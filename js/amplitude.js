@@ -207,12 +207,26 @@ hook_amplitude_functions(amplitude_web_desktop);
     Plays the song. Just pass the id of the audio element.
 */
 function amplitude_play(id){
+    if(typeof amplitude_config != 'undefined'){
+        if(typeof amplitude_config.amplitude_before_play_callback != 'undefined'){
+            var amplitude_before_play_callback_function = window[amplitude_config.amplitude_before_play_callback];
+            amplitude_before_play_callback_function();
+        }
+    }
     if (amplitude_active_song != null && !amplitude_active_song.paused) {
         amplitude_stop_song();
     }
 
     //Sets the active song to the song being played.  All other functions depend on this.
     amplitude_active_song = document.getElementById(id);
+
+    if(typeof amplitude_config != 'undefined'){
+        if(typeof amplitude_config.amplitude_live != 'undefined'){
+            if(amplitude_config.amplitude_live == true){
+                amplitude_reconnect_stream();
+            }
+        }
+    }
     //Plays the song defined in the audio tag.
     amplitude_active_song.play();
 
@@ -273,6 +287,11 @@ function amplitude_pause(){
             var amplitude_pause_callback_function = window[amplitude_config.amplitude_pause_callback];
             amplitude_pause_callback_function();
         }
+        if(typeof amplitude_config.amplitude_live != 'undefined'){
+            if(amplitude_config.amplitude_live == true){
+                amplitude_disconnect_stream();
+            }
+        }
     }
 }
 
@@ -284,6 +303,17 @@ function amplitude_play_pause(){
     if (amplitude_active_song != null) {
         //Checks to see if the song is paused, if it is, play it from where it left off otherwise pause it.
         if (amplitude_active_song.paused){
+            if(typeof amplitude_config != 'undefined'){
+                if(typeof amplitude_config.amplitude_before_play_callback != 'undefined'){
+                    var amplitude_before_play_callback_function = window[amplitude_config.amplitude_before_play_callback];
+                    amplitude_before_play_callback_function();
+                }
+                if(typeof amplitude_config.amplitude_live != 'undefined'){
+                    if(amplitude_config.amplitude_live == true){
+                        amplitude_reconnect_stream();
+                    }
+                }
+            }
             var amplitude_play_pause_button_new_class = ' amplitude-playing';
 
             amplitude_temporary_element_holder = document.getElementById('amplitude-play-pause');
@@ -293,6 +323,14 @@ function amplitude_play_pause(){
             amplitude_temporary_element_holder.className = amplitude_temporary_element_holder.className + amplitude_play_pause_button_new_class;
 
             amplitude_active_song.play();
+
+            //Fires play callback for play button
+            if(typeof amplitude_config != 'undefined'){
+                if(typeof amplitude_config.amplitude_play_callback != 'undefined'){
+                    var amplitude_play_callback_function = window[amplitude_config.amplitude_play_callback];
+                    amplitude_play_callback_function();
+                }
+            }
         }else{
             var amplitude_play_pause_button_new_class = ' amplitude-paused';
 
@@ -303,6 +341,17 @@ function amplitude_play_pause(){
             amplitude_temporary_element_holder.className = amplitude_temporary_element_holder.className + amplitude_play_pause_button_new_class;
 
             amplitude_active_song.pause();
+            if(typeof amplitude_config != 'undefined'){
+                if(typeof amplitude_config.amplitude_pause_callback != 'undefined'){
+                    var amplitude_pause_callback_function = window[amplitude_config.amplitude_pause_callback];
+                    amplitude_pause_callback_function();
+                }
+                if(typeof amplitude_config.amplitude_live != 'undefined'){
+                    if(amplitude_config.amplitude_live == true){
+                        amplitude_disconnect_stream();
+                    }
+                }
+            }
         }   
     }else{
         var amplitude_play_pause_button_new_class = ' amplitude-playing';
@@ -765,4 +814,25 @@ function amplitude_playlist_pause(e){
         amplitude_temporary_element_holder.className = amplitude_temporary_element_holder.className + amplitude_play_pause_button_new_class;
     }
     amplitude_pause();
+}
+
+/*
+    Disconnects from a live stream
+    Thanks to help from: http://blog.pearce.org.nz/2010/11/how-to-stop-video-or-audio-element.html
+*/
+function amplitude_disconnect_stream(){
+    amplitude_active_song.pause();
+    amplitude_active_song.src = ""; 
+    amplitude_active_song.load(); 
+}
+
+function amplitude_reconnect_stream(){
+    var audio_src = '';
+    if(typeof amplitude_config != 'undefined'){
+        if(typeof amplitude_config.amplitude_live_source != 'undefined'){
+           audio_src = amplitude_config.amplitude_live_source;
+        }
+    }
+    amplitude_active_song.src = audio_src; 
+    amplitude_active_song.load(); 
 }
