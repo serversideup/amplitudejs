@@ -836,3 +836,20 @@ function amplitude_reconnect_stream(){
     amplitude_active_song.src = audio_src; 
     amplitude_active_song.load(); 
 }
+
+/*
+    Amplitude live callback functions hook up
+*/
+hook_amplitude_functions(amplitude_live_callback_hooks);
+function amplitude_live_callback_hooks(){
+    if(typeof amplitude_config != 'undefined'){
+        if(typeof amplitude_config.amplitude_live_checkup != 'undefined'){
+            if((typeof amplitude_config.amplitude_live_checkup.checkup_interval != 'undefined') && (typeof amplitude_config.amplitude_live_checkup.checkup_function != 'undefined') ) {
+                setInterval(function(){
+                    var amplitude_checkup_function = window[amplitude_config.amplitude_live_checkup.checkup_function];
+                    amplitude_checkup_function(); 
+                }, amplitude_config.amplitude_live_checkup.checkup_interval);
+            }
+        }
+    }
+}
