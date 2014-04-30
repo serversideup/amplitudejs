@@ -36,6 +36,34 @@ function hook_amplitude_functions(func) {
                 oldonload();
             }
             func();
+
+            if( typeof amplitude_config != 'undefined' ){
+                if( typeof amplitude_config.amplitude_auto_play != 'undefined' && amplitude_config.amplitude_auto_play ){
+                    if( typeof amplitude_config.start_song_id != 'undefined' ){
+                        if(document.getElementById('amplitude-play-pause')){
+                            amplitude_play_pause();
+                        }else{
+                            amplitude_play(amplitude_config.start_song_id);
+                        }
+                    }else{
+                        if(document.getElementById('amplitude-play-pause')){
+                            amplitude_play_pause();
+                        }else{
+                            var playlist = document.getElementById('amplitude-playlist');
+                            if (playlist != null){
+                                if(amplitude_shuffle == true){
+                                    amplitude_play(amplitude_shuffle_list[0]);
+                                }else{
+                                    //Plays top of playlist if no start song id
+                                    amplitude_play(document.getElementById('amplitude-playlist').getElementsByTagName('audio')[0].getAttribute('id'));
+                                }
+                            }else{
+                                amplitude_play(document.getElementsByTagName('audio')[0].getAttribute('id'));
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
