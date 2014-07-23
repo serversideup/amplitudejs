@@ -25,7 +25,7 @@ http://serversideup.net/customize-html-audio-css-amplitudejs
 Example/Demo
 ------------
 Demo Located Here: 
-http://ampltiudejs.com
+http://amplitudejs.com
 
 License
 -----------------
