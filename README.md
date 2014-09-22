@@ -24,6 +24,26 @@ In HTML5, the audio tag allows users to add common audio formats to their web pa
 puts you in control of the designs by simply applying an ID or a class to page elements.  You can then style these elements through CSS and control your audio.  AmplitudeJS goes above
 and beyond by adding playlist capabilities (next, previous, shuffle), dynamic song insertions, and song meta data.
 
+### Including Amplitude ###
+To include AmplitudeJS on your page simply download the source from github: [https://github.com/521dimensions/amplitudejs](https://github.com/521dimensions/amplitudejs)
+
+On top of your page just add:
+```html
+<script type="text/javascript" src="/directory/to/amplitude.js"></script>
+```
+
+At the bare minium you will need to add the amplitude config variable somewhere in your document. This is one of the few pieces of Javascript you will have to add, but it will allow you
+to define how you want AmplitudeJS to work.  To add the amplitude config variable simply add the following code on your page:
+```javascript
+	<script type="text/javascript">
+		amplitude_config = {
+
+		}
+	</script>
+```
+
+Upon page load, Amplitude will use the variables and song objects in your amplitude_config variable to set up and move forward.
+
 ### Amplitude Config ###
 Previous versions of AmplitudeJS relyed on the programmer to add audio tags for each song. Now you don't have to even have an audio tag in your HTML
 because everything is controlled through the AmplitudeJS config. 
