@@ -1,9 +1,8 @@
-amplitudejs
-===========
+# AmplitudeJS #
+
 A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).
 
-Features
-------------
+## Features ##
 * Completely independent library (no jQuery required)
 * 100% customizable design
 * Call back functions for all events
@@ -18,23 +17,29 @@ Features
 * Connect to live steaming
 * Dynamic song additions
 
-Documentation
-------------
+## Documentation ##
 ### Overview ###
+The concept of AmplitudeJS is simple, allow designers to fully control the look and feel of their audio player through the web without having to understand advanced scripting.
+In HTML5, the audio tag allows users to add common audio formats to their web page.  The problem is that the audio playback interface is controlled by the browser.  AmplitudeJS
+puts you in control of the designs by simply applying an ID or a class to page elements.  You can then style these elements through CSS and control your audio.  AmplitudeJS goes above
+and beyond by adding playlist capabilities (next, previous, shuffle), dynamic song insertions, and song meta data.
+
+### Amplitude Config ###
+Previous versions of AmplitudeJS relyed on the programmer to add audio tags for each song. Now you don't have to even have an audio tag in your HTML
+because everything is controlled through the AmplitudeJS config. 
+
+#### Adding a Song ####
 
 
-Tutorial
-------------
+## Tutorial ##
 View a tutorial on how to use here: 
 http://serversideup.net/customize-html-audio-css-amplitudejs
 
-Example/Demo
-------------
+## Example/Demo ##
 Demo Located Here: 
 http://amplitudejs.com
 
-License
------------------
+## License ##
 
 The MIT License (MIT)
 

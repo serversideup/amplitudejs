@@ -89,8 +89,7 @@
 					"url": "http://1942.live.streamtheworld.com/CBC_R1_WPG_L_SC",
 					"live": true,
 					"visual_id": "song-2",
-					"cover_art_url": "images/jendusaep.jpg",
-					"default_order": 1
+					"cover_art_url": "images/jendusaep.jpg"
 				},
 				{
 					"name": "Porch Stomp Blues",
@@ -99,8 +98,7 @@
 					"url": "songs/In%20Search%20Of%20EP/03%20Porch%20Stomp%20Blues.mp3",
 					"live": false,
 					"visual_id": "song-3",
-					"cover_art_url": "images/jendusa.jpg",
-					"default_order": 2
+					"cover_art_url": "images/jendusa.jpg"
 				},
 				{
 					"name": "Man With the Keys",
@@ -109,8 +107,7 @@
 					"url": "songs/In%20Search%20Of/02%20Man%20with%20the%20Keys.mp3",
 					"live": false,
 					"visual_id": "song-4",
-					"cover_art_url": "images/jendusa.jpg",
-					"default_order": 3
+					"cover_art_url": "images/jendusa.jpg"
 				}
 			],
 			"amplitude_volume_up_amount": 15,
