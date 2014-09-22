@@ -16,8 +16,14 @@ Features
 * Display Album Art
 * Display Song Meta Data
 * Connect to live steaming
+* Dynamic song additions
 
 Documentation
+------------
+### Overview ###
+
+
+Tutorial
 ------------
 View a tutorial on how to use here: 
 http://serversideup.net/customize-html-audio-css-amplitudejs
