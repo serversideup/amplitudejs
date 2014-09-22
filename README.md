@@ -32,6 +32,8 @@ On top of your page just add:
 <script type="text/javascript" src="/directory/to/amplitude.js"></script>
 ```
 
+---------------------------------------
+
 At the bare minium you will need to add the amplitude config variable somewhere in your document. This is one of the few pieces of Javascript you will have to add, but it will allow you
 to define how you want AmplitudeJS to work.  To add the amplitude config variable simply add the following code on your page:
 ```javascript
@@ -41,6 +43,8 @@ to define how you want AmplitudeJS to work.  To add the amplitude config variabl
 		}
 	</script>
 ```
+
+---------------------------------------
 
 Upon page load, Amplitude will use the variables and song objects in your amplitude_config variable to set up and move forward.
 
