@@ -163,7 +163,8 @@ You will be able adjust and slide the range and it will adjust the time of the c
 #### Adding Song Current Time and Duration ####
 AmplitudeJS allows you to add current song time and current song duration elements which display information regarding the current song.  When the song is playing, the current time is updated to represent where the song is in the sense
 of minutes and seconds.  The current song duration simply shows the length of the song. To add this information, simply make an element with the id of "amplitude-current-time" and "amplitude-audio-duration".  AmplitudeJS
-will adjust the inner html of these elements to match where the song is at.  You can style these anyway you want with CSS.
+will adjust the inner html of these elements to match where the song is at.  You can style these anyway you want with CSS. NOTE: With a live song, it would be advisable to leave out the audio duration since there really isn't a known end
+and will display a random number.
 
 ```html
 	<span id="amplitude-current-time">0:00</span> / <span id="amplitude-audio-duration">0:00</span>
@@ -182,6 +183,7 @@ elements, if you are using images, it is recommended to add them as a background
 ```
 
 To adjust the volume increment and decrement amount, add to the amplitude config variable the following settings:
+
 ```javascript
 	<script type="text/javascript">
 		amplitude_config = {
@@ -201,9 +203,51 @@ To adjust the volume increment and decrement amount, add to the amplitude config
 	</script>	
 ```
 
+#### Adding a Mute Button ####
+A mute button is a toggle in AmplitudeJS. When the button is clicked, the volume gets set to 0 and when it is clicked again, the volume is restored to what it was before the click.  When we discuss callbacks, you can 
+fire functions before and after the mute button is pressed to adjuste page elements.  The mute button will automatically set the volume bar (next section) accordingly.  To add this button, simply add an element with the id of "amplitude-mute"
+to your document.
 
-#### Song Visual Elements ####
+```html
+	<div id="amplitude-mute"></div>
+```
 
+#### Adding a Volume Slider ####
+Like the song slider, the volume slider is an HTML5 range element.  The user can slide the volume slider to adjust the volume of the current song.  The volume slider also
+reacts accordingly if the mute, volume up, or volume down buttons are pressed. Unlike the song slider, the initial volume slider should NOT contain a value since you can set 
+the initial song volume in the amplitude_config variable.  To add a volume slider, add an HTML5 range element with the id of "amplitude-volume-slider" to your document. 
+You can then style this element using CSS.
+
+```html
+	<input type="range" id="amplitude-volume-slider" />
+```
+
+If you want the volume slider to be vertical, in the CSS apply the following style: 
+
+```css
+	#amplitude-volume-slider{
+		-webkit-appearance: slider-vertical
+	}
+```
+
+### Song Visual Elements ###
+For single song implementations and playlists using the same control sets, you can add certain elements that get updated depending on what song is playing and it's meta data.
+Each of these elements has their inner html updated depending on the song being played. Elements such as amplitude-current-time and amplitude-audio-duration adjust
+accordingly if there is one control set in a playlist environment. The elements added to the document that house this information should have ids:
+
+* "amplitude-album-art" - When the song changes, the inner html gets an image element added with the source of the album art defined in the amplitude_config for the specific song.
+* "amplitude-now-playing-title" - Displays the title of the song that is now playing.
+* "amplitude-now-playing-artist" - Displays the artist of the song that is now playing.
+* "amplitude-now-playing-album" - Displays the album name of the song that is now playing.
+
+All of these elements can be styled through CSS to be customized.
+
+```html
+	<div id="amplitude-album-art"></div>
+	<span id="amplitude-now-playing-title"></span>
+	<span id="amplitude-now-playing-artist"></span>
+	<span id="amplitude-now-playing-albume"></span>
+```
 
 ## Tutorial ##
 View a tutorial on how to use here: 
