@@ -150,7 +150,7 @@ var amplitude_active_config = {
 	"amplitude_volume_down_amount": 10,
 	"amplitude_continue_next": false,
 
-	"amplitude_active_song_information": {}
+	"amplitude_active_song_information": {},
 
 	"amplitude_before_play_callback": null,
 	"amplitude_after_play_callback": null,
