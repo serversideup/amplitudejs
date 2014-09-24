@@ -25,7 +25,9 @@ puts you in control of the design by simply applying an ID or a class to page el
 and beyond by adding playlist capabilities (next, previous, shuffle), dynamic song insertions, and song meta data. AmplitudeJS is now mobile as well. If it detects a request coming from
 a mobile device it will apply a touchstart event listener instead of a click to the appropriate elements.
 
-#### Including Amplitude ####
+NOTE: Any element in the source code without the prefix 'amplitude-' is not an AmplitudeJS element.  These elements would be styled to house AmplitudeJS element containers if wanted.
+
+### Including Amplitude ###
 To include AmplitudeJS on your page simply download the source from github: [https://github.com/521dimensions/amplitudejs](https://github.com/521dimensions/amplitudejs)
 
 On top of your page just add
@@ -45,11 +47,11 @@ to define how you want AmplitudeJS to work.  To add the amplitude config variabl
 
 Upon page load, Amplitude will use the variables and song objects in your amplitude_config variable to set up and move forward.
 
-#### Amplitude Config ####
+### Amplitude Config ###
 Previous versions of AmplitudeJS relyed on the programmer to add audio tags for each song. Now you don't have to even have an audio tag in your HTML
 because everything is controlled through the AmplitudeJS config. 
 
-#### Adding a Song ####
+### Adding a Song ###
 To add a song to your page, you just have to define it in the amplitude_config JSON under the amplitude_songs key.
 ```javascript
 	<script type="text/javascript">
@@ -77,7 +79,7 @@ The attributes you can define are:
 
 To add multiple songs and playlists, see "Adding Multiple Songs" or "Adding a Playlist" later in the documentation.
 
-#### Setting the Starting Volume ####
+### Setting the Starting Volume ###
 The amplitude config has an attribute where you can set the starting volume.  On Page load, it will initialize the volume to what you set it as. The range for this number
 is 0 - 100. If you wanted 75% volume, you'd set this attribute to 75.  By default this attribute is 50 for 50% volume.
 
@@ -99,7 +101,7 @@ is 0 - 100. If you wanted 75% volume, you'd set this attribute to 75.  By defaul
 	</script>
 ```
 
-#### Autoplaying a Song ####
+### Autoplaying a Song ###
 You can set the song to autoplay on page load by turning on the amplitude_auto_play parameter.  By default this is set to false.  To turn on the amplitude_auto_play parameter, add it to your
 amplitude_config variable:
 
@@ -121,7 +123,7 @@ amplitude_config variable:
 	</script>
 ```
 
-#### Adding a Play Button ####
+### Adding a Play Button ###
 To add a play button you simply need to add an element to the document with the ID of "amplitude-play".  On initialization, AmplitudeJS will scan for this element and apply an appropriate
 event handler to the element. If it's a mobile device, the event handler will be "touchstart", if it's a computer it will be "click".  AmplitudeJS allows you to style this element any way 
 you want with any CSS you want.  The play button will play the song that you defined, the active song in a playlist, or appropriate song in a multi-song implementation.
@@ -130,7 +132,7 @@ you want with any CSS you want.  The play button will play the song that you def
 	<div id="amplitude-play"></div>
 ```
 
-#### Adding a Pause Button ####
+### Adding a Pause Button ###
 Adding a pause button is very similar to the play button.  You just need to add an element with the ID of "amplitude-pause" to the document.  This element is scanned for when AmplitudeJS initializes
 and the appropriate event handlers are defined.  You can style this element anyway you like using CSS.  The pause button will pause the song you defined, the active song in a playlist or the appropriate
 song in a multi-song implementation.
@@ -139,7 +141,7 @@ song in a multi-song implementation.
 	<div id="amplitude-pause"></div>
 ```
 
-#### Adding a Play/Pause Button ####
+### Adding a Play/Pause Button ###
 The play/pause button combines the play and pause functionality into a single button.  The way this is handled is upon the appropriate event (touchstart for mobile and click for desktop), AmplitudeJS
 determines whether the active song is playing or paused. If the song is playing and the user interacts with this button, the song will pause.  If the song is paused and the user interacts with this button
 the song plays.  To add this button, add an element with the id of "amplitude-play-pause".  AmplitudeJS will bind the functionality upon page load.  Upon initialization, a class should be assigned to the element
@@ -150,7 +152,7 @@ you use a background-image in your css if you are using a div or span so the eve
 	<div id="amplitude-play-pause"></div>
 ```
 
-#### Adding a Song Slider ####
+### Adding a Song Slider ###
 The song slider is handled through an HTML5 Range Slider.  For more information visit ['http://demosthenes.info/blog/757/Playing-With-The-HTML5-range-Slider-Input'](http://demosthenes.info/blog/757/Playing-With-The-HTML5-range-Slider-Input).
 Using the HTML5 Range Slider makes the functionality much more supported.  To add a song slider (what adjusts the time of the current now playing track), add a range slider input with the id of "amplitude-song-slider".  AmplitudeJS will bind
 the time updates and display them proportionally on the range slider.  All range sliders should be set to a value of 0 when added to the page since there is nothing currently playing. Even if you have auto play turned on, the song starts at 0.
@@ -160,7 +162,7 @@ You will be able adjust and slide the range and it will adjust the time of the c
 	<input type="range" id="amplitude-song-slider" value="0"/>
 ```
 
-#### Adding Song Current Time and Duration ####
+### Adding Song Current Time and Duration ###
 AmplitudeJS allows you to add current song time and current song duration elements which display information regarding the current song.  When the song is playing, the current time is updated to represent where the song is in the sense
 of minutes and seconds.  The current song duration simply shows the length of the song. To add this information, simply make an element with the id of "amplitude-current-time" and "amplitude-audio-duration".  AmplitudeJS
 will adjust the inner html of these elements to match where the song is at.  You can style these anyway you want with CSS. NOTE: With a live song, it would be advisable to leave out the audio duration since there really isn't a known end
@@ -170,7 +172,7 @@ and will display a random number.
 	<span id="amplitude-current-time">0:00</span> / <span id="amplitude-audio-duration">0:00</span>
 ```
 
-#### Adding Volume Up and Down Buttons ####
+### Adding Volume Up and Down Buttons ###
 With AmplitudeJS you can add volume up and volume down buttons. You can also assign how much you want the volume to increase and decrease each time a user interacts with your element. To change the amount, you set the "amplitude_volume_up_amount" and
 "amplitude_volume_down_amount" in the amplitude_config variable.  The ranges for this is 0-100. Granted, you probably down't want the user to max or minify the volume on each click (there's a mute button for that) so set it something reasonable.  By default
 they are set to 10. So it would take the user 10 clicks from 0 to max the volume and 10 clicks from the max to reach 0.  To add a volume up button to the page, add an element with the id of "amplitude-volume-up".  AmplitudeJS will find this on initialization
@@ -203,7 +205,7 @@ To adjust the volume increment and decrement amount, add to the amplitude config
 	</script>	
 ```
 
-#### Adding a Mute Button ####
+### Adding a Mute Button ###
 A mute button is a toggle in AmplitudeJS. When the button is clicked, the volume gets set to 0 and when it is clicked again, the volume is restored to what it was before the click.  When we discuss callbacks, you can 
 fire functions before and after the mute button is pressed to adjuste page elements.  The mute button will automatically set the volume bar (next section) accordingly.  To add this button, simply add an element with the id of "amplitude-mute"
 to your document.
@@ -212,7 +214,7 @@ to your document.
 	<div id="amplitude-mute"></div>
 ```
 
-#### Adding a Volume Slider ####
+### Adding a Volume Slider ###
 Like the song slider, the volume slider is an HTML5 range element.  The user can slide the volume slider to adjust the volume of the current song.  The volume slider also
 reacts accordingly if the mute, volume up, or volume down buttons are pressed. Unlike the song slider, the initial volume slider should NOT contain a value since you can set 
 the initial song volume in the amplitude_config variable.  To add a volume slider, add an HTML5 range element with the id of "amplitude-volume-slider" to your document. 
@@ -248,6 +250,430 @@ All of these elements can be styled through CSS to be customized.
 	<span id="amplitude-now-playing-artist"></span>
 	<span id="amplitude-now-playing-albume"></span>
 ```
+
+### Working with Multiple Songs ###
+AmplitudeJS can handle playlists and multiple songs on the same page.  These implementations are handled through the config easily and add a lot of power to the website.  
+When dealing with multiple songs on the same page, you can look at AmplitudeJS through 2 different lenses. Lens A is a playlist.  In a playlist, there are functions
+that make sense in a playlist like next, previous, shuffle.  Lens B is one page with multiple modularized players, essentially a whole bunch of individual song players.
+In both lenses AmplitudeJS allows dynamic additions to the page as well. So when you can add a song to the playlist or page through AJAX.
+
+### Making a Playlist ###
+In the previous parts of the documentation, we had elements that are given an ID that perform certain functions. Looking through the playlist lens there should be one main control center
+that includes the current time for the current song playing, the current song duration, a play-pause set up, and a location for album art or any combination of these features.  For the elements
+discussed above, we can continue using IDs such as "amplitude-play-pause" for these implementations.  When we get to multiple songs (lens B) that are modularized, we will be using classes for the 
+common controls (that documentation is farther down) instead of IDs.
+
+Playlist Element IDs Include:
+* amplitude-play
+* amplitude-pause
+* amplitude-play-pause
+* amplitude-now-playing-title
+* amplitude-now-playing-artist
+* amplitude-now-playing-album
+* amplitude-current-time
+* amplitude-audio-duration
+* amplitude-song-slider
+* amplitude-album-art
+* amplitude-mute
+* amplitude-volume-up
+* amplitude-volume-down
+
+(all are documented above)
+
+Playlist Specific Element IDs:
+* amplitude-previous
+* amplitude-next
+* amplitude-shuffle (which contains classes amplitude-shuffle-on and amplitude-shuffle-off)
+
+Playlist Specific Element Attributes:
+* amplitude-song-index
+
+Playlist Specific Element Classes:
+* amplitude-play-pause
+* amplitude-list-paused
+* amplitude-list-playing
+
+### Setting up Amplitude Config for Playlist ###
+In the previous parts of this documentation, we were thinking of using AmplitudeJS for one song.  To set up the amplitude_config to work like a playlist, simply add more song objects to your amplitude_songs
+key. 
+
+```javascript
+	<script type="text/javascript">
+		amplitude_config = {
+			"amplitude_songs": [
+				{
+					"name": "Stream the World",
+					"url": "http://1942.live.streamtheworld.com/CBC_R1_WPG_L_SC",
+					"live": true,
+					"visual_id": "song-2"
+				},
+				{
+					"name": "Porch Stomp Blues",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of%20EP/03%20Porch%20Stomp%20Blues.mp3",
+					"live": false,
+					"visual_id": "song-3",
+					"cover_art_url": "images/jendusa.jpg"
+				},
+				{
+					"name": "Man With the Keys",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of/02%20Man%20with%20the%20Keys.mp3",
+					"live": false,
+					"visual_id": "song-4",
+					"cover_art_url": "images/jendusa.jpg"
+				}
+			]
+		}
+	</script>
+```
+
+There are now 3 songs in the playlist (you can add as many as you like). An important thing to keep in mind is that the indexes we refer to start at 0 instead of 1.
+So in the songs array, "Stream the World" has an index of 0 and "Porch Stomp Blues" has an index of 1. Now when the user clicks the play or play/pause button the current
+song will be the start of the playlist.  If you notice, there is an additional attribute to each song named "visual_id".  When you are styling your page, the "visual_id" attribute
+should correlate to the visual representation of the song.  For example if I was making a list of these songs, it might look something like: 
+
+```html
+	<div class="playlist-song" id="song-2">
+        <div class="playlist-song-album-art">
+            <img src="images/jendusaep.jpg">
+        </div>
+        <div class="playlist-song-information">
+            Song: Stream the World
+        </div>
+        <div class="playlist-audio-controls">
+            <div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="0"></div>
+        </div>
+    </div>
+    <div class="playlist-song" id="song-3">
+        <div class="playlist-song-album-art">
+            <img src="images/jendusaep.jpg">
+        </div>
+        <div class="playlist-song-information">
+            Song: Porch Stomp Blues<br>
+            Artist: Jake Jendusa<br>
+            Album: In Search Of EP
+        </div>
+        <div class="playlist-audio-controls">
+            <div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="1"></div>
+        </div>
+    </div>
+    <div class="playlist-song" id="song-4">
+        <div class="playlist-song-album-art">
+            <img src="images/jendusa.jpg">
+        </div>
+        <div class="playlist-song-information">
+            Song: Man with the Keys<br>
+            Artist: Jake Jendusa<br>
+            Album: In Search Of
+        </div>
+        <div class="playlist-audio-controls">
+            <div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="2"></div>
+        </div>
+    </div>
+```
+
+Don't worry about the unknown amplitude elements, we will get to them. However, each div element with a class = "playlist-song" (not an AmplitudeJS element, just for styling) also has
+an id.  For example, the first "playlist-song" element has an id of "song-2", meaning "song-2" is the visual_id defined in the Amplitude config.  When that song is playing in the playlist,
+a class named "amplitude-now-playing" is added to that element.  You can then style that clas to maybe change the background color or add a border to show that the song is playing.
+
+### Defining a Start Song ###
+In a playlist implementation, you can define a start song.  When the user initially clicks play, this song will play.  To do that, you just need to add to your amplitude_config
+a start song attribute with the index of the song you want to start (remember, indexes start at 0!).
+
+```javascript
+	<script type="text/javascript">
+		amplitude_config = {
+			"amplitude_songs": [
+				{
+					"name": "Stream the World",
+					"url": "http://1942.live.streamtheworld.com/CBC_R1_WPG_L_SC",
+					"live": true,
+					"visual_id": "song-2"
+				},
+				{
+					"name": "Porch Stomp Blues",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of%20EP/03%20Porch%20Stomp%20Blues.mp3",
+					"live": false,
+					"visual_id": "song-3",
+					"cover_art_url": "images/jendusa.jpg"
+				},
+				{
+					"name": "Man With the Keys",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of/02%20Man%20with%20the%20Keys.mp3",
+					"live": false,
+					"visual_id": "song-4",
+					"cover_art_url": "images/jendusa.jpg"
+				}
+			],
+			"amplitude_start_song": 1
+		}
+	</script>
+```
+
+When play is initially clicked (or touchstart), "Porch Stomp Blues" will play.
+
+### Adding Next and Previous Buttons ###
+When using AmplitudeJS in a playlist, you can navigate forwards and backwards in the playlist.  Upon click/touch AmplitudeJS will navigate through your playlist.
+To add a previous button add an element with an id of "amplitude-previous".  To add a next button add an element with an id of "amplitude-next".  When doing the visual
+design of your playlist, keep in mind Amplitude will go in order of the indexes so make sure that your visual display correlates with the order you put the songs into 
+the amplitude_config.  The exception of this is when you have shuffle turned on, it will play the songs in a random order.  When the song is the last song in the playlist,
+and next is clicked it will go to the first song of the list. If the song playing is the first song in the list and previous is clicked it will go to the last song in the playlist.
+
+```html
+	<div id="amplitude-previous"></div>
+	<div id="amplitude-next"></div>
+```
+
+### Continue to Next on Song End ###
+By default on the playlist, when a song has ended, it will not continue through the playlist.  To enable AmplitudeJS to continue to the next song after the song that is
+currently playing finishes, all you have to do is set "amplitude_continue_next" to true in the amplitude_config variable.  When the song finishes playing, it will go to the 
+next song in the playlist or the next song in the shuffle list if shuffle is turned on.  
+
+```javascript
+	<script type="text/javascript">
+		amplitude_config = {
+			"amplitude_songs": [
+				{
+					"name": "Stream the World",
+					"url": "http://1942.live.streamtheworld.com/CBC_R1_WPG_L_SC",
+					"live": true,
+					"visual_id": "song-2"
+				},
+				{
+					"name": "Porch Stomp Blues",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of%20EP/03%20Porch%20Stomp%20Blues.mp3",
+					"live": false,
+					"visual_id": "song-3",
+					"cover_art_url": "images/jendusa.jpg"
+				},
+				{
+					"name": "Man With the Keys",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of/02%20Man%20with%20the%20Keys.mp3",
+					"live": false,
+					"visual_id": "song-4",
+					"cover_art_url": "images/jendusa.jpg"
+				}
+			],
+			"amplitude_continue_next": true
+		}
+	</script>
+```
+### Adding the Shuffle Button ###
+The shuffle function allows the playlist to be randomized and is accessed through the shuffle button.  To add a shuffle button add an 
+element to the document with the id "amplitude-shuffle".  When clicked for the first time, the class "amplitude-shuffle-on" will be applied
+to the element allowing for the element to be styled for the current state.  When clicked to turn off shuffle, the class "amplitude-shuffle-off" will
+be applied to the element so you can style the element when shuffle is off.  On page load, "amplitude-shuffle-off" is the first class applied since
+shuffle is not turned on.
+
+```html
+	<div id="amplitude-shuffle"></div>
+```
+
+### Individual Playlist Song Play/Pause Functions ###
+In a playlist, you can have play/pause functions for individual songs in your playlist display.  To do this you need to use a classed form of the play-pause function
+and then apply an attribute to the element with the index of the song in the list that will be played upon click.  When the song in the list is being played, the element also
+receives a class of "amplitude-list-playing". When the song of the list is paused, it receives a class of "amplitude-list-paused".  When amplitude loads it looks for all classes
+"amplitude-play-pause" and binds an event handler to these classes. When the song is being played from the central control (the amplitude-play-pause id) the appropriate classes get
+applied as well.
+
+```html
+	<div id="player-playlist">
+	    <div class="playlist-song" id="song-2">
+	        <div class="playlist-song-album-art">
+	            <img src="images/jendusaep.jpg">
+	        </div>
+	        <div class="playlist-song-information">
+	            Song: Stream the World
+	        </div>
+	        <div class="playlist-audio-controls">
+	            <div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="0"></div>
+	        </div>
+	    </div>
+	    <div class="playlist-song" id="song-3">
+	        <div class="playlist-song-album-art">
+	            <img src="images/jendusaep.jpg">
+	        </div>
+	        <div class="playlist-song-information">
+	            Song: Porch Stomp Blues<br>
+	            Artist: Jake Jendusa<br>
+	            Album: In Search Of EP
+	        </div>
+	        <div class="playlist-audio-controls">
+	            <div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="1"></div>
+	        </div>
+	    </div>
+	    <div class="playlist-song" id="song-4">
+	        <div class="playlist-song-album-art">
+	            <img src="images/jendusa.jpg">
+	        </div>
+	        <div class="playlist-song-information">
+	            Song: Man with the Keys<br>
+	            Artist: Jake Jendusa<br>
+	            Album: In Search Of
+	        </div>
+	        <div class="playlist-audio-controls">
+	            <div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="2"></div>
+	        </div>
+	    </div>
+	</div>
+```
+
+When the element with the class "amplitude-play-pause" is clicked for Porch Stomp Blues, AmplitudeJS will read the amplitude-song-index and play that song
+in the playlist. Porch Stomp Blues has an index of 1 in our playlist.
+
+### Dynamically Adding a Song to a Playlist ###
+When adding a song, the user calls amplitude_add_song( song ) and it is the only AmplitudeJS function that the user should call directly.  What happens is when the user calls
+amplitude_add_song( song ) and passes a song as a parameter, the song gets added to the end of the amplitude_songs object in the amplitude_config.  There should be two steps in
+this process:
+
+1. Adding the song to the song list with amplitude_add_song( song ).
+2. Adding the visual element to display the song.
+
+The song parameter in the first step is the JSON representation of a song the same way you would define it in the amplitude_config.
+
+```javascript
+<script type="text/javascript">
+	var new_song = {
+		"name": "Shooting Star",
+		"artist": "Air Traffic",
+		"album": "Fractured Life",
+		"url": "songs/03%20Shooting%20Star.m4a",
+		"visual_id": "song-8",
+		"cover_art_url": "images/fracturedlife.jpg",
+		"live": false
+	}
+</script>
+```
+When you call the amplitude_add_song( song ) method and pass it the song object, it returns the new index.  You can then build the visual display and append it to the visual part of the playlist.
+The visual_id has nothing to do with the index, it's just the id of the container that houses the visual information for the song.  Amplitude listens for new nodes to be inserted into the document, 
+so when the new visual display is added, the appropriate event handlers are applied to the elements making the play/pause functions work if they are a part of your design.
+
+```javascript
+	<script type="text/javascript">
+		var new_song = {
+    		"name": "Shooting Star",
+    		"artist": "Air Traffic",
+    		"album": "Fractured Life",
+    		"url": "songs/03%20Shooting%20Star.m4a",
+    		"visual_id": "song-8",
+    		"cover_art_url": "images/fracturedlife.jpg",
+    		"live": false
+    	}
+
+
+    	var song_index = amplitude_add_song( new_song );
+    	var new_song_visual_display = '<div class="playlist-song" id="song-8">'
+    		+ '<div class="playlist-song-album-art">'
+    			+ '<img src="images/airtraffic.jpg">'
+    		+ '</div>'
+    		+ '<div class="playlist-song-information">Song: Shooting Star<br>Artist: Air Traffic<br>Album: Fractured Life</div>'
+    		+ '<div class="playlist-audio-controls">'
+    			+ '<div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="'+song_index+'"></div>'
+    		+ '</div>'
+    		+'</div>';
+
+    	document.getElementById('player-playlist').innerHTML += new_song_visual_display;
+	</script>
+```
+
+With this example, the element with the id of "player-playlist" is just the housing for the playlist.  The new song does have an "amplitude-play-pause" element and the amplitude-song-index is set to the
+returned song_index from the amplitude_add_song( song ) function.
+
+### Multiple Modular Songs ###
+You can also use AmplitudeJS for all songs in the sense of multiple songs in the same document.  When viewing AmplitudeJS through this lens, the songs don't have order like a playlist and
+it wouldn't make sense to have previous, next, and shuffle functions.  Each song operates independently of each other.  However, this means that we will be using a lot of classes compared to ids
+since there will be a lot of controls on the page.  The amplitude_songs listing should look identical to the one for the playlist.  However, the visual_id isn't used when using AmplitudeJS
+this way.  We will be using custom attributes on each element to correlate to a song in the playlist.  Also, since each song's controls are not changing, the information should be filled in for
+album, artist, artwork, and title when creating the page. The volume controls and the mute button operate globally on the element. Meaning if you mute the song, all songs are muted. If you increase
+the volume on the song, then it increases for all of the songs.
+
+```javascript
+	<script type="text/javascript">
+		amplitude_config = {
+			"amplitude_songs": [
+				{
+					"name": "Song From the Styx",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of/01%20Song%20from%20the%20Styx.mp3",
+					"live": false,
+					"cover_art_url": "images/jendusaep.jpg"
+				},
+				{
+					"name": "Stream the World",
+					"url": "http://1942.live.streamtheworld.com/CBC_R1_WPG_L_SC",
+					"live": true,
+					"cover_art_url": "images/jendusaep.jpg"
+				},
+				{
+					"name": "Porch Stomp Blues",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of%20EP/03%20Porch%20Stomp%20Blues.mp3",
+					"live": false,
+					"cover_art_url": "images/jendusa.jpg"
+				},
+				{
+					"name": "Man With the Keys",
+					"artist": "Jake Jendusa",
+					"album": "In Search Of EP",
+					"url": "songs/In%20Search%20Of/02%20Man%20with%20the%20Keys.mp3",
+					"live": false,
+					"cover_art_url": "images/jendusa.jpg"
+				}
+			]
+		}
+	</script>
+```
+
+### Multiple Songs Play/Pause ###
+Each song should have a specific play pause for the song display.  Similar to the play/pause class in the playlist, the element controlling the play/pause for the song should have a class "amplitude-play-pause" and should have an additional class
+on page load "amplitude-list-paused".  The element should also have an attribute "amplitude-song-index" and set it equal to the index of the song in the amplitude_songs list.
+
+```html
+	<div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="1"></div>
+	<div class="amplitude-play-pause amplitude-list-paused" amplitude-song-index="2"></div>
+```
+
+When playing, like in the playlist, the class "amplitude-list-playing" will be applied to the song.
+
+### Multiple Songs Current Time and Audio Duration ###
+Since each song has it's own control set that operates independently of each other, we need special elements to update when the song time changes. To add an element for current time, we need an element
+with a class "amplitude-current-time" and it needs to have an attribute "amplitude-current-time-index" set equal to the index of the song in the amplitude_songs object.  For the audio duration, we
+need to have an element with a class of "amplitude-audio-duration" and that element needs to have an attribute "amplitude-audio-duration-index" set to the index of the song in the amplitude_songs object.
+These will update accordingly when the time updates.
+
+```html
+	<span class="amplitude-current-time" amplitude-current-time-index="1">0:00</span> / <span class="amplitude-audio-duration" amplitude-audio-duration-index="1">0:00</span>
+  	<span class="amplitude-current-time" amplitude-current-time-index="2">0:00</span> / <span class="amplitude-audio-duration" amplitude-audio-duration-index="2">0:00</span>
+```
+
+### Multiple Songs Song Sliders ###
+Like every element in a multiple song document implementation, the song sliders have a class instead of an id. That way the user can track and see track progress appropriate to the individual song.
+To add these track sliders, add an HTML 5 Range Slider with a class "amplitude-song-slider" and an attribute "amplitude-song-slider-index" equal to the index of the song in the playlist.
+
+```html
+	<input type="range" class="amplitude-song-slider" amplitude-song-slider-index="0" value="0"/>
+	<input type="range" class="amplitude-song-slider" amplitude-song-slider-index="1" value="0"/>
+```
+
+Make sure these sliders are set with an inital value of 0.  AmplitudeJS will query the slider based off of the "amplitude-song-slider-index" attribute and update the appropriate song slider for the song playing.
+
+### iOS Volume Controls ###
+Mobile events work exactly the same as desktop events.  The only exception is iOS and volume changes. According to Apple's documentation on Safari, volume can not be adjusted through Javascript since the user always
+has hand access to volume increment and decrement hardware controls: [https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4](https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4).
+
 
 ## Tutorial ##
 View a tutorial on how to use here: 

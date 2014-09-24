@@ -408,9 +408,9 @@ function amplitude_configure_variables(){
 
 	if( amplitude_active_config.amplitude_start_song != null ){
 
-		amplitude_active_config.amplitude_active_song.src = amplitude_active_config.amplitude_songs[amplitude_active_config.amplitude_start_song.position].url;
-		amplitude_set_active_song_information( amplitude_active_config.amplitude_playlist[amplitude_active_config.amplitude_start_song.position] );
-		amplitude_active_config.amplitude_list_playing_index = amplitude_active_config.amplitude_start_song.position;
+		amplitude_active_config.amplitude_active_song.src = amplitude_active_config.amplitude_songs[amplitude_active_config.amplitude_start_song].url;
+		amplitude_set_active_song_information( amplitude_active_config.amplitude_songs[amplitude_active_config.amplitude_start_song] );
+		amplitude_active_config.amplitude_list_playing_index = amplitude_active_config.amplitude_start_song;
 
 		if( amplitude_active_config.amplitude_start_song.live == 'undefined' ){
 			amplitude_active_config.amplitude_start_song.live = false;

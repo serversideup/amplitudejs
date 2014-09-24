@@ -111,7 +111,8 @@
 				}
 			],
 			"amplitude_volume_up_amount": 15,
-			"amplitude_volume_down_amount": 10
+			"amplitude_volume_down_amount": 10,
+			"amplitude_start_song": 1
 		}
 		var open_playlist = false;
 	    function toggle_playlist(){
