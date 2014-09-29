@@ -162,6 +162,23 @@ You will be able adjust and slide the range and it will adjust the time of the c
 	<input type="range" id="amplitude-song-slider" value="0"/>
 ```
 
+### Adding a Song Time Visualization ###
+A song time visualization simply fills in with the percentage of the song that has been played.  It is an easy way to provide a visual for the user to see. However, the user can not interact with this, it's for display purposes only.
+To add a song time visualizaiton slider, simply add an element named "amplitude-song-time-visualization".  When added, AmplitudeJS will add an element inside named "amplitude-song-time-visualization-status".  This will fill proportionally to 
+how much of the song has been played.  You can style these two elements anyway you want using CSS.
+
+```html
+	<div id="amplitude-song-time-visualization">
+	</div>
+```
+
+After AmplitudeJS adds the element it looks like:
+```html
+	<div id="amplitude-song-time-visualization">
+		<div id="amplitude-song-time-visualization-status"></div>
+	</div>
+```
+
 ### Adding Song Current Time and Duration ###
 AmplitudeJS allows you to add current song time and current song duration elements which display information regarding the current song.  When the song is playing, the current time is updated to represent where the song is in the sense
 of minutes and seconds.  The current song duration simply shows the length of the song. To add this information, simply make an element with the id of "amplitude-current-time" and "amplitude-audio-duration".  AmplitudeJS
@@ -674,6 +691,53 @@ Make sure these sliders are set with an inital value of 0.  AmplitudeJS will que
 Mobile events work exactly the same as desktop events.  The only exception is iOS and volume changes. According to Apple's documentation on Safari, volume can not be adjusted through Javascript since the user always
 has hand access to volume increment and decrement hardware controls: [https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4](https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4).
 
+### Callback Functions ###
+All of AmplitudeJS' functions have callbacks at certain points.  The user can set a function to be called when certain events within AmplitudeJS are called.  These are functions are defined in the amplitude_config. 
+You just have to set the callback to the function name that you want to call when AmplitudeJS runs its internal function.
+
+The list of functions are:
+* amplitude_before_play_callback
+* amplitude_after_play_callback
+* amplitude_before_stop_callback
+* amplitude_after_stop_callback
+* amplitude_before_next_callback
+* amplitude_after_next_callback
+* amplitude_before_prev_callback
+* amplitude_after_prev_callback
+* amplitude_before_pause_callback
+* amplitude_after_pause_callback
+* amplitude_before_shuffle_callback
+* amplitude_after_shuffle_callback
+* amplitude_before_volume_change_callback
+* amplitude_after_volume_change_callback
+* amplitude_before_mute_callback
+* amplitude_after_mute_callback
+* amplitude_before_time_update_callback
+* amplitude_after_time_update_callback
+* amplitude_before_song_information_set_callback
+* amplitude_after_song_information_set_callback
+* amplitude_before_song_added_callback
+* amplitude_after_song_added_callback
+
+
+For example if you want a function to call after play has been called, you'd set up your amplitude_config as follows:
+
+```javascript
+<script type="text/javascript">
+	var amplitude_config = {
+		"amplitude_songs": [
+			...
+		],
+		"amplitude_after_play_callback": "name_of_your_function"
+	}
+
+	function name_of_your_function(){
+		//DO STUFF
+	}
+</script>
+```
+
+You can set up any of the callbacks this way.
 
 ## Tutorial ##
 View a tutorial on how to use here: 

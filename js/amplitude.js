@@ -797,6 +797,10 @@ function amplitude_web_mobile( ){
 */
 
 function amplitude_start(){
+	if( document.getElementById('amplitude-song-time-visualization') ){
+		document.getElementById('amplitude-song-time-visualization').innerHTML = '<div id="amplitude-song-time-visualization-status"></div>';
+		document.getElementById('amplitude-song-time-visualization-status').setAttribute( "style", "width:0px"); 
+	}
 	if( amplitude_active_config.amplitude_auto_play ){
 		amplitude_play_pause();
 	}
@@ -953,6 +957,12 @@ function amplitude_update_time(){
 
 	if( document.getElementById( 'amplitude-song-slider' ) ){
 		document.getElementById( 'amplitude-song-slider' ).value = ( amplitude_active_config.amplitude_active_song.currentTime / amplitude_active_config.amplitude_active_song.duration ) * 100;
+	}
+
+	if( document.getElementById( 'amplitude-song-time-visualization') ){
+		var visualization_width = document.getElementById('amplitude-song-time-visualization').offsetWidth;
+
+		document.getElementById('amplitude-song-time-visualization-status').setAttribute("style","width:"+( visualization_width * ( amplitude_active_config.amplitude_active_song.currentTime / amplitude_active_config.amplitude_active_song.duration ) ) + 'px'); 
 	}
 
 	//Multiple songs have multiple sources of control.
@@ -1265,15 +1275,15 @@ function amplitude_previous_song() {
 		amplitude_set_active_song_information( amplitude_active_config.amplitude_shuffle_list[ parseInt( amplitude_active_config.amplitude_playlist_index ) ] );
 		amplitude_play_song();
 	}else{
-		if ( typeof amplitude_active_config.amplitude_playlist[ parseInt( amplitude_active_config.amplitude_playlist_index ) - 1 ] != 'undefined' ) {
-			amplitude_active_config.amplitude_active_song.src = amplitude_active_config.amplitude_playlist[ parseInt( amplitude_active_config.amplitude_playlist_index ) - 1 ].url;
+		if ( typeof amplitude_active_config.amplitude_songs[ parseInt( amplitude_active_config.amplitude_playlist_index ) - 1 ] != 'undefined' ) {
+			amplitude_active_config.amplitude_active_song.src = amplitude_active_config.amplitude_songs[ parseInt( amplitude_active_config.amplitude_playlist_index ) - 1 ].url;
 			amplitude_active_config.amplitude_playlist_index = ( parseInt( amplitude_active_config.amplitude_playlist_index ) - 1 );
 		}else{
-			amplitude_active_config.amplitude_active_song.src = amplitude_active_config.amplitude_playlist[ amplitude_active_config.amplitude_playlist.length - 1].url;
-			amplitude_active_config.amplitude_playlist_index = ( amplitude_active_config.amplitude_playlist.length - 1 );
+			amplitude_active_config.amplitude_active_song.src = amplitude_active_config.amplitude_songs[ amplitude_active_config.amplitude_songs.length - 1].url;
+			amplitude_active_config.amplitude_playlist_index = ( amplitude_active_config.amplitude_songs.length - 1 );
 		}
 
-		amplitude_set_active_song_information( amplitude_active_config.amplitude_playlist[ parseInt( amplitude_active_config.amplitude_playlist_index ) ] );
+		amplitude_set_active_song_information( amplitude_active_config.amplitude_songs[ parseInt( amplitude_active_config.amplitude_playlist_index ) ] );
 		amplitude_play_song();
 
 		amplitude_active_config.amplitude_list_playing_index = parseInt( amplitude_active_config.amplitude_playlist_index );

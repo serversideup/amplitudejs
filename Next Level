@@ -161,6 +161,9 @@ Recommend that for individual songs they enter the audio duration.
 
 http://stackoverflow.com/questions/19259233/sorting-json-by-specific-element-alphabetically
 INSANITY
+
+Have some way to fill an element with song progress that's not the song tracker
+
 Elements
 	Now playing
 		artist
