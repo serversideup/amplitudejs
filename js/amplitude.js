@@ -1311,7 +1311,7 @@ function amplitude_set_playlist_play_pause(){
 	var amplitude_play_pause_classes = document.getElementsByClassName("amplitude-play-pause");
 
 	for( var i = 0; i < amplitude_play_pause_classes.length; i++ ){
-    	var amplitude_play_pause_button_new_class = 'amplitude-list-paused';
+    	var amplitude_play_pause_button_new_class = ' amplitude-list-paused';
 
 		amplitude_play_pause_classes[i].className = amplitude_play_pause_classes[i].className.replace('amplitude-list-playing', '');
 
@@ -1455,7 +1455,7 @@ function amplitude_prepare_list_play_pause( index ){
 	if( amplitude_active_config.amplitude_active_song.paused ){
 		amplitude_play_song();
 		if( document.getElementById('amplitude-play-pause') ){
-			var amplitude_play_pause_button_new_class = ' amplitude-playing';
+			var amplitude_play_pause_button_new_class = 'amplitude-playing';
 
 			document.getElementById('amplitude-play-pause').className = document.getElementById('amplitude-play-pause').className.replace('amplitude-paused', '');
 
@@ -1465,7 +1465,7 @@ function amplitude_prepare_list_play_pause( index ){
 	}else{
 		amplitude_pause_song();
 		if( document.getElementById('amplitude-play-pause') ){
-			var amplitude_play_pause_button_new_class = ' amplitude-paused';
+			var amplitude_play_pause_button_new_class = 'amplitude-paused';
 
 			document.getElementById('amplitude-play-pause').className = document.getElementById('amplitude-play-pause').className.replace('amplitude-playing', '');
 
@@ -1540,33 +1540,33 @@ function amplitude_handle_play_pause_classes( ){
 	//If the songs change then we set all visual elements to pause.
 	if( this.getAttribute('amplitude-song-index') != amplitude_active_config.amplitude_list_playing_index ){
 		for( var i = 0; i < amplitude_play_pause_classes.length; i++ ){
-	    	var amplitude_play_pause_button_new_class = 'amplitude-list-paused';
+	    	var amplitude_play_pause_button_new_class = ' amplitude-list-paused';
 
-			amplitude_play_pause_classes[i].className = amplitude_play_pause_classes[i].className.replace('amplitude-list-playing', '');
+			amplitude_play_pause_classes[i].className = amplitude_play_pause_classes[i].className.replace(' amplitude-list-playing', '');
 
 			amplitude_play_pause_classes[i].className = amplitude_play_pause_classes[i].className.replace(amplitude_play_pause_button_new_class, '');
 			amplitude_play_pause_classes[i].className = amplitude_play_pause_classes[i].className + amplitude_play_pause_button_new_class;
 	    }
 	    //Force set new click to playing. All other classes will be paused.
-	    var amplitude_play_pause_button_new_class = 'amplitude-list-playing';
+	    var amplitude_play_pause_button_new_class = ' amplitude-list-playing';
 
-		this.className = this.className.replace('amplitude-list-paused', '');
+		this.className = this.className.replace(' amplitude-list-paused', '');
 
 		this.className = this.className.replace(amplitude_play_pause_button_new_class, '');
 		this.className = this.className + amplitude_play_pause_button_new_class;
 	}else{
 
 	    if( amplitude_active_config.amplitude_active_song.paused ){
-			var amplitude_play_pause_button_new_class = 'amplitude-list-playing';
+			var amplitude_play_pause_button_new_class = ' amplitude-list-playing';
 
-			this.className = this.className.replace('amplitude-list-paused', '');
+			this.className = this.className.replace(' amplitude-list-paused', '');
 
 			this.className = this.className.replace(amplitude_play_pause_button_new_class, '');
 			this.className = this.className + amplitude_play_pause_button_new_class;
 		}else{
-			var amplitude_play_pause_button_new_class = 'amplitude-list-paused';
+			var amplitude_play_pause_button_new_class = ' amplitude-list-paused';
 
-			this.className = this.className.replace('amplitude-list-playing', '');
+			this.className = this.className.replace(' amplitude-list-playing', '');
 
 			this.className = this.className.replace(amplitude_play_pause_button_new_class, '');
 			this.className = this.className + amplitude_play_pause_button_new_class;
