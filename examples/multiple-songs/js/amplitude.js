@@ -603,6 +603,7 @@ function amplitude_web_desktop() {
     for( var i = 0; i < amplitude_mute_buttons.length; i++ ){
     	amplitude_mute_buttons[i].addEventListener('click', amplitude_handle_mute_classes );
     }
+
     /*
     amplitude_active_config.amplitude_playlist.sort(function(a, b) {
 		return compareStrings(a.name, b.name);
@@ -808,6 +809,19 @@ function amplitude_start(){
 		document.getElementById('amplitude-song-time-visualization').innerHTML = '<div id="amplitude-song-time-visualization-status"></div>';
 		document.getElementById('amplitude-song-time-visualization-status').setAttribute( "style", "width:0px"); 
 	}
+
+	var amplitude_song_time_visualizations = document.getElementsByClassName("amplitude-song-time-visualization");
+
+	for( var i = 0; i < amplitude_song_time_visualizations.length; i++ ){
+		amplitude_song_time_visualizations[i].innerHTML = '<div class="amplitude-song-time-visualization-status"></div>';
+	}
+
+	var amplitude_song_time_visualizations_status = document.getElementsByClassName("amplitude-song-time-visualization-status");
+
+	for( var i = 0; i < amplitude_song_time_visualizations_status.length; i++ ){
+		amplitude_song_time_visualizations_status[i].setAttribute( "style", "width:0px");
+	}
+
 	if( amplitude_active_config.amplitude_auto_play ){
 		amplitude_play_pause();
 	}
@@ -836,6 +850,12 @@ function amplitude_play_song(){
     for( var i = 0; i < amplitude_song_sliders.length; i++ ){
     	if( amplitude_song_sliders[i].getAttribute('amplitude-song-slider-index') != amplitude_active_config.amplitude_list_playing_index){
     		amplitude_song_sliders[i].value = 0;
+
+			var current_song_time_visualizations = document.getElementsByClassName('amplitude-song-time-visualization-status');
+
+			for( var i = 0; i < current_song_time_visualizations.length; i++ ){
+				current_song_time_visualizations[i].setAttribute("style","width:0px"); 
+			}
     	}
     }
 
@@ -970,6 +990,14 @@ function amplitude_update_time(){
 		var visualization_width = document.getElementById('amplitude-song-time-visualization').offsetWidth;
 
 		document.getElementById('amplitude-song-time-visualization-status').setAttribute("style","width:"+( visualization_width * ( amplitude_active_config.amplitude_active_song.currentTime / amplitude_active_config.amplitude_active_song.duration ) ) + 'px'); 
+	}
+
+	var current_song_time_visualization = document.querySelector('[amplitude-song-time-visualization-index="'+amplitude_active_config.amplitude_list_playing_index+'"]');
+
+	if( current_song_time_visualization != null ){
+		var visualization_width = current_song_time_visualization.offsetWidth;
+
+		current_song_time_visualization.firstChild.setAttribute("style","width:"+( visualization_width * ( amplitude_active_config.amplitude_active_song.currentTime / amplitude_active_config.amplitude_active_song.duration ) ) + 'px'); 
 	}
 
 	//Multiple songs have multiple sources of control.
