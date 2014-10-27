@@ -596,6 +596,13 @@ function amplitude_web_desktop() {
     for( var i = 0; i < amplitude_song_sliders.length; i++ ){
     	amplitude_song_sliders[i].addEventListener('input', amplitude_handle_song_sliders );
     }
+
+    //Binds multiple mute buttons for multiple song integrations
+    var amplitude_mute_buttons = document.getElementsByClassName("amplitude-mute");
+
+    for( var i = 0; i < amplitude_mute_buttons.length; i++ ){
+    	amplitude_mute_buttons[i].addEventListener('click', amplitude_handle_mute_classes );
+    }
     /*
     amplitude_active_config.amplitude_playlist.sort(function(a, b) {
 		return compareStrings(a.name, b.name);
@@ -1521,6 +1528,14 @@ function amplitude_bind_song_additions(){
 		    	amplitude_song_sliders[i].removeEventListener('input', amplitude_handle_song_sliders );
 		    	amplitude_song_sliders[i].addEventListener('input', amplitude_handle_song_sliders );
 		    }
+
+		    //Binds multiple mute buttons for multiple song integrations
+		    var amplitude_mute_buttons = document.getElementsByClassName("amplitude-mute");
+
+		    for( var i = 0; i < amplitude_mute_buttons.length; i++ ){
+		    	amplitude_mute_buttons[i].removeEventListener('input', amplitude_handle_mute_classes );
+		    	amplitude_mute_buttons[i].addEventListener('click', amplitude_handle_mute_classes );
+		    }
 		}
 	});
 	
@@ -1573,6 +1588,36 @@ function amplitude_handle_play_pause_classes( ){
 		}
 	}
 	amplitude_prepare_list_play_pause( this.getAttribute('amplitude-song-index') );
+}
+/*
+|--------------------------------------------------------------------------
+| Handle Mute classes
+|--------------------------------------------------------------------------
+| When a mute button is clicked, handle mute functionality
+| 
+*/
+function amplitude_handle_mute_classes(){
+	if( amplitude_active_config.amplitude_before_mute_callback ){
+		var amplitude_before_mute_callback_function = window[amplitude_active_config.amplitude_before_mute_callback];
+		amplitude_before_mute_callback_function();
+	}
+
+	if( amplitude_active_config.amplitude_volume == 0){
+		amplitude_active_config.amplitude_volume = amplitude_active_config.amplitude_pre_mute_volume;
+	}else{
+		amplitude_active_config.amplitude_pre_mute_volume = amplitude_active_config.amplitude_volume;
+		amplitude_active_config.amplitude_volume = 0;
+	}
+
+	amplitude_volume_update( amplitude_active_config.amplitude_volume * 100 );
+	if( document.getElementById('amplitude-volume-slider')){
+		document.getElementById('amplitude-volume-slider').value = ( amplitude_active_config.amplitude_volume * 100 );
+	}
+
+	if( amplitude_active_config.amplitude_after_mute_callback ){
+		var amplitude_after_mute_callback_function = window[amplitude_active_config.amplitude_after_mute_callback];
+		amplitude_after_mute_callback_function();
+	}
 }
 /*
 |--------------------------------------------------------------------------

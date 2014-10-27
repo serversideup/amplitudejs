@@ -16,6 +16,7 @@
 	        </div>
 	     	<input type="range" class="amplitude-song-slider" amplitude-song-slider-index="2" value="0"/>
 		</div>
+		<div class="amplitude-mute" amplitude-mute-index="2">Mute</div>
 	</div>
 	<br><br>
 	<div class="player" id="player-2">
@@ -28,6 +29,7 @@
 	            <span class="amplitude-current-time" amplitude-current-time-index="1">0:00</span> / <span class="amplitude-audio-duration" amplitude-audio-duration-index="1">0:00</span>
 	        </div>
 	        <input type="range" class="amplitude-song-slider" amplitude-song-slider-index="1" value="0"/>
+	        <div class="amplitude-mute" amplitude-mute-index="1">Mute</div>
 		</div>
 	</div>
 	<br><br>
@@ -41,6 +43,7 @@
 	            <span class="amplitude-current-time" amplitude-current-time-index="0">0:00</span> / <span class="amplitude-audio-duration" amplitude-audio-duration-index="0">0:00</span>
 	        </div>
 	       <input type="range" class="amplitude-song-slider" amplitude-song-slider-index="0" value="0"/>
+	       <div class="amplitude-mute" amplitude-mute-index="0">Mute</div>
 		</div>
 	</div>
 
