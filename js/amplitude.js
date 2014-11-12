@@ -141,6 +141,7 @@ var amplitude_active_config = {
 	"amplitude_list_playing_index": null,
 	"amplitude_auto_play": false,
 	"amplitude_songs": {},
+        "amplitude_playlist_index": 0,
 
 	"amplitude_shuffle": false,
 	"amplitude_shuffle_list": {},
@@ -918,7 +919,7 @@ function amplitude_pause_song(){
 	}
 
 	if( amplitude_active_config.amplitude_after_pause_callback ){
-		var amplitude_after_pause_callback_function = window[amplitude_active_config.amplitude_active_pause_callback];
+		var amplitude_after_pause_callback_function = window[amplitude_active_config.amplitude_after_pause_callback];
 		amplitude_after_pause_callback_function();
 	}
 }
