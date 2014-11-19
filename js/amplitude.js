@@ -250,18 +250,22 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 hook_amplitude_functions( amplitude_start );
 
 function hook_amplitude_functions( func ) {
-	var oldonload = window.onload;
-	
-	if (typeof window.onload != 'function') {
-		window.onload = func;
-	} else {
-		window.onload = function() {
-			if (oldonload) {
-				oldonload();
-			}
-			func();
-		}
-	}
+  if (document.readyState === "complete") {
+    func();
+  } else {
+    var oldonload = window.onload;
+    
+    if (typeof window.onload != 'function') {
+      window.onload = func;
+    } else {
+      window.onload = function() {
+        if (oldonload) {
+          oldonload();
+        }
+        func();
+      }
+    }
+  }
 }
 
 /*
