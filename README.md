@@ -27,9 +27,17 @@ a mobile device it will apply a touchstart event listener instead of a click to 
 
 NOTE: Any element in the source code without the prefix 'amplitude-' is not an AmplitudeJS element.  These elements would be styled to house AmplitudeJS element containers if wanted.
 
-### Including Amplitude ###
-To include AmplitudeJS on your page simply download the source from github: [https://github.com/521dimensions/amplitudejs](https://github.com/521dimensions/amplitudejs)
+### Install with Bower ###
+You can install and update Amplitude via Bower.
 
+```
+bower install amplitude
+```
+
+### Downloading Manually ###
+To get AmplitudeJS manually, simply download the source from github: [https://github.com/521dimensions/amplitudejs](https://github.com/521dimensions/amplitudejs)
+
+### Including Amplitude ###
 On top of your page just add
 ```html
 <script type="text/javascript" src="/directory/to/amplitude.js"></script>
