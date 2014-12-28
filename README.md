@@ -1,5 +1,7 @@
 # AmplitudeJS #
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/521dimensions/amplitudejs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).
 
 ## Features ##
