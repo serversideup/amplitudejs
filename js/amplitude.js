@@ -141,6 +141,7 @@ var amplitude_active_config = {
 	"amplitude_list_playing_index": null,
 	"amplitude_auto_play": false,
 	"amplitude_songs": {},
+        "amplitude_playlist_index": 0,
 
 	"amplitude_shuffle": false,
 	"amplitude_shuffle_list": {},
@@ -249,18 +250,22 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 hook_amplitude_functions( amplitude_start );
 
 function hook_amplitude_functions( func ) {
-	var oldonload = window.onload;
-	
-	if (typeof window.onload != 'function') {
-		window.onload = func;
-	} else {
-		window.onload = function() {
-			if (oldonload) {
-				oldonload();
-			}
-			func();
-		}
-	}
+  if (document.readyState === "complete") {
+    func();
+  } else {
+    var oldonload = window.onload;
+    
+    if (typeof window.onload != 'function') {
+      window.onload = func;
+    } else {
+      window.onload = function() {
+        if (oldonload) {
+          oldonload();
+        }
+        func();
+      }
+    }
+  }
 }
 
 /*
@@ -918,7 +923,7 @@ function amplitude_pause_song(){
 	}
 
 	if( amplitude_active_config.amplitude_after_pause_callback ){
-		var amplitude_after_pause_callback_function = window[amplitude_active_config.amplitude_active_pause_callback];
+		var amplitude_after_pause_callback_function = window[amplitude_active_config.amplitude_after_pause_callback];
 		amplitude_after_pause_callback_function();
 	}
 }
