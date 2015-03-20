@@ -1,0 +1,153 @@
+#player{
+	width: 314px;
+	margin: auto;
+	-webkit-box-shadow: 9px 10px 72px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 9px 10px 72px 0px rgba(0,0,0,0.75);
+	box-shadow: 9px 10px 72px 0px rgba(0,0,0,0.75);
+}
+#player-top{
+	text-align: center;
+	background-color: #CCD2D3;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 10px;
+	line-height: 12px;
+}
+#player-bottom{
+	text-align: center;
+	background-color: #CCD2D3;
+	padding: 10px;
+	line-height: 12px;
+}
+#control-container{
+	width: 103px;
+	margin: auto;
+}
+#toggle-playlist{
+	width: 17px;
+	float: right;
+	cursor: pointer;
+}
+#current-song-information{
+	clear: both;
+	margin-bottom: 8px;
+}
+#player-playlist{
+	border: 1px solid #B0B0B0;
+	display: none;
+	-webkit-box-shadow: 0px 50px 123px -4px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 50px 123px -4px rgba(0,0,0,0.75);
+	box-shadow: 0px 50px 123px -4px rgba(0,0,0,0.75);
+}
+.playlist-item{
+	padding-top: 5px;
+	padding-left: 20px;
+	padding-bottom: 5px;
+	background-color: white;
+	cursor: pointer;
+	border-bottom: 1px solid #B0B0B0;
+}
+.playlist-image-container{
+	float: left;
+}
+.playlist-image-container img{
+	height: 38px;
+}
+.playlist-song-information-container{
+	float: left;
+}
+#up-next-header{
+	font-size: 14px;
+	color: 262624;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+.playlist-song-title{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-size: 13px;
+	color: #262624;
+	line-height: 15px;
+	margin-top: 4px;
+	margin-left: 5px;
+}
+.playlist-album-information{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-size: 13px;
+	color: #7D7D7D;
+	line-height: 22px;
+	margin-left: 5px;
+}
+
+#amplitude-now-playing-title{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-weight: lighter;
+	font-size: 12px;
+	color: #494C4C;
+}
+.album-information{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-weight: lighter;
+	font-size: 12px;
+	color: #7E8181;
+}
+#amplitude-previous{
+	float: left;
+	background-image: url('../images/black-prev.png');
+	width: 29px;
+	height: 16px;
+	cursor: pointer;
+	background-size: 100%;
+}
+#amplitude-play-pause{
+	float: left;
+	height: 28px;
+	width: 25px;
+	margin: -4px 10px 0px 10px;
+	cursor: pointer;
+}
+.amplitude-paused{
+    background-image: url('../images/black-play.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.amplitude-playing{
+    background-image: url('../images/black-pause.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+#amplitude-next{
+	float: left;
+	background-image: url('../images/black-next.png');
+	width: 29px;
+	height: 16px;
+	cursor: pointer;
+	background-size: 100%;
+}
+#amplitude-current-time{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-weight: lighter;
+	font-size: 10px;
+	color: #414141;
+	display: block;
+	float: left;
+}
+#amplitude-audio-duration{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-weight: lighter;
+	font-size: 10px;
+	color: #414141;
+	display: block;
+	float: left;
+}
+#amplitude-song-time-visualization{
+	float: left;
+	height: 4px;
+	width: 239px;
+	background-color: #B3B5B4;
+	margin-top: 5px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+#amplitude-song-time-visualization-status{
+	background-color: #6A6C6B;
+	height: 4px;
+}

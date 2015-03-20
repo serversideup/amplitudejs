@@ -97,12 +97,6 @@
     margin-left: 10px;
 }
 /* Amplitude Element Styles */
-#amplitude-play-pause{
-    width: 58px;
-    height: 59px;
-    cursor: pointer;
-    float: left;
-}
 .amplitude-paused{
     background-image: url('../images/yellow-play.png');
     background-repeat: no-repeat;
@@ -111,11 +105,11 @@
     background-image: url('../images/yellow-pause.png');
     background-repeat: no-repeat;
 }
-.amplitude-now-playing-artist{
+.artist{
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
 }
-.amplitude-now-playing-title{
+.song-title{
     color: #3b3b3b;
     font-size: 12px;
     font-weight: bold;
@@ -123,10 +117,16 @@
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     margin-top: 20px;
 }
-.amplitude-current-time{
+.amplitude-current-minutes{
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
-.amplitude-audio-duration{
+.amplitude-current-seconds{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.amplitude-duration-minutes{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.amplitude-duration-seconds{
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 #amplitude-song-slider{

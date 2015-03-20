@@ -47,7 +47,7 @@ div#amplitude-album-art img{
 	height: 90px;
 	width: 90px;
 }
-#amplitude-play-pause{
+.amplitude-play-pause{
     width: 15px;
     height: 17px;
     cursor: pointer;
@@ -61,21 +61,25 @@ div#amplitude-album-art img{
     background-image: url('../images/small-gray-pause.png');
     background-repeat: no-repeat;
 }
-#amplitude-volume-slider{
+.amplitude-volume-slider{
 	width: 100%;
 }
-#amplitude-now-playing-name{
+#station-name{
 	font-family: 'PT Sans', sans-serif;
 	font-weight: 700;
 	font-size: 12px;
 }
-#amplitude-now-playing-album{
+#station-id{
 	font-family: 'PT Sans', sans-serif;
 	font-weight: 400;
 	font-size: 12px;
 }
-#amplitude-current-time{
+.current-time{
 	font-family: 'PT Sans', sans-serif;
 	font-size: 10px;
 	font-weight: 400;
+	display: block;
+	float: right;
+	margin-top: 10px;
+	margin-right: -15px;
 }

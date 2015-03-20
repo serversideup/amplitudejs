@@ -2,28 +2,26 @@
 <html>
 	<head>
 		<title>Single Song Tutorial</title>
-		<script type="text/javascript" src="js/amplitude.js"></script>
+		<script type="text/javascript" src="../../js/amplitude.js"></script>
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 	</head>
 	<div id="single-song-player">
 		<div id="top">
 			<div id="song-information-container">
-				<span id="amplitude-now-playing-artist">Jake Jendusa</span><br>
-				<span id="amplitude-now-playing-album">In Search Of</span>
+				<span id="now-playing-artist" amplitude-song-info="artist">Jake Jendusa</span><br>
+				<span id="now-playing-album" amplitude-song-info="album">In Search Of</span>
 			</div>
 			<div id="song-action-container">
-				<div id="amplitude-play-pause" class="amplitude-paused"></div>
+				<div id="play-pause" class="amplitude-play-pause amplitude-paused"></div>
 			</div>
 			<div class="clear"></div>
 		</div>
-		<div id="amplitude-song-time-visualization">
-			
-		</div>
+		<div id="bottom"></div>
 		<div id="bottom-container">
-			<span id="amplitude-now-playing-title">Song From the Styx</span>
+			<span id="now-playing-title" amplitude-song-info="name">Song From the Styx</span>
 			<span id="song-timing">
-				<span id="amplitude-current-time">0:00</span> / <span id="amplitude-audio-duration">0:00</span>
+				<span amplitude-single-current-minutes="true">0</span>:<span amplitude-single-current-seconds="true">00</span> / <span amplitude-single-duration-minutes="true">0</span>:<span amplitude-single-duration-seconds="true">00</span>
 			</span>
 		</div>
 	</div>
@@ -38,17 +36,17 @@
 		<a href="https://www.facebook.com/pages/Jake-Jendusa-The-Dead-Men/106398795937" target="_blank">https://www.facebook.com/pages/Jake-Jendusa-The-Dead-Men/106398795937</a>
 	</p>
 	<script type="text/javascript">
-		amplitude_config = {
-			"amplitude_songs": [
+		Amplitude.init({
+			"songs": [
 				{
 					"name": "Song From the Styx",
 					"artist": "Jake Jendusa",
 					"album": "In Search Of",
-					"url": "songs/In%20Search%20Of/01%20Song%20from%20the%20Styx.mp3",
+					"url": "../../songs/In%20Search%20Of/01%20Song%20from%20the%20Styx.mp3",
 					"live": false,
 					"cover_art_url": "images/jendusaep.jpg"
 				}
 			]
-		}
+		});
 	</script>
 </html>

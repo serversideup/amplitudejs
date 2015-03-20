@@ -40,17 +40,11 @@ div#bottom-container{
     text-align: center;
     margin-top: -35px;
 }
-div#amplitude-song-time-visualization{
+div#bottom{
     background-color: #fff;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     width: 320px;
-    height: 45px;
-}
-div#amplitude-song-time-visualization-status{
-    background-color: #cddff1;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
     height: 45px;
 }
 span#song-timing{
@@ -62,7 +56,7 @@ span#song-timing{
 div.clear{
     clear: both;
 }
-#amplitude-play-pause{
+#play-pause{
     width: 30px;
     height: 30px;
     margin-top: 7px;
@@ -76,19 +70,19 @@ div.clear{
     background-image: url('../images/blue-pause.png');
     background-repeat: no-repeat;
 }
-#amplitude-now-playing-artist{
+#now-playing-artist{
     color: #45587f;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 18px;
 }
-#amplitude-now-playing-album{
+#now-playing-album{
     color: #7b7b7b;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 12px;
 }
-#amplitude-now-playing-title{
+#now-playing-title{
     color: #45587f;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;

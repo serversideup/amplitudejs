@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Single Song Live</title>
-		<script type="text/javascript" src="js/amplitude.js"></script>
+		<script type="text/javascript" src="../../js/amplitude.js"></script>
 		<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 	</head>
@@ -10,33 +10,33 @@
 		<div id="container">
 			<div id="player-container">
 				<div id="amplitude-album-art">
-					<img src="images/wtmj620.png"/>
+					<img src="images/wyms.png"/>
 				</div>
 				<div id="player">
 					<div id="song-information">
-						<span id="amplitude-now-playing-name">WTMJ 620 AM</span><br>
-						<span id="amplitude-now-playing-album">Milwaukee, WI</span>
+						<span id="station-name" amplitude-song-info="name">88.9 Radio Milwaukee</span><br>
+						<span id="station-id" amplitude-song-info="album">Milwaukee, WI</span>
 					</div>
 					<div id="controls">
-						<div id="amplitude-play-pause" class="amplitude-paused"></div><br>
-						<span id="amplitude-current-time">0:00</span>
+						<div class="amplitude-play-pause amplitude-paused"></div><br>
+						<span class="current-time"><span amplitude-single-current-minutes="true">0</span>:<span amplitude-single-current-seconds="true">00</span></span>
 					</div>
-					<input class="bar" type="range" id="amplitude-volume-slider" value="0"/>
+					<input type="range" class="amplitude-volume-slider" value="0"/>
 				</div>
 			</div>
 			<script type="text/javascript">
-				amplitude_config = {
-					"amplitude_songs": [
+				Amplitude.init({
+					"songs": [
 						{
-							"name": "WTMJ 620 AM",
+							"name": "88.9 Radio Milwaukee",
 							"album": "Milwaukee, WI",
-							"url": "http://1942.live.streamtheworld.com/WTMJAM_SC",
+							"url": "http://64.202.109.5:80/live",
 							"live": true,
-							"cover_art_url": "images/wtmj620.png"
+							"cover_art_url": "images/wyms.png"
 						}
 					],
-					"amplitude_volume": 35
-				}
+					"volume": .8
+				});
 			</script>
 		</div>
 	</body>
