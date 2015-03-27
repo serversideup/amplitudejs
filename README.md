@@ -1,8 +1,25 @@
 # AmplitudeJS #
 
+A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).
+
+## Reporting Issues ##
+
+If you are experiencing any issues or if you have a feature request, please [open up a new GitHub Issue](https://github.com/521dimensions/amplitudejs/issues/new)
+
+Want to see if you can get a hold of us directly? Just join our Gitter chat and ask away:
+
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/521dimensions/amplitudejs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).
+## Donations ##
+We've been getting a lot of requests for donations. We're not ones who usually do things with money being our only focus, but since this has been such a popular request, feel free to optionally donate using the button below. We're working on some other open source projects right now and your donation will definitely help make those other projects become a reality.
+
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GKTPWCPLD9G8C)
+
+## Example/Demo##
+[![Amplitude Demo](https://dl.dropboxusercontent.com/u/13033256/Permanent/amplitude-demo.png)](http://open.521dimensions.com/amplitudejs)
+
+Click the image above to be taken to the demo site.
 
 ## Features ##
 * Completely independent library (no jQuery required)
@@ -752,10 +769,6 @@ You can set up any of the callbacks this way.
 ## Tutorial ##
 View a tutorial on how to use here: 
 http://serversideup.net/customize-html-audio-css-amplitudejs
-
-## Example/Demo ##
-Demo Located Here: 
-http://amplitudejs.com
 
 ## License ##
 
