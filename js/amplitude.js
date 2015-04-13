@@ -26,7 +26,10 @@ var Amplitude = (function () {
 	var config = {
 		active_song: new Audio(),
 		active_metadata: {},
+		active_album: '',
 		active_index: 0,
+		album_change: false,
+		callbacks: {},
 		songs: {},
 		shuffle_list: {},
 		shuffle_on: false,
@@ -43,10 +46,14 @@ var Amplitude = (function () {
 		active_visualization: '',
 		current_visualization: {},
 		visualization_started: false,
+		visualization_backup: '',
 		song_ended_callback: '',
-		soundcloud_client: ''
+		soundcloud_client: '',
+		soundcloud_song_count: 0,
+		soundcloud_songs_ready: 0
 	};
 
+	var temp_user_config = {};
 	/*
 		These are web audio API variables.  They connect the web audio
 		api to the audio source allowing for visualization extensions.
@@ -99,93 +106,18 @@ var Amplitude = (function () {
 
 			if( ready ){
 				/*
-					Checks if the user defined a start song and sets that as the active
-					song, otherwise sets the first song in the list.
+					Loads the soundcloud SDK
 				*/
-				if( user_config.start_song != undefined ){
-					config.active_song.src = config.songs[user_config.start_song].url;
-					config.active_metadata = config.songs[user_config.start_song];
-					config.active_index = user_config.start_song;
-				}else{
-					config.active_song.src = config.songs[0].url;
-					config.active_metadata = config.songs[0];
-					config.active_index = 0;
-				}
-
-				/*
-					If live is not defined, assume it is false. The reason for
-					this definition is here, is if we play/pause we disconnect
-					and re-connect to the stream so we don't fill up our cache
-					with unused audio and we aren't playing outdated audio upon
-					resume.
-				*/
-				if( config.active_metadata.live == undefined ){
-					config.active_metadata.live = false;
-				}
-
-				/*
-					If the user wants the song to be pre-loaded for instant
-					playback, they set it to true. By default it's set to false.
-				*/
-				config.active_song.preload = ( user_config.preload != undefined ? user_config.preload : "metadata" );
-				
-				/*
-					Initializes user-defined presets.
-				*/
-				config.volume = ( user_config.volume != undefined ? user_config.volume : .5 );
-				config.pre_mute_volume = ( user_config.volume != undefined ? user_config.volume : .5 );
-				config.volume_increment = ( user_config.volume_increment != undefined ? user_config.volume_increment : 5 );
-				config.volume_decrement = ( user_config.volume_decrement != undefined ? user_config.volume_increment : 5 );
-
-				config.default_album_art = ( user_config.default_album_art != undefined ? user_config.default_album_art : '' );
-				config.active_song.volume = config.volume;
-
-				config.handle_song_elements = ( user_config.handle_song_elements != undefined ? user_config.handle_song_elements : true );
-
-				config.song_ended_callback = ( user_config.song_ended_callback != undefined ? user_config.song_ended_callback : '' );
-				
 				config.soundcloud_client = ( user_config.soundcloud_client != undefined ? user_config.soundcloud_client : '' );
-				/*
-					Sets initialized to true, so the user can't re-initialize
-					and mess everything up.
-				*/
-				config.initialized = true;
 
-				/*
-					Since the user can define a start volume, we want our volume
-					sliders to sync with the user defined start value.
-				*/
-				privateSyncVolumeSliders();
-
-				/*
-					Set all of the current time elements to 0:00 upon initialization
-				*/
-				privateSyncCurrentTimes();
-
-				privateSyncSongStatusSliders();
-
-				privateCheckSongVisualization();
-				/*
-					Initialize the visual elements for the song if the user
-					wants Amplitude to handle the changes. This is new 
-					compared to previous versions where Amplitude automatically
-					handled the song elements.
-				*/
-				if( config.handle_song_elements ){
-					privateSetSongInfo();
+				if( config.soundcloud_client != '' ){
+					temp_user_config = user_config;
+					privateLoadSoundcloud();
+				}else{
+					privateSetConfig( user_config );
 				}
 
-				/*
-					Removes any classes set by the user so any inconsistencies
-					with start song and actual song are displayed correctly.
-				*/
-				privateSyncVisualPlayingContainers();
-
-				/*
-					Sets the active song container for the song that will be
-					played
-				*/
-				privateSetActiveContainer();
+				
 			}
 		}
 	}
@@ -301,12 +233,15 @@ var Amplitude = (function () {
 		the stream before playing.
 	*/
 	function privatePlay(){
+		privateRunCallback('before_play');
+
 		if( config.active_metadata.live ){
 			privateReconnectStream();
 		}
 
 		config.active_song.play();
 
+		privateRunCallback('after_play');
 	}
 
 	/*
@@ -326,12 +261,16 @@ var Amplitude = (function () {
 		If it's a live stream it disconnects.
 	*/
 	function privateStop(){
+		privateRunCallback('before_stop');
+
 		config.active_song.currentTime = 0;
 		config.active_song.pause();
 
 		if( config.active_metadata.live ){
 			privateDisconnectStream();
 		}
+
+		privateRunCallback('after_stop');
 	}
 
 	/*	
@@ -407,6 +346,16 @@ var Amplitude = (function () {
 
 			this.classList.add('amplitude-playing');
 			this.classList.remove('amplitude-paused');
+
+			/*
+				Sets the main song control status visual
+			*/
+			if( document.querySelector('[amplitude-main-play-pause="true"]') ){
+				main_control = document.querySelector('[amplitude-main-play-pause="true"]');
+				main_control.classList.add('amplitude-playing');
+				main_control.classList.remove('amplitude-paused');
+			}
+
 			/*
 				Starts the song visualization if there is one.
 			*/
@@ -419,6 +368,14 @@ var Amplitude = (function () {
 				this.classList.remove('amplitude-paused');
 
 				/*
+					Sets the main song control status visual
+				*/
+				if( document.querySelector('[amplitude-main-play-pause="true"]') ){
+					main_control = document.querySelector('[amplitude-main-play-pause="true"]');
+					main_control.classList.add('amplitude-playing');
+					main_control.classList.remove('amplitude-paused');
+				}
+				/*
 					Starts the song visualization if there is one.
 				*/
 				privateStartVisualization();
@@ -427,6 +384,15 @@ var Amplitude = (function () {
 			}else{
 				this.classList.add('amplitude-paused');
 				this.classList.remove('amplitude-playing');
+
+				/*
+					Sets the main song control status visual
+				*/
+				if( document.querySelector('[amplitude-main-play-pause="true"]') ){
+					main_control = document.querySelector('[amplitude-main-play-pause="true"]');
+					main_control.classList.add('amplitude-paused');
+					main_control.classList.remove('amplitude-playing');
+				}
 
 				privatePause();
 			}
@@ -552,6 +518,7 @@ var Amplitude = (function () {
 	}
 
 	function privateNextClickHandle(){
+		privateRunCallback('before_next');
 		/*
 			Stop active song
 		*/
@@ -569,31 +536,86 @@ var Amplitude = (function () {
 		*/
 		if( config.shuffle_on ){
 			if( parseInt(config.shuffle_active_index) + 1 < config.shuffle_list.length ){
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.suffle_list[parseInt(config.shuffle_active_index) + 1].album );
 				config.active_song.src = config.shuffle_list[parseInt(config.shuffle_active_index) + 1].url;
 				config.active_metadata = config.shuffle_list[parseInt(config.shuffle_active_index) + 1];
+				config.active_album = config.shuffle_list[parseInt(config.shuffle_active_index) + 1].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
 				config.shuffle_active_index = parseInt(config.shuffle_active_index) + 1;
 			}else{
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.suffle_list[0].album );
 				config.active_song.src = config.shuffle_list[0].url;
 				config.active_metadata = config.shuffle_list[0];
+				config.active_album = config.shuffle_list[0].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
 				config.shuffle_active_index = 0;
 			}
 		}else{
 			if( parseInt(config.active_index) + 1 < config.songs.length ){
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.songs[parseInt(config.active_index) + 1].album );
 				config.active_song.src = config.songs[parseInt(config.active_index) + 1].url;
 				config.active_metadata = config.songs[parseInt(config.active_index) + 1];
+				config.active_album = config.songs[parseInt(config.active_index) + 1].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
 				config.active_index = parseInt(config.active_index) + 1;
 			}else{
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.songs[0].album );
 				config.active_song.src = config.songs[0].url;
 				config.active_metadata = config.songs[0];
+				config.active_album = config.songs[0].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
 				config.active_index = 0;
 			}
 		}
 		
+		/*
+			Sets the main song control status visual
+		*/
+		if( document.querySelector('[amplitude-main-play-pause="true"]') ){
+			main_control = document.querySelector('[amplitude-main-play-pause="true"]');
+			main_control.classList.add('amplitude-playing');
+			main_control.classList.remove('amplitude-paused');
+		}
 
 		privateSongChange();
+
+		privateRunCallback('after_next');
 	}
 
 	function privatePrevClickHandle(){
+		privateRunCallback('before_prev');
 		/*
 			Stop active song
 		*/
@@ -610,27 +632,82 @@ var Amplitude = (function () {
 		*/
 		if( config.shuffle_on ){
 			if( ( parseInt(config.shuffle_active_index) - 1 ) >= 0 ){
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.suffle_list[parseInt(config.shuffle_active_index) - 1].album );
 				config.active_song.src = config.shuffle_list[parseInt(config.shuffle_active_index) - 1].url;
 				config.active_metadata = config.shuffle_list[parseInt(config.shuffle_active_index) - 1];
+				config.active_album = config.shuffle_list[parseInt(config.shuffle_active_index) - 1].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
 				config.shuffle_active_index = parseInt(config.shuffle_active_index) - 1;
 			}else{
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.suffle_list[parseInt(config.shuffle_list.length - 1)].album );
 				config.active_song.src = config.shuffle_list[parseInt(config.shuffle_list.length - 1)].url;
 				config.active_metadata = config.shuffle_list[parseInt(config.shuffle_list.length - 1)];
-				config.shuffle_active_index = config.shuffle_list.length - 1;
+				config.active_album = config.shuffle_list[parseInt(config.shuffle_list.length - 1)].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
+				config.shuffle_active_index = parseInt(config.shuffle_list.length) - 1;
 			}
 		}else{
 			if( ( parseInt(config.active_index) - 1 ) >= 0 ){
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.songs[parseInt(config.active_index) - 1].album );
 				config.active_song.src = config.songs[parseInt(config.active_index) - 1].url;
 				config.active_metadata = config.songs[parseInt(config.active_index) - 1];
+				config.active_album = config.songs[parseInt(config.active_index) - 1].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
 				config.active_index = parseInt(config.active_index) - 1;
 			}else{
+				/*
+					Check new album
+				*/
+				privateCheckNewAlbum( config.songs[config.songs.length - 1].album );
 				config.active_song.src = config.songs[config.songs.length - 1].url;
 				config.active_metadata = config.songs[config.songs.length - 1];
-				config.active_index = config.songs.length - 1;
+				config.active_album = config.songs[config.songs.length - 1].album;
+
+				if( config.album_change ){
+					privateRunCallback('after_album_change');
+					config.album_change = false;
+				}
+
+				config.active_index = parseInt(config.songs.length) - 1;
 			}
 		}
-
+		
+		/*
+			Sets the main song control status visual
+		*/
+		if( document.querySelector('[amplitude-main-play-pause="true"]') ){
+			main_control = document.querySelector('[amplitude-main-play-pause="true"]');
+			main_control.classList.add('amplitude-playing');
+			main_control.classList.remove('amplitude-paused');
+		}
+		
 		privateSongChange();
+
+		privateRunCallback('after_prev');
 	}
 
 	function privateShuffleClickHandle(){
@@ -663,6 +740,7 @@ var Amplitude = (function () {
 	function privateSyncPlayPauseButtons(){
 		var play_pause_classes = document.getElementsByClassName("amplitude-play-pause");
 
+
 		for( var i = 0; i < play_pause_classes.length; i++ ){
 			play_pause_classes[i].classList.add('amplitude-paused');
 			play_pause_classes[i].classList.remove('amplitude-playing');
@@ -694,6 +772,40 @@ var Amplitude = (function () {
 		}
 	}
 
+	/*
+		Handles the situation if there is no audio context
+		available
+	*/
+	function privateSyncNoAudioContext(){
+		if( !window.AudioContext ){
+			switch( config.visualization_backup ){
+				case "nothing":
+					document.getElementById('amplitude-visualization').remove();
+				break;
+				case "album-art":
+					var old_visualization = document.getElementById('amplitude-visualization');
+					var parent_old_visualization = old_visualization.parentNode;
+
+					var new_album_art = document.createElement('img');
+					new_album_art.setAttribute('amplitude-song-info', 'cover');
+					new_album_art.setAttribute('class', 'amplitude-album-art');
+
+					if( document.querySelector('[amplitude-song-info="cover"]') ){
+						if( config.active_metadata.cover_art_url != undefined){
+							new_album_art.setAttribute( 'src', config.active_metadata.cover_art_url );
+							document.querySelector('[amplitude-song-info="cover"]').setAttribute('src', config.active_metadata.cover_art_url);
+						}else if( config.default_album_art != '' ){
+							new_album_art.setAttribute( 'src', config.default_album_art );
+						}else{
+							new_album_art.setAttribute( 'src', '' );
+						}
+					}
+
+					parent_old_visualization.replaceChild( new_album_art, old_visualization );
+				break;
+			}
+		}
+	}
 	/*
 		Syncs the current time displays so you can have multiple song time
 		displays. When a song changes, we need the current minutes and seconds
@@ -748,6 +860,7 @@ var Amplitude = (function () {
 			}
 		}
 	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Helper Functions
@@ -756,6 +869,113 @@ var Amplitude = (function () {
 	| care of logic and other tasks.
 	| 
 	*/
+	/*
+		Finishes the initalization of the config. If there is soundcloud usage,
+		we have to go through and set up all of the URLs appropriately for 
+		soundcloud usage. 
+	*/
+	function privateSetConfig( user_config ){
+		/*
+			Checks if the user defined a start song and sets that as the active
+			song, otherwise sets the first song in the list.
+		*/
+		if( user_config.start_song != undefined ){
+			config.active_song.src = config.songs[user_config.start_song].url;
+			config.active_metadata = config.songs[user_config.start_song];
+			config.active_album = config.songs[user_config.start_song].album;
+			config.active_index = user_config.start_song;
+		}else{
+			config.active_song.src = config.songs[0].url;
+			config.active_metadata = config.songs[0];
+			config.active_album = config.songs[0].album;
+			config.active_index = 0;
+		}
+
+
+		/*
+			If live is not defined, assume it is false. The reason for
+			this definition is here, is if we play/pause we disconnect
+			and re-connect to the stream so we don't fill up our cache
+			with unused audio and we aren't playing outdated audio upon
+			resume.
+		*/
+		if( config.active_metadata.live == undefined ){
+			config.active_metadata.live = false;
+		}
+
+		/*
+			If the user wants the song to be pre-loaded for instant
+			playback, they set it to true. By default it's set to false.
+		*/
+		config.active_song.preload = ( user_config.preload != undefined ? user_config.preload : "metadata" );
+		
+		/*
+			Initializes user-defined presets.
+		*/
+		config.callbacks = ( user_config.callbacks != undefined ? user_config.callbacks : {} );
+		config.volume = ( user_config.volume != undefined ? user_config.volume : .5 );
+		config.visualization_backup = ( user_config.visualization_backup != undefined ? user_config.visualization_backup : 'nothing' );
+		config.pre_mute_volume = ( user_config.volume != undefined ? user_config.volume : .5 );
+		config.volume_increment = ( user_config.volume_increment != undefined ? user_config.volume_increment : 5 );
+		config.volume_decrement = ( user_config.volume_decrement != undefined ? user_config.volume_decrement : 5 );
+
+		config.default_album_art = ( user_config.default_album_art != undefined ? user_config.default_album_art : '' );
+		config.active_song.volume = config.volume;
+
+		config.handle_song_elements = ( user_config.handle_song_elements != undefined ? user_config.handle_song_elements : true );
+
+		config.song_ended_callback = ( user_config.song_ended_callback != undefined ? user_config.song_ended_callback : '' );
+		
+		
+		/*
+			Sets initialized to true, so the user can't re-initialize
+			and mess everything up.
+		*/
+		config.initialized = true;
+
+		/*
+			Since the user can define a start volume, we want our volume
+			sliders to sync with the user defined start value.
+		*/
+		privateSyncVolumeSliders();
+
+		/*
+			Sets up the player if the browser doesn't have the audio context
+		*/
+		privateSyncNoAudioContext();
+
+		/*
+			Set all of the current time elements to 0:00 upon initialization
+		*/
+		privateSyncCurrentTimes();
+
+		privateSyncSongStatusSliders();
+
+		privateCheckSongVisualization();
+		/*
+			Initialize the visual elements for the song if the user
+			wants Amplitude to handle the changes. This is new 
+			compared to previous versions where Amplitude automatically
+			handled the song elements.
+		*/
+		if( config.handle_song_elements ){
+			privateSetSongInfo();
+		}
+
+		/*
+			Removes any classes set by the user so any inconsistencies
+			with start song and actual song are displayed correctly.
+		*/
+		privateSyncVisualPlayingContainers();
+
+		/*
+			Sets the active song container for the song that will be
+			played
+		*/
+		privateSetActiveContainer();
+
+		temp_user_config = {};
+	}
 
 	/*
 		Writes out debug message to the console if enabled.
@@ -784,8 +1004,17 @@ var Amplitude = (function () {
 		if( playing_song_index != null && ( playing_song_index != config.active_index ) ){
 			privateStop();
 
+			privateCheckNewAlbum( config.songs[playing_song_index].album );
+
 			config.active_song.src = config.songs[playing_song_index].url;
 			config.active_metadata = config.songs[playing_song_index];
+			config.active_album = config.songs[playing_song_index].album;
+
+			if( config.album_change ){
+				privateRunCallback('after_album_change');
+				config.album_change = false;
+			}
+
 			config.active_index = playing_song_index;
 
 			/*
@@ -809,6 +1038,22 @@ var Amplitude = (function () {
 			return true;
 		}else{
 			return false;
+		}
+	}
+
+	/*
+		Checks to see if a new album is playing. This allows for
+		multiple albums to be initialized on the same page.
+		Through CSS you can show and hide albums and simulate
+		multiple playlists.
+
+		@param string new_album The string of the new album
+		to see if it has changed.
+	*/
+	function privateCheckNewAlbum( new_album ){
+		if( config.active_album != new_album ){
+			config.album_change = true;
+			privateRunCallback('before_album_change');
 		}
 	}
 
@@ -939,10 +1184,7 @@ var Amplitude = (function () {
 		/*
 			Fire song ended event handler.
 		*/
-		if( config.song_ended_callback != '' ){
-			var song_ended_callback_function = window[config.song_ended_callback];
-			song_ended_callback_function();
-		}
+		privateRunCallback('after_song_ended');
 	}
 
 	/*
@@ -974,6 +1216,21 @@ var Amplitude = (function () {
 			current_slider = document.querySelector('[amplitude-singular-song-slider="true"]');
 		}else{
 			current_slider = document.querySelector('input[amplitude-song-index="'+config.active_index+'"]');
+		}
+
+		/*
+			Finds the current song time visualization. If there is only one
+			song time visualization, then that's the one we adjust to represent
+			the current song time's visualization. Otherwise we find the one
+			with the same song index as the active song.
+		*/
+
+		var current_song_time_visualization = '';
+
+		if( document.querySelector('[amplitude-single-song-time-visualization="true"]') ){
+			current_song_time_visualization = document.querySelector('[amplitude-single-song-time-visualization="true"]');
+		}else{
+			current_song_time_visualization = document.querySelector('.amplitude-song-time-visualization[amplitude-song-index="'+config.active_index+'"]');
 		}
 
 		/*
@@ -1017,6 +1274,21 @@ var Amplitude = (function () {
 		if( !config.active_metadata.live && current_slider ){
 			current_slider.value = ( config.active_song.currentTime / config.active_song.duration ) * 100;
 		}
+
+		/*
+			When we find the right visualization, we set the value to the percentage of 
+			completion only if the song isn't live. Since it's 'infinite' if 
+			it's a live source, it wouldn't make sense to update the time
+			display.
+		*/
+
+		if( !config.active_metadata.live && current_song_time_visualization ){
+			var current_song_time_visualization_status = current_song_time_visualization.querySelectorAll('.amplitude-song-time-visualization-status');
+			var visualization_width = current_song_time_visualization.offsetWidth;
+
+			current_song_time_visualization_status[0].setAttribute('style', 'width:' +( visualization_width * ( config.active_song.currentTime / config.active_song.duration ) ) + 'px'); 
+		}
+
 	}
 
 	/*
@@ -1132,7 +1404,98 @@ var Amplitude = (function () {
 		shuffle_list[ original ] = shuffle_list[ random ];
 		shuffle_list[ random ] = temp;
 	}
-	
+
+	/*
+		Runs callback for specific function
+	*/
+	function privateRunCallback( callback_name ){
+		if( config.callbacks[callback_name] ){
+			var callback_function = window[ config.callbacks[callback_name] ];
+			callback_function();
+		}
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Soundcloud specific helpers
+	|--------------------------------------------------------------------------
+	| These helpers wrap around the basic functions of the Soundcloud API
+	| 
+	*/
+	/*
+		Loads the soundcloud sdk.  
+		With help from: http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file
+	*/
+	function privateLoadSoundcloud(){
+		var head = document.getElementsByTagName('head')[0];
+		var script = document.createElement('script');
+
+		script.type = 'text/javascript';
+		/*
+			URL to the remote soundcloud SDK
+		*/
+		script.src = 'http://connect.soundcloud.com/sdk.js';
+		script.onreadystatechange = privateInitSoundcloud;
+		script.onload = privateInitSoundcloud;
+
+		head.appendChild( script );
+	}
+
+	/*
+		Initializes soundcloud with the key provided.
+	*/
+	function privateInitSoundcloud(){
+		SC.initialize({
+			client_id: config.soundcloud_client
+		});
+		privateGetSoundcloudStreamableURLs();
+	}
+
+	/*
+		Gets the streamable URL from the URL provided for
+		all of the soundcloud links.  This will loop through
+		and set all of the information for the soundcloud
+		urls.
+	*/
+	function privateGetSoundcloudStreamableURLs(){
+		var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+		
+		for( var i = 0; i < config.songs.length; i++ ){
+			/*
+				If the URL matches soundcloud, we grab
+				that url and get the streamable link
+				if there is one.
+			*/
+			if( config.songs[i].url.match( soundcloud_regex ) ){
+				config.soundcloud_song_count++;
+				privateSoundcloudResolveStreamable(config.songs[i].url, i);
+			}
+		}
+	}
+
+	/*
+		Due to Soundcloud SDK being asynchronous, we need to scope the
+		index of the song in another function.
+	*/
+	function privateSoundcloudResolveStreamable(url, index){
+		SC.get('/resolve/?url='+url, function( sound ){
+			if( sound.streamable ){
+				config.songs[index].url = sound.stream_url+'?client_id='+config.soundcloud_client;
+			}else{
+				if( config.debug ){
+					privateWriteDebugMessage( config.songs[index].name +' by '+config.songs[index].artist +' is not streamable by the Soundcloud API' );
+				}
+			}
+			config.soundcloud_songs_ready++;
+			/*
+				When all songs are accounted for, then amplitude is ready
+				to rock and we set the rest of the config.
+			*/
+			if( config.soundcloud_songs_ready == config.soundcloud_song_count ){
+				privateSetConfig( temp_user_config );
+			}
+		});
+	}
 	/*
 	|--------------------------------------------------------------------------
 	| Bind Event Handlers
@@ -1316,6 +1679,20 @@ var Amplitude = (function () {
 			}else{
 				shuffle_classes[i].addEventListener('click', privateShuffleClickHandle );
 			}
+		}
+
+		/*
+			Sets up song time visualizations
+		*/
+		var song_time_visualizations = document.getElementsByClassName("amplitude-song-time-visualization");
+
+		for( var i = 0; i < song_time_visualizations.length; i++ ){
+			var status = document.createElement('div');
+
+			status.classList.add('amplitude-song-time-visualization-status');
+			status.setAttribute( 'style', 'width: 0px' );
+
+			song_time_visualizations[i].appendChild( status );
 		}
 
 	}

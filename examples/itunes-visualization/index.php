@@ -16,8 +16,8 @@
 			</div>
 			<div id="player-bottom">
 				<div id="control-container">
-					<div class="amplitude-previous"></div>
-					<div class="amplitude-play-pause amplitude-paused"></div>
+					<div class="amplitude-prev"></div>
+					<div class="amplitude-play-pause amplitude-paused" amplitude-main-play-pause="true"></div>
 					<div class="amplitude-next"></div>
 				</div>
 				<div id="toggle-playlist" onclick="toggle_playlist()">
@@ -27,7 +27,9 @@
 					<span id="current-time">
 						<span class="amplitude-current-minutes" amplitude-single-current-minutes="true">0</span>:<span class="amplitude-current-seconds" amplitude-single-current-seconds="true">00</span>
 					</span>
-					<div id="amplitude-song-time-visualization"></div>
+					<div class="amplitude-song-time-visualization" id="song-time-visualization" amplitude-single-song-time-visualization="true">
+
+					</div>
 					<span id="audio-duration">
 						<span class="amplitude-duration-minutes" amplitude-single-duration-minutes="true">0</span>:<span class="amplitude-duration-minutes" amplitude-single-duration-seconds="true">00</span>
 					</span>
@@ -43,8 +45,8 @@
 						<img src="images/jendusa.jpg"/>
 					</div>
 					<div class="playlist-song-information-container">
-						<div class="playlist-song-title">Song from the Styx</div>
-						<div class="playlist-album-information">Jake Jendusa - In Search Of</div>
+						<div class="playlist-song-title">Burial</div>
+						<div class="playlist-album-information">YOGI feat Pusha T - Burial Skrillex + Trollphace Remix</div>
 					</div>
 					<div style="clear: both;"></div>
 				</div>
@@ -53,8 +55,8 @@
 						<img src="images/jendusaep.jpg"/>
 					</div>
 					<div class="playlist-song-information-container">
-						<div class="playlist-song-title">Porch Stomp Blues</div>
-						<div class="playlist-album-information">Jake Jendusa - In Search Of EP</div>
+						<div class="playlist-song-title">Hell Of A Night</div>
+						<div class="playlist-album-information">Schoolboy Q (YOGI Remix) - YOGI remixes</div>
 					</div>
 					<div style="clear: both;"></div>
 				</div>
@@ -63,8 +65,8 @@
 						<img src="images/jendusa.jpg"/>
 					</div>
 					<div class="playlist-song-information-container">
-						<div class="playlist-song-title">Man with the Keys</div>
-						<div class="playlist-album-information">Jake Jendusa - In Search Of EP</div>
+						<div class="playlist-song-title">Christian Bale</div>
+						<div class="playlist-album-information">YOGI Feat. Casey Veggies, Knytro, Sway, KSI, Raptor</div>
 					</div>
 					<div style="clear: both;"></div>
 				</div>
@@ -76,30 +78,32 @@
 			"volume": .35,
 			"songs": [
 				{
-					"name": "Song from the Styx",
-					"url": "../../songs/In%20Search%20Of/01%20Song%20from%20the%20Styx.mp3",
-					"artist": "Jake Jendusa",
-					"album": "In Search Of",
-					"live": false,
-					"cover_art_url": "images/jendusa.jpg"
+					"name": "Burial",
+					"artist": "YOGI feat Pusha T - Burial",
+					"album": "YOGI remixes",
+					"url": "https://soundcloud.com/yogitrf/yogi-feat-pusha-t-burial-skrillex-trollphace-remix",
+					"cover_art_url": "http://upload.wikimedia.org/wikipedia/commons/3/3a/RHCP_Logo.svg",
+					"album_key": "album-1"
 				},
 				{
-					"name": "Porch Stomp Blues",
-					"url": "../../songs/In%20Search%20Of%20EP/03%20Porch%20Stomp%20Blues.mp3",
-					"artist": "Jake Jendusa",
-					"album": "In Search Of EP",
-					"live": false,
-					"cover_art_url": "images/jendusaep.jpg"
+					"name": "Hell Of A Night",
+					"artist": "Schoolboy Q (YOGI Remix)",
+					"album": "YOGI remixes",
+					"url": "https://soundcloud.com/yogitrf/schoolboy-q-hell-of-a-night"
 				},
 				{
-					"name": "Man with the Keys",
-					"url": "songs/In%20Search%20Of/02%20Man%20with%20the%20keys.mp3",
-					"artist": "Jake Jendusa",
-					"album": "In Search Of EP",
-					"live": false,
-					"cover_art_url": "images/jendusaep.jpg"
+					"name": "Christian Bale",
+					"artist": "YOGI Feat. Casey Veggies, Knytro, Sway, KSI, Raptor",
+					"album": "Christian Bale feat. Casey Veggies, Knytro, Sway, KSI, Raptor",
+					"url": "https://soundcloud.com/yogitrf/yogi-christian-bale-feat-casey-veggies-knytro-sway-ksi-raptor?in=yogitrf/sets/burial-ep"
 				}
-			]
+			],
+			"soundcloud_client": '7f4a6ed1488c1ebdf31600767b9b6350',
+			"callbacks": {
+				"before_album_change": "test",
+				"after_album_change": "after_test"
+			},
+			"visualization_backup": "album-art"
 		});
 
 		Amplitude.registerVisualization( MichaelBromleyVisualization, {
@@ -116,6 +120,14 @@
 				document.getElementById('player-playlist').style.display = 'block';
 				open_playlist = true;
 			}
+		}
+
+		function test(){
+			console.log( Amplitude.getActiveSongMetadata() );
+		}
+
+		function after_test(){
+			console.log( Amplitude.getActiveSongMetadata() );
 		}
 	</script>
 <?php

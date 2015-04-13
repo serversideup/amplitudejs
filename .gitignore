@@ -1,23 +1,4 @@
-live.php
-single-song.php
-playlist.php
-css/playlist-styles.css
-css/single-song-styles.css
-images/jendusa.jpg
-images/jendusaep.jpg
-images/yellow-next.png
-images/yellow-pause-small.png
-images/yellow-pause.png
-images/yellow-play-small.png
-images/yellow-play.png
-images/yellow-playlist.png
-images/yellow-previous.png
-images/yellow-shuffle-on.png
-images/yellow-shuffle.png
-songs/In Search Of EP/03 Porch Stomp Blues.mp3
-songs/In Search Of EP/Iconr
-songs/In Search Of/01 Song from the Styx.mp3
-songs/In Search Of/02 Man with the Keys.mp3
+songs/*
+examples/testing/*
 Iconr
 icon*
-03 Shooting Star.m4a

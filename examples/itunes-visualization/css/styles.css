@@ -102,7 +102,12 @@ html {
 	height: 314px;
 	background-color: black;
 }
-.amplitude-previous{
+.amplitude-album-art{
+	width: 314px;
+	height: 314px;
+	background-color: white;
+}
+.amplitude-prev{
 	float: left;
 	background-image: url('../images/black-prev.png');
 	width: 29px;
@@ -154,7 +159,7 @@ html {
 	display: block;
 	float: left;
 }
-#amplitude-song-time-visualization{
+#song-time-visualization{
 	float: left;
 	height: 4px;
 	width: 239px;
@@ -163,7 +168,7 @@ html {
 	margin-left: 8px;
 	margin-right: 8px;
 }
-#amplitude-song-time-visualization-status{
+.amplitude-song-time-visualization-status{
 	background-color: #6A6C6B;
 	height: 4px;
 }
