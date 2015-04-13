@@ -18,6 +18,7 @@ We've been getting a lot of requests for donations. We're not ones who usually d
 ## Example/Demo##
 [![Amplitude Demo](https://dl.dropboxusercontent.com/u/13033256/Permanent/amplitude-demo.png)](http://open.521dimensions.com/amplitudejs)
 
+Click the image above to be taken to the demo site.
 
 ## Features ##
 * Completely independent library (no jQuery required)
@@ -902,9 +903,8 @@ a cover art by default, in the AmplitudeJS config set the "visualization_backup"
 This will replace the visualization with an <img> tag set up to display the album art for browsers that do
 not support visualizations.  
 
-Visualizations work with any sound source as well it's just taken from any audio layer!
-
 ### Building a Visualization for AmplitudeJS ###
+Visualizations work with any sound source as well it's just taken from any audio layer!
 
 If you understand the Web Audio API, you can easily build a visualization and have it work with AmplitudeJS.
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
@@ -921,3 +921,19 @@ javascript audio element.
 
 Using the templates and public properties should allow for any visualization you want to make! Once you make an
 awesome visualization, feel free to send it along and we can add it to the library!
+
+
+
+## License ##
+The MIT License (MIT)
+
+Copyright (c) 2015 521 Dimensions
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
