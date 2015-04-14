@@ -81,7 +81,7 @@
 					"name": "Burial",
 					"artist": "YOGI feat Pusha T - Burial",
 					"album": "YOGI remixes",
-					"url": "https://soundcloud.com/yogitrf/yogi-feat-pusha-t-burial-skrillex-trollphace-remix",
+					"url": "https://soundcloud.com/the-crystal-method/emulator",
 					"cover_art_url": "http://upload.wikimedia.org/wikipedia/commons/3/3a/RHCP_Logo.svg",
 					"album_key": "album-1"
 				},

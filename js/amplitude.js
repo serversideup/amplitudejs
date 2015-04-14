@@ -59,7 +59,10 @@ var Amplitude = (function () {
 
 		Thanks to: http://stackoverflow.com/questions/28984883/cannot-analyse-soundclouds-streaming-audio-because-of-the-lack-of-cors-policy
 	*/
-	config.active_song.crossOrigin = "anonymous";
+	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+		console.log('here');
+		config.active_song.crossOrigin = "anonymous";
+	}
 
 	var temp_user_config = {};
 	/*
@@ -248,7 +251,7 @@ var Amplitude = (function () {
 		if( config.active_metadata.live ){
 			privateReconnectStream();
 		}
-		console.log(config.active_song);
+
 		config.active_song.play();
 
 		privateRunCallback('after_play');
