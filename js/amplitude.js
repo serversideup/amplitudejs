@@ -53,17 +53,6 @@ var Amplitude = (function () {
 		soundcloud_songs_ready: 0
 	};
 
-	/*
-		Added for Firefox to load remote origin audio 
-		and hook it through the analayser for visualizations.
-
-		Thanks to: http://stackoverflow.com/questions/28984883/cannot-analyse-soundclouds-streaming-audio-because-of-the-lack-of-cors-policy
-	*/
-	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
-		console.log('here');
-		config.active_song.crossOrigin = "anonymous";
-	}
-
 	var temp_user_config = {};
 	/*
 		These are web audio API variables.  They connect the web audio
@@ -73,7 +62,8 @@ var Amplitude = (function () {
 	*/
 	var context, analyser, source;
 	
-	if( window.AudioContext ){
+	if( window.AudioContext && !( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
+		console.log('here');
 		context = new AudioContext();
 		analyser = context.createAnalyser();
 		source = context.createMediaElementSource( config.active_song );
@@ -790,7 +780,7 @@ var Amplitude = (function () {
 		available
 	*/
 	function privateSyncNoAudioContext(){
-		if( !window.AudioContext ){
+		if( !window.AudioContext || ( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
 			switch( config.visualization_backup ){
 				case "nothing":
 					document.getElementById('amplitude-visualization').remove();

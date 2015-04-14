@@ -95,7 +95,7 @@
 					"name": "Christian Bale",
 					"artist": "YOGI Feat. Casey Veggies, Knytro, Sway, KSI, Raptor",
 					"album": "Christian Bale feat. Casey Veggies, Knytro, Sway, KSI, Raptor",
-					"url": "https://soundcloud.com/yogitrf/yogi-christian-bale-feat-casey-veggies-knytro-sway-ksi-raptor?in=yogitrf/sets/burial-ep"
+					"url": "https://soundcloud.com/the-crystal-method/emulator"
 				}
 			],
 			"soundcloud_client": '7f4a6ed1488c1ebdf31600767b9b6350',
