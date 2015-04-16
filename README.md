@@ -396,7 +396,7 @@ to your document. You can then style this element using CSS.
 ```
 
 In your config, when you set the volume parameter, this gets set accordingly.  Note that on iOS devices, you 
-can not adjust the volume through any controls through the web:https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4
+can not adjust the volume through any controls through the web: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4
 
 With the volume slider, you can also make it vertical in your css by applying the following styles:
 
