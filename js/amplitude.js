@@ -63,7 +63,6 @@ var Amplitude = (function () {
 	var context, analyser, source;
 	
 	if( window.AudioContext && !( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
-		console.log('here');
 		context = new AudioContext();
 		analyser = context.createAnalyser();
 		source = context.createMediaElementSource( config.active_song );
