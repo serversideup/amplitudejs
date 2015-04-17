@@ -1,4 +1,4 @@
-# AmplitudeJS
+# Amplitude.js
 
 A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).
 
@@ -37,14 +37,14 @@ Click the image above to be taken to the demo site.
 ## Documentation
 
 ### Overview
-The concept of AmplitudeJS is simple, allow designers to fully control the look and 
+The concept of Amplitude.js is simple, allow designers to fully control the look and 
 feel of their audio player through the web without having to understand advanced scripting. 
 In HTML5, the audio tag allows users to add common audio formats to their web page. 
-The problem is that the audio playback interface is controlled by the browser. AmplitudeJS 
+The problem is that the audio playback interface is controlled by the browser. Amplitude.js 
 puts you in control of the design by simply applying an ID or a class to page elements. 
-You can then style these elements through CSS and control your audio. AmplitudeJS goes above 
+You can then style these elements through CSS and control your audio. Amplitude.js goes above 
 and beyond by adding playlist capabilities (next, previous, shuffle), song meta data and with the
-introduction of Amplitude 2.0, visualizations. AmplitudeJS is now mobile as well. If it detects a 
+introduction of Amplitude 2.0, visualizations. Amplitude.js is now mobile as well. If it detects a 
 request coming from a mobile device it will apply a touchstart event listener instead of a click 
 to the appropriate elements.
 
@@ -55,12 +55,12 @@ controlling audio on the Web, allowing developers to choose audio sources, add e
 create audio visualizations, apply spatial effects (such as panning)  and much more." - 
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API.  Visualizations are the start,
 there is a simple plugin interface to add visualizations if you are a designer, and an easy way
-to develop visualizations that work with AmplitudeJS if you are a developer.  This opens many
-new doors to further functionality that will be implemented with AmplitudeJS, such as simple
+to develop visualizations that work with Amplitude.js if you are a developer.  This opens many
+new doors to further functionality that will be implemented with Amplitude.js, such as simple
 controls added as easily as a play button to control and cut frequencies.
 
 Along with the Web Audio API updates, another important update is the addition of Soundcloud
-support without having to understand their API. You simply need a key and a URL and AmplitudeJS
+support without having to understand their API. You simply need a key and a URL and Amplitude.js
 will find out if the song is streamable and bind it to your player!
 
 With all of these new features, also comes a more stable platform for the basic functions.  The
@@ -77,24 +77,24 @@ for multiple albums, songs, and individual songs to be handled with ease visuall
 
 ### Downloading Manually
 
-To get AmplitudeJS manually, simply download the source from github: 
+To get Amplitude.js manually, simply download the source from github: 
 https://github.com/521dimensions/amplitudejs		
 
-### Adding AmplitudeJS to Your Document
+### Adding Amplitude.js to Your Document
 On top of your page just add:
 
 ```javascript
 <script type="text/javascript" src="/directory/to/amplitude.js"></script>
 ```
 
-AmplitudeJS is now available for use! All that's left is initializing.
+Amplitude.js is now available for use! All that's left is initializing.
 
-### Initializing AmplitudeJS
-When the page is ready, AmplitudeJS will bind all the event handlers the elements.  This is what
-makes AmplitudeJS so easy to use. It finds the classes and determines the browser and will bind
+### Initializing Amplitude.js
+When the page is ready, Amplitude.js will bind all the event handlers the elements.  This is what
+makes Amplitude.js so easy to use. It finds the classes and determines the browser and will bind
 click and touchstart handlers to the elements that perform a specific function.
 
-Now that AmplitudeJS is included on your page and set up, you need to initialize it with the 
+Now that Amplitude.js is included on your page and set up, you need to initialize it with the 
 information that you want.  To do this, you need to call the init function on the Amplitude object
 and you can pass it a JSON object of configuration variables ( we will go through ALL of these in the
 documentation ). At the bare minimum, you need to pass it all of the song objects that your page will
@@ -130,12 +130,12 @@ be using. More information about the song object next.
 </script>
 ```
 
-This configuration will set up AmplitudeJS to work the way you want it. The config JSON is used heavily
-to configure and optimize AmplitudeJS for what your app needs.
+This configuration will set up Amplitude.js to work the way you want it. The config JSON is used heavily
+to configure and optimize Amplitude.js for what your app needs.
 
 ### Song Objects
 
-A nested JSON object for songs is required by AmplitudeJS.  This directs Amplitude to the metadata
+A nested JSON object for songs is required by Amplitude.js.  This directs Amplitude to the metadata
 and information necessary for playing the audio.
 
 Each song object can contain the following keys:
@@ -148,7 +148,7 @@ Each song object can contain the following keys:
 * live = Set to true for a URL that is a live audio source.
 
 It is important to note that in multiple song environments, the order that you list the songs makes a difference. When utitlizing
-next and previous functionality, AmplitudeJS will iterate over the songs object and go to the next song or the previous song
+next and previous functionality, Amplitude.js will iterate over the songs object and go to the next song or the previous song
 in the list.
 
 It is also important to note how songs are indexed. Like in almost all programming, indexes start at 0.  So when you are setting
@@ -230,7 +230,7 @@ the "default_album_art" key.  Once again, this is handled on initialization.
 
 ### Elements
 
-AmplitudeJS comes with a variety of elements. Each element is picked up by a class prefixed with 'amplitude-'
+Amplitude.js comes with a variety of elements. Each element is picked up by a class prefixed with 'amplitude-'
 and depending on the environment, an attribute that relates to the index of a song in your list of songs.
 All elements can be styled simply based off of class or if you want to define specific ids in CSS. Besides
 album art, you could apply these classes to a variety of elements.  Album art has to be an <img> element,
@@ -302,7 +302,7 @@ like this:
 The top element will control the active song and sync accordingly.  The other elements allow
 you to switch the active song and control the play/pause functionality.
 
-Remember, you can add additional attributes that are not AmplitudeJS related for styling purposes,
+Remember, you can add additional attributes that are not Amplitude.js related for styling purposes,
 such as a large play/pause for the main control.
 
 You could also add the class "amplitude-play-pause" and an attribute "amplitude-song-index" to an
@@ -320,8 +320,8 @@ To add this element in a single control situation, simply add a range input with
 <input type="range" class="amplitude-song-slider" amplitude-singular-song-slider="true" value="0"/>
 ```
 
-Set the value to 0 right away so it's appropriately synced on page load.  AmplitudeJS will update this 
-with the time accordingly.  The attribute 'amplitude-singular-song-slider="true"' lets AmplitudeJS know
+Set the value to 0 right away so it's appropriately synced on page load.  Amplitude.js will update this 
+with the time accordingly.  The attribute 'amplitude-singular-song-slider="true"' lets Amplitude.js know
 that there is a single control.
 
 To do multiple song sliders (in an environment where there are MANY songs that have their own display) add
@@ -345,7 +345,7 @@ set it equal to "true".
 <div class="amplitude-song-time-visualization" amplitude-single-song-time-visualization="true"></div>
 ```
 
-When AmplitudeJS loads, it will add an additional element inside of that element with the class of "amplitude-song-time-visualization-status".
+When Amplitude.js loads, it will add an additional element inside of that element with the class of "amplitude-song-time-visualization-status".
 This status will update accordingly with the song percentage played. When finished it will look like:
 
 ```html
@@ -412,7 +412,7 @@ With the volume slider, you can also make it vertical in your css by applying th
 
 ### Adding a Mute Button
 
-A mute button is a toggle in AmplitudeJS. When the button is clicked, the volume gets set to 0 and when it is clicked again, 
+A mute button is a toggle in Amplitude.js. When the button is clicked, the volume gets set to 0 and when it is clicked again, 
 the volume is restored to what it was before the click. The mute button will automatically set the volume slider accordingly. 
 To add this button, simply add an element with the class of "amplitude-mute" to your document.
 
@@ -422,14 +422,14 @@ To add this button, simply add an element with the class of "amplitude-mute" to 
 
 ### Adding Volume Up and Down Buttons
 
-With AmplitudeJS you can add volume up and volume down buttons. You can also assign how much you want the volume to 
+With Amplitude.js you can add volume up and volume down buttons. You can also assign how much you want the volume to 
 increase and decrease each time a user interacts with your element. To adjust how much the volume gets incremented or
-decremented each time, you have to set that in the config when you initialize AmplitudeJS.  By default, these are 
+decremented each time, you have to set that in the config when you initialize Amplitude.js.  By default, these are 
 set to 5.  The range for these are between 0 and 100. Granted, you probably down't want the user to max or minify the 
 volume on each click (there's a mute button for that) so set it something reasonable. To add a volume up button to the 
-page, add an element with the class of "amplitude-volume-up". AmplitudeJS will find this on initialization and bind the 
+page, add an element with the class of "amplitude-volume-up". Amplitude.js will find this on initialization and bind the 
 appropriate handler. To add a volume down button, add an element with the class of "amplitude-volume-down" to the page. 
-Like the volume up, AmplitudeJS will find this element and bind the appropriate event handler to the element. 
+Like the volume up, Amplitude.js will find this element and bind the appropriate event handler to the element. 
 With all amplitude elements, if you are using images, it is recommended to add them as a background-image to the 
 appropriate element so the event handlers bind appropriately.
 
@@ -477,12 +477,12 @@ The buttons will now increment/decrement the volume by 10 each time one is press
 
 ### Song Visual Elements
 
-AmplitudeJS will handle updating certain elements with the metadata for the active song. Each
+Amplitude.js will handle updating certain elements with the metadata for the active song. Each
 of the elements has their inner inner HTML updated depending on the song being played. By default
-AmplitudeJS will handle these automatically, but you can also turn this feature off in the config.
+Amplitude.js will handle these automatically, but you can also turn this feature off in the config.
 Since this is for dynamic areas that are dependant upon what song is playing, it would make sense
 to have only one of each of these elements.  The element for album art has to be an image since
-AmplitudeJS sets the src attribute.  These specific elements are identified by attributes.
+Amplitude.js sets the src attribute.  These specific elements are identified by attributes.
 
 * 'amplitude-song-info="name"' -> inner HTML updates to the song name of what is currently playing
 * 'amplitude-song-info="artist"' -> inner HTML updates to the song's artist for what is currently playing
@@ -498,7 +498,7 @@ AmplitudeJS sets the src attribute.  These specific elements are identified by a
 
 ### Using Amplitude for Playlists
 
-AmplitudeJS makes playlists easy.  You can think of playlists as a group of songs, or you 
+Amplitude.js makes playlists easy.  You can think of playlists as a group of songs, or you 
 can divide them into albums.  Both configurations are no different than what we've already
 been doing. With playlists new elements are available such as a next button, previous button,
 and shuffle button.
@@ -580,8 +580,8 @@ JSON.
 
 ### Next and Previous Buttons
 
-When using AmplitudeJS in a playlist, you can navigate forwards and backwards in the playlist. 
-Upon click/touch AmplitudeJS will navigate through your playlist. To add a previous button add 
+When using Amplitude.js in a playlist, you can navigate forwards and backwards in the playlist. 
+Upon click/touch Amplitude.js will navigate through your playlist. To add a previous button add 
 an element with a class of "amplitude-prev". To add a next button add an element with a class 
 of "amplitude-next". When doing the visual design of your playlist, keep in mind Amplitude will 
 go in order of the indexes so make sure that your visual display correlates with the order you 
@@ -598,7 +598,7 @@ is the first song in the list and previous is clicked it will go to the last son
 ### Adding a Shuffle Button
 
 The shuffle function allows the playlist to be randomized and is accessed through the shuffle button. 
-To add a shuffle button add an element to the document with the class "amplitude-shuffle". When AmplitudeJS
+To add a shuffle button add an element to the document with the class "amplitude-shuffle". When Amplitude.js
 loads the class "amplitude-shuffle-off" will be applied to the element allowing for the element to be styled 
 for the current state. When clicked to turn on shuffle, the class "amplitude-shuffle-on" will be applied to 
 the element so you can style the element when shuffle is off. 
@@ -612,8 +612,8 @@ are clicked or when the song has ended.
 
 ### Playlist Play/Pause Buttons
 
-In the previous version of AmplitudeJS you had to really mess around to get this to work properly.  With
-AmplitudeJS 2, you just add a class of "amplitude-play-pause" with an attribute of the song index
+In the previous version of Amplitude.js you had to really mess around to get this to work properly.  With
+Amplitude.js 2, you just add a class of "amplitude-play-pause" with an attribute of the song index
 'amplitude-song-index="1"'.
 
 ```html
@@ -625,7 +625,7 @@ These will be configured appropriately on song changes so all song active states
 ### Amplitude Song Containers
 
 In a playlist, you might a scenario where you have elements containing information for a song.  When
-active, it's good UX to show that that song is the song that is being played.  With AmplitudeJS, you 
+active, it's good UX to show that that song is the song that is being played.  With Amplitude.js, you 
 can apply an element with a class of "amplitude-song-container" and an attribute of "amplitude-song-index"
 to correlate the visual display to a song in the list.  When that song is being played, the container
 will receive a class of "amplitude-active-song-container" so you can style the background or change
@@ -649,11 +649,11 @@ individual players on your page.
 
 ### Using Soundcloud
 
-In AmplitudeJS 2.0 Soundcloud support has been added and is made as easily as possible.  All you need is a
+In Amplitude.js 2.0 Soundcloud support has been added and is made as easily as possible.  All you need is a
 Soundcloud API Key (https://developers.soundcloud.com/).  It's important to note that not all songs are
-available for streaming through the API.  AmplitudeJS accounts for that and can help with the finding of the track.
+available for streaming through the API.  Amplitude.js accounts for that and can help with the finding of the track.
 
-When initializing AmplitudeJS, you need to add an extra attribute to the JSON config: "soundcloud_client".
+When initializing Amplitude.js, you need to add an extra attribute to the JSON config: "soundcloud_client".
 This is your public API key.
 
 You will also have to change your song urls to be a soundcloud link.  This is found by clicking the "share"
@@ -663,10 +663,10 @@ https://soundcloud.com/yogitrf/yogi-feat-pusha-t-burial-skrillex-trollphace-remi
 
 If you are familiar with the Soundcloud API, this is NOT the streaming URL.  This is the URL that directly
 links to the song. These are easier to find and require no knowledge of the API to grab the streaming URL.
-What AmplitudeJS does upon initilization is check to see if there is a defined Soundcloud key.  If there is,
-it checks all of the songs to see if their URL is a Soundcloud URL.  If it is, AmplitudeJS will resolve the
+What Amplitude.js does upon initilization is check to see if there is a defined Soundcloud key.  If there is,
+it checks all of the songs to see if their URL is a Soundcloud URL.  If it is, Amplitude.js will resolve the
 streaming URL and replace the URL with the one to stream containing your API key.  IF the song is NOT streamable,
-AmplitudeJS will print to the console which songs are not streamable.  This only happens if you have debug turned
+Amplitude.js will print to the console which songs are not streamable.  This only happens if you have debug turned
 on (see debugging section).
 
 ```javascript
@@ -697,12 +697,12 @@ Amplitude.init({
 });
 ```
 
-That's all you need to do to load Soundcloud! AmplitudeJS will auto grab their SDK and take care of the rest!
+That's all you need to do to load Soundcloud! Amplitude.js will auto grab their SDK and take care of the rest!
 Remember to give the proper credit to the artists as well from Soundcloud in your design.
 
 ### Debugging
 
-There is a lot of information that AmplitudeJS is setting up and bugs can happen.  In AmplitudeJS 2.0 there
+There is a lot of information that Amplitude.js is setting up and bugs can happen.  In Amplitude.js 2.0 there
 is a simple debugging tool that can be enabled that will print out information if there are errors to the
 console. To turn it on, simply pass an attribute of "debug" set to 'true' in the JSON config.
 
@@ -746,10 +746,10 @@ https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/U
 
 ### Callbacks
 
-Most of the core of AmplitudeJS functions have a callback that you can assign a function to that
-runs at certain events.  You can bind to these callbacks when you initialize AmplitudeJS.  You
+Most of the core of Amplitude.js functions have a callback that you can assign a function to that
+runs at certain events.  You can bind to these callbacks when you initialize Amplitude.js.  You
 just have to set the callback to the function name that you want to call when the appropriate
-AmplitudeJS point occurs.
+Amplitude.js point occurs.
 
 Here are a list of appropriate callbacks:
 * before_play
@@ -804,7 +804,7 @@ Amplitude.init({
 
 ### Public functions
 
-AmplitudeJS has a few public functions available for you to call when needed. Most of these relate
+Amplitude.js has a few public functions available for you to call when needed. Most of these relate
 to the building and using of visualizations (see next section), but there are a few that can help
 with development.
 
@@ -816,17 +816,17 @@ The other public functions are all for visualizations.
 
 ### Using visualizations
 
-AmplitudeJS 2.0 introduces visualizations which are as easy to use as the rest of AmplitudeJS' features.
+Amplitude.js 2.0 introduces visualizations which are as easy to use as the rest of Amplitude.js' features.
 A simple structure to build visualizations is also there for developers who want to add a visualization
-to the AmplitudeJS visualization library.  The downside is that not all browsers support the Web
-Audio API.  AmplitudeJS handles this as well by letting you swap out the visualizatoin for album art
+to the Amplitude.js visualization library.  The downside is that not all browsers support the Web
+Audio API.  Amplitude.js handles this as well by letting you swap out the visualizatoin for album art
 through a setting in the config.  Otherwise the visualization element is just removed from the document
 so errors don't occur.
 
 To use a visualization, you will have to download the visualization object of your choice.  These are
 found in the visualization directory on this github.  For this example we will be using a visualization 
 adapted from https://github.com/michaelbromley/soundcloud-visualizer/blob/master/js/app.js which converted
-to AmplitudeJS is in /visualizations/michaelbromley.js.
+to Amplitude.js is in /visualizations/michaelbromley.js.
 
 After downloading the visualization, you need to add the script AFTER you define the AmpitudeJS script:
 
@@ -851,15 +851,15 @@ Amplitude.registerVisualization( MichaelBromleyVisualization, {
 } );
 ```
 
-Now that you have your visualization registered with AmplitudeJS. You just need to add the following element:
+Now that you have your visualization registered with Amplitude.js. You just need to add the following element:
 
 ```html
 <div id="amplitude-visualization"></div>
 ```
 
-That's it! AmplitudeJS will inject the visualization canvas in that element and run. If the browser does not
-support the Web Audio API, by default AmplitudeJS will remove that element so no confusion. If you want to use
-a cover art by default, in the AmplitudeJS config set the "visualization_backup" equal to "album-art":
+That's it! Amplitude.js will inject the visualization canvas in that element and run. If the browser does not
+support the Web Audio API, by default Amplitude.js will remove that element so no confusion. If you want to use
+a cover art by default, in the Amplitude.js config set the "visualization_backup" equal to "album-art":
 
 ```javascript
 <script type="text/javascript">
@@ -907,16 +907,16 @@ a cover art by default, in the AmplitudeJS config set the "visualization_backup"
 This will replace the visualization with an <img> tag set up to display the album art for browsers that do
 not support visualizations.  
 
-### Building a Visualization for AmplitudeJS
+### Building a Visualization for Amplitude.js
 Visualizations work with any sound source as well it's just taken from any audio layer!
 
-If you understand the Web Audio API, you can easily build a visualization and have it work with AmplitudeJS.
+If you understand the Web Audio API, you can easily build a visualization and have it work with Amplitude.js.
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
 
 First, just download the template.js in the /visualization directory.  
 
 This is the starting point for structuring your visualization. The comments in the template explain what each
-method does.  To do your visualization, you will need access to the web audio elements.  AmplitudeJS makes
+method does.  To do your visualization, you will need access to the web audio elements.  Amplitude.js makes
 these available to you through public properties
 
 Amplitude.analyser -> The AudioContext() after the createAnalyser() method is called
