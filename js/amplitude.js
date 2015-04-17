@@ -62,6 +62,10 @@ var Amplitude = (function () {
 	*/
 	var context, analyser, source;
 	
+	/**
+		Needs to be fixed to filter remote sources
+	**/
+	/*
 	if( window.AudioContext && !( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
 		context = new AudioContext();
 		analyser = context.createAnalyser();
@@ -70,6 +74,7 @@ var Amplitude = (function () {
 		source.connect( analyser );
 		analyser.connect( context.destination );
 	}
+	*/
 
 
 	/*
@@ -779,6 +784,30 @@ var Amplitude = (function () {
 		available
 	*/
 	function privateSyncNoAudioContext(){
+		/*
+			Shows album art instead of visualizations due to the 
+			remote loading breaking everything with the Web Audio API
+		*/
+		var old_visualization = document.getElementById('amplitude-visualization');
+		var parent_old_visualization = old_visualization.parentNode;
+
+		var new_album_art = document.createElement('img');
+		new_album_art.setAttribute('amplitude-song-info', 'cover');
+		new_album_art.setAttribute('class', 'amplitude-album-art');
+
+		if( document.querySelector('[amplitude-song-info="cover"]') ){
+			if( config.active_metadata.cover_art_url != undefined){
+				new_album_art.setAttribute( 'src', config.active_metadata.cover_art_url );
+				document.querySelector('[amplitude-song-info="cover"]').setAttribute('src', config.active_metadata.cover_art_url);
+			}else if( config.default_album_art != '' ){
+				new_album_art.setAttribute( 'src', config.default_album_art );
+			}else{
+				new_album_art.setAttribute( 'src', '' );
+			}
+		}
+
+		parent_old_visualization.replaceChild( new_album_art, old_visualization );
+		/*
 		if( !window.AudioContext || ( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
 			switch( config.visualization_backup ){
 				case "nothing":
@@ -806,7 +835,7 @@ var Amplitude = (function () {
 					parent_old_visualization.replaceChild( new_album_art, old_visualization );
 				break;
 			}
-		}
+		}*/
 	}
 	/*
 		Syncs the current time displays so you can have multiple song time

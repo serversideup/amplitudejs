@@ -1,8 +1,8 @@
-# AmplitudeJS #
+# AmplitudeJS
 
 A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).
 
-## Reporting Issues ##
+## Reporting Issues
 
 If you are experiencing any issues or if you have a feature request, please [open up a new GitHub Issue](https://github.com/521dimensions/amplitudejs/issues/new)
 
@@ -10,17 +10,17 @@ Want to see if you can get a hold of us directly? Just join our Gitter chat and 
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/521dimensions/amplitudejs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Donations ##
+## Donation
 We've been getting a lot of requests for donations. We're not ones who usually do things with money being our only focus, but since this has been such a popular request, feel free to optionally donate using the button below. We're working on some other open source projects right now and your donation will definitely help make those other projects become a reality.
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GKTPWCPLD9G8C)
 
-## Example/Demo##
+## Example/Demo
 [![Amplitude Demo](https://dl.dropboxusercontent.com/u/13033256/Permanent/amplitude-demo.png)](http://open.521dimensions.com/amplitudejs)
 
 Click the image above to be taken to the demo site.
 
-## Features ##
+## Features
 * Completely independent library (no jQuery required)
 * 100% customizable design
 * Real time audio visualizations
@@ -34,9 +34,9 @@ Click the image above to be taken to the demo site.
 * Shuffle
 * Song meta data display
 
-## Documentation ##
+## Documentation
 
-### Overview ###
+### Overview
 The concept of AmplitudeJS is simple, allow designers to fully control the look and 
 feel of their audio player through the web without having to understand advanced scripting. 
 In HTML5, the audio tag allows users to add common audio formats to their web page. 
@@ -48,7 +48,7 @@ introduction of Amplitude 2.0, visualizations. AmplitudeJS is now mobile as well
 request coming from a mobile device it will apply a touchstart event listener instead of a click 
 to the appropriate elements.
 
-### Amplitude 2.0 Updates ###
+### Amplitude 2.0 Updates
 With the Amplitude 2.0 update, the project not only works with the HTML 5 audio tag, but begins
 the journey to mapping controls to the Web Audio API - "a powerful and versatile system for 
 controlling audio on the Web, allowing developers to choose audio sources, add effects to audio, 
@@ -69,25 +69,27 @@ continues with that vision. The only difference is we removed most of the elemen
 and replaced them as a combo of classes and amplitude attributes (all explained in the docs).  This allows
 for multiple albums, songs, and individual songs to be handled with ease visually and functionally.
 
-### Install and update Amplitude via Bower ###
+### Install and update Amplitude via Bower
 
 ```
 	bower install amplitude
 ```
 
-### Downloading Manually ###
-	To get AmplitudeJS manually, simply download the source from github: 
-	https://github.com/521dimensions/amplitudejs		
+### Downloading Manually
 
-### Adding AmplitudeJS to Your Document ###
+To get AmplitudeJS manually, simply download the source from github: 
+https://github.com/521dimensions/amplitudejs		
+
+### Adding AmplitudeJS to Your Document
 On top of your page just add:
+
 ```javascript
 <script type="text/javascript" src="/directory/to/amplitude.js"></script>
 ```
 
 AmplitudeJS is now available for use! All that's left is initializing.
 
-### Initializing AmplitudeJS ###
+### Initializing AmplitudeJS
 When the page is ready, AmplitudeJS will bind all the event handlers the elements.  This is what
 makes AmplitudeJS so easy to use. It finds the classes and determines the browser and will bind
 click and touchstart handlers to the elements that perform a specific function.
@@ -127,21 +129,23 @@ be using. More information about the song object next.
 	});
 </script>
 ```
+
 This configuration will set up AmplitudeJS to work the way you want it. The config JSON is used heavily
 to configure and optimize AmplitudeJS for what your app needs.
 
-### Song Objects ###
+### Song Objects
 
 A nested JSON object for songs is required by AmplitudeJS.  This directs Amplitude to the metadata
 and information necessary for playing the audio.
 
 Each song object can contain the following keys:
-	* name - The name of the song 
-	* artist - The song's artist
-	* album - The song's album ( Also used to determine album changes in an environment where multiple albums are used on the page)
-	* url - The URL to the song. This is most imporatant.  (Soundcloud URLs discussed later)
-	* cover_art_url - The URL to the song's cover art.
-	* live - Set to true for a URL that is a live audio source.
+
+* name = The name of the song 
+* artist = The song's artist
+* album = The song's album ( Also used to determine album changes in an environment where multiple albums are used on the page)
+* url = The URL to the song. This is most imporatant.  (Soundcloud URLs discussed later)
+* cover_art_url = The URL to the song's cover art.
+* live = Set to true for a URL that is a live audio source.
 
 It is important to note that in multiple song environments, the order that you list the songs makes a difference. When utitlizing
 next and previous functionality, AmplitudeJS will iterate over the songs object and go to the next song or the previous song
@@ -151,8 +155,8 @@ It is also important to note how songs are indexed. Like in almost all programmi
 up multiple play/pause functions or song status sliders that relate to an individual song, the indexes are used. For example,
 the song above named "Song Name 1" would have an index of 0, "Song Name 2" would have an index of 1, and so on.
 
-### Setting the Starting Volume ###
-	
+### Setting the Starting Volume
+
 You can define the starting volume for when the user initially presses play.  To do this, you need to add a 
 "volume" key to your initialization JSON.  This value is any number between 0 and 1. Think of this as a percentage.
 If you want the volume percentage at 35%, set this value equal to .35.
@@ -188,10 +192,11 @@ If you want the volume percentage at 35%, set this value equal to .35.
 </script>
 ```
 
-### Setting Default Album Art ###
+### Setting Default Album Art
 
 If you have songs that don't have a specific piece of album art, you can define a default image url using
 the "default_album_art" key.  Once again, this is handled on initialization.
+
 ```javascript
 <script type="text/javscript">
 	Amplitude.init({
@@ -223,7 +228,7 @@ the "default_album_art" key.  Once again, this is handled on initialization.
 </script>
 ```
 
-### Elements ###
+### Elements
 
 AmplitudeJS comes with a variety of elements. Each element is picked up by a class prefixed with 'amplitude-'
 and depending on the environment, an attribute that relates to the index of a song in your list of songs.
@@ -232,23 +237,22 @@ album art, you could apply these classes to a variety of elements.  Album art ha
 but the other elements could be whatever. However, using these elements, be advised that block level elements
 might work better than inline elements.  This can all be handled in CSS.
 
-### Adding a Play Button ###
-	
+### Adding a Play Button
+
 To add a play button, simply add an element with a class of 'amplitude-play'. 
 
 ```html
 <div class="amplitude-play"></div>
 ```
 
-If you have multiple songs, add an attribute of 'amplitude-song-index' and set it
-equal to the index of the song in the config.
+If you have multiple songs, add an attribute of 'amplitude-song-index' and set it equal to the index of the song in the config.
 
 ```html
 <div class="amplitude-play" amplitude-song-index="2"></div>
 ```
 
-### Adding a Pause Button ###
-	
+### Adding a Pause Button
+
 Similar to the play button, simply add an element with a class of 'amplitude-pause'.
 
 ```html
@@ -256,7 +260,7 @@ Similar to the play button, simply add an element with a class of 'amplitude-pau
 ```
 This will pause the active song.
 
-### Adding a Play/Pause Button ###
+### Adding a Play/Pause Button
 
 This button combines the play and pause button similar to what most media players use.
 
@@ -279,7 +283,7 @@ synchronize to the state of that song.
 ```html
 <div class="amplitude-play-pause amplitude-paused" amplitude-song-index="2"></div>
 ```
-	
+
 That play/pause button will control the song at index 2.
 
 Another scenario could be you are in a multiple song environment and you have a single set of
@@ -304,8 +308,8 @@ such as a large play/pause for the main control.
 You could also add the class "amplitude-play-pause" and an attribute "amplitude-song-index" to an
 element that looks like a song row in itunes and not have an actual button, but a link.
 
-### Adding a Song Slider ###
-	
+### Adding a Song Slider
+
 A song slider allows the user to interface directly with the current song time.  This is an HTML 5
 range element: http://demosthenes.info/blog/757/Playing-With-The-HTML5-range-Slider-Input.  Using
 the range element, it is a smoother functionality for interacting by the user and is supported on mobile.
@@ -315,7 +319,7 @@ To add this element in a single control situation, simply add a range input with
 ```html
 <input type="range" class="amplitude-song-slider" amplitude-singular-song-slider="true" value="0"/>
 ```
-	
+
 Set the value to 0 right away so it's appropriately synced on page load.  AmplitudeJS will update this 
 with the time accordingly.  The attribute 'amplitude-singular-song-slider="true"' lets AmplitudeJS know
 that there is a single control.
@@ -329,8 +333,8 @@ an attribute to your song slider that is "amplitude-song-index=" (just like the 
 
 If this is live feed, this won't work since there is no end time.
 
-### Adding Song Time Visualizations ###
-	
+### Adding Song Time Visualizations
+
 A song time visualization simply fills in with the percentage of the song that has been played. It is an 
 easy way to provide a visual for the user to see. However, the user can not interact with this, it's for display purposes only. 
 To add a song time visualization slider, add an element with the class of "amplitude-song-time-visualization".  Recommended,
@@ -340,7 +344,7 @@ set it equal to "true".
 ```html
 <div class="amplitude-song-time-visualization" amplitude-single-song-time-visualization="true"></div>
 ```
-	
+
 When AmplitudeJS loads, it will add an additional element inside of that element with the class of "amplitude-song-time-visualization-status".
 This status will update accordingly with the song percentage played. When finished it will look like:
 
@@ -356,11 +360,11 @@ set it equal to the index of the song in your config, just like a play/pause but
 ```html
 <div class="amplitude-song-time-visualization" amplitude-song-index="2"></div>
 ```
-	
+
 On live feeds, these won't work since there is no end time in a live feed.
 
-### Adding Song Current Time and Duration ###
-	
+### Adding Song Current Time and Duration
+
 These elements update with the time song has played compared to its duration.  For each current time
 and duration the elements are broken down into seconds and minutes. Like the other elements, there is
 also an attribute to declare whether there is one central spot to update when the active song changes
@@ -383,7 +387,7 @@ of the attribute for a single set:
 <span class="amplitude-duration-minutes" amplitude-song-index="1">0</span>:<span class="amplitude-duration-seconds" amplitude-song-index="1">00</span></span>
 ```
 
-### Adding a Volume Slider ###
+### Adding a Volume Slider
 
 The user can slide the volume slider to adjust the volume of the current song. The volume slider also reacts 
 accordingly if the mute, volume up, or volume down buttons are pressed. Unlike the song slider, the 
@@ -404,9 +408,10 @@ With the volume slider, you can also make it vertical in your css by applying th
 .amplitude-volume-slider{
     -webkit-appearance: slider-vertical
 }
+```
 
-### Adding a Mute Button ###
-	
+### Adding a Mute Button
+
 A mute button is a toggle in AmplitudeJS. When the button is clicked, the volume gets set to 0 and when it is clicked again, 
 the volume is restored to what it was before the click. The mute button will automatically set the volume slider accordingly. 
 To add this button, simply add an element with the class of "amplitude-mute" to your document.
@@ -415,7 +420,7 @@ To add this button, simply add an element with the class of "amplitude-mute" to 
 <div id="amplitude-mute"></div>
 ```
 
-### Adding Volume Up and Down Buttons ###
+### Adding Volume Up and Down Buttons
 
 With AmplitudeJS you can add volume up and volume down buttons. You can also assign how much you want the volume to 
 increase and decrease each time a user interacts with your element. To adjust how much the volume gets incremented or
@@ -467,11 +472,11 @@ config.
 	});
 </script>
 ```
-	
+
 The buttons will now increment/decrement the volume by 10 each time one is pressed.
 
-### Song Visual Elements ###
-	
+### Song Visual Elements
+
 AmplitudeJS will handle updating certain elements with the metadata for the active song. Each
 of the elements has their inner inner HTML updated depending on the song being played. By default
 AmplitudeJS will handle these automatically, but you can also turn this feature off in the config.
@@ -491,7 +496,7 @@ AmplitudeJS sets the src attribute.  These specific elements are identified by a
 <img amplitude-song-info="cover"/>
 ```
 
-### Using Amplitude for Playlists ###
+### Using Amplitude for Playlists
 
 AmplitudeJS makes playlists easy.  You can think of playlists as a group of songs, or you 
 can divide them into albums.  Both configurations are no different than what we've already
@@ -535,7 +540,7 @@ The previous and next buttons will loop around the list, updating the appropriat
 when a new song is played. If shuffle is turned on, the songs are randomized and go in
 a random order.  All will be explained next!
 
-### Defining a Start Song ###
+### Defining a Start Song
 
 When using a playlist, you can set the index of a start song.  For example, if you
 wanted to start at the 2nd song in the list.  Remember indexes start at 0, so the
@@ -573,8 +578,8 @@ JSON.
 </script>
 ```
 
-### Next and Previous Buttons ###
-	
+### Next and Previous Buttons
+
 When using AmplitudeJS in a playlist, you can navigate forwards and backwards in the playlist. 
 Upon click/touch AmplitudeJS will navigate through your playlist. To add a previous button add 
 an element with a class of "amplitude-prev". To add a next button add an element with a class 
@@ -590,8 +595,8 @@ is the first song in the list and previous is clicked it will go to the last son
 <div class="ampltiude-prev"></div>
 ```
 
-### Adding a Shuffle Button ###
-	
+### Adding a Shuffle Button
+
 The shuffle function allows the playlist to be randomized and is accessed through the shuffle button. 
 To add a shuffle button add an element to the document with the class "amplitude-shuffle". When AmplitudeJS
 loads the class "amplitude-shuffle-off" will be applied to the element allowing for the element to be styled 
@@ -605,7 +610,7 @@ the element so you can style the element when shuffle is off.
 Clicking this button will randomize the playlist and it will go in a different order when next and previous 
 are clicked or when the song has ended.
 
-### Playlist Play/Pause Buttons ###
+### Playlist Play/Pause Buttons
 
 In the previous version of AmplitudeJS you had to really mess around to get this to work properly.  With
 AmplitudeJS 2, you just add a class of "amplitude-play-pause" with an attribute of the song index
@@ -617,8 +622,8 @@ AmplitudeJS 2, you just add a class of "amplitude-play-pause" with an attribute 
 
 These will be configured appropriately on song changes so all song active states are synced.
 
-### Amplitude Song Containers ###
-	
+### Amplitude Song Containers
+
 In a playlist, you might a scenario where you have elements containing information for a song.  When
 active, it's good UX to show that that song is the song that is being played.  With AmplitudeJS, you 
 can apply an element with a class of "amplitude-song-container" and an attribute of "amplitude-song-index"
@@ -630,7 +635,7 @@ the color or whatever is needed to show that that is the active song.
 <div class="amplitude-song-container" amplitude-song-index="1"></div>
 ```
 
-### Multiple Modular Songs ###
+### Multiple Modular Songs
 
 Instead of a playlist type feel, you can have a page with multiple individual songs. In the documentation
 when you add an "amplitude-song-index" attribute to the element, it applies the specific functionality
@@ -642,8 +647,8 @@ individual players on your page.
 <div class="amplitude-play-pause amplitude-paused" amplitude-song-index="2"></div>
 ```
 
-### Using Soundcloud ###
-	
+### Using Soundcloud
+
 In AmplitudeJS 2.0 Soundcloud support has been added and is made as easily as possible.  All you need is a
 Soundcloud API Key (https://developers.soundcloud.com/).  It's important to note that not all songs are
 available for streaming through the API.  AmplitudeJS accounts for that and can help with the finding of the track.
@@ -695,7 +700,7 @@ Amplitude.init({
 That's all you need to do to load Soundcloud! AmplitudeJS will auto grab their SDK and take care of the rest!
 Remember to give the proper credit to the artists as well from Soundcloud in your design.
 
-### Debugging ###
+### Debugging
 
 There is a lot of information that AmplitudeJS is setting up and bugs can happen.  In AmplitudeJS 2.0 there
 is a simple debugging tool that can be enabled that will print out information if there are errors to the
@@ -732,15 +737,14 @@ Amplitude.init({
 
 Any common errors such as a non streamable Soundcloud song will be printed out to the console.
 
-### iOS Volume Controls ###
+### iOS Volume Controls
 
 Mobile events work exactly the same as desktop events. The only exception is iOS and volume changes. 
 According to Apple's documentation on Safari, volume can not be adjusted through Javascript since 
 the user always has hand access to volume increment and decrement hardware controls:
 https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4.
 
-
-### Callbacks ###
+### Callbacks
 
 Most of the core of AmplitudeJS functions have a callback that you can assign a function to that
 runs at certain events.  You can bind to these callbacks when you initialize AmplitudeJS.  You
@@ -798,7 +802,7 @@ Amplitude.init({
 });
 ```
 
-### Public functions ###
+### Public functions
 
 AmplitudeJS has a few public functions available for you to call when needed. Most of these relate
 to the building and using of visualizations (see next section), but there are a few that can help
@@ -810,7 +814,7 @@ with development.
 
 The other public functions are all for visualizations.
 
-### Using visualizations ###
+### Using visualizations
 
 AmplitudeJS 2.0 introduces visualizations which are as easy to use as the rest of AmplitudeJS' features.
 A simple structure to build visualizations is also there for developers who want to add a visualization
@@ -903,7 +907,7 @@ a cover art by default, in the AmplitudeJS config set the "visualization_backup"
 This will replace the visualization with an <img> tag set up to display the album art for browsers that do
 not support visualizations.  
 
-### Building a Visualization for AmplitudeJS ###
+### Building a Visualization for AmplitudeJS
 Visualizations work with any sound source as well it's just taken from any audio layer!
 
 If you understand the Web Audio API, you can easily build a visualization and have it work with AmplitudeJS.
@@ -922,9 +926,7 @@ javascript audio element.
 Using the templates and public properties should allow for any visualization you want to make! Once you make an
 awesome visualization, feel free to send it along and we can add it to the library!
 
-
-
-## License ##
+## License
 The MIT License (MIT)
 
 Copyright (c) 2015 521 Dimensions
@@ -934,6 +936,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
