@@ -1741,7 +1741,8 @@ var Amplitude = (function () {
 		changeVisualization: publicChangeActiveVisualization,
 		addSong: publicAddSong,
 		analyser: analyser,
-		source: source
+		source: source,
+		active: config.active_song
 	};
 
 })();
