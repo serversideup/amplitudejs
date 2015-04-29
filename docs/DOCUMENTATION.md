@@ -454,7 +454,7 @@ Amplitude.js sets the src attribute.  These specific elements are identified by 
 * 'amplitude-song-info="cover"' -> sets the src of the <img> element to the album's cover art
 * 'amplitude-song-info="album"' -> inner HTML updates to the song's album name
 
-``html
+```html
 <span amplitude-song-info="name"></span>
 <span amplitude-song-info="artist"></span>
 <span amplitude-song-info="album"></span>
