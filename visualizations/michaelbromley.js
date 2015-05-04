@@ -175,6 +175,7 @@ var MichaelBromleyVisualization = (function() {
 			Rotate all the vertices to achieve the overall rotational effect
 		*/
 		var rotation = fgRotation;
+
 		rotation -= Amplitude.analyser.volume > 10000 ? Math.sin(Amplitude.analyser.volume/800000) : 0;
 		for (var i = 0; i <= this.sides-1;i += 1) {
 			this.vertices[i][0] = this.vertices[i][0] -  this.vertices[i][1] * Math.sin(rotation);

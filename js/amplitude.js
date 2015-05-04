@@ -1,3 +1,7 @@
+/*
+	Amplitude.js
+	Version: 2.1
+*/
 var Amplitude = (function () {
 	/*
 	|--------------------------------------------------------------------------
@@ -49,9 +53,12 @@ var Amplitude = (function () {
 		visualization_backup: '',
 		song_ended_callback: '',
 		soundcloud_client: '',
+		soundcloud_use_art: false,
 		soundcloud_song_count: 0,
 		soundcloud_songs_ready: 0
 	};
+
+
 
 	var temp_user_config = {};
 	/*
@@ -62,20 +69,15 @@ var Amplitude = (function () {
 	*/
 	var context, analyser, source;
 	
-	/**
-		Needs to be fixed to filter remote sources
-	**/
-	/*
-	if( window.AudioContext && !( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
+	if( window.AudioContext ){
 		context = new AudioContext();
+		
 		analyser = context.createAnalyser();
 		source = context.createMediaElementSource( config.active_song );
 		
 		source.connect( analyser );
 		analyser.connect( context.destination );
 	}
-	*/
-
 
 	/*
 	|--------------------------------------------------------------------------
@@ -116,7 +118,8 @@ var Amplitude = (function () {
 					Loads the soundcloud SDK
 				*/
 				config.soundcloud_client = ( user_config.soundcloud_client != undefined ? user_config.soundcloud_client : '' );
-
+				config.soundcloud_use_art = ( user_config.soundcloud_use_art != undefined ? user_config.soundcloud_use_art : '' );
+				
 				if( config.soundcloud_client != '' ){
 					temp_user_config = user_config;
 					privateLoadSoundcloud();
@@ -225,6 +228,29 @@ var Amplitude = (function () {
 		config.songs.push( song );
 		return config.songs.length - 1;
 	}
+
+	/*
+		Plays a song right away.
+	*/
+	function publicPlayNow( song ){
+		config.active_song.src = song.url;
+		config.active_metadata = song;
+		config.active_album = song.album;
+
+
+		/*
+			Sets the main song control status visual
+		*/
+		if( document.querySelector('[amplitude-main-play-pause="true"]') ){
+			main_control = document.querySelector('[amplitude-main-play-pause="true"]');
+			main_control.classList.add('amplitude-playing');
+			main_control.classList.remove('amplitude-paused');
+		}
+
+		privateSongChange();
+
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Functional Methods
@@ -784,37 +810,21 @@ var Amplitude = (function () {
 		available
 	*/
 	function privateSyncNoAudioContext(){
-		/*
-			Shows album art instead of visualizations due to the 
-			remote loading breaking everything with the Web Audio API
-		*/
-		var old_visualization = document.getElementById('amplitude-visualization');
-		var parent_old_visualization = old_visualization.parentNode;
-
-		var new_album_art = document.createElement('img');
-		new_album_art.setAttribute('amplitude-song-info', 'cover');
-		new_album_art.setAttribute('class', 'amplitude-album-art');
-
-		if( document.querySelector('[amplitude-song-info="cover"]') ){
-			if( config.active_metadata.cover_art_url != undefined){
-				new_album_art.setAttribute( 'src', config.active_metadata.cover_art_url );
-				document.querySelector('[amplitude-song-info="cover"]').setAttribute('src', config.active_metadata.cover_art_url);
-			}else if( config.default_album_art != '' ){
-				new_album_art.setAttribute( 'src', config.default_album_art );
-			}else{
-				new_album_art.setAttribute( 'src', '' );
-			}
+		if( !window.AudioContext ){
+			privateHandleVisualizationBackup();
 		}
+	}
 
-		parent_old_visualization.replaceChild( new_album_art, old_visualization );
-		/*
-		if( !window.AudioContext || ( navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) ){
-			switch( config.visualization_backup ){
-				case "nothing":
+	function privateHandleVisualizationBackup(){
+		switch( config.visualization_backup ){
+			case "nothing":
+				if( document.getElementById('amplitude-visualization') ){
 					document.getElementById('amplitude-visualization').remove();
-				break;
-				case "album-art":
-					var old_visualization = document.getElementById('amplitude-visualization');
+				}
+			break;
+			case "album-art":
+				var old_visualization = document.getElementById('amplitude-visualization');
+				if( old_visualization ){
 					var parent_old_visualization = old_visualization.parentNode;
 
 					var new_album_art = document.createElement('img');
@@ -833,9 +843,9 @@ var Amplitude = (function () {
 					}
 
 					parent_old_visualization.replaceChild( new_album_art, old_visualization );
-				break;
-			}
-		}*/
+				}
+			break;
+		}
 	}
 	/*
 		Syncs the current time displays so you can have multiple song time
@@ -922,7 +932,6 @@ var Amplitude = (function () {
 			config.active_index = 0;
 		}
 
-
 		/*
 			If live is not defined, assume it is false. The reason for
 			this definition is here, is if we play/pause we disconnect
@@ -933,6 +942,9 @@ var Amplitude = (function () {
 		if( config.active_metadata.live == undefined ){
 			config.active_metadata.live = false;
 		}
+
+
+
 
 		/*
 			If the user wants the song to be pre-loaded for instant
@@ -957,7 +969,24 @@ var Amplitude = (function () {
 
 		config.song_ended_callback = ( user_config.song_ended_callback != undefined ? user_config.song_ended_callback : '' );
 		
-		
+		/*
+			If the song is live, we disable visualizaitons.  Visualizations
+			will most likely not work with Live audio due to cors violations.
+		*/
+		if( !config.active_metadata.live ){
+			config.active_song.crossOrigin = "anonymous";
+		}else{
+			/*
+				If live, remove visualization element.
+			*/
+			privateHandleVisualizationBackup();
+
+			source.disconnect(0);
+			analyser.disconnect(0);
+			
+			context.close();
+		}
+
 		/*
 			Sets initialized to true, so the user can't re-initialize
 			and mess everything up.
@@ -1230,11 +1259,20 @@ var Amplitude = (function () {
 
 		var current_minutes = Math.floor( config.active_song.currentTime / 60 );
 		
+		/*
+			Soundcloud stream on safari doesn't return the song duration
+			as a finite number. So we grab the duration from soundcloud and
+			bind it to the meta data. We always use the metadata from
+			soundcloud to prevent loading issues and duration calculation.
+		*/
+
 		var song_duration_seconds = ( Math.floor( config.active_song.duration % 60 ) < 10 ? '0' : '' ) + 
-									  			Math.floor( config.active_song.duration % 60 );
+									  		Math.floor( config.active_song.duration % 60 );
 
 		var song_duration_minutes = Math.floor( config.active_song.duration / 60 );
+		
 
+		
 		/*
 			Finds the current slider that represents the active song's time.
 			If there is only one song slider, than that's the one we adjust
@@ -1303,7 +1341,11 @@ var Amplitude = (function () {
 			display.
 		*/
 		if( !config.active_metadata.live && current_slider ){
-			current_slider.value = ( config.active_song.currentTime / config.active_song.duration ) * 100;
+			if( config.active_metadata.duration != undefined ){
+				current_slider.value = ( ( config.active_song.currentTime / config.active_metadata.duration ) * 1000 ) * 100;
+			}else{
+				current_slider.value = ( config.active_song.currentTime / config.active_song.duration ) * 100;
+			}	
 		}
 
 		/*
@@ -1376,15 +1418,52 @@ var Amplitude = (function () {
 			document.querySelector('[amplitude-song-info="album"]').innerHTML = config.active_metadata.album;
 		}
 
-
 		if( document.querySelector('[amplitude-song-info="cover"]') ){
-			if( config.active_metadata.cover_art_url != undefined){
-				document.querySelector('[amplitude-song-info="cover"]').setAttribute('src', config.active_metadata.cover_art_url);
-			}else if( config.default_album_art != '' ){
-				document.querySelector('[amplitude-song-info="cover"]').setAttribute('src', config.default_album_art);
-			}else{
-				document.querySelector('[amplitude-song-info="cover"]').setAttribute('src', '');
+			var coverImages = document.querySelectorAll('[amplitude-song-info="cover"]');
+			for( i = 0; i < coverImages.length; i++ ){
+				if( config.active_metadata.cover_art_url != undefined){
+					coverImages[i].setAttribute('src', config.active_metadata.cover_art_url);
+				}else if( config.default_album_art != '' ){
+					coverImages[i].setAttribute('src', config.default_album_art);
+				}else{
+					coverImages[i].setAttribute('src', '');
+				}
 			}
+			
+		}
+
+		/*
+			Station information for live streams
+		*/
+
+		if( document.querySelector('[amplitude-song-info="call-sign"]') ){
+			document.querySelector('[amplitude-song-info="call-sign"]').innerHTML = config.active_metadata.call_sign;
+		}
+
+		if( document.querySelector('[amplitude-song-info="station-name"]') ){
+			document.querySelector('[amplitude-song-info="station-name"]').innerHTML = config.active_metadata.station_name;
+		}
+
+		if( document.querySelector('[amplitude-song-info="location"]') ){
+			document.querySelector('[amplitude-song-info="location"]').innerHTML = config.active_metadata.location;
+		}
+
+		if( document.querySelector('[amplitude-song-info="frequency"]') ){
+			document.querySelector('[amplitude-song-info="frequency"]').innerHTML = config.active_metadata.frequency;
+		}
+
+		if( document.querySelector('[amplitude-song-info="station-art"]') ){
+			var coverImages = document.querySelectorAll('[amplitude-song-info="station-art"]');
+			for( i = 0; i < coverImages.length; i++ ){
+				if( config.active_metadata.cover_art_url != undefined){
+					coverImages[i].setAttribute('src', config.active_metadata.station_art_url);
+				}else if( config.default_album_art != '' ){
+					coverImages[i].setAttribute('src', config.default_album_art);
+				}else{
+					coverImages[i].setAttribute('src', '');
+				}
+			}
+			
 		}
 	}
 
@@ -1512,6 +1591,12 @@ var Amplitude = (function () {
 		SC.get('/resolve/?url='+url, function( sound ){
 			if( sound.streamable ){
 				config.songs[index].url = sound.stream_url+'?client_id='+config.soundcloud_client;
+
+				if( config.soundcloud_use_art ){
+					config.songs[index].cover_art_url = sound.artwork_url;
+				}
+
+				config.songs[index].soundcloud_data = sound;
 			}else{
 				if( config.debug ){
 					privateWriteDebugMessage( config.songs[index].name +' by '+config.songs[index].artist +' is not streamable by the Soundcloud API' );
@@ -1736,6 +1821,7 @@ var Amplitude = (function () {
 		setDebug: publicSetDebug,
 		getActiveSongMetadata: publicGetActiveSongMetadata,
 		getSongByIndex: publicGetSongByIndex,
+		playNow: publicPlayNow,
 		registerVisualization: publicRegisterVisualization,
 		visualizationCapable: publicVisualizationCapable,
 		changeVisualization: publicChangeActiveVisualization,
