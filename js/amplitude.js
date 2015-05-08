@@ -1019,7 +1019,6 @@ var Amplitude = (function () {
 		}
 
 		if( !config.use_visualizations ){
-			console.log( config.active_song );
 			source.disconnect(0);
 			analyser.disconnect(0);
 			
