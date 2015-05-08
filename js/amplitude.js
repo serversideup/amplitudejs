@@ -33,6 +33,7 @@ var Amplitude = (function () {
 		active_album: '',
 		active_index: 0,
 		album_change: false,
+		dynamic_mode: false,
 		callbacks: {},
 		songs: {},
 		shuffle_list: {},
@@ -55,7 +56,8 @@ var Amplitude = (function () {
 		soundcloud_client: '',
 		soundcloud_use_art: false,
 		soundcloud_song_count: 0,
-		soundcloud_songs_ready: 0
+		soundcloud_songs_ready: 0,
+		use_visualizations: false
 	};
 
 
@@ -78,7 +80,7 @@ var Amplitude = (function () {
 		source.connect( analyser );
 		analyser.connect( context.destination );
 	}
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Public Methods
@@ -102,7 +104,7 @@ var Amplitude = (function () {
 				Set config songs. 
 			*/
 			if( user_config.songs ){
-				if( user_config.songs.length != 0 ){
+				if( user_config.songs.length != 0 || user_config.dynamic_mode ){
 					config.songs = user_config.songs;
 					ready = true;
 				}else{
@@ -251,6 +253,21 @@ var Amplitude = (function () {
 
 	}
 
+	/*
+		Accessible ONLY if dynmaic mode is turned
+		on.
+	*/
+	function publicPlay(){
+		if( config.dynamic_mode ){
+			privatePlay();
+		}
+	}
+
+	function publicPause(){
+		if( config.dynamic_mode ){
+			privatePause();
+		}
+	}
 	/*
 	|--------------------------------------------------------------------------
 	| Functional Methods
@@ -920,16 +937,18 @@ var Amplitude = (function () {
 			Checks if the user defined a start song and sets that as the active
 			song, otherwise sets the first song in the list.
 		*/
-		if( user_config.start_song != undefined ){
-			config.active_song.src = config.songs[user_config.start_song].url;
-			config.active_metadata = config.songs[user_config.start_song];
-			config.active_album = config.songs[user_config.start_song].album;
-			config.active_index = user_config.start_song;
-		}else{
-			config.active_song.src = config.songs[0].url;
-			config.active_metadata = config.songs[0];
-			config.active_album = config.songs[0].album;
-			config.active_index = 0;
+		if( user_config.dynamic_mode != undefined && !user_config.dynamic_mode ){
+			if( user_config.start_song != undefined ){
+				config.active_song.src = config.songs[user_config.start_song].url;
+				config.active_metadata = config.songs[user_config.start_song];
+				config.active_album = config.songs[user_config.start_song].album;
+				config.active_index = user_config.start_song;
+			}else{
+				config.active_song.src = config.songs[0].url;
+				config.active_metadata = config.songs[0];
+				config.active_album = config.songs[0].album;
+				config.active_index = 0;
+			}
 		}
 
 		/*
@@ -955,12 +974,14 @@ var Amplitude = (function () {
 		/*
 			Initializes user-defined presets.
 		*/
+		config.dynamic_mode = ( user_config.dynamic_mode != undefined ? user_config.dynamic_mode : false );
 		config.callbacks = ( user_config.callbacks != undefined ? user_config.callbacks : {} );
 		config.volume = ( user_config.volume != undefined ? user_config.volume : .5 );
 		config.visualization_backup = ( user_config.visualization_backup != undefined ? user_config.visualization_backup : 'nothing' );
 		config.pre_mute_volume = ( user_config.volume != undefined ? user_config.volume : .5 );
 		config.volume_increment = ( user_config.volume_increment != undefined ? user_config.volume_increment : 5 );
 		config.volume_decrement = ( user_config.volume_decrement != undefined ? user_config.volume_decrement : 5 );
+		config.use_visualizations = ( user_config.use_visualizations != undefined ? user_config.use_visualizations : false );
 
 		config.default_album_art = ( user_config.default_album_art != undefined ? user_config.default_album_art : '' );
 		config.active_song.volume = config.volume;
@@ -974,13 +995,31 @@ var Amplitude = (function () {
 			will most likely not work with Live audio due to cors violations.
 		*/
 		if( !config.active_metadata.live ){
-			config.active_song.crossOrigin = "anonymous";
+			if( !config.dynamic_mode && config.use_visualizations ){
+				config.active_song.crossOrigin = "anonymous";
+			}
 		}else{
 			/*
 				If live, remove visualization element.
 			*/
 			privateHandleVisualizationBackup();
 
+			source.disconnect(0);
+			analyser.disconnect(0);
+			
+			context.close();
+		}
+
+		if( config.dynamic_mode ){
+
+			source.disconnect(0);
+			analyser.disconnect(0);
+			
+			context.close();
+		}
+
+		if( !config.use_visualizations ){
+			console.log( config.active_song );
 			source.disconnect(0);
 			analyser.disconnect(0);
 			
@@ -1822,6 +1861,8 @@ var Amplitude = (function () {
 		getActiveSongMetadata: publicGetActiveSongMetadata,
 		getSongByIndex: publicGetSongByIndex,
 		playNow: publicPlayNow,
+		play: publicPlay,
+		pause: publicPause,
 		registerVisualization: publicRegisterVisualization,
 		visualizationCapable: publicVisualizationCapable,
 		changeVisualization: publicChangeActiveVisualization,
