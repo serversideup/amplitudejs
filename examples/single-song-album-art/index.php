@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Single Song Live Player with Amplitude.js</title>
+		<title>Single Song Player and Album Art with Amplitude.js</title>
 		<script type="text/javascript" src="../../js/amplitude.js"></script>
 		<!-- jQuery only used to help with animations and NON Amplitude elements -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -13,8 +13,8 @@
 		<div id="top-header" class="hidden-on-collapse">
 			<div id="top-header-toggle" class="small-player-toggle-contract"></div>
 
-			<div class="now-playing-title"><span amplitude-song-info="station-name"></span> - <span amplitude-song-info="call-sign"></span></div>
-			<div class="location-information" amplitude-song-info="location"></div>
+			<div class="now-playing-title" amplitude-song-info="name"></div>
+			<div class="album-information"><span amplitude-song-info="artist"></span> - <span amplitude-song-info="album"></span></div>
 		</div>
 		<!-- End Top Header -->
 
@@ -47,17 +47,40 @@
 
 					<!-- Begin Meta Container -->
 					<div id="small-player-middle-meta">
-						<div class="now-playing-title"><span amplitude-song-info="station-name"></span> - <span amplitude-song-info="call-sign"></span></div>
-						<div class="location-information" amplitude-song-info="location"></div>
+						<div class="now-playing-title" amplitude-song-info="name"></div>
+						<div class="album-information"><span amplitude-song-info="artist"></span> - <span amplitude-song-info="album"></span></div>
 					</div>
 					<!-- End Meta Container -->
+				</div>
+				
+				<div id="small-player-middle-bottom">
+					<div class="amplitude-song-time-visualization" amplitude-song-index="0" id="song-time-visualization"></div>
 				</div>
 			</div>
 			<!-- End Small Player Middle -->
 
+			<!-- Begin Small Player Right -->
+			<div id="small-player-right" class="hidden-on-expanded">
+				<span class="current-time">
+					<span class="amplitude-current-minutes" amplitude-song-index="0">0</span>:<span class="amplitude-current-seconds" amplitude-song-index="0">00</span>
+				</span>
+			</div>
+			<!-- End Small Player Right -->
+
 			<!-- Begin Small Player Full Bottom -->
 			<div id="small-player-full-bottom" class="hidden-on-collapse">
 				<div class="amplitude-play-pause amplitude-paused" amplitude-song-index="0"></div>
+				<div id="small-player-full-bottom-info">
+					<span class="current-time">
+						<span class="amplitude-current-minutes" amplitude-song-index="0">0</span>:<span class="amplitude-current-seconds" amplitude-song-index="0">00</span>
+					</span>
+					
+					<div class="amplitude-song-time-visualization" amplitude-song-index="0" id="song-time-visualization-large"></div>
+					
+					<span class="time-duration">
+						<span class="amplitude-duration-minutes" amplitude-song-index="0">0</span>:<span class="amplitude-duration-seconds" amplitude-song-index="0">00</span>
+					</span>
+				</div>
 			</div>
 			<!-- End Small Player Full Bottom -->
 		</div>
@@ -67,13 +90,12 @@
 		Amplitude.init({
 			"songs": [
 				{
-					"call_sign": "WYMSE",
-					"station_name": "88.9 Radio Milwaukee",
-					"location": "Milwaukee, WI",
-					"frequency": "88.9 MHz",
-					"url": "http://64.202.109.5:80/live",
-					"live": true,
-					"cover_art_url": "images/radiomilwaukee.jpg"
+					"name": "Rooms",
+					"artist": "Mia and Jonah",
+					"album": "Rooms For Adelaide",
+					"url": "http://a656.phobos.apple.com/us/r30/Music/2d/d1/52/mzm.oymgnziu.aac.p.m4a",
+					"live": false,
+					"cover_art_url": "images/roomsforadelaide.jpg"
 				}
 			],
 			"default_album_art": "images/no-cover-large.png"

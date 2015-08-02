@@ -1,52 +1,83 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Single Song Tutorial</title>
+		<title>Single Song Player with Amplitude.js</title>
 		<script type="text/javascript" src="../../js/amplitude.js"></script>
-		<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css'>
+		<!-- jQuery only used to help with animations and NON Amplitude elements -->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 	</head>
-	<div id="single-song-player">
-		<div id="top">
-			<div id="song-information-container">
-				<span id="now-playing-artist" amplitude-song-info="artist">Jake Jendusa</span><br>
-				<span id="now-playing-album" amplitude-song-info="album">In Search Of</span>
-			</div>
-			<div id="song-action-container">
-				<div id="play-pause" class="amplitude-play-pause amplitude-paused"></div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<div id="bottom"></div>
-		<div id="bottom-container">
-			<span id="now-playing-title" amplitude-song-info="name">Song From the Styx</span>
-			<span id="song-timing">
-				<span amplitude-single-current-minutes="true">0</span>:<span amplitude-single-current-seconds="true">00</span> / <span amplitude-single-duration-minutes="true">0</span>:<span amplitude-single-duration-seconds="true">00</span>
-			</span>
-		</div>
-	</div>
+	<body>
+		<!-- Begin Small Player -->
+		<div id="small-player">
+			<!-- Begin Small Player Left -->
+			<div id="small-player-left">
 
-	<p>
-		Design help from: <br>
-		<a href="https://dribbble.com/shots/1509327-UI-Kit-PSD-included?list=users&offset=14" target="_blank">https://dribbble.com/shots/1509327-UI-Kit-PSD-included?list=users&offset=14</a>
-	</p>
+			</div>
+			<!-- End Small Player Left -->
 
-	<p>
-		Music From: <br>
-		<a href="https://www.facebook.com/pages/Jake-Jendusa-The-Dead-Men/106398795937" target="_blank">https://www.facebook.com/pages/Jake-Jendusa-The-Dead-Men/106398795937</a>
-	</p>
+			<!-- Begin Small Player Album Art -->
+			<img id="small-player-album-art" amplitude-song-info="cover"/>
+			<!-- End Small Player Album Art -->
+
+			<!-- Begin Small Player Middle -->
+			<div id="small-player-middle">	
+				<div id="small-player-middle-top">
+					<!-- Begin Controls Container -->
+					<div id="small-player-middle-controls">
+						<div class="amplitude-play-pause amplitude-paused" amplitude-main-play-pause="true"></div>
+					</div>
+					<!-- End Controls Container -->
+
+					<!-- Begin Meta Container -->
+					<div id="small-player-middle-meta">
+						<div id="now-playing-title" amplitude-song-info="name"></div>
+						<div class="album-information"><span amplitude-song-info="artist"></span> - <span amplitude-song-info="album"></span></div>
+					</div>
+					<!-- End Meta Container -->
+				</div>
+				
+				<div id="small-player-middle-bottom">
+					<div class="amplitude-song-time-visualization" amplitude-single-song-time-visualization="true" id="song-time-visualization"></div>
+				</div>
+			</div>
+			<!-- End Small Player Middle -->
+
+			<!-- Begin Small Player Right -->
+			<div id="small-player-right">
+				<span id="current-time">
+					<span class="amplitude-current-minutes" amplitude-single-current-minutes="true">0</span>:<span class="amplitude-current-seconds" amplitude-single-current-seconds="true">00</span>
+				</span>
+			</div>
+			<!-- End Small Player Right -->
+		</div>
+		<!-- End Small Player -->
+	</body>
 	<script type="text/javascript">
 		Amplitude.init({
 			"songs": [
 				{
-					"name": "Song From the Styx",
-					"artist": "Jake Jendusa",
-					"album": "In Search Of",
-					"url": "../../songs/In%20Search%20Of/01%20Song%20from%20the%20Styx.mp3",
+					"name": "Rooms",
+					"artist": "Mia and Jonah",
+					"album": "Rooms For Adelaide",
+					"url": "http://a656.phobos.apple.com/us/r30/Music/2d/d1/52/mzm.oymgnziu.aac.p.m4a",
 					"live": false,
-					"cover_art_url": "images/jendusaep.jpg"
+					"cover_art_url": "images/roomsforadelaide.jpg"
 				}
-			]
+			],
+			"default_album_art": "images/no-cover.png"
+		});
+
+		/*
+			jQuery Visual Helpers
+		*/
+		$('#small-player').hover(function(){
+			$('#small-player-middle-controls').show();
+			$('#small-player-middle-meta').hide();
+		}, function(){
+			$('#small-player-middle-controls').hide();
+			$('#small-player-middle-meta').show();
 		});
 	</script>
 </html>

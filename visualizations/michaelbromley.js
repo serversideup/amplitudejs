@@ -15,7 +15,9 @@ var MichaelBromleyVisualization = (function() {
 		"height": 500,
 		"fullscreen": false
 	};
-	
+
+	var analyser = '';
+
 	var tileSize;
 	var tiles = [];
 	var stars = [];
@@ -41,12 +43,15 @@ var MichaelBromleyVisualization = (function() {
 	var sampleAudioStreamInterval;
 
 	var animationFrame;
+
 	/*
 		REQUIRED
 		Start visualization method. Initialize your visualization here.
 	*/
 	function startVisualization(  ){
 		if( document.getElementById('amplitude-visualization') ){
+			analyser = Amplitude.analyser();
+
 			amplitude_container = document.getElementById('amplitude-visualization');
 
 			/*
@@ -118,8 +123,8 @@ var MichaelBromleyVisualization = (function() {
 	}
 
 	function sampleAudioStream(){
-		Amplitude.analyser.getByteFrequencyData(streamData);
-        
+		
+		analyser.getByteFrequencyData(streamData);
         /*	
         	Calculate an overall volume value
         */
@@ -176,7 +181,7 @@ var MichaelBromleyVisualization = (function() {
 		*/
 		var rotation = fgRotation;
 
-		rotation -= Amplitude.analyser.volume > 10000 ? Math.sin(Amplitude.analyser.volume/800000) : 0;
+		rotation -= analyser.volume > 10000 ? Math.sin(analyser.volume/800000) : 0;
 		for (var i = 0; i <= this.sides-1;i += 1) {
 			this.vertices[i][0] = this.vertices[i][0] -  this.vertices[i][1] * Math.sin(rotation);
 			this.vertices[i][1] = this.vertices[i][1] +  this.vertices[i][0] * Math.sin(rotation);

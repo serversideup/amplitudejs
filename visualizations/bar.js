@@ -12,12 +12,15 @@ var BarVisualization = (function() {
 		'height': '200'
 	};
 	
+	var analyser = '';
 	/*
 		REQUIRED
 		Start visualization method. Initialize your visualization here.
 	*/
 	function startVisualization(  ){
 		if( document.getElementById('amplitude-visualization') ){
+			analyser = Amplitude.analyser();
+
 			amplitude_container = document.getElementById('amplitude-visualization');
 
 			canvas = document.createElement('canvas');
@@ -65,8 +68,8 @@ var BarVisualization = (function() {
 	function rafCallback(time) {
 		request_animation = window.requestAnimationFrame(rafCallback, canvas);
 
-		var freqByteData = new Uint8Array(Amplitude.analyser.frequencyBinCount);
-		Amplitude.analyser.getByteFrequencyData(freqByteData);
+		var freqByteData = new Uint8Array(analyser.frequencyBinCount);
+		analyser.getByteFrequencyData(freqByteData);
 
 		var SPACER_WIDTH = 10;
 		var BAR_WIDTH = 5;
