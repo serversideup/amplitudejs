@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Playlist with Amplitude.js</title>
+		<title>Full Player with Amplitude.js</title>
 		<script type="text/javascript" src="../../js/amplitude.js"></script>
 		<!-- jQuery only used to help with animations and NON Amplitude elements -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -201,14 +201,12 @@
 			],
 			"default_album_art": "images/no-cover-large.png",
 			"callbacks": {
-				"after_init": "set_up_display",
+				"after_init": "album_change",
 				"after_album_change": "album_change",
 				"after_song_ended": "album_change"
 			}
 		});
-		function set_up_display(){
-			album_change();
-		}
+
 		function album_change(){
 			var activeSong = Amplitude.getActiveSongMetadata();
 

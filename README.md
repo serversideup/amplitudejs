@@ -21,7 +21,7 @@ Click the image at the top to be taken to the demo site or [click here](https://
 * Song meta data display
 
 ## Documentation
-We're hug believers in clear documentation. You can access the [latest documentation here](https://open.521dimensions.com/amplitudejs/docs). If you find errors or places for improvement, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
+We're huge believers in clear documentation. You can access the [latest documentation here](https://open.521dimensions.com/amplitudejs/docs). If you find errors or places for improvement, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
 
 ## Reporting Issues
 

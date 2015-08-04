@@ -2491,12 +2491,13 @@ var Amplitude = (function () {
 		if( document.querySelectorAll('[amplitude-song-info="frequency"]') ){
 			var metaStationFrequency = document.querySelectorAll('[amplitude-song-info="frequency"]');
 			for( i = 0; i < metaStationFrequency.length; i++ ){
-				metaStationFrequency.innerHTML = config.active_metadata.frequency;
+				metaStationFrequency[i].innerHTML = config.active_metadata.frequency;
 			}	
 		}
 
 		/*
 			Sets all of the elements that will contain the live stream's station art metadata
+			TODO: Rename coverImages to stationArtImages
 		*/
 		if( document.querySelectorAll('[amplitude-song-info="station-art"]') ){
 			var coverImages = document.querySelectorAll('[amplitude-song-info="station-art"]');

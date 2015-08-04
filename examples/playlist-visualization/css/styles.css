@@ -51,7 +51,7 @@ table {
 	Body
 */
 body{
-	background-color: #71b3ac;
+	background-color: #0B4C63;
     padding-top: 100px;
 }
 /*
@@ -92,6 +92,10 @@ div#visualization{
 }
 div#visualization canvas{
     border-radius: 5px;
+}
+div#visualization img{
+    width: 370px;
+    height: 370px;
 }
 /*
     Large Album Art

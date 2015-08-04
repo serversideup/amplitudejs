@@ -156,6 +156,24 @@ If you want the volume percentage at 35%, set this value equal to .35.
 	});
 </script>
 ```
+### Dynamic Mode
+
+Dynamic mode is a new feature in AmplitudeJS. It allows you to utilize the features of AmplitudeJS without initializing any songs.
+To activate dynamic mode, set dynamic_mode to true in your initialization:
+
+```javascript
+<script type="text/javascript">
+	Amplitude.init({
+		"dynamic_mode": true
+	})
+</script>
+```
+
+Now you can pass a song object using the publicPlayNow() function and Amplitude will play that song right away.  Dynamic mode is
+used in places where you want to have an array of songs or a group of songs added after Amplitude is initialized.  When dynamic mode
+is turned on you also have access to the Amplitude.play() and Amplitude.pause() methods allowing you to control the active song
+in Amplitude.
+
 
 ### Setting Default Album Art
 
@@ -265,7 +283,9 @@ like this:
 ```
 
 The top element will control the active song and sync accordingly.  The other elements allow
-you to switch the active song and control the play/pause functionality.
+you to switch the active song and control the play/pause functionality. If you have two locations
+to control the active song you can have multiple elements with the "amplitude-main-play-pause" 
+attribute. AmplitudeJS will bind the proper controls to all of these elements and keep them in sync.
 
 Remember, you can add additional attributes that are not Amplitude.js related for styling purposes,
 such as a large play/pause for the main control.
@@ -303,8 +323,8 @@ If this is live feed, this won't work since there is no end time.
 A song time visualization simply fills in with the percentage of the song that has been played. It is an 
 easy way to provide a visual for the user to see. However, the user can not interact with this, it's for display purposes only. 
 To add a song time visualization slider, add an element with the class of "amplitude-song-time-visualization".  Recommended,
-this would be a <div> tag.  In a single song environment, add the attribute "amplitude-single-song-time-visualization" and 
-set it equal to "true".
+this would be a <div> tag.  In a single song environment or environment where you have multiple song time visualizations for the current active song,
+add the attribute "amplitude-single-song-time-visualization" and set it equal to "true".
 
 ```html
 <div class="amplitude-song-time-visualization" amplitude-single-song-time-visualization="true"></div>
@@ -342,7 +362,8 @@ In a single song or single control set:
 <span class="amplitude-duration-minutes" amplitude-single-duration-minutes="true">0</span>:<span class="amplitude-duration-minutes" amplitude-single-duration-seconds="true">00</span>
 ```
 
-In the example above we use a span tag.  This could be anything, but since it's text that gets inserted, a span tag works just fine.
+In the example above we use a span tag. You could have multiple of the single identifiers if there are multiple places where the song time needs to get updated as the active song plays.
+This could be anything, but since it's text that gets inserted, a span tag works just fine.
 
 When there are multiple control sets, the attribute for the song index needs to be there instead
 of the attribute for a single set:
@@ -447,7 +468,8 @@ of the elements has their inner inner HTML updated depending on the song being p
 Amplitude.js will handle these automatically, but you can also turn this feature off in the config.
 Since this is for dynamic areas that are dependant upon what song is playing, it would make sense
 to have only one of each of these elements.  The element for album art has to be an image since
-Amplitude.js sets the src attribute.  These specific elements are identified by attributes.
+Amplitude.js sets the src attribute.  These specific elements are identified by attributes. You can
+have multiple of these elements for multiple places where the active song metadata should be updated.
 
 * 'amplitude-song-info="name"' -> inner HTML updates to the song name of what is currently playing
 * 'amplitude-song-info="artist"' -> inner HTML updates to the song's artist for what is currently playing
@@ -459,6 +481,43 @@ Amplitude.js sets the src attribute.  These specific elements are identified by 
 <span amplitude-song-info="artist"></span>
 <span amplitude-song-info="album"></span>
 <img amplitude-song-info="cover"/>
+```
+
+There is also a set of metadata you can add for live streams. They relate more to radio station identification
+information.
+
+* 'amplitude-song-info="call-sign"' -> innerHTML updates to the call sign of the live stream currently playing.
+* 'amplitude-song-info="station-name"' -> innerHTML updates to the station name of the live stream currently playing
+* 'amplitude-song-info="location"' -> innerHTML updates to the location of the station currently playing.
+* 'amplitude-song-info="frequency"' -> innerHTML updates to the frequency of the station currently playing.
+* 'amplitude-song-info="station-art"' -> sets the src of the <img> element to the station's logo.
+
+```html
+<span amplitude-song-info="call-sign"></span>
+<span amplitude-song-info="station-name"></span>
+<span amplitude-song-info="location"></span>
+<span amplitude-song-info="frequency"></span>
+<img amplitude-song-info="station-art"/>
+```
+
+Your updated song object would look like this: 
+
+```javascript
+<script type="text/javscript">
+	Amplitude.init({
+		"songs": [
+			{
+					"call_sign": "WYMSE",
+					"station_name": "88.9 Radio Milwaukee",
+					"location": "Milwaukee, WI",
+					"frequency": "88.9 MHz",
+					"url": "http://64.202.109.5:80/live",
+					"live": true,
+					"cover_art_url": "images/station/image.jpg"
+			}
+		]
+	});
+</script>
 ```
 
 ### Using Amplitude for Playlists
@@ -665,6 +724,9 @@ Amplitude.init({
 That's all you need to do to load Soundcloud! Amplitude.js will auto grab their SDK and take care of the rest!
 Remember to give the proper credit to the artists as well from Soundcloud in your design.
 
+You can also retrieve the data returned by the Soundcloud API for each song when you call Amplitude.getActiveSongMetadata(). 
+AmplitudeJS takes the data returned and appends it to the song object's metadata under the 'soundcloud' key.
+
 ### Debugging
 
 There is a lot of information that Amplitude.js is setting up and bugs can happen.  In Amplitude.js 2.0 there
@@ -727,6 +789,7 @@ Here are a list of appropriate callbacks:
 * after_prev
 * before_album_change
 * after_album_change
+* after_init
 
 The most unique is the before_album_change and after_album change callbacks.  WHen an album
 changes in a multiple song environment, these callbacks happen. This allows you to show and

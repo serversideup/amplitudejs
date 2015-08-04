@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Soundcloud Playlist with Amplitude.js</title>
+		<title>Visualizer Playlist with Amplitude.js</title>
 		<script type="text/javascript" src="../../js/amplitude.js"></script>
 		<script type="text/javascript" src="../../visualizations/michaelbromley.js"></script>
 

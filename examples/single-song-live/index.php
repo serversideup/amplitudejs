@@ -13,7 +13,7 @@
 		<div id="top-header" class="hidden-on-collapse">
 			<div id="top-header-toggle" class="small-player-toggle-contract"></div>
 
-			<div class="now-playing-title"><span amplitude-song-info="station-name"></span> - <span amplitude-song-info="call-sign"></span></div>
+			<div class="now-playing-title"><span amplitude-song-info="station-name"></span> - <span amplitude-song-info="call-sign"></span> (<span amplitude-song-info="frequency"></span>)</div>
 			<div class="location-information" amplitude-song-info="location"></div>
 		</div>
 		<!-- End Top Header -->
@@ -47,7 +47,7 @@
 
 					<!-- Begin Meta Container -->
 					<div id="small-player-middle-meta">
-						<div class="now-playing-title"><span amplitude-song-info="station-name"></span> - <span amplitude-song-info="call-sign"></span></div>
+						<div class="now-playing-title"><span amplitude-song-info="station-name"></span> - <span amplitude-song-info="call-sign"></span> (<span amplitude-song-info="frequency"></span>)</div>
 						<div class="location-information" amplitude-song-info="location"></div>
 					</div>
 					<!-- End Meta Container -->

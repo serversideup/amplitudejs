@@ -51,6 +51,13 @@ var VisualizationObjectName = (function(){
 	}
 
 	/*
+		Placeholder for the analyser. This should be set when
+		you start the visualization and use the Amplitude.anlyser() method
+		which will return the analyser bound to the active song
+	*/
+	var analyser = '';
+
+	/*
 		REQUIRED
 		Start visualization method. Initialize your visualization here.
 		Between the if statement is where you initialize your visualization
@@ -59,6 +66,8 @@ var VisualizationObjectName = (function(){
 	*/
 	function startVisualization(  ){
 		if( document.getElementById('amplitude-visualization') ){
+			analyser = Amplitude.analyser();
+			
 			amplitude_container = document.getElementById('amplitude-visualization');
 
 			/*
