@@ -165,7 +165,7 @@ To activate dynamic mode, set dynamic_mode to true in your initialization:
 <script type="text/javascript">
 	Amplitude.init({
 		"dynamic_mode": true
-	})
+	});
 </script>
 ```
 
