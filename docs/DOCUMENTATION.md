@@ -174,6 +174,43 @@ used in places where you want to have an array of songs or a group of songs adde
 is turned on you also have access to the Amplitude.play() and Amplitude.pause() methods allowing you to control the active song
 in Amplitude.
 
+### Autoplay
+
+Autoplay is simple, when set to true, AmplitudeJS will play the song you set to to be the start song, or the first song in your
+config.
+
+```javascript
+<script type="text/javascript">
+	Amplitude.init({
+		"songs": [
+			{
+				"name": "Song Name 1",
+				"artist": "Artist Name",
+				"album": "Album Name",
+				"url": "/song/url.mp3",
+				"cover_art_url": "/cover/art/url.jpg"
+			},
+			{
+				"name": "Song Name 2",
+				"artist": "Artist Name",
+				"album": "Album Name",
+				"url": "/song/url.mp3",
+				"cover_art_url": "/cover/art/url.jpg"
+			},
+			{
+				"name": "Song Name 3",
+				"artist": "Artist Name",
+				"album": "Album Name",
+				"url": "/song/url.mp3",
+				"cover_art_url": "/cover/art/url.jpg"
+			}
+		],
+		"autoplay": true
+	});
+</script>
+```
+
+This will play the first song in the config on page load.
 
 ### Setting Default Album Art
 
@@ -633,6 +670,20 @@ the element so you can style the element when shuffle is off.
 
 Clicking this button will randomize the playlist and it will go in a different order when next and previous 
 are clicked or when the song has ended.
+
+### Adding a Repeat Button
+
+The repeat button allows you to repeat a song after it has ended.  To add a repeat button add an element
+to the document with the class "amplitude-repeat".  On init, Amplitude will add a class "amplitude-repeat-off"
+which you can style.  When clicked, repeat will be turned on and the "amplitude-repeat-off" class will be
+removed and the "amplitude-repeat-on" class will be added.  You can then style the "amplitude-repeat-on" class.
+
+```html
+<div class="amplitude-repeat"></div>
+```
+
+Clicking this button will have the song repeat when it has ended. Clicking again, will resume the default
+of going to the next song or stopping in a single song scenario turning off repeat.
 
 ### Playlist Play/Pause Buttons
 

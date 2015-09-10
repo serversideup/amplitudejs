@@ -1,6 +1,6 @@
 /*
 	Amplitude.js
-	Version: 2.1.1
+	Version: 2.2
 */
 var Amplitude = (function () {
 	/*
@@ -56,6 +56,10 @@ var Amplitude = (function () {
 		*/
 		active_index: 0,
 		/*
+			Set to true to autoplay the song
+		*/
+		autoplay: false,
+		/*
 			Used to determine if the album has changed and run the callback if it
 			has.
 		*/
@@ -77,6 +81,10 @@ var Amplitude = (function () {
 			to use.
 		*/
 		songs: {},
+		/*
+			When repeat is on, when the song ends the song will replay itself.
+		*/
+		repeat: false,
 		/*
 			When shuffled, this gets populated with the songs the user provided
 			in a random order.
@@ -817,6 +825,22 @@ var Amplitude = (function () {
 				shuffle_classes[i].addEventListener('click', privateShuffleClickHandle );
 			}
 		}
+
+		/*
+			Binds handlers for repeat button classes.
+		*/
+		var repeat_classes = document.getElementsByClassName("amplitude-repeat");
+
+		for( var i = 0; i < repeat_classes.length; i++ ){
+			repeat_classes[i].classList.remove('amplitude-repeat-on');
+			repeat_classes[i].classList.add('amplitude-repeat-off');
+
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				repeat_classes[i].addEventListener('touchstart', privateRepeatClickHandle );
+			}else{
+				repeat_classes[i].addEventListener('click', privateRepeatClickHandle );
+			}
+		}
 	}
 
 	/*--------------------------------------------------------------------------
@@ -1544,82 +1568,101 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function privateHandleSongEnded(){
 		/*
-			Checks to see if there is more than one song.
+			Checks to see if repeat is on. If it's on, then we re-play the
+			current song. Otherwise we begin the process of playing the
+			next song in the list whether it's shuffle or regular list or
+			single song.
 		*/
-		if( config.songs.length > 1 ){
+		if( config.repeat ){
 			/*
-				Stops the active song
+				Confirms stop of the active song
 			*/
 			privateStop();
 
 			/*
-				Checks to see if shuffle mode is turned on.
-			*/
-			if( config.shuffle_on ){
-				/*
-					Loop around shuffle array if at the end. We need to check if the next
-					song is within array. Otherwise we reset it to 0.
-
-					Set new song
-				*/
-				if( parseInt( config.shuffle_active_index) + 1 < config.shuffle_list.length ){
-					var newIndex = parseInt( config.shuffle_active_index) + 1;
-
-					/*
-						Sets the active song information.
-					*/
-					privateSetActiveSongInformation( newIndex, config.shuffle_on );
-
-					config.shuffle_active_index = parseInt(config.shuffle_active_index) + 1;
-				}else{
-					/*
-						Sets the active song information to the beginning of the
-						shuffle list
-					*/
-					privateSetActiveSongInformation( 0, config.shuffle_on );
-
-					config.shuffle_active_index = 0;
-				}
-			}else{
-				/*
-					Loop around songs array if at the end. We need to check if the next
-					song is within array. Otherwise we reset it to 0.
-
-					Sets new song
-				*/
-				if( parseInt(config.active_index) + 1 < config.songs.length ){
-					var newIndex = parseInt( config.active_index ) + 1;
-
-					/*
-						Sets the active song information
-					*/
-					privateSetActiveSongInformation( newIndex, config.shuffle_on );
-
-					config.active_index = parseInt(config.active_index) + 1;
-				}else{
-					/*
-						Sets the active song information to the beginning of the
-						songs list
-					*/
-					privateSetActiveSongInformation( 0, config.shuffle_on );
-
-					config.active_index = 0;
-				}
-			}
-
-			/*
-				Runs the song change function.
+				Without changing the index, just prepares the 
+				next song to play.
 			*/
 			privateAfterSongChanges();
 		}else{
 			/*
-				If there is nothing coming up, pause the play
-				button and sync the current times. This will set the play pause
-				buttons to paused (stopped) state and the current times to
-				0:00
+				Checks to see if there is more than one song.
 			*/
-			privateSetPlayPauseButtonsToPause();
-			privateSyncCurrentTimes();			
+			if( config.songs.length > 1 ){
+				/*
+					Stops the active song
+				*/
+				privateStop();
+
+				/*
+					Checks to see if shuffle mode is turned on.
+				*/
+				if( config.shuffle_on ){
+					/*
+						Loop around shuffle array if at the end. We need to check if the next
+						song is within array. Otherwise we reset it to 0.
+
+						Set new song
+					*/
+					if( parseInt( config.shuffle_active_index) + 1 < config.shuffle_list.length ){
+						var newIndex = parseInt( config.shuffle_active_index) + 1;
+
+						/*
+							Sets the active song information.
+						*/
+						privateSetActiveSongInformation( newIndex, config.shuffle_on );
+
+						config.shuffle_active_index = parseInt(config.shuffle_active_index) + 1;
+					}else{
+						/*
+							Sets the active song information to the beginning of the
+							shuffle list
+						*/
+						privateSetActiveSongInformation( 0, config.shuffle_on );
+
+						config.shuffle_active_index = 0;
+					}
+				}else{
+					/*
+						Loop around songs array if at the end. We need to check if the next
+						song is within array. Otherwise we reset it to 0.
+
+						Sets new song
+					*/
+					if( parseInt(config.active_index) + 1 < config.songs.length ){
+						var newIndex = parseInt( config.active_index ) + 1;
+
+						/*
+							Sets the active song information
+						*/
+						privateSetActiveSongInformation( newIndex, config.shuffle_on );
+
+						config.active_index = parseInt(config.active_index) + 1;
+					}else{
+						/*
+							Sets the active song information to the beginning of the
+							songs list
+						*/
+						privateSetActiveSongInformation( 0, config.shuffle_on );
+
+						config.active_index = 0;
+					}
+				}
+
+				/*
+					Runs the song change function.
+				*/
+				privateAfterSongChanges();
+			}else{
+				/*
+					If there is nothing coming up, pause the play
+					button and sync the current times. This will set the play pause
+					buttons to paused (stopped) state and the current times to
+					0:00
+				*/
+				privateSetPlayPauseButtonsToPause();
+				privateSyncCurrentTimes();			
+			}
 		}
 
 		/*
@@ -1817,6 +1860,24 @@ var Amplitude = (function () {
 		privateSyncVisualShuffle();
 	}
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-repeat'
+
+		Handles a click for the repeat element.
+	--------------------------------------------------------------------------*/
+	function privateRepeatClickHandle(){
+		/*
+			If repeat is on, we turn it off. Othwerwise we turn repeat on.
+		*/
+		if( config.repeat ){
+			config.repeat = false;
+		}else{
+			config.repeat = true;
+		}
+
+		privateSyncVisualRepeat();
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| HELPER FUNCTIONS
@@ -2011,6 +2072,47 @@ var Amplitude = (function () {
 			Run after init callback
 		*/
 		privateRunCallback("after_init");
+
+		/*
+			If the user turns on autoplay the song will play automatically.
+		*/
+		if( user_config.autoplay ){
+			/*
+				Gets the attribute for song index so we can check if
+				there is a need to change the song.  In some scenarios
+				there might be multiple play classes on the page. In that
+				case it is possible the user could click a different play
+				class and change the song.
+			*/
+			var playing_song_index = config.start_song;
+
+			/*
+				We set the new song if the user clicked a song with a different
+				index. If it's the same as what's playing then we don't set anything. 
+				If it's different we reset all song sliders.
+			*/
+			if( privateCheckNewSong( playing_song_index ) ){
+				privateChangeSong( playing_song_index );
+
+				privateResetSongStatusSliders();
+			}
+
+			/*
+				Start the visualizations for the song.
+			*/
+			privateStartVisualization();
+			
+			/*
+				If there are any play pause buttons we need
+				to sync them to playing for auto play.
+			*/
+			privateChangePlayPauseState('playing');
+
+			/*
+				Play the song through the core play function.
+			*/
+			privatePlay();
+		}
 	}
 
 	/*--------------------------------------------------------------------------
@@ -2904,6 +3006,26 @@ var Amplitude = (function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Sets repeat on for all of the repeat buttons. Users
+		can apply styles to the amplitude-repeat-on and 
+		amplitude-repeat-off classes. They represent the state
+		of the player.
+	--------------------------------------------------------------------------*/
+	function privateSyncVisualRepeat(){
+		var repeat_classes = document.getElementsByClassName("amplitude-repeat");
+
+		for( var i = 0; i < repeat_classes.length; i++ ){
+			if( config.repeat ){
+				repeat_classes[i].classList.add('amplitude-repeat-on');
+				repeat_classes[i].classList.remove('amplitude-repeat-off');
+			}else{
+				repeat_classes[i].classList.remove('amplitude-repeat-on');
+				repeat_classes[i].classList.add('amplitude-repeat-off');
+			}
+		}
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| CORE FUNCTIONAL METHODS
@@ -3015,6 +3137,7 @@ var Amplitude = (function () {
 		visualizationCapable: publicVisualizationCapable,
 		changeVisualization: publicChangeActiveVisualization,
 		addSong: publicAddSong,
-		analyser: publicGetAnalyser
+		analyser: publicGetAnalyser,
+		active: config.active_song
 	};
 })();

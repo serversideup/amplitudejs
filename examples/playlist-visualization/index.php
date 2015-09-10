@@ -132,7 +132,7 @@
 
 		<!-- Start Soundcloud Props -->
 		<a href="https://soundcloud.com" target="_blank">
-			<img id="soundcloud-image" src="images/poweredBySoundcloud.png"/>
+			<img id="soundcloud-image" src="images/poweredBySoundcloud-white.png"/>
 		</a>
 		<!-- End Soundcloud Props -->
 	</body>
