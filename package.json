@@ -5,7 +5,7 @@
   "main": "js/amplitude.js",
   "devDependencies": {
     "gulp": "3.x"
-  }
+  },
   "directories": {
     "doc": "docs",
     "example": "examples"
