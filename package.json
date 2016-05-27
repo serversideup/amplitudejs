@@ -2,12 +2,20 @@
   "name": "amplitudejs",
   "version": "2.2.0",
   "description": "A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://open.521dimensions.com/amplitudejs",
-  "main": "gulpfile.js",
+  "main": "js/amplitude.js",
+  "devDependencies": {
+    "gulp": "3.x"
+  },
   "directories": {
     "doc": "docs",
     "example": "examples"
   },
+  "files": [
+    "js",
+    "visualizations"
+  ],
   "scripts": {
+    "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
