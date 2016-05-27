@@ -1,30 +1,30 @@
 {
-  "name": "amplitude",
-  "version": "2.2",
-  "description": "A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required).",
-  "main": "index.js",
+  "name": "amplitudejs",
+  "version": "2.2.0",
+  "description": "A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://open.521dimensions.com/amplitudejs",
+  "main": "gulpfile.js",
   "directories": {
+    "doc": "docs",
     "example": "examples"
-  },
-  "dependencies": {
-    "gulp": "^3.8.11"
-  },
-  "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/521dimensions/amplitudejs.git"
+    "url": "git+https://github.com/521dimensions/amplitudejs.git"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "webaudio",
+    "html5",
+    "javascript",
+    "css",
+    "audio"
+  ],
+  "author": "521 Dimensions",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/521dimensions/amplitudejs/issues"
   },
-  "homepage": "https://github.com/521dimensions/amplitudejs"
+  "homepage": "https://github.com/521dimensions/amplitudejs#readme"
 }
