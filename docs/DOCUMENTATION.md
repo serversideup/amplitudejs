@@ -111,6 +111,7 @@ Each song object can contain the following keys:
 * url = The URL to the song. This is most imporatant.  (Soundcloud URLs discussed later)
 * cover_art_url = The URL to the song's cover art.
 * live = Set to true for a URL that is a live audio source.
+* start_at = Set the duration point in secods that the song should start playing
 
 It is important to note that in multiple song environments, the order that you list the songs makes a difference. When utitlizing
 next and previous functionality, Amplitude.js will iterate over the songs object and go to the next song or the previous song
