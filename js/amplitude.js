@@ -1,26 +1,8 @@
 /*
 	Amplitude.js
-	Version: 2.2
+	Version: 2.3
 */
 var Amplitude = (function () {
-	/*
-	|--------------------------------------------------------------------------
-	| Initializers
-	|--------------------------------------------------------------------------
-	| When the document is ready, Amplitude goes through and finds the elements
-	| that should have event listeners and binds them. Next it will set up all
-	| of the song time visualizations.  These visualizations simply show the
-	| proportion of the song time that has elapsed with respect to the container
-	| element. These are NOT the visualizations for audio frequencies that are
-	| artistic.  It's a div that fills with another div representing the song time.
-	*/
-	document.onreadystatechange = function () {
-		if( document.readyState == "complete" ){
-			privateInitializeEventHandlers();
-			privateInitializeSongTimeVisualizations();
-		}
-	}
-
 	/*
 	|--------------------------------------------------------------------------
 	| Module Variables
@@ -56,9 +38,19 @@ var Amplitude = (function () {
 		*/
 		active_index: 0,
 		/*
+			For mobile issues, keep track if the song pause button
+			was clicked
+		*/
+		pause_clicked: false,
+		/*
 			Set to true to autoplay the song
 		*/
 		autoplay: false,
+		/*
+			Sets the initial playback speed of the song. The values
+			for this can be 1.0, 1.5, 2.0
+		*/
+		playback_speed: 1.0,
 		/*
 			Used to determine if the album has changed and run the callback if it
 			has.
@@ -238,138 +230,141 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function publicInit( user_config ){
 		/*
-			Checks to see if Amplitude has been initialized.
-			If it hasn't then we can initialize AmplitudeJS. 
-			The reason we check is so the same event handler 
-			isn't bound twice to the same element.
+			Reset the config on init.
 		*/
-		if( !config.initialized ){
-			/*
-				Initializes debugging right away so we can use it for the rest
-				of the configuration.
-			*/
-			config.debug = ( user_config.debug != undefined ? user_config.debug : false );
+		privateResetConfig();
 
-			/*
-				Checks for dynamic mode right away.  This will determine whether
-				not having songs is a critical error or not since dynamic mode
-				allows you to play songs by passing them in dynamically.
-			*/
-			config.dynamic_mode = ( user_config.dynamic_mode != undefined ? user_config.dynamic_mode : false );
+		/*
+			Initialize event handlers on init.
+		*/
+		privateInitializeEventHandlers();
+		privateInitializeSongTimeVisualizations();
+		
+		/*
+			Initializes debugging right away so we can use it for the rest
+			of the configuration.
+		*/
+		config.debug = ( user_config.debug != undefined ? user_config.debug : false );
+
+		/*
+			Checks for dynamic mode right away.  This will determine whether
+			not having songs is a critical error or not since dynamic mode
+			allows you to play songs by passing them in dynamically.
+		*/
+		config.dynamic_mode = ( user_config.dynamic_mode != undefined ? user_config.dynamic_mode : false );
+		
+		/*
+			To use visualizations with Amplitude, the user will have to explicitly state
+			that their player uses visualizations.  Reason being is that the AudioContext
+			and other filters can really mess up functionality if the user is not prepared
+			to have them operate on their audio element.  If set to true, then the
+			AudioContext and the other necessary elements will be bound for the Web Audio API
+			to handle the visualization processing.
+		*/
+		config.use_visualizations = ( user_config.use_visualizations != undefined ? user_config.use_visualizations : false );
+		
+		/*
+			If the browser supports it and the user wants to use
+			visualizations, then they can run visualizations. If
+			the browser does not support the Web Audio API and the
+			user has debug turned on, write to the console.
+		*/
+		if( window.AudioContext && config.use_visualizations ){
+			config.context = new AudioContext();
+			config.analyser = config.context.createAnalyser();
+
+			config.source = config.context.createMediaElementSource( config.active_song );
+			config.source.connect( config.analyser );
 			
-			/*
-				To use visualizations with Amplitude, the user will have to explicitly state
-				that their player uses visualizations.  Reason being is that the AudioContext
-				and other filters can really mess up functionality if the user is not prepared
-				to have them operate on their audio element.  If set to true, then the
-				AudioContext and the other necessary elements will be bound for the Web Audio API
-				to handle the visualization processing.
-			*/
-			config.use_visualizations = ( user_config.use_visualizations != undefined ? user_config.use_visualizations : false );
-			
-			/*
-				If the browser supports it and the user wants to use
-				visualizations, then they can run visualizations. If
-				the browser does not support the Web Audio API and the
-				user has debug turned on, write to the console.
-			*/
-			if( window.AudioContext && config.use_visualizations ){
-				config.context = new AudioContext();
-				config.analyser = config.context.createAnalyser();
+			config.analyser.connect( config.context.destination );
 
-				config.source = config.context.createMediaElementSource( config.active_song );
-				config.source.connect( config.analyser );
-				
-				config.analyser.connect( config.context.destination );
-
-				config.active_song.crossOrigin = "anonymous";
-			}else{
-				if( !window.AudioContext ){
-					privateWriteDebugMessage( 'This browser does not support the Web Audio API' );
-				}
+			config.active_song.crossOrigin = "anonymous";
+		}else{
+			if( !window.AudioContext ){
+				privateWriteDebugMessage( 'This browser does not support the Web Audio API' );
 			}
+		}
 
+		/*
+			The first step in setting up Amplitude is copying over all of 
+			the song objects that the user wants to use.
+		*/
+		var ready = false;
+
+		/*
+			This copies over all of the user defined songs and adds them
+			to the amplitude config.
+
+			First check is to see if Amplitude is in Dynamic Mode which
+			means that the user will be selecting sending songs dynamically
+			and using a global control set to control the functionality.
+			This is the ONLY scenario that doesn't require song(s) object.
+		*/
+		if( !user_config.dynamic_mode ){
 			/*
-				The first step in setting up Amplitude is copying over all of 
-				the song objects that the user wants to use.
+				Checks to see if the user defined any songs.
+				If there are no song definitions, then it's 
+				a critical error since Amplitude needs that to
+				run.
 			*/
-			var ready = false;
-
-			/*
-				This copies over all of the user defined songs and adds them
-				to the amplitude config.
-
-				First check is to see if Amplitude is in Dynamic Mode which
-				means that the user will be selecting sending songs dynamically
-				and using a global control set to control the functionality.
-				This is the ONLY scenario that doesn't require song(s) object.
-			*/
-			if( !user_config.dynamic_mode ){
+			if( user_config.songs ){
 				/*
-					Checks to see if the user defined any songs.
-					If there are no song definitions, then it's 
-					a critical error since Amplitude needs that to
-					run.
+					Makes sure the songs length is not 0, meaning
+					that there is at least 1 song.
 				*/
-				if( user_config.songs ){
+				if( user_config.songs.length != 0 ){
 					/*
-						Makes sure the songs length is not 0, meaning
-						that there is at least 1 song.
+						Copies over the user defined songs. and prepares
+						Amplitude for the rest of the configuration.
 					*/
-					if( user_config.songs.length != 0 ){
-						/*
-							Copies over the user defined songs. and prepares
-							Amplitude for the rest of the configuration.
-						*/
-						config.songs = user_config.songs;
-						ready = true;
-					}else{
-						privateWriteDebugMessage( 'Please add some songs, to your songs object!' );
-					}
+					config.songs = user_config.songs;
+					ready = true;
 				}else{
-					privateWriteDebugMessage( 'Please provide a songs object for AmplitudeJS to run!' );
+					privateWriteDebugMessage( 'Please add some songs, to your songs object!' );
 				}
 			}else{
-				/*
-					We are ready to copy over the rest of the information
-					since we are in dynamic mode.
-				*/
-				ready = true;
+				privateWriteDebugMessage( 'Please provide a songs object for AmplitudeJS to run!' );
 			}
-			
-
+		}else{
 			/*
-				When the preliminary config is ready, we are rady to proceed.
+				We are ready to copy over the rest of the information
+				since we are in dynamic mode.
 			*/
-			if( ready ){
-				/*
-					Copies over the soundcloud information to the global config
-					which will determine where we go from there.
-				*/
-				config.soundcloud_client = ( user_config.soundcloud_client != undefined ? user_config.soundcloud_client : '' );
-				config.soundcloud_use_art = ( user_config.soundcloud_use_art != undefined ? user_config.soundcloud_use_art : '' );
-				
-				/*
-					If the user provides a soundcloud client then we assume that
-					there are URLs in their songs that will reference SoundcCloud.
-					We then copy over the user config they provided to the 
-					temp_user_config so we don't mess up the global or their configs
-					and load the soundcloud information.
-				*/
-				if( config.soundcloud_client != '' ){
-					temp_user_config = user_config;
+			ready = true;
+		}
+		
 
-					/*
-						Load up SoundCloud for use with AmplitudeJS.
-					*/
-					privateLoadSoundcloud();
-				}else{
-					/*
-						The user is not using Soundcloud with Amplitude at this point
-						so we just finish the configuration with the users's preferences.
-					*/
-					privateSetConfig( user_config );
-				}
+		/*
+			When the preliminary config is ready, we are rady to proceed.
+		*/
+		if( ready ){
+			/*
+				Copies over the soundcloud information to the global config
+				which will determine where we go from there.
+			*/
+			config.soundcloud_client = ( user_config.soundcloud_client != undefined ? user_config.soundcloud_client : '' );
+			config.soundcloud_use_art = ( user_config.soundcloud_use_art != undefined ? user_config.soundcloud_use_art : '' );
+			
+			/*
+				If the user provides a soundcloud client then we assume that
+				there are URLs in their songs that will reference SoundcCloud.
+				We then copy over the user config they provided to the 
+				temp_user_config so we don't mess up the global or their configs
+				and load the soundcloud information.
+			*/
+			if( config.soundcloud_client != '' ){
+				temp_user_config = user_config;
+
+				/*
+					Load up SoundCloud for use with AmplitudeJS.
+				*/
+				privateLoadSoundcloud();
+			}else{
+				/*
+					The user is not using Soundcloud with Amplitude at this point
+					so we just finish the configuration with the users's preferences.
+				*/
+				privateSetConfig( user_config );
 			}
 		}
 	}
@@ -574,9 +569,7 @@ var Amplitude = (function () {
 		Public Accessor: Amplitude.pause();
 	--------------------------------------------------------------------------*/
 	function publicPause(){
-		if( config.dynamic_mode ){
-			privatePause();
-		}
+		privatePause();
 	}
 
 	function publicGetAnalyser(){
@@ -611,9 +604,17 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function privateInitializeEventHandlers(){
 		/*
+			Gets browser so if we need to apply overrides, like we usually
+			have to do for anything cool in IE, we can do that.
+		*/
+		var ua 		= window.navigator.userAgent;
+        var msie 	= ua.indexOf("MSIE ");
+
+		/*
 			On time update for the audio element, update visual displays that
 			represent the time on either a visualized element or time display.
 		*/
+		config.active_song.removeEventListener( 'timeupdate', privateUpdateTime );
 		config.active_song.addEventListener('timeupdate', privateUpdateTime );
 
 		/*
@@ -623,6 +624,7 @@ var Amplitude = (function () {
 			visualization, but for a playlist it determines whether
 			it should play the next song or not.
 		*/
+		config.active_song.removeEventListener('ended', privateHandleSongEnded );
 		config.active_song.addEventListener('ended', privateHandleSongEnded );
 
 		/*
@@ -632,8 +634,10 @@ var Amplitude = (function () {
 
 		for( var i = 0; i < play_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				play_classes[i].removeEventListener('touchstart', privatePlayClickHandle );
 				play_classes[i].addEventListener('touchstart', privatePlayClickHandle );
 			}else{
+				play_classes[i].removeEventListener('click', privatePlayClickHandle );
 				play_classes[i].addEventListener('click', privatePlayClickHandle );
 			}
 		}
@@ -645,8 +649,10 @@ var Amplitude = (function () {
 
 		for( var i = 0; i < pause_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				pause_classes[i].removeEventListener('touchstart', privatePauseClickHandle );
 				pause_classes[i].addEventListener('touchstart', privatePauseClickHandle );
 			}else{
+				pause_classes[i].removeEventListener('click', privatePauseClickHandle );
 				pause_classes[i].addEventListener('click', privatePauseClickHandle );
 			}
 		}
@@ -658,8 +664,10 @@ var Amplitude = (function () {
 
 		for( var i = 0; i < stop_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				stop_classes[i].removeEventListener('touchstart', privateStopClickHandle );
 				stop_classes[i].addEventListener('touchstart', privateStopClickHandle );
 			}else{
+				stop_classes[i].removeEventListener('click', privateStopClickHandle );
 				stop_classes[i].addEventListener('click', privateStopClickHandle );
 			}
 		}
@@ -671,8 +679,10 @@ var Amplitude = (function () {
 
 		for( var i = 0; i < play_pause_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				play_pause_classes[i].removeEventListener('touchstart', privatePlayPauseClickHandle );
 				play_pause_classes[i].addEventListener('touchstart', privatePlayPauseClickHandle );
 			}else{
+				play_pause_classes[i].removeEventListener('click', privatePlayPauseClickHandle );
 				play_pause_classes[i].addEventListener('click', privatePlayPauseClickHandle );
 			}
 		}
@@ -695,9 +705,11 @@ var Amplitude = (function () {
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
 					privateWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
+					mute_classes[i].removeEventListener('touchstart', privateMuteClickHandle );
 					mute_classes[i].addEventListener('touchstart', privateMuteClickHandle );
 				}
 			}else{
+				mute_classes[i].removeEventListener('click', privateMuteClickHandle );
 				mute_classes[i].addEventListener('click', privateMuteClickHandle );
 			}
 		}
@@ -720,9 +732,11 @@ var Amplitude = (function () {
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
 					privateWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
+					volume_up_classes[i].removeEventListener('touchstart', privateVolumeUpClickHandle );
 					volume_up_classes[i].addEventListener('touchstart', privateVolumeUpClickHandle );
 				}
 			}else{
+				volume_up_classes[i].removeEventListener('click', privateVolumeUpClickHandle );
 				volume_up_classes[i].addEventListener('click', privateVolumeUpClickHandle );
 			}
 		}
@@ -745,9 +759,11 @@ var Amplitude = (function () {
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
 					privateWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
+					volume_down_classes[i].removeEventListener('touchstart', privateVolumeDownClickHandle );
 					volume_down_classes[i].addEventListener('touchstart', privateVolumeDownClickHandle );
 				}
 			}else{
+				volume_down_classes[i].removeEventListener('click', privateVolumeDownClickHandle );
 				volume_down_classes[i].addEventListener('click', privateVolumeDownClickHandle );
 			}
 		}
@@ -759,7 +775,13 @@ var Amplitude = (function () {
 		var song_sliders = document.getElementsByClassName("amplitude-song-slider");
 
 		for( var i = 0; i < song_sliders.length; i++ ){
-			song_sliders[i].addEventListener('input', privateSongStatusBarInputHandle );
+			if ( msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./) ){
+				song_sliders[i].removeEventListener('change', privateSongStatusBarInputHandle );
+				song_sliders[i].addEventListener('change', privateSongStatusBarInputHandle );
+			}else{
+				song_sliders[i].removeEventListener('input', privateSongStatusBarInputHandle );
+				song_sliders[i].addEventListener('input', privateSongStatusBarInputHandle );
+			}
 		}
 
 		/*
@@ -780,6 +802,7 @@ var Amplitude = (function () {
 			if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
 				privateWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 			}else{
+				volume_sliders[i].removeEventListener('input', privateVolumeInputHandle );
 				volume_sliders[i].addEventListener('input', privateVolumeInputHandle );
 			}
 		}
@@ -791,8 +814,10 @@ var Amplitude = (function () {
 
 		for( var i = 0; i < next_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				next_classes[i].removeEventListener('touchstart', privateNextClickHandle );
 				next_classes[i].addEventListener('touchstart', privateNextClickHandle );
 			}else{
+				next_classes[i].removeEventListener('click', privateNextClickHandle );
 				next_classes[i].addEventListener('click', privateNextClickHandle );
 			}
 		}
@@ -804,8 +829,10 @@ var Amplitude = (function () {
 
 		for( var i = 0; i < prev_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				prev_classes[i].removeEventListener('touchstart', privatePrevClickHandle );
 				prev_classes[i].addEventListener('touchstart', privatePrevClickHandle );
 			}else{
+				prev_classes[i].removeEventListener('click', privatePrevClickHandle );
 				prev_classes[i].addEventListener('click', privatePrevClickHandle );
 			}
 		}
@@ -820,8 +847,10 @@ var Amplitude = (function () {
 			shuffle_classes[i].classList.add('amplitude-shuffle-off');
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				shuffle_classes[i].removeEventListener('touchstart', privateShuffleClickHandle );
 				shuffle_classes[i].addEventListener('touchstart', privateShuffleClickHandle );
 			}else{
+				shuffle_classes[i].removeEventListener('click', privateShuffleClickHandle );
 				shuffle_classes[i].addEventListener('click', privateShuffleClickHandle );
 			}
 		}
@@ -836,9 +865,26 @@ var Amplitude = (function () {
 			repeat_classes[i].classList.add('amplitude-repeat-off');
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				repeat_classes[i].removeEventListener('touchstart', privateRepeatClickHandle );
 				repeat_classes[i].addEventListener('touchstart', privateRepeatClickHandle );
 			}else{
+				repeat_classes[i].removeEventListener('click', privateRepeatClickHandle );
 				repeat_classes[i].addEventListener('click', privateRepeatClickHandle );
+			}
+		}
+
+		/*
+			Binds handlers for playback speed adjustments
+		*/
+		var playback_speed_classes = document.getElementsByClassName("amplitude-playback-speed");
+
+		for( var i = 0; i < playback_speed_classes.length; i++ ){
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				playback_speed_classes[i].removeEventListener('touchstart', privateAdjustPlaybackSpeedClickHandle );
+				playback_speed_classes[i].addEventListener('touchstart', privateAdjustPlaybackSpeedClickHandle );
+			}else{
+				playback_speed_classes[i].removeEventListener('click', privateAdjustPlaybackSpeedClickHandle );
+				playback_speed_classes[i].addEventListener('click', privateAdjustPlaybackSpeedClickHandle );
 			}
 		}
 	}
@@ -1682,22 +1728,91 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function privateUpdateTime(){
 		/*
-			Gets the current time of the song in seconds and minutes.
+			Gets the current time of the song in seconds, minutes, and hours.
 		*/
 		var current_seconds = ( Math.floor( config.active_song.currentTime % 60 ) < 10 ? '0' : '' ) + 
 							    Math.floor( config.active_song.currentTime % 60 );
 
 		var current_minutes = Math.floor( config.active_song.currentTime / 60 );
 
+		if( current_minutes < 10 ){
+			current_minutes = '0'+current_minutes;
+		}
+
 		/*
-			Gets the current song's duration in seconds and minutes.
+			Initialize the current hours variable.
+		*/
+		var current_hours = '00';
+
+		/*
+			If the user is more than 60 minutes into the song, then
+			we extract the hours.
+		*/
+		if( current_minutes > 60 ){
+			current_minutes 	= current_minutes % 60;
+			current_hours 		= Math.ceil( current_minutes / 60 );
+
+			/*
+				If the user is less than 10 hours in, we append the
+				additional 0 to the hours.
+			*/
+			if( current_hours < 10 ){
+				current_hours = '0'+current_hours;
+			}
+
+			/*
+				If the user is less than 10 minutes in, we append the
+				additional 0 to the minutes.
+			*/
+			if( current_minutes < 10 ){
+				current_minutes = '0'+current_minutes;
+			}
+		}
+
+		/*
+			Gets the current song's duration in seconds, minutes, and hours.
 		*/
 
 		var song_duration_seconds = ( Math.floor( config.active_song.duration % 60 ) < 10 ? '0' : '' ) + 
 									  		Math.floor( config.active_song.duration % 60 );
 
 		var song_duration_minutes = Math.floor( config.active_song.duration / 60 );
+
+		if( song_duration_minutes < 10 ){
+			song_duration_minutes = '0'+song_duration_minutes;
+		}
+		/*
+			Initialize the hours duration variable.
+		*/
+		var song_duration_hours = '00';
 		
+		/*
+			If there is more than 60 minutes in the song, then we
+			extract the hours.
+		*/
+		if( song_duration_minutes > 60 ){
+			song_duration_minutes 	= song_duration_minutes % 60;
+			song_duration_hours 	= Math.ceil( song_duration_minutes / 60 ); 
+
+			/*
+				If the song duration hours is less than 10 we append
+				the additional 0.
+			*/
+			if( song_duration_hours < 10 ){
+				song_duration_hours = '0'+song_duration_hours;
+			}
+
+			/*
+				If the song duration minutes is less than 10 we append
+				the additional 0.
+			*/
+			if( song_duration_minutes < 10 ){
+				song_duration_minutes = '0'+song_duration_minutes;
+			}
+		}
+
+
+
 		/*
 			Finds the current slider that represents the active song's time.
 			If there is only one song slider, than that's the one we adjust
@@ -1756,6 +1871,20 @@ var Amplitude = (function () {
 			display, we update the singular. If there are multiple, we only do 
 			the first one on the query, it wouldn't make sense to do all of them.
 		*/
+		if( document.querySelectorAll('[amplitude-single-current-hours="true"]').length > 0 ){
+			var mainCurrentHourSelectors = document.querySelectorAll('[amplitude-single-current-hours="true"]');
+			for( var i = 0; i < mainCurrentHourSelectors.length; i++ ){
+				mainCurrentHourSelectors[i].innerHTML = current_hours;
+			}
+		}
+
+		if( document.querySelectorAll('.amplitude-current-hours[amplitude-song-index="'+config.active_index+'"]').length > 0 ){
+			var currentHourSelectors = document.querySelectorAll('.amplitude-current-hours[amplitude-song-index="'+config.active_index+'"]');
+			for( var i = 0; i < currentHourSelectors.length; i++ ){
+				currentHourSelectors[i].innerHTML = current_hours;
+			}
+		}
+
 		if( document.querySelectorAll('[amplitude-single-current-minutes="true"]').length > 0 ){
 			var mainCurrentMinuteSelectors = document.querySelectorAll('[amplitude-single-current-minutes="true"]');
 			for( var i = 0; i < mainCurrentMinuteSelectors.length; i++ ){
@@ -1785,6 +1914,20 @@ var Amplitude = (function () {
 		}
 		
 		if( !config.active_metadata.live ){
+			if( document.querySelectorAll('[amplitude-single-duration-hours="true"]').length > 0 ){
+				var mainDurationHourSelectors = document.querySelectorAll('[amplitude-single-duration-hours="true"]');
+				for( var i = 0; i < mainDurationHourSelectors.length; i++ ){
+					mainDurationHourSelectors[i].innerHTML = song_duration_hours;
+				}
+			}
+
+			if( document.querySelectorAll('.amplitude-duration-hours[amplitude-song-index="'+config.active_index+'"]').length > 0 ){
+				var durationHourSelectors = document.querySelectorAll('.amplitude-duration-hours[amplitude-song-index="'+config.active_index+'"]');
+				for( var i = 0; i < durationHourSelectors.length; i++ ){
+					durationHourSelectors[i].innerHTML = song_duration_hours;
+				}
+			}
+
 			if( document.querySelectorAll('[amplitude-single-duration-minutes="true"]').length > 0 ){
 				var mainDurationMinuteSelectors = document.querySelectorAll('[amplitude-single-duration-minutes="true"]');
 				for( var i = 0; i < mainDurationMinuteSelectors.length; i++ ){
@@ -1878,6 +2021,29 @@ var Amplitude = (function () {
 		privateSyncVisualRepeat();
 	}
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-playback-speed'
+
+		Handles a click for the adjust playback speed element.
+	--------------------------------------------------------------------------*/
+	function privateAdjustPlaybackSpeedClickHandle(){
+		switch( config.playback_speed ){
+			case 1:
+				config.playback_speed = 1.5;
+			break;
+			case 1.5:
+				config.playback_speed = 2;
+			break;
+			case 2:
+				config.playback_speed = 1;
+			break;
+		}
+		
+		config.active_song.playbackRate = config.playback_speed;
+
+		privateSyncVisualPlaybackSpeed();
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| HELPER FUNCTIONS
@@ -1886,6 +2052,79 @@ var Amplitude = (function () {
 	| assisting the logical functions with what they need such as setting
 	| the proper song index after an event has occured.
 	*/
+
+	/*--------------------------------------------------------------------------
+		Resets the config back to the defaults. This is so if we are adding
+		an entirely new player to the page it we call re-init and allow the
+		user to pass in their overrides.
+	--------------------------------------------------------------------------*/
+	function privateResetConfig(){
+		config.active_song = new Audio();
+
+		config.active_metadata = {};
+
+		config.active_album = '';
+
+		config.active_index = 0;
+
+		config.pause_clicked = false;
+
+		config.autoplay = false;
+
+		config.playback_speed = 1.0;
+
+		config.album_change = false;
+
+		config.dynamic_mode = false;
+
+		config.callbacks = {};
+
+		config.songs = {};
+
+		config.repeat = false;
+
+		config.shuffle_list = {};
+
+		config.shuffle_on = false;
+
+		config.shuffle_active_index = 0;
+
+		config.default_album_art = '';
+
+		config.debug = false;
+
+		config.initialized = false;
+
+		config.handle_song_elements = true;
+
+		config.volume = .5;
+
+		config.pre_mute_volume = .5;
+
+		config.volume_increment = 5;
+
+		config.volume_decrement = 5;
+
+		config.use_visualizations = false;
+
+		config.visualizations = new Array();
+
+		config.active_visualization = '';
+
+		config.current_visualization = {};
+
+		config.visualization_started = false;
+
+		config.visualization_backup = '';
+
+		config.soundcloud_client = '';
+
+		config.soundcloud_use_art = false;
+
+		config.soundcloud_song_count = 0;
+
+		config.soundcloud_songs_ready = 0;
+	}
 
 	/*--------------------------------------------------------------------------
 		Finishes the initalization of the config. Takes all of the user defined
@@ -1942,6 +2181,19 @@ var Amplitude = (function () {
 				config.active_index = 0;
 			}
 		}
+
+		/*
+			If the user defined a playback speed, we copy over their
+			preference here, otherwise we default to normal playback
+			speed of 1.0.
+		*/
+		config.playback_speed = ( user_config.playback_speed != undefined ? user_config.playback_speed : 1.0 );
+
+		/*
+			Sets the playback rate for the current song based on what
+			the user defined or the default if nothing was defined.
+		*/
+		config.active_song.playbackRate = config.playback_speed;
 
 		/*
 			If live is not defined, assume it is false. The reason for
@@ -2038,6 +2290,12 @@ var Amplitude = (function () {
 		privateResetSongStatusSliders();
 
 		privateCheckSongVisualization();
+
+		/*
+			Syncs the visual playback speed items so the appropriate class
+			is added to the item for visual purposes.
+		*/
+		privateSyncVisualPlaybackSpeed();
 
 		/*
 			Initialize the visual elements for the song if the user
@@ -2616,8 +2874,110 @@ var Amplitude = (function () {
 				}else{
 					coverImages[i].setAttribute('src', '');
 				}
+			}	
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's date.
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-date"]') ){
+			var podcastEpisodeDate = document.querySelectorAll('[amplitude-song-info="podcast-episode-date"]');
+			for( i = 0; i < podcastEpisodeDate.length; i++ ){
+				podcastEpisodeDate[i].innerHTML = config.active_metadata.podcast_episode_date;
 			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's play count
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-play-count"]') ){
+			var podcastEpisodePlayCount = document.querySelectorAll('[amplitude-song-info="podcast-episode-play-count"]');
+			for( i = 0; i < podcastEpisodePlayCount.length; i++ ){
+				podcastEpisodePlayCount[i].innerHTML = config.active_metadata.podcast_episode_play_count;
+			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's published date
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-published-date"]') ){
+			var podcastEpisodePublishedDate = document.querySelectorAll('[amplitude-song-info="podcast-episode-published-date"]');
+
+			for( i = 0; i < podcastEpisodePublishedDate.length; i++ ){
+				podcastEpisodePublishedDate[i].innerHTML = config.active_metadata.podcast_episode_published_date;
+			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's name.
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-name"]' ) ){
+			var podcastEpisodeName = document.querySelectorAll('[amplitude-song-info="podcast-episode-name"]');
+			for( i = 0; i < podcastEpisodeName.length; i++ ){
+				podcastEpisodeName[i].innerHTML = config.active_metadata.podcast_episode_name;
+			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's author.
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-author"]' ) ){
+			var podcastEpisodeAuthor = document.querySelectorAll('[amplitude-song-info="podcast-episode-author"]');
+			for( i = 0; i < podcastEpisodeAuthor.length; i++ ){
+				podcastEpisodeAuthor[i].innerHTML = config.active_metadata.podcast_episode_author;
+			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's duration.
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-duration"]') ){
+			var podcastEpisodeDuration = document.querySelectorAll('[amplitude-song-info="podcast-episode-duration"]');
+			for( i = 0; i < podcastEpisodeDuration.length; i++ ){
+				podcastEpisodeDuration[i].innerHTML = config.active_metadata.podcast_episode_duration;
+			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's description.
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-episode-description"]') ){
+			var podcastEpisodeDescription = document.querySelectorAll('[amplitude-song-info="podcast-episode-description"]');
+			for( i = 0; i < podcastEpisodeDuration.length; i++ ){
+				podcastEpisodeDescription[i].innerHTML = config.active_metadata.podcast_episode_description;
+			}
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's cover art.
+		*/
+		if( document.querySelectorAll('[amplitude-song-info="podcast-episode-cover-art"]') ){
+			var coverImages = document.querySelectorAll('[amplitude-song-info="podcast-episode-cover-art"]');
 			
+			/*
+					Checks to see if first, the podcast episode has a defined cover art and uses
+					that. If it does NOT have defined cover art, checks to see if there
+					is a default.  Otherwise it just sets the src to '';
+				*/
+			for( i = 0; i < coverImages.length; i++ ){
+				if( config.active_metadata.podcast_episode_cover_art != undefined){
+					coverImages[i].setAttribute('src', config.active_metadata.podcast_episode_cover_art);
+				}else if( config.default_album_art != '' ){
+					coverImages[i].setAttribute('src', config.default_album_art);
+				}else{
+					coverImages[i].setAttribute('src', '');
+				}
+			}	
+		}
+
+		/*
+			Sets all of the elements that will contain the podcast episode's name.
+		*/
+		if( document.querySelectorAll( '[amplitude-song-info="podcast-name"]') ){
+			var podcastName = document.querySelectorAll('[amplitude-song-info="podcast-name"]');
+			for( i = 0; i < podcastName.length; i++ ){
+				podcastName[i].innerHTML = config.active_metadata.podcast_name;
+			}
 		}
 	}
 
@@ -2844,6 +3204,8 @@ var Amplitude = (function () {
 		making sure everything stays in sync.
 	--------------------------------------------------------------------------*/
 	function privateChangePlayPauseState( state ){
+		privateSetPlayPauseButtonsToPause();
+		
 		/*
 			If the state is playing we set all of the classes accordingly.
 		*/
@@ -2960,7 +3322,7 @@ var Amplitude = (function () {
 		var current_minute_times = document.getElementsByClassName("amplitude-current-minutes");
 
 		for( var i = 0; i < current_minute_times.length; i++ ){
-			current_minute_times[i].innerHTML = '0';
+			current_minute_times[i].innerHTML = '00';
 		}
 
 		var current_second_times = document.getElementsByClassName("amplitude-current-seconds");
@@ -3026,6 +3388,47 @@ var Amplitude = (function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Sets all of the visual playback speed buttons to have the right class
+		to display the background image that represents the current playback
+		speed.
+	--------------------------------------------------------------------------*/
+	function privateSyncVisualPlaybackSpeed(){
+		/*
+			Gets all of the playback speed classes.
+		*/
+		var playback_speed_classes = document.getElementsByClassName("amplitude-playback-speed");
+
+		/*
+			Iterates over all of the playback speed classes
+			applying the right speed class for visual purposes.
+		*/
+		for( var i = 0; i < playback_speed_classes.length; i++ ){
+			/*
+				Removes all of the old playback speed classes.
+			*/
+			playback_speed_classes[i].classList.remove('amplitude-playback-speed-10');
+			playback_speed_classes[i].classList.remove('amplitude-playback-speed-15');
+			playback_speed_classes[i].classList.remove('amplitude-playback-speed-20');
+
+			/*
+				Switch the current playback speed and apply the appropriate 
+				speed class.
+			*/
+			switch( config.playback_speed ){
+				case 1:
+					playback_speed_classes[i].classList.add('amplitude-playback-speed-10');
+				break;
+				case 1.5:
+					playback_speed_classes[i].classList.add('amplitude-playback-speed-15');
+				break;
+				case 2:
+					playback_speed_classes[i].classList.add('amplitude-playback-speed-20');
+				break;
+			}
+		}
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| CORE FUNCTIONAL METHODS
@@ -3048,8 +3451,20 @@ var Amplitude = (function () {
 			privateReconnectStream();
 		}
 
-		config.active_song.play();
+		/*
+			Mobile remote sources need to be reconnected on play. I think this is
+			because mobile browsers are optimized not to load all resources
+			for speed reasons. We only do this if mobile and the paused button
+			is not clicked. If the pause button was clicked then we don't reconnect
+			or the user will lose their place in the stream.
+		*/
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && !config.paused ) {
+			privateReconnectStream();
+		}
 
+		config.active_song.play();
+		config.active_song.playbackRate = config.playback_speed;
+		
 		privateRunCallback('after_play');
 	}
 
@@ -3059,6 +3474,11 @@ var Amplitude = (function () {
 	function privatePause(){
 		config.active_song.pause();
 		
+		/*
+			Flag that pause button was clicked.
+		*/
+		config.paused = true;
+
 		if( config.active_metadata.live ){
 			privateDisconnectStream();
 		}
