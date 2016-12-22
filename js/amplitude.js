@@ -492,6 +492,17 @@ var Amplitude = (function () {
 	}
 
 	/*--------------------------------------------------------------------------
+		Returns the active song index.
+		
+		Public Accessor: Amplitude.activeIndex()
+
+		@returns The integer for the active index.
+	--------------------------------------------------------------------------*/
+	function publicGetActiveIndex(){
+		return config.active_index;
+	}
+
+	/*--------------------------------------------------------------------------
 		Adds a song to the end of the config array.  This will allow Amplitude
 		to play the song in a playlist type setting.
 		
@@ -3558,6 +3569,7 @@ var Amplitude = (function () {
 		changeVisualization: publicChangeActiveVisualization,
 		addSong: publicAddSong,
 		analyser: publicGetAnalyser,
-		active: config.active_song
+		active: config.active_song,
+		activeIndex: publicGetActiveIndex
 	};
 })();
