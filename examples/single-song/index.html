@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Single Song Player with Amplitude.js</title>
-		<script type="text/javascript" src="../../js/amplitude.js"></script>
+		<script type="text/javascript" src="../../dist/amplitude.js"></script>
 		<!-- jQuery only used to help with animations and NON Amplitude elements -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 
@@ -18,7 +18,7 @@
 			<!-- End Small Player Left -->
 
 			<!-- Begin Small Player Album Art -->
-			<img id="small-player-album-art" amplitude-song-info="cover"/>
+			<img id="small-player-album-art" amplitude-song-info="cover_art_url"/>
 			<!-- End Small Player Album Art -->
 
 			<!-- Begin Small Player Middle -->
@@ -39,7 +39,7 @@
 				</div>
 				
 				<div id="small-player-middle-bottom">
-					<div class="amplitude-song-time-visualization" amplitude-single-song-time-visualization="true" id="song-time-visualization"></div>
+					<div class="amplitude-song-time-visualization" amplitude-main-song-time-visualization="true" id="song-time-visualization"></div>
 				</div>
 			</div>
 			<!-- End Small Player Middle -->
@@ -47,7 +47,7 @@
 			<!-- Begin Small Player Right -->
 			<div id="small-player-right">
 				<span id="current-time">
-					<span class="amplitude-current-minutes" amplitude-single-current-minutes="true">0</span>:<span class="amplitude-current-seconds" amplitude-single-current-seconds="true">00</span>
+					<span class="amplitude-current-minutes" amplitude-main-current-minutes="true">0</span>:<span class="amplitude-current-seconds" amplitude-main-current-seconds="true">00</span>
 				</span>
 			</div>
 			<!-- End Small Player Right -->

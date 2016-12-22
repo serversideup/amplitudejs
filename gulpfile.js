@@ -8,4 +8,3 @@ gulp.task('default', function() {
     .pipe(uglify())	
     .pipe(gulp.dest('js'));
 });
-

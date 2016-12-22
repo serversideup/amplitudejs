@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Single Song Player and Album Art with Amplitude.js</title>
-		<script type="text/javascript" src="../../js/amplitude.js"></script>
+		<script type="text/javascript" src="../../dist/amplitude.js"></script>
 		<!-- jQuery only used to help with animations and NON Amplitude elements -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 
@@ -20,7 +20,7 @@
 
 		<!-- Start Large Album Art -->
 		<div id="top-large-album" class="hidden-on-collapse">
-			<img id="large-album-art" amplitude-song-info="cover"/>
+			<img id="large-album-art" amplitude-song-info="cover_art_url"/>
 		</div>
 		<!-- End Large Album Art -->
 
@@ -33,7 +33,7 @@
 			<!-- End Small Player Left -->
 
 			<!-- Begin Small Player Album Art -->
-			<img id="small-player-album-art" class="hidden-on-expanded" amplitude-song-info="cover"/>
+			<img id="small-player-album-art" class="hidden-on-expanded" amplitude-song-info="cover_art_url"/>
 			<!-- End Small Player Album Art -->
 
 			<!-- Begin Small Player Middle -->
@@ -41,7 +41,7 @@
 				<div id="small-player-middle-top">
 					<!-- Begin Controls Container -->
 					<div id="small-player-middle-controls">
-						<div class="amplitude-play-pause amplitude-paused" amplitude-song-index="0"></div>
+						<div class="amplitude-play-pause amplitude-paused" amplitude-main-play-pause="true"></div>
 					</div>
 					<!-- End Controls Container -->
 
@@ -69,7 +69,7 @@
 
 			<!-- Begin Small Player Full Bottom -->
 			<div id="small-player-full-bottom" class="hidden-on-collapse">
-				<div class="amplitude-play-pause amplitude-paused" amplitude-song-index="0"></div>
+				<div class="amplitude-play-pause amplitude-paused" amplitude-main-play-pause="true"></div>
 				<div id="small-player-full-bottom-info">
 					<span class="current-time">
 						<span class="amplitude-current-minutes" amplitude-song-index="0">0</span>:<span class="amplitude-current-seconds" amplitude-song-index="0">00</span>

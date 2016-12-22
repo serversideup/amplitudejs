@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Playlist with Amplitude.js</title>
-		<script type="text/javascript" src="../../js/amplitude.js"></script>
+		<script type="text/javascript" src="../../dist/amplitude.js"></script>
 		<!-- jQuery only used to help with animations and NON Amplitude elements -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 
@@ -131,20 +131,20 @@
 		Amplitude.init({
 			"songs": [
 				{
-					"name": "Living Proof",
-					"artist": "Gregory Alan Isakov",
-					"album": "The Weatherman",
-					"url": "http://a1537.phobos.apple.com/us/r30/Music4/v4/60/af/eb/60afeba7-f8d9-a920-ff5b-b8666fdc2de4/mzaf_3379426683594665460.plus.aac.p.m4a",
-					"live": false,
-					"cover_art_url": "images/theweatherman.jpg"
-				},
-				{
 					"name": "Rooms",
 					"artist": "Mia and Jonah",
 					"album": "Rooms For Adelaide",
 					"url": "http://a656.phobos.apple.com/us/r30/Music/2d/d1/52/mzm.oymgnziu.aac.p.m4a",
 					"live": false,
 					"cover_art_url": "images/roomsforadelaide.jpg"
+				},
+				{
+					"name": "Living Proof",
+					"artist": "Gregory Alan Isakov",
+					"album": "The Weatherman",
+					"url": "http://a1537.phobos.apple.com/us/r30/Music4/v4/60/af/eb/60afeba7-f8d9-a920-ff5b-b8666fdc2de4/mzaf_3379426683594665460.plus.aac.p.m4a",
+					"live": false,
+					"cover_art_url": "images/theweatherman.jpg"
 				},
 				{
 					"name": "Suburban War",
@@ -155,7 +155,16 @@
 					"cover_art_url": "images/thesuburbs.jpeg"
 				}
 			],
-			"default_album_art": "images/no-cover-large.png"
+			"playlists": {
+				"indie": [
+					1, 0, 2
+				],
+				"alt-rock": [
+					2, 1, 0
+				]
+			},
+			"default_album_art": "images/no-cover-large.png",
+			"debug": true
 		});
 
 		var expanded = false;
