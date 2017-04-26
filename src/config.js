@@ -79,6 +79,11 @@ var config = {
 	shuffled_statuses: {},
 
 	/*
+		Object that contains the active index in a shuffled playlist.
+	*/
+	shuffled_active_indexes: {},
+
+	/*
 		When repeat is on, when the song ends the song will replay itself.
 	*/
 	repeat: false,

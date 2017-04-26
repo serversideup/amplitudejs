@@ -1,13 +1,7 @@
 import config from '../config.js';
-
 import AmplitudeHelpers from './helpers.js';
+import AmplitudeVisualSync from '../visual/visual.js';
 
-/*
-	TODO: Make that any interactions with volume that the volume is between 0 and 100. It's a little
-	easier sounding.
-
-	TODO: Ensure that anything not referencing the config or an HTML element is camelCase
-*/
 /*
 |----------------------------------------------------------------------------------------------------
 | CORE FUNCTIONAL METHODS
@@ -35,8 +29,14 @@ var AmplitudeCore = (function() {
 		the stream before playing.
 	--------------------------------------------------------------------------*/
 	function play(){
+		/*
+			Run the before play callback
+		*/
 		AmplitudeHelpers.runCallback('before_play');
 
+		/*
+			If the audio is live we re-conenct the stream.
+		*/
 		if( config.active_metadata.live ){
 			reconnectStream();
 		}
@@ -52,9 +52,16 @@ var AmplitudeCore = (function() {
 			reconnectStream();
 		}
 
+		/*
+			Play the song and set the playback rate to the playback
+			speed.
+		*/
 		config.active_song.play();
 		config.active_song.playbackRate = config.playback_speed;
-		
+			
+		/*
+			Run the after play callback
+		*/
 		AmplitudeHelpers.runCallback('after_play');
 	}
 
@@ -62,6 +69,9 @@ var AmplitudeCore = (function() {
 		Pauses the active song. If it's live, it disconnects the stream.
 	--------------------------------------------------------------------------*/
 	function pause(){
+		/*
+			Pause the active song.
+		*/
 		config.active_song.pause();
 		
 		/*
@@ -93,6 +103,14 @@ var AmplitudeCore = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
+		Repeats the active song on ending.
+	--------------------------------------------------------------------------*/
+	function repeat(){
+		config.active_song.currentTime = 0;
+		config.active_song.play();
+	}
+
+	/*--------------------------------------------------------------------------
 		Sets the song volume.
 
 		@param int volumeLevel A number between 1 and 100 as a percentage of
@@ -114,6 +132,31 @@ var AmplitudeCore = (function() {
 		if( !config.active_metadata.live ){
 			config.active_song.currentTime = ( config.active_song.duration ) * ( song_percentage / 100 );
 		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Skips to a location in a song
+
+		@param int seconds An integer containing the seconds to skip to
+	--------------------------------------------------------------------------*/
+	function skipToLocation( seconds ){
+		/*
+			When the active song can be played through, we can check to
+			see if the seconds will work. We only bind the event handler
+			once and remove it once it's fired.
+		*/
+		config.active_song.addEventListener('canplaythrough', function(){
+			/*
+				If the active song duration is greater than or equal to the
+				amount of seconds the user wants to skip to and the seconds
+				is greater than 0, we skip to the seconds defined.
+			*/
+			if( config.active_song.duration >= seconds && seconds > 0 ){
+				config.active_song.currentTime = seconds;
+			}else{
+				AmplitudeHelpers.writeDebugMessage('Amplitude can\'t skip to a location greater than the duration of the audio or less than 0');
+			}
+		}, { once: true });
 	}
 
 	/*--------------------------------------------------------------------------
@@ -140,8 +183,6 @@ var AmplitudeCore = (function() {
 		Public Accessor: Amplitude.playNow( song_json )
 
 		@param song JSON representation of a song.
-
-		TODO: Make sure that the globals get adjusted for the now playing.
 	--------------------------------------------------------------------------*/
 	function playNow( song ){
 		/*
@@ -153,19 +194,36 @@ var AmplitudeCore = (function() {
 			config.active_metadata 	= song;
 			config.active_album 	= song.album;
 		}else{
-			privateHelpWriteDebugMessage('The song needs to have a URL!');
+			/*
+				Write error message since the song passed in doesn't
+				have a URL.
+			*/
+			AmplitudeHelpers.writeDebugMessage('The song needs to have a URL!');
 		}
 		
 		/*
 			Sets the main song control status visual
 		*/
-		privateChangePlayPauseState('playing');
+		AmplitudeVisualSync.syncMainPlayPause('playing');
 
 		/*
-			Calls the song change method that configures everything necessary for
-			Amplitude when the song changes.
+			Update the song meta data
 		*/
-		privateAfterSongChanges();
+		AmplitudeVisualSync.displaySongMetadata();
+
+
+		/*
+			Reset the song sliders, song time visualizations, and
+			reset times. This ensures everything stays in sync.
+		*/
+		AmplitudeVisualSync.resetSongSliders();
+		AmplitudeVisualSync.resetSongTimeVisualizations();
+		AmplitudeVisualSync.resetTimes();
+
+		/*
+			Plays the song.
+		*/
+		play();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -192,8 +250,10 @@ var AmplitudeCore = (function() {
 		play: play,
 		pause: pause,
 		stop: stop,
+		repeat: repeat,
 		setVolume: setVolume,
 		setSongLocation: setSongLocation,
+		skipToLocation: skipToLocation,
 		disconnectStream: disconnectStream,
 		reconnectStream: reconnectStream,
 		playNow: playNow,

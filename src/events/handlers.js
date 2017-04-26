@@ -2,6 +2,7 @@ import config from '../config.js';
 import AmplitudeEventHelpers from './helpers.js';
 import AmplitudeVisualSync from '../visual/visual.js';
 import AmplitudeCore from '../core/core.js';
+import AmplitudeCoreHelpers from '../core/helpers.js';
 
 /*
 |-------------------------------------------------------------------------------
@@ -31,7 +32,9 @@ import AmplitudeCore from '../core/core.js';
 */
 export default {
 	/*--------------------------------------------------------------------------
-		Handles an update on the current song's time.
+		HANDLER FOR: timeupdate
+
+		When the time updates on the active song, we sync the current time displays
 	--------------------------------------------------------------------------*/
 	updateTime: function(){
 		/*
@@ -52,17 +55,53 @@ export default {
 			var songCompletionPercentage = AmplitudeEventHelpers.computeSongCompletionPercentage();
 
 			/*
+				Computes the song duration
+			*/
+			var songDuration = AmplitudeEventHelpers.computeSongDuration();
+
+			/*
 				Sync the current time elements with the current
-				location of the song.
+				location of the song and the song duration elements with
+				the duration of the song.
 			*/
 			AmplitudeVisualSync.syncCurrentTime( currentTime, songCompletionPercentage );
+			AmplitudeVisualSync.syncSongDuration( songDuration );
 		}
 	},
 
-	songEnded: function(){
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: ended
 
+		When the song has ended, handles what to do next
+	--------------------------------------------------------------------------*/
+	songEnded: function(){
+		/*
+			If the config is set to repeat, repeat the current song
+		*/
+		if( config.repeat ){
+			AmplitudeCore.repeat();
+		}else{
+			/*
+				If the active playlist is not set, we set the
+				next song that's in the songs array.
+			*/
+			if( config.active_playlist == '' 
+				|| config.active_playlist == null ){
+					AmplitudeEventHelpers.setNext();
+			}else{
+				/*
+					Set the next song in the playlist
+				*/
+				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist );
+			}
+		}
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-play'
+
+		Handles an event on a play button in Amplitude.
+	--------------------------------------------------------------------------*/
 	play: function(){
 		/*
 			Gets the attribute for song index so we can check if
@@ -72,140 +111,512 @@ export default {
 			class and change the song.
 		*/
 		var playButtonSongIndex = this.getAttribute('amplitude-song-index');
-		
-		/*
-			We set the new song if the user clicked a song with a different
-			index. If it's the same as what's playing then we don't set anything. 
-			If it's different we reset all song sliders.
-		*/
-		if( AmplitudeEventHelpers.checkNewSong( playButtonSongIndex ) ){
-			//TODO: Implement change song method
-			AmplitudeHelpers.changeSong( config.songs[ playButtonSongIndex ] );
+		var playButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
+
+		if( playButtonPlaylistIndex == null && playButtonSongIndex == null ){
+			AmplitudeEventHelpers.setSongPlayPause( config.active_playlist, config.active_index );
 		}
 
-		// TODO: We should method this out so we can use it in the play/pause interaction
+		/*
+			
+		*/
+		if( playButtonPlaylistIndex != null && playButtonPlaylistIndex != '' ){
+			if( AmplitudeCoreHelpers.checkNewPlaylist( playButtonPlaylistIndex ) ){
+				AmplitudeCoreHelpers.setActivePlaylist( playButtonPlaylistIndex );
+
+				if( playButtonSongIndex != null ){
+					AmplitudeCoreHelpers.changeSong( playButtonSongIndex );
+					AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+				}else{
+					AmplitudeCoreHelpers.changeSong( config.playlists[ playButtonPlaylistIndex ][0] );
+					AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+				}
+			}else{
+				if( playButtonSongIndex != null ){
+					AmplitudeCoreHelpers.changeSong( playButtonSongIndex );
+					AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+				}else{
+					AmplitudeCoreHelpers.changeSong( config.active_index );
+					AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+				}
+			}
+		}
+
+		/*
+
+		*/
+		if( ( playButtonPlaylistIndex == null || playButtonPlaylistIndex == '' )
+			&& ( playButtonSongIndex != null && playButtonSongIndex != '' ) ){
+
+				if( AmplitudeCoreHelpers.checkNewSong( playButtonSongIndex )
+					|| config.active_playlist != playButtonPlaylistIndex ){
+					AmplitudeCoreHelpers.changeSong( playButtonSongIndex );
+				}
+
+				AmplitudeEventHelpers.setSongPlayPause( playButtonPlaylistIndex, playButtonSongIndex );
+		}
 
 		/*
 			Start the visualizations for the song. 
 			AMPFX-TODO: MAKE HANDLED BY AMPLITUDE FX
 		*/
 		//privateStartVisualization();
-		
-		/*
-			Play the song through the core play function.
-		*/
-		AmplitudeCore.play();
 	},
 
 	/*--------------------------------------------------------------------------
-		Handles an event on a pause element.
-
-		TODO: Check to see that the pause element has an index and if that
-		index matches the current song being played.  If it's different then
-		we should disable it? If the user clicks on song-index=1 pause and 
-		song-index=2 is being played, is it right to pause?
+		HANDLER FOR: 'amplitude-pause'
 	--------------------------------------------------------------------------*/
 	pause: function(){
-		AmplitudeCore.pause();
-	},
+		var pauseButtonSongIndex = this.getAttribute('amplitude-song-index');
+		var pauseButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
+
+		if( pauseButtonSongIndex == null && pauseButtonPlaylistIndex == null ){
+			AmplitudeEventHelpers.setSongPlayPause( config.active_playlist, config.active_index );
+			AmplitudeCore.pause();
+		}
 
 
-	playPause: function(){
-		/*--------------------------------------------------------------------------
-			Plays or Pauses the current song. This is the logic for main play 
-			pause buttons. This is the simplist implementation since it just plays
-			or pauses the active song.
-		--------------------------------------------------------------------------*/
-		if( this.getAttribute( 'amplitude-main-play-pause' ) != null ){
+		if( pauseButtonPlaylistIndex != null || pauseButtonPlaylistIndex != '' 
+			&& config.active_playlist == pauseButtonPlaylistIndex ){
 			/*
-				Determines what action we should take based on the
-				state of the song.
+				The song was playing so we sync visually for the song
+				to be paused and we pause the song.
 			*/
-			if( config.active_song.paused ){
-				/*
-					The song was paused so we sync visually for the song
-					that is playing and we play the song.
-				*/
-				AmplitudeVisualSync.syncPlayPause( 'playing' );
-				AmplitudeCore.play();
-			}else{
+			AmplitudeVisualSync.syncMainPlayPause( 'paused' );
+
+			/*
+				If there is an active playlist, then
+				we need to sync that playlist's play pause
+				button to the state of paused.
+			*/
+			AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'paused' );
+
+			/*
+				Sync the song play pause buttons
+			*/
+			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'paused' );
+			
+			AmplitudeCore.pause();
+		}
+
+		if( ( pauseButtonPlaylistIndex == null || pauseButtonPlaylistIndex == '' )
+			&& ( pauseButtonSongIndex == config.active_index ) ){
 				/*
 					The song was playing so we sync visually for the song
 					to be paused and we pause the song.
 				*/
-				AmplitudeVisualSync.syncPlayPause( 'paused' );
+				AmplitudeVisualSync.syncMainPlayPause( 'paused' );
+
+				/*
+					If there is an active playlist, then
+					we need to sync that playlist's play pause
+					button to the state of paused.
+				*/
+				AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'paused' );
+
+				/*
+					Sync the song play pause buttons
+				*/
+				AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'paused' );
+
 				AmplitudeCore.pause();
-			}
+		}
+
+		
+	},
+
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-play-pause'
+
+		Handles an event on a play pause button.
+	--------------------------------------------------------------------------*/
+	playPause: function(){
+		/*
+			Checks to see if the element has an attribute for amplitude-main-play-pause
+			and syncs accordingly
+		*/
+		if( this.getAttribute( 'amplitude-main-play-pause' ) != null ){
+			AmplitudeEventHelpers.setMainPlayPause();
+
+		/*
+			Syncs playlist main play pause buttons
+		*/
 		}else if( this.getAttribute('amplitude-playlist-main-play-pause') != null ){
-			//privateEventHelperPlayPauseMainPlaylist( this.getAttribute('amplitude-playlist-main-play-pause') );
-			/*
-				Scenario 2: Play pause button for a playlist
-					Check if play pause is for a different playlist.
-					If the playlist is different, we go to the first song in the playlist or first
-					song in the playlist shuffle array.
-			*/
-			//console.log( 'PLAYLIST: playlist -> '+playlist );
+			var playlist 	= this.getAttribute('amplitude-playlist');
+
+			AmplitudeEventHelpers.setPlaylistPlayPause( playlist );
+
+		/*
+			Syncs amplitude individual song buttons
+		*/
 		}else{
-			/*
-				Scenario 1: Play pause button for an individual song
-					if playlist != null
-					Check if playlist changes
-					Check if the song IDs change
-					If paused, play. If playing, pause
-			*/
-			//console.log( 'INDIVIDUAL: index -> '+songIndex+' playlist -> '+playlist );
-			//privateEventHelperPlayPauseSong( this.getAttribute('amplitude-song-index'), this.getAttribute('amplitude-playlist') );
+			var playlist 	= this.getAttribute('amplitude-playlist');
+			var songIndex 	= this.getAttribute('amplitude-song-index');
+
+			AmplitudeEventHelpers.setSongPlayPause( playlist, songIndex );
 		}
 	},
 
 	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-stop'
+
 		Handles an event on a stop element.
 
-		TODO: Before stopping, make sure that AmplitudeFX visualization
+		AMP-FX TODO: Before stopping, make sure that AmplitudeFX visualization
 		is stopped as well.
 	--------------------------------------------------------------------------*/
 	stop: function(){
+		/*
+			Sets all of the play/pause buttons to pause
+		*/
+		AmplitudeVisualSync.setPlayPauseButtonsToPause();
+
+		/*
+			Stops the active song.
+		*/
 		AmplitudeCore.stop();
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-mute'
+
+		Handles an event on a mute element.
+	--------------------------------------------------------------------------*/
 	mute: function(){
+		/*
+			If the current volume in the config is 0, we set the volume to the 
+			pre_mute level.  This means that the audio is already muted and
+			needs to be restored to the pre_mute level.
+			
+			Otherwise, we set pre_mute volume to the current volume
+			and set the config volume to 0, muting the audio.
+		*/
+		if( config.volume == 0 ){
+			config.volume = config.pre_mute_volume;
+			AmplitudeVisualSync.syncMute( false );
+		}else{
+			config.pre_mute_volume = config.volume;
+			config.volume = 0;
+			AmplitudeVisualSync.syncMute( true );
+		}
 
+		/*
+			Calls the core function to set the volume to the computed value
+			based on the user's intent.
+		*/
+		AmplitudeCore.setVolume( config.volume );
+
+		/*
+			Syncs the volume sliders so the visuals align up with the functionality.
+			If the volume is at 0, then the sliders should represent that so the user
+			has the right starting point.
+		*/
+		AmplitudeVisualSync.syncVolumeSliders( config.volume );
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-volume-up'
+
+		Handles a click on a volume up element.
+	--------------------------------------------------------------------------*/
 	volumeUp: function(){
+		/*
+			The volume range is from 0 to 1 for an audio element. We make this
+			a base of 100 for ease of working with.
 
+			If the new value is less than 100, we use the new calculated
+			value which gets converted to the proper unit for the audio element.
+
+			If the new value is greater than 100, we set the volume to 1 which
+			is the max for the audio element.
+		*/
+		if( ( config.volume + config.volume_increment ) <= 100 ){
+			config.volume = config.volume + config.volume_increment;
+		}else{
+			config.volume = 100;
+		}
+
+		/*
+			Calls the core function to set the volume to the computed value
+			based on the user's intent.
+		*/
+		AmplitudeCore.setVolume( config.volume );
+
+		/*
+			Syncs the volume sliders so the visuals align up with the functionality.
+			If the volume is at 0, then the sliders should represent that so the user
+			has the right starting point.
+		*/
+		AmplitudeVisualSync.syncVolumeSliders( config.volume );
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-volume-down'
+
+		Handles a click on a volume down element.
+	--------------------------------------------------------------------------*/
 	volumeDown: function(){
+		/*
+			The volume range is from 0 to 1 for an audio element. We make this
+			a base of 100 for ease of working with.
 
+			If the new value is less than 100, we use the new calculated
+			value which gets converted to the proper unit for the audio element.
+
+			If the new value is greater than 100, we set the volume to 1 which
+			is the max for the audio element.
+		*/
+		if( ( config.volume - config.volume_increment ) > 0 ){
+			config.volume = config.volume - config.volume_increment;
+		}else{
+			config.volume = 0;
+		}
+
+		/*
+			Calls the core function to set the volume to the computed value
+			based on the user's intent.
+		*/
+		AmplitudeCore.setVolume( config.volume );
+
+		/*
+			Syncs the volume sliders so the visuals align up with the functionality.
+			If the volume is at 0, then the sliders should represent that so the user
+			has the right starting point.
+		*/
+		AmplitudeVisualSync.syncVolumeSliders( config.volume );
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-song-slider'
+
+		Handles a change on the song slider
+	--------------------------------------------------------------------------*/
 	songSlider: function(){
+		/*
+			Gets the percentage of the song we will be setting the location for.
+		*/
+		var locationPercentage = this.value;
+
+		/*
+			Checks to see if the element has an attribute for amplitude-main-play-pause
+			and syncs accordingly
+		*/
+		if( this.getAttribute( 'amplitude-main-song-slider' ) != null ){
+			/*
+				If the active song is not live, set the current time
+			*/
+			if( !config.active_metadata.live ){
+				config.active_song.currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
+			}
+
+			AmplitudeVisualSync.syncMainSliderLocation( locationPercentage );
+
+			if( config.active_playlist != '' && config.active_playlist != null ){
+				AmplitudeVisualSync.syncPlaylistSliderLocation( config.active_playlist, locationPercentage );
+			}
+		}
+
+		/*
+			Syncs playlist main play pause buttons
+		*/
+		if( this.getAttribute('amplitude-playlist-song-slider') != null ){
+			var playlist 	= this.getAttribute('amplitude-playlist');
+
+			/*
+				We don't want to song slide a playlist that's not the
+				active placylist.
+			*/
+			if( config.active_playlist == playlist ){
+				/*
+					If the active song is not live, set the current time
+				*/
+				if( !config.active_metadata.live ){
+					config.active_song.currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
+				}
+				AmplitudeVisualSync.syncMainSliderLocation( locationPercentage );
+				AmplitudeVisualSync.syncPlaylistSliderLocation( playlist, locationPercentage );
+			}
+		}
+
+		/*
+			Syncs amplitude individual song buttons
+		*/
+		if( this.getAttribute('amplitude-playlist-song-slider') == null
+			&& this.getAttribute('amplitude-main-song-slider') == null ){
+			var playlist 	= this.getAttribute('amplitude-playlist');
+			var songIndex 	= this.getAttribute('amplitude-song-index');
+
+			if( config.active_index == songIndex ){
+				/*
+					If the active song is not live, set the current time
+				*/
+				if( !config.active_metadata.live ){
+					config.active_song.currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
+				}
+
+				AmplitudeVisualSync.syncMainSliderLocation();
+				
+				if( config.active_playlist != ''
+					&& config.active_playlist != null
+					&& config.active_playlist == playlist ){
+						AmplitudeVisualSync.syncPlaylistSliderLocation( playlist, location );
+				}
+
+				AmplitudeVisualSync.syncSongSliderLocation( playlist, songIndex, location );
+			}
+		}
 
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-volume-slider'
+
+		Handles a change on the volume slider
+	--------------------------------------------------------------------------*/
 	volumeSlider: function(){
+		/*
+			Calls the core function to set the volume to the computed value
+			based on the user's intent.
+		*/
+		AmplitudeCore.setVolume( this.value );
 
+		/*
+			Sync the volume slider locations
+		*/
+		AmplitudeVisualSync.syncVolumeSliderLocation( this.value );
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-next'
+
+		Handles an event on the next button
+	--------------------------------------------------------------------------*/
 	next: function(){
+		/*
+			We went to the next song so we turn repeat off.
+		*/
+		config.repeat = AmplitudeEventHelpers.setRepeat( false );
+		AmplitudeVisualSync.syncRepeat();
 
+		/*
+			Checks to see if the button is a playlist next button or
+			if it's a global playlist button.
+		*/
+		if( this.getAttribute('amplitude-playlist') == ''
+			|| this.getAttribute('amplitude-playlist') == null ){
+
+			/*
+				Check to see if the current state of the player
+				is in playlist mode or not playlist mode.
+			*/
+			if( config.active_playlist == '' 
+				|| config.active_playlist == null ){
+					AmplitudeEventHelpers.setNext();
+			}else{
+				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist );
+			}
+		}else{
+			/*
+				Gets the playlist of the next button.
+			*/
+			var playlist = this.getAttribute('amplitude-playlist');
+
+			/*
+				Sets the next playlist
+			*/
+			AmplitudeEventHelpers.setNextPlaylist( playlist );
+		}
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-prev'
+
+		Handles an event on the previous button
+	--------------------------------------------------------------------------*/
 	prev: function(){
+		/*
+			We went to the previous song so we turn repeat off.
+		*/
+		config.repeat = AmplitudeEventHelpers.setRepeat( false );
+		AmplitudeVisualSync.syncRepeat();
 
+		/*
+			Checks to see if the previous button is a playlist previous
+			button or if it's a global playlist button.
+		*/
+		if( this.getAttribute('amplitude-playlist') == ''
+			|| this.getAttribute('amplitude-playlist') == null ){
+
+			/*
+				Check to see if the current playlist has been set
+				or null and set the previous song.
+			*/
+			if( config.active_playlist == ''
+				|| config.active_playlist == null ){
+					AmplitudeEventHelpers.setPrev();
+			}else{
+				AmplitudeEventHelpers.setPrevPlaylist( config.active_playlist );
+			}
+		}else{
+			/*
+				Gets the playlist of the previous button.
+			*/
+			var playlist = this.getAttribute('amplitude-playlist');
+
+			/*
+				Sets the previous playlist
+			*/
+			AmplitudeEventHelpers.setPrevPlaylist( playlist );
+		}
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-shuffle'
+
+		Handles an event on the shuffle button
+	--------------------------------------------------------------------------*/
 	shuffle: function(){
-
+		/*
+			Check to see if the shuffle button belongs to a playlist
+		*/
+		if( this.getAttribute('amplitude-playlist') == ''
+			|| this.getAttribute('amplitude-playlist') == null ){
+			/*
+				Sets the shuffle button to null
+			*/
+			AmplitudeEventHelpers.setShuffle( null );
+		}else{
+			/*
+				Gets the playlist attribute of the shuffle button and
+				set shuffle to on for the playlist.
+			*/
+			var playlist = this.getAttribute('amplitude-playlist');
+			AmplitudeEventHelpers.setShuffle( playlist );
+		}
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-repeat'
+
+		Handles an event on the repeat button
+	--------------------------------------------------------------------------*/
 	repeat: function(){
+		/*
+			Sets repeat to the opposite of what it was set to
+		*/
 		AmplitudeEventHelpers.setRepeat( !config.repeat );
 
-		AmplitudeVisualSync.syncVisualRepeat();
+		/*
+			Visually sync repeat
+		*/
+		AmplitudeVisualSync.syncRepeat();
 	},
 
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-playback-speed'
+
+		Handles an event on the playback speed button
+	--------------------------------------------------------------------------*/
 	playbackSpeed: function(){
 		/*
 			We increment the speed by .5 everytime we click
@@ -231,7 +642,59 @@ export default {
 		AmplitudeVisualSync.syncPlaybackSpeed();
 	},
 
-	skipTo: function(){
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: 'amplitude-skip-to'
 
+		Handles an event on a skip to button.
+	--------------------------------------------------------------------------*/
+	skipTo: function(){
+		/*
+			Determines if the skip to button is in the scope of a playlist.
+		*/
+		if( this.hasAttribute('amplitude-playlist') ){
+			var playlist = this.getAttribute('amplitude-playlist');
+			
+			if( AmplitudeCoreHelpers.checkNewPlaylist( playlist ) ){
+				AmplitudeCoreHelpers.setActivePlaylist( playlist );
+			}
+			/*
+				Gets the location, playlist and song index that is being skipped
+				to.
+			*/
+			var location = parseInt( this.getAttribute('amplitude-location') );
+			var playlist = this.getAttribute('amplitude-playlist');
+			var songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
+			
+			/*
+				Changes the song to where it's being skipped and then
+				play the song.
+			*/
+			AmplitudeCoreHelpers.changeSong( songIndex );
+			AmplitudeCore.play();
+
+			/*
+				Skip to the location in the song.
+			*/
+			AmplitudeCore.skipToLocation( location );
+		}else{
+			/*
+				Gets the location and song index that is being skipped
+				to.
+			*/
+			var location = parseInt( this.getAttribute('amplitude-location') );
+			var songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
+
+			/*
+				Changes the song to where it's being skipped and then
+				play the song.
+			*/
+			AmplitudeCoreHelpers.changeSong( songIndex );
+			AmplitudeCore.play();
+
+			/*
+				Skip to the location in the song.
+			*/
+			AmplitudeCore.skipToLocation( location );
+		}
 	}
 }

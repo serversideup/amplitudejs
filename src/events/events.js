@@ -91,12 +91,12 @@ var AmplitudeEvents = (function () {
 		bindVolumeDown();
 		
 		/*
-			Binds 'amplitude-volume-up' event handlers
+			Binds 'amplitude-song-slider' event handlers
 		*/
 		bindSongSlider();
 		
 		/*
-			Binds 'amplitude-song-slider' event handlers.
+			Binds 'amplitude-volume-slider' event handlers.
 		*/
 		bindVolumeSlider();
 
@@ -583,8 +583,6 @@ var AmplitudeEvents = (function () {
 		BINDS: class="amplitude-playback-speed"
 
 		Binds click and touchstart events for amplitude playback speed buttons.
-
-		TODO: Remove classes that represent different speeds.
 	--------------------------------------------------------------------------*/
 	function bindPlaybackSpeed(){
 		/*
@@ -612,12 +610,27 @@ var AmplitudeEvents = (function () {
 		BINDS: class="amplitude-skip-to"
 
 		Binds click and touchstart events for amplitude skip to buttons.
-
-		TODO: Add a way to skip to any song with this button. Should have a
-		song index and a time location.
 	--------------------------------------------------------------------------*/
 	function bindSkipTo(){
+		/*
+			Gets all of the skip to elements with the class 'amplitude-skip-to'
+		*/
+		var skipToClasses = document.getElementsByClassName("amplitude-skip-to");
 
+		/*
+			Iterates over all of the skip to classes and binds the event interaction
+			methods to the element. If the browser is mobile, then the event is touchstart
+			otherwise it's a click.
+		*/
+		for( var i = 0; i < skipToClasses.length; i++ ){
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				skipToClasses[i].removeEventListener('touchstart', AmplitudeHandlers.skipTo );
+				skipToClasses[i].addEventListener('touchstart', AmplitudeHandlers.skipTo );
+			}else{
+				skipToClasses[i].removeEventListener('click', AmplitudeHandlers.skipTo );
+				skipToClasses[i].addEventListener('click', AmplitudeHandlers.skipTo );
+			}
+		}
 	}
 
 	return {

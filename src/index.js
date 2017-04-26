@@ -6,7 +6,8 @@
 */
 import AmplitudeInitializer from './init/init.js';
 import AmplitudeCore from './core/core.js';
-
+import AmplitudeHelpers from './core/helpers.js';
+import AmplitudeEvents from './events/events.js';
 import config from './config.js';
 
 /*
@@ -26,6 +27,13 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function init( userConfig ){
 		AmplitudeInitializer.initialize( userConfig );
+	}
+
+	/*--------------------------------------------------------------------------
+		Binds new elements that were added to the page.
+	--------------------------------------------------------------------------*/
+	function bindNewElements(){
+		AmplitudeInitializer.rebindDisplay();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -69,6 +77,25 @@ var Amplitude = (function () {
 	}
 
 	/*--------------------------------------------------------------------------
+		Returns a song at a playlist index
+		
+		Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index 
+
+		@param 	int 	index The integer for the index of the
+		song in the playlist.
+
+		@param 	string	playlist The key of the playlist we are getting the song
+		at the index for
+
+		@returns JSON representation for the song at a specific index.
+	--------------------------------------------------------------------------*/
+	function getSongAtPlaylistIndex( playlist, index ){
+		var songIndex = config.playlists[playlist][index];
+
+		return config.songs[songIndex];
+	}
+
+	/*--------------------------------------------------------------------------
 		Adds a song to the end of the config array.  This will allow Amplitude
 		to play the song in a playlist type setting.
 		
@@ -83,11 +110,17 @@ var Amplitude = (function () {
 		return config.songs.length - 1;
 	}
 
-	/*
-		TODO: Implement Play Now Functionality
-	*/
-	function playNow( song ){
+	/*--------------------------------------------------------------------------
+		When you pass a song object it plays that song right awawy.  It sets
+		the active song in the config to the song you pass in and synchronizes
+		the visuals.
+		
+		Public Accessor: Amplitude.playNow( song )
 
+		@param song JSON representation of a song.
+	--------------------------------------------------------------------------*/
+	function playNow( song ){
+		AmplitudeCore.playNow( song );
 	}
 
 	/*
@@ -116,18 +149,28 @@ var Amplitude = (function () {
 		Public Accessor: Amplitude.pause();
 	--------------------------------------------------------------------------*/
 	function pause(){
-		Amplitude.pause();
+		AmplitudeCore.pause();
 	}
 
+	/*--------------------------------------------------------------------------
+		Returns the audio object used to play the audio
+
+		Public Accessor: Amplitude.getAudio();
+	--------------------------------------------------------------------------*/
 	function getAudio(){
-
+		return config.active_song;
 	}
 
+	/*
+		Returns all of the publically accesible methods.
+	*/
 	return {
 		init: init,
+		bindNewElements: bindNewElements,
 		setDebug: setDebug,
 		getActiveSongMetadata: getActiveSongMetadata,
 		getSongByIndex: getSongByIndex,
+		getSongAtPlaylistIndex: getSongAtPlaylistIndex,
 		addSong: addSong,
 		playNow: playNow,
 		play: play,

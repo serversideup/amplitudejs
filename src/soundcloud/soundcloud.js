@@ -11,6 +11,9 @@ import AmplitudeInitializer from '../init/init.js';
 | streamable through Amplitude
 */
 var AmplitudeSoundcloud = (function() {
+	/*
+		Defines the temp user config
+	*/
 	var tempUserConfig = {};
 
 	/*--------------------------------------------------------------------------
@@ -131,6 +134,9 @@ var AmplitudeSoundcloud = (function() {
 		});
 	}
 
+	/*
+		Returns the publically accessible methods
+	*/
 	return {
 		loadSoundCloud: loadSoundCloud
 	}

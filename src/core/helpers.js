@@ -97,9 +97,11 @@ var AmplitudeHelpers = (function () {
 		different than what is currently playing, the song ends and the next
 		song begins, etc.
 
-		@param JSON song The song object of the song we are changing to.
+		@param int songIndex The song index we are changing to
 	--------------------------------------------------------------------------*/
-	function changeSong( song ){
+	function changeSong( songIndex ){
+		var song = config.songs[ songIndex ];
+
 		/*
 			Stops the currently playing song so we can adjust
 			what we need.
@@ -114,7 +116,7 @@ var AmplitudeHelpers = (function () {
 			Set all play buttons to pause while we change
 			the song.
 		*/
-		AmplitudeVisualSync.syncPlayPause( 'pause' );
+		AmplitudeVisualSync.setPlayPauseButtonsToPause();
 
 		/*
 			Since it is a new song, we reset the song sliders. These
@@ -147,7 +149,7 @@ var AmplitudeHelpers = (function () {
 			Set the new song information so we can use the
 			active meta data later on.
 		*/
-		setNewSong( song );
+		setNewSong( song, songIndex );
 
 		/*
 			Display the new visual metadata now that the config has
@@ -161,6 +163,11 @@ var AmplitudeHelpers = (function () {
 			song's controls to show it's highlighted.
 		*/
 		AmplitudeVisualSync.setActiveContainer();
+
+		/*
+			Sets the active song's duration
+		*/
+		AmplitudeVisualSync.syncSongDuration();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -194,35 +201,99 @@ var AmplitudeHelpers = (function () {
 	}
 
 	/*--------------------------------------------------------------------------
+		Checks to see if there is a new playlist
+
+		@param string playlist The playlist passed in to check against the active
+		playlist.
+	--------------------------------------------------------------------------*/
+	function checkNewPlaylist( playlist ){
+		if( config.active_playlist != playlist ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
 		Sets the new song in the config. Sets the src of the audio object, 
 		updates the	metadata and sets the active album.
 
 		@param JSON song The song object of the song we are changing to.
+		@param int index The index of the song in the songs object we are changing.
 	--------------------------------------------------------------------------*/
-	function setNewSong( song ){
-		config.active_song.src = song.url;
-		config.active_metadata = song;
-		config.active_album    = song.album;
+	function setNewSong( song, index ){
+		config.active_song.src 	= song.url;
+		config.active_metadata 	= song;
+		config.active_album    	= song.album;
+		config.active_index 	= index;
 	}
 
 	/*--------------------------------------------------------------------------
-		Shuffles Songs
+		Shuffles individual songs in the config
 
 		Based off of: http://www.codinghorror.com/blog/2007/12/the-danger-of-naivete.html
 	--------------------------------------------------------------------------*/
 	function shuffleSongs(){
+		/*
+			Builds a temporary array with the length of the config.
+		*/
 		var shuffleTemp = new Array( config.songs.length );
 
-		for( i = 0; i < config.songs.length; i++ ){
+		/*
+			Set the temporary array equal to the songs array.
+		*/
+		for( var i = 0; i < config.songs.length; i++ ){
 			shuffleTemp[i] = config.songs[i];
+			shuffleTemp[i].original_index = i;
 		}
 
-		for( i = config.songs.length - 1; i > 0; i-- ){
-			randNum = Math.floor( ( Math.random() * config.songs.length ) + 1 );
+		/*
+			Iterate ove rthe songs and generate random numbers to 
+			swap the indexes of the shuffle array.
+		*/
+		for( var i = config.songs.length - 1; i > 0; i-- ){
+			var randNum = Math.floor( ( Math.random() * config.songs.length ) + 1 );
 			shuffleSwap( shuffleTemp, i, randNum - 1 );
 		}
 
+		/*
+			Set the shuffle list to the shuffle temp.
+		*/
 		config.shuffle_list = shuffleTemp;
+	}
+
+	/*--------------------------------------------------------------------------
+		Shuffle songs in a playlist
+
+		@param string playlist The playlist we are shuffling.
+	--------------------------------------------------------------------------*/
+	function shufflePlaylistSongs( playlist ){
+		/*
+			Builds a temporary array with the length of the playlist songs.
+		*/
+		var shuffleTemp = new Array( config.playlists[playlist].length );
+
+		/*
+			Set the temporary array equal to the playlist array.
+		*/
+		for( var i = 0; i < config.playlists[playlist].length; i++ ){
+			shuffleTemp[i] = config.songs[ config.playlists[playlist][i] ];
+			shuffleTemp[i].original_index = i;
+		}
+
+		/*
+			Iterate ove rthe songs and generate random numbers to 
+			swap the indexes of the shuffle array.
+		*/
+		for( var i = config.playlists[playlist].length - 1; i > 0; i-- ){
+			var randNum = Math.floor( ( Math.random() * config.playlists[playlist].length ) + 1 );
+			shuffleSwap( shuffleTemp, i, randNum - 1 );
+		}
+
+		/*
+			Set the shuffle list to the shuffle temp.
+		*/
+		config.shuffled_playlists[playlist] = shuffleTemp;
 	}
 
 	/*--------------------------------------------------------------------------
@@ -243,6 +314,41 @@ var AmplitudeHelpers = (function () {
 		shuffleList[ random ] = temp;
 	}
 
+	/*--------------------------------------------------------------------------
+		Sets the active playlist
+
+		@param string playlist The string of the playlist being 
+		set to active.
+	--------------------------------------------------------------------------*/
+	function setActivePlaylist( playlist ){
+		if( config.active_playlist != playlist ){
+			runCallback('playlist_changed');
+		}
+
+		config.active_playlist = playlist;
+	}
+
+	/*--------------------------------------------------------------------------
+		Determines if the string passed in is a URL or not
+	
+		@param string url The string we are testing to see if it's a URL.
+	--------------------------------------------------------------------------*/
+	function isURL( url ){
+		var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+
+		return pattern.test( url );
+	}
+
+	/*--------------------------------------------------------------------------
+		Determines if what is passed in is an integer or not.
+	
+		@param string int The variable we are testing to see is an integer or not.
+	--------------------------------------------------------------------------*/
+	function isInt( int ){
+		return !isNaN( int ) && 
+         		parseInt( Number( int ) ) == int && 
+         		!isNaN( parseInt( int, 10 ) );
+	}
 
 	/*
 		Returns the public functions
@@ -254,7 +360,12 @@ var AmplitudeHelpers = (function () {
 		changeSong: changeSong,
 		checkNewSong: checkNewSong,
 		checkNewAlbum: checkNewAlbum,
-		shuffleSongs: shuffleSongs
+		checkNewPlaylist: checkNewPlaylist,
+		shuffleSongs: shuffleSongs,
+		shufflePlaylistSongs: shufflePlaylistSongs,
+		setActivePlaylist: setActivePlaylist,
+		isURL: isURL,
+		isInt: isInt
 	}
 })();
 

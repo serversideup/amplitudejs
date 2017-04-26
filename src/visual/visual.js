@@ -11,13 +11,18 @@ import AmplitudeVisualSyncHelpers from './helpers.js';
 |
 | METHODS
 |	syncCurrentTime( currentTime, completionPercentage )
+|	resetTimes()
 |	resetSongSliders()
 |	resetSongTimeVisualizations()
 |	setActiveContainer()
 |	displaySongMetadata()
 |	syncPlaybackSpeed()
 | 	syncVolumeSliders()
-|	syncPlayPause( state )
+| 	setPlayPauseButtonsToPause()
+| 	syncMainPlayPause( state )
+|	syncPlaylistPlayPause( playlist, state )
+| 	syncSongPlayPause( playlist, song, state )
+| 	syncRepeat()
 */
 var AmplitudeVisualSync = (function() {
 	/*--------------------------------------------------------------------------
@@ -55,8 +60,9 @@ var AmplitudeVisualSync = (function() {
 			Set all song sliders to be to the current percentage
 			of the song played.
 		*/
-		AmplitudeVisualSyncHelpers.syncSongSliders( completionPercentage );
-		
+		syncMainSliderLocation( completionPercentage );
+		syncPlaylistSliderLocation( config.active_playlist, completionPercentage );
+		syncSongSliderLocation( config.active_playlist, config.active_index, completionPercentage );
 		/*
 			Set all visual sync song time visualizations. This will
 			expand the div inside of the visualization to be the song
@@ -70,9 +76,10 @@ var AmplitudeVisualSync = (function() {
 		we can keep all the players in sync
 	--------------------------------------------------------------------------*/
 	function resetTimes(){
-		AmplitudeVisualSyncHelpers.syncCurrentHours( '00' );
-		AmplitudeVisualSyncHelpers.syncCurrentMinutes( '00' );
-		AmplitudeVisualSyncHelpers.syncCurrentMinutes( '00' );
+		AmplitudeVisualSyncHelpers.resetCurrentHours();
+		AmplitudeVisualSyncHelpers.resetCurrentMinutes();
+		AmplitudeVisualSyncHelpers.resetCurrentSeconds();
+		AmplitudeVisualSyncHelpers.resetCurrentTime();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -112,8 +119,6 @@ var AmplitudeVisualSync = (function() {
 	/*--------------------------------------------------------------------------
 		Applies the class 'amplitude-active-song-container' to the element 
 		containing visual information regarding the active song.
-
-		TODO: Make sure that when shuffling, this changes accordingly.
 	--------------------------------------------------------------------------*/
 	function setActiveContainer(){
 		var songContainers = document.getElementsByClassName('amplitude-song-container');
@@ -129,11 +134,23 @@ var AmplitudeVisualSync = (function() {
 			Finds the active index and adds the active song container to the element
 			that represents the song at the index. 
 		*/
-		if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]') ){
-			var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]');
+		if( config.active_playlist == '' || config.active_playlist == null ){
+			if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]') ){
+				var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]');
 
-			for( i = 0; i < songContainers.length; i++ ){
-				songContainers[i].classList.add('amplitude-active-song-container');
+				for( i = 0; i < songContainers.length; i++ ){
+					if( !songContainers[i].hasAttribute('amplitude-playlist') ){
+						songContainers[i].classList.add('amplitude-active-song-container');
+					}
+				}
+			}
+		}else{
+			if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]') ){
+				var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]');
+
+				for( i = 0; i < songContainers.length; i++ ){
+					songContainers[i].classList.add('amplitude-active-song-container');
+				}
 			}
 		}
 	}
@@ -158,12 +175,6 @@ var AmplitudeVisualSync = (function() {
 		var ignoredKeys 		= ['url', 'live'];
 
 		/*
-			TODO: Worry about setting Playlist level and Main Level attributes.
-			TODO: Should we have song info for indexes? If so we need to account
-			for this.
-		*/
-
-		/*
 			Get all of the song info elements
 		*/
 		var songInfoElements = document.querySelectorAll('[amplitude-song-info]');
@@ -181,31 +192,119 @@ var AmplitudeVisualSync = (function() {
 			var info = songInfoElements[i].getAttribute('amplitude-song-info');
 
 			/*
-				If the active metadata has the key, then we set it,
-				otherwise we clear it. If it's an image element then
-				we default it to the default info if needed.
+				Get the song info element playlist.
 			*/
-			if( config.active_metadata[info] != undefined ){
-				if( imageMetaDataKeys.indexOf( info ) >= 0 ){
-					songInfoElements[i].setAttribute('src', config.active_metadata[info]);
-				}else{
-					songInfoElements[i].innerHTML = config.active_metadata[info];
-				}
-			}else{
+			var playlist = songInfoElements[i].getAttribute('amplitude-playlist');
+			
+			/*
+				Get the main song info flag.
+			*/
+			var main = songInfoElements[i].getAttribute('amplitude-main-song-info');
+
+			/*
+				If the playlists match or the element is a main element, then
+				we set the song info.
+			*/
+			if( config.active_playlist == playlist || main == 'true' ){
 				/*
-					We look for the default album art because
-					the actual key didn't exist. If the default album
-					art doesn't exist then we set the src attribute
-					to null.
+					If the active metadata has the key, then we set it,
+					otherwise we clear it. If it's an image element then
+					we default it to the default info if needed.
 				*/
-				if( imageMetaDataKeys.indexOf( info ) >= 0 ){
-					if( config.default_album_art != '' ){
-						songInfoElements[i].setAttribute('src', config.default_album_art);
+				if( config.active_metadata[info] != undefined ){
+					if( imageMetaDataKeys.indexOf( info ) >= 0 ){
+						songInfoElements[i].setAttribute('src', config.active_metadata[info]);
 					}else{
-						songInfoElements[i].setAttribute('src', '');
+						songInfoElements[i].innerHTML = config.active_metadata[info];
 					}
 				}else{
-					songInfoElements[i].innerHTML = '';
+					/*
+						We look for the default album art because
+						the actual key didn't exist. If the default album
+						art doesn't exist then we set the src attribute
+						to null.
+					*/
+					if( imageMetaDataKeys.indexOf( info ) >= 0 ){
+						if( config.default_album_art != '' ){
+							songInfoElements[i].setAttribute('src', config.default_album_art);
+						}else{
+							songInfoElements[i].setAttribute('src', '');
+						}
+					}else{
+						songInfoElements[i].innerHTML = '';
+					}
+				}
+			}
+		}
+	}
+
+	function setFirstSongInPlaylist( song, playlist ){
+		/*
+			Define the image meta data keys. These are managed separately
+			since we aren't actually changing the inner HTML of these elements.
+		*/
+		var imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
+		
+		/*
+			These are the ignored keys that we won't be worrying about displaying.
+			Every other key in the song object can be displayed.
+		*/
+		var ignoredKeys 		= ['url', 'live'];
+
+		/*
+			Get all of the song info elements
+		*/
+		var songInfoElements = document.querySelectorAll('[amplitude-song-info][amplitude-playlist="'+playlist+'"]');
+
+		/*
+			Iterate over all of the song info elements. We will either
+			set these to the new values, or clear them if the active song
+			doesn't have the info set.
+		*/
+		for( var i = 0; i < songInfoElements.length; i++ ){
+			/*
+				Get the info so we can check if the active meta data has the
+				key.
+			*/
+			var info = songInfoElements[i].getAttribute('amplitude-song-info');
+
+			/*
+				Get the song info element playlist.
+			*/
+			var elementPlaylist = songInfoElements[i].getAttribute('amplitude-playlist');
+			
+			/*
+				If the playlists match or the element is a main element, then
+				we set the song info.
+			*/
+			if( elementPlaylist == playlist ){
+				/*
+					If the active metadata has the key, then we set it,
+					otherwise we clear it. If it's an image element then
+					we default it to the default info if needed.
+				*/
+				if( song[info] != undefined ){
+					if( imageMetaDataKeys.indexOf( info ) >= 0 ){
+						songInfoElements[i].setAttribute('src', song[info]);
+					}else{
+						songInfoElements[i].innerHTML = song[info];
+					}
+				}else{
+					/*
+						We look for the default album art because
+						the actual key didn't exist. If the default album
+						art doesn't exist then we set the src attribute
+						to null.
+					*/
+					if( imageMetaDataKeys.indexOf( info ) >= 0 ){
+						if( song.default_album_art != '' ){
+							songInfoElements[i].setAttribute('src', song.default_album_art);
+						}else{
+							songInfoElements[i].setAttribute('src', '');
+						}
+					}else{
+						songInfoElements[i].innerHTML = '';
+					}
 				}
 			}
 		}
@@ -269,16 +368,26 @@ var AmplitudeVisualSync = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Syncs all of the play pause buttons to the active state of the
-		player.
+		Sets all of the play pause buttons to paused.
+	--------------------------------------------------------------------------*/
+	function setPlayPauseButtonsToPause(){
+		var playPauseElements = document.querySelectorAll('.amplitude-play-pause');
+
+		for( var i = 0; i < playPauseElements.length; i++ ){
+			AmplitudeVisualSyncHelpers.setElementPause( playPauseElements[i] );
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs the main play pause buttons to the state of the active song.
 
 		@param string state The state of the player.
 	--------------------------------------------------------------------------*/
-	function syncPlayPause( state ){
+	function syncMainPlayPause( state ){
 		/*
 			Get all play pause buttons.
 		*/
-		var playPauseElements = document.getElementsByClassName("amplitude-play-pause");
+		var playPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-main-play-pause="true"]');
 
 		/*
 			Iterate over all of the play pause elements syncing the
@@ -291,45 +400,161 @@ var AmplitudeVisualSync = (function() {
 			*/
 			switch( state ){
 				case 'playing':
-					/*
-						If the state is playing and the active index matches the index of the
-						now playing song or the element is the playlist main play pause button
-						of the active playlist or the element is the main play pause then 
-						we apply the playing class.
-
-						TODO: Should we change the playlist play pause button if the song is in a playlist?
-							NO: Then should we only flag individual songs' play pause buttons IF they don't have
-							a playlist attribute?
-							DO NOT FLAG PLAYLIST SONGS IF NOT ACTIVELY PLAYING!!
-					*/
-					if( playPauseElements[i].getAttribute('amplitude-song-index') == config.active_index
-						|| playPauseElements[i].getAttribute('amplitude-playlist-main-play-pause') == config.active_playlist
-					 	|| playPauseElements[i].getAttribute('amplitude-main-play-pause') == 'true' ){
-							playPauseElements[i].classList.add('amplitude-playing');
-							playPauseElements[i].classList.remove('amplitude-paused');
-					}
+					AmplitudeVisualSyncHelpers.setElementPlay( playPauseElements[i] );
 				break;
 				case 'paused':
-					/*
-						Everything will be set to pause so this is easy, just set all of the elements
-						to paused.
-					*/
-					playPauseElements[i].classList.add('amplitude-paused');
-					playPauseElements[i].classList.remove('amplitude-playing');
+					AmplitudeVisualSyncHelpers.setElementPause( playPauseElements[i] );
 				break;
 			}
 		}
 	}
 
 	/*--------------------------------------------------------------------------
-		Sets repeat on for all of the repeat buttons. Users
-		can apply styles to the amplitude-repeat-on and 
-		amplitude-repeat-off classes. They represent the state
+		Syncs the main playlist play pause buttons to the state of the active song.
+		
+		@param string playlist The playlist we are setting the play pause state
+		for.
+
+		@param string state Either playing or paused for the state of the
+		active song.
+	--------------------------------------------------------------------------*/
+	function syncPlaylistPlayPause( playlist, state ){
+		/*
+			Get all of the main playlist play pause elements
+		*/
+		var playlistPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-playlist-main-play-pause="true"]');
+
+		/*
+			Iterate over the play pause elements, syncing the state accordingly.
+		*/
+		for( var i = 0; i < playlistPlayPauseElements.length; i++ ){
+			/*
+				If the element has the same playlist attribute as the playlist
+				passed in and the state is playing, we set the element to
+				be playing otherwise we set it to pause. Setting to pause
+				means the element doesn't match the active playlist or the
+				state is paused.
+			*/
+			if( playlistPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist 
+				&& state == 'playing' ){
+				
+				AmplitudeVisualSyncHelpers.setElementPlay( playlistPlayPauseElements[i] );
+			}else{
+				AmplitudeVisualSyncHelpers.setElementPause( playlistPlayPauseElements[i] );
+			}
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs the song play pause buttons to the state of the active song.
+		
+		@param string playlist The playlist we are setting the play pause state
+		for.
+
+		@param int song The index of the song we are syncing the state for
+		
+		@param string state Either playing or paused for the state of the
+		active song.
+	--------------------------------------------------------------------------*/
+	function syncSongPlayPause( playlist, song, state ){
+		/*
+			If the playlist is null or empty, we make sure that any song
+			that is a part of a playlist is set to paused.
+		*/
+		if( playlist == null || playlist == '' ){
+			/*
+				Get all of the individual song play pause buttons. These have an
+				amplitude-song-index attribute. Some have amplitude-playlist which
+				means they are individual songs within a playlist.
+			*/
+			var songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
+
+			/*
+				Iterate over all of the song play pause elements
+			*/
+			for( var i = 0; i < songPlayPauseElements.length; i++ ){
+				/*
+					If the song element has an attribute for amplitude-playlist then
+					we set it to paused no matter what because the state of the player
+					is not in a playlist mode.
+				*/
+				if( songPlayPauseElements[i].hasAttribute('amplitude-playlist') ){
+					AmplitudeVisualSyncHelpers.setElementPause( songPlayPauseElements[i] );
+				}else{
+					/*
+						If the state of the song is playing and the song index matches the
+						index of the song we have, we set the element to playing otherwise
+						we set the element to paused.
+					*/
+					if( state == 'playing' && songPlayPauseElements[i].getAttribute('amplitude-song-index') == song ){
+						AmplitudeVisualSyncHelpers.setElementPlay( songPlayPauseElements[i] );
+					}else{
+						AmplitudeVisualSyncHelpers.setElementPause( songPlayPauseElements[i] );
+					}
+				}
+			}
+		}else{
+			/*
+				Get all of the individual song play pause buttons. These have an
+				amplitude-song-index attribute. Some have amplitude-playlist which
+				means they are individual songs within a playlist.
+			*/
+			var songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
+
+			/*
+				Iterate over all of the individual play pause elements.
+			*/
+			for( var i = 0; i < songPlayPauseElements.length; i++ ){
+				/*
+					Since we have an active playlist this time, we want any stand alone
+					songs to be set to paused since the scope is within a playlist.
+
+					We check to see if the element has an amplitude-playlist attribute.
+				*/
+				if( songPlayPauseElements[i].hasAttribute('amplitude-playlist') ){
+
+					/*
+						Check to see if the song index matches the index passed in and the
+						playlist matches the scoped playlist we are looking for and the
+						state of the player is playing, then we set the element to play. If those
+						three parameters are not met, set the element to pause.
+					*/
+					if( songPlayPauseElements[i].getAttribute('amplitude-song-index') == song 
+						&& songPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist
+						&& state == 'playing' ){
+							AmplitudeVisualSyncHelpers.setElementPlay( songPlayPauseElements[i] );
+					}else{
+						AmplitudeVisualSyncHelpers.setElementPause( songPlayPauseElements[i] );
+					}
+				}else{
+					/*
+						Set any individual songs (songs outside of a playlist scope) to pause
+						since we are in the scope of a playlist.
+					*/
+					AmplitudeVisualSyncHelpers.setElementPause( songPlayPauseElements[i] );
+				}
+			}
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs repeat for all of the repeat buttons. Users
+		can apply styles to the 'amplitude-repeat-on' and 
+		'amplitude-repeat-off' classes. They represent the state
 		of the player.
 	--------------------------------------------------------------------------*/
 	function syncRepeat(){
+		/*
+			Gets all of the repeat classes
+		*/
 		var repeatClasses = document.getElementsByClassName("amplitude-repeat");
 
+		/*
+			Iterate over all of the repeat classes. If repeat is on,
+			then add the 'amplitude-repeat-on' class and remove the
+			'amplitude-repeat-off' class. If it's off, then do the
+			opposite.
+		*/
 		for( var i = 0; i < repeatClasses.length; i++ ){
 			if( config.repeat ){
 				repeatClasses[i].classList.add('amplitude-repeat-on');
@@ -339,6 +564,265 @@ var AmplitudeVisualSync = (function() {
 				repeatClasses[i].classList.add('amplitude-repeat-off');
 			}
 		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs mute for all of the mute buttons. This represents the
+		state of the player if it's muted or not.
+
+		@param 	string	state The muted state of the player.
+	--------------------------------------------------------------------------*/
+	function syncMute( state ){
+		/*
+			Get all of the mute buttons.
+		*/
+		var muteClasses = document.getElementsByClassName("amplitude-mute");
+
+		/*
+			Iterate over all of the mute classes. If the state of the player
+			is not-muted then we add the amplitude-not-muted classe and remove
+			the amplitude muted class otherwise we do the opposite.
+		*/
+		for( var i = 0; i < muteClasses.length; i++ ){
+			if( !state ){
+				muteClasses[i].classList.add( 'amplitude-not-muted' );
+				muteClasses[i].classList.remove( 'amplitude-muted' );
+			}else{
+				muteClasses[i].classList.remove( 'amplitude-not-muted' );
+				muteClasses[i].classList.add( 'amplitude-muted' );
+			}
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		@param 	string	state
+	--------------------------------------------------------------------------*/
+	function syncVolumeSliders( volume ){
+
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs the global shuffle button visual state.
+
+		@param 	bool state The shuffled state of the player.
+	--------------------------------------------------------------------------*/
+	function syncShuffle( state ){
+		/*
+			Gets the shuffle buttons.
+		*/
+		var shuffleButtons = document.getElementsByClassName("amplitude-shuffle");
+
+		/*
+			Iterate over all of the shuffle buttons.
+		*/
+		for( var i = 0; i < shuffleButtons.length; i++ ){
+			/*
+				Ensure the shuffle button doesn't belong to a playlist. We have
+				a separate method for that.
+			*/
+			if( shuffleButtons[i].getAttribute('amplitude-playlist') == null ){
+				/*
+					If the state of the player is shuffled on, true, then
+					we add the 'amplitude-shuffle-on' class and remove the
+					'amplitude-shuffle-off' class. If the player is not shuffled
+					then we do the opposite.
+				*/
+				if( state ){
+					shuffleButtons[i].classList.add( 'amplitude-shuffle-on');
+					shuffleButtons[i].classList.remove( 'amplitude-shuffle-off');
+				}else{
+					shuffleButtons[i].classList.add( 'amplitude-shuffle-off');
+					shuffleButtons[i].classList.remove( 'amplitude-shuffle-on');
+				}
+			}
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs the playlist shuffle button visual state.
+
+		@param 	bool state The shuffled state of the player.
+		@param 	string	playlist The playlist string the shuffle button belongs to.
+	--------------------------------------------------------------------------*/
+	function syncPlaylistShuffle( state, playlist ){
+		/*
+			Gets all of the shuffle buttons.
+		*/
+		var shuffleButtons = document.getElementsByClassName("amplitude-shuffle");
+
+		/*
+			Iterate over all of the shuffle buttons
+		*/
+		for( var i = 0; i < shuffleButtons.length; i++ ){
+			/*
+				Ensure that the playlist the shuffle button belongs to matches the
+				playlist we are syncing the state for.
+			*/
+			if( shuffleButtons[i].getAttribute('amplitude-playlist') == playlist ){
+				/*
+					If the state of the playlist is shuffled on, true, then
+					we add the 'amplitude-shuffle-on' class and remove the
+					'amplitude-shuffle-off' class. If the player is not shuffled
+					then we do the opposite.
+				*/
+				if( state ){
+					shuffleButtons[i].classList.add( 'amplitude-shuffle-on');
+					shuffleButtons[i].classList.remove( 'amplitude-shuffle-off');
+				}else{
+					shuffleButtons[i].classList.add( 'amplitude-shuffle-off');
+					shuffleButtons[i].classList.remove( 'amplitude-shuffle-on');
+				}
+			}
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs the main slider location
+
+		@param 	int 	location The location of the song as a percentage.
+	--------------------------------------------------------------------------*/
+	function syncMainSliderLocation( location ){
+		/*
+			Ensure we have a location that's a number
+		*/
+		location = !isNaN( location ) ? location : 0;
+
+		/*
+			Gets the main song sliders
+		*/
+		var mainSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-main-song-slider="true"]');
+		
+		/*
+			Iterates over all of the main sliders and sets the value to the
+			percentage of the song played.
+		*/
+		for( var i = 0; i < mainSongSliders.length; i++ ){
+			mainSongSliders[i].value = location;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs playlist song slider locations
+		
+		@param 	string	playlist The playlist we are setting the song slider for.
+		@param 	int 	location The location of the song as a percentage.
+	--------------------------------------------------------------------------*/
+	function syncPlaylistSliderLocation( playlist, location ){
+		/*
+			Ensure we have a location that's a number
+		*/
+		location = !isNaN( location ) ? location : 0;
+
+		/*
+			Gets the playlist song sliders
+		*/
+		var playlistSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-playlist-song-slider="true"][amplitude-playlist="'+playlist+'"]');
+
+		/*
+			Iterates over all of the playlist sliders and sets the value to the
+			percentage of the song played.
+		*/
+		for( var i = 0; i < playlistSongSliders.length; i++ ){
+			playlistSongSliders[i].value = location;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs individual song slider locations
+		
+		@param 	string	playlist The playlist we are setting the song slider for.
+		@param 	int 	songIndex The index of the song we are adjusting the song slider for.
+		@param 	int 	location The location of the song as a percentage.
+	--------------------------------------------------------------------------*/
+	function syncSongSliderLocation( playlist, songIndex, location ){
+		/*
+			Ensure we have a location that's a number
+		*/
+		location = !isNaN( location ) ? location : 0;
+
+		/*
+			If the playlist is set, we get all of the individual song sliders
+			that relate to the song and the playlist.
+		*/
+		if( playlist != '' && playlist != null ){
+			/*
+				Gets the song sliders for the individual songs and the
+				playlist
+			*/
+			var songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-playlist="'+playlist+'"][amplitude-song-index="'+songIndex+'"]');
+
+			/*
+				Iterates over all of the playlist sliders and set the value to the
+				percentage of the song played.
+			*/
+			for( var i = 0; i < songSliders.length; i++ ){
+				songSliders[i].value = location;
+			}
+		}else{
+			/*
+				Get the individual song slider by index
+			*/
+			var songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-song-index="'+songIndex+'"]');
+
+			/*
+				Iterats over all of the song sliders that have the index of
+				the song we are sliding. If the song doesn't have a playlist
+				attribute, we set the location.
+			*/
+			for( var i = 0; i < songSliders.length; i++ ){
+				if( !songSliders[i].hasAttribute('amplitude-playlist') ){
+					songSliders[i].value = location;
+				}
+			}
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Sets the volume slider location
+		
+		@param 	int volume The volume from 0 - 1 for song volume.
+	--------------------------------------------------------------------------*/
+	function syncVolumeSliderLocation( volume ){
+		/*
+			Gets all of the volume sliders
+		*/
+		var volumeSliders = document.querySelectorAll('.amplitude-volume-slider');
+
+		/*
+			Iterates over all of the sliders and sets their volume
+			to the volume of the song.
+		*/
+		for( var i = 0; i < volumeSliders.length; i++ ){
+			volumeSliders[i].value = volume;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Syncs the song's duration
+
+		@param 	songDuration 	Object containing information about the duration
+			of the song
+	--------------------------------------------------------------------------*/
+	function syncSongDuration( songDuration ){
+		/*
+			Set duration hour display.
+		*/
+		AmplitudeVisualSyncHelpers.syncDurationHours( songDuration != undefined && !isNaN( songDuration.hours ) ? songDuration.hours : '00' );
+		
+		/*
+			Set duration minute display.
+		*/
+		AmplitudeVisualSyncHelpers.syncDurationMinutes( songDuration != undefined && !isNaN( songDuration.minutes ) ? songDuration.minutes : '00' );
+		
+		/*
+			Set duration second display.
+		*/
+		AmplitudeVisualSyncHelpers.syncDurationSeconds( songDuration != undefined && !isNaN( songDuration.seconds ) ? songDuration.seconds : '00' );
+		
+		/*
+			Set duration time display.
+		*/
+		AmplitudeVisualSyncHelpers.syncDurationTime( songDuration != undefined ? songDuration : {} );
 	}
 
 	/*
@@ -353,8 +837,21 @@ var AmplitudeVisualSync = (function() {
 		displaySongMetadata: displaySongMetadata,
 		syncPlaybackSpeed: syncPlaybackSpeed,
 		syncVolumeSliders: syncVolumeSliders,
-		syncPlayPause: syncPlayPause,
-		syncRepeat: syncRepeat
+		setPlayPauseButtonsToPause: setPlayPauseButtonsToPause,
+		setFirstSongInPlaylist: setFirstSongInPlaylist,
+		syncMainPlayPause: syncMainPlayPause,
+		syncPlaylistPlayPause: syncPlaylistPlayPause,
+		syncSongPlayPause: syncSongPlayPause,
+		syncRepeat: syncRepeat,
+		syncMute: syncMute,
+		syncVolumeSliders: syncVolumeSliders,
+		syncShuffle: syncShuffle,
+		syncPlaylistShuffle: syncPlaylistShuffle,
+		syncMainSliderLocation: syncMainSliderLocation,
+		syncPlaylistSliderLocation: syncPlaylistSliderLocation,
+		syncSongSliderLocation: syncSongSliderLocation,
+		syncVolumeSliderLocation: syncVolumeSliderLocation,
+		syncSongDuration: syncSongDuration
 	}
 })();
 

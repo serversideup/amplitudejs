@@ -30,10 +30,6 @@ var AmplitudeInitializer = (function () {
 
 	 	@param userConfig A JSON object of user defined values that help 
 	 	configure and initialize AmplitudeJS.
-
-	 	TODO: Find an optimal way to re-initialize
-	 	TODO: Should we emit custom events for plugins to hook into like
-	 	AmplitudeFX?
 	--------------------------------------------------------------------------*/
 	function initialize( userConfig ){
 		var ready = false;
@@ -67,11 +63,6 @@ var AmplitudeInitializer = (function () {
 		*/
 		config.debug = ( userConfig.debug != undefined ? userConfig.debug : false );
 		
-		/*
-			TODO: Initialize default live setting for all songs. If the song does not
-			have it's meta data as live, set live to false.
-		*/
-
 		/*
 			Checks to see if the user has songs defined.
 		*/
@@ -114,6 +105,11 @@ var AmplitudeInitializer = (function () {
 			config.playlists = userConfig.playlists;
 			
 			/*
+				Initialize default live settings
+			*/
+			initializeDefaultLiveSettings();
+
+			/*
 				Check to see if the user has valid song indexes in their playlist.
 			*/
 			checkValidSongsInPlaylists();
@@ -127,6 +123,16 @@ var AmplitudeInitializer = (function () {
 				Initialize temporary place holders for shuffle lists.
 			*/
 			initializePlaylistShuffleLists();
+
+			/*
+				Initializes the active shuffled indexes for shuffled playlists.
+			*/
+			initializePlaylistShuffleIndexes();
+
+			/*
+				Initializes the first song in the playlist
+			*/
+			initializeFirstSongInPlaylistMetaData();
 		}
 		
 		/*
@@ -175,6 +181,14 @@ var AmplitudeInitializer = (function () {
 	}
 
 	/*--------------------------------------------------------------------------
+		Rebinds all of the elements in the display
+	--------------------------------------------------------------------------*/
+	function rebindDisplay(){
+		AmplitudeEvents.initializeEvents();
+		initializeSongTimeVisualizations();
+	}
+
+	/*--------------------------------------------------------------------------
 		Finishes the initalization of the config. Takes all of the user defined
 		parameters and makes sure they override the defaults. The important
 		config information is assigned in the publicInit() function.
@@ -191,16 +205,19 @@ var AmplitudeInitializer = (function () {
 	--------------------------------------------------------------------------*/
 	function setConfig( userConfig ){
 		/*
-			TODO: Make a way for the user to define a start song AND
-			a start playlist.
-
-			TODO: Make sure that if the user sends a start_song that it's an integer
-			and nothing else. Debug if NOT an integer.
-		*/
+			Check to see if the user entered a start song
+		*/	
 		if( userConfig.start_song != undefined ){
-			AmplitudeHelpers.changeSong( config.songs[ userConfig.start_song ] );
+			/*
+				Ensure what has been entered is an integer.
+			*/
+			if( AmplitudeHelpers.isInt( userConfig.start_song ) ){
+				AmplitudeHelpers.changeSong( userConfig.start_song );
+			}else{
+				AmplitudeHelpers.writeDebugMessage("You must enter an integer index for the start song.");
+			}			
 		}else{
-			AmplitudeHelpers.changeSong( config.songs[ 0 ] );
+			AmplitudeHelpers.changeSong( 0 );
 		}
 
 		/*
@@ -224,7 +241,7 @@ var AmplitudeInitializer = (function () {
 		*/
 		config.active_song.preload = ( userConfig.preload != undefined ? 
 									   userConfig.preload :
-									   "metadata" );
+									   "auto" );
 
 		/*
 			Initializes the user defined callbacks. This should be a JSON
@@ -273,12 +290,12 @@ var AmplitudeInitializer = (function () {
 		/*
 			If the user defines default album art, this image will display if the active
 			song doesn't have album art defined.
-
-			TODO: Validate that this is a URL and maybe if the URL exists
 		*/
-		config.default_album_art = ( userConfig.default_album_art != undefined ? 
-									 userConfig.default_album_art : 
-									 '' );
+		if( userConfig.default_album_art != undefined ){
+			config.default_album_art = userConfig.default_album_art;
+		}else{
+			config.default_album_art = '';
+		}		
 
 		/*
 			Syncs all of the visual time elements to 00.
@@ -286,17 +303,32 @@ var AmplitudeInitializer = (function () {
 		AmplitudeVisualSync.resetTimes();
 
 		/*
-			Run after init callback
+			Sets all of the play pause buttons to pause.
 		*/
-		AmplitudeHelpers.runCallback('after_init');
+		AmplitudeVisualSync.setPlayPauseButtonsToPause();
 
 		/*
 			If the user has autoplay enabled, then begin playing the song. Everything should
 			be configured for this to be ready to play.
 		*/
 		if( userConfig.autoplay ){
+			config.active_playlist = null;
+			/*
+				Sync the main and song play pause buttons.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( null, 0, 'playing' );
+
+			/*
+				Start playing the song
+			*/
 			AmplitudeCore.play();
 		}
+
+		/*
+			Run after init callback
+		*/
+		AmplitudeHelpers.runCallback('after_init');	
 	}
 
 	/*--------------------------------------------------------------------------
@@ -442,9 +474,52 @@ var AmplitudeInitializer = (function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Initializes the shuffled playlist indexes array. These will be set for
+		playlists that are shuffled and contain the active shuffled index.
+	--------------------------------------------------------------------------*/
+	function initializePlaylistShuffleIndexes(){
+		/*
+			Iterates over all of the playlists adding a key
+			to the shuffled_active_indexes array that contains
+			the active shuffled index.
+		*/
+		for( var key in config.playlists ) {
+			config.shuffled_active_indexes[ key ] = 0;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Intializes the display for the first song in the playlist meta data.
+	--------------------------------------------------------------------------*/
+	function initializeFirstSongInPlaylistMetaData(){
+		/*
+			Iterates over all of the playlists setting the meta data for the
+			first song.
+		*/
+		for( var key in config.playlists ){
+			AmplitudeVisualSync.setFirstSongInPlaylist( config.songs[ config.playlists[ key ][0] ] , key );
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Intializes the default live settings for all of the songs.
+	--------------------------------------------------------------------------*/
+	function initializeDefaultLiveSettings(){
+		for( var i = 0; i < config.songs.length; i++ ){
+			if( config.songs[i].live == undefined ){
+				config.songs[i].live = false;
+			}
+		}
+	}
+
+	/*
+		Returns the publicly accessible methods
+	*/
 	return {
 		initialize: initialize,
-		setConfig: setConfig
+		setConfig: setConfig,
+		rebindDisplay: rebindDisplay
 	}
 })();
 
