@@ -1,4 +1,4 @@
-[![Amplitude.js Logo](https://open.521dimensions.com/images/amplitudejs/amplitudejs_hero_image.jpg)](https://open.521dimensions.com/amplitudejs)
+[![Amplitude.js Logo](https://521dimensions.com/img/open-source/amplitudejs/amplitudejs_hero_image.jpg)](https://open.521dimensions.com/amplitudejs)
 
 Amplitude.js is a lightweight javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). Amplitude.js is available under the [MIT License](https://open.521dimensions.com/license.txt).
 
