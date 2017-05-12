@@ -535,6 +535,7 @@ var Amplitude = (function () {
 			config.active_song.src = song.url;
 			config.active_metadata = song;
 			config.active_album = song.album;
+			if(typeof song.start_at !== 'undefined') config.active_song.currentTime = song.start_at;
 		}else{
 			privateWriteDebugMessage('The song needs to have a URL!');
 		}

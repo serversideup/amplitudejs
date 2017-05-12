@@ -1,7 +1,7 @@
 {
-  "name": "amplitudejs",
-  "version": "2.2.0",
-  "description": "A Javascript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://open.521dimensions.com/amplitudejs",
+  "name": "@sergiovilar/amplitudejs",
+  "version": "2.2.3",
+  "description": "Fork of Amlpitude.js",
   "main": "js/amplitude.js",
   "devDependencies": {
     "gulp": "3.x"
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/521dimensions/amplitudejs.git"
+    "url": "git+https://github.com/AnansiPodcast/amplitudejs.git"
   },
   "keywords": [
     "webaudio",
@@ -32,7 +32,7 @@
   "author": "521 Dimensions",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/521dimensions/amplitudejs/issues"
+    "url": "https://github.com/AnansiPodcast/amplitudejs/issues"
   },
-  "homepage": "https://github.com/521dimensions/amplitudejs#readme"
+  "homepage": "https://github.com/AnansiPodcast/amplitudejs#readme"
 }
