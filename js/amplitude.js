@@ -330,6 +330,7 @@ var Amplitude = (function () {
 				We are ready to copy over the rest of the information
 				since we are in dynamic mode.
 			*/
+			config.songs = new Array();
 			ready = true;
 		}
 		
