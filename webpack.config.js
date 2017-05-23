@@ -1,9 +1,9 @@
 const webpack = require('webpack');
-
+const path = require('path');
 module.exports = {
 	entry: ['./src/index.js'],
 	output: {
-		path: './dist',
+		path: path.resolve(__dirname, './dist'),
 		filename: 'amplitude.js',
 		library: 'Amplitude',
 		libraryTarget: 'umd',
@@ -15,15 +15,5 @@ module.exports = {
 			exclude: /node_modules/,
 			loader: 'babel-loader'
 		}]
-	},
-	//plugins: [
-	//	new webpack.optimize.UglifyJsPlugin({
-	//		compress: {
-	//			warnings: false,
-	//		},
-	//		output: {
-	//			comments: false,
-	//		}
-	//	}),
-	//]
+	}
 }
