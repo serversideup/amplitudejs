@@ -2,4 +2,6 @@ songs/*
 examples/testing/*
 Iconr
 icon*
-node_modules
+node_modules/
+src/PENDING
+logs/
