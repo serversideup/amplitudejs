@@ -168,7 +168,9 @@ var config = {
 		match the SoundCloud song count meaning we can move to the rest
 		of the config.
 	*/
-	soundcloud_songs_ready: 0
+	soundcloud_songs_ready: 0,
+
+	is_touch_moving: false
 };
 
 module.exports = config;

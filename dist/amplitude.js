@@ -909,7 +909,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		function stop() {
 			_helpers2.default.runCallback('before_stop');
 
-			_config2.default.active_song.currentTime = 0;
+			if (_config2.default.active_song.currentTime != 0) {
+				_config2.default.active_song.currentTime = 0;
+			}
+
 			_config2.default.active_song.pause();
 
 			if (_config2.default.active_metadata.live) {
@@ -1251,7 +1254,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	match the SoundCloud song count meaning we can move to the rest
 	 	of the config.
 	 */
-		soundcloud_songs_ready: 0
+		soundcloud_songs_ready: 0,
+
+		is_touch_moving: false
 	};
 
 	module.exports = config;
@@ -3290,6 +3295,23 @@ return /******/ (function(modules) { // webpackBootstrap
 			_helpers2.default.writeDebugMessage('Beginning initialization of event handlers..');
 
 			/*
+	  	Sets flag that the screen is moving and not a tap
+	  */
+			document.addEventListener('touchmove', function () {
+				_config2.default.is_touch_moving = true;
+			});
+
+			/*
+	  	On touch end if it was a touch move event, set moving to
+	  	false
+	  */
+			document.addEventListener('touchend', function () {
+				if (_config2.default.is_touch_moving) {
+					_config2.default.is_touch_moving = false;
+				}
+			});
+
+			/*
 	  	On time update for the audio element, update visual displays that
 	  	represent the time on either a visualized element or time display.
 	  */
@@ -3403,7 +3425,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-play"
-	 		Binds click and touchstart events for amplitude play buttons.
+	 		Binds click and touchend events for amplitude play buttons.
 	 --------------------------------------------------------------------------*/
 		function bindPlay() {
 			/*
@@ -3413,13 +3435,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the play classes and binds the event interaction
-	  	method to the element. If the browser is mobile, then the event is touchstart
+	  	method to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < play_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					play_classes[i].removeEventListener('touchstart', _handlers2.default.play);
-					play_classes[i].addEventListener('touchstart', _handlers2.default.play);
+					play_classes[i].removeEventListener('touchend', _handlers2.default.play);
+					play_classes[i].addEventListener('touchend', _handlers2.default.play);
 				} else {
 					play_classes[i].removeEventListener('click', _handlers2.default.play);
 					play_classes[i].addEventListener('click', _handlers2.default.play);
@@ -3429,7 +3451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-pause"
-	 		Binds click and touchstart events for amplitude pause buttons.
+	 		Binds click and touchend events for amplitude pause buttons.
 	 --------------------------------------------------------------------------*/
 		function bindPause() {
 			/*
@@ -3439,13 +3461,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the pause classes and binds the event interaction
-	  	method to the element. If the browser is mobile, then the event is touchstart
+	  	method to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < pause_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					pause_classes[i].removeEventListener('touchstart', _handlers2.default.pause);
-					pause_classes[i].addEventListener('touchstart', _handlers2.default.pause);
+					pause_classes[i].removeEventListener('touchend', _handlers2.default.pause);
+					pause_classes[i].addEventListener('touchend', _handlers2.default.pause);
 				} else {
 					pause_classes[i].removeEventListener('click', _handlers2.default.pause);
 					pause_classes[i].addEventListener('click', _handlers2.default.pause);
@@ -3456,7 +3478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-play-pause"
 	 	
-	 	Binds click and touchstart events for amplitude play pause buttons.
+	 	Binds click and touchend events for amplitude play pause buttons.
 	 --------------------------------------------------------------------------*/
 		function bindPlayPause() {
 			/*
@@ -3466,13 +3488,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the play/pause classes and binds the event interaction
-	  	method to the element. If the browser is mobile, then the event is touchstart
+	  	method to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < play_pause_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					play_pause_classes[i].removeEventListener('touchstart', _handlers2.default.playPause);
-					play_pause_classes[i].addEventListener('touchstart', _handlers2.default.playPause);
+					play_pause_classes[i].removeEventListener('touchend', _handlers2.default.playPause);
+					play_pause_classes[i].addEventListener('touchend', _handlers2.default.playPause);
 				} else {
 					play_pause_classes[i].removeEventListener('click', _handlers2.default.playPause);
 					play_pause_classes[i].addEventListener('click', _handlers2.default.playPause);
@@ -3482,7 +3504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-stop"
-	 		Binds click and touchstart events for amplitude stop buttons
+	 		Binds click and touchend events for amplitude stop buttons
 	 --------------------------------------------------------------------------*/
 		function bindStop() {
 			/*
@@ -3492,13 +3514,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the stop classes and binds the event interaction
-	  	method to the element.  If the browser is mobile, then the event is touchstart
+	  	method to the element.  If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < stop_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					stop_classes[i].removeEventListener('touchstart', _handlers2.default.stop);
-					stop_classes[i].addEventListener('touchstart', _handlers2.default.stop);
+					stop_classes[i].removeEventListener('touchend', _handlers2.default.stop);
+					stop_classes[i].addEventListener('touchend', _handlers2.default.stop);
 				} else {
 					stop_classes[i].removeEventListener('click', _handlers2.default.stop);
 					stop_classes[i].addEventListener('click', _handlers2.default.stop);
@@ -3508,7 +3530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-mute"
-	 		Binds click and touchstart events for amplitude mute buttons
+	 		Binds click and touchend events for amplitude mute buttons
 	 --------------------------------------------------------------------------*/
 		function bindMute() {
 			/*
@@ -3518,7 +3540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the mute classes and binds the event interaction
-	  	method to the element. If the browser is mobile, then the event is touchstart
+	  	method to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < mute_classes.length; i++) {
@@ -3533,10 +3555,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    	is turned on.
 	    */
 					if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-						privateHelpWriteDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
+						_helpers2.default.writeDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
 					} else {
-						mute_classes[i].removeEventListener('touchstart', _handlers2.default.mute);
-						mute_classes[i].addEventListener('touchstart', _handlers2.default.mute);
+						mute_classes[i].removeEventListener('touchend', _handlers2.default.mute);
+						mute_classes[i].addEventListener('touchend', _handlers2.default.mute);
 					}
 				} else {
 					mute_classes[i].removeEventListener('click', _handlers2.default.mute);
@@ -3547,7 +3569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-volume-up"
-	 		Binds click and touchstart events for amplitude volume up buttons
+	 		Binds click and touchend events for amplitude volume up buttons
 	 --------------------------------------------------------------------------*/
 		function bindVolumeUp() {
 			/*
@@ -3557,7 +3579,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the volume up classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < volume_up_classes.length; i++) {
@@ -3572,10 +3594,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    	is turned on.
 	    */
 					if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-						privateHelpWriteDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
+						_helpers2.default.writeDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
 					} else {
-						volume_up_classes[i].removeEventListener('touchstart', _handlers2.default.volumeUp);
-						volume_up_classes[i].addEventListener('touchstart', _handlers2.default.volumeUp);
+						volume_up_classes[i].removeEventListener('touchend', _handlers2.default.volumeUp);
+						volume_up_classes[i].addEventListener('touchend', _handlers2.default.volumeUp);
 					}
 				} else {
 					volume_up_classes[i].removeEventListener('click', _handlers2.default.volumeUp);
@@ -3586,7 +3608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-volume-down"
-	 		Binds click and touchstart events for amplitude volume down buttons
+	 		Binds click and touchend events for amplitude volume down buttons
 	 --------------------------------------------------------------------------*/
 		function bindVolumeDown() {
 			/*
@@ -3596,7 +3618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the volume down classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < volume_down_classes.length; i++) {
@@ -3611,10 +3633,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    	is turned on.
 	    */
 					if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-						privateHelpWriteDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
+						_helpers2.default.writeDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
 					} else {
-						volume_down_classes[i].removeEventListener('touchstart', _handlers2.default.volumeDown);
-						volume_down_classes[i].addEventListener('touchstart', _handlers2.default.volumeDown);
+						volume_down_classes[i].removeEventListener('touchend', _handlers2.default.volumeDown);
+						volume_down_classes[i].addEventListener('touchend', _handlers2.default.volumeDown);
 					}
 				} else {
 					volume_down_classes[i].removeEventListener('click', _handlers2.default.volumeDown);
@@ -3685,7 +3707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   	the device.
 	   */
 				if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-					privateHelpWriteDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
+					_helpers2.default.writeDebugMessage('iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4');
 				} else {
 					if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
 						volume_sliders[i].removeEventListener('change', _handlers2.default.volumeSlider);
@@ -3700,7 +3722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-next"
-	 		Binds click and touchstart events for amplitude next buttons.
+	 		Binds click and touchend events for amplitude next buttons.
 	 --------------------------------------------------------------------------*/
 		function bindNext() {
 			/*
@@ -3710,13 +3732,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the next classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < next_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					next_classes[i].removeEventListener('touchstart', _handlers2.default.next);
-					next_classes[i].addEventListener('touchstart', _handlers2.default.next);
+					next_classes[i].removeEventListener('touchend', _handlers2.default.next);
+					next_classes[i].addEventListener('touchend', _handlers2.default.next);
 				} else {
 					next_classes[i].removeEventListener('click', _handlers2.default.next);
 					next_classes[i].addEventListener('click', _handlers2.default.next);
@@ -3726,7 +3748,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-prev"
-	 		Binds click and touchstart events for amplitude prev buttons.
+	 		Binds click and touchend events for amplitude prev buttons.
 	 --------------------------------------------------------------------------*/
 		function bindPrev() {
 			/*
@@ -3736,13 +3758,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the prev classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < prev_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					prev_classes[i].removeEventListener('touchstart', _handlers2.default.prev);
-					prev_classes[i].addEventListener('touchstart', _handlers2.default.prev);
+					prev_classes[i].removeEventListener('touchend', _handlers2.default.prev);
+					prev_classes[i].addEventListener('touchend', _handlers2.default.prev);
 				} else {
 					prev_classes[i].removeEventListener('click', _handlers2.default.prev);
 					prev_classes[i].addEventListener('click', _handlers2.default.prev);
@@ -3752,7 +3774,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-shuffle"
-	 		Binds click and touchstart events for amplitude shuffle buttons.
+	 		Binds click and touchend events for amplitude shuffle buttons.
 	 --------------------------------------------------------------------------*/
 		function bindShuffle() {
 			/*
@@ -3762,7 +3784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the shuffle classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < shuffle_classes.length; i++) {
@@ -3774,8 +3796,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				shuffle_classes[i].classList.add('amplitude-shuffle-off');
 
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					shuffle_classes[i].removeEventListener('touchstart', _handlers2.default.shuffle);
-					shuffle_classes[i].addEventListener('touchstart', _handlers2.default.shuffle);
+					shuffle_classes[i].removeEventListener('touchend', _handlers2.default.shuffle);
+					shuffle_classes[i].addEventListener('touchend', _handlers2.default.shuffle);
 				} else {
 					shuffle_classes[i].removeEventListener('click', _handlers2.default.shuffle);
 					shuffle_classes[i].addEventListener('click', _handlers2.default.shuffle);
@@ -3785,7 +3807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-repeat"
-	 		Binds click and touchstart events for amplitude repeat buttons.
+	 		Binds click and touchend events for amplitude repeat buttons.
 	 --------------------------------------------------------------------------*/
 		function bindRepeat() {
 			/*
@@ -3795,7 +3817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the repeat classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < repeat_classes.length; i++) {
@@ -3807,8 +3829,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				repeat_classes[i].classList.add('amplitude-repeat-off');
 
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					repeat_classes[i].removeEventListener('touchstart', _handlers2.default.repeat);
-					repeat_classes[i].addEventListener('touchstart', _handlers2.default.repeat);
+					repeat_classes[i].removeEventListener('touchend', _handlers2.default.repeat);
+					repeat_classes[i].addEventListener('touchend', _handlers2.default.repeat);
 				} else {
 					repeat_classes[i].removeEventListener('click', _handlers2.default.repeat);
 					repeat_classes[i].addEventListener('click', _handlers2.default.repeat);
@@ -3818,7 +3840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-playback-speed"
-	 		Binds click and touchstart events for amplitude playback speed buttons.
+	 		Binds click and touchend events for amplitude playback speed buttons.
 	 --------------------------------------------------------------------------*/
 		function bindPlaybackSpeed() {
 			/*
@@ -3828,13 +3850,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the playback speed classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it is click.
 	  */
 			for (var i = 0; i < playback_speed_classes.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					playback_speed_classes[i].removeEventListener('touchstart', _handlers2.default.playbackSpeed);
-					playback_speed_classes[i].addEventListener('touchstart', _handlers2.default.playbackSpeed);
+					playback_speed_classes[i].removeEventListener('touchend', _handlers2.default.playbackSpeed);
+					playback_speed_classes[i].addEventListener('touchend', _handlers2.default.playbackSpeed);
 				} else {
 					playback_speed_classes[i].removeEventListener('click', _handlers2.default.playbackSpeed);
 					playback_speed_classes[i].addEventListener('click', _handlers2.default.playbackSpeed);
@@ -3844,7 +3866,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/*--------------------------------------------------------------------------
 	 	BINDS: class="amplitude-skip-to"
-	 		Binds click and touchstart events for amplitude skip to buttons.
+	 		Binds click and touchend events for amplitude skip to buttons.
 	 --------------------------------------------------------------------------*/
 		function bindSkipTo() {
 			/*
@@ -3854,13 +3876,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			/*
 	  	Iterates over all of the skip to classes and binds the event interaction
-	  	methods to the element. If the browser is mobile, then the event is touchstart
+	  	methods to the element. If the browser is mobile, then the event is touchend
 	  	otherwise it's a click.
 	  */
 			for (var i = 0; i < skipToClasses.length; i++) {
 				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					skipToClasses[i].removeEventListener('touchstart', _handlers2.default.skipTo);
-					skipToClasses[i].addEventListener('touchstart', _handlers2.default.skipTo);
+					skipToClasses[i].removeEventListener('touchend', _handlers2.default.skipTo);
+					skipToClasses[i].addEventListener('touchend', _handlers2.default.skipTo);
 				} else {
 					skipToClasses[i].removeEventListener('click', _handlers2.default.skipTo);
 					skipToClasses[i].addEventListener('click', _handlers2.default.skipTo);
@@ -4005,117 +4027,121 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on a play button in Amplitude.
 	 --------------------------------------------------------------------------*/
 		play: function play() {
-			/*
-	  	Gets the attribute for song index so we can check if
-	  	there is a need to change the song.  In some scenarios
-	  	there might be multiple play classes on the page. In that
-	  	case it is possible the user could click a different play
-	  	class and change the song.
-	  */
-			var playButtonSongIndex = this.getAttribute('amplitude-song-index');
-			var playButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	Gets the attribute for song index so we can check if
+	   	there is a need to change the song.  In some scenarios
+	   	there might be multiple play classes on the page. In that
+	   	case it is possible the user could click a different play
+	   	class and change the song.
+	   */
+				var playButtonSongIndex = this.getAttribute('amplitude-song-index');
+				var playButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
 
-			if (playButtonPlaylistIndex == null && playButtonSongIndex == null) {
-				_helpers2.default.setSongPlayPause(_config2.default.active_playlist, _config2.default.active_index);
-			}
-
-			/*
-	  	
-	  */
-			if (playButtonPlaylistIndex != null && playButtonPlaylistIndex != '') {
-				if (_helpers4.default.checkNewPlaylist(playButtonPlaylistIndex)) {
-					_helpers4.default.setActivePlaylist(playButtonPlaylistIndex);
-
-					if (playButtonSongIndex != null) {
-						_helpers4.default.changeSong(playButtonSongIndex);
-						_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
-					} else {
-						_helpers4.default.changeSong(_config2.default.playlists[playButtonPlaylistIndex][0]);
-						_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
-					}
-				} else {
-					if (playButtonSongIndex != null) {
-						_helpers4.default.changeSong(playButtonSongIndex);
-						_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
-					} else {
-						_helpers4.default.changeSong(_config2.default.active_index);
-						_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
-					}
-				}
-			}
-
-			/*
-	  	*/
-			if ((playButtonPlaylistIndex == null || playButtonPlaylistIndex == '') && playButtonSongIndex != null && playButtonSongIndex != '') {
-
-				if (_helpers4.default.checkNewSong(playButtonSongIndex) || _config2.default.active_playlist != playButtonPlaylistIndex) {
-					_helpers4.default.changeSong(playButtonSongIndex);
+				if (playButtonPlaylistIndex == null && playButtonSongIndex == null) {
+					_helpers2.default.setSongPlayPause(_config2.default.active_playlist, _config2.default.active_index);
 				}
 
-				_helpers2.default.setSongPlayPause(playButtonPlaylistIndex, playButtonSongIndex);
-			}
+				/*
+	   	
+	   */
+				if (playButtonPlaylistIndex != null && playButtonPlaylistIndex != '') {
+					if (_helpers4.default.checkNewPlaylist(playButtonPlaylistIndex)) {
+						_helpers4.default.setActivePlaylist(playButtonPlaylistIndex);
 
-			/*
-	  	Start the visualizations for the song. 
-	  	AMPFX-TODO: MAKE HANDLED BY AMPLITUDE FX
-	  */
-			//privateStartVisualization();
+						if (playButtonSongIndex != null) {
+							_helpers4.default.changeSong(playButtonSongIndex);
+							_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
+						} else {
+							_helpers4.default.changeSong(_config2.default.playlists[playButtonPlaylistIndex][0]);
+							_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
+						}
+					} else {
+						if (playButtonSongIndex != null) {
+							_helpers4.default.changeSong(playButtonSongIndex);
+							_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
+						} else {
+							_helpers4.default.changeSong(_config2.default.active_index);
+							_helpers2.default.setPlaylistPlayPause(playButtonPlaylistIndex);
+						}
+					}
+				}
+
+				/*
+	   	*/
+				if ((playButtonPlaylistIndex == null || playButtonPlaylistIndex == '') && playButtonSongIndex != null && playButtonSongIndex != '') {
+
+					if (_helpers4.default.checkNewSong(playButtonSongIndex) || _config2.default.active_playlist != playButtonPlaylistIndex) {
+						_helpers4.default.changeSong(playButtonSongIndex);
+					}
+
+					_helpers2.default.setSongPlayPause(playButtonPlaylistIndex, playButtonSongIndex);
+				}
+
+				/*
+	   	Start the visualizations for the song. 
+	   	AMPFX-TODO: MAKE HANDLED BY AMPLITUDE FX
+	   */
+				//privateStartVisualization();
+			}
 		},
 
 		/*--------------------------------------------------------------------------
 	 	HANDLER FOR: 'amplitude-pause'
 	 --------------------------------------------------------------------------*/
 		pause: function pause() {
-			var pauseButtonSongIndex = this.getAttribute('amplitude-song-index');
-			var pauseButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
+			if (!_config2.default.is_touch_moving) {
+				var pauseButtonSongIndex = this.getAttribute('amplitude-song-index');
+				var pauseButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
 
-			if (pauseButtonSongIndex == null && pauseButtonPlaylistIndex == null) {
-				_helpers2.default.setSongPlayPause(_config2.default.active_playlist, _config2.default.active_index);
-				_core2.default.pause();
-			}
+				if (pauseButtonSongIndex == null && pauseButtonPlaylistIndex == null) {
+					_helpers2.default.setSongPlayPause(_config2.default.active_playlist, _config2.default.active_index);
+					_core2.default.pause();
+				}
 
-			if (pauseButtonPlaylistIndex != null || pauseButtonPlaylistIndex != '' && _config2.default.active_playlist == pauseButtonPlaylistIndex) {
-				/*
-	   	The song was playing so we sync visually for the song
-	   	to be paused and we pause the song.
-	   */
-				_visual2.default.syncMainPlayPause('paused');
+				if (pauseButtonPlaylistIndex != null || pauseButtonPlaylistIndex != '' && _config2.default.active_playlist == pauseButtonPlaylistIndex) {
+					/*
+	    	The song was playing so we sync visually for the song
+	    	to be paused and we pause the song.
+	    */
+					_visual2.default.syncMainPlayPause('paused');
 
-				/*
-	   	If there is an active playlist, then
-	   	we need to sync that playlist's play pause
-	   	button to the state of paused.
-	   */
-				_visual2.default.syncPlaylistPlayPause(_config2.default.active_playlist, 'paused');
+					/*
+	    	If there is an active playlist, then
+	    	we need to sync that playlist's play pause
+	    	button to the state of paused.
+	    */
+					_visual2.default.syncPlaylistPlayPause(_config2.default.active_playlist, 'paused');
 
-				/*
-	   	Sync the song play pause buttons
-	   */
-				_visual2.default.syncSongPlayPause(_config2.default.active_playlist, _config2.default.active_index, 'paused');
+					/*
+	    	Sync the song play pause buttons
+	    */
+					_visual2.default.syncSongPlayPause(_config2.default.active_playlist, _config2.default.active_index, 'paused');
 
-				_core2.default.pause();
-			}
+					_core2.default.pause();
+				}
 
-			if ((pauseButtonPlaylistIndex == null || pauseButtonPlaylistIndex == '') && pauseButtonSongIndex == _config2.default.active_index) {
-				/*
-	   	The song was playing so we sync visually for the song
-	   	to be paused and we pause the song.
-	   */
-				_visual2.default.syncMainPlayPause('paused');
+				if ((pauseButtonPlaylistIndex == null || pauseButtonPlaylistIndex == '') && pauseButtonSongIndex == _config2.default.active_index) {
+					/*
+	    	The song was playing so we sync visually for the song
+	    	to be paused and we pause the song.
+	    */
+					_visual2.default.syncMainPlayPause('paused');
 
-				/*
-	   	If there is an active playlist, then
-	   	we need to sync that playlist's play pause
-	   	button to the state of paused.
-	   */
-				_visual2.default.syncPlaylistPlayPause(_config2.default.active_playlist, 'paused');
+					/*
+	    	If there is an active playlist, then
+	    	we need to sync that playlist's play pause
+	    	button to the state of paused.
+	    */
+					_visual2.default.syncPlaylistPlayPause(_config2.default.active_playlist, 'paused');
 
-				/*
-	   	Sync the song play pause buttons
-	   */
-				_visual2.default.syncSongPlayPause(_config2.default.active_playlist, _config2.default.active_index, 'paused');
+					/*
+	    	Sync the song play pause buttons
+	    */
+					_visual2.default.syncSongPlayPause(_config2.default.active_playlist, _config2.default.active_index, 'paused');
 
-				_core2.default.pause();
+					_core2.default.pause();
+				}
 			}
 		},
 
@@ -4124,29 +4150,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on a play pause button.
 	 --------------------------------------------------------------------------*/
 		playPause: function playPause() {
-			/*
-	  	Checks to see if the element has an attribute for amplitude-main-play-pause
-	  	and syncs accordingly
-	  */
-			if (this.getAttribute('amplitude-main-play-pause') != null) {
-				_helpers2.default.setMainPlayPause();
-
+			if (!_config2.default.is_touch_moving) {
 				/*
-	   	Syncs playlist main play pause buttons
+	   	Checks to see if the element has an attribute for amplitude-main-play-pause
+	   	and syncs accordingly
 	   */
-			} else if (this.getAttribute('amplitude-playlist-main-play-pause') != null) {
-				var playlist = this.getAttribute('amplitude-playlist');
+				if (this.getAttribute('amplitude-main-play-pause') != null) {
+					_helpers2.default.setMainPlayPause();
 
-				_helpers2.default.setPlaylistPlayPause(playlist);
+					/*
+	    	Syncs playlist main play pause buttons
+	    */
+				} else if (this.getAttribute('amplitude-playlist-main-play-pause') != null) {
+					var playlist = this.getAttribute('amplitude-playlist');
 
-				/*
-	   	Syncs amplitude individual song buttons
-	   */
-			} else {
-				var playlist = this.getAttribute('amplitude-playlist');
-				var songIndex = this.getAttribute('amplitude-song-index');
+					_helpers2.default.setPlaylistPlayPause(playlist);
 
-				_helpers2.default.setSongPlayPause(playlist, songIndex);
+					/*
+	    	Syncs amplitude individual song buttons
+	    */
+				} else {
+					var playlist = this.getAttribute('amplitude-playlist');
+					var songIndex = this.getAttribute('amplitude-song-index');
+
+					_helpers2.default.setSongPlayPause(playlist, songIndex);
+				}
 			}
 		},
 
@@ -4157,15 +4185,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	is stopped as well.
 	 --------------------------------------------------------------------------*/
 		stop: function stop() {
-			/*
-	  	Sets all of the play/pause buttons to pause
-	  */
-			_visual2.default.setPlayPauseButtonsToPause();
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	Sets all of the play/pause buttons to pause
+	   */
+				_visual2.default.setPlayPauseButtonsToPause();
 
-			/*
-	  	Stops the active song.
-	  */
-			_core2.default.stop();
+				/*
+	   	Stops the active song.
+	   */
+				_core2.default.stop();
+			}
 		},
 
 		/*--------------------------------------------------------------------------
@@ -4173,35 +4203,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on a mute element.
 	 --------------------------------------------------------------------------*/
 		mute: function mute() {
-			/*
-	  	If the current volume in the config is 0, we set the volume to the 
-	  	pre_mute level.  This means that the audio is already muted and
-	  	needs to be restored to the pre_mute level.
-	  	
-	  	Otherwise, we set pre_mute volume to the current volume
-	  	and set the config volume to 0, muting the audio.
-	  */
-			if (_config2.default.volume == 0) {
-				_config2.default.volume = _config2.default.pre_mute_volume;
-				_visual2.default.syncMute(false);
-			} else {
-				_config2.default.pre_mute_volume = _config2.default.volume;
-				_config2.default.volume = 0;
-				_visual2.default.syncMute(true);
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	If the current volume in the config is 0, we set the volume to the 
+	   	pre_mute level.  This means that the audio is already muted and
+	   	needs to be restored to the pre_mute level.
+	   	
+	   	Otherwise, we set pre_mute volume to the current volume
+	   	and set the config volume to 0, muting the audio.
+	   */
+				if (_config2.default.volume == 0) {
+					_config2.default.volume = _config2.default.pre_mute_volume;
+					_visual2.default.syncMute(false);
+				} else {
+					_config2.default.pre_mute_volume = _config2.default.volume;
+					_config2.default.volume = 0;
+					_visual2.default.syncMute(true);
+				}
+
+				/*
+	   	Calls the core function to set the volume to the computed value
+	   	based on the user's intent.
+	   */
+				_core2.default.setVolume(_config2.default.volume);
+
+				/*
+	   	Syncs the volume sliders so the visuals align up with the functionality.
+	   	If the volume is at 0, then the sliders should represent that so the user
+	   	has the right starting point.
+	   */
+				_visual2.default.syncVolumeSliders(_config2.default.volume);
 			}
-
-			/*
-	  	Calls the core function to set the volume to the computed value
-	  	based on the user's intent.
-	  */
-			_core2.default.setVolume(_config2.default.volume);
-
-			/*
-	  	Syncs the volume sliders so the visuals align up with the functionality.
-	  	If the volume is at 0, then the sliders should represent that so the user
-	  	has the right starting point.
-	  */
-			_visual2.default.syncVolumeSliders(_config2.default.volume);
 		},
 
 		/*--------------------------------------------------------------------------
@@ -4209,32 +4241,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles a click on a volume up element.
 	 --------------------------------------------------------------------------*/
 		volumeUp: function volumeUp() {
-			/*
-	  	The volume range is from 0 to 1 for an audio element. We make this
-	  	a base of 100 for ease of working with.
-	  		If the new value is less than 100, we use the new calculated
-	  	value which gets converted to the proper unit for the audio element.
-	  		If the new value is greater than 100, we set the volume to 1 which
-	  	is the max for the audio element.
-	  */
-			if (_config2.default.volume + _config2.default.volume_increment <= 100) {
-				_config2.default.volume = _config2.default.volume + _config2.default.volume_increment;
-			} else {
-				_config2.default.volume = 100;
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	The volume range is from 0 to 1 for an audio element. We make this
+	   	a base of 100 for ease of working with.
+	   		If the new value is less than 100, we use the new calculated
+	   	value which gets converted to the proper unit for the audio element.
+	   		If the new value is greater than 100, we set the volume to 1 which
+	   	is the max for the audio element.
+	   */
+				if (_config2.default.volume + _config2.default.volume_increment <= 100) {
+					_config2.default.volume = _config2.default.volume + _config2.default.volume_increment;
+				} else {
+					_config2.default.volume = 100;
+				}
+
+				/*
+	   	Calls the core function to set the volume to the computed value
+	   	based on the user's intent.
+	   */
+				_core2.default.setVolume(_config2.default.volume);
+
+				/*
+	   	Syncs the volume sliders so the visuals align up with the functionality.
+	   	If the volume is at 0, then the sliders should represent that so the user
+	   	has the right starting point.
+	   */
+				_visual2.default.syncVolumeSliders(_config2.default.volume);
 			}
-
-			/*
-	  	Calls the core function to set the volume to the computed value
-	  	based on the user's intent.
-	  */
-			_core2.default.setVolume(_config2.default.volume);
-
-			/*
-	  	Syncs the volume sliders so the visuals align up with the functionality.
-	  	If the volume is at 0, then the sliders should represent that so the user
-	  	has the right starting point.
-	  */
-			_visual2.default.syncVolumeSliders(_config2.default.volume);
 		},
 
 		/*--------------------------------------------------------------------------
@@ -4242,32 +4276,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles a click on a volume down element.
 	 --------------------------------------------------------------------------*/
 		volumeDown: function volumeDown() {
-			/*
-	  	The volume range is from 0 to 1 for an audio element. We make this
-	  	a base of 100 for ease of working with.
-	  		If the new value is less than 100, we use the new calculated
-	  	value which gets converted to the proper unit for the audio element.
-	  		If the new value is greater than 100, we set the volume to 1 which
-	  	is the max for the audio element.
-	  */
-			if (_config2.default.volume - _config2.default.volume_increment > 0) {
-				_config2.default.volume = _config2.default.volume - _config2.default.volume_increment;
-			} else {
-				_config2.default.volume = 0;
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	The volume range is from 0 to 1 for an audio element. We make this
+	   	a base of 100 for ease of working with.
+	   		If the new value is less than 100, we use the new calculated
+	   	value which gets converted to the proper unit for the audio element.
+	   		If the new value is greater than 100, we set the volume to 1 which
+	   	is the max for the audio element.
+	   */
+				if (_config2.default.volume - _config2.default.volume_increment > 0) {
+					_config2.default.volume = _config2.default.volume - _config2.default.volume_increment;
+				} else {
+					_config2.default.volume = 0;
+				}
+
+				/*
+	   	Calls the core function to set the volume to the computed value
+	   	based on the user's intent.
+	   */
+				_core2.default.setVolume(_config2.default.volume);
+
+				/*
+	   	Syncs the volume sliders so the visuals align up with the functionality.
+	   	If the volume is at 0, then the sliders should represent that so the user
+	   	has the right starting point.
+	   */
+				_visual2.default.syncVolumeSliders(_config2.default.volume);
 			}
-
-			/*
-	  	Calls the core function to set the volume to the computed value
-	  	based on the user's intent.
-	  */
-			_core2.default.setVolume(_config2.default.volume);
-
-			/*
-	  	Syncs the volume sliders so the visuals align up with the functionality.
-	  	If the volume is at 0, then the sliders should represent that so the user
-	  	has the right starting point.
-	  */
-			_visual2.default.syncVolumeSliders(_config2.default.volume);
 		},
 
 		/*--------------------------------------------------------------------------
@@ -4369,37 +4405,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on the next button
 	 --------------------------------------------------------------------------*/
 		next: function next() {
-			/*
-	  	We went to the next song so we turn repeat off.
-	  */
-			_config2.default.repeat = _helpers2.default.setRepeat(false);
-			_visual2.default.syncRepeat();
-
-			/*
-	  	Checks to see if the button is a playlist next button or
-	  	if it's a global playlist button.
-	  */
-			if (this.getAttribute('amplitude-playlist') == '' || this.getAttribute('amplitude-playlist') == null) {
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	We went to the next song so we turn repeat off.
+	   */
+				_config2.default.repeat = _helpers2.default.setRepeat(false);
+				_visual2.default.syncRepeat();
 
 				/*
-	   	Check to see if the current state of the player
-	   	is in playlist mode or not playlist mode.
+	   	Checks to see if the button is a playlist next button or
+	   	if it's a global playlist button.
 	   */
-				if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
-					_helpers2.default.setNext();
+				if (this.getAttribute('amplitude-playlist') == '' || this.getAttribute('amplitude-playlist') == null) {
+
+					/*
+	    	Check to see if the current state of the player
+	    	is in playlist mode or not playlist mode.
+	    */
+					if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
+						_helpers2.default.setNext();
+					} else {
+						_helpers2.default.setNextPlaylist(_config2.default.active_playlist);
+					}
 				} else {
-					_helpers2.default.setNextPlaylist(_config2.default.active_playlist);
-				}
-			} else {
-				/*
-	   	Gets the playlist of the next button.
-	   */
-				var playlist = this.getAttribute('amplitude-playlist');
+					/*
+	    	Gets the playlist of the next button.
+	    */
+					var playlist = this.getAttribute('amplitude-playlist');
 
-				/*
-	   	Sets the next playlist
-	   */
-				_helpers2.default.setNextPlaylist(playlist);
+					/*
+	    	Sets the next playlist
+	    */
+					_helpers2.default.setNextPlaylist(playlist);
+				}
 			}
 		},
 
@@ -4408,37 +4446,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on the previous button
 	 --------------------------------------------------------------------------*/
 		prev: function prev() {
-			/*
-	  	We went to the previous song so we turn repeat off.
-	  */
-			_config2.default.repeat = _helpers2.default.setRepeat(false);
-			_visual2.default.syncRepeat();
-
-			/*
-	  	Checks to see if the previous button is a playlist previous
-	  	button or if it's a global playlist button.
-	  */
-			if (this.getAttribute('amplitude-playlist') == '' || this.getAttribute('amplitude-playlist') == null) {
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	We went to the previous song so we turn repeat off.
+	   */
+				_config2.default.repeat = _helpers2.default.setRepeat(false);
+				_visual2.default.syncRepeat();
 
 				/*
-	   	Check to see if the current playlist has been set
-	   	or null and set the previous song.
+	   	Checks to see if the previous button is a playlist previous
+	   	button or if it's a global playlist button.
 	   */
-				if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
-					_helpers2.default.setPrev();
+				if (this.getAttribute('amplitude-playlist') == '' || this.getAttribute('amplitude-playlist') == null) {
+
+					/*
+	    	Check to see if the current playlist has been set
+	    	or null and set the previous song.
+	    */
+					if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
+						_helpers2.default.setPrev();
+					} else {
+						_helpers2.default.setPrevPlaylist(_config2.default.active_playlist);
+					}
 				} else {
-					_helpers2.default.setPrevPlaylist(_config2.default.active_playlist);
-				}
-			} else {
-				/*
-	   	Gets the playlist of the previous button.
-	   */
-				var playlist = this.getAttribute('amplitude-playlist');
+					/*
+	    	Gets the playlist of the previous button.
+	    */
+					var playlist = this.getAttribute('amplitude-playlist');
 
-				/*
-	   	Sets the previous playlist
-	   */
-				_helpers2.default.setPrevPlaylist(playlist);
+					/*
+	    	Sets the previous playlist
+	    */
+					_helpers2.default.setPrevPlaylist(playlist);
+				}
 			}
 		},
 
@@ -4447,21 +4487,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on the shuffle button
 	 --------------------------------------------------------------------------*/
 		shuffle: function shuffle() {
-			/*
-	  	Check to see if the shuffle button belongs to a playlist
-	  */
-			if (this.getAttribute('amplitude-playlist') == '' || this.getAttribute('amplitude-playlist') == null) {
+			if (!_config2.default.is_touch_moving) {
 				/*
-	   	Sets the shuffle button to null
+	   	Check to see if the shuffle button belongs to a playlist
 	   */
-				_helpers2.default.setShuffle(null);
-			} else {
-				/*
-	   	Gets the playlist attribute of the shuffle button and
-	   	set shuffle to on for the playlist.
-	   */
-				var playlist = this.getAttribute('amplitude-playlist');
-				_helpers2.default.setShuffle(playlist);
+				if (this.getAttribute('amplitude-playlist') == '' || this.getAttribute('amplitude-playlist') == null) {
+					/*
+	    	Sets the shuffle button to null
+	    */
+					_helpers2.default.setShuffle(null);
+				} else {
+					/*
+	    	Gets the playlist attribute of the shuffle button and
+	    	set shuffle to on for the playlist.
+	    */
+					var playlist = this.getAttribute('amplitude-playlist');
+					_helpers2.default.setShuffle(playlist);
+				}
 			}
 		},
 
@@ -4470,15 +4512,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on the repeat button
 	 --------------------------------------------------------------------------*/
 		repeat: function repeat() {
-			/*
-	  	Sets repeat to the opposite of what it was set to
-	  */
-			_helpers2.default.setRepeat(!_config2.default.repeat);
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	Sets repeat to the opposite of what it was set to
+	   */
+				_helpers2.default.setRepeat(!_config2.default.repeat);
 
-			/*
-	  	Visually sync repeat
-	  */
-			_visual2.default.syncRepeat();
+				/*
+	   	Visually sync repeat
+	   */
+				_visual2.default.syncRepeat();
+			}
 		},
 
 		/*--------------------------------------------------------------------------
@@ -4486,28 +4530,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on the playback speed button
 	 --------------------------------------------------------------------------*/
 		playbackSpeed: function playbackSpeed() {
-			/*
-	  	We increment the speed by .5 everytime we click
-	  	the button to change the playback speed. Once we are
-	  	actively playing back at 2, we start back at 1 which
-	  	is normal speed.
-	  */
-			switch (_config2.default.playback_speed) {
-				case 1:
-					_helpers2.default.setPlaybackSpeed(1.5);
-					break;
-				case 1.5:
-					_helpers2.default.setPlaybackSpeed(2);
-					break;
-				case 2:
-					_helpers2.default.setPlaybackSpeed(1);
-					break;
-			}
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	We increment the speed by .5 everytime we click
+	   	the button to change the playback speed. Once we are
+	   	actively playing back at 2, we start back at 1 which
+	   	is normal speed.
+	   */
+				switch (_config2.default.playback_speed) {
+					case 1:
+						_helpers2.default.setPlaybackSpeed(1.5);
+						break;
+					case 1.5:
+						_helpers2.default.setPlaybackSpeed(2);
+						break;
+					case 2:
+						_helpers2.default.setPlaybackSpeed(1);
+						break;
+				}
 
-			/*
-	  	Visually sync the playback speed.
-	  */
-			_visual2.default.syncPlaybackSpeed();
+				/*
+	   	Visually sync the playback speed.
+	   */
+				_visual2.default.syncPlaybackSpeed();
+			}
 		},
 
 		/*--------------------------------------------------------------------------
@@ -4515,53 +4561,55 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		Handles an event on a skip to button.
 	 --------------------------------------------------------------------------*/
 		skipTo: function skipTo() {
-			/*
-	  	Determines if the skip to button is in the scope of a playlist.
-	  */
-			if (this.hasAttribute('amplitude-playlist')) {
-				var playlist = this.getAttribute('amplitude-playlist');
+			if (!_config2.default.is_touch_moving) {
+				/*
+	   	Determines if the skip to button is in the scope of a playlist.
+	   */
+				if (this.hasAttribute('amplitude-playlist')) {
+					var playlist = this.getAttribute('amplitude-playlist');
 
-				if (_helpers4.default.checkNewPlaylist(playlist)) {
-					_helpers4.default.setActivePlaylist(playlist);
+					if (_helpers4.default.checkNewPlaylist(playlist)) {
+						_helpers4.default.setActivePlaylist(playlist);
+					}
+					/*
+	    	Gets the location, playlist and song index that is being skipped
+	    	to.
+	    */
+					var location = parseInt(this.getAttribute('amplitude-location'));
+					var playlist = this.getAttribute('amplitude-playlist');
+					var songIndex = parseInt(this.getAttribute('amplitude-song-index'));
+
+					/*
+	    	Changes the song to where it's being skipped and then
+	    	play the song.
+	    */
+					_helpers4.default.changeSong(songIndex);
+					_core2.default.play();
+
+					/*
+	    	Skip to the location in the song.
+	    */
+					_core2.default.skipToLocation(location);
+				} else {
+					/*
+	    	Gets the location and song index that is being skipped
+	    	to.
+	    */
+					var location = parseInt(this.getAttribute('amplitude-location'));
+					var songIndex = parseInt(this.getAttribute('amplitude-song-index'));
+
+					/*
+	    	Changes the song to where it's being skipped and then
+	    	play the song.
+	    */
+					_helpers4.default.changeSong(songIndex);
+					_core2.default.play();
+
+					/*
+	    	Skip to the location in the song.
+	    */
+					_core2.default.skipToLocation(location);
 				}
-				/*
-	   	Gets the location, playlist and song index that is being skipped
-	   	to.
-	   */
-				var location = parseInt(this.getAttribute('amplitude-location'));
-				var playlist = this.getAttribute('amplitude-playlist');
-				var songIndex = parseInt(this.getAttribute('amplitude-song-index'));
-
-				/*
-	   	Changes the song to where it's being skipped and then
-	   	play the song.
-	   */
-				_helpers4.default.changeSong(songIndex);
-				_core2.default.play();
-
-				/*
-	   	Skip to the location in the song.
-	   */
-				_core2.default.skipToLocation(location);
-			} else {
-				/*
-	   	Gets the location and song index that is being skipped
-	   	to.
-	   */
-				var location = parseInt(this.getAttribute('amplitude-location'));
-				var songIndex = parseInt(this.getAttribute('amplitude-song-index'));
-
-				/*
-	   	Changes the song to where it's being skipped and then
-	   	play the song.
-	   */
-				_helpers4.default.changeSong(songIndex);
-				_core2.default.play();
-
-				/*
-	   	Skip to the location in the song.
-	   */
-				_core2.default.skipToLocation(location);
 			}
 		}
 	};

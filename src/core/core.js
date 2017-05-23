@@ -92,7 +92,10 @@ var AmplitudeCore = (function() {
 	function stop(){
 		AmplitudeHelpers.runCallback('before_stop');
 
-		config.active_song.currentTime = 0;
+		if( config.active_song.currentTime != 0 ){
+			config.active_song.currentTime = 0;
+		}
+
 		config.active_song.pause();
 
 		if( config.active_metadata.live ){

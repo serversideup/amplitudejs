@@ -30,11 +30,7 @@ and easier to maintain. Everything in Amplitude 3.0 is modular so releases won't
 
 ## Installation
 
-### Install and update Amplitude via Bower
-
-```
-	bower install amplitude
-```
+### NPM
 
 ### Downloading Manually
 
@@ -51,6 +47,23 @@ On top of your page just add:
 Amplitude.js is now available for use! All that's left is initializing.
 
 ## Configuring Amplitude.js
+Amplitude JS contains many variables that can be configured to determine the functionality of AmplitudeJS.
+These are set and passed in during the Amplitude.init() method:
+
+| Setting       		  | Default       | Type  	 				| Functionality 																			|
+| ----------------------- |:-------------:|:-----------------------:|:------------------------------------------------------------------------------------------|
+| autoplay      		  | false 		  | boolean 				| When true, autoplays the current song 													|
+| callbacks 			  | {} 			  | JSON Object  			| An array of methods that get called at certain actions 									|
+| songs     			  | {}     		  | JSON Object 			| Object containing all of the songs used by AmplitudeJS 									|
+| playlists 			  | {}  	      | JSON Object 			| Object containing all of the playlists used by AmplitudeJS 								|
+| default_album_art 	  | '' 			  | URL 					| URL to the default album art image 														|
+| debug 				  | false 		  | Boolean 				| Determines if we should print out debugging to the console 								|
+| volume 				  | .5 			  | Float (0.0 - 1.0) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
+| volume_increment 		  | 5			  | Integer (1 - 100) 		| How much the volume increments every time the volume increment pressed.					|
+| volume_decriment 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
+| soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
+| soundcloud_use_art 	  | false 		  | Boolean 				| Determines if we should use the SoundCloud album art by default 							|
+
 
 ### Initializing Amplitude.js
 To initialize Amplitude.js, you must call the Amplitude.init() method and pass in an object that
@@ -405,19 +418,29 @@ the "default_album_art" key.  Once again, this is handled on initialization.
 
 ### Debug Mode
 
-Debug mode outputs verbose updates 
+Debug mode outputs verbose updates when Amplitude actions take place to see the current config and statuses
+of the AmplitudeJS player. To turn on AmplitudeJS debug mode you can set it in the config or call: 
+
+```
+Amplitude.setDebug( true );
+```
 
 ### Soundcloud Configuration
-
-### Preload Setting
+AmplitudeJS supports SoundCloud integration. When adding a song from SoundCloud use the SoundCloud streamable
+URL and provide a soundcloud_client in the config. AmplitudeJS will configure all of the data necessary from the
+SoundCloud API to go with the song.  You can even use the album art by setting the soundcloud_use_art to true in
+the config during the Amplitude.init() method.
 
 ### Callbacks
+There are a variety of callbacks that AmplitudeJS calls at certain times and the developer can bind to. To bind to a callback
 
-### Preset Volume
 
-### Volume Increment Amount
-
-### Volume Decrement Amount
+| Callback        | Description 										   |
+| --------------- |--------------------------------------------------------|
+| before_play     | Occurs before the play method is called 			   |
+| after_play 	  | Occurs after the play method is called 			       |
+| before_stop 	  | Occurs before the stop method is called 			   |
+| after_stop  	  | Occurs after the stop method is called 				   |
 
 ## Amplitude Elements
 
@@ -530,10 +553,38 @@ There are 3 levels of Play/Pause buttons.
 3. Song Play/Pause - Plays or pauses an individual song.
 
 ##### Global Play/Pause
+The global play pause button plays or pauses the current song depending on the state of the AmplitudeJS player. This button
+does not account for whether the song is in a playlist or an individual song, it's whatever song is active the functionality works
+on.  To add a global play/pause button you add an element and give the property of 'amplitude-main-play-pause="true"':
+
+```html
+<span class="button amplitude-play-pause" amplitude-main-play-pause="true"></span>
+```
 
 ##### Playlist Play/Pause
+The playlist play pause button plays or pauses the current song in a playlist. If a song is being played outside of a playlist when
+clicked, the playlist will play the first song in the playlist assigned to the button clicked and pause the other song. To add a playlist
+play pause button add an element with the class of 'amplitude-play-pause' an attribute of 'amplitude-playlist-main-play-pause="true"' and an
+attribute of 'amplitude-playlist="{playlist-index}'.
+
+```
+<span class="button amplitude-play-pause amplitude-paused" amplitude-playlist-main-play-pause="true" amplitude-playlist="{index}"></span>
+```
 
 ##### Song Play/Pause
+The song play pause button plays or pauses the song clicked. This can either be in a playlist or an individual song.
+If the song is in a playlist you will have to add an attribute stating the playlist with the playlist key. The element will
+also have to have an attribute of the song index on the element.
+
+Playlist Song:
+```
+<span class="button amplitude-play-pause" amplitude-song-index="{song_index}" amplitude-playlist="{song_playlist}"></span>
+```
+
+Individual Song:
+```
+<span class="button amplitude-play-pause amplitude-paused" amplitude-song-index="{song_index}"></span>
+```
 
 #### Stop Button
 The stop button simply stops the active song. On a desktop, this will respond to the 'click' event and a 'touchstart' on mobile. 
@@ -691,36 +742,160 @@ These specific keys have to be on an img tag since they update the src attribute
 attribute fills in the inner html of the tag.
 
 #### Image Metadata
+When defining a song object there are 3 different keys you can define image meta data with:
+
+1. cover_art_url
+2. station_art_url
+3. podcast_episode_cover_art_url
+
+These URLs point to an image that will be substituted out for the active song image. 
 
 #### Text Metadata
+With text metadata describing a song, you can use whatever information you like and place it
+in whatever element you like. This is new to Amplitude 3.0. Previous versions of AmplitudeJS
+limited the user to certain meta data fields such as artist, album, title, etc. The newest
+version of AmplitudeJS allows the user to do whatever keys on a song object and insert that
+text into any element defined appropriately. This give much more flexibility when using AmplitudeJS
+in a variety of audio scenarios such as for radio stations and podcasts. To add an element that contains
+a piece of meta data regarding the now playing song simply add:
+
+```
+<span amplitude-song-info="{song_meta_index}" amplitude-main-song-info="true"></span>
+```
+
+If it's a main element for a playlist add the key for the playlist:
+```
+<span amplitude-song-info="{song_meta_index}" amplitude-playlist="{playlist_index}"></span>
+```
 
 #### Time Metadata
+There are certain elements that contain time data about the active song. You can add these elements to your document
+and they will auto fill with the current status of the song. Like other elements, these can be either for the overall
+player, scoped in a playlist or for a specific song. There are two sets of time meta data, current time and song duration.
+The song duration can only be set for the active song since the metadata isn't preloaded for all of the songs.
 
-## Config Variables
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+Main Current Time - Displays in MM:SS
+```
+<span class="amplitude-current-time" amplitude-main-current-time="true"></span>
+```
+
+Main Current Hours
+```
+<span class="amplitude-current-hours" amplitude-main-current-hours="true"></span>
+```
+
+Main Current Minutes
+```
+<span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>
+```
+
+Main Current Seconds
+```
+<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
+```
+
+Current Hours For Playlist
+```
+<span class="amplitude-current-hours" amplitude-playlist-current-hours="true" amplitude-playlist="{playlist_key}"></span>
+```
+
+Current Minutes For Playlist
+```
+<span class="amplitude-current-minutes" amplitude-playlist-current-minutes="true" amplitude-playlist="{playlist_key}"></span>
+```
+
+Current Seconds For Playlist
+```
+<span class="amplitude-current-seconds" amplitude-playlist-current-seconds="true" amplitude-playlist="{playlist_key}"></span>
+```
+
+Current Hours For Song
+```
+<span class="amplitude-current-hours" amplitude-song-index="{song_index}"></span>
+```
+
+Current Minutes For Song
+```
+<span class="amplitude-current-minutes" amplitude-song-index="{song_index}"></span>
+```
+
+Current Seconds For Song
+```
+<span class="amplitude-current-seconds" amplitude-song-index="{song_index}"></span>
+```
 
 ## Public Functions
+There are a variety of public functions that AmplitudeJS exposes to the user. These methods allow the 
+user to change config variables, add new songs, play now, etc.
 
 ### Bind New Elements
+The bind new elements function should be called whenever a new song element is added to the page. This will
+bind all of the event handlers for that element.
+
+```
+Amplitude.bindNewElements()
+```
 
 ### Set Debug
+To change the debug mode setting, you can call the setDebug method any time and start to receive data
+about the state of the player or turn off debugging.
+
+```
+Amplitude.setDebug( {bool} );
+```
 
 ### Get Active Song Metadata
+Returns the active song's metadata as a JSON object.
+
+```
+Amplitude.getActiveSongMetadata();
+```
 
 ### Get Song By Index
+Returns a song's metadata at a specific index.
+```
+Amplitude.getSongByIndex( {index} );
+```
 
 ### Get Song At Playlist Index
+Returns a song at a playlist's index.
+```
+Amplitude.getSongAtPlaylistIndex( {playlistIndex}, {index} );
+```
 
 ### Add Song
+Adds a song to the AmplitudeJS player. You will need to write a method yourself to add the visual side
+of things to fit your custom design, and then call the bindNewElements() method to make sure it works.
+This method returns the index of the song added to the player.
+
+```
+Amplitude.addSong( {song_object} );
+```
 
 ### Play Now
+In AmplitudeJS 2.0 this was referred to as 'Dynamic Mode'. Now you can just pass a song to AmplitudeJS and it
+will automatically play. If there are visual elements, then they will sync as well.
+
+```
+Amplitude.playNow( {song_object} );
+```
 
 ### Play
+This simply plays whatever song is active.
+
+```
+Amplitude.play()
+```
 
 ### Pause
+This simply pauses whatever song is active.
+```
+Amplitude.play()
+```
 
 ### Get Audio
+This returns the actual audio element. This is mainly used for writing extensions but exposes the core of
+AmplitudeJS. This returns the audio element used by AmplitudeJS.
+```
+Amplitude.audio()
+```

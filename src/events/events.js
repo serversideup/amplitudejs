@@ -41,6 +41,23 @@ var AmplitudeEvents = (function () {
 		AmplitudeHelpers.writeDebugMessage( 'Beginning initialization of event handlers..' );
 
 		/*
+			Sets flag that the screen is moving and not a tap
+		*/
+		document.addEventListener('touchmove', function(){
+			config.is_touch_moving = true;
+		});
+
+		/*
+			On touch end if it was a touch move event, set moving to
+			false
+		*/
+		document.addEventListener('touchend', function(){
+			if( config.is_touch_moving ){
+				config.is_touch_moving = false;
+			}
+		});
+
+		/*
 			On time update for the audio element, update visual displays that
 			represent the time on either a visualized element or time display.
 		*/
@@ -155,7 +172,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-play"
 
-		Binds click and touchstart events for amplitude play buttons.
+		Binds click and touchend events for amplitude play buttons.
 	--------------------------------------------------------------------------*/
 	function bindPlay(){
 		/*
@@ -165,13 +182,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the play classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchstart
+			method to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < play_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent ) ) {
-				play_classes[i].removeEventListener('touchstart', AmplitudeHandlers.play );
-				play_classes[i].addEventListener('touchstart', AmplitudeHandlers.play );
+				play_classes[i].removeEventListener('touchend', AmplitudeHandlers.play );
+				play_classes[i].addEventListener('touchend', AmplitudeHandlers.play );
 			}else{
 				play_classes[i].removeEventListener('click', AmplitudeHandlers.play );
 				play_classes[i].addEventListener('click', AmplitudeHandlers.play );
@@ -182,7 +199,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-pause"
 
-		Binds click and touchstart events for amplitude pause buttons.
+		Binds click and touchend events for amplitude pause buttons.
 	--------------------------------------------------------------------------*/
 	function bindPause(){
 		/*
@@ -192,13 +209,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the pause classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchstart
+			method to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < pause_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				pause_classes[i].removeEventListener('touchstart', AmplitudeHandlers.pause );
-				pause_classes[i].addEventListener('touchstart', AmplitudeHandlers.pause );
+				pause_classes[i].removeEventListener('touchend', AmplitudeHandlers.pause );
+				pause_classes[i].addEventListener('touchend', AmplitudeHandlers.pause );
 			}else{
 				pause_classes[i].removeEventListener('click', AmplitudeHandlers.pause );
 				pause_classes[i].addEventListener('click', AmplitudeHandlers.pause );
@@ -209,7 +226,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-play-pause"
 		
-		Binds click and touchstart events for amplitude play pause buttons.
+		Binds click and touchend events for amplitude play pause buttons.
 	--------------------------------------------------------------------------*/
 	function bindPlayPause(){
 		/*
@@ -219,13 +236,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the play/pause classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchstart
+			method to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < play_pause_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				play_pause_classes[i].removeEventListener('touchstart', AmplitudeHandlers.playPause );
-				play_pause_classes[i].addEventListener('touchstart', AmplitudeHandlers.playPause );
+				play_pause_classes[i].removeEventListener('touchend', AmplitudeHandlers.playPause );
+				play_pause_classes[i].addEventListener('touchend', AmplitudeHandlers.playPause );
 			}else{
 				play_pause_classes[i].removeEventListener('click', AmplitudeHandlers.playPause );
 				play_pause_classes[i].addEventListener('click', AmplitudeHandlers.playPause );
@@ -236,7 +253,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-stop"
 
-		Binds click and touchstart events for amplitude stop buttons
+		Binds click and touchend events for amplitude stop buttons
 	--------------------------------------------------------------------------*/
 	function bindStop(){
 		/*
@@ -246,13 +263,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the stop classes and binds the event interaction
-			method to the element.  If the browser is mobile, then the event is touchstart
+			method to the element.  If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < stop_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				stop_classes[i].removeEventListener('touchstart', AmplitudeHandlers.stop );
-				stop_classes[i].addEventListener('touchstart', AmplitudeHandlers.stop );
+				stop_classes[i].removeEventListener('touchend', AmplitudeHandlers.stop );
+				stop_classes[i].addEventListener('touchend', AmplitudeHandlers.stop );
 			}else{
 				stop_classes[i].removeEventListener('click', AmplitudeHandlers.stop );
 				stop_classes[i].addEventListener('click', AmplitudeHandlers.stop );
@@ -263,7 +280,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-mute"
 
-		Binds click and touchstart events for amplitude mute buttons
+		Binds click and touchend events for amplitude mute buttons
 	--------------------------------------------------------------------------*/
 	function bindMute(){
 		/*
@@ -273,7 +290,7 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the mute classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchstart
+			method to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < mute_classes.length; i++ ){
@@ -288,10 +305,10 @@ var AmplitudeEvents = (function () {
 					is turned on.
 				*/
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-					privateHelpWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+					AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
-					mute_classes[i].removeEventListener('touchstart', AmplitudeHandlers.mute );
-					mute_classes[i].addEventListener('touchstart', AmplitudeHandlers.mute );
+					mute_classes[i].removeEventListener('touchend', AmplitudeHandlers.mute );
+					mute_classes[i].addEventListener('touchend', AmplitudeHandlers.mute );
 				}
 			}else{
 				mute_classes[i].removeEventListener('click', AmplitudeHandlers.mute );
@@ -303,7 +320,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-volume-up"
 
-		Binds click and touchstart events for amplitude volume up buttons
+		Binds click and touchend events for amplitude volume up buttons
 	--------------------------------------------------------------------------*/
 	function bindVolumeUp(){
 		/*
@@ -313,7 +330,7 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the volume up classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < volume_up_classes.length; i++ ){
@@ -328,10 +345,10 @@ var AmplitudeEvents = (function () {
 					is turned on.
 				*/
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-					privateHelpWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+					AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
-					volume_up_classes[i].removeEventListener('touchstart', AmplitudeHandlers.volumeUp );
-					volume_up_classes[i].addEventListener('touchstart', AmplitudeHandlers.volumeUp );
+					volume_up_classes[i].removeEventListener('touchend', AmplitudeHandlers.volumeUp );
+					volume_up_classes[i].addEventListener('touchend', AmplitudeHandlers.volumeUp );
 				}
 			}else{
 				volume_up_classes[i].removeEventListener('click', AmplitudeHandlers.volumeUp );
@@ -343,7 +360,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-volume-down"
 
-		Binds click and touchstart events for amplitude volume down buttons
+		Binds click and touchend events for amplitude volume down buttons
 	--------------------------------------------------------------------------*/
 	function bindVolumeDown(){
 		/*
@@ -353,7 +370,7 @@ var AmplitudeEvents = (function () {
 		
 		/*
 			Iterates over all of the volume down classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < volume_down_classes.length; i++ ){
@@ -368,10 +385,10 @@ var AmplitudeEvents = (function () {
 					is turned on.
 				*/
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-					privateHelpWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+					AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
-					volume_down_classes[i].removeEventListener('touchstart', AmplitudeHandlers.volumeDown );
-					volume_down_classes[i].addEventListener('touchstart', AmplitudeHandlers.volumeDown );
+					volume_down_classes[i].removeEventListener('touchend', AmplitudeHandlers.volumeDown );
+					volume_down_classes[i].addEventListener('touchend', AmplitudeHandlers.volumeDown );
 				}
 			}else{
 				volume_down_classes[i].removeEventListener('click', AmplitudeHandlers.volumeDown );
@@ -444,7 +461,7 @@ var AmplitudeEvents = (function () {
 				the device.
 			*/
 			if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-				privateHelpWriteDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+				AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 			}else{
 				if ( msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./) ){
 					volume_sliders[i].removeEventListener('change', AmplitudeHandlers.volumeSlider );
@@ -460,7 +477,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-next"
 
-		Binds click and touchstart events for amplitude next buttons.
+		Binds click and touchend events for amplitude next buttons.
 	--------------------------------------------------------------------------*/
 	function bindNext(){
 		/*
@@ -470,13 +487,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the next classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < next_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				next_classes[i].removeEventListener('touchstart', AmplitudeHandlers.next );
-				next_classes[i].addEventListener('touchstart', AmplitudeHandlers.next );
+				next_classes[i].removeEventListener('touchend', AmplitudeHandlers.next );
+				next_classes[i].addEventListener('touchend', AmplitudeHandlers.next );
 			}else{
 				next_classes[i].removeEventListener('click', AmplitudeHandlers.next );
 				next_classes[i].addEventListener('click', AmplitudeHandlers.next );
@@ -487,7 +504,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-prev"
 
-		Binds click and touchstart events for amplitude prev buttons.
+		Binds click and touchend events for amplitude prev buttons.
 	--------------------------------------------------------------------------*/
 	function bindPrev(){
 		/*
@@ -497,13 +514,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the prev classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < prev_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				prev_classes[i].removeEventListener('touchstart', AmplitudeHandlers.prev );
-				prev_classes[i].addEventListener('touchstart', AmplitudeHandlers.prev );
+				prev_classes[i].removeEventListener('touchend', AmplitudeHandlers.prev );
+				prev_classes[i].addEventListener('touchend', AmplitudeHandlers.prev );
 			}else{
 				prev_classes[i].removeEventListener('click', AmplitudeHandlers.prev );
 				prev_classes[i].addEventListener('click', AmplitudeHandlers.prev );
@@ -514,7 +531,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-shuffle"
 
-		Binds click and touchstart events for amplitude shuffle buttons.
+		Binds click and touchend events for amplitude shuffle buttons.
 	--------------------------------------------------------------------------*/
 	function bindShuffle(){
 		/*
@@ -524,7 +541,7 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the shuffle classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < shuffle_classes.length; i++ ){
@@ -536,8 +553,8 @@ var AmplitudeEvents = (function () {
 			shuffle_classes[i].classList.add('amplitude-shuffle-off');
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				shuffle_classes[i].removeEventListener('touchstart', AmplitudeHandlers.shuffle );
-				shuffle_classes[i].addEventListener('touchstart', AmplitudeHandlers.shuffle );
+				shuffle_classes[i].removeEventListener('touchend', AmplitudeHandlers.shuffle );
+				shuffle_classes[i].addEventListener('touchend', AmplitudeHandlers.shuffle );
 			}else{
 				shuffle_classes[i].removeEventListener('click', AmplitudeHandlers.shuffle );
 				shuffle_classes[i].addEventListener('click', AmplitudeHandlers.shuffle );
@@ -548,7 +565,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-repeat"
 
-		Binds click and touchstart events for amplitude repeat buttons.
+		Binds click and touchend events for amplitude repeat buttons.
 	--------------------------------------------------------------------------*/
 	function bindRepeat(){
 		/*
@@ -558,7 +575,7 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the repeat classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < repeat_classes.length; i++ ){
@@ -570,8 +587,8 @@ var AmplitudeEvents = (function () {
 			repeat_classes[i].classList.add('amplitude-repeat-off');
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				repeat_classes[i].removeEventListener('touchstart', AmplitudeHandlers.repeat );
-				repeat_classes[i].addEventListener('touchstart', AmplitudeHandlers.repeat );
+				repeat_classes[i].removeEventListener('touchend', AmplitudeHandlers.repeat );
+				repeat_classes[i].addEventListener('touchend', AmplitudeHandlers.repeat );
 			}else{
 				repeat_classes[i].removeEventListener('click', AmplitudeHandlers.repeat );
 				repeat_classes[i].addEventListener('click', AmplitudeHandlers.repeat );
@@ -582,7 +599,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-playback-speed"
 
-		Binds click and touchstart events for amplitude playback speed buttons.
+		Binds click and touchend events for amplitude playback speed buttons.
 	--------------------------------------------------------------------------*/
 	function bindPlaybackSpeed(){
 		/*
@@ -592,13 +609,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the playback speed classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it is click.
 		*/
 		for( var i = 0; i < playback_speed_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				playback_speed_classes[i].removeEventListener('touchstart', AmplitudeHandlers.playbackSpeed );
-				playback_speed_classes[i].addEventListener('touchstart', AmplitudeHandlers.playbackSpeed );
+				playback_speed_classes[i].removeEventListener('touchend', AmplitudeHandlers.playbackSpeed );
+				playback_speed_classes[i].addEventListener('touchend', AmplitudeHandlers.playbackSpeed );
 			}else{
 				playback_speed_classes[i].removeEventListener('click', AmplitudeHandlers.playbackSpeed );
 				playback_speed_classes[i].addEventListener('click', AmplitudeHandlers.playbackSpeed );
@@ -609,7 +626,7 @@ var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-skip-to"
 
-		Binds click and touchstart events for amplitude skip to buttons.
+		Binds click and touchend events for amplitude skip to buttons.
 	--------------------------------------------------------------------------*/
 	function bindSkipTo(){
 		/*
@@ -619,13 +636,13 @@ var AmplitudeEvents = (function () {
 
 		/*
 			Iterates over all of the skip to classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchstart
+			methods to the element. If the browser is mobile, then the event is touchend
 			otherwise it's a click.
 		*/
 		for( var i = 0; i < skipToClasses.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				skipToClasses[i].removeEventListener('touchstart', AmplitudeHandlers.skipTo );
-				skipToClasses[i].addEventListener('touchstart', AmplitudeHandlers.skipTo );
+				skipToClasses[i].removeEventListener('touchend', AmplitudeHandlers.skipTo );
+				skipToClasses[i].addEventListener('touchend', AmplitudeHandlers.skipTo );
 			}else{
 				skipToClasses[i].removeEventListener('click', AmplitudeHandlers.skipTo );
 				skipToClasses[i].addEventListener('click', AmplitudeHandlers.skipTo );
