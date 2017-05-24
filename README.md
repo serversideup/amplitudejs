@@ -33,7 +33,7 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 ## Features
 * Completely independent library (no jQuery required)
 * 100% customizable design of all player elements
-* Single command install: `npm install amplitudejs`
+* Single command install: `npm install --save amplitudejs`
 * Multiple playlist support on single page
 * Song meta data display
 * Soundcloud integration
