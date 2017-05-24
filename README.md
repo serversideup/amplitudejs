@@ -45,7 +45,7 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 	* Previous Song
 	* Shuffle
 
-# Installation
+## Installation
 ##### Automatic install via `npm`
 Download it via NPM to your existing project:
 ```sh
