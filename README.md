@@ -52,7 +52,7 @@ Download it via NPM to your existing project:
 npm install --save amplitudejs
 ```
 
-You will see the file under `amplitudejs/dist/amplitude.js`. 
+You will see the file under `node_modules/amplitudejs/dist/amplitude.js`. 
 
 ##### Manual download
 Download the `amplitude.js` file from our releases here: https://github.com/521dimensions/amplitudejs/releases
