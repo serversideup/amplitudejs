@@ -1,12 +1,9 @@
 # How to contribute
-- Thank them for wanting to contribute
-- Explain there are a few guidelines to contribute
+Thanks for your interest in contributing to the AmplitudeJS project! This is an open source project, so we like to keep things fun. It should go without saying that you please be friendly and respectful of other people's ideas. We're here to push Amplitude.js to the cutting edge of web audio, we want to make sure everyone is having fun do it. Let's not make this project feel like a job!
 
-Thanks for your interest in contributing to the AmplitudeJS project! We have a few guidelines on getting started and how to contribute:
+We also have a few guidelines on getting started and how to contribute:
 
 ## Coding Guidelines
-
-- Be friendly and respectful of other people's ideas
 - Make sure all code is properly indented with tabs and commented thoroughly
 - Everything MUST be in Vanilla JavaScript and not revolve around any library
 - Spend some quality time testing your code
