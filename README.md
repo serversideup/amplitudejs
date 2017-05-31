@@ -33,7 +33,7 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 ## Features
 * Completely independent library (no jQuery required)
 * 100% customizable design of all player elements
-* Single command install: `npm install --save amplitudejs`
+* Available by CDN or single command install: `npm install --save amplitudejs`
 * Multiple playlist support on single page
 * Song meta data display
 * Soundcloud integration
@@ -46,7 +46,18 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 	* Shuffle
 
 ## Installation
-##### Automatic install via `npm`
+
+### Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
+No installation is required to use Amplitude.js. All you need to do is include a single line in your `<head>` section of your HTML page.
+
+Replace `{{version-number}}` with the exact version number that you would like to use (see [our releases](https://github.com/521dimensions/amplitudejs/releases) for what version number to use):
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs/dist/amplitude@{{version-number}}.js"></script>
+```
+**NOTE:** It's best to set your version number manually to make sure you have full control of what version you are running. If you need to upgrade in the future, just change `{{version-number}}` to the latest version.
+
+
+### Option 2: Automatic install via `npm`
 Download it via NPM to your existing project:
 ```sh
 npm install --save amplitudejs
@@ -54,8 +65,8 @@ npm install --save amplitudejs
 
 You will see the file under `node_modules/amplitudejs/dist/amplitude.js`. 
 
-##### Manual download
-Download the `amplitude.js` file from our releases here: https://github.com/521dimensions/amplitudejs/releases
+### Option 3: Manual download
+Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
 
 ## Documentation & Usage
 We're huge believers in clear documentation. You can access the [latest documentation here](https://521dimensions.com/open-source/amplitudejs/docs). If you find errors or places for improvement, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
