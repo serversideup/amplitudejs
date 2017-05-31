@@ -30,42 +30,31 @@ and easier to maintain. Everything in Amplitude 3.0 is modular so releases won't
 
 ## Installation
 
-### NPM
+### Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
+No installation is required to use Amplitude.js. All you need to do is include a single line in your `<head>` section of your HTML page.
 
-### Downloading Manually
-
-To get Amplitude.js manually, simply download the source from github: 
-https://github.com/521dimensions/amplitudejs		
-
-### Adding Amplitude.js to Your Document
-On top of your page just add:
-
-```javascript
-<script type="text/javascript" src="/directory/to/amplitude.js"></script>
+Replace `{{version-number}}` with the exact version number that you would like to use (see [our releases](https://github.com/521dimensions/amplitudejs/releases) for what version number to use):
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs/dist/amplitude@{{version-number}}.js"></script>
 ```
+**NOTE:** It's best to set your version number manually to make sure you have full control of what version you are running. If you need to upgrade in the future, just change `{{version-number}}` to the latest version.
+
+
+### Option 2: Automatic install via `npm`
+Download it via NPM to your existing project:
+```sh
+npm install --save amplitudejs
+```
+
+You will see the file under `node_modules/amplitudejs/dist/amplitude.js`. 
+
+### Option 3: Manual download
+Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
 
 Amplitude.js is now available for use! All that's left is initializing.
 
-## Configuring Amplitude.js
-Amplitude JS contains many variables that can be configured to determine the functionality of AmplitudeJS.
-These are set and passed in during the Amplitude.init() method:
 
-| Setting       		  | Default       | Type  	 				| Functionality 																			|
-| ----------------------- |:-------------:|:-----------------------:|:------------------------------------------------------------------------------------------|
-| autoplay      		  | false 		  | boolean 				| When true, autoplays the current song 													|
-| callbacks 			  | {} 			  | JSON Object  			| An array of methods that get called at certain actions 									|
-| songs     			  | {}     		  | JSON Object 			| Object containing all of the songs used by AmplitudeJS 									|
-| playlists 			  | {}  	      | JSON Object 			| Object containing all of the playlists used by AmplitudeJS 								|
-| default_album_art 	  | '' 			  | URL 					| URL to the default album art image 														|
-| debug 				  | false 		  | Boolean 				| Determines if we should print out debugging to the console 								|
-| volume 				  | .5 			  | Float (0.0 - 1.0) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
-| volume_increment 		  | 5			  | Integer (1 - 100) 		| How much the volume increments every time the volume increment pressed.					|
-| volume_decriment 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
-| soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
-| soundcloud_use_art 	  | false 		  | Boolean 				| Determines if we should use the SoundCloud album art by default 							|
-
-
-### Initializing Amplitude.js
+## Initializing Amplitude.js
 To initialize Amplitude.js, you must call the Amplitude.init() method and pass in an object that
 contains an array of songs and settings. Amplitude.js will then take care of configuring and setting up your
 player by finding all of the Amplitude elements (defined later in the docs) and binding the appropriate
@@ -106,6 +95,24 @@ be using. More information about the song object next.
 
 This configuration will set up Amplitude.js to work the way you want it. The config JSON is used heavily
 to configure and optimize Amplitude.js for what your app needs.
+
+## Configuring Amplitude.js
+Amplitude JS contains many variables that can be configured to determine the functionality of AmplitudeJS.
+These are set and passed in during the Amplitude.init() method:
+
+| Setting       		  | Default       | Type  	 				| Functionality 																			|
+| ----------------------- |:-------------:|:-----------------------:|:------------------------------------------------------------------------------------------|
+| autoplay      		  | false 		  | boolean 				| When true, autoplays the current song 													|
+| callbacks 			  | {} 			  | JSON Object  			| An array of methods that get called at certain actions 									|
+| songs     			  | {}     		  | JSON Object 			| Object containing all of the songs used by AmplitudeJS 									|
+| playlists 			  | {}  	      | JSON Object 			| Object containing all of the playlists used by AmplitudeJS 								|
+| default_album_art 	  | '' 			  | URL 					| URL to the default album art image 														|
+| debug 				  | false 		  | Boolean 				| Determines if we should print out debugging to the console 								|
+| volume 				  | .5 			  | Float (0.0 - 1.0) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
+| volume_increment 		  | 5			  | Integer (1 - 100) 		| How much the volume increments every time the volume increment pressed.					|
+| volume_decriment 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
+| soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
+| soundcloud_use_art 	  | false 		  | Boolean 				| Determines if we should use the SoundCloud album art by default 							|
 
 ### Song Objects
 
