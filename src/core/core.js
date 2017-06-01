@@ -69,6 +69,7 @@ var AmplitudeCore = (function() {
 		Pauses the active song. If it's live, it disconnects the stream.
 	--------------------------------------------------------------------------*/
 	function pause(){
+		AmplitudeHelpers.runCallback('before_pause');
 		/*
 			Pause the active song.
 		*/
@@ -82,6 +83,7 @@ var AmplitudeCore = (function() {
 		if( config.active_metadata.live ){
 			disconnectStream();
 		}
+		AmplitudeHelpers.runCallback('after_pause');
 	}
 
 	/*--------------------------------------------------------------------------
