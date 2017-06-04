@@ -28,8 +28,6 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 	Click the image above to go to the demo site or <a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">click here</a>.
 </p>
 
-
-
 ## Features
 * Completely independent library (no jQuery required)
 * 100% customizable design of all player elements
@@ -44,6 +42,13 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 	* Next Song
 	* Previous Song
 	* Shuffle
+
+## Browsers support
+
+| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome | 
+<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" /></br>Opera |
+| --------- | --------- | --------- | --------- | --------- | 
+| IE9, IE10, IE11, Edge| 4.0+| 3.5+| 4.0+| 10.5+|
 
 ## Installation
 
@@ -67,6 +72,48 @@ You will see the file under `node_modules/amplitudejs/dist/amplitude.js`.
 
 ### Option 3: Manual download
 Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
+
+### After install, you must initialize Amplitude.js
+To initialize Amplitude.js, you must call the `Amplitude.init()` method and pass in an object that
+contains an array of songs and settings. Amplitude.js will then take care of configuring and setting up your
+player by finding all of the Amplitude elements (defined later in the docs) and binding the appropriate
+event handlers.
+
+To configure Amplitude.js, you need to call the init function on the Amplitude object
+and you can pass it a JSON object of configuration variables ( we will go through ALL of these [in the
+documentation](https://521dimensions.com/open-source/amplitudejs/docs) ). At the bare minimum, you need to pass it all of the song objects that your page will
+be using. More information about the song object next.
+
+```javascript
+	Amplitude.init({
+		"songs": [
+			{
+				"name": "Song Name 1",
+				"artist": "Artist Name",
+				"album": "Album Name",
+				"url": "/song/url.mp3",
+				"cover_art_url": "/cover/art/url.jpg"
+			},
+			{
+				"name": "Song Name 2",
+				"artist": "Artist Name",
+				"album": "Album Name",
+				"url": "/song/url.mp3",
+				"cover_art_url": "/cover/art/url.jpg"
+			},
+			{
+				"name": "Song Name 3",
+				"artist": "Artist Name",
+				"album": "Album Name",
+				"url": "/song/url.mp3",
+				"cover_art_url": "/cover/art/url.jpg"
+			}
+		]
+	});
+```
+
+This configuration will set up Amplitude.js to work the way you want it. The config JSON is used heavily
+to configure and optimize Amplitude.js for what your app needs.
 
 ## Documentation & Usage
 We're huge believers in clear documentation. You can access the [latest documentation here](https://521dimensions.com/open-source/amplitudejs/docs). If you find errors or places for improvement, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
