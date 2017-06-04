@@ -116,7 +116,7 @@ This configuration will set up Amplitude.js to work the way you want it. The con
 to configure and optimize Amplitude.js for what your app needs.
 
 ## Documentation & Usage
-We're huge believers in clear documentation. You can access the [latest documentation here](https://521dimensions.com/open-source/amplitudejs/docs). If you find errors or places for improvement, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
+There are a lot more features that are explained in greater detail in our [latest documentation](https://521dimensions.com/open-source/amplitudejs/docs). If you find errors or places for improvement on our documentation, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
 
 
 ## Reporting Issues
