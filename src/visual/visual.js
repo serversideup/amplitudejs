@@ -739,7 +739,6 @@ var AmplitudeVisualSync = (function() {
 			Ensure we have a location that's a number
 		*/
 		location = !isNaN( location ) ? location : 0;
-
 		/*
 			If the playlist is set, we get all of the individual song sliders
 			that relate to the song and the playlist.
@@ -771,7 +770,9 @@ var AmplitudeVisualSync = (function() {
 			*/
 			for( var i = 0; i < songSliders.length; i++ ){
 				if( !songSliders[i].hasAttribute('amplitude-playlist') ){
-					songSliders[i].value = location;
+					if( location != 0 ){
+						songSliders[i].value = location;
+					}
 				}
 			}
 		}

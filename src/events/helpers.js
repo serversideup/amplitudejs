@@ -162,10 +162,10 @@ var AmplitudeEventHelpers = (function() {
 	/*--------------------------------------------------------------------------
 		Sets the current song's playback speed
 
-		@param int speed The float with a base of 1 representing the speed
+		@param float speed The float with a base of 1 representing the speed
 	--------------------------------------------------------------------------*/
 	function setPlaybackSpeed( speed ){
-		config.playback_speed = speed;
+		AmplitudeCore.setPlaybackSpeed( speed );
 	}
 
 	/*--------------------------------------------------------------------------

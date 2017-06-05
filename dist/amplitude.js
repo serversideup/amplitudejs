@@ -1673,7 +1673,6 @@ var AmplitudeVisualSync = function () {
   	Ensure we have a location that's a number
   */
 		location = !isNaN(location) ? location : 0;
-
 		/*
   	If the playlist is set, we get all of the individual song sliders
   	that relate to the song and the playlist.
@@ -1705,7 +1704,9 @@ var AmplitudeVisualSync = function () {
    */
 			for (var i = 0; i < songSliders.length; i++) {
 				if (!songSliders[i].hasAttribute('amplitude-playlist')) {
-					songSliders[i].value = location;
+					if (location != 0) {
+						songSliders[i].value = location;
+					}
 				}
 			}
 		}
@@ -3650,6 +3651,7 @@ exports.default = {
   	Syncs amplitude individual song buttons
   */
 		if (this.getAttribute('amplitude-playlist-song-slider') == null && this.getAttribute('amplitude-main-song-slider') == null) {
+
 			var playlist = this.getAttribute('amplitude-playlist');
 			var songIndex = this.getAttribute('amplitude-song-index');
 
@@ -4089,10 +4091,10 @@ var AmplitudeEventHelpers = function () {
 
 	/*--------------------------------------------------------------------------
  	Sets the current song's playback speed
- 		@param int speed The float with a base of 1 representing the speed
+ 		@param float speed The float with a base of 1 representing the speed
  --------------------------------------------------------------------------*/
 	function setPlaybackSpeed(speed) {
-		_config2.default.playback_speed = speed;
+		_core2.default.setPlaybackSpeed(speed);
 	}
 
 	/*--------------------------------------------------------------------------

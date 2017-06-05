@@ -455,6 +455,7 @@ export default {
 		*/
 		if( this.getAttribute('amplitude-playlist-song-slider') == null
 			&& this.getAttribute('amplitude-main-song-slider') == null ){
+
 			var playlist 	= this.getAttribute('amplitude-playlist');
 			var songIndex 	= this.getAttribute('amplitude-song-index');
 
