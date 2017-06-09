@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1803,7 +1803,7 @@ var _helpers = __webpack_require__(1);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
-var _handlers = __webpack_require__(7);
+var _handlers = __webpack_require__(6);
 
 var _handlers2 = _interopRequireDefault(_handlers);
 
@@ -3000,305 +3000,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _init = __webpack_require__(5);
-
-var _init2 = _interopRequireDefault(_init);
-
-var _core = __webpack_require__(2);
-
-var _core2 = _interopRequireDefault(_core);
-
-var _helpers = __webpack_require__(1);
-
-var _helpers2 = _interopRequireDefault(_helpers);
-
-var _events = __webpack_require__(4);
-
-var _events2 = _interopRequireDefault(_events);
-
 var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
-                                                                                                                                                                                                                  	Amplitude.js
-                                                                                                                                                                                                                  	Version: 	3.0
-                                                                                                                                                                                                                  	Author: 	Dan Pastori
-                                                                                                                                                                                                                  	Company: 	521 Dimensions
-                                                                                                                                                                                                                  */
-
-
-/*
-	Amplitude should just be an interface to the public functions.
-	Everything else should be handled by other objects
-*/
-
-var Amplitude = function () {
-	var _ref;
-
-	/*--------------------------------------------------------------------------
- 	The main init function.  The user will call this through 
- 	Amplitude.init({}) and pass in their settings.
- 	
- 	Public Accessor: Amplitude.init( user_config_json );
- 	 	@param user_config A JSON object of user defined values that help 
-  	configure and initialize AmplitudeJS.
- --------------------------------------------------------------------------*/
-	function init(userConfig) {
-		_init2.default.initialize(userConfig);
-	}
-
-	/*--------------------------------------------------------------------------
- 	Binds new elements that were added to the page.
- --------------------------------------------------------------------------*/
-	function bindNewElements() {
-		_init2.default.rebindDisplay();
-	}
-
-	function getActivePlaylist() {
-		return _config2.default.active_playlist;
-	}
-
-	function getPlaybackSpeed() {
-		return _config2.default.playback_speed;
-	}
-
-	function setPlaybackSpeed(speed) {
-		/*
-  	TODO: Apply appropriate class to speed button.
-  */
-		//config.playback_speed 
-	}
-
-	function getRepeat() {
-		return _config2.default.repeat;
-	}
-
-	function setRepeat(repeat) {
-		/*
-  	TODO: Visually show repeat methods
-  */
-	}
-
-	function getShuffle() {
-		return _config2.default.shuffle_on;
-	}
-
-	function setShuffle(shuffle) {
-		/*
-  	TODO: Set the shuffle state for all of the songs visually.
-  */
-	}
-
-	function getShufflePlaylist(shuffle, playlistKey) {}
-
-	function setShufflePlaylist(shuffle, playlistKey) {
-		/*
-  	TODO: Set the shuffle state for all of the songs in the playlist visually.
-  */
-	}
-
-	function getDefaultAlbumArt() {
-		return _config2.default.default_album_art;
-	}
-
-	function setDefaultAlbumArt() {}
-
-	/*--------------------------------------------------------------------------
- 	Allows the user to get the percentage of the song played.
- 	
- 	Public Accessor: Amplitude.getSongPlayedPercentage();
- --------------------------------------------------------------------------*/
-	function getSongPlayedPercentage() {
-		/*
-  	Returns the percentage of the song played.
-  */
-		return _config2.default.active_song.currentTime / _config2.default.active_song.duration * 100;
-	}
-
-	/*--------------------------------------------------------------------------
- 	Allows the user to set how far into the song they want to be. This is
- 	helpful for implementing custom range sliders
- 	
- 	Public Accessor: Amplitude.setSongPlayedPercentage( float );
- 	
-  	@param Float percentage The percentage of the song played
- --------------------------------------------------------------------------*/
-	function setSongPlayedPercentage(percentage) {
-		/*
-  	Ensures the percentage is a number and is between 0 and 100.
-  */
-		if (typeof percentage == 'number' && percentage > 0 && percentage < 100) {
-			/*
-   	Sets the current time of the song to the percentage.
-   */
-			_config2.default.active_song.currentTime = _config2.default.active_song.duration * (percentage / 100);
-		}
-	}
-
-	/*--------------------------------------------------------------------------
- 	Allows the user to turn on debugging.
- 	
- 	Public Accessor: Amplitude.setDebug( bool );
- 	
-  	@param BOOL state Turns debugging on and off.
- --------------------------------------------------------------------------*/
-	function setDebug(state) {
-		/*
-  	Sets the global config debug on or off.
-  */
-		_config2.default.debug = state;
-	}
-
-	/*--------------------------------------------------------------------------
- 	Returns the active song meta data for the user to do what is 
- 	needed.
- 	
- 	Public Accessor: Amplitude.getActiveSongMetadata();
- 	
-  	@returns JSON Object with the active song information
- --------------------------------------------------------------------------*/
-	function getActiveSongMetadata() {
-		return _config2.default.active_metadata;
-	}
-
-	/*--------------------------------------------------------------------------
- 	Returns a song in the songs array at that index
- 	
- 	Public Accessor: Amplitude.getSongByIndex( song_index )
- 		@param int index The integer for the index of the
- 	song in the songs array.
- 		@returns JSON representation for the song at a specific index.
- --------------------------------------------------------------------------*/
-	function getSongByIndex(index) {
-		return _config2.default.songs[index];
-	}
-
-	/*--------------------------------------------------------------------------
- 	Returns a song at a playlist index
- 	
- 	Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index 
- 		@param 	int 	index The integer for the index of the
- 	song in the playlist.
- 		@param 	string	playlist The key of the playlist we are getting the song
- 	at the index for
- 		@returns JSON representation for the song at a specific index.
- --------------------------------------------------------------------------*/
-	function getSongAtPlaylistIndex(playlist, index) {
-		var songIndex = _config2.default.playlists[playlist][index];
-
-		return _config2.default.songs[songIndex];
-	}
-
-	/*--------------------------------------------------------------------------
- 	Adds a song to the end of the config array.  This will allow Amplitude
- 	to play the song in a playlist type setting.
- 	
- 	Public Accessor: Amplitude.addSong( song_json )
- 		@param song JSON representation of a song.
- 		@returns int New index of the song.
- --------------------------------------------------------------------------*/
-	function addSong(song) {
-		_config2.default.songs.push(song);
-		return _config2.default.songs.length - 1;
-	}
-
-	/*--------------------------------------------------------------------------
- 	When you pass a song object it plays that song right awawy.  It sets
- 	the active song in the config to the song you pass in and synchronizes
- 	the visuals.
- 	
- 	Public Accessor: Amplitude.playNow( song )
- 		@param song JSON representation of a song.
- --------------------------------------------------------------------------*/
-	function playNow(song) {
-		_core2.default.playNow(song);
-	}
-
-	/*
- 	TODO: Implement Add Song To Playlist Functionality
- */
-	function addSongToPlaylist(song, playlist) {}
-
-	/*--------------------------------------------------------------------------
- 	Allows the user to play whatever the active song is directly
- 	through Javascript. Normally ALL of Amplitude functions that access
- 	the core features are called through event handlers.
- 		Public Accessor: Amplitude.play();
- --------------------------------------------------------------------------*/
-	function play() {
-		_core2.default.play();
-	}
-
-	/*--------------------------------------------------------------------------
- 	Allows the user to pause whatever the active song is directly
- 	through Javascript. Normally ALL of Amplitude functions that access
- 	the core features are called through event handlers. 
- 		Public Accessor: Amplitude.pause();
- --------------------------------------------------------------------------*/
-	function pause() {
-		_core2.default.pause();
-	}
-
-	/*--------------------------------------------------------------------------
- 	Returns the audio object used to play the audio
- 		Public Accessor: Amplitude.getAudio();
- --------------------------------------------------------------------------*/
-	function getAudio() {
-		return _config2.default.active_song;
-	}
-
-	/*
- 	Returns all of the publically accesible methods.
- */
-	return _ref = {
-		init: init,
-		bindNewElements: bindNewElements,
-		getActivePlaylist: getActivePlaylist,
-		getPlaybackSpeed: getPlaybackSpeed,
-		setPlaybackSpeed: setPlaybackSpeed,
-		getRepeat: getRepeat,
-		setRepeat: setRepeat,
-		getShuffle: getShuffle,
-		getShufflePlaylist: getShufflePlaylist,
-		setShuffle: setShuffle,
-		setShufflePlaylist: setShufflePlaylist,
-		getDefaultAlbumArt: getDefaultAlbumArt,
-		setDefaultAlbumArt: setDefaultAlbumArt,
-		getSongPlayedPercentage: getSongPlayedPercentage,
-		setSongPlayedPercentage: setSongPlayedPercentage,
-		setDebug: setDebug,
-		getActiveSongMetadata: getActiveSongMetadata,
-		getSongByIndex: getSongByIndex,
-		getSongAtPlaylistIndex: getSongAtPlaylistIndex,
-		addSong: addSong,
-		playNow: playNow,
-		play: play,
-		pause: pause
-	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _ref;
-}();
-
-exports.default = Amplitude;
-module.exports = exports['default'];
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _helpers = __webpack_require__(8);
+var _helpers = __webpack_require__(7);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -4001,7 +3707,7 @@ exports.default = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4840,6 +4546,300 @@ var AmplitudeEventHelpers = function () {
 }();
 
 exports.default = AmplitudeEventHelpers;
+module.exports = exports['default'];
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _init = __webpack_require__(5);
+
+var _init2 = _interopRequireDefault(_init);
+
+var _core = __webpack_require__(2);
+
+var _core2 = _interopRequireDefault(_core);
+
+var _helpers = __webpack_require__(1);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
+var _events = __webpack_require__(4);
+
+var _events2 = _interopRequireDefault(_events);
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
+                                                                                                                                                                                                                  	Amplitude.js
+                                                                                                                                                                                                                  	Version: 	3.0
+                                                                                                                                                                                                                  	Author: 	Dan Pastori
+                                                                                                                                                                                                                  	Company: 	521 Dimensions
+                                                                                                                                                                                                                  */
+
+
+/*
+	Amplitude should just be an interface to the public functions.
+	Everything else should be handled by other objects
+*/
+
+var Amplitude = function () {
+	var _ref;
+
+	/*--------------------------------------------------------------------------
+ 	The main init function.  The user will call this through 
+ 	Amplitude.init({}) and pass in their settings.
+ 	
+ 	Public Accessor: Amplitude.init( user_config_json );
+ 	 	@param user_config A JSON object of user defined values that help 
+  	configure and initialize AmplitudeJS.
+ --------------------------------------------------------------------------*/
+	function init(userConfig) {
+		_init2.default.initialize(userConfig);
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Binds new elements that were added to the page.
+ --------------------------------------------------------------------------*/
+	function bindNewElements() {
+		_init2.default.rebindDisplay();
+	}
+
+	function getActivePlaylist() {
+		return _config2.default.active_playlist;
+	}
+
+	function getPlaybackSpeed() {
+		return _config2.default.playback_speed;
+	}
+
+	function setPlaybackSpeed(speed) {
+		/*
+  	TODO: Apply appropriate class to speed button.
+  */
+		//config.playback_speed 
+	}
+
+	function getRepeat() {
+		return _config2.default.repeat;
+	}
+
+	function setRepeat(repeat) {
+		/*
+  	TODO: Visually show repeat methods
+  */
+	}
+
+	function getShuffle() {
+		return _config2.default.shuffle_on;
+	}
+
+	function setShuffle(shuffle) {
+		/*
+  	TODO: Set the shuffle state for all of the songs visually.
+  */
+	}
+
+	function getShufflePlaylist(shuffle, playlistKey) {}
+
+	function setShufflePlaylist(shuffle, playlistKey) {
+		/*
+  	TODO: Set the shuffle state for all of the songs in the playlist visually.
+  */
+	}
+
+	function getDefaultAlbumArt() {
+		return _config2.default.default_album_art;
+	}
+
+	function setDefaultAlbumArt() {}
+
+	/*--------------------------------------------------------------------------
+ 	Allows the user to get the percentage of the song played.
+ 	
+ 	Public Accessor: Amplitude.getSongPlayedPercentage();
+ --------------------------------------------------------------------------*/
+	function getSongPlayedPercentage() {
+		/*
+  	Returns the percentage of the song played.
+  */
+		return _config2.default.active_song.currentTime / _config2.default.active_song.duration * 100;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Allows the user to set how far into the song they want to be. This is
+ 	helpful for implementing custom range sliders
+ 	
+ 	Public Accessor: Amplitude.setSongPlayedPercentage( float );
+ 	
+  	@param Float percentage The percentage of the song played
+ --------------------------------------------------------------------------*/
+	function setSongPlayedPercentage(percentage) {
+		/*
+  	Ensures the percentage is a number and is between 0 and 100.
+  */
+		if (typeof percentage == 'number' && percentage > 0 && percentage < 100) {
+			/*
+   	Sets the current time of the song to the percentage.
+   */
+			_config2.default.active_song.currentTime = _config2.default.active_song.duration * (percentage / 100);
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Allows the user to turn on debugging.
+ 	
+ 	Public Accessor: Amplitude.setDebug( bool );
+ 	
+  	@param BOOL state Turns debugging on and off.
+ --------------------------------------------------------------------------*/
+	function setDebug(state) {
+		/*
+  	Sets the global config debug on or off.
+  */
+		_config2.default.debug = state;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Returns the active song meta data for the user to do what is 
+ 	needed.
+ 	
+ 	Public Accessor: Amplitude.getActiveSongMetadata();
+ 	
+  	@returns JSON Object with the active song information
+ --------------------------------------------------------------------------*/
+	function getActiveSongMetadata() {
+		return _config2.default.active_metadata;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Returns a song in the songs array at that index
+ 	
+ 	Public Accessor: Amplitude.getSongByIndex( song_index )
+ 		@param int index The integer for the index of the
+ 	song in the songs array.
+ 		@returns JSON representation for the song at a specific index.
+ --------------------------------------------------------------------------*/
+	function getSongByIndex(index) {
+		return _config2.default.songs[index];
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Returns a song at a playlist index
+ 	
+ 	Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index 
+ 		@param 	int 	index The integer for the index of the
+ 	song in the playlist.
+ 		@param 	string	playlist The key of the playlist we are getting the song
+ 	at the index for
+ 		@returns JSON representation for the song at a specific index.
+ --------------------------------------------------------------------------*/
+	function getSongAtPlaylistIndex(playlist, index) {
+		var songIndex = _config2.default.playlists[playlist][index];
+
+		return _config2.default.songs[songIndex];
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Adds a song to the end of the config array.  This will allow Amplitude
+ 	to play the song in a playlist type setting.
+ 	
+ 	Public Accessor: Amplitude.addSong( song_json )
+ 		@param song JSON representation of a song.
+ 		@returns int New index of the song.
+ --------------------------------------------------------------------------*/
+	function addSong(song) {
+		_config2.default.songs.push(song);
+		return _config2.default.songs.length - 1;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	When you pass a song object it plays that song right awawy.  It sets
+ 	the active song in the config to the song you pass in and synchronizes
+ 	the visuals.
+ 	
+ 	Public Accessor: Amplitude.playNow( song )
+ 		@param song JSON representation of a song.
+ --------------------------------------------------------------------------*/
+	function playNow(song) {
+		_core2.default.playNow(song);
+	}
+
+	/*
+ 	TODO: Implement Add Song To Playlist Functionality
+ */
+	function addSongToPlaylist(song, playlist) {}
+
+	/*--------------------------------------------------------------------------
+ 	Allows the user to play whatever the active song is directly
+ 	through Javascript. Normally ALL of Amplitude functions that access
+ 	the core features are called through event handlers.
+ 		Public Accessor: Amplitude.play();
+ --------------------------------------------------------------------------*/
+	function play() {
+		_core2.default.play();
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Allows the user to pause whatever the active song is directly
+ 	through Javascript. Normally ALL of Amplitude functions that access
+ 	the core features are called through event handlers. 
+ 		Public Accessor: Amplitude.pause();
+ --------------------------------------------------------------------------*/
+	function pause() {
+		_core2.default.pause();
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Returns the audio object used to play the audio
+ 		Public Accessor: Amplitude.getAudio();
+ --------------------------------------------------------------------------*/
+	function getAudio() {
+		return _config2.default.active_song;
+	}
+
+	/*
+ 	Returns all of the publically accesible methods.
+ */
+	return _ref = {
+		init: init,
+		bindNewElements: bindNewElements,
+		getActivePlaylist: getActivePlaylist,
+		getPlaybackSpeed: getPlaybackSpeed,
+		setPlaybackSpeed: setPlaybackSpeed,
+		getRepeat: getRepeat,
+		setRepeat: setRepeat,
+		getShuffle: getShuffle,
+		getShufflePlaylist: getShufflePlaylist,
+		setShuffle: setShuffle,
+		setShufflePlaylist: setShufflePlaylist,
+		getDefaultAlbumArt: getDefaultAlbumArt,
+		setDefaultAlbumArt: setDefaultAlbumArt,
+		getSongPlayedPercentage: getSongPlayedPercentage,
+		setSongPlayedPercentage: setSongPlayedPercentage,
+		setDebug: setDebug,
+		getActiveSongMetadata: getActiveSongMetadata,
+		getSongByIndex: getSongByIndex,
+		getSongAtPlaylistIndex: getSongAtPlaylistIndex,
+		addSong: addSong,
+		playNow: playNow,
+		play: play,
+		pause: pause
+	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _ref;
+}();
+
+exports.default = Amplitude;
 module.exports = exports['default'];
 
 /***/ }),
@@ -5750,13 +5750,6 @@ var AmplitudeVisualSyncHelpers = function () {
 
 exports.default = AmplitudeVisualSyncHelpers;
 module.exports = exports['default'];
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
 
 /***/ })
 /******/ ]);
