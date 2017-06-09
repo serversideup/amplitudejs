@@ -36,6 +36,92 @@ var Amplitude = (function () {
 		AmplitudeInitializer.rebindDisplay();
 	}
 
+	function getActivePlaylist(){
+		return config.active_playlist;
+	}
+
+	function getPlaybackSpeed(){
+		return config.playback_speed;
+	}
+
+	function setPlaybackSpeed( speed ){
+		/*
+			TODO: Apply appropriate class to speed button.
+		*/
+		//config.playback_speed 
+	}
+
+	function getRepeat(){
+		return config.repeat;
+	}	
+
+	function setRepeat( repeat ){
+		/*
+			TODO: Visually show repeat methods
+		*/
+	}
+
+	function getShuffle(){
+		return config.shuffle_on
+	}
+
+	function setShuffle( shuffle ){
+		/*
+			TODO: Set the shuffle state for all of the songs visually.
+		*/
+	}
+
+	function getShufflePlaylist( shuffle, playlistKey ){
+
+	}
+
+	function setShufflePlaylist( shuffle, playlistKey ){
+		/*
+			TODO: Set the shuffle state for all of the songs in the playlist visually.
+		*/
+	}
+
+	function getDefaultAlbumArt(){
+		return config.default_album_art;
+	}
+
+	function setDefaultAlbumArt(){
+
+	}
+
+	/*--------------------------------------------------------------------------
+		Allows the user to get the percentage of the song played.
+		
+		Public Accessor: Amplitude.getSongPlayedPercentage();
+	--------------------------------------------------------------------------*/
+	function getSongPlayedPercentage(){
+		/*
+			Returns the percentage of the song played.
+		*/
+		return ( config.active_song.currentTime / config.active_song.duration ) * 100;
+	}
+
+	/*--------------------------------------------------------------------------
+		Allows the user to set how far into the song they want to be. This is
+		helpful for implementing custom range sliders
+		
+		Public Accessor: Amplitude.setSongPlayedPercentage( float );
+		
+	 	@param Float percentage The percentage of the song played
+	--------------------------------------------------------------------------*/
+	function setSongPlayedPercentage( percentage ){
+		/*
+			Ensures the percentage is a number and is between 0 and 100.
+		*/
+		if( typeof percentage == 'number'
+			&& ( percentage > 0 && percentage < 100 ) ){
+				/*
+					Sets the current time of the song to the percentage.
+				*/
+				config.active_song.currentTime = ( config.active_song.duration ) * ( percentage / 100 );
+		}
+	}
+
 	/*--------------------------------------------------------------------------
 		Allows the user to turn on debugging.
 		
@@ -167,6 +253,19 @@ var Amplitude = (function () {
 	return {
 		init: init,
 		bindNewElements: bindNewElements,
+		getActivePlaylist: getActivePlaylist,
+		getPlaybackSpeed: getPlaybackSpeed,
+		setPlaybackSpeed: setPlaybackSpeed,
+		getRepeat: getRepeat,
+		setRepeat: setRepeat,
+		getShuffle: getShuffle,
+		getShufflePlaylist: getShufflePlaylist,
+		setShuffle: setShuffle,
+		setShufflePlaylist: setShufflePlaylist,
+		getDefaultAlbumArt: getDefaultAlbumArt,
+		setDefaultAlbumArt: setDefaultAlbumArt,
+		getSongPlayedPercentage: getSongPlayedPercentage,
+		setSongPlayedPercentage: setSongPlayedPercentage,
 		setDebug: setDebug,
 		getActiveSongMetadata: getActiveSongMetadata,
 		getSongByIndex: getSongByIndex,
