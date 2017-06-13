@@ -8,6 +8,7 @@ import AmplitudeInitializer from './init/init.js';
 import AmplitudeCore from './core/core.js';
 import AmplitudeHelpers from './core/helpers.js';
 import AmplitudeEvents from './events/events.js';
+import AmplitudeVisualSync from './visual/visual.js';
 import config from './config.js';
 
 /*
@@ -36,57 +37,58 @@ var Amplitude = (function () {
 		AmplitudeInitializer.rebindDisplay();
 	}
 
+	/*--------------------------------------------------------------------------
+		Returns the active playlist
+	--------------------------------------------------------------------------*/
 	function getActivePlaylist(){
 		return config.active_playlist;
 	}
 
+	/*--------------------------------------------------------------------------
+		Returns the current playback speed
+	--------------------------------------------------------------------------*/
 	function getPlaybackSpeed(){
 		return config.playback_speed;
 	}
 
-	function setPlaybackSpeed( speed ){
-		/*
-			TODO: Apply appropriate class to speed button.
-		*/
-		//config.playback_speed 
-	}
-
+	/*--------------------------------------------------------------------------
+		Gets the repeat state of the player.
+	--------------------------------------------------------------------------*/
 	function getRepeat(){
 		return config.repeat;
 	}	
 
-	function setRepeat( repeat ){
-		/*
-			TODO: Visually show repeat methods
-		*/
-	}
-
+	/*--------------------------------------------------------------------------
+		Returns the shuffle state of the player.
+	--------------------------------------------------------------------------*/
 	function getShuffle(){
 		return config.shuffle_on
 	}
 
-	function setShuffle( shuffle ){
-		/*
-			TODO: Set the shuffle state for all of the songs visually.
-		*/
+	/*--------------------------------------------------------------------------
+		Returns the shuffle state of the playlist.
+
+		@param playlist The key representing the playlist ID to see if it's shuffled
+		or not.
+	--------------------------------------------------------------------------*/
+	function getShufflePlaylist( playlist ){
+		return config.shuffled_statuses[ playlist ];
 	}
 
-	function getShufflePlaylist( shuffle, playlistKey ){
-
-	}
-
-	function setShufflePlaylist( shuffle, playlistKey ){
-		/*
-			TODO: Set the shuffle state for all of the songs in the playlist visually.
-		*/
-	}
-
+	/*--------------------------------------------------------------------------
+		Gets the default album art for the player
+	--------------------------------------------------------------------------*/
 	function getDefaultAlbumArt(){
 		return config.default_album_art;
 	}
 
-	function setDefaultAlbumArt(){
+	/*--------------------------------------------------------------------------
+		Sets the default album art for the player
 
+		@param url A string representing the URL of the new default album art.
+	--------------------------------------------------------------------------*/
+	function setDefaultAlbumArt( url ){
+		config.default_album_art = url;
 	}
 
 	/*--------------------------------------------------------------------------
@@ -255,13 +257,9 @@ var Amplitude = (function () {
 		bindNewElements: bindNewElements,
 		getActivePlaylist: getActivePlaylist,
 		getPlaybackSpeed: getPlaybackSpeed,
-		setPlaybackSpeed: setPlaybackSpeed,
 		getRepeat: getRepeat,
-		setRepeat: setRepeat,
 		getShuffle: getShuffle,
 		getShufflePlaylist: getShufflePlaylist,
-		setShuffle: setShuffle,
-		setShufflePlaylist: setShufflePlaylist,
 		getDefaultAlbumArt: getDefaultAlbumArt,
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,

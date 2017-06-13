@@ -460,13 +460,17 @@ var AmplitudeEventHelpers = (function() {
 
 	/*--------------------------------------------------------------------------
 		Sets the next song when next is clicked
+
+		@param songEnded (default false) If the song ended, this is set to true
+		so we take into effect the repeat setting.
 	--------------------------------------------------------------------------*/
-	function setNext(){
+	function setNext( songEnded = false ){
 		/*
 			Initializes the next index variable. This will be the
 			index of the song that is next.
 		*/
 		var nextIndex = 0;
+		var endOfList = false;
 
 		/*
 			If the shuffle is on, we use the shuffled list of
@@ -488,6 +492,7 @@ var AmplitudeEventHelpers = (function() {
 			}else{
 				config.shuffle_active_index = 0;
 				nextIndex = 0;
+				endOfList = true;
 			}
 		}else{
 			/*
@@ -499,6 +504,7 @@ var AmplitudeEventHelpers = (function() {
 				config.active_index = parseInt( config.active_index ) + 1;
 			}else{
 				config.active_index = 0;
+				endOfList = true;
 			}
 
 			/*
@@ -518,32 +524,75 @@ var AmplitudeEventHelpers = (function() {
 		AmplitudeCoreHelpers.changeSong( nextIndex );
 
 		/*
-			Play the next song.
+			If the song has ended and repeat is on, and the list is ended, play the song
+			which should be the beginning of the first song.
 		*/
-		AmplitudeCore.play();
+		if( songEnded && config.repeat && endOfList ){
+			AmplitudeCore.play();
+
+			/*
+				Sync the play/pause buttons to the current state of the player.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( null, nextIndex, 'playing' );
+		
+			/*
+				Call after next callback
+			*/
+			AmplitudeCoreHelpers.runCallback('after_next');
+		}
 
 		/*
-			Sync the play/pause buttons to the current state of the player.
+			If the song ended and it's not the end of the list, then
+			we play the next song in the list.
 		*/
-		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
-		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex, 'playing' );
-	
+		if( songEnded && !endOfList ){
+			AmplitudeCore.play();
+
+			/*
+				Sync the play/pause buttons to the current state of the player.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( null, nextIndex, 'playing' );
+		
+			/*
+				Call after next callback
+			*/
+			AmplitudeCoreHelpers.runCallback('after_next');
+		}
+
 		/*
-			Call after next callback
+			If the user presses the next button, play the next song.
 		*/
-		AmplitudeCoreHelpers.runCallback('after_next');
+		if( !songEnded ){
+			AmplitudeCore.play();
+
+			/*
+				Sync the play/pause buttons to the current state of the player.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( null, nextIndex, 'playing' );
+		
+			/*
+				Call after next callback
+			*/
+			AmplitudeCoreHelpers.runCallback('after_next');
+		}
 	}
 
 	/*--------------------------------------------------------------------------
 		Sets the next song in a playlist
 
 		@param string playlist The playlist being shuffled
+		@param songEnded (default false) If the song ended, this is set to true
+		so we take into effect the repeat setting.
 	--------------------------------------------------------------------------*/
-	function setNextPlaylist( playlist ){
+	function setNextPlaylist( playlist, songEnded = false ){
 		/*
 			Initializes the next index
 		*/
 		var nextIndex = 0;
+		var endOfList = false;
 
 		/*
 			If the playlist is shuffled we get the next index of the playlist.
@@ -574,6 +623,7 @@ var AmplitudeEventHelpers = (function() {
 				*/
 				config.shuffled_active_indexes[ playlist ] = 0;
 				nextIndex = config.shuffled_playlists[ playlist ][0].original_index;
+				endOfList = true;
 			}
 		}else{
 			/*
@@ -590,6 +640,7 @@ var AmplitudeEventHelpers = (function() {
 				config.active_index = parseInt( config.playlists[ playlist ][ playlistActiveSongIndex + 1 ] );
 			}else{
 				config.active_index = parseInt( config.playlists[ playlist ][0] );
+				endOfList = true;
 			}
 
 			/*
@@ -608,24 +659,71 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
 		AmplitudeCoreHelpers.setActivePlaylist( playlist );
-
-		/*
-			Plays the song
-		*/
-		AmplitudeCore.play();
-
-		/*
-			Syncs the main play pause button, playlist play pause button and
-			song play pause.
-		*/
-		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
-		AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
-		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex, 'playing' );
 		
 		/*
-			Call after next callback
+			If the song has ended and repeat is on, play the song.
 		*/
-		AmplitudeCoreHelpers.runCallback('after_next');
+		if( songEnded && config.repeat ){
+			/*
+				Plays the song
+			*/
+			AmplitudeCore.play();
+
+			/*
+				Syncs the main play pause button, playlist play pause button and
+				song play pause.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex, 'playing' );
+			
+			/*
+				Call after next callback
+			*/
+			AmplitudeCoreHelpers.runCallback('after_next');
+		}
+
+		/*
+			If the song ended and it's not the end of the list, then
+			we play the next song in the list.
+		*/
+		if( songEnded && !endOfList ){
+			AmplitudeCore.play();
+
+			/*
+				Sync the play/pause buttons to the current state of the player.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( null, nextIndex, 'playing' );
+		
+			/*
+				Call after next callback
+			*/
+			AmplitudeCoreHelpers.runCallback('after_next');
+		}
+
+		/*
+			If the user presses the next button, play the next song.
+		*/
+		if( !songEnded ){
+			/*
+				Plays the song
+			*/
+			AmplitudeCore.play();
+
+			/*
+				Syncs the main play pause button, playlist play pause button and
+				song play pause.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+			AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex, 'playing' );
+			
+			/*
+				Call after next callback
+			*/
+			AmplitudeCoreHelpers.runCallback('after_next');
+		}
 	}
 
 	/*--------------------------------------------------------------------------
