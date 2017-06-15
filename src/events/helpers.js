@@ -545,6 +545,12 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		var nextIndex = 0;
 
+        /*
+          Used to determine whether the playlist looped over
+          If it did, only play if repeat is allowed, end otherwise 
+          @TODO: Different settings for song loop, in-playlist loop and global loop
+        */
+        let playlistOverflow = false;
 		/*
 			If the playlist is shuffled we get the next index of the playlist.
 		*/
@@ -588,8 +594,9 @@ var AmplitudeEventHelpers = (function() {
 			*/
 			if( playlistActiveSongIndex + 1 < config.playlists[ playlist ].length ){
 				config.active_index = parseInt( config.playlists[ playlist ][ playlistActiveSongIndex + 1 ] );
-			}else{
+			} else {
 				config.active_index = parseInt( config.playlists[ playlist ][0] );
+                playlistOverflow = true;
 			}
 
 			/*
@@ -612,7 +619,8 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			Plays the song
 		*/
-		AmplitudeCore.play();
+        if(!playlistOverflow || config.repeat)
+	 	    AmplitudeCore.play();
 
 		/*
 			Syncs the main play pause button, playlist play pause button and
