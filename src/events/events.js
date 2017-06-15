@@ -155,6 +155,10 @@ var AmplitudeEvents = (function () {
 	function bindTimeUpdate(){
 		config.active_song.removeEventListener( 'timeupdate', AmplitudeHandlers.updateTime );
 		config.active_song.addEventListener( 'timeupdate', AmplitudeHandlers.updateTime );
+        
+        // also bind change of duratuion
+		config.active_song.removeEventListener( 'durationchange', AmplitudeHandlers.updateTime );
+		config.active_song.addEventListener( 'durationchange', AmplitudeHandlers.updateTime );
 	}
 
 	/*--------------------------------------------------------------------------
