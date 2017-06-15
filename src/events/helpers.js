@@ -467,7 +467,10 @@ var AmplitudeEventHelpers = (function() {
 			index of the song that is next.
 		*/
 		var nextIndex = 0;
-
+        /*
+          Ensure we don't loop in the playlist if config.repeat is not true 
+          */
+        let songOverflow = false;
 		/*
 			If the shuffle is on, we use the shuffled list of
 			songs to determine our next song.
@@ -499,6 +502,7 @@ var AmplitudeEventHelpers = (function() {
 				config.active_index = parseInt( config.active_index ) + 1;
 			}else{
 				config.active_index = 0;
+                songOverflow = true;
 			}
 
 			/*
@@ -520,13 +524,14 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			Play the next song.
 		*/
-		AmplitudeCore.play();
+        if(!songOverflow || config.repeat)
+		    AmplitudeCore.play();
 
 		/*
 			Sync the play/pause buttons to the current state of the player.
 		*/
-		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
-		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex, 'playing' );
+		AmplitudeVisualSync.syncMainPlayPause( );
+		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex);
 	
 		/*
 			Call after next callback
@@ -539,7 +544,7 @@ var AmplitudeEventHelpers = (function() {
 
 		@param string playlist The playlist being shuffled
 	--------------------------------------------------------------------------*/
-	function setNextPlaylist( playlist ){
+	function setNextPlaylist( playlist ) {
 		/*
 			Initializes the next index
 		*/
@@ -626,9 +631,9 @@ var AmplitudeEventHelpers = (function() {
 			Syncs the main play pause button, playlist play pause button and
 			song play pause.
 		*/
-		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
-		AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
-		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex, 'playing' );
+		AmplitudeVisualSync.syncMainPlayPause( );
+		AmplitudeVisualSync.syncPlaylistPlayPause(playlist);
+		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex);
 		
 		/*
 			Call after next callback
