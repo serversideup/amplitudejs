@@ -460,8 +460,11 @@ var AmplitudeEventHelpers = (function() {
 
 	/*--------------------------------------------------------------------------
 		Sets the next song when next is clicked
+
+		@param songEnded (default false) If the song ended, this is set to true
+		so we take into effect the repeat setting.
 	--------------------------------------------------------------------------*/
-	function setNext(){
+	function setNext( songEnded = false ){
 		/*
 			Initializes the next index variable. This will be the
 			index of the song that is next.
@@ -470,7 +473,9 @@ var AmplitudeEventHelpers = (function() {
         /*
           Ensure we don't loop in the playlist if config.repeat is not true 
           */
-        let songOverflow = false;
+		var endOfList = false;
+
+		/*
 		/*
 			If the shuffle is on, we use the shuffled list of
 			songs to determine our next song.
@@ -491,6 +496,7 @@ var AmplitudeEventHelpers = (function() {
 			}else{
 				config.shuffle_active_index = 0;
 				nextIndex = 0;
+				endOfList = true;
 			}
 		}else{
 			/*
@@ -502,7 +508,7 @@ var AmplitudeEventHelpers = (function() {
 				config.active_index = parseInt( config.active_index ) + 1;
 			}else{
 				config.active_index = 0;
-                songOverflow = true;
+				endOfList = true;
 			}
 
 			/*
@@ -520,31 +526,34 @@ var AmplitudeEventHelpers = (function() {
 			Change the song to the index we need.
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
-
+        
 		/*
-			Play the next song.
+			If the song has ended and repeat is on, play the song.
 		*/
-        if(!songOverflow || config.repeat)
+        if( !( songEnded && !config.repeat && endOfList ) )
 		    AmplitudeCore.play();
 
-		/*
-			Sync the play/pause buttons to the current state of the player.
-		*/
+        /*
+        	Syncs the main play pause button, playlist play pause button and
+        	song play pause.
+        */
 		AmplitudeVisualSync.syncMainPlayPause( );
-		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex);
-	
-		/*
-			Call after next callback
-		*/
-		AmplitudeCoreHelpers.runCallback('after_next');
+		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex);
+			
+        /*
+        	Call after next callback
+        */
+        AmplitudeCoreHelpers.runCallback('after_next');
 	}
 
 	/*--------------------------------------------------------------------------
 		Sets the next song in a playlist
 
 		@param string playlist The playlist being shuffled
+		@param songEnded (default false) If the song ended, this is set to true
+		so we take into effect the repeat setting.
 	--------------------------------------------------------------------------*/
-	function setNextPlaylist( playlist ) {
+	function setNextPlaylist( playlist, songEnded = false ){
 		/*
 			Initializes the next index
 		*/
@@ -555,7 +564,7 @@ var AmplitudeEventHelpers = (function() {
           If it did, only play if repeat is allowed, end otherwise 
           @TODO: Different settings for song loop, in-playlist loop and global loop
         */
-        let playlistOverflow = false;
+		var endOfList = false;
 		/*
 			If the playlist is shuffled we get the next index of the playlist.
 		*/
@@ -585,6 +594,7 @@ var AmplitudeEventHelpers = (function() {
 				*/
 				config.shuffled_active_indexes[ playlist ] = 0;
 				nextIndex = config.shuffled_playlists[ playlist ][0].original_index;
+				endOfList = true;
 			}
 		}else{
 			/*
@@ -599,9 +609,9 @@ var AmplitudeEventHelpers = (function() {
 			*/
 			if( playlistActiveSongIndex + 1 < config.playlists[ playlist ].length ){
 				config.active_index = parseInt( config.playlists[ playlist ][ playlistActiveSongIndex + 1 ] );
-			} else {
+			}else{
 				config.active_index = parseInt( config.playlists[ playlist ][0] );
-                playlistOverflow = true;
+				endOfList = true;
 			}
 
 			/*
@@ -613,6 +623,7 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			Stops the active song playing.
 		*/
+
 		AmplitudeCore.stop();
 
 		/*
@@ -620,25 +631,25 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
 		AmplitudeCoreHelpers.setActivePlaylist( playlist );
-
+		
 		/*
-			Plays the song
+			If the song has ended and repeat is on, play the song.
 		*/
-        if(!playlistOverflow || config.repeat)
-	 	    AmplitudeCore.play();
+        if( !( songEnded && !config.repeat && endOfList ) )
+		    AmplitudeCore.play();
 
-		/*
-			Syncs the main play pause button, playlist play pause button and
-			song play pause.
-		*/
+        /*
+        	Syncs the main play pause button, playlist play pause button and
+        	song play pause.
+        */
 		AmplitudeVisualSync.syncMainPlayPause( );
 		AmplitudeVisualSync.syncPlaylistPlayPause(playlist);
 		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex);
-		
-		/*
-			Call after next callback
-		*/
-		AmplitudeCoreHelpers.runCallback('after_next');
+			
+        /*
+        	Call after next callback
+        */
+        AmplitudeCoreHelpers.runCallback('after_next');
 	}
 
 	/*--------------------------------------------------------------------------

@@ -108,14 +108,6 @@ var AmplitudeCore = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Repeats the active song on ending.
-	--------------------------------------------------------------------------*/
-	function repeat(){
-		config.active_song.currentTime = 0;
-		config.active_song.play();
-	}
-
-	/*--------------------------------------------------------------------------
 		Sets the song volume.
 
 		@param int volumeLevel A number between 1 and 100 as a percentage of
@@ -255,7 +247,6 @@ var AmplitudeCore = (function() {
 		play: play,
 		pause: pause,
 		stop: stop,
-		repeat: repeat,
 		setVolume: setVolume,
 		setSongLocation: setSongLocation,
 		skipToLocation: skipToLocation,

@@ -76,24 +76,17 @@ export default {
 	--------------------------------------------------------------------------*/
 	songEnded: function(){
 		/*
-			If the config is set to repeat, repeat the current song
+			If the active playlist is not set, we set the
+			next song that's in the songs array.
 		*/
-		if( config.repeat ){
-			AmplitudeCore.repeat();
+		if( config.active_playlist == '' 
+			|| config.active_playlist == null ){
+				AmplitudeEventHelpers.setNext( true );
 		}else{
 			/*
-				If the active playlist is not set, we set the
-				next song that's in the songs array.
+				Set the next song in the playlist
 			*/
-			if( config.active_playlist == '' 
-				|| config.active_playlist == null ){
-					AmplitudeEventHelpers.setNext();
-			}else{
-				/*
-					Set the next song in the playlist
-				*/
-				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist );
-			}
+			AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
 		}
 	},
 
@@ -418,7 +411,11 @@ export default {
 				If the active song is not live, set the current time
 			*/
 			if( !config.active_metadata.live ){
-				config.active_song.currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
+				var currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
+
+				if( isFinite( currentTime ) ){
+					config.active_song.currentTime = currentTime;
+				}
 			}
 
 			AmplitudeVisualSync.syncMainSliderLocation( locationPercentage );

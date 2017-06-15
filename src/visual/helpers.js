@@ -137,13 +137,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 			];
 		}
 		
-                const currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
-
+        const currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
 
 		/*
 			Set the current minute selector's inner html to minutes passed in.
 		*/
-		for( let i = 0, l=currentMinuteSelectors.length; i < l; i++ ){
+		for( let i = 0, l = currentMinuteSelectors.length; i < l; i++ ){
 			/*
 				If the selector is a main selector, we set the seconds.
 			*/
