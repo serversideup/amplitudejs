@@ -137,51 +137,42 @@ var AmplitudeVisualSyncHelpers = (function() {
 			];
 		}
 		
+        const currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
 
 		/*
-			Ensures that there are some minute selectors.
+			Set the current minute selector's inner html to minutes passed in.
 		*/
-		if( document.querySelectorAll( minuteSelectors.join() ).length > 0 ){
+		for( let i = 0, l = currentMinuteSelectors.length; i < l; i++ ){
 			/*
-				Get all of the minute selectors
+				If the selector is a main selector, we set the seconds.
 			*/
-			var currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
-
-			/*
-				Set the current minute selector's inner html to minutes passed in.
-			*/
-			for( var i = 0; i < currentMinuteSelectors.length; i++ ){
+			if( currentMinuteSelectors[i].getAttribute('amplitude-main-current-minutes') == 'true' ){
+				currentMinuteSelectors[i].innerHTML = minutes;
+			}else{
 				/*
-					If the selector is a main selector, we set the seconds.
+					If the active playlist is not null or empty
+					and the attribute of the playlist is equal to the
+					active playlist, then we set the inner html.
 				*/
-				if( currentMinuteSelectors[i].getAttribute('amplitude-main-current-minutes') == 'true' ){
-					currentMinuteSelectors[i].innerHTML = minutes;
+				if( config.active_playlist != '' 
+					&& config.active_playlist != null 
+					&& currentMinuteSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
+						currentMinuteSelectors[i].innerHTML = minutes;
+				/*
+					If the active playlist is not set and the selector
+					does not have a playlist then we set the minutes. This
+					means that the current selector is an individual song
+					selector.
+				*/
+				}else if( config.active_playlist == ''
+					|| config.active_playlist == null
+					&& !currentMinuteSelectors[i].hasAttribute('amplitude-playlist') ){
+						currentMinuteSelectors[i].innerHTML = minutes;
+				/*
+					If nothing else matches, set the selector's inner HTML to '00'
+				*/
 				}else{
-					/*
-						If the active playlist is not null or empty
-						and the attribute of the playlist is equal to the
-						active playlist, then we set the inner html.
-					*/
-					if( config.active_playlist != '' 
-						&& config.active_playlist != null 
-						&& currentMinuteSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
-							currentMinuteSelectors[i].innerHTML = minutes;
-					/*
-						If the active playlist is not set and the selector
-						does not have a playlist then we set the minutes. This
-						means that the current selector is an individual song
-						selector.
-					*/
-					}else if( config.active_playlist == ''
-						|| config.active_playlist == null
-						&& !currentMinuteSelectors[i].hasAttribute('amplitude-playlist') ){
-							currentMinuteSelectors[i].innerHTML = minutes;
-					/*
-						If nothing else matches, set the selector's inner HTML to '00'
-					*/
-					}else{
-						currentMinuteSelectors[i].innerHTML = '00';
-					}
+					currentMinuteSelectors[i].innerHTML = '00';
 				}
 			}
 		}
@@ -230,53 +221,48 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 		
 
-		/*
-			Ensures that there are some second selectors.
-		*/
-		if( document.querySelectorAll( secondSelectors.join() ).length > 0 ){
-			/*
-				Get all of the second selectors
-			*/
-			var currentSecondSelectors = document.querySelectorAll( secondSelectors.join() );
+	        /*
+	        	Get all of the second selectors
+	        */
+	        var currentSecondSelectors = document.querySelectorAll( secondSelectors.join() );
 
-			/*
-				Iterate over all of the second selectors.
-			*/			
-			for( var i = 0; i < currentSecondSelectors.length; i++ ){
-				/*
-					If the selector is a main selector, we set the seconds.
-				*/
-				if( currentSecondSelectors[i].getAttribute('amplitude-main-current-seconds') == 'true' ){
-					currentSecondSelectors[i].innerHTML = seconds;
-				}else{
-					/*
-						If the active playlist is not null or empty
-						and the attribute of the playlist is equal to the
-						active playlist, then we set the inner html.
-					*/
-					if( config.active_playlist != '' 
-						&& config.active_playlist != null 
-						&& currentSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
-							currentSecondSelectors[i].innerHTML = seconds;
-					/*
-						If the active playlist is not set and the selector
-						does not have a playlist then we set the seconds. This
-						means that the current selector is an individual song
-						selector.
-					*/
-					}else if( config.active_playlist == ''
-						|| config.active_playlist == null
-						&& !currentSecondSelectors[i].hasAttribute('amplitude-playlist') ){
-							currentSecondSelectors[i].innerHTML = seconds;
-					/*
-						If nothing else matches, set the selector's inner HTML to '00'
-					*/
-					}else{
-						currentSecondSelectors[i].innerHTML = '00';
-					}
-				}
-			}
-		}
+	        /*
+	        	Iterate over all of the second selectors.
+	        */			
+	        for( let i = 0, l = currentSecondSelectors.length; i < l; i++ ){
+	        	/*
+	        		If the selector is a main selector, we set the seconds.
+	        	*/
+	        	if( currentSecondSelectors[i].getAttribute('amplitude-main-current-seconds') == 'true' ){
+	        		currentSecondSelectors[i].innerHTML = seconds;
+	        	}else{
+	        		/*
+	        			If the active playlist is not null or empty
+	        			and the attribute of the playlist is equal to the
+	        			active playlist, then we set the inner html.
+	        		*/
+	        		if( config.active_playlist != '' 
+	        			&& config.active_playlist != null 
+	        			&& currentSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
+	        				currentSecondSelectors[i].innerHTML = seconds;
+	        		/*
+	        			If the active playlist is not set and the selector
+	        			does not have a playlist then we set the seconds. This
+	        			means that the current selector is an individual song
+	        			selector.
+	        		*/
+	        		}else if( config.active_playlist == ''
+	        			|| config.active_playlist == null
+	        			&& !currentSecondSelectors[i].hasAttribute('amplitude-playlist') ){
+	        				currentSecondSelectors[i].innerHTML = seconds;
+	        		/*
+	        			If nothing else matches, set the selector's inner HTML to '00'
+	        		*/
+	        		}else{
+	        			currentSecondSelectors[i].innerHTML = '00';
+	        		}
+	        	}
+	        }
 	}
 
 	/*--------------------------------------------------------------------------
@@ -315,22 +301,18 @@ var AmplitudeVisualSyncHelpers = (function() {
 		];
 
 		/*
-			Ensures that there are some time selectors.
+			Get all of the time selectors.
 		*/
-		if( document.querySelectorAll( timeSelectors.join() ).length > 0 ){
-			/*
-				Get all of the time selectors.
-			*/
-			var currentTimeSelectors = document.querySelectorAll( timeSelectors.join() );
+		var currentTimeSelectors = document.querySelectorAll( timeSelectors.join() );
 
-			/*
-				Set the time selector's inner html to the current time for the song. The current
-				time is computed by joining minutes and seconds.
-			*/
-			for( var i = 0; i < currentTimeSelectors.length; i++ ){
-				currentTimeSelectors[i].innerHTML = currentTime.minutes+':'+currentTime.seconds;
-			}
+		/*
+			Set the time selector's inner html to the current time for the song. The current
+			time is computed by joining minutes and seconds.
+		*/
+		for( let i = 0, l=currentTimeSelectors.length; i < l; i++ ){
+			currentTimeSelectors[i].innerHTML = currentTime.minutes+':'+currentTime.seconds;
 		}
+
 	}
 
 	/*--------------------------------------------------------------------------
@@ -628,53 +610,50 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 		
 
-		/*
-			Ensures that there are some minute selectors.
-		*/
-		if( document.querySelectorAll( minuteSelectors.join() ).length > 0 ){
-			/*
-				Get all of the minute selectors
-			*/
-			var durationMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
 
+		/*
+			Get all of the minute selectors
+		*/
+		var durationMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
+
+		/*
+			Set the duration minute selector's inner html to minutes passed in.
+		*/
+		for( var i = 0; i < durationMinuteSelectors.length; i++ ){
 			/*
-				Set the duration minute selector's inner html to minutes passed in.
+				If the selector is a main selector, we set the seconds.
 			*/
-			for( var i = 0; i < durationMinuteSelectors.length; i++ ){
+			if( durationMinuteSelectors[i].getAttribute('amplitude-main-duration-minutes') == 'true' ){
+				durationMinuteSelectors[i].innerHTML = minutes;
+			}else{
 				/*
-					If the selector is a main selector, we set the seconds.
+					If the active playlist is not null or empty
+					and the attribute of the playlist is equal to the
+					active playlist, then we set the inner html.
 				*/
-				if( durationMinuteSelectors[i].getAttribute('amplitude-main-duration-minutes') == 'true' ){
-					durationMinuteSelectors[i].innerHTML = minutes;
+				if( config.active_playlist != '' 
+					&& config.active_playlist != null 
+					&& durationMinuteSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
+						durationMinuteSelectors[i].innerHTML = minutes;
+				/*
+					If the active playlist is not set and the selector
+					does not have a playlist then we set the minutes. This
+					means that the duration selector is an individual song
+					selector.
+				*/
+				}else if( config.active_playlist == ''
+					|| config.active_playlist == null
+					&& !durationMinuteSelectors[i].hasAttribute('amplitude-playlist') ){
+						durationMinuteSelectors[i].innerHTML = minutes;
+				/*
+					If nothing else matches, set the selector's inner HTML to '00'
+				*/
 				}else{
-					/*
-						If the active playlist is not null or empty
-						and the attribute of the playlist is equal to the
-						active playlist, then we set the inner html.
-					*/
-					if( config.active_playlist != '' 
-						&& config.active_playlist != null 
-						&& durationMinuteSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
-							durationMinuteSelectors[i].innerHTML = minutes;
-					/*
-						If the active playlist is not set and the selector
-						does not have a playlist then we set the minutes. This
-						means that the duration selector is an individual song
-						selector.
-					*/
-					}else if( config.active_playlist == ''
-						|| config.active_playlist == null
-						&& !durationMinuteSelectors[i].hasAttribute('amplitude-playlist') ){
-							durationMinuteSelectors[i].innerHTML = minutes;
-					/*
-						If nothing else matches, set the selector's inner HTML to '00'
-					*/
-					}else{
-						durationMinuteSelectors[i].innerHTML = '00';
-					}
+					durationMinuteSelectors[i].innerHTML = '00';
 				}
 			}
 		}
+		
 	}
 
 		/*--------------------------------------------------------------------------
@@ -703,49 +682,44 @@ var AmplitudeVisualSyncHelpers = (function() {
 		
 
 		/*
-			Ensures that there are some second selectors.
+			Get all of the second selectors
 		*/
-		if( document.querySelectorAll( secondSelectors.join() ).length > 0 ){
-			/*
-				Get all of the second selectors
-			*/
-			var durationSecondSelectors = document.querySelectorAll( secondSelectors.join() );
+		var durationSecondSelectors = document.querySelectorAll( secondSelectors.join() );
 
+		/*
+			Iterate over all of the second selectors.
+		*/			
+		for( var i = 0; i < durationSecondSelectors.length; i++ ){
 			/*
-				Iterate over all of the second selectors.
-			*/			
-			for( var i = 0; i < durationSecondSelectors.length; i++ ){
+				If the selector is a main selector, we set the seconds.
+			*/
+			if( durationSecondSelectors[i].getAttribute('amplitude-main-duration-seconds') == 'true' ){
+				durationSecondSelectors[i].innerHTML = seconds;
+			}else{
 				/*
-					If the selector is a main selector, we set the seconds.
+					If the active playlist is not null or empty
+					and the attribute of the playlist is equal to the
+					active playlist, then we set the inner html.
 				*/
-				if( durationSecondSelectors[i].getAttribute('amplitude-main-duration-seconds') == 'true' ){
-					durationSecondSelectors[i].innerHTML = seconds;
+				if( config.active_playlist != '' 
+					&& config.active_playlist != null 
+					&& durationSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
+						durationSecondSelectors[i].innerHTML = seconds;
+				/*
+					If the active playlist is not set and the selector
+					does not have a playlist then we set the seconds. This
+					means that the duration selector is an individual song
+					selector.
+				*/
+				}else if( config.active_playlist == ''
+					|| config.active_playlist == null
+					&& !durationSecondSelectors[i].hasAttribute('amplitude-playlist') ){
+						durationSecondSelectors[i].innerHTML = seconds;
+				/*
+					If nothing else matches, set the selector's inner HTML to '00'
+				*/
 				}else{
-					/*
-						If the active playlist is not null or empty
-						and the attribute of the playlist is equal to the
-						active playlist, then we set the inner html.
-					*/
-					if( config.active_playlist != '' 
-						&& config.active_playlist != null 
-						&& durationSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
-							durationSecondSelectors[i].innerHTML = seconds;
-					/*
-						If the active playlist is not set and the selector
-						does not have a playlist then we set the seconds. This
-						means that the duration selector is an individual song
-						selector.
-					*/
-					}else if( config.active_playlist == ''
-						|| config.active_playlist == null
-						&& !durationSecondSelectors[i].hasAttribute('amplitude-playlist') ){
-							durationSecondSelectors[i].innerHTML = seconds;
-					/*
-						If nothing else matches, set the selector's inner HTML to '00'
-					*/
-					}else{
-						durationSecondSelectors[i].innerHTML = '00';
-					}
+					durationSecondSelectors[i].innerHTML = '00';
 				}
 			}
 		}
@@ -769,26 +743,22 @@ var AmplitudeVisualSyncHelpers = (function() {
 		];
 
 		/*
-			Ensures that there are some time selectors.
+			Get all of the time selectors.
 		*/
-		if( document.querySelectorAll( timeSelectors.join() ).length > 0 ){
-			/*
-				Get all of the time selectors.
-			*/
-			var durationTimeSelectors = document.querySelectorAll( timeSelectors.join() );
+		var durationTimeSelectors = document.querySelectorAll( timeSelectors.join() );
 
-			/*
-				Set the time selector's inner html to the duration time for the song. The duration
-				time is computed by joining minutes and seconds.
-			*/
-			for( var i = 0; i < durationTimeSelectors.length; i++ ){
-				if( !isNaN( durationTime.minutes ) && !isNaN( durationTime.seconds ) ){
-					durationTimeSelectors[i].innerHTML = durationTime.minutes+':'+durationTime.seconds;
-				}else{
-					durationTimeSelectors[i].innerHTML = '00:00';
-				}
+		/*
+			Set the time selector's inner html to the duration time for the song. The duration
+			time is computed by joining minutes and seconds.
+		*/
+		for( var i = 0; i < durationTimeSelectors.length; i++ ){
+			if( !isNaN( durationTime.minutes ) && !isNaN( durationTime.seconds ) ){
+				durationTimeSelectors[i].innerHTML = durationTime.minutes+':'+durationTime.seconds;
+			}else{
+				durationTimeSelectors[i].innerHTML = '00:00';
 			}
 		}
+		
 	}
 
 	/*

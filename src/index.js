@@ -8,6 +8,7 @@ import AmplitudeInitializer from './init/init.js';
 import AmplitudeCore from './core/core.js';
 import AmplitudeHelpers from './core/helpers.js';
 import AmplitudeEvents from './events/events.js';
+import AmplitudeVisualSync from './visual/visual.js';
 import config from './config.js';
 
 /*
@@ -34,6 +35,93 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function bindNewElements(){
 		AmplitudeInitializer.rebindDisplay();
+	}
+
+	/*--------------------------------------------------------------------------
+		Returns the active playlist
+	--------------------------------------------------------------------------*/
+	function getActivePlaylist(){
+		return config.active_playlist;
+	}
+
+	/*--------------------------------------------------------------------------
+		Returns the current playback speed
+	--------------------------------------------------------------------------*/
+	function getPlaybackSpeed(){
+		return config.playback_speed;
+	}
+
+	/*--------------------------------------------------------------------------
+		Gets the repeat state of the player.
+	--------------------------------------------------------------------------*/
+	function getRepeat(){
+		return config.repeat;
+	}	
+
+	/*--------------------------------------------------------------------------
+		Returns the shuffle state of the player.
+	--------------------------------------------------------------------------*/
+	function getShuffle(){
+		return config.shuffle_on
+	}
+
+	/*--------------------------------------------------------------------------
+		Returns the shuffle state of the playlist.
+
+		@param playlist The key representing the playlist ID to see if it's shuffled
+		or not.
+	--------------------------------------------------------------------------*/
+	function getShufflePlaylist( playlist ){
+		return config.shuffled_statuses[ playlist ];
+	}
+
+	/*--------------------------------------------------------------------------
+		Gets the default album art for the player
+	--------------------------------------------------------------------------*/
+	function getDefaultAlbumArt(){
+		return config.default_album_art;
+	}
+
+	/*--------------------------------------------------------------------------
+		Sets the default album art for the player
+
+		@param url A string representing the URL of the new default album art.
+	--------------------------------------------------------------------------*/
+	function setDefaultAlbumArt( url ){
+		config.default_album_art = url;
+	}
+
+	/*--------------------------------------------------------------------------
+		Allows the user to get the percentage of the song played.
+		
+		Public Accessor: Amplitude.getSongPlayedPercentage();
+	--------------------------------------------------------------------------*/
+	function getSongPlayedPercentage(){
+		/*
+			Returns the percentage of the song played.
+		*/
+		return ( config.active_song.currentTime / config.active_song.duration ) * 100;
+	}
+
+	/*--------------------------------------------------------------------------
+		Allows the user to set how far into the song they want to be. This is
+		helpful for implementing custom range sliders
+		
+		Public Accessor: Amplitude.setSongPlayedPercentage( float );
+		
+	 	@param Float percentage The percentage of the song played
+	--------------------------------------------------------------------------*/
+	function setSongPlayedPercentage( percentage ){
+		/*
+			Ensures the percentage is a number and is between 0 and 100.
+		*/
+		if( typeof percentage == 'number'
+			&& ( percentage > 0 && percentage < 100 ) ){
+				/*
+					Sets the current time of the song to the percentage.
+				*/
+				config.active_song.currentTime = ( config.active_song.duration ) * ( percentage / 100 );
+		}
 	}
 
 	/*--------------------------------------------------------------------------
@@ -167,6 +255,15 @@ var Amplitude = (function () {
 	return {
 		init: init,
 		bindNewElements: bindNewElements,
+		getActivePlaylist: getActivePlaylist,
+		getPlaybackSpeed: getPlaybackSpeed,
+		getRepeat: getRepeat,
+		getShuffle: getShuffle,
+		getShufflePlaylist: getShufflePlaylist,
+		getDefaultAlbumArt: getDefaultAlbumArt,
+		setDefaultAlbumArt: setDefaultAlbumArt,
+		getSongPlayedPercentage: getSongPlayedPercentage,
+		setSongPlayedPercentage: setSongPlayedPercentage,
 		setDebug: setDebug,
 		getActiveSongMetadata: getActiveSongMetadata,
 		getSongByIndex: getSongByIndex,

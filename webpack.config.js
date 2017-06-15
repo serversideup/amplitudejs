@@ -1,10 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
 module.exports = {
-	entry: ['./src/index.js'],
+	entry: {
+		'amplitude': './src/index.js',
+		'amplitude.min': './src/index.js'
+	},
 	output: {
 		path: path.resolve(__dirname, './dist'),
-		filename: 'amplitude.js',
+		filename: '[name].js',
 		library: 'Amplitude',
 		libraryTarget: 'umd',
 		umdNamedDefine: true
@@ -15,5 +18,11 @@ module.exports = {
 			exclude: /node_modules/,
 			loader: 'babel-loader'
 		}]
-	}
+	},
+	plugins: [
+	    new webpack.optimize.UglifyJsPlugin({
+	      include: /\.min\.js$/,
+	      minimize: true
+	    })
+	]
 }

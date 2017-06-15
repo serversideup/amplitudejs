@@ -69,6 +69,7 @@ var AmplitudeCore = (function() {
 		Pauses the active song. If it's live, it disconnects the stream.
 	--------------------------------------------------------------------------*/
 	function pause(){
+		AmplitudeHelpers.runCallback('before_pause');
 		/*
 			Pause the active song.
 		*/
@@ -82,6 +83,7 @@ var AmplitudeCore = (function() {
 		if( config.active_metadata.live ){
 			disconnectStream();
 		}
+		AmplitudeHelpers.runCallback('after_pause');
 	}
 
 	/*--------------------------------------------------------------------------
@@ -103,14 +105,6 @@ var AmplitudeCore = (function() {
 		}
 
 		AmplitudeHelpers.runCallback('after_stop');
-	}
-
-	/*--------------------------------------------------------------------------
-		Repeats the active song on ending.
-	--------------------------------------------------------------------------*/
-	function repeat(){
-		config.active_song.currentTime = 0;
-		config.active_song.play();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -253,7 +247,6 @@ var AmplitudeCore = (function() {
 		play: play,
 		pause: pause,
 		stop: stop,
-		repeat: repeat,
 		setVolume: setVolume,
 		setSongLocation: setSongLocation,
 		skipToLocation: skipToLocation,
