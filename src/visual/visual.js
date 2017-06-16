@@ -384,10 +384,12 @@ var AmplitudeVisualSync = (function() {
 		@param string state The state of the player.
 	--------------------------------------------------------------------------*/
 	function syncMainPlayPause( state ){
+        if(typeof state!="string")
+            state = config.active_song.paused ? "paused" : "playing";
 		/*
 			Get all play pause buttons.
 		*/
-		var playPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-main-play-pause="true"]');
+		const playPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-main-play-pause="true"]');
 
 		/*
 			Iterate over all of the play pause elements syncing the
@@ -419,6 +421,9 @@ var AmplitudeVisualSync = (function() {
 		active song.
 	--------------------------------------------------------------------------*/
 	function syncPlaylistPlayPause( playlist, state ){
+    
+        if(typeof state != "string")
+            state = config.active_song.paused ? "paused" : "playing";
 		/*
 			Get all of the main playlist play pause elements
 		*/
@@ -457,6 +462,10 @@ var AmplitudeVisualSync = (function() {
 		active song.
 	--------------------------------------------------------------------------*/
 	function syncSongPlayPause( playlist, song, state ){
+    
+        if(typeof state!="string")
+            state = config.active_song.paused ? "paused" : "playing";
+            
 		/*
 			If the playlist is null or empty, we make sure that any song
 			that is a part of a playlist is set to paused.

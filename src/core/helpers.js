@@ -87,7 +87,17 @@ var AmplitudeHelpers = (function () {
 			/*
 				Run the callback function.
 			*/
-			callbackFunction();
+            try {
+                callbackFunction();
+            }
+            catch(error) {
+                // undocumented way to cancel events
+                if(error.message == "CANCEL EVENT")
+                    throw error;
+                else
+                    writeDebugMessage( 'Callback error: '+error.message );
+            }
+			
 		}
 	}
 
