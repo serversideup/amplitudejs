@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="17.9978906 24.001875 23.9971875 24.001875 23.9971875 0.001875 1.06685494e-16 0.001875 0 24.001875 5.99929687 24.001875 17.9978906 24.001875"></polygon>
+    </defs>
+    <g id="05.100.00-OpenSource-Amplitude" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HD_05.100.00-521Website_OpenSource-Amplitude" transform="translate(-976.000000, -381.000000)">
+            <g id="Lead-in">
+                <g id="Player" transform="translate(368.000000, 359.000000)">
+                    <g id="Playlist" transform="translate(352.000000, 5.000000)">
+                        <g id="Song-Item" transform="translate(1.000000, 0.000000)">
+                            <g id="bandcamp-button-square-black">
+                                <g transform="translate(255.002813, 16.998125)">
+                                    <g id="Group-3">
+                                        <mask id="mask-2" fill="white">
+                                            <use xlink:href="#path-1"></use>
+                                        </mask>
+                                        <g id="Clip-2"></g>
+                                        <polygon id="Fill-1" fill="#A5A5A5" mask="url(#mask-2)" points="0 24.001875 24.001875 24.001875 24.001875 0 0 0"></polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

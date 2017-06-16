@@ -472,10 +472,9 @@ var AmplitudeEventHelpers = (function() {
 		var nextIndex = 0;
         /*
           Ensure we don't loop in the playlist if config.repeat is not true 
-          */
+        */
 		var endOfList = false;
 
-		/*
 		/*
 			If the shuffle is on, we use the shuffled list of
 			songs to determine our next song.
@@ -530,15 +529,16 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			If the song has ended and repeat is on, play the song.
 		*/
-        if( !( songEnded && !config.repeat && endOfList ) )
+        if( !( songEnded && !config.repeat && endOfList ) ){
 		    AmplitudeCore.play();
+        }
 
         /*
         	Syncs the main play pause button, playlist play pause button and
         	song play pause.
         */
 		AmplitudeVisualSync.syncMainPlayPause( );
-		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex);
+		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex);
 			
         /*
         	Call after next callback

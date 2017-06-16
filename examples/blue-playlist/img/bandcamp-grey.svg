@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>bandcamp-button-square-black</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="17.9978906 24.001875 23.9971875 24.001875 23.9971875 0.001875 1.06685494e-16 0.001875 0 24.001875 5.99929687 24.001875 17.9978906 24.001875"></polygon>
+        <path d="M2.29110937,2.5333125 C1.431,2.5333125 0.9915,3.21032813 0.9915,4.2301875 C0.9915,5.19421875 1.46671875,5.917875 2.29110937,5.917875 C3.22340625,5.917875 3.57295312,5.06465625 3.57295312,4.2301875 C3.57225,3.35878125 3.13303125,2.5333125 2.29082812,2.5333125 L2.29110937,2.5333125 L2.29110937,2.5333125 Z M0.005625,0.00225 L1.02735937,0.00225 L1.02735937,2.449875 L1.04540625,2.449875 C1.32328125,1.986375 1.90579687,1.69884375 2.4256875,1.69884375 C3.88645312,1.69884375 4.59478125,2.84892188 4.59478125,4.24907813 C4.59478125,5.53739063 3.96745312,6.7520625 2.59589062,6.7520625 C1.96846875,6.7520625 1.29628125,6.59484375 0.99140625,5.96414063 L0.9736875,5.96414063 L0.9736875,6.62278125 L0.005578125,6.62278125 L0.005578125,0.002390625 L0.005625,0.00225 L0.005625,0.00225 Z" id="path-3"></path>
+        <path d="M3.35667188,1.73428125 C3.27595313,1.15007813 2.86378125,0.83465625 2.299125,0.83465625 C1.77004688,0.83465625 1.02628125,1.12223438 1.02628125,2.57798438 C1.02628125,3.37546875 1.36678125,4.2193125 2.25426563,4.2193125 C2.84573438,4.2193125 3.25790625,3.81084375 3.35667188,3.12473438 L4.37840625,3.12473438 C4.19015625,4.36720313 3.44634375,5.0533125 2.25426563,5.0533125 C0.802171875,5.0533125 0.0045,3.98728125 0.0045,2.57798438 C0.0045,1.13160938 0.766359375,0.000375 2.290125,0.000375 C3.365625,0.000375 4.28015625,0.5566875 4.37840625,1.73432813 L3.35835938,1.73432813 L3.35667188,1.73428125 L3.35667188,1.73428125 Z" id="path-5"></path>
+        <polygon id="path-7" points="7.66664062 6.60834375 0.0031875 6.60834375 3.58190625 0.00225 11.2454062 0.00225"></polygon>
+    </defs>
+    <g id="05.100.00-OpenSource-Amplitude" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HD_05.100.00-521Website_OpenSource-Amplitude" transform="translate(-976.000000, -381.000000)">
+            <g id="Lead-in">
+                <g id="Player" transform="translate(368.000000, 359.000000)">
+                    <g id="Playlist" transform="translate(352.000000, 5.000000)">
+                        <g id="Song-Item" transform="translate(1.000000, 0.000000)">
+                            <g id="bandcamp-button-square-black">
+                                <g transform="translate(255.002813, 16.998125)">
+                                    <g id="Group-3">
+                                        <mask id="mask-2" fill="white">
+                                            <use xlink:href="#path-1"></use>
+                                        </mask>
+                                        <g id="Clip-2"></g>
+                                        <polygon id="Fill-1" fill="#A5A5A5" mask="url(#mask-2)" points="0 24.001875 24.001875 24.001875 24.001875 0 0 0"></polygon>
+                                    </g>
+                                    <g id="Group-6" transform="translate(12.746250, 8.690625)">
+                                        <mask id="mask-4" fill="white">
+                                            <use xlink:href="#path-3"></use>
+                                        </mask>
+                                        <g id="Clip-5"></g>
+                                        <polygon id="Fill-4" fill="#FFFFFF" mask="url(#mask-4)" points="0 6.755625 4.595625 6.755625 4.595625 0 0 0"></polygon>
+                                    </g>
+                                    <g id="Group-9" transform="translate(17.752500, 10.389375)">
+                                        <mask id="mask-6" fill="white">
+                                            <use xlink:href="#path-5"></use>
+                                        </mask>
+                                        <g id="Clip-8"></g>
+                                        <polygon id="Fill-7" fill="#FFFFFF" mask="url(#mask-6)" points="0 5.056875 4.381875 5.056875 4.381875 0 0 0"></polygon>
+                                    </g>
+                                    <g id="Group-12" transform="translate(1.513125, 8.690625)">
+                                        <mask id="mask-8" fill="white">
+                                            <use xlink:href="#path-7"></use>
+                                        </mask>
+                                        <g id="Clip-11"></g>
+                                        <polygon id="Fill-10" fill="#FFFFFF" mask="url(#mask-8)" points="0 6.609375 11.25 6.609375 11.25 0 0 0"></polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

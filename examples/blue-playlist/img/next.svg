@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="39px" height="39px" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Next</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="05.100.00-OpenSource-Amplitude" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HD_05.100.00-521Website_OpenSource-Amplitude" transform="translate(-568.000000, -782.000000)">
+            <g id="Lead-in">
+                <g id="Player" transform="translate(368.000000, 359.000000)">
+                    <g id="Controllers/Status/Info" transform="translate(0.000000, 357.000000)">
+                        <g id="Controls" transform="translate(114.000000, 56.000000)">
+                            <g id="Next" transform="translate(86.000000, 10.000000)">
+                                <ellipse id="Oval-1-Copy" fill="#00A0FF" cx="19.5" cy="19.5" rx="19.5" ry="19.5"></ellipse>
+                                <path d="M27.6768636,11 L25.1308315,11 C24.4160835,11 23.8436969,11.5800341 23.8436969,12.2983117 L23.8436969,18.2421908 L12.5565622,11.250603 C11.6994529,10.6911583 11,11.1011824 11,12.1694806 L11,26.3003121 C11,27.3662571 11.6988647,27.7815757 12.5565622,27.2191897 L23.8436969,20.2293666 L23.8436969,26.1732458 C23.8436969,26.8932881 24.4196132,27.4703809 25.1308315,27.4703809 L27.6768636,27.4703809 C28.390435,27.4703809 28.9639982,26.8932881 28.9639982,26.1732458 L28.9639982,12.2983117 C28.9651747,11.5817989 28.3892585,11 27.6768636,11 L27.6768636,11 Z" id="Shape" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

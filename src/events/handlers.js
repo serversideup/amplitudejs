@@ -504,12 +504,6 @@ export default {
 	next: function(){
 		if( !config.is_touch_moving ){
 			/*
-				We went to the next song so we turn repeat off.
-			*/
-			config.repeat = AmplitudeEventHelpers.setRepeat( false );
-			AmplitudeVisualSync.syncRepeat();
-
-			/*
 				Checks to see if the button is a playlist next button or
 				if it's a global playlist button.
 			*/
