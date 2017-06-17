@@ -8,6 +8,7 @@ import AmplitudeInitializer from './init/init.js';
 import AmplitudeCore from './core/core.js';
 import AmplitudeHelpers from './core/helpers.js';
 import AmplitudeEvents from './events/events.js';
+import AmplitudeEventHelpers from './events/helpers.js';
 import AmplitudeVisualSync from './visual/visual.js';
 import config from './config.js';
 
@@ -249,6 +250,66 @@ var Amplitude = (function () {
 		return config.active_song;
 	}
 
+	/*--------------------------------------------------------------------------
+		Plays the next song either in the playlist or globally.
+
+		Public Accessor: Amplitude.next( playlist );
+
+		@param 	string 	playlist The playlist key
+	--------------------------------------------------------------------------*/
+	function next( playlist = null ){
+		/*
+			If the playlist is empty or null, then we check the active
+			playlist
+		*/
+		if( playlist == '' || playlist == null ){
+			/*
+				If the active playlist is null, then we set the next global
+				song or we set the next in the playlist.
+			*/
+			if( config.active_playlist == null || config.active_playlist == '' ){
+				AmplitudeEventHelpers.setNext()
+			}else{
+				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist );
+			}
+		}else{
+			/*
+				Set the next in the playlist for the key provided.
+			*/
+			AmplitudeEventHelpers.setNextPlaylist( playlist );
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Plays the prev song either in the playlist or globally.
+
+		Public Accessor: Amplitude.prev( playlist );
+
+		@param 	string 	playlist The playlist key
+	--------------------------------------------------------------------------*/
+	function prev( playlist = null ){
+		/*
+			If the playlist is empty or null, then we check the active
+			playlist
+		*/
+		if( playlist == '' || playlist == null ){
+			/*
+				If the active playlist is null, then we set the prev global
+				song or we set the prev in the playlist.
+			*/
+			if( config.active_playlist == null || config.active_playlist == '' ){
+				AmplitudeEventHelpers.setPrev()
+			}else{
+				AmplitudeEventHelpers.setPrevPlaylist( config.active_playlist );
+			}
+		}else{
+			/*
+				Set the prev in the playlist for the key provided.
+			*/
+			AmplitudeEventHelpers.setPrevPlaylist( playlist );
+		}
+	}
+
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -273,7 +334,9 @@ var Amplitude = (function () {
 		play: play,
 		pause: pause,
 		addSong: addSong,
-		audio: getAudio
+		audio: getAudio,
+		next: next,
+		prev: prev
 	}
 })();
 
