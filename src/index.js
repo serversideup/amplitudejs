@@ -1,6 +1,6 @@
 /*
 	Amplitude.js
-	Version: 	3.0
+	Version: 	3.1.0
 	Author: 	Dan Pastori
 	Company: 	521 Dimensions
 */
