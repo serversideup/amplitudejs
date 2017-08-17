@@ -4,7 +4,7 @@ import config from '../config.js';
 |-------------------------------------------------------------------------------
 | VISUAL SYNC HELPER METHODS
 |-------------------------------------------------------------------------------
-| These methods help sync visual displays. They essentially make the visual sync 
+| These methods help sync visual displays. They essentially make the visual sync
 | methods smaller and more maintainable.
 |
 | METHODS
@@ -15,6 +15,10 @@ import config from '../config.js';
 |	syncCurrentSeconds( seconds )
 |	resetCurrentSeconds()
 |	syncCurrentTime( currentTime )
+| syncCurrentHours( hours )
+| syncCurrentMinutes( minutes )
+| syncCurrentSeconds( seconds )
+| syncCurrentTime( time )
 |	resetCurrentTime()
 |	syncSongTimeVisualizations( songPlayedPercentage )
 |	syncMainSongTimeVisualizations( songPlayedPercentage )
@@ -55,7 +59,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				Get all of the hour selectors
 			*/
 			var currentHourSelectors = document.querySelectorAll( hourSelectors.join() );
-			
+
 			/*
 				Set the current hour selector's inner html to hours passed in.
 			*/
@@ -71,8 +75,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 						and the attribute of the playlist is equal to the
 						active playlist, then we set the inner html.
 					*/
-					if( config.active_playlist != '' 
-						&& config.active_playlist != null 
+					if( config.active_playlist != ''
+						&& config.active_playlist != null
 						&& currentHourSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
 							currentHourSelectors[i].innerHTML = hours;
 					/*
@@ -136,7 +140,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				'.amplitude-current-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}
-		
+
         const currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
 
 		/*
@@ -154,8 +158,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 					and the attribute of the playlist is equal to the
 					active playlist, then we set the inner html.
 				*/
-				if( config.active_playlist != '' 
-					&& config.active_playlist != null 
+				if( config.active_playlist != ''
+					&& config.active_playlist != null
 					&& currentMinuteSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
 						currentMinuteSelectors[i].innerHTML = minutes;
 				/*
@@ -219,7 +223,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				'.amplitude-current-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}
-		
+
 
 	        /*
 	        	Get all of the second selectors
@@ -228,7 +232,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 
 	        /*
 	        	Iterate over all of the second selectors.
-	        */			
+	        */
 	        for( let i = 0, l = currentSecondSelectors.length; i < l; i++ ){
 	        	/*
 	        		If the selector is a main selector, we set the seconds.
@@ -241,8 +245,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 	        			and the attribute of the playlist is equal to the
 	        			active playlist, then we set the inner html.
 	        		*/
-	        		if( config.active_playlist != '' 
-	        			&& config.active_playlist != null 
+	        		if( config.active_playlist != ''
+	        			&& config.active_playlist != null
 	        			&& currentSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
 	        				currentSecondSelectors[i].innerHTML = seconds;
 	        		/*
@@ -436,7 +440,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				to a playlist
 			*/
 			var songTimeVisualizations = document.querySelectorAll('.amplitude-song-time-visualization[amplitude-playlist="'+config.active_playlist+'"][amplitude-song-index="'+config.active_index+'"]');
-			
+
 			/*
 				Iterate over all of the individual song time visualizations setting
 				the internal div to be the percentage of the parent container
@@ -463,7 +467,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				Get all of the individual song time visualizations.
 			*/
 			var songTimeVisualizations = document.querySelectorAll('.amplitude-song-time-visualization[amplitude-song-index="'+config.active_index+'"]');
-			
+
 			/*
 				Iterate over all of the individual song time visualizations setting
 				the internal div to be the percentage of the parent container
@@ -545,7 +549,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				Get all of the hour selectors
 			*/
 			var durationHourSelectors = document.querySelectorAll( hourSelectors.join() );
-			
+
 			/*
 				Set the duration hour selector's inner html to hours passed in.
 			*/
@@ -561,8 +565,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 						and the attribute of the playlist is equal to the
 						active playlist, then we set the inner html.
 					*/
-					if( config.active_playlist != '' 
-						&& config.active_playlist != null 
+					if( config.active_playlist != ''
+						&& config.active_playlist != null
 						&& durationHourSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
 							durationHourSelectors[i].innerHTML = hours;
 					/*
@@ -608,7 +612,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				'.amplitude-duration-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}
-		
+
 
 
 		/*
@@ -631,8 +635,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 					and the attribute of the playlist is equal to the
 					active playlist, then we set the inner html.
 				*/
-				if( config.active_playlist != '' 
-					&& config.active_playlist != null 
+				if( config.active_playlist != ''
+					&& config.active_playlist != null
 					&& durationMinuteSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
 						durationMinuteSelectors[i].innerHTML = minutes;
 				/*
@@ -653,7 +657,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				}
 			}
 		}
-		
+
 	}
 
 		/*--------------------------------------------------------------------------
@@ -679,7 +683,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				'.amplitude-duration-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}
-		
+
 
 		/*
 			Get all of the second selectors
@@ -688,7 +692,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 
 		/*
 			Iterate over all of the second selectors.
-		*/			
+		*/
 		for( var i = 0; i < durationSecondSelectors.length; i++ ){
 			/*
 				If the selector is a main selector, we set the seconds.
@@ -701,8 +705,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 					and the attribute of the playlist is equal to the
 					active playlist, then we set the inner html.
 				*/
-				if( config.active_playlist != '' 
-					&& config.active_playlist != null 
+				if( config.active_playlist != ''
+					&& config.active_playlist != null
 					&& durationSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
 						durationSecondSelectors[i].innerHTML = seconds;
 				/*
@@ -758,7 +762,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 				durationTimeSelectors[i].innerHTML = '00:00';
 			}
 		}
-		
+
 	}
 
 	/*

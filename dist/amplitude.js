@@ -288,7 +288,7 @@ var config = __webpack_require__(0);
 |----------------------------------------------------------------------------------------------------
 | HELPER FUNCTIONS
 |----------------------------------------------------------------------------------------------------
-| For the sake of code clarity, these functions perform helper tasks 
+| For the sake of code clarity, these functions perform helper tasks
 | assisting the logical functions with what they need such as setting
 | the proper song index after an event has occured.
 |
@@ -357,7 +357,7 @@ var AmplitudeHelpers = function () {
 			/*
    	Build the callback function
    */
-			var callbackFunction = window[config.callbacks[callbackName]];
+			var callbackFunction = config.callbacks[callbackName];
 
 			/*
    	Write a debug message stating the callback we are running
@@ -496,7 +496,7 @@ var AmplitudeHelpers = function () {
 	}
 
 	/*--------------------------------------------------------------------------
- 	Sets the new song in the config. Sets the src of the audio object, 
+ 	Sets the new song in the config. Sets the src of the audio object,
  	updates the	metadata and sets the active album.
  		@param JSON song The song object of the song we are changing to.
  	@param int index The index of the song in the songs object we are changing.
@@ -527,7 +527,7 @@ var AmplitudeHelpers = function () {
 		}
 
 		/*
-  	Iterate ove rthe songs and generate random numbers to 
+  	Iterate ove rthe songs and generate random numbers to
   	swap the indexes of the shuffle array.
   */
 		for (var i = config.songs.length - 1; i > 0; i--) {
@@ -560,7 +560,7 @@ var AmplitudeHelpers = function () {
 		}
 
 		/*
-  	Iterate ove rthe songs and generate random numbers to 
+  	Iterate ove rthe songs and generate random numbers to
   	swap the indexes of the shuffle array.
   */
 		for (var i = config.playlists[playlist].length - 1; i > 0; i--) {
@@ -591,7 +591,7 @@ var AmplitudeHelpers = function () {
 
 	/*--------------------------------------------------------------------------
  	Sets the active playlist
- 		@param string playlist The string of the playlist being 
+ 		@param string playlist The string of the playlist being
  	set to active.
  --------------------------------------------------------------------------*/
 	function setActivePlaylist(playlist) {
@@ -604,8 +604,7 @@ var AmplitudeHelpers = function () {
 
 	/*--------------------------------------------------------------------------
  	Determines if the string passed in is a URL or not
- 
- 	@param string url The string we are testing to see if it's a URL.
+ 		@param string url The string we are testing to see if it's a URL.
  --------------------------------------------------------------------------*/
 	function isURL(url) {
 		var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -615,8 +614,7 @@ var AmplitudeHelpers = function () {
 
 	/*--------------------------------------------------------------------------
  	Determines if what is passed in is an integer or not.
- 
- 	@param string int The variable we are testing to see is an integer or not.
+ 		@param string int The variable we are testing to see is an integer or not.
  --------------------------------------------------------------------------*/
 	function isInt(int) {
 		return !isNaN(int) && parseInt(Number(int)) == int && !isNaN(parseInt(int, 10));
@@ -5115,7 +5113,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 |-------------------------------------------------------------------------------
 | VISUAL SYNC HELPER METHODS
 |-------------------------------------------------------------------------------
-| These methods help sync visual displays. They essentially make the visual sync 
+| These methods help sync visual displays. They essentially make the visual sync
 | methods smaller and more maintainable.
 |
 | METHODS
@@ -5126,6 +5124,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 |	syncCurrentSeconds( seconds )
 |	resetCurrentSeconds()
 |	syncCurrentTime( currentTime )
+| syncCurrentHours( hours )
+| syncCurrentMinutes( minutes )
+| syncCurrentSeconds( seconds )
+| syncCurrentTime( time )
 |	resetCurrentTime()
 |	syncSongTimeVisualizations( songPlayedPercentage )
 |	syncMainSongTimeVisualizations( songPlayedPercentage )
