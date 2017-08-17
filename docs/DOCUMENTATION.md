@@ -1,13 +1,13 @@
 ## Overview
-The concept of Amplitude.js is simple, allow designers to fully control the look and 
-feel of their audio player through the web without having to understand advanced scripting. 
-In HTML5, the audio tag allows users to add common audio formats to their web page. 
-The problem is that the audio playback interface is controlled by the browser. Amplitude.js 
-puts you in control of the design by simply applying a class or ID to page elements. 
-You can then style these elements through CSS and control your audio. Amplitude.js goes above 
-and beyond by adding playlist capabilities (next, previous, shuffle), song meta data and visualizations. 
-Amplitude.js is now mobile friendly as well. If it detects a 
-request coming from a mobile device it will apply a touchstart event listener instead of a click 
+The concept of Amplitude.js is simple, allow designers to fully control the look and
+feel of their audio player through the web without having to understand advanced scripting.
+In HTML5, the audio tag allows users to add common audio formats to their web page.
+The problem is that the audio playback interface is controlled by the browser. Amplitude.js
+puts you in control of the design by simply applying a class or ID to page elements.
+You can then style these elements through CSS and control your audio. Amplitude.js goes above
+and beyond by adding playlist capabilities (next, previous, shuffle), song meta data and visualizations.
+Amplitude.js is now mobile friendly as well. If it detects a
+request coming from a mobile device it will apply a touchstart event listener instead of a click
 to the appropriate elements.
 
 ### Amplitude 3.0 Updates
@@ -46,7 +46,7 @@ Download it via NPM to your existing project:
 npm install --save amplitudejs
 ```
 
-You will see the file under `node_modules/amplitudejs/dist/amplitude.js`. 
+You will see the file under `node_modules/amplitudejs/dist/amplitude.js`.
 
 ### Option 3: Manual download
 Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
@@ -121,7 +121,7 @@ and information necessary for playing the audio.
 
 A basic song object has the following keys:
 
-* name = The name of the song 
+* name = The name of the song
 * artist = The song's artist
 * album = The song's album ( Also used to determine album changes in an environment where multiple albums are used on the page)
 * url = The URL to the song. This is most imporatant.  (Soundcloud URLs discussed later)
@@ -131,7 +131,7 @@ A basic song object has the following keys:
 The only actualy required key is the url so Amplitude.js can play the song.
 
 As of Amplitude 3.0, the song object can include any number of keys which can be displayed anywhere on the page. You can
-make up a key name if you want like 
+make up a key name if you want like
 
 ```json
 	{
@@ -320,7 +320,7 @@ playlist.
 
 ### Setting the Starting Volume
 
-You can define the starting volume for when the user initially presses play.  To do this, you need to add a 
+You can define the starting volume for when the user initially presses play.  To do this, you need to add a
 "volume" key to your initialization JSON.  This value is any number between 0 and 1. Think of this as a percentage.
 If you want the volume percentage at 35%, set this value equal to .35.
 
@@ -426,7 +426,7 @@ the "default_album_art" key.  Once again, this is handled on initialization.
 ### Debug Mode
 
 Debug mode outputs verbose updates when Amplitude actions take place to see the current config and statuses
-of the AmplitudeJS player. To turn on AmplitudeJS debug mode you can set it in the config or call: 
+of the AmplitudeJS player. To turn on AmplitudeJS debug mode you can set it in the config or call:
 
 ```
 Amplitude.setDebug( true );
@@ -552,7 +552,7 @@ If you want to pause song index 3 in the playlist "test_playlist"
 The play/pause button is probably the most common button to be implemented when working with Amplitude.js.
 Depending on the global state, playlist state and/or song state, this element will get a class that is 'amplitude-playing'
 or 'amplitude-paused' that can be styled accordingly. It's common to set a play or pause button image as a background in CSS
-so when the interaction occurs, the proper button appears. 
+so when the interaction occurs, the proper button appears.
 
 There are 3 levels of Play/Pause buttons.
 1. Global Play/Pause - Plays or pauses the active song no matter if it's independent or part of a playlist.
@@ -594,7 +594,7 @@ Individual Song:
 ```
 
 #### Stop Button
-The stop button simply stops the active song. On a desktop, this will respond to the 'click' event and a 'touchstart' on mobile. 
+The stop button simply stops the active song. On a desktop, this will respond to the 'click' event and a 'touchstart' on mobile.
 To add a stop button simply add the following HTML element:
 
 ```html
@@ -685,7 +685,7 @@ The playlist previous button has an amplitude-playlist attribute with the key fo
 The shuffle button is also an extension of functionality added by Amplitude.js. It allows the developer/user to shuffle songs
 in a playlist or on a global level. Playlists can have shuffle states indpendent of other playlists. When a song ends or the user
 goes to the next song, Amplitude.js will know whether or not the playlist should go to the next sequential user defined song or the
-next song in the shuffle array.  When a playlist is shuffled or the global songs are shuffled a class of 'amplitude-shuffle-on' is 
+next song in the shuffle array.  When a playlist is shuffled or the global songs are shuffled a class of 'amplitude-shuffle-on' is
 applied to the element where if shuffle is turned off 'ampltiude-shuffle-off' is applied to the element.
 
 To add a shuffle button add the following HTML:
@@ -702,7 +702,7 @@ This shuffle button contains the attribute that defines the playlist key. This w
 
 #### Repeat Button
 The repeat button, when active, will repeat the current song when the song has ended. This is a global level element.
-The button can be styled based off of the state of the classes applied to the button. When repeat is not on, the button 
+The button can be styled based off of the state of the classes applied to the button. When repeat is not on, the button
 will have a class of 'amplitude-repeat-off' applied to the element and when repeat is on, the class 'amplitude-repeat-on'
 applied to the class.
 
@@ -755,7 +755,7 @@ When defining a song object there are 3 different keys you can define image meta
 2. station_art_url
 3. podcast_episode_cover_art_url
 
-These URLs point to an image that will be substituted out for the active song image. 
+These URLs point to an image that will be substituted out for the active song image.
 
 #### Text Metadata
 With text metadata describing a song, you can use whatever information you like and place it
@@ -831,8 +831,65 @@ Current Seconds For Song
 <span class="amplitude-current-seconds" amplitude-song-index="{song_index}"></span>
 ```
 
+Main Duration Time MM:SS
+```
+<span class="amplitud-duration-time" amplitude-main-duration-time="true"></span>
+```
+
+Main Duration Time - Displays in MM:SS
+```
+<span class="amplitude-duration-time" amplitude-main-duration-time="true"></span>
+```
+
+Main Duration Hours
+```
+<span class="amplitude-duration-hours" amplitude-main-duration-hours="true"></span>
+```
+
+Main Duration Minutes
+```
+<span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>
+```
+
+Main Duration Seconds
+```
+<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
+```
+
+Duration Hours For Playlist
+```
+<span class="amplitude-duration-hours" amplitude-playlist-duration-hours="true" amplitude-playlist="{playlist_key}"></span>
+```
+
+Duration Minutes For Playlist
+```
+<span class="amplitude-duration-minutes" amplitude-playlist-duration-minutes="true" amplitude-playlist="{playlist_key}"></span>
+```
+
+Duration Seconds For Playlist
+```
+<span class="amplitude-duration-seconds" amplitude-playlist-duration-seconds="true" amplitude-playlist="{playlist_key}"></span>
+```
+
+Duration Hours For Song
+```
+<span class="amplitude-duration-hours" amplitude-song-index="{song_index}"></span>
+```
+
+Duration Minutes For Song
+```
+<span class="amplitude-duration-minutes" amplitude-song-index="{song_index}"></span>
+```
+
+Duration Seconds For Song
+```
+<span class="amplitude-duration-seconds" amplitude-song-index="{song_index}"></span>
+```
+
+
+
 ## Public Functions
-There are a variety of public functions that AmplitudeJS exposes to the user. These methods allow the 
+There are a variety of public functions that AmplitudeJS exposes to the user. These methods allow the
 user to change config variables, add new songs, play now, etc.
 
 ### Bind New Elements
