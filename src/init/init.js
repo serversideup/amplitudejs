@@ -21,14 +21,14 @@ import AmplitudeVisualSync from '../visual/visual.js';
 |	eventHandlers()
 */
 var AmplitudeInitializer = (function () {
-	
+
 	/*--------------------------------------------------------------------------
-		The main init function.  The user will call this through 
+		The main init function.  The user will call this through
 		Amplitude.init({}) and pass in their settings.
-		
+
 		Public Accessor: Amplitude.init( user_config_json );
 
-	 	@param userConfig A JSON object of user defined values that help 
+	 	@param userConfig A JSON object of user defined values that help
 	 	configure and initialize AmplitudeJS.
 	--------------------------------------------------------------------------*/
 	function initialize( userConfig ){
@@ -49,20 +49,20 @@ var AmplitudeInitializer = (function () {
 		/*
 			In Amplitude there are 2 different types of song time visualizations.
 			1st is the HTML5 range element. The 2nd is a div that gets filled in
-			proportionately to the amount of time elapsed in the song. The user 
+			proportionately to the amount of time elapsed in the song. The user
 			can style this and represent the amount played visually. This
 			initializes all of the 2nd type by inserting an element into each
 			of the defined divs that will expand the width according to song
 			played percentage.
 		*/
 		initializeSongTimeVisualizations();
-		
+
 		/*
 			Initializes debugging right away so we can use it for the rest
 			of the configuration.
 		*/
 		config.debug = ( userConfig.debug != undefined ? userConfig.debug : false );
-		
+
 		/*
 			Checks to see if the user has songs defined.
 		*/
@@ -93,7 +93,7 @@ var AmplitudeInitializer = (function () {
 			AMPFX-TODO: MAKE HANDLED BY AMPLITUDE FX.
 		*/
 		//privateHelpInitializeAudioContext();
-		
+
 		/*
 			Checks if the user has any playlists defined. If they do
 			we have to initialize the functionality for the playlists.
@@ -103,7 +103,7 @@ var AmplitudeInitializer = (function () {
 				Copy the playlists over to Amplitude
 			*/
 			config.playlists = userConfig.playlists;
-			
+
 			/*
 				Initialize default live settings
 			*/
@@ -118,7 +118,7 @@ var AmplitudeInitializer = (function () {
 				Initialize the shuffle status of the playlists.
 			*/
 			initializePlaylistShuffleStatuses();
-			
+
 			/*
 				Initialize temporary place holders for shuffle lists.
 			*/
@@ -134,7 +134,7 @@ var AmplitudeInitializer = (function () {
 			*/
 			initializeFirstSongInPlaylistMetaData();
 		}
-		
+
 		/*
 			When the preliminary config is ready, we are ready to proceed.
 		*/
@@ -144,19 +144,21 @@ var AmplitudeInitializer = (function () {
 				which will determine where we go from there.
 			*/
 			config.soundcloud_client = ( userConfig.soundcloud_client != undefined ? userConfig.soundcloud_client : '' );
-			
+
 			/*
 				Checks if we want to use the art loaded from soundcloud.
 			*/
 			config.soundcloud_use_art = ( userConfig.soundcloud_use_art != undefined ? userConfig.soundcloud_use_art : '' );
-			
+
 			/*
 				If the user provides a soundcloud client then we assume that
 				there are URLs in their songs that will reference SoundcCloud.
-				We then copy over the user config they provided to the 
+				We then copy over the user config they provided to the
 				temp_user_config so we don't mess up the global or their configs
 				and load the soundcloud information.
 			*/
+			var tempUserConfig = {};
+
 			if( config.soundcloud_client != '' ){
 				tempUserConfig = userConfig;
 
@@ -206,7 +208,7 @@ var AmplitudeInitializer = (function () {
 	function setConfig( userConfig ){
 		/*
 			Check to see if the user entered a start song
-		*/	
+		*/
 		if( userConfig.start_song != undefined ){
 			/*
 				Ensure what has been entered is an integer.
@@ -215,7 +217,7 @@ var AmplitudeInitializer = (function () {
 				AmplitudeHelpers.changeSong( userConfig.start_song );
 			}else{
 				AmplitudeHelpers.writeDebugMessage("You must enter an integer index for the start song.");
-			}			
+			}
 		}else{
 			AmplitudeHelpers.changeSong( 0 );
 		}
@@ -225,7 +227,7 @@ var AmplitudeInitializer = (function () {
 			preference here, otherwise we default to normal playback
 			speed of 1.0.
 		*/
-		config.playback_speed = ( userConfig.playback_speed != undefined ? 
+		config.playback_speed = ( userConfig.playback_speed != undefined ?
 								  userConfig.playback_speed :
 								  1.0 );
 
@@ -239,7 +241,7 @@ var AmplitudeInitializer = (function () {
 			playback, they set it to true. By default it's set to just
 			load the metadata.
 		*/
-		config.active_song.preload = ( userConfig.preload != undefined ? 
+		config.active_song.preload = ( userConfig.preload != undefined ?
 									   userConfig.preload :
 									   "auto" );
 
@@ -248,8 +250,8 @@ var AmplitudeInitializer = (function () {
 			object that contains a key->value store of the callback name
 			and the name of the function the user needs to call.
 		*/
-		config.callbacks = ( userConfig.callbacks != undefined ? 
-							 userConfig.callbacks : 
+		config.callbacks = ( userConfig.callbacks != undefined ?
+							 userConfig.callbacks :
 							 {} );
 
 		/*
@@ -258,8 +260,8 @@ var AmplitudeInitializer = (function () {
 			Amplitude sets the active song's volume to the volume defined
 			by the user.
 		*/
-		config.volume = ( userConfig.volume != undefined ? 
-			 			  userConfig.volume : 
+		config.volume = ( userConfig.volume != undefined ?
+			 			  userConfig.volume :
 			 			  50 );
 
 		/*
@@ -267,12 +269,12 @@ var AmplitudeInitializer = (function () {
 			for when the volume up or down button is pressed.  The default is an increase
 			or decrease of 5.
 		*/
-		config.volume_increment = ( userConfig.volume_increment != undefined ? 
-									userConfig.volume_increment : 
+		config.volume_increment = ( userConfig.volume_increment != undefined ?
+									userConfig.volume_increment :
 									5 );
 
-		config.volume_decrement = ( userConfig.volume_decrement != undefined ? 
-									userConfig.volume_decrement : 
+		config.volume_decrement = ( userConfig.volume_decrement != undefined ?
+									userConfig.volume_decrement :
 									5 );
 
 		/*
@@ -295,7 +297,7 @@ var AmplitudeInitializer = (function () {
 			config.default_album_art = userConfig.default_album_art;
 		}else{
 			config.default_album_art = '';
-		}		
+		}
 
 		/*
 			Syncs all of the visual time elements to 00.
@@ -328,16 +330,16 @@ var AmplitudeInitializer = (function () {
 		/*
 			Run after init callback
 		*/
-		AmplitudeHelpers.runCallback('after_init');	
+		AmplitudeHelpers.runCallback('after_init');
 	}
 
 	/*--------------------------------------------------------------------------
 		Sets up all of the song time visualizations.  This is the only time
 		that AmplitudeJS will add an element to the page. AmplitudeJS will
 		add an element inside of the song time visualization element that will
-		expand proportionally to the amount of time elapsed on the active 
+		expand proportionally to the amount of time elapsed on the active
 		audio, thus visualizing the song time.  This element is NOT user
-		interactive.  To have the user scrub the time, they will have to 
+		interactive.  To have the user scrub the time, they will have to
 		style and implement a song time slider with an HTML 5 Range Element.
 	--------------------------------------------------------------------------*/
 	function initializeSongTimeVisualizations(){
@@ -388,7 +390,7 @@ var AmplitudeInitializer = (function () {
 			and find out how many we have to account for.
 		*/
 		var size = 0, key;
-		
+
 		/*
 			Iterate over playlists and if the user has the playlist defined,
 			increment the size of playlists.

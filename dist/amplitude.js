@@ -3367,11 +3367,10 @@ var config = __webpack_require__(0);
 var AmplitudeInitializer = function () {
 
 	/*--------------------------------------------------------------------------
- 	The main init function.  The user will call this through 
+ 	The main init function.  The user will call this through
  	Amplitude.init({}) and pass in their settings.
- 	
- 	Public Accessor: Amplitude.init( user_config_json );
- 	 	@param userConfig A JSON object of user defined values that help 
+ 		Public Accessor: Amplitude.init( user_config_json );
+ 	 	@param userConfig A JSON object of user defined values that help
   	configure and initialize AmplitudeJS.
  --------------------------------------------------------------------------*/
 	function initialize(userConfig) {
@@ -3392,7 +3391,7 @@ var AmplitudeInitializer = function () {
 		/*
   	In Amplitude there are 2 different types of song time visualizations.
   	1st is the HTML5 range element. The 2nd is a div that gets filled in
-  	proportionately to the amount of time elapsed in the song. The user 
+  	proportionately to the amount of time elapsed in the song. The user
   	can style this and represent the amount played visually. This
   	initializes all of the 2nd type by inserting an element into each
   	of the defined divs that will expand the width according to song
@@ -3496,10 +3495,12 @@ var AmplitudeInitializer = function () {
 			/*
    	If the user provides a soundcloud client then we assume that
    	there are URLs in their songs that will reference SoundcCloud.
-   	We then copy over the user config they provided to the 
+   	We then copy over the user config they provided to the
    	temp_user_config so we don't mess up the global or their configs
    	and load the soundcloud information.
    */
+			var tempUserConfig = {};
+
 			if (config.soundcloud_client != '') {
 				tempUserConfig = userConfig;
 
@@ -3663,9 +3664,9 @@ var AmplitudeInitializer = function () {
  	Sets up all of the song time visualizations.  This is the only time
  	that AmplitudeJS will add an element to the page. AmplitudeJS will
  	add an element inside of the song time visualization element that will
- 	expand proportionally to the amount of time elapsed on the active 
+ 	expand proportionally to the amount of time elapsed on the active
  	audio, thus visualizing the song time.  This element is NOT user
- 	interactive.  To have the user scrub the time, they will have to 
+ 	interactive.  To have the user scrub the time, they will have to
  	style and implement a song time slider with an HTML 5 Range Element.
  --------------------------------------------------------------------------*/
 	function initializeSongTimeVisualizations() {
