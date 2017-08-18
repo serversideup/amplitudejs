@@ -7,7 +7,7 @@ import AmplitudeCoreHelpers from '../core/helpers.js';
 |-------------------------------------------------------------------------------
 | EVENT HANDLER HELPER METHODS
 |-------------------------------------------------------------------------------
-| These methods help handle interactions whether it's computation or shuffling 
+| These methods help handle interactions whether it's computation or shuffling
 | songs.
 |
 | METHODS
@@ -29,7 +29,7 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			Computes the current seconds for the song.
 		*/
-		var currentSeconds = ( Math.floor( config.active_song.currentTime % 60 ) < 10 ? '0' : '' ) + 
+		var currentSeconds = ( Math.floor( config.active_song.currentTime % 60 ) < 10 ? '0' : '' ) +
 							    Math.floor( config.active_song.currentTime % 60 );
 
 		/*
@@ -97,7 +97,7 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			Computes the duration of the song's seconds.
 		*/
-		var songDurationSeconds = ( Math.floor( config.active_song.duration % 60 ) < 10 ? '0' : '' ) + 
+		var songDurationSeconds = ( Math.floor( config.active_song.duration % 60 ) < 10 ? '0' : '' ) +
 									  		Math.floor( config.active_song.duration % 60 );
 
 		/*
@@ -116,13 +116,13 @@ var AmplitudeEventHelpers = (function() {
 		if( songDurationMinutes < 10 ){
 			songDurationMinutes = '0'+songDurationMinutes;
 		}
-		
+
 		/*
 			If there is more than 60 minutes in the song, then we
 			extract the hours.
 		*/
 		if( songDurationMinutes > 60 ){
-			songDurationHours 		= Math.floor( songDurationMinutes / 60 ); 
+			songDurationHours 		= Math.floor( songDurationMinutes / 60 );
 			songDurationMinutes 	= songDurationMinutes % 60;
 
 			/*
@@ -260,7 +260,7 @@ var AmplitudeEventHelpers = (function() {
 				AmplitudeCoreHelpers.changeSong( config.shuffled_playlists[playlist][0].original_index );
 			}else{
 				AmplitudeCoreHelpers.changeSong( config.playlists[playlist][0] );
-			}			
+			}
 		}
 
 		/*
@@ -285,7 +285,7 @@ var AmplitudeEventHelpers = (function() {
 				Sync the song play pause buttons
 			*/
 			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
-			
+
 			/*
 				Play the song
 			*/
@@ -308,7 +308,7 @@ var AmplitudeEventHelpers = (function() {
 				Sync the song play pause buttons
 			*/
 			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'paused' );
-			
+
 			/*
 				Pause the song
 			*/
@@ -380,7 +380,7 @@ var AmplitudeEventHelpers = (function() {
 				Sync the song play pause buttons
 			*/
 			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
-			
+
 			/*
 				Play the song
 			*/
@@ -403,7 +403,7 @@ var AmplitudeEventHelpers = (function() {
 				Sync the song play pause buttons
 			*/
 			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'paused' );
-			
+
 			/*
 				Pause the song
 			*/
@@ -471,7 +471,7 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		var nextIndex = 0;
         /*
-          Ensure we don't loop in the playlist if config.repeat is not true 
+          Ensure we don't loop in the playlist if config.repeat is not true
         */
 		var endOfList = false;
 
@@ -485,9 +485,9 @@ var AmplitudeEventHelpers = (function() {
 				we use the next shuffle otherwise we go to the beginning
 				of the shuffle list.
 			*/
-			if( config.shuffle_active_index + 1 < config.shuffle_list.length ){
+			if( ( parseInt( config.shuffle_active_index ) + 1 ) < config.shuffle_list.length ){
 				config.shuffle_active_index = parseInt( config.shuffle_active_index ) + 1;
-				
+
 				/*
 					Set the next index to be the index of the song in the shuffle list.
 				*/
@@ -503,7 +503,7 @@ var AmplitudeEventHelpers = (function() {
 				we use the next song otherwise we go to the beginning of the
 				song list.
 			*/
-			if( config.active_index + 1 < config.songs.length ){
+			if( ( parseInt( config.active_index ) + 1 ) < config.songs.length ){
 				config.active_index = parseInt( config.active_index ) + 1;
 			}else{
 				config.active_index = 0;
@@ -525,7 +525,7 @@ var AmplitudeEventHelpers = (function() {
 			Change the song to the index we need.
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
-        
+
 		/*
 			If the song has ended and repeat is on, play the song.
 		*/
@@ -539,7 +539,7 @@ var AmplitudeEventHelpers = (function() {
         */
 		AmplitudeVisualSync.syncMainPlayPause( );
 		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex);
-			
+
         /*
         	Call after next callback
         */
@@ -561,7 +561,7 @@ var AmplitudeEventHelpers = (function() {
 
         /*
           Used to determine whether the playlist looped over
-          If it did, only play if repeat is allowed, end otherwise 
+          If it did, only play if repeat is allowed, end otherwise
           @TODO: Different settings for song loop, in-playlist loop and global loop
         */
 		var endOfList = false;
@@ -631,7 +631,7 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
 		AmplitudeCoreHelpers.setActivePlaylist( playlist );
-		
+
 		/*
 			If the song has ended and repeat is on, play the song.
 		*/
@@ -645,7 +645,7 @@ var AmplitudeEventHelpers = (function() {
 		AmplitudeVisualSync.syncMainPlayPause( );
 		AmplitudeVisualSync.syncPlaylistPlayPause(playlist);
 		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex);
-			
+
         /*
         	Call after next callback
         */
@@ -668,7 +668,7 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		if( config.shuffle_on ){
 			/*
-				If the previous index is greater than or equal to 0, we use the active 
+				If the previous index is greater than or equal to 0, we use the active
 				index - 1.
 			*/
 			if( parseInt( config.shuffle_active_index ) - 1 >= 0 ){
@@ -676,7 +676,7 @@ var AmplitudeEventHelpers = (function() {
 					Sets the new active to be 1 less than the current active index.
 				*/
 				config.shuffle_active_index = parseInt( config.shuffle_active_index ) - 1;
-				
+
 				/*
 					Gets the index of the song in the song array for the new index.
 				*/
@@ -725,7 +725,7 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
 		AmplitudeVisualSync.syncSongPlayPause( null, prevIndex, 'playing' );
-		
+
 		/*
 			Call after prev callback
 		*/
@@ -755,7 +755,7 @@ var AmplitudeEventHelpers = (function() {
 			var shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
 
 			/*
-				If the shuffled song active index is greater than or equal to 0, 
+				If the shuffled song active index is greater than or equal to 0,
 				we use the active index - 1.
 			*/
 			if( shuffledPlaylistActiveSongIndex - 1 >= 0 ){
@@ -763,7 +763,7 @@ var AmplitudeEventHelpers = (function() {
 					Sets the active index to the active song index - 1
 				*/
 				config.shuffled_active_indexes[ playlist ] = shuffledPlaylistActiveSongIndex - 1;
-				
+
 				/*
 					Gets the index of the song in the song array for the new index.
 				*/
@@ -820,7 +820,7 @@ var AmplitudeEventHelpers = (function() {
 		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
 		AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
 		AmplitudeVisualSync.syncSongPlayPause( playlist, prevIndex, 'playing' );
-		
+
 		/*
 			Call after prev callback
 		*/

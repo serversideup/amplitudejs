@@ -2481,7 +2481,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 |-------------------------------------------------------------------------------
 | EVENT HANDLER HELPER METHODS
 |-------------------------------------------------------------------------------
-| These methods help handle interactions whether it's computation or shuffling 
+| These methods help handle interactions whether it's computation or shuffling
 | songs.
 |
 | METHODS
@@ -2938,7 +2938,7 @@ var AmplitudeEventHelpers = function () {
   */
 		var nextIndex = 0;
 		/*
-    Ensure we don't loop in the playlist if config.repeat is not true 
+    Ensure we don't loop in the playlist if config.repeat is not true
   */
 		var endOfList = false;
 
@@ -2952,7 +2952,7 @@ var AmplitudeEventHelpers = function () {
    	we use the next shuffle otherwise we go to the beginning
    	of the shuffle list.
    */
-			if (_config2.default.shuffle_active_index + 1 < _config2.default.shuffle_list.length) {
+			if (parseInt(_config2.default.shuffle_active_index) + 1 < _config2.default.shuffle_list.length) {
 				_config2.default.shuffle_active_index = parseInt(_config2.default.shuffle_active_index) + 1;
 
 				/*
@@ -2970,7 +2970,7 @@ var AmplitudeEventHelpers = function () {
    	we use the next song otherwise we go to the beginning of the
    	song list.
    */
-			if (_config2.default.active_index + 1 < _config2.default.songs.length) {
+			if (parseInt(_config2.default.active_index) + 1 < _config2.default.songs.length) {
 				_config2.default.active_index = parseInt(_config2.default.active_index) + 1;
 			} else {
 				_config2.default.active_index = 0;
@@ -3029,7 +3029,7 @@ var AmplitudeEventHelpers = function () {
 
 		/*
     Used to determine whether the playlist looped over
-    If it did, only play if repeat is allowed, end otherwise 
+    If it did, only play if repeat is allowed, end otherwise
     @TODO: Different settings for song loop, in-playlist loop and global loop
   */
 		var endOfList = false;
@@ -3135,7 +3135,7 @@ var AmplitudeEventHelpers = function () {
   */
 		if (_config2.default.shuffle_on) {
 			/*
-   	If the previous index is greater than or equal to 0, we use the active 
+   	If the previous index is greater than or equal to 0, we use the active
    	index - 1.
    */
 			if (parseInt(_config2.default.shuffle_active_index) - 1 >= 0) {
@@ -3221,7 +3221,7 @@ var AmplitudeEventHelpers = function () {
 			var shuffledPlaylistActiveSongIndex = parseInt(_config2.default.shuffled_active_indexes[playlist]);
 
 			/*
-   	If the shuffled song active index is greater than or equal to 0, 
+   	If the shuffled song active index is greater than or equal to 0,
    	we use the active index - 1.
    */
 			if (shuffledPlaylistActiveSongIndex - 1 >= 0) {

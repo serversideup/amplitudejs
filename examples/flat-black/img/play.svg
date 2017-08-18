@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Player" transform="translate(-158.000000, -510.000000)" fill="#FFFFFF">
+            <g id="Controls" transform="translate(24.000000, 504.000000)">
+                <g id="Play" transform="translate(128.000000, 0.000000)">
+                    <path d="M36,6 C19.44,6 6,19.44 6,36 C6,52.56 19.44,66 36,66 C52.56,66 66,52.56 66,36 C66,19.44 52.56,6 36,6 Z M36,60 C22.77,60 12,49.23 12,36 C12,22.77 22.77,12 36,12 C49.23,12 60,22.77 60,36 C60,49.23 49.23,60 36,60 Z M45.9454545,35.9487179 L29,47.8974359 L29,24 L45.9454545,35.9487179 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
