@@ -88,7 +88,7 @@ return /******/ (function(modules) { // webpackBootstrap
 | Module Variables
 |-------------------------------------------------------------------------------
 | These variables make Amplitude run. The config is the most important
-| containing active settings and parameters. 
+| containing active settings and parameters.
 */
 /*--------------------------------------------------------------------------
 	The config JSON is the global settings for ALL of Amplitude functions.
@@ -97,6 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
+	version: '3.1.0',
 	/*
  	The audio element we will be using to handle all of the audio. This
  	is the javascript version of the HTML5 audio element.
@@ -158,7 +159,7 @@ var config = {
 	shuffled_playlists: {},
 
 	/*
- 	Object that contains whether the current playlist is in 
+ 	Object that contains whether the current playlist is in
  	shuffle mode or not.
  */
 	shuffled_statuses: {},
@@ -4959,6 +4960,14 @@ var Amplitude = function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Get the version of AmplitudeJS
+ 		Public Accessor: Amplitude.getVersion()
+ --------------------------------------------------------------------------*/
+	function getVersion() {
+		return _config2.default.version;
+	}
+
 	/*
  	Returns all of the publically accesible methods.
  */
@@ -4982,7 +4991,7 @@ var Amplitude = function () {
 		playNow: playNow,
 		play: play,
 		pause: pause
-	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _defineProperty(_ref, 'getActiveIndexState', getActiveIndexState), _ref;
+	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _defineProperty(_ref, 'getActiveIndexState', getActiveIndexState), _defineProperty(_ref, 'getVersion', getVersion), _ref;
 }();
 
 exports.default = Amplitude;

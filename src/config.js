@@ -3,7 +3,7 @@
 | Module Variables
 |-------------------------------------------------------------------------------
 | These variables make Amplitude run. The config is the most important
-| containing active settings and parameters. 
+| containing active settings and parameters.
 */
 /*--------------------------------------------------------------------------
 	The config JSON is the global settings for ALL of Amplitude functions.
@@ -12,6 +12,7 @@
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
+	version: '3.1.0',
 	/*
 		The audio element we will be using to handle all of the audio. This
 		is the javascript version of the HTML5 audio element.
@@ -73,7 +74,7 @@ var config = {
 	shuffled_playlists: {},
 
 	/*
-		Object that contains whether the current playlist is in 
+		Object that contains whether the current playlist is in
 		shuffle mode or not.
 	*/
 	shuffled_statuses: {},

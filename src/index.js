@@ -399,7 +399,16 @@ var Amplitude = (function () {
 			return parseInt( config.active_index );
 		}
 	}
-	
+
+	/*--------------------------------------------------------------------------
+		Get the version of AmplitudeJS
+
+		Public Accessor: Amplitude.getVersion()
+	--------------------------------------------------------------------------*/
+	function getVersion(){
+		return config.version;
+	}
+
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -432,7 +441,8 @@ var Amplitude = (function () {
 		getSongsState: getSongsState,
 		getSongsStatePlaylist: getSongsStatePlaylist,
 		getActiveIndex: getActiveIndex,
-		getActiveIndexState: getActiveIndexState
+		getActiveIndexState: getActiveIndexState,
+		getVersion: getVersion
 	}
 })();
 
