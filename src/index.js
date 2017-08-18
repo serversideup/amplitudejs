@@ -386,6 +386,20 @@ var Amplitude = (function () {
 		return parseInt( config.active_index );
 	}
 
+	/*--------------------------------------------------------------------------
+		Gets the active index with respect to the state of the player whether it is
+		shuffled or not.
+
+		Public Accessor: Amplitude.getActiveIndexState()
+	--------------------------------------------------------------------------*/
+	function getActiveIndexState(){
+		if( config.shuffle_on ){
+			return parseInt( config.shuffle_active_index );
+		}else{
+			return parseInt( config.active_index );
+		}
+	}
+	
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -417,7 +431,8 @@ var Amplitude = (function () {
 		getSongsInPlaylist: getSongsInPlaylist,
 		getSongsState: getSongsState,
 		getSongsStatePlaylist: getSongsStatePlaylist,
-		getActiveIndex: getActiveIndex
+		getActiveIndex: getActiveIndex,
+		getActiveIndexState: getActiveIndexState
 	}
 })();
 

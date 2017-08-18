@@ -4945,6 +4945,19 @@ var Amplitude = function () {
 		return parseInt(_config2.default.active_index);
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Gets the active index with respect to the state of the player whether it is
+ 	shuffled or not.
+ 		Public Accessor: Amplitude.getActiveIndexState()
+ --------------------------------------------------------------------------*/
+	function getActiveIndexState() {
+		if (_config2.default.shuffle_on) {
+			return parseInt(_config2.default.shuffle_active_index);
+		} else {
+			return parseInt(_config2.default.active_index);
+		}
+	}
+
 	/*
  	Returns all of the publically accesible methods.
  */
@@ -4968,7 +4981,7 @@ var Amplitude = function () {
 		playNow: playNow,
 		play: play,
 		pause: pause
-	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _ref;
+	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _defineProperty(_ref, 'getActiveIndexState', getActiveIndexState), _ref;
 }();
 
 exports.default = Amplitude;
