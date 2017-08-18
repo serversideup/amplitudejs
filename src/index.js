@@ -19,12 +19,12 @@ import config from './config.js';
 
 var Amplitude = (function () {
 	/*--------------------------------------------------------------------------
-		The main init function.  The user will call this through 
+		The main init function.  The user will call this through
 		Amplitude.init({}) and pass in their settings.
-		
+
 		Public Accessor: Amplitude.init( user_config_json );
 
-	 	@param user_config A JSON object of user defined values that help 
+	 	@param user_config A JSON object of user defined values that help
 	 	configure and initialize AmplitudeJS.
 	--------------------------------------------------------------------------*/
 	function init( userConfig ){
@@ -57,7 +57,7 @@ var Amplitude = (function () {
 	--------------------------------------------------------------------------*/
 	function getRepeat(){
 		return config.repeat;
-	}	
+	}
 
 	/*--------------------------------------------------------------------------
 		Returns the shuffle state of the player.
@@ -94,7 +94,7 @@ var Amplitude = (function () {
 
 	/*--------------------------------------------------------------------------
 		Allows the user to get the percentage of the song played.
-		
+
 		Public Accessor: Amplitude.getSongPlayedPercentage();
 	--------------------------------------------------------------------------*/
 	function getSongPlayedPercentage(){
@@ -107,9 +107,9 @@ var Amplitude = (function () {
 	/*--------------------------------------------------------------------------
 		Allows the user to set how far into the song they want to be. This is
 		helpful for implementing custom range sliders
-		
+
 		Public Accessor: Amplitude.setSongPlayedPercentage( float );
-		
+
 	 	@param Float percentage The percentage of the song played
 	--------------------------------------------------------------------------*/
 	function setSongPlayedPercentage( percentage ){
@@ -127,9 +127,9 @@ var Amplitude = (function () {
 
 	/*--------------------------------------------------------------------------
 		Allows the user to turn on debugging.
-		
+
 		Public Accessor: Amplitude.setDebug( bool );
-		
+
 	 	@param BOOL state Turns debugging on and off.
 	--------------------------------------------------------------------------*/
 	function setDebug( state ){
@@ -140,11 +140,11 @@ var Amplitude = (function () {
 	}
 
 	/*--------------------------------------------------------------------------
-		Returns the active song meta data for the user to do what is 
+		Returns the active song meta data for the user to do what is
 		needed.
-		
+
 		Public Accessor: Amplitude.getActiveSongMetadata();
-		
+
 	 	@returns JSON Object with the active song information
 	--------------------------------------------------------------------------*/
 	function getActiveSongMetadata(){
@@ -153,7 +153,7 @@ var Amplitude = (function () {
 
 	/*--------------------------------------------------------------------------
 		Returns a song in the songs array at that index
-		
+
 		Public Accessor: Amplitude.getSongByIndex( song_index )
 
 		@param int index The integer for the index of the
@@ -167,8 +167,8 @@ var Amplitude = (function () {
 
 	/*--------------------------------------------------------------------------
 		Returns a song at a playlist index
-		
-		Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index 
+
+		Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index
 
 		@param 	int 	index The integer for the index of the
 		song in the playlist.
@@ -187,7 +187,7 @@ var Amplitude = (function () {
 	/*--------------------------------------------------------------------------
 		Adds a song to the end of the config array.  This will allow Amplitude
 		to play the song in a playlist type setting.
-		
+
 		Public Accessor: Amplitude.addSong( song_json )
 
 		@param song JSON representation of a song.
@@ -203,7 +203,7 @@ var Amplitude = (function () {
 		When you pass a song object it plays that song right awawy.  It sets
 		the active song in the config to the song you pass in and synchronizes
 		the visuals.
-		
+
 		Public Accessor: Amplitude.playNow( song )
 
 		@param song JSON representation of a song.
@@ -216,7 +216,7 @@ var Amplitude = (function () {
 		TODO: Implement Add Song To Playlist Functionality
 	*/
 	function addSongToPlaylist( song, playlist ){
-		
+
 	}
 
 	/*--------------------------------------------------------------------------
@@ -233,7 +233,7 @@ var Amplitude = (function () {
 	/*--------------------------------------------------------------------------
 		Allows the user to pause whatever the active song is directly
 		through Javascript. Normally ALL of Amplitude functions that access
-		the core features are called through event handlers. 
+		the core features are called through event handlers.
 
 		Public Accessor: Amplitude.pause();
 	--------------------------------------------------------------------------*/
@@ -310,6 +310,82 @@ var Amplitude = (function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Gets all of the songs in the songs array
+
+		Public Accessor: Amplitude.getSongs( );
+	--------------------------------------------------------------------------*/
+	function getSongs(){
+		return config.songs;
+	}
+
+	/*--------------------------------------------------------------------------
+		Gets all of the songs in a playlist
+
+		Public Accessor: Amplitude.getSongsInPlaylist( playlist );
+
+		@param 	string 	playlist The playlist key
+	--------------------------------------------------------------------------*/
+	function getSongsInPlaylist( playlist ){
+		var songsArray = [];
+
+		for( var i = 0; i < config.playlist[playlist].length; i++ ){
+			songsArray.push( config.songs[i] );
+		}
+
+		return songsArray;
+	}
+
+	/*--------------------------------------------------------------------------
+		Get current state of songs. If shuffled, this will return the shuffled
+		songs.
+
+		Public Accessor: Amplitude.getSongsState();
+	--------------------------------------------------------------------------*/
+	function getSongsState(){
+		if( config.shuffle_on ){
+			return config.shuffle_list;
+		}else{
+			return config.songs;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Get current state of songs in playlist. If shuffled, this will return the
+		shuffled songs.
+
+		Public Accessor: Amplitude.getSongsStatePlaylist( playlist );
+
+		@param 	string 	playlist The playlist key
+	--------------------------------------------------------------------------*/
+	function getSongsStatePlaylist( playlist ){
+		var songsArray = [];
+
+		if( config.shuffled_status[playlist] ){
+
+			for( var i = 0; i < config.shuffled_playlists[playlist].length; i++ ){
+				songsArray.push( config.songs[i] );
+			}
+
+		}else{
+
+			for( var i = 0; i < config.playlist[playlist].length; i++ ){
+				songsArray.push( config.songs[i] );
+			}
+		}
+
+		return songsArray;
+	}
+
+	/*--------------------------------------------------------------------------
+		Gets the active index of the player
+
+		Public Accessor: Amplitude.getActiveIndex()
+	--------------------------------------------------------------------------*/
+	function getActiveIndex(){
+		return parseInt( config.active_index );
+	}
+
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -336,7 +412,12 @@ var Amplitude = (function () {
 		addSong: addSong,
 		audio: getAudio,
 		next: next,
-		prev: prev
+		prev: prev,
+		getSongs: getSongs,
+		getSongsInPlaylist: getSongsInPlaylist,
+		getSongsState: getSongsState,
+		getSongsStatePlaylist: getSongsStatePlaylist,
+		getActiveIndex: getActiveIndex
 	}
 })();
 

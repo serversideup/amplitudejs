@@ -40,22 +40,22 @@ var AmplitudeVisualSync = (function() {
 			Set current hour display.
 		*/
 		AmplitudeVisualSyncHelpers.syncCurrentHours( currentTime.hours );
-		
+
 		/*
 			Set current minute display.
 		*/
 		AmplitudeVisualSyncHelpers.syncCurrentMinutes( currentTime.minutes );
-		
+
 		/*
 			Set current second display.
 		*/
 		AmplitudeVisualSyncHelpers.syncCurrentSeconds( currentTime.seconds );
-		
+
 		/*
 			Set current time display.
 		*/
 		AmplitudeVisualSyncHelpers.syncCurrentTime( currentTime );
-		
+
 		/*
 			Set all song sliders to be to the current percentage
 			of the song played.
@@ -72,7 +72,7 @@ var AmplitudeVisualSync = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Visually sync all of the times to the initial time of 0. This is so 
+		Visually sync all of the times to the initial time of 0. This is so
 		we can keep all the players in sync
 	--------------------------------------------------------------------------*/
 	function resetTimes(){
@@ -117,7 +117,7 @@ var AmplitudeVisualSync = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Applies the class 'amplitude-active-song-container' to the element 
+		Applies the class 'amplitude-active-song-container' to the element
 		containing visual information regarding the active song.
 	--------------------------------------------------------------------------*/
 	function setActiveContainer(){
@@ -132,7 +132,7 @@ var AmplitudeVisualSync = (function() {
 
 		/*
 			Finds the active index and adds the active song container to the element
-			that represents the song at the index. 
+			that represents the song at the index.
 		*/
 		if( config.active_playlist == '' || config.active_playlist == null ){
 			if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]') ){
@@ -167,7 +167,7 @@ var AmplitudeVisualSync = (function() {
 			since we aren't actually changing the inner HTML of these elements.
 		*/
 		var imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
-		
+
 		/*
 			These are the ignored keys that we won't be worrying about displaying.
 			Every other key in the song object can be displayed.
@@ -195,7 +195,7 @@ var AmplitudeVisualSync = (function() {
 				Get the song info element playlist.
 			*/
 			var playlist = songInfoElements[i].getAttribute('amplitude-playlist');
-			
+
 			/*
 				Get the main song info flag.
 			*/
@@ -244,7 +244,7 @@ var AmplitudeVisualSync = (function() {
 			since we aren't actually changing the inner HTML of these elements.
 		*/
 		var imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
-		
+
 		/*
 			These are the ignored keys that we won't be worrying about displaying.
 			Every other key in the song object can be displayed.
@@ -272,7 +272,7 @@ var AmplitudeVisualSync = (function() {
 				Get the song info element playlist.
 			*/
 			var elementPlaylist = songInfoElements[i].getAttribute('amplitude-playlist');
-			
+
 			/*
 				If the playlists match or the element is a main element, then
 				we set the song info.
@@ -334,7 +334,7 @@ var AmplitudeVisualSync = (function() {
 			playbackSpeedClasses[i].classList.remove('amplitude-playback-speed-20');
 
 			/*
-				Switch the current playback speed and apply the appropriate 
+				Switch the current playback speed and apply the appropriate
 				speed class.
 			*/
 			switch( config.playback_speed ){
@@ -413,7 +413,7 @@ var AmplitudeVisualSync = (function() {
 
 	/*--------------------------------------------------------------------------
 		Syncs the main playlist play pause buttons to the state of the active song.
-		
+
 		@param string playlist The playlist we are setting the play pause state
 		for.
 
@@ -421,7 +421,7 @@ var AmplitudeVisualSync = (function() {
 		active song.
 	--------------------------------------------------------------------------*/
 	function syncPlaylistPlayPause( playlist, state ){
-    
+
         if(typeof state != "string")
             state = config.active_song.paused ? "paused" : "playing";
 		/*
@@ -440,9 +440,9 @@ var AmplitudeVisualSync = (function() {
 				means the element doesn't match the active playlist or the
 				state is paused.
 			*/
-			if( playlistPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist 
+			if( playlistPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist
 				&& state == 'playing' ){
-				
+
 				AmplitudeVisualSyncHelpers.setElementPlay( playlistPlayPauseElements[i] );
 			}else{
 				AmplitudeVisualSyncHelpers.setElementPause( playlistPlayPauseElements[i] );
@@ -452,20 +452,20 @@ var AmplitudeVisualSync = (function() {
 
 	/*--------------------------------------------------------------------------
 		Syncs the song play pause buttons to the state of the active song.
-		
+
 		@param string playlist The playlist we are setting the play pause state
 		for.
 
 		@param int song The index of the song we are syncing the state for
-		
+
 		@param string state Either playing or paused for the state of the
 		active song.
 	--------------------------------------------------------------------------*/
 	function syncSongPlayPause( playlist, song, state ){
-    
+
         if(typeof state!="string")
             state = config.active_song.paused ? "paused" : "playing";
-            
+
 		/*
 			If the playlist is null or empty, we make sure that any song
 			that is a part of a playlist is set to paused.
@@ -528,7 +528,7 @@ var AmplitudeVisualSync = (function() {
 						state of the player is playing, then we set the element to play. If those
 						three parameters are not met, set the element to pause.
 					*/
-					if( songPlayPauseElements[i].getAttribute('amplitude-song-index') == song 
+					if( songPlayPauseElements[i].getAttribute('amplitude-song-index') == song
 						&& songPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist
 						&& state == 'playing' ){
 							AmplitudeVisualSyncHelpers.setElementPlay( songPlayPauseElements[i] );
@@ -548,7 +548,7 @@ var AmplitudeVisualSync = (function() {
 
 	/*--------------------------------------------------------------------------
 		Syncs repeat for all of the repeat buttons. Users
-		can apply styles to the 'amplitude-repeat-on' and 
+		can apply styles to the 'amplitude-repeat-on' and
 		'amplitude-repeat-off' classes. They represent the state
 		of the player.
 	--------------------------------------------------------------------------*/
@@ -700,7 +700,7 @@ var AmplitudeVisualSync = (function() {
 			Gets the main song sliders
 		*/
 		var mainSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-main-song-slider="true"]');
-		
+
 		/*
 			Iterates over all of the main sliders and sets the value to the
 			percentage of the song played.
@@ -712,7 +712,7 @@ var AmplitudeVisualSync = (function() {
 
 	/*--------------------------------------------------------------------------
 		Syncs playlist song slider locations
-		
+
 		@param 	string	playlist The playlist we are setting the song slider for.
 		@param 	int 	location The location of the song as a percentage.
 	--------------------------------------------------------------------------*/
@@ -738,7 +738,7 @@ var AmplitudeVisualSync = (function() {
 
 	/*--------------------------------------------------------------------------
 		Syncs individual song slider locations
-		
+
 		@param 	string	playlist The playlist we are setting the song slider for.
 		@param 	int 	songIndex The index of the song we are adjusting the song slider for.
 		@param 	int 	location The location of the song as a percentage.
@@ -789,7 +789,7 @@ var AmplitudeVisualSync = (function() {
 
 	/*--------------------------------------------------------------------------
 		Sets the volume slider location
-		
+
 		@param 	int volume The volume from 0 - 1 for song volume.
 	--------------------------------------------------------------------------*/
 	function syncVolumeSliderLocation( volume ){
@@ -818,17 +818,17 @@ var AmplitudeVisualSync = (function() {
 			Set duration hour display.
 		*/
 		AmplitudeVisualSyncHelpers.syncDurationHours( songDuration != undefined && !isNaN( songDuration.hours ) ? songDuration.hours : '00' );
-		
+
 		/*
 			Set duration minute display.
 		*/
 		AmplitudeVisualSyncHelpers.syncDurationMinutes( songDuration != undefined && !isNaN( songDuration.minutes ) ? songDuration.minutes : '00' );
-		
+
 		/*
 			Set duration second display.
 		*/
 		AmplitudeVisualSyncHelpers.syncDurationSeconds( songDuration != undefined && !isNaN( songDuration.seconds ) ? songDuration.seconds : '00' );
-		
+
 		/*
 			Set duration time display.
 		*/

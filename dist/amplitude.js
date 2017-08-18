@@ -736,7 +736,7 @@ var AmplitudeVisualSync = function () {
 	}
 
 	/*--------------------------------------------------------------------------
- 	Visually sync all of the times to the initial time of 0. This is so 
+ 	Visually sync all of the times to the initial time of 0. This is so
  	we can keep all the players in sync
  --------------------------------------------------------------------------*/
 	function resetTimes() {
@@ -781,7 +781,7 @@ var AmplitudeVisualSync = function () {
 	}
 
 	/*--------------------------------------------------------------------------
- 	Applies the class 'amplitude-active-song-container' to the element 
+ 	Applies the class 'amplitude-active-song-container' to the element
  	containing visual information regarding the active song.
  --------------------------------------------------------------------------*/
 	function setActiveContainer() {
@@ -796,7 +796,7 @@ var AmplitudeVisualSync = function () {
 
 		/*
   	Finds the active index and adds the active song container to the element
-  	that represents the song at the index. 
+  	that represents the song at the index.
   */
 		if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
 			if (document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"]')) {
@@ -998,7 +998,7 @@ var AmplitudeVisualSync = function () {
 			playbackSpeedClasses[i].classList.remove('amplitude-playback-speed-20');
 
 			/*
-   	Switch the current playback speed and apply the appropriate 
+   	Switch the current playback speed and apply the appropriate
    	speed class.
    */
 			switch (_config2.default.playback_speed) {
@@ -1075,8 +1075,7 @@ var AmplitudeVisualSync = function () {
 
 	/*--------------------------------------------------------------------------
  	Syncs the main playlist play pause buttons to the state of the active song.
- 	
- 	@param string playlist The playlist we are setting the play pause state
+ 		@param string playlist The playlist we are setting the play pause state
  	for.
  		@param string state Either playing or paused for the state of the
  	active song.
@@ -1111,12 +1110,10 @@ var AmplitudeVisualSync = function () {
 
 	/*--------------------------------------------------------------------------
  	Syncs the song play pause buttons to the state of the active song.
- 	
- 	@param string playlist The playlist we are setting the play pause state
+ 		@param string playlist The playlist we are setting the play pause state
  	for.
  		@param int song The index of the song we are syncing the state for
- 	
- 	@param string state Either playing or paused for the state of the
+ 		@param string state Either playing or paused for the state of the
  	active song.
  --------------------------------------------------------------------------*/
 	function syncSongPlayPause(playlist, song, state) {
@@ -1202,7 +1199,7 @@ var AmplitudeVisualSync = function () {
 
 	/*--------------------------------------------------------------------------
  	Syncs repeat for all of the repeat buttons. Users
- 	can apply styles to the 'amplitude-repeat-on' and 
+ 	can apply styles to the 'amplitude-repeat-on' and
  	'amplitude-repeat-off' classes. They represent the state
  	of the player.
  --------------------------------------------------------------------------*/
@@ -1360,8 +1357,7 @@ var AmplitudeVisualSync = function () {
 
 	/*--------------------------------------------------------------------------
  	Syncs playlist song slider locations
- 	
- 	@param 	string	playlist The playlist we are setting the song slider for.
+ 		@param 	string	playlist The playlist we are setting the song slider for.
  	@param 	int 	location The location of the song as a percentage.
  --------------------------------------------------------------------------*/
 	function syncPlaylistSliderLocation(playlist, location) {
@@ -1386,8 +1382,7 @@ var AmplitudeVisualSync = function () {
 
 	/*--------------------------------------------------------------------------
  	Syncs individual song slider locations
- 	
- 	@param 	string	playlist The playlist we are setting the song slider for.
+ 		@param 	string	playlist The playlist we are setting the song slider for.
  	@param 	int 	songIndex The index of the song we are adjusting the song slider for.
  	@param 	int 	location The location of the song as a percentage.
  --------------------------------------------------------------------------*/
@@ -1437,8 +1432,7 @@ var AmplitudeVisualSync = function () {
 
 	/*--------------------------------------------------------------------------
  	Sets the volume slider location
- 	
- 	@param 	int volume The volume from 0 - 1 for song volume.
+ 		@param 	int volume The volume from 0 - 1 for song volume.
  --------------------------------------------------------------------------*/
 	function syncVolumeSliderLocation(volume) {
 		/*
@@ -4621,11 +4615,10 @@ var Amplitude = function () {
 	var _ref;
 
 	/*--------------------------------------------------------------------------
- 	The main init function.  The user will call this through 
+ 	The main init function.  The user will call this through
  	Amplitude.init({}) and pass in their settings.
- 	
- 	Public Accessor: Amplitude.init( user_config_json );
- 	 	@param user_config A JSON object of user defined values that help 
+ 		Public Accessor: Amplitude.init( user_config_json );
+ 	 	@param user_config A JSON object of user defined values that help
   	configure and initialize AmplitudeJS.
  --------------------------------------------------------------------------*/
 	function init(userConfig) {
@@ -4693,8 +4686,7 @@ var Amplitude = function () {
 
 	/*--------------------------------------------------------------------------
  	Allows the user to get the percentage of the song played.
- 	
- 	Public Accessor: Amplitude.getSongPlayedPercentage();
+ 		Public Accessor: Amplitude.getSongPlayedPercentage();
  --------------------------------------------------------------------------*/
 	function getSongPlayedPercentage() {
 		/*
@@ -4706,10 +4698,8 @@ var Amplitude = function () {
 	/*--------------------------------------------------------------------------
  	Allows the user to set how far into the song they want to be. This is
  	helpful for implementing custom range sliders
- 	
- 	Public Accessor: Amplitude.setSongPlayedPercentage( float );
- 	
-  	@param Float percentage The percentage of the song played
+ 		Public Accessor: Amplitude.setSongPlayedPercentage( float );
+ 	 	@param Float percentage The percentage of the song played
  --------------------------------------------------------------------------*/
 	function setSongPlayedPercentage(percentage) {
 		/*
@@ -4725,10 +4715,8 @@ var Amplitude = function () {
 
 	/*--------------------------------------------------------------------------
  	Allows the user to turn on debugging.
- 	
- 	Public Accessor: Amplitude.setDebug( bool );
- 	
-  	@param BOOL state Turns debugging on and off.
+ 		Public Accessor: Amplitude.setDebug( bool );
+ 	 	@param BOOL state Turns debugging on and off.
  --------------------------------------------------------------------------*/
 	function setDebug(state) {
 		/*
@@ -4738,12 +4726,10 @@ var Amplitude = function () {
 	}
 
 	/*--------------------------------------------------------------------------
- 	Returns the active song meta data for the user to do what is 
+ 	Returns the active song meta data for the user to do what is
  	needed.
- 	
- 	Public Accessor: Amplitude.getActiveSongMetadata();
- 	
-  	@returns JSON Object with the active song information
+ 		Public Accessor: Amplitude.getActiveSongMetadata();
+ 	 	@returns JSON Object with the active song information
  --------------------------------------------------------------------------*/
 	function getActiveSongMetadata() {
 		return _config2.default.active_metadata;
@@ -4751,8 +4737,7 @@ var Amplitude = function () {
 
 	/*--------------------------------------------------------------------------
  	Returns a song in the songs array at that index
- 	
- 	Public Accessor: Amplitude.getSongByIndex( song_index )
+ 		Public Accessor: Amplitude.getSongByIndex( song_index )
  		@param int index The integer for the index of the
  	song in the songs array.
  		@returns JSON representation for the song at a specific index.
@@ -4763,8 +4748,7 @@ var Amplitude = function () {
 
 	/*--------------------------------------------------------------------------
  	Returns a song at a playlist index
- 	
- 	Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index 
+ 		Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index
  		@param 	int 	index The integer for the index of the
  	song in the playlist.
  		@param 	string	playlist The key of the playlist we are getting the song
@@ -4780,8 +4764,7 @@ var Amplitude = function () {
 	/*--------------------------------------------------------------------------
  	Adds a song to the end of the config array.  This will allow Amplitude
  	to play the song in a playlist type setting.
- 	
- 	Public Accessor: Amplitude.addSong( song_json )
+ 		Public Accessor: Amplitude.addSong( song_json )
  		@param song JSON representation of a song.
  		@returns int New index of the song.
  --------------------------------------------------------------------------*/
@@ -4794,8 +4777,7 @@ var Amplitude = function () {
  	When you pass a song object it plays that song right awawy.  It sets
  	the active song in the config to the song you pass in and synchronizes
  	the visuals.
- 	
- 	Public Accessor: Amplitude.playNow( song )
+ 		Public Accessor: Amplitude.playNow( song )
  		@param song JSON representation of a song.
  --------------------------------------------------------------------------*/
 	function playNow(song) {
@@ -4820,7 +4802,7 @@ var Amplitude = function () {
 	/*--------------------------------------------------------------------------
  	Allows the user to pause whatever the active song is directly
  	through Javascript. Normally ALL of Amplitude functions that access
- 	the core features are called through event handlers. 
+ 	the core features are called through event handlers.
  		Public Accessor: Amplitude.pause();
  --------------------------------------------------------------------------*/
 	function pause() {
@@ -4895,6 +4877,74 @@ var Amplitude = function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Gets all of the songs in the songs array
+ 		Public Accessor: Amplitude.getSongs( );
+ --------------------------------------------------------------------------*/
+	function getSongs() {
+		return _config2.default.songs;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Gets all of the songs in a playlist
+ 		Public Accessor: Amplitude.getSongsInPlaylist( playlist );
+ 		@param 	string 	playlist The playlist key
+ --------------------------------------------------------------------------*/
+	function getSongsInPlaylist(playlist) {
+		var songsArray = [];
+
+		for (var i = 0; i < _config2.default.playlist[playlist].length; i++) {
+			songsArray.push(_config2.default.songs[i]);
+		}
+
+		return songsArray;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Get current state of songs. If shuffled, this will return the shuffled
+ 	songs.
+ 		Public Accessor: Amplitude.getSongsState();
+ --------------------------------------------------------------------------*/
+	function getSongsState() {
+		if (_config2.default.shuffle_on) {
+			return _config2.default.shuffle_list;
+		} else {
+			return _config2.default.songs;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Get current state of songs in playlist. If shuffled, this will return the
+ 	shuffled songs.
+ 		Public Accessor: Amplitude.getSongsStatePlaylist( playlist );
+ 		@param 	string 	playlist The playlist key
+ --------------------------------------------------------------------------*/
+	function getSongsStatePlaylist(playlist) {
+		var songsArray = [];
+
+		if (_config2.default.shuffled_status[playlist]) {
+
+			for (var i = 0; i < _config2.default.shuffled_playlists[playlist].length; i++) {
+				songsArray.push(_config2.default.songs[i]);
+			}
+		} else {
+
+			for (var i = 0; i < _config2.default.playlist[playlist].length; i++) {
+				songsArray.push(_config2.default.songs[i]);
+			}
+		}
+
+		return songsArray;
+	}
+
+	/*--------------------------------------------------------------------------
+ 	Gets the active index of the player
+ 		Public Accessor: Amplitude.getActiveIndex()
+ --------------------------------------------------------------------------*/
+	function getActiveIndex() {
+		return parseInt(_config2.default.active_index);
+	}
+
 	/*
  	Returns all of the publically accesible methods.
  */
@@ -4918,7 +4968,7 @@ var Amplitude = function () {
 		playNow: playNow,
 		play: play,
 		pause: pause
-	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _ref;
+	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _ref;
 }();
 
 exports.default = Amplitude;
