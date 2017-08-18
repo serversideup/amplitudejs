@@ -439,7 +439,7 @@ SoundCloud API to go with the song.  You can even use the album art by setting t
 the config during the Amplitude.init() method.
 
 ### Callbacks
-There are a variety of callbacks that AmplitudeJS calls at certain times and the developer can bind to. To bind to a callback
+There are a variety of callbacks that AmplitudeJS calls at certain times and the developer can bind to.
 
 
 | Callback        | Description 										   |
@@ -448,6 +448,46 @@ There are a variety of callbacks that AmplitudeJS calls at certain times and the
 | after_play 	  | Occurs after the play method is called 			       |
 | before_stop 	  | Occurs before the stop method is called 			   |
 | after_stop  	  | Occurs after the stop method is called 				   |
+
+To bind to a callback you add a function to your callbacks object with the key of one of the callbacks listed above. That key will be a function. When the callback is called, the function the user passes will be run. For example, After the user clicks play we want to increase the play count. I'd set up a callback that has a method to increase the play count:
+
+```javascript
+var playCount = 0;
+
+Amplitude.init({
+		 "songs": [
+				 {
+						 "name": "Song Name 1",
+						 "artist": "Artist Name",
+						 "album": "Album Name",
+						 "url": "/song/url.mp3",
+						 "cover_art_url": "/cover/art/url.jpg"
+				 },
+				 {
+						 "name": "Song Name 2",
+						 "artist": "Artist Name",
+						 "album": "Album Name",
+						 "url": "/song/url.mp3",
+						 "cover_art_url": "/cover/art/url.jpg"
+				 },
+				 {
+						 "name": "Song Name 3",
+						 "artist": "Artist Name",
+						 "album": "Album Name",
+						 "url": "/song/url.mp3",
+						 "cover_art_url": "/cover/art/url.jpg"
+				 }
+		 ],
+		 "callbacks": {
+			 'after_play': function(){
+				 playCount++;
+				 alert( playCount );
+			 }
+		 }
+ });
+```
+
+Every time the play button is called, the song will begin to play and after all the code has been run, the callback will increase the play count.
 
 ## Amplitude Elements
 
