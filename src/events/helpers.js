@@ -827,6 +827,107 @@ var AmplitudeEventHelpers = (function() {
 		AmplitudeCoreHelpers.runCallback('after_prev');
 	}
 
+	/*--------------------------------------------------------------------------
+		Runs an event on key down
+
+		@param 	int key The key code the event is bound to.
+	--------------------------------------------------------------------------*/
+	function runKeyEvent( key ){
+		/*
+			Checks to see if the user bound an event to the code pressed.
+		*/
+		if( config.bindings[key] != undefined ){
+			/*
+				Determine which event should be run if bound.
+			*/
+			switch( config.bindings[key] ){
+				/*
+					Fires a play pause event.
+				*/
+				case 'play_pause':
+					setSongPlayPause( config.active_playlist, config.active_index );
+				break;
+
+				/*
+					Fires a next event.
+				*/
+				case 'next':
+					/*
+						Check to see if the current state of the player
+						is in playlist mode or not playlist mode.
+					*/
+					if( config.active_playlist == ''
+						|| config.active_playlist == null ){
+							setNext();
+					}else{
+						setNextPlaylist( config.active_playlist );
+					}
+				break;
+
+				/*
+					Fires a previous event.
+				*/
+				case 'prev':
+					/*
+						Check to see if the current playlist has been set
+						or null and set the previous song.
+					*/
+					if( config.active_playlist == ''
+						|| config.active_playlist == null ){
+							AmplitudeEventHelpers.setPrev();
+					}else{
+						AmplitudeEventHelpers.setPrevPlaylist( config.active_playlist );
+					}
+				break;
+
+				/*
+					Fires a stop event.
+				*/
+				case 'stop':
+					/*
+						Sets all of the play/pause buttons to pause
+					*/
+					AmplitudeVisualSync.setPlayPauseButtonsToPause();
+
+					/*
+						Stops the active song.
+					*/
+					AmplitudeCore.stop();
+				break;
+
+				/*
+					Fires a shuffle event.
+				*/
+				case 'shuffle':
+					/*
+						Check to see if the current playlist has been set
+						or null and set the previous song.
+					*/
+					if( config.active_playlist == ''
+						|| config.active_playlist == null ){
+							AmplitudeEventHelpers.setShuffle( null );
+					}else{
+						AmplitudeEventHelpers.setShuffle( config.active_playlist );
+					}
+				break;
+
+				/*
+					Fires a repeat event.
+				*/
+				case 'repeat':
+					/*
+						Sets repeat to the opposite of what it was set to
+					*/
+					AmplitudeEventHelpers.setRepeat( !config.repeat );
+
+					/*
+						Visually sync repeat
+					*/
+					AmplitudeVisualSync.syncRepeat();
+				break;
+			}
+		}
+	}
 
 	/*
 		Return the publically scoped functions
@@ -844,7 +945,8 @@ var AmplitudeEventHelpers = (function() {
 		setNext: setNext,
 		setNextPlaylist: setNextPlaylist,
 		setPrev: setPrev,
-		setPrevPlaylist: setPrevPlaylist
+		setPrevPlaylist: setPrevPlaylist,
+		runKeyEvent: runKeyEvent
 	}
 })();
 

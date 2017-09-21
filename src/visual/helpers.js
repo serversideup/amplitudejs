@@ -20,10 +20,6 @@ import config from '../config.js';
 | syncCurrentSeconds( seconds )
 | syncCurrentTime( time )
 |	resetCurrentTime()
-|	syncSongTimeVisualizations( songPlayedPercentage )
-|	syncMainSongTimeVisualizations( songPlayedPercentage )
-|	syncPlaylistSongTimeVisualizations( songPlayedPercentage )
-|	syncIndividualSongTimeVisualizations( songPlayedPercentage )
 |	setElementPlay( element )
 |	setElementPause( element )
 */
@@ -337,161 +333,83 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates all of the song time visualizaitons which are an expanding
-		element that displays the percentage of the song that has been played.
-
-		@param float songPlayedPercentage The percentage of the song that
-		has been played.
-	--------------------------------------------------------------------------*/
-	function syncSongTimeVisualizations( songPlayedPercentage ){
-		syncMainSongTimeVisualizations( songPlayedPercentage );
-		syncPlaylistSongTimeVisualizations( songPlayedPercentage );
-		syncIndividualSongTimeVisualizations( songPlayedPercentage );
+	function syncSongPlayedProgressBar( songPlayedPercentage ){
+		syncMainSongPlayedProgressBars( songPlayedPercentage );
+		syncPlaylistSongPlayedProgressBars( songPlayedPercentage );
+		syncIndividualSongPlayedProgressBars( songPlayedPercentage );
 	}
 
 	/*--------------------------------------------------------------------------
-		Updates all of the main song time visualizaitons which are an expanding
-		element that displays the percentage of the song that has been played.
+		Sync how much has been played with a progress bar.
 
-		@param float songPlayedPercentage The percentage of the song that
-		has been played.
+		@param float songPlayedPercentage The percent of the song completed.
 	--------------------------------------------------------------------------*/
-	function syncMainSongTimeVisualizations( songPlayedPercentage ){
+	function syncMainSongPlayedProgressBars( songPlayedPercentage ){
 		/*
-			Get all of the main song time visualizations
+			Ensure that the song completion percentage is a number
 		*/
-		var mainSongTimeVisualizations = document.querySelectorAll('.amplitude-song-time-visualization[amplitude-main-song-time-visualization="true"]');
-
-		/*
-			Iterate over all of the main song time visualizations setting
-			the internal div to be the percentage of the parent container
-			equivalent to the percentage of the song played.
-		*/
-		for( var i = 0; i < mainSongTimeVisualizations.length; i++ ){
+		if( !isNaN( songPlayedPercentage ) ){
 			/*
-				Get the song time visualization status and the visualization
-				width. Calculate the computed width of the song as a percentage
-				of the player width and song played.
+				Get all of the song progress bars
 			*/
-			var songTimeVisualizationStatus = mainSongTimeVisualizations[i].querySelectorAll('.amplitude-song-time-visualization-status');
-			var visualizationWidth 			= mainSongTimeVisualizations[i].offsetWidth;
-			var computedWidth 				= ( visualizationWidth * ( songPlayedPercentage / 100 ) );
+			var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-main-song-played-progress="true"]');
 
-			/*
-				Set the inner element width to the computed width. This allows for the user
-				to define the width of the outer element and this will fill proportionally.
-			*/
-			songTimeVisualizationStatus[0].setAttribute('style', 'width: ' + computedWidth + 'px');
-		}
-	}
+			for( var i = 0; i < songPlayedProgressBars.length; i++ ){
+				var max = songPlayedProgressBars[i].max;
 
-	/*--------------------------------------------------------------------------
-		Updates all of the playlist song time visualizaitons which are an expanding
-		element that displays the percentage of the song that has been played.
-
-		@param float songPlayedPercentage The percentage of the song that
-		has been played.
-	--------------------------------------------------------------------------*/
-	function syncPlaylistSongTimeVisualizations( songPlayedPercentage ){
-		/*
-			Get all of the playlist song time visualizations
-		*/
-		var playlistSongTimeVisualizations = document.querySelectorAll('.amplitude-song-time-visualization[amplitude-playlist-song-time-visualization="true"][amplitude-playlist="'+config.active_playlist+'"]');
-
-		/*
-			Iterate over all of the main song time visualizations setting
-			the internal div to be the percentage of the parent container
-			equivalent to the percentage of the song played.
-		*/
-		for( var i = 0; i < playlistSongTimeVisualizations.length; i++ ){
-			/*
-				Get the song time visualization status and the visualization
-				width. Calculate the computed width of the song as a percentage
-				of the player width and song played.
-			*/
-			var songTimeVisualizationStatus = playlistSongTimeVisualizations[i].querySelectorAll('.amplitude-song-time-visualization-status');
-			var visualizationWidth 			= playlistSongTimeVisualizations[i].offsetWidth;
-			var computedWidth 				= ( visualizationWidth * ( songPlayedPercentage / 100 ) );
-
-			/*
-				Set the inner element width to the computed width. This allows for the user
-				to define the width of the outer element and this will fill proportionally.
-			*/
-			songTimeVisualizationStatus[0].setAttribute('style', 'width: ' + computedWidth + 'px');
-		}
-	}
-
-	/*--------------------------------------------------------------------------
-		Updates all of the individual song time visualizaitons which are an expanding
-		element that displays the percentage of the song that has been played.
-
-		@param float songPlayedPercentage The percentage of the song that
-		has been played.
-	--------------------------------------------------------------------------*/
-	function syncIndividualSongTimeVisualizations( songPlayedPercentage ){
-		/*
-			If the active playlist is not null, we get the individual song
-			time visualizations for the playlist.
-		*/
-		if( config.active_playlist != '' && config.active_playlist != null ){
-			/*
-				Get all of the individual song time visualizations that correspond
-				to a playlist
-			*/
-			var songTimeVisualizations = document.querySelectorAll('.amplitude-song-time-visualization[amplitude-playlist="'+config.active_playlist+'"][amplitude-song-index="'+config.active_index+'"]');
-
-			/*
-				Iterate over all of the individual song time visualizations setting
-				the internal div to be the percentage of the parent container
-				equivalent to the percentage of the song played.
-			*/
-			for( var i = 0; i < songTimeVisualizations.length; i++ ){
-				/*
-					Get the song time visualization status and the visualization
-					width. Calculate the computed width of the song as a percentage
-					of the player width and song played.
-				*/
-				var songTimeVisualizationStatus = songTimeVisualizations[i].querySelectorAll('.amplitude-song-time-visualization-status');
-				var visualizationWidth 			= songTimeVisualizations[i].offsetWidth;
-				var computedWidth 				= ( visualizationWidth * ( songPlayedPercentage / 100 ) );
-
-				/*
-					Set the inner element width to the computed width. This allows for the user
-					to define the width of the outer element and this will fill proportionally.
-				*/
-				songTimeVisualizationStatus[0].setAttribute('style', 'width: ' + computedWidth + 'px');
+				songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
 			}
-		}else{
-			/*
-				Get all of the individual song time visualizations.
-			*/
-			var songTimeVisualizations = document.querySelectorAll('.amplitude-song-time-visualization[amplitude-song-index="'+config.active_index+'"]');
+		}
+	}
 
+	function syncPlaylistSongPlayedProgressBars( songPlayedPercentage ){
+		/*
+			Ensure that the song completion percentage is a number
+		*/
+		if( !isNaN( songPlayedPercentage ) ){
 			/*
-				Iterate over all of the individual song time visualizations setting
-				the internal div to be the percentage of the parent container
-				equivalent to the percentage of the song played.
+				Get all of the song progress bars
 			*/
-			for( var i = 0; i < songTimeVisualizations.length; i++ ){
+			var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-playlist-song-played-progress="true"][amplitude-playlist="'+config.active_playlist+'"]');
+
+			for( var i = 0; i < songPlayedProgressBars.length; i++ ){
+				var max = songPlayedProgressBars[i].max;
+
+				songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
+			}
+		}
+	}
+
+	function syncIndividualSongPlayedProgressBars( songPlayedPercentage ){
+		/*
+			Ensure that the song completion percentage is a number
+		*/
+		if( !isNaN( songPlayedPercentage ) ){
+			/*
+				If the active playlist is not null, we get the individual song
+				played progress for the playlist.
+			*/
+			if( config.active_playlist != '' && config.active_playlist != null ){
 				/*
-					Ensure the visualization doesn't have a playlist attribute.
+					Get all of the song progress bars
 				*/
-				if( !songTimeVisualizations[i].hasAttribute('amplitude-playlist') ){
-					/*
-						Get the song time visualization status and the visualization
-						width. Calculate the computed width of the song as a percentage
-						of the player width and song played.
-					*/
-					var songTimeVisualizationStatus = songTimeVisualizations[i].querySelectorAll('.amplitude-song-time-visualization-status');
-					var visualizationWidth 			= songTimeVisualizations[i].offsetWidth;
-					var computedWidth 				= ( visualizationWidth * ( songPlayedPercentage / 100 ) );
+				var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-playlist="'+config.active_playlist+'"][amplitude-song-index="'+config.active_index+'"]');
 
-					/*
-						Set the inner element width to the computed width. This allows for the user
-						to define the width of the outer element and this will fill proportionally.
-					*/
-					songTimeVisualizationStatus[0].setAttribute('style', 'width: ' + computedWidth + 'px');
+				for( var i = 0; i < songPlayedProgressBars.length; i++ ){
+					var max = songPlayedProgressBars[i].max;
+
+					songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
+				}
+			}else{
+				/*
+					Get all of the song progress bars
+				*/
+				var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-song-index="'+config.active_index+'"]');
+
+				for( var i = 0; i < songPlayedProgressBars.length; i++ ){
+					var max = songPlayedProgressBars[i].max;
+
+					songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
 				}
 			}
 		}
@@ -765,6 +683,81 @@ var AmplitudeVisualSyncHelpers = (function() {
 
 	}
 
+	/*--------------------------------------------------------------------------
+		Updates the elements that show how much time is remaining in the song.
+
+		@param JSON currentTime A json object containing the parts for the current
+		time for the song.
+
+		@param JSON durationTime A json object conaining the parts for the
+		duration time for the song.
+	--------------------------------------------------------------------------*/
+	function syncCountDownTime( currentTime, songDuration ){
+		/*
+			Initialize time remaining.
+		*/
+		var timeRemaining = '00:00';
+
+		/*
+			Ensure that all values are defined.
+		*/
+		if( currentTime != undefined && songDuration != undefined ){
+			/*
+				Initialize the total current seconds and total duration seconds
+			*/
+			var totalCurrentSeconds = parseInt( currentTime.seconds ) + ( parseInt( currentTime.minutes ) * 60 ) + ( ( parseInt( currentTime.hours ) * 60 * 60 ) );
+			var totalDurationSeconds = parseInt( songDuration.seconds ) + ( parseInt( songDuration.minutes ) * 60 ) + ( ( parseInt( songDuration.hours ) * 60 * 60 ) );
+
+			/*
+				If the two variables are numbers we continue the computing.
+			*/
+			if( !isNaN( totalCurrentSeconds ) && !isNaN( totalDurationSeconds ) ){
+				/*
+					Find the total remaining seconds.
+				*/
+				var timeRemainingTotalSeconds = totalDurationSeconds - totalCurrentSeconds;
+
+				/*
+					Find how many seconds are remaining.
+				*/
+				var timeRemainingSeconds = ( Math.floor( timeRemainingTotalSeconds % 60 ) < 10 ? '0' : '' ) +
+											  		Math.floor( timeRemainingTotalSeconds % 60 );
+
+				/*
+					Find how many minutes are remaining.
+				*/
+				var timeRemainingMinutes = Math.floor( timeRemainingTotalSeconds / 60 );
+
+				/*
+					Build the time remaining.
+				*/
+				timeRemaining = timeRemainingMinutes+':'+timeRemainingSeconds;
+			}
+		}
+
+		/*
+			Gets all of the song time selectors.
+		*/
+		var timeSelectors = [
+			'.amplitude-time-remaining[amplitude-main-time-remaining="true"]',
+			'.amplitude-time-remaining[amplitude-playlist-main-time-remaining="'+config.active_playlist+'"]',
+			'.amplitude-time-remaining[amplitude-song-index="'+config.active_index+'"]'
+		];
+
+		/*
+			Get all of the time selectors.
+		*/
+		var timeRemainingSelectors = document.querySelectorAll( timeSelectors.join() );
+
+		/*
+			Set the time selector's inner html to the duration time for the song. The duration
+			time is computed by joining minutes and seconds.
+		*/
+		for( var i = 0; i < timeRemainingSelectors.length; i++ ){
+			timeRemainingSelectors[i].innerHTML = timeRemaining;
+		}
+	}
+
 	/*
 		Return the publically available functions.
 	*/
@@ -777,13 +770,14 @@ var AmplitudeVisualSyncHelpers = (function() {
 		resetCurrentMinutes: resetCurrentMinutes,
 		resetCurrentSeconds: resetCurrentSeconds,
 		resetCurrentTime: resetCurrentTime,
-		syncSongTimeVisualizations: syncSongTimeVisualizations,
+		syncSongPlayedProgressBar: syncSongPlayedProgressBar,
 		setElementPlay: setElementPlay,
 		setElementPause: setElementPause,
 		syncDurationHours: syncDurationHours,
 		syncDurationMinutes: syncDurationMinutes,
 		syncDurationSeconds: syncDurationSeconds,
 		syncDurationTime: syncDurationTime,
+		syncCountDownTime: syncCountDownTime
 	}
 })();
 

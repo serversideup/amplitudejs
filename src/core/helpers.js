@@ -87,16 +87,16 @@ var AmplitudeHelpers = (function () {
 			/*
 				Run the callback function.
 			*/
-            try {
-                callbackFunction();
-            }
-            catch(error) {
-                // undocumented way to cancel events
-                if(error.message == "CANCEL EVENT")
-                    throw error;
-                else
-                    writeDebugMessage( 'Callback error: '+error.message );
-            }
+      try {
+          callbackFunction();
+      }
+      catch(error) {
+          // undocumented way to cancel events
+          if(error.message == "CANCEL EVENT")
+              throw error;
+          else
+              writeDebugMessage( 'Callback error: '+error.message );
+      }
 
 		}
 	}
@@ -136,11 +136,8 @@ var AmplitudeHelpers = (function () {
 		*/
 		AmplitudeVisualSync.resetSongSliders();
 
-		/*
-			Reset the song time vizualizations as well since those
-			can be bound to a specific song.
-		*/
-		AmplitudeVisualSync.resetSongTimeVisualizations();
+
+		AmplitudeVisualSync.resetSongPlayedProgressBars();
 
 		/*
 			Reset all the time place holders accordingly.

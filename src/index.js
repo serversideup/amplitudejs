@@ -1,12 +1,12 @@
 /*
 	Amplitude.js
-	Version: 	3.1.0
+	Version: 	3.2.0
 	Author: 	Dan Pastori
 	Company: 	521 Dimensions
 */
 import AmplitudeInitializer from './init/init.js';
 import AmplitudeCore from './core/core.js';
-import AmplitudeHelpers from './core/helpers.js';
+import AmplitudeCoreHelpers from './core/helpers.js';
 import AmplitudeEvents from './events/events.js';
 import AmplitudeEventHelpers from './events/helpers.js';
 import AmplitudeVisualSync from './visual/visual.js';
@@ -106,7 +106,7 @@ var Amplitude = (function () {
 
 	/*--------------------------------------------------------------------------
 		Allows the user to set how far into the song they want to be. This is
-		helpful for implementing custom range sliders
+		helpful for implementing custom range sliders. Only works on the current song.
 
 		Public Accessor: Amplitude.setSongPlayedPercentage( float );
 
@@ -409,6 +409,50 @@ var Amplitude = (function () {
 		return config.version;
 	}
 
+	/*--------------------------------------------------------------------------
+		Get the buffered amount for the current song
+
+		Public Accessor: Amplitude.getBuffered()
+	--------------------------------------------------------------------------*/
+	function getBuffered(){
+		return config.buffered;
+	}
+
+	/*--------------------------------------------------------------------------
+		Skip to a certain location in a selected song.
+
+		Public Accessor: Amplitude.getBuffered()
+	--------------------------------------------------------------------------*/
+	function skipTo( seconds, songIndex, playlist = null ){
+		if( playlist != null ){
+			if( AmplitudeCoreHelpers.checkNewPlaylist( playlist ) ){
+				AmplitudeCoreHelpers.setActivePlaylist( playlist );
+			}
+		}
+
+		seconds = parseInt( seconds );
+
+		/*
+			Changes the song to where it's being skipped and then
+			play the song.
+		*/
+		AmplitudeCoreHelpers.changeSong( songIndex );
+		AmplitudeCore.play();
+
+		AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+
+		if( playlist != null ){
+			AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
+		}
+
+		AmplitudeVisualSync.syncSongPlayPause( playlist, songIndex, 'playing' );
+
+		/*
+			Skip to the location in the song.
+		*/
+		AmplitudeCore.skipToLocation( seconds );
+	}
+
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -442,7 +486,9 @@ var Amplitude = (function () {
 		getSongsStatePlaylist: getSongsStatePlaylist,
 		getActiveIndex: getActiveIndex,
 		getActiveIndexState: getActiveIndexState,
-		getVersion: getVersion
+		getVersion: getVersion,
+		getBuffered: getBuffered,
+		skipTo: skipTo
 	}
 })();
 

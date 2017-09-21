@@ -47,17 +47,6 @@ var AmplitudeInitializer = (function () {
 		AmplitudeEvents.initializeEvents();
 
 		/*
-			In Amplitude there are 2 different types of song time visualizations.
-			1st is the HTML5 range element. The 2nd is a div that gets filled in
-			proportionately to the amount of time elapsed in the song. The user
-			can style this and represent the amount played visually. This
-			initializes all of the 2nd type by inserting an element into each
-			of the defined divs that will expand the width according to song
-			played percentage.
-		*/
-		initializeSongTimeVisualizations();
-
-		/*
 			Initializes debugging right away so we can use it for the rest
 			of the configuration.
 		*/
@@ -187,7 +176,6 @@ var AmplitudeInitializer = (function () {
 	--------------------------------------------------------------------------*/
 	function rebindDisplay(){
 		AmplitudeEvents.initializeEvents();
-		initializeSongTimeVisualizations();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -253,6 +241,15 @@ var AmplitudeInitializer = (function () {
 		config.callbacks = ( userConfig.callbacks != undefined ?
 							 userConfig.callbacks :
 							 {} );
+
+		/*
+			Initializes the user defined key bindings. This should be a JSON
+			object that contains a key->value store of the key event number
+			pressed and the method to be run.
+		*/
+		config.bindings = ( userConfig.bindings != undefined ?
+												userConfig.bindings :
+												{} );
 
 		/*
 			The user can define a starting volume in a range of 0-100 with
@@ -331,51 +328,6 @@ var AmplitudeInitializer = (function () {
 			Run after init callback
 		*/
 		AmplitudeHelpers.runCallback('after_init');
-	}
-
-	/*--------------------------------------------------------------------------
-		Sets up all of the song time visualizations.  This is the only time
-		that AmplitudeJS will add an element to the page. AmplitudeJS will
-		add an element inside of the song time visualization element that will
-		expand proportionally to the amount of time elapsed on the active
-		audio, thus visualizing the song time.  This element is NOT user
-		interactive.  To have the user scrub the time, they will have to
-		style and implement a song time slider with an HTML 5 Range Element.
-	--------------------------------------------------------------------------*/
-	function initializeSongTimeVisualizations(){
-		/*
-			Sets up song time visualizations
-		*/
-		var song_time_visualizations = document.getElementsByClassName("amplitude-song-time-visualization");
-
-		/*
-			Iterates through all of the amplitude-song-time-visualization
-			elements adding a new div with a class of
-			'amplitude-song-time-visualization-status' that will expand
-			inside of the 'amplitude-song-time-visualization' element.
-		*/
-		for( var i = 0; i < song_time_visualizations.length; i++ ){
-			/*
-				Creates new element
-			*/
-			var status = document.createElement('div');
-
-			/*
-				Adds class and attributes
-			*/
-			status.classList.add('amplitude-song-time-visualization-status');
-			status.setAttribute( 'style', 'width: 0px' );
-
-			/*
-				Clears the inner HTML so we don't get two status divs.
-			*/
-			song_time_visualizations[i].innerHTML = '';
-
-			/*
-				Appends the element as a child element.
-			*/
-			song_time_visualizations[i].appendChild( status );
-		}
 	}
 
 	/*--------------------------------------------------------------------------

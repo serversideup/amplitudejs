@@ -29,6 +29,7 @@ import AmplitudeHandlers from './handlers.js';
 |	bindRepeat()
 |	bindPlaybackSpeed()
 |	bindSkipTo()
+| bindProgress()
 */
 var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
@@ -62,7 +63,12 @@ var AmplitudeEvents = (function () {
 			represent the time on either a visualized element or time display.
 		*/
 		bindTimeUpdate();
-		
+
+		/*
+			Binds key down event handlers for matching key codes to functions.
+		*/
+		bindKeyDownEventHandlers();
+
 		/*
 			When the audio element has ended playing, we handle the song
 			ending. In a single song or multiple modular song instance,
@@ -71,6 +77,11 @@ var AmplitudeEvents = (function () {
 			it should play the next song or not.
 		*/
 		bindSongEnded();
+
+		/*
+			Binds progress event so we can see how much of the song is loaded.
+		*/
+		bindProgress();
 
 		/*
 			Binds 'amplitude-play' event handlers
@@ -86,7 +97,7 @@ var AmplitudeEvents = (function () {
 			Binds 'amplitude-play-pause' event handlers.
 		*/
 		bindPlayPause();
-		
+
 		/*
 			Binds 'amplitude-stop' event handlers.
 		*/
@@ -96,22 +107,22 @@ var AmplitudeEvents = (function () {
 			Binds 'amplitude-mute' event handlers.
 		*/
 		bindMute();
-		
+
 		/*
 			Binds 'amplitude-volume-up' event handlers
 		*/
 		bindVolumeUp();
-		
+
 		/*
 			Binds 'amplitude-volume-down' event handlers
 		*/
 		bindVolumeDown();
-		
+
 		/*
 			Binds 'amplitude-song-slider' event handlers
 		*/
 		bindSongSlider();
-		
+
 		/*
 			Binds 'amplitude-volume-slider' event handlers.
 		*/
@@ -136,7 +147,7 @@ var AmplitudeEvents = (function () {
 			Binds 'amplitude-repeat' event handlers.
 		*/
 		bindRepeat();
-			
+
 		/*
 			Binds 'amplitude-playback-speed' event handlers.
 		*/
@@ -155,10 +166,20 @@ var AmplitudeEvents = (function () {
 	function bindTimeUpdate(){
 		config.active_song.removeEventListener( 'timeupdate', AmplitudeHandlers.updateTime );
 		config.active_song.addEventListener( 'timeupdate', AmplitudeHandlers.updateTime );
-        
-        // also bind change of duratuion
+
+    // also bind change of duratuion
 		config.active_song.removeEventListener( 'durationchange', AmplitudeHandlers.updateTime );
 		config.active_song.addEventListener( 'durationchange', AmplitudeHandlers.updateTime );
+	}
+
+	/*--------------------------------------------------------------------------
+		On keydown, we listen to what key got pressed so we can map the key to
+		a function. This allows the user to map pause and play, next, etc. to key
+		presses.
+	--------------------------------------------------------------------------*/
+	function bindKeyDownEventHandlers(){
+		document.removeEventListener("keydown", AmplitudeHelpers.keydown );
+		document.addEventListener("keydown", AmplitudeHandlers.keydown );
 	}
 
 	/*--------------------------------------------------------------------------
@@ -171,6 +192,16 @@ var AmplitudeEvents = (function () {
 	function bindSongEnded(){
 		config.active_song.removeEventListener( 'ended', AmplitudeHandlers.songEnded );
 		config.active_song.addEventListener( 'ended', AmplitudeHandlers.songEnded );
+	}
+
+	/*--------------------------------------------------------------------------
+		As the audio is loaded, the progress event gets fired. We bind into this
+		to grab the buffered percentage of the song. We can then add more elements
+		to show the buffered amount.
+	--------------------------------------------------------------------------*/
+	function bindProgress(){
+		config.active_song.removeEventListener( 'progress', AmplitudeHandlers.progess );
+		config.active_song.addEventListener( 'progress', AmplitudeHandlers.progress );
 	}
 
 	/*--------------------------------------------------------------------------
@@ -229,7 +260,7 @@ var AmplitudeEvents = (function () {
 
 	/*--------------------------------------------------------------------------
 		BINDS: class="amplitude-play-pause"
-		
+
 		Binds click and touchend events for amplitude play pause buttons.
 	--------------------------------------------------------------------------*/
 	function bindPlayPause(){
@@ -288,7 +319,7 @@ var AmplitudeEvents = (function () {
 	--------------------------------------------------------------------------*/
 	function bindMute(){
 		/*
-			Gets all of the elements with the class amplitue-mute			
+			Gets all of the elements with the class amplitue-mute
 		*/
 		var mute_classes = document.getElementsByClassName("amplitude-mute");
 
@@ -328,7 +359,7 @@ var AmplitudeEvents = (function () {
 	--------------------------------------------------------------------------*/
 	function bindVolumeUp(){
 		/*
-			Gets all of the elements with the class amplitude-volume-up			
+			Gets all of the elements with the class amplitude-volume-up
 		*/
 		var volume_up_classes = document.getElementsByClassName("amplitude-volume-up");
 
@@ -368,10 +399,10 @@ var AmplitudeEvents = (function () {
 	--------------------------------------------------------------------------*/
 	function bindVolumeDown(){
 		/*
-			Gets all of the elements with the class amplitude-volume-down			
+			Gets all of the elements with the class amplitude-volume-down
 		*/
 		var volume_down_classes = document.getElementsByClassName("amplitude-volume-down");
-		
+
 		/*
 			Iterates over all of the volume down classes and binds the event interaction
 			methods to the element. If the browser is mobile, then the event is touchend
@@ -550,7 +581,7 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < shuffle_classes.length; i++ ){
 			/*
-				Since we are re-binding everything we remove any classes that signify 
+				Since we are re-binding everything we remove any classes that signify
 				a state of the shuffle control.
 			*/
 			shuffle_classes[i].classList.remove('amplitude-shuffle-on');
@@ -584,7 +615,7 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < repeat_classes.length; i++ ){
 			/*
-				Since we are re-binding everything we remove any classes that signify 
+				Since we are re-binding everything we remove any classes that signify
 				a state of the repeat control.
 			*/
 			repeat_classes[i].classList.remove('amplitude-repeat-on');

@@ -448,6 +448,7 @@ There are a variety of callbacks that AmplitudeJS calls at certain times and the
 | after_play 	  | Occurs after the play method is called 			       |
 | before_stop 	  | Occurs before the stop method is called 			   |
 | after_stop  	  | Occurs after the stop method is called 				   |
+| time_update 		| Occurs when the time has updated
 
 To bind to a callback you add a function to your callbacks object with the key of one of the callbacks listed above. That key will be a function. When the callback is called, the function the user passes will be run. For example, After the user clicks play we want to increase the play count. I'd set up a callback that has a method to increase the play count:
 
@@ -1002,4 +1003,65 @@ This returns the actual audio element. This is mainly used for writing extension
 AmplitudeJS. This returns the audio element used by AmplitudeJS.
 ```
 Amplitude.audio()
+```
+
+### Get songs (Version 3.2)
+This method returns all of the songs defined in AmplitudeJS. It can be used for a variety of different functions. It's extremely helpful if you are AJAX loading songs and want to see the contents of the song array.
+```
+Amplitude.getSongs()
+```
+
+### Get Songs In Playlist (Version 3.2)
+This method returns all of the songs in a playlist. Since the user defines a playlist with a key and the indexes of the songs, this will map the keys to the songs and return all of the songs in the playlist.
+```
+Amplitude.getSongsInPlaylist( playlistKey )
+```
+
+### Get Songs State (Version 3.2)
+This method returns the current order of the songs. It can be used for determining what song is next. If shuffle is on, it will return the shuffled list of songs.
+```
+Amplitude.getSongsState()
+```
+
+### Get Songs State Playlist (Version 3.2)
+This method returns the current order of the songs in a playlist. If needed this can be used to determine the next song in a playlist. This accounts for whether the playlist has been shuffled or not.
+```
+Amplitude.getSongsStatePlaylist( playlist )
+```
+
+### Get Active Index (Version 3.2)
+This method returns the index of the active song in the songs array.
+```
+Amplitude.getActiveIndex()
+```
+
+### Get Active Index State (Version 3.2)
+This method returns the index of the active song in the songs array but accounts for if shuffle has been enabled or not.
+```
+Amplitude.getActiveIndexState()
+```
+
+### Get Version (Version 3.2)
+This method returns the version of AmplitudeJS being used.
+```
+Amplitude.getVersion()
+```
+
+### Get Buffered (Version 3.2)
+This method returns the buffered percentage of the now playing song. This can be used to show how much of the song has been buffered and ready to be played.
+```
+Amplitude.getBuffered()
+```
+
+### Get Song Played Percentage (Version 3.2)
+This method returns the percentage of the song played. When implementing a 3rd party tracking element, you can set the percentage of the element to the percentage played of the song.
+```
+Amplitude.getSongPlayedPercentage()
+```
+You can combine this method with the time_update callback and whenever the time updates your method can call Amplitude.getSongPlayedPercentage() and you can set your tracking element correctly.
+
+### Set Song Played Percentage (Version 3.2)
+This method allows you to set the percentage of the active song. The method accepts a float between 0 and 100 for the percentage of the song to be set to.
+```
+Amplitude.setSongPlayedPercentage( percentage )
 ```

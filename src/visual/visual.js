@@ -13,7 +13,6 @@ import AmplitudeVisualSyncHelpers from './helpers.js';
 |	syncCurrentTime( currentTime, completionPercentage )
 |	resetTimes()
 |	resetSongSliders()
-|	resetSongTimeVisualizations()
 |	setActiveContainer()
 |	displaySongMetadata()
 |	syncPlaybackSpeed()
@@ -63,12 +62,8 @@ var AmplitudeVisualSync = (function() {
 		syncMainSliderLocation( completionPercentage );
 		syncPlaylistSliderLocation( config.active_playlist, completionPercentage );
 		syncSongSliderLocation( config.active_playlist, config.active_index, completionPercentage );
-		/*
-			Set all visual sync song time visualizations. This will
-			expand the div inside of the visualization to be the song
-			played percentage.
-		*/
-		AmplitudeVisualSyncHelpers.syncSongTimeVisualizations( completionPercentage );
+
+		AmplitudeVisualSyncHelpers.syncSongPlayedProgressBar( completionPercentage );
 	}
 
 	/*--------------------------------------------------------------------------
@@ -99,20 +94,31 @@ var AmplitudeVisualSync = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Visually syncs the song time visualizations. Like the song sliders,
-		when a song is changed, these must be synced back to 0. Except 0 in
-		this circumstance is the visualization status has 0 width.
+		Sets all of the song buffered progress bars to 0
 	--------------------------------------------------------------------------*/
-	function resetSongTimeVisualizations(){
-		var songTimeVisualizations = document.getElementsByClassName("amplitude-song-time-visualization");
+	function resetSongBufferedProgressBars(){
+		/*
+			Gets all of the song buffered progress bars.
+		*/
+		var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
 
 		/*
-			Iterate over all of the song time visualization elements and find their inner
-			status and set that element's width to 0.
+			Iterate over all of the song buffered progress bar and
+			set them to 0 which is like re-setting them.
 		*/
-		for( var i = 0; i < songTimeVisualizations.length; i++ ){
-			var songTimeVisualizationStatus = songTimeVisualizations[i].querySelector('.amplitude-song-time-visualization-status');
-			songTimeVisualizationStatus.setAttribute('style', 'width: 0px');
+		for( var i = 0; i < songBufferedProgressBars.length; i++ ){
+			songBufferedProgressBars[i].value = 0;
+		}
+	}
+
+	/*--------------------------------------------------------------------------
+		Sets all of the song played progress bars to 0
+	--------------------------------------------------------------------------*/
+	function resetSongPlayedProgressBars(){
+		var songPlayedProgressBars = document.getElementsByClassName("amplitude-song-played-progress");
+
+		for( var i = 0; i < songPlayedProgressBars.length; i++ ){
+			songPlayedProgressBars[i].value = 0;
 		}
 	}
 
@@ -350,6 +356,23 @@ var AmplitudeVisualSync = (function() {
 			}
 		}
 	}
+
+	function syncBufferedProgressBars(){
+		/*
+			Gets all of the song buffered progress bars.
+		*/
+		var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
+
+		/*
+			Iterate over all of the song buffered progress bar and
+			set them to 0 which is like re-setting them.
+		*/
+		for( var i = 0; i < songBufferedProgressBars.length; i++ ){
+			songBufferedProgressBars[i].value = parseFloat( parseFloat( config.buffered ) / 100 );
+		}
+	}
+
+
 
 	/*--------------------------------------------------------------------------
 		Visually syncs the volume sliders so they are all the same if there
@@ -813,7 +836,7 @@ var AmplitudeVisualSync = (function() {
 		@param 	songDuration 	Object containing information about the duration
 			of the song
 	--------------------------------------------------------------------------*/
-	function syncSongDuration( songDuration ){
+	function syncSongDuration( currentTime, songDuration ){
 		/*
 			Set duration hour display.
 		*/
@@ -833,6 +856,11 @@ var AmplitudeVisualSync = (function() {
 			Set duration time display.
 		*/
 		AmplitudeVisualSyncHelpers.syncDurationTime( songDuration != undefined ? songDuration : {} );
+
+		/*
+			Set count down time display.
+		*/
+		AmplitudeVisualSyncHelpers.syncCountDownTime( currentTime, songDuration );
 	}
 
 	/*
@@ -842,10 +870,12 @@ var AmplitudeVisualSync = (function() {
 		syncCurrentTime: syncCurrentTime,
 		resetTimes: resetTimes,
 		resetSongSliders: resetSongSliders,
-		resetSongTimeVisualizations: resetSongTimeVisualizations,
+		resetSongPlayedProgressBars: resetSongPlayedProgressBars,
+		resetSongBufferedProgressBars: resetSongBufferedProgressBars,
 		setActiveContainer: setActiveContainer,
 		displaySongMetadata: displaySongMetadata,
 		syncPlaybackSpeed: syncPlaybackSpeed,
+		syncBufferedProgressBars: syncBufferedProgressBars,
 		syncVolumeSliders: syncVolumeSliders,
 		setPlayPauseButtonsToPause: setPlayPauseButtonsToPause,
 		setFirstSongInPlaylist: setFirstSongInPlaylist,

@@ -9,7 +9,7 @@ import AmplitudeVisualSync from '../visual/visual.js';
 | Interacts directly with native functions of the Audio element. Logic
 | leading up to these methods are handled by click handlers which call
 | helpers and visual synchronizers. These are the core functions of AmplitudeJS.
-| Every other function that leads to these prepare the information to be 
+| Every other function that leads to these prepare the information to be
 | acted upon by these functions.
 |
 | METHODS
@@ -58,7 +58,7 @@ var AmplitudeCore = (function() {
 		*/
 		config.active_song.play();
 		config.active_song.playbackRate = config.playback_speed;
-			
+
 		/*
 			Run the after play callback
 		*/
@@ -74,7 +74,7 @@ var AmplitudeCore = (function() {
 			Pause the active song.
 		*/
 		config.active_song.pause();
-		
+
 		/*
 			Flag that pause button was clicked.
 		*/
@@ -119,7 +119,7 @@ var AmplitudeCore = (function() {
 
 	/*--------------------------------------------------------------------------
 		Sets the song percentage. If it's a live song, we ignore this because
-		we can't skip ahead. This is an issue if you have a playlist with 
+		we can't skip ahead. This is an issue if you have a playlist with
 		a live source.
 
 		@param int songPercentage A number between 1 and 100 as a percentage of
@@ -176,7 +176,7 @@ var AmplitudeCore = (function() {
 		When you pass a song object it plays that song right awawy.  It sets
 		the active song in the config to the song you pass in and synchronizes
 		the visuals.
-		
+
 		Public Accessor: Amplitude.playNow( song_json )
 
 		@param song JSON representation of a song.
@@ -197,7 +197,7 @@ var AmplitudeCore = (function() {
 			*/
 			AmplitudeHelpers.writeDebugMessage('The song needs to have a URL!');
 		}
-		
+
 		/*
 			Sets the main song control status visual
 		*/
@@ -210,11 +210,13 @@ var AmplitudeCore = (function() {
 
 
 		/*
-			Reset the song sliders, song time visualizations, and
+			Reset the song sliders, song progress bar info, and
 			reset times. This ensures everything stays in sync.
 		*/
 		AmplitudeVisualSync.resetSongSliders();
-		AmplitudeVisualSync.resetSongTimeVisualizations();
+
+		AmplitudeVisualSync.resetSongPlayedProgressBars();
+
 		AmplitudeVisualSync.resetTimes();
 
 		/*

@@ -65,8 +65,23 @@ export default {
 				the duration of the song.
 			*/
 			AmplitudeVisualSync.syncCurrentTime( currentTime, songCompletionPercentage );
-			AmplitudeVisualSync.syncSongDuration( songDuration );
+			AmplitudeVisualSync.syncSongDuration( currentTime, songDuration );
+
+			/*
+				Runs the callback defined for the time update.
+			*/
+			AmplitudeCoreHelpers.runCallback( 'time_update' );
 		}
+	},
+
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: keydown
+
+		When the keydown event is fired, we determine which function should be run
+		based on what was passed in.
+	--------------------------------------------------------------------------*/
+	keydown: function(){
+		AmplitudeEventHelpers.runKeyEvent( event.which );
 	},
 
 	/*--------------------------------------------------------------------------
@@ -79,7 +94,7 @@ export default {
 			If the active playlist is not set, we set the
 			next song that's in the songs array.
 		*/
-		if( config.active_playlist == '' 
+		if( config.active_playlist == ''
 			|| config.active_playlist == null ){
 				AmplitudeEventHelpers.setNext( true );
 		}else{
@@ -88,6 +103,29 @@ export default {
 			*/
 			AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
 		}
+	},
+
+	/*--------------------------------------------------------------------------
+		HANDLER FOR: progress
+
+		As the song is buffered, we can display the buffered percentage in
+		a progress bar.
+	--------------------------------------------------------------------------*/
+	progress: function(){
+		/*
+			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+		*/
+		if( config.active_song.buffered.length - 1 >= 0 ){
+			var bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
+			var duration =  config.active_song.duration;
+
+			config.buffered = ( ( bufferedEnd / duration ) * 100 );
+		}
+
+		/*
+			Sync the buffered progress bars.
+		*/
+		AmplitudeVisualSync.syncBufferedProgressBars();
 	},
 
 	/*--------------------------------------------------------------------------
@@ -112,7 +150,7 @@ export default {
 			}
 
 			/*
-				
+
 			*/
 			if( playButtonPlaylistIndex != null && playButtonPlaylistIndex != '' ){
 				if( AmplitudeCoreHelpers.checkNewPlaylist( playButtonPlaylistIndex ) ){
@@ -151,7 +189,7 @@ export default {
 			}
 
 			/*
-				Start the visualizations for the song. 
+				Start the visualizations for the song.
 				AMPFX-TODO: MAKE HANDLED BY AMPLITUDE FX
 			*/
 			//privateStartVisualization();
@@ -172,7 +210,7 @@ export default {
 			}
 
 
-			if( pauseButtonPlaylistIndex != null || pauseButtonPlaylistIndex != '' 
+			if( pauseButtonPlaylistIndex != null || pauseButtonPlaylistIndex != ''
 				&& config.active_playlist == pauseButtonPlaylistIndex ){
 				/*
 					The song was playing so we sync visually for the song
@@ -191,7 +229,7 @@ export default {
 					Sync the song play pause buttons
 				*/
 				AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'paused' );
-				
+
 				AmplitudeCore.pause();
 			}
 
@@ -284,10 +322,10 @@ export default {
 	mute: function(){
 		if( !config.is_touch_moving ){
 			/*
-				If the current volume in the config is 0, we set the volume to the 
+				If the current volume in the config is 0, we set the volume to the
 				pre_mute level.  This means that the audio is already muted and
 				needs to be restored to the pre_mute level.
-				
+
 				Otherwise, we set pre_mute volume to the current volume
 				and set the config volume to 0, muting the audio.
 			*/
@@ -465,7 +503,7 @@ export default {
 				}
 
 				AmplitudeVisualSync.syncMainSliderLocation();
-				
+
 				if( config.active_playlist != ''
 					&& config.active_playlist != null
 					&& config.active_playlist == playlist ){
@@ -514,7 +552,7 @@ export default {
 					Check to see if the current state of the player
 					is in playlist mode or not playlist mode.
 				*/
-				if( config.active_playlist == '' 
+				if( config.active_playlist == ''
 					|| config.active_playlist == null ){
 						AmplitudeEventHelpers.setNext();
 				}else{
@@ -632,7 +670,7 @@ export default {
 				is normal speed.
 			*/
 			switch( config.playback_speed ){
-				case 1: 
+				case 1:
 					AmplitudeEventHelpers.setPlaybackSpeed( 1.5 );
 				break;
 				case 1.5:
@@ -662,7 +700,7 @@ export default {
 			*/
 			if( this.hasAttribute('amplitude-playlist') ){
 				var playlist = this.getAttribute('amplitude-playlist');
-				
+
 				if( AmplitudeCoreHelpers.checkNewPlaylist( playlist ) ){
 					AmplitudeCoreHelpers.setActivePlaylist( playlist );
 				}
@@ -670,10 +708,9 @@ export default {
 					Gets the location, playlist and song index that is being skipped
 					to.
 				*/
-				var location = parseInt( this.getAttribute('amplitude-location') );
-				var playlist = this.getAttribute('amplitude-playlist');
+				var seconds = parseInt( this.getAttribute('amplitude-location') );
 				var songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
-				
+
 				/*
 					Changes the song to where it's being skipped and then
 					play the song.
@@ -681,16 +718,20 @@ export default {
 				AmplitudeCoreHelpers.changeSong( songIndex );
 				AmplitudeCore.play();
 
+				AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+				AmplitudeVisualSync.syncPlaylistPlayPause( playlist, 'playing' );
+				AmplitudeVisualSync.syncSongPlayPause( playlist, songIndex, 'playing' );
+
 				/*
 					Skip to the location in the song.
 				*/
-				AmplitudeCore.skipToLocation( location );
+				AmplitudeCore.skipToLocation( seconds );
 			}else{
 				/*
 					Gets the location and song index that is being skipped
 					to.
 				*/
-				var location = parseInt( this.getAttribute('amplitude-location') );
+				var seconds = parseInt( this.getAttribute('amplitude-location') );
 				var songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
 
 				/*
@@ -700,10 +741,13 @@ export default {
 				AmplitudeCoreHelpers.changeSong( songIndex );
 				AmplitudeCore.play();
 
+				AmplitudeVisualSync.syncMainPlayPause( 'playing' );
+				AmplitudeVisualSync.syncSongPlayPause( null, songIndex, 'playing' );
+
 				/*
 					Skip to the location in the song.
 				*/
-				AmplitudeCore.skipToLocation( location );
+				AmplitudeCore.skipToLocation( seconds );
 			}
 		}
 	}

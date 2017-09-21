@@ -12,7 +12,7 @@
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
-	version: '3.1.0',
+	version: '3.2.0',
 	/*
 		The audio element we will be using to handle all of the audio. This
 		is the javascript version of the HTML5 audio element.
@@ -171,7 +171,20 @@ var config = {
 	*/
 	soundcloud_songs_ready: 0,
 
-	is_touch_moving: false
+	/*
+		Flag for if the user is moving the screen.
+	*/
+	is_touch_moving: false,
+
+	/*
+		How much of the song is buffered.
+	*/
+	buffered: 0,
+
+	/*
+		Array of bindings to certain key events.
+	*/
+	bindings: {}
 };
 
 module.exports = config;
