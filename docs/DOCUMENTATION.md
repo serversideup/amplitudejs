@@ -29,7 +29,7 @@ developer/designer over the functionality and feel of their audio player. The ba
 and easier to maintain. Everything in Amplitude 3.0 is modular so releases won't be so few and far between.
 
 ### Amplitude 3.2 Updates
-Amplitude 3.2 adds a whole bunch of more features. It could easily have been an entire version number increase. The main thing focused on in Amplitude 3.2 is open up access to the config through getters. This allows for more customization built on the current state of the player. Another big feature is the implementation of the <progress> elements for song time visualization and the addition of song buffering. You can now access the current buffering state of the song.  The most exciting feature I think is the addition of key binding events. You can now take a key code and bind certain events such as play_pause, pause, stop, etc to a key code when pressed on the page. This is new in 3.2 and definitely looking to be expanded further.
+Amplitude 3.2 adds a whole bunch of more features. It could easily have been an entire version number increase. The main thing focused on in Amplitude 3.2 is open up access to the config through getters. This allows for more customization built on the current state of the player. Another big feature is the implementation of the `<progress>` elements for song time visualization and the addition of song buffering. You can now access the current buffering state of the song.  The most exciting feature I think is the addition of key binding events. You can now take a key code and bind certain events such as play_pause, pause, stop, etc to a key code when pressed on the page. This is new in 3.2 and definitely looking to be expanded further.
 
 The only thing removed in version 3.2 is the song-time-visualization. This is because it was the only feature that actually added mark up to the page. All of this functionality can be done with a progress bar now and styled as a progress bar. The range element can still be a slider and can be styled as well. AmplitudeJS now does not insert any mark up into the page.
 
@@ -115,7 +115,7 @@ These are set and passed in during the Amplitude.init() method:
 | debug 				  | false 		  | Boolean 				| Determines if we should print out debugging to the console 								|
 | volume 				  | .5 			  | Float (0.0 - 1.0) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
 | volume_increment 		  | 5			  | Integer (1 - 100) 		| How much the volume increments every time the volume increment pressed.					|
-| volume_decriment 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
+| volume_decrement 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
 | soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
 | soundcloud_use_art 	  | false 		  | Boolean 				| Determines if we should use the SoundCloud album art by default 							|
 
@@ -814,6 +814,49 @@ An example song link would be:
 
 This link will go to the song at index 7 on the playlist rock and the location of 30 seconds into the song.
 
+### Song Tracking Slider HTML 5 Range
+
+The easiest way to implement song tracking is through an HTML 5 Range slider. The sliding functionality is already taken care of for you and it provides a smooth UX. There are some downfalls with this element since you can't style the before and after pieces. We also have an HTML 5 progress element that allows for easy styling of before and after but requires some custom JS to update the interaction. No worries, though the tutorial will be linked!
+
+To add a song slider, add the following element:
+```html
+<input type="range" class="amplitude-song-slider" amplitude-main-song-slider="true" step=".1"/>
+```
+
+The class name is `amplitude-song-slider`. You can also add `amplitude-main-song-slider="true"` if you want it to reference the current song no matter what. If you want to do an individual playlist, you can add the attributes of `amplitude-playlist-song-slider="true"` and `amplitude-playlist="{playlistKey}"`.
+
+```html
+<input type="range" class="amplitude-song-slider" amplitude-playlist-song-slider="true" amplitude-playlist="{playlistKey}"/>
+```
+
+You can also add a song slider for an individual song like this:
+```html
+<input type="range" class="amplitude-song-slider" amplitude-playlist="{playlistKey}" amplitude-song-index="{songIndex}"/>
+```
+
+or
+
+```html
+<input type="range" class="amplitude-song-slider" amplitude-song-index="{songIndex}"/>
+```
+
+The first of the individual song examples is for a playlist, the second is for an individual song.
+
+### Song Progress Bar (Version 3.2)
+In AmplitudeJS 3.2, we added the song progress bar. This allows the user further customization over the design. It essentially replaces the song time visualization that was removed in this release. These operate the same as the range except you will have to implement your own slider event handling. I wrote a quick tutorial on that here: [https://serversideup.net/set-song-played-percentage-amplitudejs/](https://serversideup.net/set-song-played-percentage-amplitudejs/).
+
+To add a song progress bar, add the following:
+```html
+<progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
+```
+
+### Song Buffered Progress Bar (Version 3.2)
+In AmplitudeJS 3.2, we added the song buffered progress bar. This allows for a visual display of how much of the song has been buffered. You can do some CSS techniques to overlay this progress element over the song-played-progress element to make an all in one, or you could leave it by itself.  
+
+To add a song buffered progress element, add the following:
+```html
+<progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+```
 
 ### Meta Data Elements
 
@@ -1042,7 +1085,7 @@ Amplitude.play()
 ### Pause
 This simply pauses whatever song is active.
 ```
-Amplitude.play()
+Amplitude.pause()
 ```
 
 ### Get Audio
