@@ -28,6 +28,11 @@ A load of other small features have been added as well such as skip to, repeat a
 developer/designer over the functionality and feel of their audio player. The basic functionality has also been updated to be more stable
 and easier to maintain. Everything in Amplitude 3.0 is modular so releases won't be so few and far between.
 
+### Amplitude 3.2 Updates
+Amplitude 3.2 adds a whole bunch of more features. It could easily have been an entire version number increase. The main thing focused on in Amplitude 3.2 is open up access to the config through getters. This allows for more customization built on the current state of the player. Another big feature is the implementation of the <progress> elements for song time visualization and the addition of song buffering. You can now access the current buffering state of the song.  The most exciting feature I think is the addition of key binding events. You can now take a key code and bind certain events such as play_pause, pause, stop, etc to a key code when pressed on the page. This is new in 3.2 and definitely looking to be expanded further.
+
+The only thing removed in version 3.2 is the song-time-visualization. This is because it was the only feature that actually added mark up to the page. All of this functionality can be done with a progress bar now and styled as a progress bar. The range element can still be a slider and can be styled as well. AmplitudeJS now does not insert any mark up into the page.
+
 ## Installation
 
 ### Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
@@ -318,6 +323,29 @@ You now have a playlist with a key "rock_and_roll" that contains 4 songs from yo
 features, you will see how this playlist key will come into play to scope the functions of Amplitude.js by
 playlist.
 
+### Binding Key Events (Version 3.2)
+Key events were added in version 3.2. This allows you to configure certain events to trigger on key presses. The main piece of information needed is the key code (http://keycode.info/)[http://keycode.info/]. Once you have that, you can make an object that references a certain event key. There are 6 events that you can bind a key code to:
+
+- prev (on key down, goes to previous song)
+- next (on key down, goes to next song)
+- play_pause (on key down, toggles play/pause)
+- stop (on key down, stops the song)
+- shuffle (on key down, toggles shuffle state global)
+- repeat (on key down, toggles repeat state global)
+
+To add a binding, for example, the right arrow key on a mac keyboard has code 39 you'd add the following to your config:
+
+```javascript
+	Amplitude.init({
+		"bindings": {
+			39: 'next'
+		},
+		"songs": [{}]
+	})
+```
+
+Now every time the right arrow down is pressed, AmplitudeJS will go to the next song. You can add multiple bindings to the array with multiple key codes. It could be any key you want!
+
 ### Setting the Starting Volume
 
 You can define the starting volume for when the user initially presses play.  To do this, you need to add a
@@ -445,10 +473,12 @@ There are a variety of callbacks that AmplitudeJS calls at certain times and the
 | Callback        | Description 										   |
 | --------------- |--------------------------------------------------------|
 | before_play     | Occurs before the play method is called 			   |
-| after_play 	  | Occurs after the play method is called 			       |
+| after_play 	  	| Occurs after the play method is called 			     |
 | before_stop 	  | Occurs before the stop method is called 			   |
 | after_stop  	  | Occurs after the stop method is called 				   |
-| time_update 		| Occurs when the time has updated
+| time_update 		| Occurs when the time has updated 								 |
+| album_change 		| Occurs when an album changes 										 |
+| song_change 		| Occurs when a song has been changed 						 |
 
 To bind to a callback you add a function to your callbacks object with the key of one of the callbacks listed above. That key will be a function. When the callback is called, the function the user passes will be run. For example, After the user clicks play we want to increase the play count. I'd set up a callback that has a method to increase the play count:
 
@@ -489,6 +519,8 @@ Amplitude.init({
 ```
 
 Every time the play button is called, the song will begin to play and after all the code has been run, the callback will increase the play count.
+
+The 'time_update' callback is super helpful because this gets triggered when the song time updates. This can be used to call other AmplitudeJS events such as song played percentage and set 3rd party visualizations.
 
 ## Amplitude Elements
 
@@ -782,6 +814,7 @@ An example song link would be:
 
 This link will go to the song at index 7 on the playlist rock and the location of 30 seconds into the song.
 
+
 ### Meta Data Elements
 
 Meta data elements get their information filled in with meta data from the active song object. These can be
@@ -819,8 +852,8 @@ If it's a main element for a playlist add the key for the playlist:
 #### Time Metadata
 There are certain elements that contain time data about the active song. You can add these elements to your document
 and they will auto fill with the current status of the song. Like other elements, these can be either for the overall
-player, scoped in a playlist or for a specific song. There are two sets of time meta data, current time and song duration.
-The song duration can only be set for the active song since the metadata isn't preloaded for all of the songs.
+player, scoped in a playlist or for a specific song. There are three sets of time meta data: current time, song duration, time remaining.
+The song duration can only be set for the active song since the metadata isn't preloaded for all of the songs. The time remaining is a count down for how much time is left for a song.
 
 Main Current Time - Displays in MM:SS
 ```
@@ -927,6 +960,20 @@ Duration Seconds For Song
 <span class="amplitude-duration-seconds" amplitude-song-index="{song_index}"></span>
 ```
 
+Main Time Remaining For Song
+```
+<span class="amplitude-time-remaining" amplitude-main-time-remaining="true"></span>
+```
+
+Playlist Main Time Remaining For Song
+```
+<span class="amplitude-time-remaining" amplitude-playlist-main-time-remaining="{playlist_key}"></span>
+```
+
+Song Time Remaining
+```
+<span class="amplitude-time-remaining" amplitude-song-index="{song_index}"></span>
+```
 
 
 ## Public Functions

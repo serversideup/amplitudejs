@@ -627,13 +627,6 @@ var AmplitudeVisualSync = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		@param 	string	state
-	--------------------------------------------------------------------------*/
-	function syncVolumeSliders( volume ){
-
-	}
-
-	/*--------------------------------------------------------------------------
 		Syncs the global shuffle button visual state.
 
 		@param 	bool state The shuffled state of the player.
@@ -884,7 +877,6 @@ var AmplitudeVisualSync = (function() {
 		syncSongPlayPause: syncSongPlayPause,
 		syncRepeat: syncRepeat,
 		syncMute: syncMute,
-		syncVolumeSliders: syncVolumeSliders,
 		syncShuffle: syncShuffle,
 		syncPlaylistShuffle: syncPlaylistShuffle,
 		syncMainSliderLocation: syncMainSliderLocation,

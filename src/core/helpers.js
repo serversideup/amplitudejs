@@ -136,7 +136,9 @@ var AmplitudeHelpers = (function () {
 		*/
 		AmplitudeVisualSync.resetSongSliders();
 
-
+		/*
+			Resets the progress bars
+		*/
 		AmplitudeVisualSync.resetSongPlayedProgressBars();
 
 		/*
@@ -175,6 +177,11 @@ var AmplitudeHelpers = (function () {
 			Sets the active song's duration
 		*/
 		AmplitudeVisualSync.syncSongDuration();
+
+		/*
+			Run song change callback.
+		*/
+		runCallback('song_change');
 	}
 
 	/*--------------------------------------------------------------------------

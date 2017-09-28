@@ -1,21 +1,44 @@
 $(document).on('ready', function(){
 
+  /*
+    Handles a click on the down button to slide down the playlist.
+  */
   $('#down').on('click', function(){
+    /*
+      Sets the list's height;
+    */
     $('#list').css('height', ( parseInt( $('#player-container').height() ) - 135 )+ 'px' );
 
+    /*
+      Slides down the playlist.
+    */
     $('#list-screen').slideDown(500, function(){
         $(this).show();
     });
-
   });
 
+  /*
+    Handles a click on the up arrow to hide the list screen.
+  */
   $('#up-arrow').on('click', function(){
     $('#list-screen').slideUp( 500, function(){
       $(this).hide();
     });
   });
 
-  $('#test').on('click', function(){
-    Amplitude.skipTo( 42, 2 );
+  /*
+    Handles a click on the song played progress bar.
+  */
+  document.getElementById('song-played-progress').addEventListener('click', function( e ){
+    var offset = this.getBoundingClientRect();
+    var x = e.pageX - offset.left;
+
+    Amplitude.setSongPlayedPercentage( ( parseFloat( x ) / parseFloat( this.offsetWidth) ) * 100 );
   });
+
+  $('img[amplitude-song-info="cover_art_url"]').css('height', $('img[amplitude-song-info="cover_art_url"]').width() + 'px' );
+});
+
+$(window).on('resize', function(){
+  $('img[amplitude-song-info="cover_art_url"]').css('height', $('img[amplitude-song-info="cover_art_url"]').width() + 'px' );
 });

@@ -333,6 +333,9 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Syncs the song played progress bars. These are HTML5 progress elements.
+	--------------------------------------------------------------------------*/
 	function syncSongPlayedProgressBar( songPlayedPercentage ){
 		syncMainSongPlayedProgressBars( songPlayedPercentage );
 		syncPlaylistSongPlayedProgressBars( songPlayedPercentage );
@@ -340,7 +343,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Sync how much has been played with a progress bar.
+		Sync how much has been played with a progress bar. This is the main progress
+		bar.
 
 		@param float songPlayedPercentage The percent of the song completed.
 	--------------------------------------------------------------------------*/
@@ -362,6 +366,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Sync how much has been played with a progress bar. This is the playlist progress
+		bar.
+
+		@param float songPlayedPercentage The percent of the song completed.
+	--------------------------------------------------------------------------*/
 	function syncPlaylistSongPlayedProgressBars( songPlayedPercentage ){
 		/*
 			Ensure that the song completion percentage is a number
@@ -380,6 +390,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+		Sync how much has been played with a progress bar. This is for an individual
+		song.
+
+		@param float songPlayedPercentage The percent of the song completed.
+	--------------------------------------------------------------------------*/
 	function syncIndividualSongPlayedProgressBars( songPlayedPercentage ){
 		/*
 			Ensure that the song completion percentage is a number
@@ -726,7 +742,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 				/*
 					Find how many minutes are remaining.
 				*/
-				var timeRemainingMinutes = Math.floor( timeRemainingTotalSeconds / 60 );
+				var timeRemainingMinutes = ( Math.floor( timeRemainingTotalSeconds / 60 ) < 10 ? '0' : '' ) +
+															Math.floor( timeRemainingTotalSeconds / 60 );
 
 				/*
 					Build the time remaining.

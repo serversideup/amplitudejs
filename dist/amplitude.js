@@ -97,7 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
-	version: '3.1.0',
+	version: '3.2.0',
 	/*
  	The audio element we will be using to handle all of the audio. This
  	is the javascript version of the HTML5 audio element.
@@ -256,10 +256,19 @@ var config = {
  */
 	soundcloud_songs_ready: 0,
 
+	/*
+ 	Flag for if the user is moving the screen.
+ */
 	is_touch_moving: false,
 
+	/*
+ 	How much of the song is buffered.
+ */
 	buffered: 0,
 
+	/*
+ 	Array of bindings to certain key events.
+ */
 	bindings: {}
 };
 
@@ -415,6 +424,9 @@ var AmplitudeHelpers = function () {
   */
 		_visual2.default.resetSongSliders();
 
+		/*
+  	Resets the progress bars
+  */
 		_visual2.default.resetSongPlayedProgressBars();
 
 		/*
@@ -453,6 +465,11 @@ var AmplitudeHelpers = function () {
   	Sets the active song's duration
   */
 		_visual2.default.syncSongDuration();
+
+		/*
+  	Run song change callback.
+  */
+		runCallback('song_change');
 	}
 
 	/*--------------------------------------------------------------------------
@@ -664,8 +681,6 @@ var _helpers2 = _interopRequireDefault(_helpers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /*
 |----------------------------------------------------------------------------------------------------
 | VISUAL SYNC METHODS
@@ -689,8 +704,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 | 	syncRepeat()
 */
 var AmplitudeVisualSync = function () {
-	var _ref;
-
 	/*--------------------------------------------------------------------------
  	Visually displays the current time on the screen. This is called on
  	time update for the current song.
@@ -1276,11 +1289,6 @@ var AmplitudeVisualSync = function () {
 	}
 
 	/*--------------------------------------------------------------------------
- 	@param 	string	state
- --------------------------------------------------------------------------*/
-	function syncVolumeSliders(volume) {}
-
-	/*--------------------------------------------------------------------------
  	Syncs the global shuffle button visual state.
  		@param 	bool state The shuffled state of the player.
  --------------------------------------------------------------------------*/
@@ -1506,7 +1514,7 @@ var AmplitudeVisualSync = function () {
 	/*
  	Returns the publically available functions
  */
-	return _ref = {
+	return {
 		syncCurrentTime: syncCurrentTime,
 		resetTimes: resetTimes,
 		resetSongSliders: resetSongSliders,
@@ -1523,8 +1531,15 @@ var AmplitudeVisualSync = function () {
 		syncPlaylistPlayPause: syncPlaylistPlayPause,
 		syncSongPlayPause: syncSongPlayPause,
 		syncRepeat: syncRepeat,
-		syncMute: syncMute
-	}, _defineProperty(_ref, 'syncVolumeSliders', syncVolumeSliders), _defineProperty(_ref, 'syncShuffle', syncShuffle), _defineProperty(_ref, 'syncPlaylistShuffle', syncPlaylistShuffle), _defineProperty(_ref, 'syncMainSliderLocation', syncMainSliderLocation), _defineProperty(_ref, 'syncPlaylistSliderLocation', syncPlaylistSliderLocation), _defineProperty(_ref, 'syncSongSliderLocation', syncSongSliderLocation), _defineProperty(_ref, 'syncVolumeSliderLocation', syncVolumeSliderLocation), _defineProperty(_ref, 'syncSongDuration', syncSongDuration), _ref;
+		syncMute: syncMute,
+		syncShuffle: syncShuffle,
+		syncPlaylistShuffle: syncPlaylistShuffle,
+		syncMainSliderLocation: syncMainSliderLocation,
+		syncPlaylistSliderLocation: syncPlaylistSliderLocation,
+		syncSongSliderLocation: syncSongSliderLocation,
+		syncVolumeSliderLocation: syncVolumeSliderLocation,
+		syncSongDuration: syncSongDuration
+	};
 }();
 
 exports.default = AmplitudeVisualSync;
@@ -4750,7 +4765,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
                                                                                                                                                                                                                   	Amplitude.js
-                                                                                                                                                                                                                  	Version: 	3.1.0
+                                                                                                                                                                                                                  	Version: 	3.2.0
                                                                                                                                                                                                                   	Author: 	Dan Pastori
                                                                                                                                                                                                                   	Company: 	521 Dimensions
                                                                                                                                                                                                                   */
@@ -5664,6 +5679,9 @@ var AmplitudeVisualSyncHelpers = function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Syncs the song played progress bars. These are HTML5 progress elements.
+ --------------------------------------------------------------------------*/
 	function syncSongPlayedProgressBar(songPlayedPercentage) {
 		syncMainSongPlayedProgressBars(songPlayedPercentage);
 		syncPlaylistSongPlayedProgressBars(songPlayedPercentage);
@@ -5671,7 +5689,8 @@ var AmplitudeVisualSyncHelpers = function () {
 	}
 
 	/*--------------------------------------------------------------------------
- 	Sync how much has been played with a progress bar.
+ 	Sync how much has been played with a progress bar. This is the main progress
+ 	bar.
  		@param float songPlayedPercentage The percent of the song completed.
  --------------------------------------------------------------------------*/
 	function syncMainSongPlayedProgressBars(songPlayedPercentage) {
@@ -5692,6 +5711,11 @@ var AmplitudeVisualSyncHelpers = function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Sync how much has been played with a progress bar. This is the playlist progress
+ 	bar.
+ 		@param float songPlayedPercentage The percent of the song completed.
+ --------------------------------------------------------------------------*/
 	function syncPlaylistSongPlayedProgressBars(songPlayedPercentage) {
 		/*
   	Ensure that the song completion percentage is a number
@@ -5710,6 +5734,11 @@ var AmplitudeVisualSyncHelpers = function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Sync how much has been played with a progress bar. This is for an individual
+ 	song.
+ 		@param float songPlayedPercentage The percent of the song completed.
+ --------------------------------------------------------------------------*/
 	function syncIndividualSongPlayedProgressBars(songPlayedPercentage) {
 		/*
   	Ensure that the song completion percentage is a number
@@ -5965,20 +5994,51 @@ var AmplitudeVisualSyncHelpers = function () {
 		}
 	}
 
+	/*--------------------------------------------------------------------------
+ 	Updates the elements that show how much time is remaining in the song.
+ 		@param JSON currentTime A json object containing the parts for the current
+ 	time for the song.
+ 		@param JSON durationTime A json object conaining the parts for the
+ 	duration time for the song.
+ --------------------------------------------------------------------------*/
 	function syncCountDownTime(currentTime, songDuration) {
+		/*
+  	Initialize time remaining.
+  */
 		var timeRemaining = '00:00';
 
+		/*
+  	Ensure that all values are defined.
+  */
 		if (currentTime != undefined && songDuration != undefined) {
+			/*
+   	Initialize the total current seconds and total duration seconds
+   */
 			var totalCurrentSeconds = parseInt(currentTime.seconds) + parseInt(currentTime.minutes) * 60 + parseInt(currentTime.hours) * 60 * 60;
 			var totalDurationSeconds = parseInt(songDuration.seconds) + parseInt(songDuration.minutes) * 60 + parseInt(songDuration.hours) * 60 * 60;
 
+			/*
+   	If the two variables are numbers we continue the computing.
+   */
 			if (!isNaN(totalCurrentSeconds) && !isNaN(totalDurationSeconds)) {
+				/*
+    	Find the total remaining seconds.
+    */
 				var timeRemainingTotalSeconds = totalDurationSeconds - totalCurrentSeconds;
 
+				/*
+    	Find how many seconds are remaining.
+    */
 				var timeRemainingSeconds = (Math.floor(timeRemainingTotalSeconds % 60) < 10 ? '0' : '') + Math.floor(timeRemainingTotalSeconds % 60);
 
-				var timeRemainingMinutes = Math.floor(timeRemainingTotalSeconds / 60);
+				/*
+    	Find how many minutes are remaining.
+    */
+				var timeRemainingMinutes = (Math.floor(timeRemainingTotalSeconds / 60) < 10 ? '0' : '') + Math.floor(timeRemainingTotalSeconds / 60);
 
+				/*
+    	Build the time remaining.
+    */
 				timeRemaining = timeRemainingMinutes + ':' + timeRemainingSeconds;
 			}
 		}
@@ -5993,7 +6053,6 @@ var AmplitudeVisualSyncHelpers = function () {
   */
 		var timeRemainingSelectors = document.querySelectorAll(timeSelectors.join());
 
-		console.log(timeRemainingSelectors.length);
 		/*
   	Set the time selector's inner html to the duration time for the song. The duration
   	time is computed by joining minutes and seconds.

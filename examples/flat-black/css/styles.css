@@ -156,9 +156,24 @@ div#list-screen div#list-screen-footer div#list-screen-meta-container div.song-a
 /*
   Player
 */
-div#player-top{
+div.player-header{
+  background-color: #141920;
+  padding: 15px;
+  text-align: center;
+  height: 55px;
   position: relative;
   margin-top: 40px;
+}
+
+div.player-header img#down{
+  position: absolute;
+  top: 23px;
+  left: 15px;
+  cursor: pointer;
+}
+
+div#player-top{
+  position: relative;
 }
 
 div#player-top div#main-song-info-container{
@@ -171,14 +186,28 @@ div#player-top div#main-song-info-container{
   bottom: 0;
 }
 
-div#player-top div#main-song-info-container img#down{
-  cursor: pointer;
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
 div#player-top img[amplitude-main-song-info="true"]{
   width: 100%;
+  height: 370px;
+}
+
+div#player-top span.amplitude-time-remaining{
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+}
+
+div#player-top span.amplitude-current-time{
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+}
+
+div#player-top span.time-container{
+  color: rgba( 255, 255, 255, .7 );
+  font-size: 14px;
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
 }
 
 div#player-progress-bar-container{
@@ -199,6 +228,8 @@ div#player-progress-bar-container progress#song-played-progress{
   right: 0;
   left: 0;
   bottom: 0;
+  z-index: 9;
+  cursor: pointer;
 }
 
 div#player-progress-bar-container progress#song-played-progress[value]::-webkit-progress-bar{
@@ -220,6 +251,7 @@ div#player-progress-bar-container progress#song-buffered-progress{
   right: 0;
   left: 0;
   bottom: 0;
+  z-index: 2;
 }
 
 div#player-progress-bar-container progress#song-buffered-progress[value]::-webkit-progress-bar{

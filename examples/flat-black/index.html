@@ -220,9 +220,13 @@
             </div>
           </div>
           <div id="player-screen">
+            <div class="player-header">
+              <img id="down" src="img/down.svg"/>
+            </div>
             <div id="player-top">
               <div id="main-song-info-container">
-                <img src="img/down.svg" id="down"/>
+                <span class="amplitude-current-time time-container" amplitude-main-current-time="true"></span>
+                <span class="amplitude-time-remaining time-container" amplitude-main-time-remaining="true"></span>
               </div>
               <img amplitude-song-info="cover_art_url" amplitude-main-song-info="true"/>
             </div>
@@ -272,7 +276,6 @@
         </div>
       </div>
     </div>
-    <span class="amplitude-time-remaining" amplitude-main-time-remaining="true" style="color: white;"></span>
   </body>
   <script type="text/javascript">
 		Amplitude.init({

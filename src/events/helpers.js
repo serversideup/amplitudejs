@@ -529,21 +529,21 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			If the song has ended and repeat is on, play the song.
 		*/
-        if( !( songEnded && !config.repeat && endOfList ) ){
-		    AmplitudeCore.play();
-        }
+    if( !( songEnded && !config.repeat && endOfList ) ){
+    AmplitudeCore.play();
+    }
 
-        /*
-        	Syncs the main play pause button, playlist play pause button and
-        	song play pause.
-        */
+    /*
+    	Syncs the main play pause button, playlist play pause button and
+    	song play pause.
+    */
 		AmplitudeVisualSync.syncMainPlayPause( );
 		AmplitudeVisualSync.syncSongPlayPause( null, nextIndex);
 
-        /*
-        	Call after next callback
-        */
-        AmplitudeCoreHelpers.runCallback('after_next');
+    /*
+    	Call after next callback
+    */
+    AmplitudeCoreHelpers.runCallback('after_next');
 	}
 
 	/*--------------------------------------------------------------------------
@@ -559,11 +559,11 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		var nextIndex = 0;
 
-        /*
-          Used to determine whether the playlist looped over
-          If it did, only play if repeat is allowed, end otherwise
-          @TODO: Different settings for song loop, in-playlist loop and global loop
-        */
+    /*
+      Used to determine whether the playlist looped over
+      If it did, only play if repeat is allowed, end otherwise
+      @TODO: Different settings for song loop, in-playlist loop and global loop
+    */
 		var endOfList = false;
 		/*
 			If the playlist is shuffled we get the next index of the playlist.
