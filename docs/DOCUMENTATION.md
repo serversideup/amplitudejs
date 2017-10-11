@@ -1155,3 +1155,6 @@ This method allows you to set the percentage of the active song. The method acce
 ```
 Amplitude.setSongPlayedPercentage( percentage )
 ```
+## Tutorials
+We use ServerSideUp for all of our tutorials. Here's a list of tutorials that can be helpful when developing with AmplitudeJS:
+- [Set Song Played Percentage with AmplitudeJS](https://serversideup.net/set-song-played-percentage-amplitudejs/)

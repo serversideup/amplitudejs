@@ -184,7 +184,13 @@ var config = {
 	/*
 		Array of bindings to certain key events.
 	*/
-	bindings: {}
+	bindings: {},
+
+	/*
+		Determines when a song ends, we should continue to the next
+		song.
+	*/
+	continue_next: true
 };
 
 module.exports = config;

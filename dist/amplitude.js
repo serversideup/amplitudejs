@@ -269,7 +269,13 @@ var config = {
 	/*
  	Array of bindings to certain key events.
  */
-	bindings: {}
+	bindings: {},
+
+	/*
+ 	Determines when a song ends, we should continue to the next
+ 	song.
+ */
+	continue_next: true
 };
 
 module.exports = config;
@@ -3796,6 +3802,12 @@ var AmplitudeInitializer = function () {
 		}
 
 		/*
+  	Set whether the user wants to continue next after a song has played. This
+  	pretty much disables playlist mode.
+  */
+		config.continue_next = userConfig.continue_next;
+
+		/*
   	Syncs all of the visual time elements to 00.
   */
 		_visual2.default.resetTimes();
@@ -4096,17 +4108,31 @@ exports.default = {
  		When the song has ended, handles what to do next
  --------------------------------------------------------------------------*/
 	songEnded: function songEnded() {
-		/*
-  	If the active playlist is not set, we set the
-  	next song that's in the songs array.
-  */
-		if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
-			_helpers2.default.setNext(true);
-		} else {
+		if (_config2.default.continue_next) {
 			/*
-   	Set the next song in the playlist
+   	If the active playlist is not set, we set the
+   	next song that's in the songs array.
    */
-			_helpers2.default.setNextPlaylist(_config2.default.active_playlist, true);
+			if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
+				_helpers2.default.setNext(true);
+			} else {
+				/*
+    	Set the next song in the playlist
+    */
+				_helpers2.default.setNextPlaylist(_config2.default.active_playlist, true);
+			}
+		} else {
+			if (!_config2.default.is_touch_moving) {
+				/*
+    	Sets all of the play/pause buttons to pause
+    */
+				_visual2.default.setPlayPauseButtonsToPause();
+
+				/*
+    	Stops the active song.
+    */
+				_core2.default.stop();
+			}
 		}
 	},
 

@@ -90,18 +90,32 @@ export default {
 		When the song has ended, handles what to do next
 	--------------------------------------------------------------------------*/
 	songEnded: function(){
-		/*
-			If the active playlist is not set, we set the
-			next song that's in the songs array.
-		*/
-		if( config.active_playlist == ''
-			|| config.active_playlist == null ){
-				AmplitudeEventHelpers.setNext( true );
-		}else{
+		if( config.continue_next ){
 			/*
-				Set the next song in the playlist
+				If the active playlist is not set, we set the
+				next song that's in the songs array.
 			*/
-			AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
+			if( config.active_playlist == ''
+				|| config.active_playlist == null ){
+					AmplitudeEventHelpers.setNext( true );
+			}else{
+				/*
+					Set the next song in the playlist
+				*/
+				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
+			}
+		}else{
+			if( !config.is_touch_moving ){
+				/*
+					Sets all of the play/pause buttons to pause
+				*/
+				AmplitudeVisualSync.setPlayPauseButtonsToPause();
+
+				/*
+					Stops the active song.
+				*/
+				AmplitudeCore.stop();
+			}
 		}
 	},
 
