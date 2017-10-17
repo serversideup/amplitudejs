@@ -3074,10 +3074,15 @@ var AmplitudeEventHelpers = function () {
 		_helpers2.default.changeSong(nextIndex);
 
 		/*
-  	If the song has ended and repeat is on, play the song.
+  	If it's the end of the list and repeat is not on, do nothing.
   */
-		if (!(songEnded && !_config2.default.repeat && endOfList)) {
-			_core2.default.play();
+		if (endOfList && !_config2.default.repeat) {} else {
+			/*
+   	If the song has ended and repeat is on, play the song.
+   */
+			if (!(songEnded && !_config2.default.repeat && endOfList)) {
+				_core2.default.play();
+			}
 		}
 
 		/*

@@ -526,12 +526,22 @@ var AmplitudeEventHelpers = (function() {
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
 
+
 		/*
-			If the song has ended and repeat is on, play the song.
+			If it's the end of the list and repeat is not on, do nothing.
 		*/
-    if( !( songEnded && !config.repeat && endOfList ) ){
-    AmplitudeCore.play();
-    }
+		if( endOfList && !config.repeat ){
+
+		}else{
+			/*
+				If the song has ended and repeat is on, play the song.
+			*/
+	    if( !( songEnded && !config.repeat && endOfList ) ){
+	    	AmplitudeCore.play();
+	    }
+		}
+
+
 
     /*
     	Syncs the main play pause button, playlist play pause button and

@@ -26,6 +26,9 @@ div#list-screen div#list-screen-header{
   text-align: center;
   height: 55px;
   position: relative;
+  color: white;
+  font-family: "Lato", sans-serif;
+  cursor: pointer;
 }
 
 div#list-screen div#list-screen-header img#up-arrow{
@@ -163,6 +166,9 @@ div.player-header{
   height: 55px;
   position: relative;
   margin-top: 40px;
+  cursor: pointer;
+  color: white;
+  font-family: "Lato", sans-serif;
 }
 
 div.player-header img#down{
@@ -174,16 +180,6 @@ div.player-header img#down{
 
 div#player-top{
   position: relative;
-}
-
-div#player-top div#main-song-info-container{
-  /* Cover Art: */
-  box-shadow: inset 0 0 30px 20px rgba(0,0,0,0.50);
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
 }
 
 div#player-top img[amplitude-main-song-info="true"]{
@@ -204,7 +200,7 @@ div#player-top span.amplitude-current-time{
 }
 
 div#player-top span.time-container{
-  color: rgba( 255, 255, 255, .7 );
+  color: black;
   font-size: 14px;
   font-family: "Lato", sans-serif;
   font-weight: 600;
