@@ -12,7 +12,7 @@
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
-	version: '3.2.0',
+	version: '3.2.1',
 	/*
 		The audio element we will be using to handle all of the audio. This
 		is the javascript version of the HTML5 audio element.
@@ -61,7 +61,7 @@ var config = {
 		Object containing all of the songs the user has passed to Amplitude
 		to use.
 	*/
-	songs: {},
+	songs: [],
 
 	/*
 		Object containing all of the playlists the user created.

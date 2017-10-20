@@ -97,7 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
-	version: '3.2.0',
+	version: '3.2.1',
 	/*
  	The audio element we will be using to handle all of the audio. This
  	is the javascript version of the HTML5 audio element.
@@ -146,7 +146,7 @@ var config = {
  	Object containing all of the songs the user has passed to Amplitude
  	to use.
  */
-	songs: {},
+	songs: [],
 
 	/*
  	Object containing all of the playlists the user created.
@@ -332,7 +332,7 @@ var AmplitudeHelpers = function () {
 		config.autoplay = false;
 		config.playback_speed = 1.0;
 		config.callbacks = {};
-		config.songs = {};
+		config.songs = [];
 		config.playlists = {};
 		config.shuffled_playlists = {};
 		config.shuffled_statuses = {};
@@ -4818,22 +4818,12 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
-                                                                                                                                                                                                                  	Amplitude.js
-                                                                                                                                                                                                                  	Version: 	3.2.0
-                                                                                                                                                                                                                  	Author: 	Dan Pastori
-                                                                                                                                                                                                                  	Company: 	521 Dimensions
-                                                                                                                                                                                                                  */
-
-
 /*
 	Amplitude should just be an interface to the public functions.
 	Everything else should be handled by other objects
 */
 
 var Amplitude = function () {
-	var _ref;
-
 	/*--------------------------------------------------------------------------
  	The main init function.  The user will call this through
  	Amplitude.init({}) and pass in their settings.
@@ -4989,6 +4979,13 @@ var Amplitude = function () {
  		@returns int New index of the song.
  --------------------------------------------------------------------------*/
 	function addSong(song) {
+		/*
+  	Ensures we have a songs array to push to.
+  */
+		if (_config2.default.songs == undefined) {
+			_config2.default.songs = [];
+		}
+
 		_config2.default.songs.push(song);
 		return _config2.default.songs.length - 1;
 	}
@@ -5233,7 +5230,7 @@ var Amplitude = function () {
 	/*
  	Returns all of the publically accesible methods.
  */
-	return _ref = {
+	return {
 		init: init,
 		bindNewElements: bindNewElements,
 		getActivePlaylist: getActivePlaylist,
@@ -5252,10 +5249,26 @@ var Amplitude = function () {
 		addSong: addSong,
 		playNow: playNow,
 		play: play,
-		pause: pause
-	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _defineProperty(_ref, 'getActiveIndexState', getActiveIndexState), _defineProperty(_ref, 'getVersion', getVersion), _defineProperty(_ref, 'getBuffered', getBuffered), _defineProperty(_ref, 'skipTo', skipTo), _ref;
-}();
-
+		pause: pause,
+		audio: getAudio,
+		next: next,
+		prev: prev,
+		getSongs: getSongs,
+		getSongsInPlaylist: getSongsInPlaylist,
+		getSongsState: getSongsState,
+		getSongsStatePlaylist: getSongsStatePlaylist,
+		getActiveIndex: getActiveIndex,
+		getActiveIndexState: getActiveIndexState,
+		getVersion: getVersion,
+		getBuffered: getBuffered,
+		skipTo: skipTo
+	};
+}(); /*
+     	Amplitude.js
+     	Version: 	3.2.0
+     	Author: 	Dan Pastori
+     	Company: 	521 Dimensions
+     */
 exports.default = Amplitude;
 module.exports = exports['default'];
 

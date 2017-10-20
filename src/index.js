@@ -195,6 +195,13 @@ var Amplitude = (function () {
 		@returns int New index of the song.
 	--------------------------------------------------------------------------*/
 	function addSong( song ){
+		/*
+			Ensures we have a songs array to push to.
+		*/
+		if( config.songs == undefined ){
+			config.songs = [];
+		}
+
 		config.songs.push( song );
 		return config.songs.length - 1;
 	}
@@ -476,7 +483,6 @@ var Amplitude = (function () {
 		playNow: playNow,
 		play: play,
 		pause: pause,
-		addSong: addSong,
 		audio: getAudio,
 		next: next,
 		prev: prev,
