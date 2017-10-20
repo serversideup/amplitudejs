@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="44px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>play</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="05.04.00-Example-MultipleSongs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HD_05.04.00-Example-MultipleSongs" transform="translate(-864.000000, -431.000000)" fill="#43434C">
+            <g id="Body" transform="translate(50.000000, 182.000000)">
+                <g id="Content">
+                    <g id="Example">
+                        <g id="Group" transform="translate(318.000000, 80.000000)">
+                            <g id="Player-1">
+                                <g id="Content" transform="translate(262.000000, 29.000000)">
+                                    <g id="plays" transform="translate(132.000000, 140.000000)">
+                                        <polygon id="play" points="102.66 0 102.66 44 141.67 22"></polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -114,6 +114,15 @@ var AmplitudeCore = (function() {
 		min to max for a volume level.
 	--------------------------------------------------------------------------*/
 	function setVolume( volumeLevel ){
+		/*
+			If the volume is set to mute somewhere else, we sync the display.
+		*/
+		if( volumeLevel == 0 ){
+			AmplitudeVisualSync.syncMute( true );
+		}else{
+			AmplitudeVisualSync.syncMute( false );
+		}
+
 		config.active_song.volume = volumeLevel / 100;
 	}
 

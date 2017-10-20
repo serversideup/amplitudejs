@@ -1,3 +1,6 @@
+window.onkeydown = function(e) {
+    return !(e.keyCode == 32);
+};
 $(document).on('ready', function(){
 
   /*
@@ -7,7 +10,7 @@ $(document).on('ready', function(){
     /*
       Sets the list's height;
     */
-    $('#list').css('height', ( parseInt( $('#player-container').height() ) - 135 )+ 'px' );
+    $('#list').css('height', ( parseInt( $('#flat-black-player-container').height() ) - 135 )+ 'px' );
 
     /*
       Slides down the playlist.

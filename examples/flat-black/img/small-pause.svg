@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="24px" viewBox="0 0 18 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Pause</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Playlist-view" transform="translate(-313.000000, -671.000000)" fill="#FFFFFF">
+            <g id="Group" transform="translate(270.000000, 671.000000)">
+                <g id="Main-Control" transform="translate(43.000000, 0.000000)">
+                    <path d="M0,24 L6,24 L6,0 L0,0 L0,24 Z M12,24 L18,24 L18,0 L12,0 L12,24 Z" id="Pause"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
