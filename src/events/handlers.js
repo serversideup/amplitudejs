@@ -38,6 +38,21 @@ export default {
 	--------------------------------------------------------------------------*/
 	updateTime: function(){
 		/*
+			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+		*/
+		if( config.active_song.buffered.length - 1 >= 0 ){
+			var bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
+			var duration =  config.active_song.duration;
+
+			config.buffered = ( ( bufferedEnd / duration ) * 100 );
+		}
+
+		/*
+			Sync the buffered progress bars.
+		*/
+		AmplitudeVisualSync.syncBufferedProgressBars();
+		
+		/*
 			If the current song is not live, then
 			we can update the time information. Otherwise the
 			current time updates wouldn't mean much since the time

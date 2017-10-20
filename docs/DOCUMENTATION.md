@@ -113,7 +113,7 @@ These are set and passed in during the Amplitude.init() method:
 | playlists 			  | {}  	      | JSON Object 			| Object containing all of the playlists used by AmplitudeJS 								|
 | default_album_art 	  | '' 			  | URL 					| URL to the default album art image 														|
 | debug 				  | false 		  | Boolean 				| Determines if we should print out debugging to the console 								|
-| volume 				  | .5 			  | Float (0.0 - 1.0) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
+| volume 				  | 50 			  | Integer (0 - 100) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
 | volume_increment 		  | 5			  | Integer (1 - 100) 		| How much the volume increments every time the volume increment pressed.					|
 | volume_decrement 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
 | soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
@@ -349,8 +349,8 @@ Now every time the right arrow down is pressed, AmplitudeJS will go to the next 
 ### Setting the Starting Volume
 
 You can define the starting volume for when the user initially presses play.  To do this, you need to add a
-"volume" key to your initialization JSON.  This value is any number between 0 and 1. Think of this as a percentage.
-If you want the volume percentage at 35%, set this value equal to .35.
+"volume" key to your initialization JSON.  This value is any number between 0 and 100. Think of this as a percentage.
+If you want the volume percentage at 35%, set this value equal to 35.
 
 ```javascript
 	Amplitude.init({
@@ -377,7 +377,7 @@ If you want the volume percentage at 35%, set this value equal to .35.
 				"cover_art_url": "/cover/art/url.jpg"
 			}
 		],
-		"volume": .35
+		"volume": 35
 	});
 ```
 

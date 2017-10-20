@@ -4063,6 +4063,21 @@ exports.default = {
  --------------------------------------------------------------------------*/
 	updateTime: function updateTime() {
 		/*
+  	Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+  */
+		if (_config2.default.active_song.buffered.length - 1 >= 0) {
+			var bufferedEnd = _config2.default.active_song.buffered.end(_config2.default.active_song.buffered.length - 1);
+			var duration = _config2.default.active_song.duration;
+
+			_config2.default.buffered = bufferedEnd / duration * 100;
+		}
+
+		/*
+  	Sync the buffered progress bars.
+  */
+		_visual2.default.syncBufferedProgressBars();
+
+		/*
   	If the current song is not live, then
   	we can update the time information. Otherwise the
   	current time updates wouldn't mean much since the time
