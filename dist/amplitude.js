@@ -3712,6 +3712,7 @@ var AmplitudeInitializer = function () {
  --------------------------------------------------------------------------*/
 	function rebindDisplay() {
 		_events2.default.initializeEvents();
+		_visual2.default.displaySongMetadata();
 	}
 
 	/*--------------------------------------------------------------------------

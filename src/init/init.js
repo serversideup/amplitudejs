@@ -176,6 +176,7 @@ var AmplitudeInitializer = (function () {
 	--------------------------------------------------------------------------*/
 	function rebindDisplay(){
 		AmplitudeEvents.initializeEvents();
+		AmplitudeVisualSync.displaySongMetadata();
 	}
 
 	/*--------------------------------------------------------------------------
