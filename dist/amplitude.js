@@ -97,7 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
-	version: '3.2.0',
+	version: '3.2.1',
 	/*
  	The audio element we will be using to handle all of the audio. This
  	is the javascript version of the HTML5 audio element.
@@ -146,7 +146,7 @@ var config = {
  	Object containing all of the songs the user has passed to Amplitude
  	to use.
  */
-	songs: {},
+	songs: [],
 
 	/*
  	Object containing all of the playlists the user created.
@@ -269,7 +269,13 @@ var config = {
 	/*
  	Array of bindings to certain key events.
  */
-	bindings: {}
+	bindings: {},
+
+	/*
+ 	Determines when a song ends, we should continue to the next
+ 	song.
+ */
+	continue_next: true
 };
 
 module.exports = config;
@@ -326,7 +332,7 @@ var AmplitudeHelpers = function () {
 		config.autoplay = false;
 		config.playback_speed = 1.0;
 		config.callbacks = {};
-		config.songs = {};
+		config.songs = [];
 		config.playlists = {};
 		config.shuffled_playlists = {};
 		config.shuffled_statuses = {};
@@ -1681,6 +1687,15 @@ var AmplitudeCore = function () {
  	min to max for a volume level.
  --------------------------------------------------------------------------*/
 	function setVolume(volumeLevel) {
+		/*
+  	If the volume is set to mute somewhere else, we sync the display.
+  */
+		if (volumeLevel == 0) {
+			_visual2.default.syncMute(true);
+		} else {
+			_visual2.default.syncMute(false);
+		}
+
 		_config2.default.active_song.volume = volumeLevel / 100;
 	}
 
@@ -3068,10 +3083,15 @@ var AmplitudeEventHelpers = function () {
 		_helpers2.default.changeSong(nextIndex);
 
 		/*
-  	If the song has ended and repeat is on, play the song.
+  	If it's the end of the list and repeat is not on, do nothing.
   */
-		if (!(songEnded && !_config2.default.repeat && endOfList)) {
-			_core2.default.play();
+		if (endOfList && !_config2.default.repeat) {} else {
+			/*
+   	If the song has ended and repeat is on, play the song.
+   */
+			if (!(songEnded && !_config2.default.repeat && endOfList)) {
+				_core2.default.play();
+			}
 		}
 
 		/*
@@ -3692,6 +3712,7 @@ var AmplitudeInitializer = function () {
  --------------------------------------------------------------------------*/
 	function rebindDisplay() {
 		_events2.default.initializeEvents();
+		_visual2.default.displaySongMetadata();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -3794,6 +3815,12 @@ var AmplitudeInitializer = function () {
 		} else {
 			config.default_album_art = '';
 		}
+
+		/*
+  	Set whether the user wants to continue next after a song has played. This
+  	pretty much disables playlist mode.
+  */
+		config.continue_next = userConfig.continue_next;
 
 		/*
   	Syncs all of the visual time elements to 00.
@@ -4046,6 +4073,21 @@ exports.default = {
  --------------------------------------------------------------------------*/
 	updateTime: function updateTime() {
 		/*
+  	Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+  */
+		if (_config2.default.active_song.buffered.length - 1 >= 0) {
+			var bufferedEnd = _config2.default.active_song.buffered.end(_config2.default.active_song.buffered.length - 1);
+			var duration = _config2.default.active_song.duration;
+
+			_config2.default.buffered = bufferedEnd / duration * 100;
+		}
+
+		/*
+  	Sync the buffered progress bars.
+  */
+		_visual2.default.syncBufferedProgressBars();
+
+		/*
   	If the current song is not live, then
   	we can update the time information. Otherwise the
   	current time updates wouldn't mean much since the time
@@ -4096,17 +4138,31 @@ exports.default = {
  		When the song has ended, handles what to do next
  --------------------------------------------------------------------------*/
 	songEnded: function songEnded() {
-		/*
-  	If the active playlist is not set, we set the
-  	next song that's in the songs array.
-  */
-		if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
-			_helpers2.default.setNext(true);
-		} else {
+		if (_config2.default.continue_next) {
 			/*
-   	Set the next song in the playlist
+   	If the active playlist is not set, we set the
+   	next song that's in the songs array.
    */
-			_helpers2.default.setNextPlaylist(_config2.default.active_playlist, true);
+			if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
+				_helpers2.default.setNext(true);
+			} else {
+				/*
+    	Set the next song in the playlist
+    */
+				_helpers2.default.setNextPlaylist(_config2.default.active_playlist, true);
+			}
+		} else {
+			if (!_config2.default.is_touch_moving) {
+				/*
+    	Sets all of the play/pause buttons to pause
+    */
+				_visual2.default.setPlayPauseButtonsToPause();
+
+				/*
+    	Stops the active song.
+    */
+				_core2.default.stop();
+			}
 		}
 	},
 
@@ -4763,22 +4819,12 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
-                                                                                                                                                                                                                  	Amplitude.js
-                                                                                                                                                                                                                  	Version: 	3.2.0
-                                                                                                                                                                                                                  	Author: 	Dan Pastori
-                                                                                                                                                                                                                  	Company: 	521 Dimensions
-                                                                                                                                                                                                                  */
-
-
 /*
 	Amplitude should just be an interface to the public functions.
 	Everything else should be handled by other objects
 */
 
 var Amplitude = function () {
-	var _ref;
-
 	/*--------------------------------------------------------------------------
  	The main init function.  The user will call this through
  	Amplitude.init({}) and pass in their settings.
@@ -4934,6 +4980,13 @@ var Amplitude = function () {
  		@returns int New index of the song.
  --------------------------------------------------------------------------*/
 	function addSong(song) {
+		/*
+  	Ensures we have a songs array to push to.
+  */
+		if (_config2.default.songs == undefined) {
+			_config2.default.songs = [];
+		}
+
 		_config2.default.songs.push(song);
 		return _config2.default.songs.length - 1;
 	}
@@ -5178,7 +5231,7 @@ var Amplitude = function () {
 	/*
  	Returns all of the publically accesible methods.
  */
-	return _ref = {
+	return {
 		init: init,
 		bindNewElements: bindNewElements,
 		getActivePlaylist: getActivePlaylist,
@@ -5197,10 +5250,26 @@ var Amplitude = function () {
 		addSong: addSong,
 		playNow: playNow,
 		play: play,
-		pause: pause
-	}, _defineProperty(_ref, 'addSong', addSong), _defineProperty(_ref, 'audio', getAudio), _defineProperty(_ref, 'next', next), _defineProperty(_ref, 'prev', prev), _defineProperty(_ref, 'getSongs', getSongs), _defineProperty(_ref, 'getSongsInPlaylist', getSongsInPlaylist), _defineProperty(_ref, 'getSongsState', getSongsState), _defineProperty(_ref, 'getSongsStatePlaylist', getSongsStatePlaylist), _defineProperty(_ref, 'getActiveIndex', getActiveIndex), _defineProperty(_ref, 'getActiveIndexState', getActiveIndexState), _defineProperty(_ref, 'getVersion', getVersion), _defineProperty(_ref, 'getBuffered', getBuffered), _defineProperty(_ref, 'skipTo', skipTo), _ref;
-}();
-
+		pause: pause,
+		audio: getAudio,
+		next: next,
+		prev: prev,
+		getSongs: getSongs,
+		getSongsInPlaylist: getSongsInPlaylist,
+		getSongsState: getSongsState,
+		getSongsStatePlaylist: getSongsStatePlaylist,
+		getActiveIndex: getActiveIndex,
+		getActiveIndexState: getActiveIndexState,
+		getVersion: getVersion,
+		getBuffered: getBuffered,
+		skipTo: skipTo
+	};
+}(); /*
+     	Amplitude.js
+     	Version: 	3.2.0
+     	Author: 	Dan Pastori
+     	Company: 	521 Dimensions
+     */
 exports.default = Amplitude;
 module.exports = exports['default'];
 

@@ -176,6 +176,7 @@ var AmplitudeInitializer = (function () {
 	--------------------------------------------------------------------------*/
 	function rebindDisplay(){
 		AmplitudeEvents.initializeEvents();
+		AmplitudeVisualSync.displaySongMetadata();
 	}
 
 	/*--------------------------------------------------------------------------
@@ -295,6 +296,12 @@ var AmplitudeInitializer = (function () {
 		}else{
 			config.default_album_art = '';
 		}
+
+		/*
+			Set whether the user wants to continue next after a song has played. This
+			pretty much disables playlist mode.
+		*/
+		config.continue_next = userConfig.continue_next;
 
 		/*
 			Syncs all of the visual time elements to 00.

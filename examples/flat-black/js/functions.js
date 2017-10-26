@@ -1,13 +1,16 @@
+window.onkeydown = function(e) {
+    return !(e.keyCode == 32);
+};
 $(document).on('ready', function(){
 
   /*
     Handles a click on the down button to slide down the playlist.
   */
-  $('#down').on('click', function(){
+  $('.down-header').on('click', function(){
     /*
       Sets the list's height;
     */
-    $('#list').css('height', ( parseInt( $('#player-container').height() ) - 135 )+ 'px' );
+    $('#list').css('height', ( parseInt( $('#flat-black-player-container').height() ) - 135 )+ 'px' );
 
     /*
       Slides down the playlist.
@@ -20,7 +23,7 @@ $(document).on('ready', function(){
   /*
     Handles a click on the up arrow to hide the list screen.
   */
-  $('#up-arrow').on('click', function(){
+  $('.hide-playlist').on('click', function(){
     $('#list-screen').slideUp( 500, function(){
       $(this).hide();
     });

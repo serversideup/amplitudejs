@@ -38,6 +38,21 @@ export default {
 	--------------------------------------------------------------------------*/
 	updateTime: function(){
 		/*
+			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+		*/
+		if( config.active_song.buffered.length - 1 >= 0 ){
+			var bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
+			var duration =  config.active_song.duration;
+
+			config.buffered = ( ( bufferedEnd / duration ) * 100 );
+		}
+
+		/*
+			Sync the buffered progress bars.
+		*/
+		AmplitudeVisualSync.syncBufferedProgressBars();
+		
+		/*
 			If the current song is not live, then
 			we can update the time information. Otherwise the
 			current time updates wouldn't mean much since the time
@@ -90,18 +105,32 @@ export default {
 		When the song has ended, handles what to do next
 	--------------------------------------------------------------------------*/
 	songEnded: function(){
-		/*
-			If the active playlist is not set, we set the
-			next song that's in the songs array.
-		*/
-		if( config.active_playlist == ''
-			|| config.active_playlist == null ){
-				AmplitudeEventHelpers.setNext( true );
-		}else{
+		if( config.continue_next ){
 			/*
-				Set the next song in the playlist
+				If the active playlist is not set, we set the
+				next song that's in the songs array.
 			*/
-			AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
+			if( config.active_playlist == ''
+				|| config.active_playlist == null ){
+					AmplitudeEventHelpers.setNext( true );
+			}else{
+				/*
+					Set the next song in the playlist
+				*/
+				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
+			}
+		}else{
+			if( !config.is_touch_moving ){
+				/*
+					Sets all of the play/pause buttons to pause
+				*/
+				AmplitudeVisualSync.setPlayPauseButtonsToPause();
+
+				/*
+					Stops the active song.
+				*/
+				AmplitudeCore.stop();
+			}
 		}
 	},
 
