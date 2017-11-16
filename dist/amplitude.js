@@ -97,7 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Amplitude.
 --------------------------------------------------------------------------*/
 var config = {
-	version: '3.2.1',
+	version: '3.2.3',
 	/*
  	The audio element we will be using to handle all of the audio. This
  	is the javascript version of the HTML5 audio element.
