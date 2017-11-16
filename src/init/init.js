@@ -211,6 +211,8 @@ var AmplitudeInitializer = (function () {
 			AmplitudeHelpers.changeSong( 0 );
 		}
 
+		config.continue_next = ( userConfig.continue_next != undefined ? userConfig.continue_next : true );
+
 		/*
 			If the user defined a playback speed, we copy over their
 			preference here, otherwise we default to normal playback
@@ -297,11 +299,6 @@ var AmplitudeInitializer = (function () {
 			config.default_album_art = '';
 		}
 
-		/*
-			Set whether the user wants to continue next after a song has played. This
-			pretty much disables playlist mode.
-		*/
-		config.continue_next = userConfig.continue_next;
 
 		/*
 			Syncs all of the visual time elements to 00.

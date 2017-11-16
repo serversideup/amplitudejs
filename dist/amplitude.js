@@ -351,6 +351,7 @@ var AmplitudeHelpers = function () {
 		config.soundcloud_use_art = false;
 		config.soundcloud_song_count = 0;
 		config.soundcloud_songs_ready = 0;
+		config.continue_next = true;
 	}
 
 	/*--------------------------------------------------------------------------
@@ -3744,6 +3745,8 @@ var AmplitudeInitializer = function () {
 			_helpers2.default.changeSong(0);
 		}
 
+		config.continue_next = userConfig.continue_next != undefined ? userConfig.continue_next : true;
+
 		/*
   	If the user defined a playback speed, we copy over their
   	preference here, otherwise we default to normal playback
@@ -3815,12 +3818,6 @@ var AmplitudeInitializer = function () {
 		} else {
 			config.default_album_art = '';
 		}
-
-		/*
-  	Set whether the user wants to continue next after a song has played. This
-  	pretty much disables playlist mode.
-  */
-		config.continue_next = userConfig.continue_next;
 
 		/*
   	Syncs all of the visual time elements to 00.
@@ -4377,9 +4374,11 @@ exports.default = {
    	and set the config volume to 0, muting the audio.
    */
 			if (_config2.default.volume == 0) {
+				_config2.default.active_song.muted = false;
 				_config2.default.volume = _config2.default.pre_mute_volume;
 				_visual2.default.syncMute(false);
 			} else {
+				_config2.default.active_song.muted = true;
 				_config2.default.pre_mute_volume = _config2.default.volume;
 				_config2.default.volume = 0;
 				_visual2.default.syncMute(true);

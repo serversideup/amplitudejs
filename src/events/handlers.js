@@ -51,7 +51,7 @@ export default {
 			Sync the buffered progress bars.
 		*/
 		AmplitudeVisualSync.syncBufferedProgressBars();
-		
+
 		/*
 			If the current song is not live, then
 			we can update the time information. Otherwise the
@@ -359,9 +359,11 @@ export default {
 				and set the config volume to 0, muting the audio.
 			*/
 			if( config.volume == 0 ){
+				config.active_song.muted = false;
 				config.volume = config.pre_mute_volume;
 				AmplitudeVisualSync.syncMute( false );
 			}else{
+				config.active_song.muted = true;
 				config.pre_mute_volume = config.volume;
 				config.volume = 0;
 				AmplitudeVisualSync.syncMute( true );

@@ -49,6 +49,7 @@ var AmplitudeHelpers = (function () {
 		config.soundcloud_use_art 		= false;
 		config.soundcloud_song_count 	= 0;
 		config.soundcloud_songs_ready 	= 0;
+		config.continue_next = true;
 	}
 
 	/*--------------------------------------------------------------------------
