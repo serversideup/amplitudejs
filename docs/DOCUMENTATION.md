@@ -108,7 +108,7 @@ These are set and passed in during the Amplitude.init() method:
 | Setting       		  | Default       | Type  	 				| Functionality 																			|
 | ----------------------- |:-------------:|:-----------------------:|:------------------------------------------------------------------------------------------|
 | autoplay      		  | false 		  | boolean 				| When true, autoplays the current song 													|
-| callbacks 			  | {} 			  | JSON Object  			| An array of methods that get called at certain actions 									|
+| callbacks 			  | {} 			  | JSON Object  			| Object containing methods that get called at certain actions 									|
 | songs     			  | {}     		  | JSON Object 			| Object containing all of the songs used by AmplitudeJS 									|
 | playlists 			  | {}  	      | JSON Object 			| Object containing all of the playlists used by AmplitudeJS 								|
 | default_album_art 	  | '' 			  | URL 					| URL to the default album art image 														|
