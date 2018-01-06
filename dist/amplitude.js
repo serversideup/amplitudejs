@@ -105,6 +105,7 @@ return /******/ (function(modules) { // webpackBootstrap
  * @property {object} 	config.callbacks								- The user can pass a JSON object with a key => value store of callbacks to be run at certain events.
  * @property {array} 		config.songs										- Contains all of the songs the user has passed to Amplitude to use.
  * @property {object} 	config.playlists								- Contains all of the playlists the user created.
+ * @property {object} 	config.start_song 							- The index of the song that AmplitudeJS should start with.
  * @property {object} 	config.shuffled_playlists				- Will contain shuffled playlists.
  * @property {string} 	config.starting_playlist 				- The starting playlist the player will intiialize to.
  * @property {object} 	config.shuffled_statuses 				- Contains whether the current playlist is in shuffle mode or not.
@@ -150,6 +151,8 @@ module.exports = {
   songs: [],
 
   playlists: {},
+
+  start_song: '',
 
   shuffled_playlists: {},
 
@@ -249,11 +252,13 @@ var AmplitudeHelpers = function () {
 		_config2.default.active_album = '';
 		_config2.default.active_index = 0;
 		_config2.default.active_playlist = '';
+		_config2.default.active_playlist = '';
 		_config2.default.autoplay = false;
 		_config2.default.playback_speed = 1.0;
 		_config2.default.callbacks = {};
 		_config2.default.songs = [];
 		_config2.default.playlists = {};
+		_config2.default.start_song = '';
 		_config2.default.shuffled_playlists = {};
 		_config2.default.shuffled_statuses = {};
 		_config2.default.repeat = false;
