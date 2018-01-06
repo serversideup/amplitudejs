@@ -1,35 +1,22 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from '../config.js';
 
-/*
-|-------------------------------------------------------------------------------
-| VISUAL SYNC HELPER METHODS
-|-------------------------------------------------------------------------------
-| These methods help sync visual displays. They essentially make the visual sync
-| methods smaller and more maintainable.
-|
-| METHODS
-|	syncCurrentHours( hours )
-|	resetCurrentHours()
-|	syncCurrentMinutes( minutes )
-|	resetCurrentMinutes()
-|	syncCurrentSeconds( seconds )
-|	resetCurrentSeconds()
-|	syncCurrentTime( currentTime )
-| syncCurrentHours( hours )
-| syncCurrentMinutes( minutes )
-| syncCurrentSeconds( seconds )
-| syncCurrentTime( time )
-|	resetCurrentTime()
-|	setElementPlay( element )
-|	setElementPause( element )
-*/
+/**
+ * These methods help sync visual displays. They essentially make the visual sync
+ * methods smaller and more maintainable.
+ *
+ * @module visual/AmplitudeVisualSyncHelpers
+ */
 var AmplitudeVisualSyncHelpers = (function() {
-	/*--------------------------------------------------------------------------
-		Updates any elements that display the current hour for the song.
-
-		@param int hours An integer conaining how many hours into
-		the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the current hour for the song.
+	 *
+	 * @access public
+	 * @param {number} hours 	- An integer conaining how many hours into the song.
+	 */
 	function syncCurrentHours( hours ){
 		/*
 			Gets all of the song hour selectors.
@@ -96,9 +83,11 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Resets the current hours displays to 00
-	--------------------------------------------------------------------------*/
+	/**
+	 * Resets the current hours displays to 00
+	 *
+	 * @access public
+	 */
 	function resetCurrentHours(){
 		/*
 			Gets the hour display elements
@@ -114,12 +103,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates any elements that display the current minutes for the song.
-
-		@param int minutes An integer conaining how many minutes into
-		the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the current minutes for the song.
+	 *
+	 * @access public
+	 * @param {number} minutes 	- An integer conaining how many minutes into the song.
+	 */
 	function syncCurrentMinutes( minutes ){
 		/*
 			Gets all of the song minute selectors.
@@ -137,7 +126,10 @@ var AmplitudeVisualSyncHelpers = (function() {
 			];
 		}
 
-        const currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
+		/*
+			Grabs the current minute selectors
+		*/
+    const currentMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
 
 		/*
 			Set the current minute selector's inner html to minutes passed in.
@@ -178,9 +170,11 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Resets the current minutes displays to 00
-	--------------------------------------------------------------------------*/
+	/**
+	 * Resets the current minutes displays to 00
+	 *
+	 * @access public
+	 */
 	function resetCurrentMinutes(){
 		/*
 			Gets the minutes display elements
@@ -196,12 +190,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates any elements that display the current seconds for the song.
-
-		@param int minutes An integer conaining how many seconds into
-		the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the current seconds for the song.
+	 *
+	 * @access public
+	 * @param {number} seconds	- An integer conaining how many seconds into the song.
+	 */
 	function syncCurrentSeconds( seconds ){
 		/*
 			Gets all of the song second selectors. If the active playlist
@@ -220,54 +214,55 @@ var AmplitudeVisualSyncHelpers = (function() {
 			];
 		}
 
+    /*
+    	Get all of the second selectors
+    */
+    var currentSecondSelectors = document.querySelectorAll( secondSelectors.join() );
 
-	        /*
-	        	Get all of the second selectors
-	        */
-	        var currentSecondSelectors = document.querySelectorAll( secondSelectors.join() );
-
-	        /*
-	        	Iterate over all of the second selectors.
-	        */
-	        for( let i = 0, l = currentSecondSelectors.length; i < l; i++ ){
-	        	/*
-	        		If the selector is a main selector, we set the seconds.
-	        	*/
-	        	if( currentSecondSelectors[i].getAttribute('amplitude-main-current-seconds') == 'true' ){
-	        		currentSecondSelectors[i].innerHTML = seconds;
-	        	}else{
-	        		/*
-	        			If the active playlist is not null or empty
-	        			and the attribute of the playlist is equal to the
-	        			active playlist, then we set the inner html.
-	        		*/
-	        		if( config.active_playlist != ''
-	        			&& config.active_playlist != null
-	        			&& currentSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
-	        				currentSecondSelectors[i].innerHTML = seconds;
-	        		/*
-	        			If the active playlist is not set and the selector
-	        			does not have a playlist then we set the seconds. This
-	        			means that the current selector is an individual song
-	        			selector.
-	        		*/
-	        		}else if( config.active_playlist == ''
-	        			|| config.active_playlist == null
-	        			&& !currentSecondSelectors[i].hasAttribute('amplitude-playlist') ){
-	        				currentSecondSelectors[i].innerHTML = seconds;
-	        		/*
-	        			If nothing else matches, set the selector's inner HTML to '00'
-	        		*/
-	        		}else{
-	        			currentSecondSelectors[i].innerHTML = '00';
-	        		}
-	        	}
-	        }
+    /*
+    	Iterate over all of the second selectors.
+    */
+    for( let i = 0, l = currentSecondSelectors.length; i < l; i++ ){
+    	/*
+    		If the selector is a main selector, we set the seconds.
+    	*/
+    	if( currentSecondSelectors[i].getAttribute('amplitude-main-current-seconds') == 'true' ){
+    		currentSecondSelectors[i].innerHTML = seconds;
+    	}else{
+    		/*
+    			If the active playlist is not null or empty
+    			and the attribute of the playlist is equal to the
+    			active playlist, then we set the inner html.
+    		*/
+    		if( config.active_playlist != ''
+    			&& config.active_playlist != null
+    			&& currentSecondSelectors[i].getAttribute('amplitude-playlist') == config.active_playlist ){
+    				currentSecondSelectors[i].innerHTML = seconds;
+    		/*
+    			If the active playlist is not set and the selector
+    			does not have a playlist then we set the seconds. This
+    			means that the current selector is an individual song
+    			selector.
+    		*/
+    		}else if( config.active_playlist == ''
+    			|| config.active_playlist == null
+    			&& !currentSecondSelectors[i].hasAttribute('amplitude-playlist') ){
+    				currentSecondSelectors[i].innerHTML = seconds;
+    		/*
+    			If nothing else matches, set the selector's inner HTML to '00'
+    		*/
+    		}else{
+    			currentSecondSelectors[i].innerHTML = '00';
+    		}
+    	}
+    }
 	}
 
-	/*--------------------------------------------------------------------------
-		Resets the current seconds displays to 00
-	--------------------------------------------------------------------------*/
+	/**
+	 * Resets the current seconds displays to 00
+	 *
+	 * @access public
+	 */
 	function resetCurrentSeconds(){
 		/*
 			Gets the seconds display elements
@@ -283,13 +278,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates any elements that display the current time for the song. This
-		is a computed field that will be commonly used.
-
-		@param JSON currentTime A json object conaining the parts for the
-		current time for the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the current time for the song. This
+	 * is a computed field that will be commonly used.
+	 *
+	 * @access public
+	 * @param {object} currentTime 	- A json object conaining the parts for the current time for the song.
+	 */
 	function syncCurrentTime( currentTime ){
 		/*
 			Gets all of the song time selectors.
@@ -315,9 +310,11 @@ var AmplitudeVisualSyncHelpers = (function() {
 
 	}
 
-	/*--------------------------------------------------------------------------
-		Resets the current time displays to 00:00
-	--------------------------------------------------------------------------*/
+	/**
+	 * Resets the current time displays to 00:00
+	 *
+	 * @access public
+	 */
 	function resetCurrentTime(){
 		/*
 			Gets the time selector display elements
@@ -333,21 +330,24 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Syncs the song played progress bars. These are HTML5 progress elements.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Syncs the song played progress bars. These are HTML5 progress elements.
+	 *
+	 * @access private
+	 * @param {number} songPlayedPercentage  	- The percentage of the song that has been played.
+	 */
 	function syncSongPlayedProgressBar( songPlayedPercentage ){
 		syncMainSongPlayedProgressBars( songPlayedPercentage );
 		syncPlaylistSongPlayedProgressBars( songPlayedPercentage );
 		syncIndividualSongPlayedProgressBars( songPlayedPercentage );
 	}
 
-	/*--------------------------------------------------------------------------
-		Sync how much has been played with a progress bar. This is the main progress
-		bar.
-
-		@param float songPlayedPercentage The percent of the song completed.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sync how much has been played with a progress bar. This is the main progress bar.
+	 *
+	 * @access private
+	 * @param {number} songPlayedPercentage 	- The percent of the song completed.
+	 */
 	function syncMainSongPlayedProgressBars( songPlayedPercentage ){
 		/*
 			Ensure that the song completion percentage is a number
@@ -366,12 +366,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sync how much has been played with a progress bar. This is the playlist progress
-		bar.
-
-		@param float songPlayedPercentage The percent of the song completed.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sync how much has been played with a progress bar. This is the playlist progress bar.
+	 *
+	 * @access public
+	 * @param {number} songPlayedPercentage 	- The percent of the song completed.
+	 */
 	function syncPlaylistSongPlayedProgressBars( songPlayedPercentage ){
 		/*
 			Ensure that the song completion percentage is a number
@@ -390,12 +390,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sync how much has been played with a progress bar. This is for an individual
-		song.
-
-		@param float songPlayedPercentage The percent of the song completed.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sync how much has been played with a progress bar. This is for an individual song.
+	 *
+	 * @access private
+	 * @param {number} songPlayedPercentage 	- The percent of the song completed.
+	 */
 	function syncIndividualSongPlayedProgressBars( songPlayedPercentage ){
 		/*
 			Ensure that the song completion percentage is a number
@@ -431,33 +431,36 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets an element to be playing by removing the 'amplitude-paused' class
-		and adding the 'amplitude-playing' class
-
-		@param element element The element getting the playing class added.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets an element to be playing by removing the 'amplitude-paused' class
+	 * and adding the 'amplitude-playing' class
+	 *
+	 * @access public
+	 * @param {element} element 	- The element getting the playing class added.
+	 */
 	function setElementPlay( element ){
 		element.classList.add('amplitude-playing');
 		element.classList.remove('amplitude-paused');
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets an element to be paused by adding the 'amplitude-paused' class
-		and removing the 'amplitude-playing' class
-
-		@param element element The element getting the paused class added.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets an element to be paused by adding the 'amplitude-paused' class
+	 * and removing the 'amplitude-playing' class
+	 *
+	 * @access public
+	 * @param {element} element 	- The element getting the paused class added.
+	 */
 	function setElementPause( element ){
 		element.classList.remove('amplitude-playing');
 		element.classList.add('amplitude-paused');
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates any elements that display the duration hour for the song.
-
-		@param int hours An integer conaining how many hours are in the song
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the duration hour for the song.
+	 *
+	 * @access public
+	 * @param {number} hours 		- An integer conaining how many hours are in the song
+	 */
 	function syncDurationHours( hours ){
 		/*
 			Gets all of the song hour selectors.
@@ -524,12 +527,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-		/*--------------------------------------------------------------------------
-		Updates any elements that display the duration minutes for the song.
-
-		@param int minutes An integer conaining how many minutes into
-		the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the duration minutes for the song.
+	 *
+	 * @access public
+	 * @param {number} minutes 	- An integer conaining how many minutes into the song.
+	 */
 	function syncDurationMinutes( minutes ){
 		/*
 			Gets all of the song minute selectors.
@@ -546,8 +549,6 @@ var AmplitudeVisualSyncHelpers = (function() {
 				'.amplitude-duration-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}
-
-
 
 		/*
 			Get all of the minute selectors
@@ -594,12 +595,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 
 	}
 
-		/*--------------------------------------------------------------------------
-		Updates any elements that display the duration seconds for the song.
-
-		@param int minutes An integer conaining how many seconds into
-		the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the duration seconds for the song.
+	 *
+	 * @access private
+	 * @param {number} seconds 	- An integer conaining how many seconds into the song.
+	 */
 	function syncDurationSeconds( seconds ){
 		/*
 			Gets all of the song second selectors. If the active playlist
@@ -617,7 +618,6 @@ var AmplitudeVisualSyncHelpers = (function() {
 				'.amplitude-duration-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}
-
 
 		/*
 			Get all of the second selectors
@@ -663,13 +663,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates any elements that display the duration time for the song. This
-		is a computed field that will be commonly used.
-
-		@param JSON durationTime A json object conaining the parts for the
-		duration time for the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates any elements that display the duration time for the song. This
+	 * is a computed field that will be commonly used.
+	 *
+	 * @access public
+	 * @param {object} durationTime 	- A json object conaining the parts for the duration time for the song.
+	 */
 	function syncDurationTime( durationTime ){
 		/*
 			Gets all of the song time selectors.
@@ -699,15 +699,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 
 	}
 
-	/*--------------------------------------------------------------------------
-		Updates the elements that show how much time is remaining in the song.
-
-		@param JSON currentTime A json object containing the parts for the current
-		time for the song.
-
-		@param JSON durationTime A json object conaining the parts for the
-		duration time for the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Updates the elements that show how much time is remaining in the song.
+	 *
+	 * @access public
+	 * @param {object} currentTime 	- A json object containing the parts for the current time for the song.
+	 * @param {object} durationTime - A json object conaining the parts for the duration time for the song.
+	 */
 	function syncCountDownTime( currentTime, songDuration ){
 		/*
 			Initialize time remaining.

@@ -1,33 +1,39 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from '../config.js';
+
+/**
+ * AmplitudeJS Core Helpers
+ * @module core/helpers
+ */
 import AmplitudeHelpers from './helpers.js';
+
+/**
+ * AmplitudeJS Visual Sync
+ * @module visual/visual
+*/
 import AmplitudeVisualSync from '../visual/visual.js';
 
-/*
-|----------------------------------------------------------------------------------------------------
-| CORE FUNCTIONAL METHODS
-|----------------------------------------------------------------------------------------------------
-| Interacts directly with native functions of the Audio element. Logic
-| leading up to these methods are handled by click handlers which call
-| helpers and visual synchronizers. These are the core functions of AmplitudeJS.
-| Every other function that leads to these prepare the information to be
-| acted upon by these functions.
-|
-| METHODS
-|	play()
-|	pause()
-|	stop()
-|	setVolume( volumeLevel )
-|	setSongLocation( songPercentage )
-|	disconnectStream()
-|	reconnectStream()
-|	playNow()
-| 	setPlaybackSpeed()
-*/
-var AmplitudeCore = (function() {
-	/*--------------------------------------------------------------------------
-		Plays the active song. If the current song is live, it reconnects
-		the stream before playing.
-	--------------------------------------------------------------------------*/
+/**
+ * Interacts directly with native functions of the Audio element. Logic
+ * leading up to these methods are handled by click handlers which call
+ * helpers and visual synchronizers. These are the core functions of AmplitudeJS.
+ * Every other function that leads to these prepare the information to be
+ * acted upon by these functions.
+ *
+ * @module core/AmplitudeCore
+ */
+let AmplitudeCore = (function() {
+	/**
+	 * Plays the active song. If the current song is live, it reconnects
+	 * the stream before playing.
+	 *
+	 * Public Accessor: Amplitude.play()
+	 *
+	 * @access public
+	 */
 	function play(){
 		/*
 			Run the before play callback
@@ -65,11 +71,19 @@ var AmplitudeCore = (function() {
 		AmplitudeHelpers.runCallback('after_play');
 	}
 
-	/*--------------------------------------------------------------------------
-		Pauses the active song. If it's live, it disconnects the stream.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Pauses the active song. If it's live, it disconnects the stream.
+	 *
+	 * Public Accessor: Amplitude.pause()
+	 *
+	 * @access public
+	 */
 	function pause(){
+		/*
+			Run the before pause callback.
+		*/
 		AmplitudeHelpers.runCallback('before_pause');
+
 		/*
 			Pause the active song.
 		*/
@@ -80,39 +94,69 @@ var AmplitudeCore = (function() {
 		*/
 		config.paused = true;
 
+		/*
+			If the song is live, we disconnect the stream so we aren't
+			saving it to memory.
+		*/
 		if( config.active_metadata.live ){
 			disconnectStream();
 		}
+
+		/*
+			Run the after pause callback.
+		*/
 		AmplitudeHelpers.runCallback('after_pause');
 	}
 
-	/*--------------------------------------------------------------------------
-		Stops the active song by setting the current song time to 0.
-		When the user resumes, it will be from the beginning.
-		If it's a live stream it disconnects.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Stops the active song by setting the current song time to 0.
+	 * When the user resumes, it will be from the beginning.
+	 * If it's a live stream it disconnects.
+	 *
+	 * Public Accessor: Amplitude.stop()
+	 *
+	 * @access public
+	 */
 	function stop(){
+		/*
+			Runs the before stop callback.
+		*/
 		AmplitudeHelpers.runCallback('before_stop');
 
+		/*
+			Set the current time of the song to 0 which will reset the song.
+		*/
 		if( config.active_song.currentTime != 0 ){
 			config.active_song.currentTime = 0;
 		}
 
+		/*
+			Run pause so the song will stop
+		*/
 		config.active_song.pause();
 
+		/*
+			If the song is live, disconnect the stream.
+		*/
 		if( config.active_metadata.live ){
 			disconnectStream();
 		}
 
+		/*
+			Run the after stop callback
+		*/
 		AmplitudeHelpers.runCallback('after_stop');
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the song volume.
-
-		@param int volumeLevel A number between 1 and 100 as a percentage of
-		min to max for a volume level.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the song volume.
+	 *
+	 * Public Accessor: Amplitude.setVolume( volumeLevel )
+	 *
+	 * @access public
+	 * @param {number} volumeLevel - A number between 1 and 100 as a percentage of
+	 * min to max for a volume level.
+	 */
 	function setVolume( volumeLevel ){
 		/*
 			If the volume is set to mute somewhere else, we sync the display.
@@ -123,28 +167,40 @@ var AmplitudeCore = (function() {
 			AmplitudeVisualSync.syncMute( false );
 		}
 
+		/*
+			Set the volume of the active song.
+		*/
 		config.active_song.volume = volumeLevel / 100;
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the song percentage. If it's a live song, we ignore this because
-		we can't skip ahead. This is an issue if you have a playlist with
-		a live source.
-
-		@param int songPercentage A number between 1 and 100 as a percentage of
-		song completion.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the song percentage. If it's a live song, we ignore this because
+	 * we can't skip ahead. This is an issue if you have a playlist with
+	 * a live source.
+	 *
+	 * Public Accessor: Amplitude.setSongLocation( songPercentage )
+	 *
+	 * @access public
+	 * @param {number} songPercentage - A number between 1 and 100 as a percentage of song completion.
+	 */
 	function setSongLocation( songPercentage ){
+		/*
+			As long as the song is not live, we can set the current time of the
+			song to the percentage the user passed in.
+		*/
 		if( !config.active_metadata.live ){
 			config.active_song.currentTime = ( config.active_song.duration ) * ( song_percentage / 100 );
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Skips to a location in a song
-
-		@param int seconds An integer containing the seconds to skip to
-	--------------------------------------------------------------------------*/
+	/**
+	 * Skips to a location in a song
+	 *
+	 * Public Accessor: Amplitude.skipToLocation( seconds )
+	 *
+	 * @access public
+	 * @param {number} seconds - An integer containing the seconds to skip to
+	 */
 	function skipToLocation( seconds ){
 		/*
 			When the active song can be played through, we can check to
@@ -165,31 +221,40 @@ var AmplitudeCore = (function() {
 		}, { once: true });
 	}
 
-	/*--------------------------------------------------------------------------
-		Disconnects the live stream
-	--------------------------------------------------------------------------*/
+	/**
+	 * Disconnects the live stream
+	 *
+	 * Public Accessor: Amplitude.disconnectStream()
+	 *
+	 * @access public
+	 */
 	function disconnectStream(){
 		config.active_song.src = '';
 		config.active_song.load();
 	}
 
-	/*--------------------------------------------------------------------------
-		Reconnects the live stream
-	--------------------------------------------------------------------------*/
+	/**
+	 * Reconnects the live stream
+	 *
+	 * Public Accessor: Amplitude.reconnectStream()
+	 *
+	 * @access public\
+	 */
 	function reconnectStream(){
 		config.active_song.src = config.active_metadata.url;
 		config.active_song.load();
 	}
 
-	/*--------------------------------------------------------------------------
-		When you pass a song object it plays that song right awawy.  It sets
-		the active song in the config to the song you pass in and synchronizes
-		the visuals.
-
-		Public Accessor: Amplitude.playNow( song_json )
-
-		@param song JSON representation of a song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * When you pass a song object it plays that song right awawy.  It sets
+	 * the active song in the config to the song you pass in and synchronizes
+	 * the visuals.
+	 *
+	 * Public Accessor: Amplitude.playNow( song )
+	 *
+	 * @access public
+	 * @param {object} song - JSON representation of a song.
+	 */
 	function playNow( song ){
 		/*
 			Makes sure the song object has a URL associated with it
@@ -234,11 +299,11 @@ var AmplitudeCore = (function() {
 		play();
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the playback speed for the song.
-
-		@param float playbackSpeed The speed we want the song to play back at.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the playback speed for the song.
+	 *
+	 * @param {number} playbackSpeed The speed we want the song to play back at.
+	 */
 	function setPlaybackSpeed( playbackSpeed ){
 		/*
 			Set the config playback speed.

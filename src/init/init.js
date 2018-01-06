@@ -1,38 +1,58 @@
-var config = require('../config.js');
+/**
+ * Imports the config module
+ * @module config
+ */
+import config from '../config.js';
 
+/**
+ * AmplitudeJS Core Module
+ * @module core/AmplitudeCore
+ */
 import AmplitudeCore from '../core/core.js';
+
+/**
+ * AmplitudeJS Core Helpers
+ * @module core/AmplitudeHelpers
+ */
 import AmplitudeHelpers from '../core/helpers.js';
+
+/**
+ * AmplitudeJS Events
+ * @module events/AmplitudeEvents
+ */
 import AmplitudeEvents from '../events/events.js';
+
+/**
+ * AmplitudeJS Soundcloud
+ * @module soundcloud/AmplitudeSoundcloud
+ */
 import AmplitudeSoundcloud from '../soundcloud/soundcloud.js';
+
+/**
+ * AmplitudeJS Visual Sync
+ * @module visual/AmplitudeVisualSync
+*/
 import AmplitudeVisualSync from '../visual/visual.js';
 
-/*
-|----------------------------------------------------------------------------------------------------
-| INITIALIZER FOR AMPLITUDE JS
-|----------------------------------------------------------------------------------------------------
-| These methods initialize AmplitudeJS and make sure everything is ready to run
-|
-| METHODS
-|	initialize( userConfig )
-|	countPlaylists( playlists )
-|	checkValidSongsInPlaylists()
-|	playlistShuffleStatuses()
-|	playlistShuffleLists()
-|	eventHandlers()
-*/
-var AmplitudeInitializer = (function () {
+/**
+ * AmplitudeJS Initializer Module. Helps with the handling of all of the
+ * initialization for AmplitudeJS.
+ *
+ * @module init/AmplitudeInitializer
+ */
+let AmplitudeInitializer = (function () {
 
-	/*--------------------------------------------------------------------------
-		The main init function.  The user will call this through
-		Amplitude.init({}) and pass in their settings.
-
-		Public Accessor: Amplitude.init( user_config_json );
-
-	 	@param userConfig A JSON object of user defined values that help
-	 	configure and initialize AmplitudeJS.
-	--------------------------------------------------------------------------*/
+	/**
+   * The main init function.  The user will call this through
+	 * Amplitude.init({}) and pass in their settings.
+	 *
+	 * Public Accessor: Amplitude.init( user_config_json )
+	 * @access public
+   * @param {object} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
+   */
 	function initialize( userConfig ){
-		var ready = false;
+		let ready = false;
+
 		/*
 			Reset the config on init so we have a clean slate. This is if the
 			user has to re-init.
@@ -76,11 +96,11 @@ var AmplitudeInitializer = (function () {
 			AmplitudeHelpers.writeDebugMessage( 'Please provide a songs object for AmplitudeJS to run!' );
 		}
 
-		/*
-			Initializes the audio context. In this method it checks to see if the
-			user wants to use visualizations or not before proceeding.
-			AMPFX-TODO: MAKE HANDLED BY AMPLITUDE FX.
-		*/
+		/**
+		 * Initializes the audio context. In this method it checks to see if the
+		 * user wants to use visualizations or not before proceeding.
+		 * @todo MAKE HANDLED BY AMPLITUDE FX.
+		 */
 		//privateHelpInitializeAudioContext();
 
 		/*
@@ -146,7 +166,7 @@ var AmplitudeInitializer = (function () {
 				temp_user_config so we don't mess up the global or their configs
 				and load the soundcloud information.
 			*/
-			var tempUserConfig = {};
+			let tempUserConfig = {};
 
 			if( config.soundcloud_client != '' ){
 				tempUserConfig = userConfig;
@@ -171,29 +191,33 @@ var AmplitudeInitializer = (function () {
 		AmplitudeHelpers.writeDebugMessage( config );
 	}
 
-	/*--------------------------------------------------------------------------
-		Rebinds all of the elements in the display
-	--------------------------------------------------------------------------*/
+	/**
+	 * Rebinds all of the elements in the display.
+	 *
+	 * Public Accessor: Amplitude.rebindDisplay()
+	 * @access public
+	 */
 	function rebindDisplay(){
 		AmplitudeEvents.initializeEvents();
 		AmplitudeVisualSync.displaySongMetadata();
 	}
 
-	/*--------------------------------------------------------------------------
-		Finishes the initalization of the config. Takes all of the user defined
-		parameters and makes sure they override the defaults. The important
-		config information is assigned in the publicInit() function.
-
-		This function can be called from 2 different locations:
-			1. Right away on init after the important settings are defined.
-
-			2. After all of the Soundcloud URLs are resolved properly and
-			soundcloud is configured.  We will need the proper URLs from Soundcloud
-			to stream through Amplitude so we get those right away before we
-			set the information and the active song
-
-		@param JSON userConfig The config provided by the user.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Finishes the initalization of the config. Takes all of the user defined
+	 * parameters and makes sure they override the defaults. The important
+	 * config information is assigned in the publicInit() function.
+	 *
+	 * This function can be called from 2 different locations:
+	 * 	1. Right away on init after the important settings are defined.
+	 *
+	 * 	2. After all of the Soundcloud URLs are resolved properly and
+	 *	 	soundcloud is configured.  We will need the proper URLs from Soundcloud
+	 * 		to stream through Amplitude so we get those right away before we
+	 * 		set the information and the active song
+	 *
+	 * @access public
+	 * @param {object} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
+	 */
 	function setConfig( userConfig ){
 		/*
 			Check to see if the user entered a start song
@@ -211,7 +235,14 @@ var AmplitudeInitializer = (function () {
 			AmplitudeHelpers.changeSong( 0 );
 		}
 
-		config.continue_next = ( userConfig.continue_next != undefined ? userConfig.continue_next : true );
+		/*
+			Allows the user to set whether they want to continue to the next song
+			when the current song finishes or not. In any scenario that's not a playlist,
+			contining to the next song may not be desired.
+		*/
+		config.continue_next = ( userConfig.continue_next != undefined ?
+														 userConfig.continue_next :
+														 true );
 
 		/*
 			If the user defined a playback speed, we copy over their
@@ -219,8 +250,8 @@ var AmplitudeInitializer = (function () {
 			speed of 1.0.
 		*/
 		config.playback_speed = ( userConfig.playback_speed != undefined ?
-								  userConfig.playback_speed :
-								  1.0 );
+								  						userConfig.playback_speed :
+								  						1.0 );
 
 		/*
 			Sets the audio playback speed.
@@ -233,8 +264,8 @@ var AmplitudeInitializer = (function () {
 			load the metadata.
 		*/
 		config.active_song.preload = ( userConfig.preload != undefined ?
-									   userConfig.preload :
-									   "auto" );
+									   							 userConfig.preload :
+									   					 		 "auto" );
 
 		/*
 			Initializes the user defined callbacks. This should be a JSON
@@ -242,8 +273,8 @@ var AmplitudeInitializer = (function () {
 			and the name of the function the user needs to call.
 		*/
 		config.callbacks = ( userConfig.callbacks != undefined ?
-							 userConfig.callbacks :
-							 {} );
+							 					 userConfig.callbacks :
+							 				 	 {} );
 
 		/*
 			Initializes the user defined key bindings. This should be a JSON
@@ -261,8 +292,8 @@ var AmplitudeInitializer = (function () {
 			by the user.
 		*/
 		config.volume = ( userConfig.volume != undefined ?
-			 			  userConfig.volume :
-			 			  50 );
+			 			  				userConfig.volume :
+			 			  				50 );
 
 		/*
 			The user can set the volume increment and decrement values between 1 and 100
@@ -270,12 +301,12 @@ var AmplitudeInitializer = (function () {
 			or decrease of 5.
 		*/
 		config.volume_increment = ( userConfig.volume_increment != undefined ?
-									userConfig.volume_increment :
-									5 );
+																userConfig.volume_increment :
+																5 );
 
 		config.volume_decrement = ( userConfig.volume_decrement != undefined ?
-									userConfig.volume_decrement :
-									5 );
+																userConfig.volume_decrement :
+																5 );
 
 		/*
 			Set the volume to what is defined in the config. The user can define this,
@@ -299,7 +330,6 @@ var AmplitudeInitializer = (function () {
 			config.default_album_art = '';
 		}
 
-
 		/*
 			Syncs all of the visual time elements to 00.
 		*/
@@ -315,12 +345,21 @@ var AmplitudeInitializer = (function () {
 			be configured for this to be ready to play.
 		*/
 		if( userConfig.autoplay ){
-			config.active_playlist = null;
+			/*
+				If the user hasn't set a starting playlist, set it to null otherwise initialize to the
+				starting playlist selected by the user.
+			*/
+			if( userConfig.starting_playlist == '' ){
+				config.active_playlist = null;
+			}else{
+				config.active_playlist = userConfig.starting_playlist;
+			}
+
 			/*
 				Sync the main and song play pause buttons.
 			*/
 			AmplitudeVisualSync.syncMainPlayPause( 'playing' );
-			AmplitudeVisualSync.syncSongPlayPause( null, 0, 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, 0, 'playing' );
 
 			/*
 				Start playing the song
@@ -329,23 +368,48 @@ var AmplitudeInitializer = (function () {
 		}
 
 		/*
+			If the user has selected a starting playlist, we need to set the starting playlist
+			and sync the visuals
+		*/
+		if( userConfig.starting_playlist != '' ){
+			/*
+				Set the active playlist to the starting playlist by the user
+			*/
+			config.active_playlist = userConfig.starting_playlist;
+
+			/*
+				Set the player to the first song in the playlist
+			*/
+			AmplitudeHelpers.changeSong( userConfig.playlists[ userConfig.starting_playlist ][0] );
+
+			/*
+				Sync the main and song play pause buttons.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause( 'paused' );
+			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, 0, 'paused' );
+		}
+
+		/*
 			Run after init callback
 		*/
 		AmplitudeHelpers.runCallback('after_init');
 	}
 
-	/*--------------------------------------------------------------------------
-		Counts the number of playlists the user has configured. This ensures
-		that the user has at least 1 playlist so we can validate the songs
-		defined in the playlist are correct and they didn't enter an invalid
-		ID.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Counts the number of playlists the user has configured. This ensures
+	 * that the user has at least 1 playlist so we can validate the songs
+	 * defined in the playlist are correct and they didn't enter an invalid
+	 * ID.
+	 *
+	 * @access private
+	 * @param {object} playlists 	-
+	 */
 	function countPlaylists( playlists ){
 		/*
 			Initialize the placeholders to iterate through the playlists
 			and find out how many we have to account for.
 		*/
-		var size = 0, key;
+		let size = 0, key;
 
 		/*
 			Iterate over playlists and if the user has the playlist defined,
@@ -368,15 +432,17 @@ var AmplitudeInitializer = (function () {
 		return size;
 	}
 
-	/*--------------------------------------------------------------------------
-		Ensures the indexes in the playlists are valid indexes. The song has
-		to exist in the Amplitude config to be played correctly.
-	--------------------------------------------------------------------------*/
+	/**
+	* Ensures the indexes in the playlists are valid indexes. The song has
+	* to exist in the Amplitude config to be played correctly.
+	*
+	* @access private
+	*/
 	function checkValidSongsInPlaylists(){
 		/*
 			Iterate over all of the config's playlists
 		*/
-		for( var key in config.playlists ){
+		for( let key in config.playlists ){
 			/*
 				Checks if the playlist key is accurate.
 			*/
@@ -388,7 +454,7 @@ var AmplitudeInitializer = (function () {
 					/*
 						Iterate over all of the songs in the playlist
 					*/
-					for( var i = 0; i < config.playlists[key].songs.length; i++ ){
+					for( let i = 0; i < config.playlists[key].songs.length; i++ ){
 						/*
 							Check to see if the index for the song in the playlist
 							exists in the songs config.
@@ -402,69 +468,79 @@ var AmplitudeInitializer = (function () {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Initializes the shuffle statuses for each of the playlists. These will
-		be referenced when we shuffle individual playlists.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Initializes the shuffle statuses for each of the playlists. These will
+	 * be referenced when we shuffle individual playlists.
+	 *
+	 * @access private
+	 */
 	function initializePlaylistShuffleStatuses(){
 		/*
 			Iterate over all of the playlists the user defined adding
 			the playlist key to the shuffled playlist array and creating
 			and empty object to house the statuses.
 		*/
-		for ( var key in config.playlists ) {
+		for ( let key in config.playlists ) {
 			config.shuffled_statuses[ key ] = false;
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Initializes the shuffled playlist placeholders. These will be set for
-		playlists that are shuffled and contain the shuffled songs.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Initializes the shuffled playlist placeholders. These will be set for
+	 * playlists that are shuffled and contain the shuffled songs.
+	 *
+	 * @access private
+ 	 */
 	function initializePlaylistShuffleLists(){
 		/*
 			Iterate over all of the playlists the user defined adding
 			the playlist key to the shuffled playlists array and creating
 			and empty object to house the shuffled playlists
 		*/
-		for ( var key in config.playlists ) {
+		for ( let key in config.playlists ) {
 			config.shuffled_playlists[ key ] = [];
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Initializes the shuffled playlist indexes array. These will be set for
-		playlists that are shuffled and contain the active shuffled index.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Initializes the shuffled playlist indexes array. These will be set for
+	 * playlists that are shuffled and contain the active shuffled index.
+	 *
+	 * @access private
+	 */
 	function initializePlaylistShuffleIndexes(){
 		/*
 			Iterates over all of the playlists adding a key
 			to the shuffled_active_indexes array that contains
 			the active shuffled index.
 		*/
-		for( var key in config.playlists ) {
+		for( let key in config.playlists ) {
 			config.shuffled_active_indexes[ key ] = 0;
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Intializes the display for the first song in the playlist meta data.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Intializes the display for the first song in the playlist meta data.
+	 *
+	 * @access private
+	 */
 	function initializeFirstSongInPlaylistMetaData(){
 		/*
 			Iterates over all of the playlists setting the meta data for the
 			first song.
 		*/
-		for( var key in config.playlists ){
+		for( let key in config.playlists ){
 			AmplitudeVisualSync.setFirstSongInPlaylist( config.songs[ config.playlists[ key ][0] ] , key );
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Intializes the default live settings for all of the songs.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Intializes the default live settings for all of the songs.
+	 *
+	 * @access priavet
+	 */
 	function initializeDefaultLiveSettings(){
-		for( var i = 0; i < config.songs.length; i++ ){
+		for( let i = 0; i < config.songs.length; i++ ){
 			if( config.songs[i].live == undefined ){
 				config.songs[i].live = false;
 			}

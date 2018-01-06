@@ -1,33 +1,59 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from '../config.js';
+
+/**
+ * Imports the helper functions for the core module
+ * @module core/AmplitudeHelers
+ */
 import AmplitudeHelpers from '../core/helpers.js';
+
+/**
+ * Imports the initializer
+ * @module init/AmplitudeInitializer
+ */
 import AmplitudeInitializer from '../init/init.js';
 
-/*
-|----------------------------------------------------------------------------------------------------
-| SOUNDCLOUD
-|----------------------------------------------------------------------------------------------------
-| These helpers wrap around the basic methods of the Soundcloud API
-| and get the information we need from SoundCloud to make the songs
-| streamable through Amplitude
-*/
+/**
+ * These helpers wrap around the basic methods of the Soundcloud API
+ * and get the information we need from SoundCloud to make the songs
+ * streamable through Amplitude
+ *
+ * @module soundcloud/AmplitudeSoundcloud
+ */
 var AmplitudeSoundcloud = (function() {
-	/*
-		Defines the temp user config
-	*/
+
+	/**
+	 * Defines the temporary user config used while we configure soundcloud
+	 * @type {object}
+	 */
 	var tempUserConfig = {};
 
-	/*--------------------------------------------------------------------------
-		Loads the soundcloud SDK for use with Amplitude so the user doesn't have
-		to load it themselves.
-		With help from: http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file
-	--------------------------------------------------------------------------*/
+	/**
+	 * Loads the soundcloud SDK for use with Amplitude so the user doesn't have
+	 * to load it themselves.
+	 * With help from: http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file
+	 *
+	 * @access public
+	 * @param {object} userConfig 	- The config defined by the user for AmplitudeJS
+	 */
 	function loadSoundCloud( userConfig ){
+		/*
+			Sets the temporary config to the config passed by the user so we can make changes
+			and not break the actual config.
+		*/
 		tempUserConfig = userConfig;
-		
+
+		/*
+			Gets the head tag for the document and create a script element.
+		*/
 		var head = document.getElementsByTagName('head')[0];
 		var script = document.createElement('script');
 
 		script.type = 'text/javascript';
+
 		/*
 			URL to the remote soundcloud SDK
 		*/
@@ -35,12 +61,17 @@ var AmplitudeSoundcloud = (function() {
 		script.onreadystatechange = initSoundcloud;
 		script.onload = initSoundcloud;
 
+		/*
+			Add the script to the head of the document.
+		*/
 		head.appendChild( script );
 	}
 
-	/*--------------------------------------------------------------------------
-		Initializes soundcloud with the key provided.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Initializes soundcloud with the key provided.
+	 *
+	 * @access private
+	 */
 	function initSoundcloud(){
 		/*
 			Calls the SoundCloud initialize function
@@ -60,15 +91,20 @@ var AmplitudeSoundcloud = (function() {
 		getStreamableURLs();
 	}
 
-	/*--------------------------------------------------------------------------
-		Gets the streamable URL from the URL provided for
-		all of the soundcloud links.  This will loop through
-		and set all of the information for the soundcloud
-		urls.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Gets the streamable URL from the URL provided for
+	 * all of the soundcloud links.  This will loop through
+	 * and set all of the information for the soundcloud
+	 * urls.
+	 *
+	 * @access private
+	 */
 	function getStreamableURLs(){
+		/*
+			Define the regex to find the soundcloud URLs
+		*/
 		var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
-		
+
 		for( var i = 0; i < config.songs.length; i++ ){
 			/*
 				If the URL matches soundcloud, we grab
@@ -82,12 +118,16 @@ var AmplitudeSoundcloud = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Due to Soundcloud SDK being asynchronous, we need to scope the
-		index of the song in another function. The privateGetSoundcloudStreamableURLs
-		function does the actual iteration and scoping.
-	--------------------------------------------------------------------------*/
-	function resolveStreamable(url, index){
+	/**
+	 * Due to Soundcloud SDK being asynchronous, we need to scope the
+	 * index of the song in another function. The privateGetSoundcloudStreamableURLs
+	 * function does the actual iteration and scoping.
+	 *
+	 * @access private
+	 * @param {string} url 		- URL of the soundcloud song
+	 * @param {number} index 	- The index of the soundcloud song in the songs array.
+	 */
+	function resolveStreamable( url, index ){
 		SC.get('/resolve/?url='+url, function( sound ){
 			/*
 				If streamable we get the url and bind the client ID to the end

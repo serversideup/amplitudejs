@@ -1,25 +1,40 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from '../config.js';
+
+/**
+ * Imports the Amplitude Visual Sync module
+ * @module visual/AmplitudeVisualSync
+ */
 import AmplitudeVisualSync from '../visual/visual.js';
+
+/**
+ * Imports the Amplitude Core module
+ * @module core/AmplitudeCore
+ */
 import AmplitudeCore from '../core/core.js';
+
+/**
+ * Imports the Amplitude Core Helpers module
+ * @module core/AmplitudeCoreHelpers
+ */
 import AmplitudeCoreHelpers from '../core/helpers.js';
 
-/*
-|-------------------------------------------------------------------------------
-| EVENT HANDLER HELPER METHODS
-|-------------------------------------------------------------------------------
-| These methods help handle interactions whether it's computation or shuffling
-| songs.
-|
-| METHODS
-|	computeCurrentTimes()
-|	computeSongDuration()
-|	computeSongCompletionPercentage()
-*/
-var AmplitudeEventHelpers = (function() {
-	/*--------------------------------------------------------------------------
-		Computes the current song time. Breaks down where the song is into
-		hours, minutes, seconds and formats it to be displayed to the user.
-	--------------------------------------------------------------------------*/
+/**
+ * These methods help handle interactions whether it's computation or shuffling
+ * songs.
+ *
+ * @module events/AmplitudeEventsHelpers
+ */
+var AmplitudeEventsHelpers = (function() {
+	/**
+	 * Computes the current song time. Breaks down where the song is into
+	 * hours, minutes, seconds and formats it to be displayed to the user.
+	 *
+	 * @access public
+	 */
 	function computeCurrentTimes(){
 		/*
 			Initialize the current time object that will be returned.
@@ -84,10 +99,12 @@ var AmplitudeEventHelpers = (function() {
 		return currentTime;
 	}
 
-	/*--------------------------------------------------------------------------
-		Computes the current song duration. Breaks down where the song is into
-		hours, minutes, seconds and formats it to be displayed to the user.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Computes the current song duration. Breaks down where the song is into
+	 * hours, minutes, seconds and formats it to be displayed to the user.
+	 *
+	 * @access public
+	 */
 	function computeSongDuration(){
 		/*
 			Initialize the song duration object that will be returned.
@@ -152,35 +169,41 @@ var AmplitudeEventHelpers = (function() {
 		return songDuration;
 	}
 
-	/*--------------------------------------------------------------------------
-		Computes the song completion percentage.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Computes the song completion percentage.
+	 *
+	 * @access public
+	 */
 	function computeSongCompletionPercentage(){
 		return ( config.active_song.currentTime / config.active_song.duration ) * 100;
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the current song's playback speed
-
-		@param float speed The float with a base of 1 representing the speed
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the current song's playback speed
+	 *
+	 * @access public
+	 * @param {number} speed 	- The float with a base of 1 representing the speed
+	 *
+	 */
 	function setPlaybackSpeed( speed ){
 		AmplitudeCore.setPlaybackSpeed( speed );
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the state of the repeat for the current song.
-
-		@param bool repeat A boolean representing whether the repeat should
-		be on or off
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the state of the repeat for the current song.
+	 *
+	 * @access public
+	 * @param {boolean} repeat - A boolean representing whether the repeat should be on or off
+	 */
 	function setRepeat( repeat ){
 		config.repeat = repeat;
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the main play pause buttons to the current state of the song.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the main play pause buttons to the current state of the song.
+	 *
+	 * @access public
+	 */
 	function setMainPlayPause(){
 		/*
 			Determines what action we should take based on the
@@ -235,11 +258,12 @@ var AmplitudeEventHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the playlist main play pause buttons to the current state of the song.
-
-		@param string playlist The playlist the main play pause button controls
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the playlist main play pause buttons to the current state of the song.
+	 *
+	 * @access public
+	 * @param {string} playlist The playlist the main play pause button controls
+	 */
 	function setPlaylistPlayPause( playlist ){
 		/*
 			The only thing that can change when you click a playlist
@@ -316,12 +340,14 @@ var AmplitudeEventHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the song play pause buttons to the current state of the song.
-
-		@param string playlist The playlist the song is a part of
-		@param int songIndex The index of the song being played/paused
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the song play pause buttons to the current state of the song.
+	 *
+	 * @access public
+	 * @param {string} playlist The playlist the song is a part of
+	 * @param {number} songIndex The index of the song being played/paused
+	 *
+	 */
 	function setSongPlayPause( playlist, songIndex ){
 		/*
 			There can be multiple playlists on the page and there can be
@@ -411,11 +437,12 @@ var AmplitudeEventHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the shuffle state for a playlist
-
-		@param string playlist The playlist being shuffled
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the shuffle state for a playlist
+	 *
+	 * @access public
+	 * @param {string} playlist - The playlist being shuffled
+	 */
 	function setShuffle( playlist ){
 		/*
 			If the playlist is null, then we are dealing with the global
@@ -458,12 +485,13 @@ var AmplitudeEventHelpers = (function() {
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the next song when next is clicked
-
-		@param songEnded (default false) If the song ended, this is set to true
-		so we take into effect the repeat setting.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the next song when next is clicked
+	 *
+	 * @access public
+	 * @param {boolean} [songEnded=false] If the song ended, this is set to true
+	 * so we take into effect the repeat setting.
+	*/
 	function setNext( songEnded = false ){
 		/*
 			Initializes the next index variable. This will be the
@@ -541,8 +569,6 @@ var AmplitudeEventHelpers = (function() {
 	    }
 		}
 
-
-
     /*
     	Syncs the main play pause button, playlist play pause button and
     	song play pause.
@@ -556,13 +582,13 @@ var AmplitudeEventHelpers = (function() {
     AmplitudeCoreHelpers.runCallback('after_next');
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the next song in a playlist
-
-		@param string playlist The playlist being shuffled
-		@param songEnded (default false) If the song ended, this is set to true
-		so we take into effect the repeat setting.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the next song in a playlist
+	 *
+	 * @param {string} playlist - The playlist being shuffled
+	 * @param {boolean} [songEnded=false] - If the song ended, this is set to true
+	 * so we take into effect the repeat setting.
+	 */
 	function setNextPlaylist( playlist, songEnded = false ){
 		/*
 			Initializes the next index
@@ -645,23 +671,28 @@ var AmplitudeEventHelpers = (function() {
 		/*
 			If the song has ended and repeat is on, play the song.
 		*/
-        if( !( songEnded && !config.repeat && endOfList ) )
-		    AmplitudeCore.play();
+    if( !( songEnded && !config.repeat && endOfList ) ){
+			AmplitudeCore.play();
+		}
 
-        /*
-        	Syncs the main play pause button, playlist play pause button and
-        	song play pause.
-        */
+    /*
+    	Syncs the main play pause button, playlist play pause button and
+    	song play pause.
+    */
 		AmplitudeVisualSync.syncMainPlayPause( );
 		AmplitudeVisualSync.syncPlaylistPlayPause(playlist);
 		AmplitudeVisualSync.syncSongPlayPause( playlist, nextIndex);
 
-        /*
-        	Call after next callback
-        */
-        AmplitudeCoreHelpers.runCallback('after_next');
+    /*
+    	Call after next callback
+    */
+    AmplitudeCoreHelpers.runCallback('after_next');
 	}
 
+	/**
+	 * Sets the previous song
+	 * @access public
+	 *
 	/*--------------------------------------------------------------------------
 		Sets the previous song
 	--------------------------------------------------------------------------*/
@@ -742,11 +773,12 @@ var AmplitudeEventHelpers = (function() {
 		AmplitudeCoreHelpers.runCallback('after_prev');
 	}
 
-	/*--------------------------------------------------------------------------
-		Sets the previous song in a playlist
-
-		@param	string	The Playlist we are setting the previous for.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Sets the previous song in a playlist
+	 *
+	 * @access public
+	 * @param {string} playlist 	- The playlist we are setting the previous for.
+	 */
 	function setPrevPlaylist( playlist ){
 		/*
 			Initializes the prev index variable. This will be the
@@ -837,11 +869,12 @@ var AmplitudeEventHelpers = (function() {
 		AmplitudeCoreHelpers.runCallback('after_prev');
 	}
 
-	/*--------------------------------------------------------------------------
-		Runs an event on key down
-
-		@param 	int key The key code the event is bound to.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Runs an event on key down
+	 *
+	 * @access public
+	 * @param {number} key 	- The key code the event is bound to.
+	 */
 	function runKeyEvent( key ){
 		/*
 			Checks to see if the user bound an event to the code pressed.
@@ -884,9 +917,9 @@ var AmplitudeEventHelpers = (function() {
 					*/
 					if( config.active_playlist == ''
 						|| config.active_playlist == null ){
-							AmplitudeEventHelpers.setPrev();
+							AmplitudeEventsHelpers.setPrev();
 					}else{
-						AmplitudeEventHelpers.setPrevPlaylist( config.active_playlist );
+						AmplitudeEventsHelpers.setPrevPlaylist( config.active_playlist );
 					}
 				break;
 
@@ -915,9 +948,9 @@ var AmplitudeEventHelpers = (function() {
 					*/
 					if( config.active_playlist == ''
 						|| config.active_playlist == null ){
-							AmplitudeEventHelpers.setShuffle( null );
+							AmplitudesEventHelpers.setShuffle( null );
 					}else{
-						AmplitudeEventHelpers.setShuffle( config.active_playlist );
+						AmplitudeEvenstHelpers.setShuffle( config.active_playlist );
 					}
 				break;
 
@@ -928,7 +961,7 @@ var AmplitudeEventHelpers = (function() {
 					/*
 						Sets repeat to the opposite of what it was set to
 					*/
-					AmplitudeEventHelpers.setRepeat( !config.repeat );
+					AmplitudeEventsHelpers.setRepeat( !config.repeat );
 
 					/*
 						Visually sync repeat
@@ -960,4 +993,4 @@ var AmplitudeEventHelpers = (function() {
 	}
 })();
 
-export default AmplitudeEventHelpers
+export default AmplitudeEventsHelpers

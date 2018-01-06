@@ -1,41 +1,47 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from '../config.js';
-import AmplitudeEventHelpers from './helpers.js';
+
+/**
+ * Imports the helpers for the event handlers.
+ * @module events/AmplitudeEventsHelpers
+ */
+import AmplitudeEventsHelpers from './helpers.js';
+
+/**
+ * Imports the visual sync module to keep the display in sync with AmplitudeJS
+ * @module visual/AmplitudeVisualSync
+ */
 import AmplitudeVisualSync from '../visual/visual.js';
+
+/**
+ * Imports the core module of Amplitude which handles the basic functions
+ * @module core/AmplitudeCore
+ */
 import AmplitudeCore from '../core/core.js';
+
+/**
+ * Imports the core helpers for Amplitude which help run some of AmplitudeJS functions
+ * @module core/AmplitudeHelpers
+ */
 import AmplitudeCoreHelpers from '../core/helpers.js';
 
-/*
-|-------------------------------------------------------------------------------
-| EVENT HANDLER FUNCTIONS
-|-------------------------------------------------------------------------------
-| These functions handle the events that we bound to each element and
-| prepare for a function to be called. These kind of act like filters/middleware.
-|
-| METHODS
-|	updateTime()
-|	songEnded()
-|	play()
-|	pause()
-|	playPause()
-|	stop()
-|	mute()
-|	volumeUp()
-|	volumeDown()
-|	songSlider()
-|	volumeSlider()
-|	next()
-|	prev()
-|	shuffle()
-|	repeat()
-|	playbackSpeed()
-|	skipTo()
-*/
+/**
+ * These functions handle the events that we bound to each element and
+ * prepare for a function to be called. These kind of act like filters/middleware.
+ *
+ * @module events/AmplitudeHandlers
+ */
 export default {
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: timeupdate
-
-		When the time updates on the active song, we sync the current time displays
-	--------------------------------------------------------------------------*/
+	/**
+	 * When the time updates on the active song, we sync the current time displays
+	 *
+	 * HANDLER FOR: timeupdate
+	 *
+	 * @access public
+	 */
 	updateTime: function(){
 		/*
 			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
@@ -62,17 +68,17 @@ export default {
 			/*
 				Compute the current time
 			*/
-			var currentTime = AmplitudeEventHelpers.computeCurrentTimes();
+			var currentTime = AmplitudeEventsHelpers.computeCurrentTimes();
 
 			/*
 				Compute the song completion percentage
 			*/
-			var songCompletionPercentage = AmplitudeEventHelpers.computeSongCompletionPercentage();
+			var songCompletionPercentage = AmplitudeEventsHelpers.computeSongCompletionPercentage();
 
 			/*
 				Computes the song duration
 			*/
-			var songDuration = AmplitudeEventHelpers.computeSongDuration();
+			var songDuration = AmplitudeEventsHelpers.computeSongDuration();
 
 			/*
 				Sync the current time elements with the current
@@ -89,21 +95,25 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: keydown
-
-		When the keydown event is fired, we determine which function should be run
-		based on what was passed in.
-	--------------------------------------------------------------------------*/
+	/**
+	 * When the keydown event is fired, we determine which function should be run
+	 * based on what was passed in.
+	 *
+	 * HANDLER FOR: keydown
+	 *
+	 * @access public
+	 */
 	keydown: function(){
-		AmplitudeEventHelpers.runKeyEvent( event.which );
+		AmplitudeEventsHelpers.runKeyEvent( event.which );
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: ended
-
-		When the song has ended, handles what to do next
-	--------------------------------------------------------------------------*/
+	/**
+	 * When the song has ended, handles what to do next
+	 *
+	 * HANDLER FOR: ended
+	 *
+	 * @access public
+	 */
 	songEnded: function(){
 		if( config.continue_next ){
 			/*
@@ -112,12 +122,12 @@ export default {
 			*/
 			if( config.active_playlist == ''
 				|| config.active_playlist == null ){
-					AmplitudeEventHelpers.setNext( true );
+					AmplitudeEventsHelpers.setNext( true );
 			}else{
 				/*
 					Set the next song in the playlist
 				*/
-				AmplitudeEventHelpers.setNextPlaylist( config.active_playlist, true );
+				AmplitudeEventsHelpers.setNextPlaylist( config.active_playlist, true );
 			}
 		}else{
 			if( !config.is_touch_moving ){
@@ -134,12 +144,14 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: progress
-
-		As the song is buffered, we can display the buffered percentage in
-		a progress bar.
-	--------------------------------------------------------------------------*/
+	/**
+	 * As the song is buffered, we can display the buffered percentage in
+	 * a progress bar.
+	 *
+	 * HANDLER FOR: ended
+	 *
+	 * @access public
+	 */
 	progress: function(){
 		/*
 			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
@@ -157,11 +169,14 @@ export default {
 		AmplitudeVisualSync.syncBufferedProgressBars();
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-play'
-
-		Handles an event on a play button in Amplitude.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on a play button in Amplitude.
+	 *
+	 * HANDLER FOR: 'amplitude-play'
+	 *
+	 * @access public
+	 * @TODO Finish commenting and re-structure
+	 */
 	play: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -175,7 +190,7 @@ export default {
 			var playButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
 
 			if( playButtonPlaylistIndex == null && playButtonSongIndex == null ){
-				AmplitudeEventHelpers.setSongPlayPause( config.active_playlist, config.active_index );
+				AmplitudeEventsHelpers.setSongPlayPause( config.active_playlist, config.active_index );
 			}
 
 			/*
@@ -187,18 +202,18 @@ export default {
 
 					if( playButtonSongIndex != null ){
 						AmplitudeCoreHelpers.changeSong( playButtonSongIndex );
-						AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+						AmplitudeEventsHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
 					}else{
 						AmplitudeCoreHelpers.changeSong( config.playlists[ playButtonPlaylistIndex ][0] );
-						AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+						AmplitudeEventsHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
 					}
 				}else{
 					if( playButtonSongIndex != null ){
 						AmplitudeCoreHelpers.changeSong( playButtonSongIndex );
-						AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+						AmplitudeEventsHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
 					}else{
 						AmplitudeCoreHelpers.changeSong( config.active_index );
-						AmplitudeEventHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
+						AmplitudeEventsHelpers.setPlaylistPlayPause( playButtonPlaylistIndex );
 					}
 				}
 			}
@@ -214,7 +229,7 @@ export default {
 						AmplitudeCoreHelpers.changeSong( playButtonSongIndex );
 					}
 
-					AmplitudeEventHelpers.setSongPlayPause( playButtonPlaylistIndex, playButtonSongIndex );
+					AmplitudeEventsHelpers.setSongPlayPause( playButtonPlaylistIndex, playButtonSongIndex );
 			}
 
 			/*
@@ -225,16 +240,21 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-pause'
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on a pause button
+	 *
+	 * HANDLER FOR: 'amplitude-pause'
+	 *
+	 * @access public
+	 * @TODO Finish commenting and optimize
+	 */
 	pause: function(){
 		if( !config.is_touch_moving ){
 			var pauseButtonSongIndex = this.getAttribute('amplitude-song-index');
 			var pauseButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
 
 			if( pauseButtonSongIndex == null && pauseButtonPlaylistIndex == null ){
-				AmplitudeEventHelpers.setSongPlayPause( config.active_playlist, config.active_index );
+				AmplitudeEventsHelpers.setSongPlayPause( config.active_playlist, config.active_index );
 				AmplitudeCore.pause();
 			}
 
@@ -287,11 +307,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-play-pause'
-
-		Handles an event on a play pause button.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on a play/pause button
+	 *
+	 * HANDLER FOR: 'amplitude-play-pause'
+	 *
+	 * @access public
+	 */
 	playPause: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -299,7 +321,7 @@ export default {
 				and syncs accordingly
 			*/
 			if( this.getAttribute( 'amplitude-main-play-pause' ) != null ){
-				AmplitudeEventHelpers.setMainPlayPause();
+				AmplitudeEventsHelpers.setMainPlayPause();
 
 			/*
 				Syncs playlist main play pause buttons
@@ -307,7 +329,7 @@ export default {
 			}else if( this.getAttribute('amplitude-playlist-main-play-pause') != null ){
 				var playlist 	= this.getAttribute('amplitude-playlist');
 
-				AmplitudeEventHelpers.setPlaylistPlayPause( playlist );
+				AmplitudeEventsHelpers.setPlaylistPlayPause( playlist );
 
 			/*
 				Syncs amplitude individual song buttons
@@ -316,19 +338,19 @@ export default {
 				var playlist 	= this.getAttribute('amplitude-playlist');
 				var songIndex 	= this.getAttribute('amplitude-song-index');
 
-				AmplitudeEventHelpers.setSongPlayPause( playlist, songIndex );
+				AmplitudeEventsHelpers.setSongPlayPause( playlist, songIndex );
 			}
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-stop'
-
-		Handles an event on a stop element.
-
-		AMP-FX TODO: Before stopping, make sure that AmplitudeFX visualization
-		is stopped as well.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on a stop element.
+	 *
+	 * HANDLER FOR: 'amplitude-stop'
+	 *
+	 * @access public
+	 * @TODO: AMP-FX Before stopping, make sure that AmplitudeFX visualization is stopped as well.
+	 */
 	stop: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -343,11 +365,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-mute'
-
-		Handles an event on a mute element.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event for a mute element
+	 *
+	 * HANDLER FOR: 'amplitude-mute'
+	 *
+	 * @access public
+	 */
 	mute: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -384,11 +408,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-volume-up'
-
-		Handles a click on a volume up element.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles a click on a volume up element.
+	 *
+	 * HANDLER FOR: 'amplitude-volume-up'
+	 *
+	 * @access public
+	 */
 	volumeUp: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -422,11 +448,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-volume-down'
-
-		Handles a click on a volume down element.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles a click on a volume down element.
+	 *
+	 * HANDLER FOR: 'amplitude-volume-down'
+	 *
+	 * @access public
+	 */
 	volumeDown: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -460,11 +488,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-song-slider'
-
-		Handles a change on the song slider
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles a change on the song slider
+	 *
+	 * HANDLER FOR: 'amplitude-song-slider'
+	 *
+	 * @access public
+	 */
 	songSlider: function(){
 		/*
 			Gets the percentage of the song we will be setting the location for.
@@ -547,11 +577,13 @@ export default {
 
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-volume-slider'
-
-		Handles a change on the volume slider
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles a change on the volume slider
+	 *
+	 * HANDLER FOR: 'amplitude-volume-slider'
+	 *
+	 * @access public
+	 */
 	volumeSlider: function(){
 		/*
 			Calls the core function to set the volume to the computed value
@@ -565,11 +597,13 @@ export default {
 		AmplitudeVisualSync.syncVolumeSliderLocation( this.value );
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-next'
-
-		Handles an event on the next button
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on the next button
+	 *
+	 * HANDLER FOR: 'amplitude-next'
+	 *
+	 * @access public
+	 */
 	next: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -585,9 +619,9 @@ export default {
 				*/
 				if( config.active_playlist == ''
 					|| config.active_playlist == null ){
-						AmplitudeEventHelpers.setNext();
+						AmplitudeEventsHelpers.setNext();
 				}else{
-					AmplitudeEventHelpers.setNextPlaylist( config.active_playlist );
+					AmplitudeEventsHelpers.setNextPlaylist( config.active_playlist );
 				}
 			}else{
 				/*
@@ -598,16 +632,18 @@ export default {
 				/*
 					Sets the next playlist
 				*/
-				AmplitudeEventHelpers.setNextPlaylist( playlist );
+				AmplitudeEventsHelpers.setNextPlaylist( playlist );
 			}
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-prev'
-
-		Handles an event on the previous button
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on the previous button
+	 *
+	 * HANDLER FOR: 'amplitude-prev'
+	 *
+	 * @access public
+	 */
 	prev: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -623,9 +659,9 @@ export default {
 				*/
 				if( config.active_playlist == ''
 					|| config.active_playlist == null ){
-						AmplitudeEventHelpers.setPrev();
+						AmplitudeEventsHelpers.setPrev();
 				}else{
-					AmplitudeEventHelpers.setPrevPlaylist( config.active_playlist );
+					AmplitudeEventsHelpers.setPrevPlaylist( config.active_playlist );
 				}
 			}else{
 				/*
@@ -636,16 +672,18 @@ export default {
 				/*
 					Sets the previous playlist
 				*/
-				AmplitudeEventHelpers.setPrevPlaylist( playlist );
+				AmplitudeEventsHelpers.setPrevPlaylist( playlist );
 			}
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-shuffle'
-
-		Handles an event on the shuffle button
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on the shuffle button
+	 *
+	 * HANDLER FOR: 'amplitude-shuffle'
+	 *
+	 * @access public
+	 */
 	shuffle: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -656,29 +694,31 @@ export default {
 				/*
 					Sets the shuffle button to null
 				*/
-				AmplitudeEventHelpers.setShuffle( null );
+				AmplitudeEventsHelpers.setShuffle( null );
 			}else{
 				/*
 					Gets the playlist attribute of the shuffle button and
 					set shuffle to on for the playlist.
 				*/
 				var playlist = this.getAttribute('amplitude-playlist');
-				AmplitudeEventHelpers.setShuffle( playlist );
+				AmplitudeEventsHelpers.setShuffle( playlist );
 			}
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-repeat'
-
-		Handles an event on the repeat button
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on the repeat button
+	 *
+	 * HANDLER FOR: 'amplitude-repeat'
+	 *
+	 * @access private
+	 */
 	repeat: function(){
 		if( !config.is_touch_moving ){
 			/*
 				Sets repeat to the opposite of what it was set to
 			*/
-			AmplitudeEventHelpers.setRepeat( !config.repeat );
+			AmplitudeEventsHelpers.setRepeat( !config.repeat );
 
 			/*
 				Visually sync repeat
@@ -687,11 +727,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-playback-speed'
-
-		Handles an event on the playback speed button
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on the playback speed button
+	 *
+	 * HANDLER FOR: 'amplitude-playback-speed'
+	 *
+	 * @access private
+	 */
 	playbackSpeed: function(){
 		if( !config.is_touch_moving ){
 			/*
@@ -702,13 +744,13 @@ export default {
 			*/
 			switch( config.playback_speed ){
 				case 1:
-					AmplitudeEventHelpers.setPlaybackSpeed( 1.5 );
+					AmplitudeEventsHelpers.setPlaybackSpeed( 1.5 );
 				break;
 				case 1.5:
-					AmplitudeEventHelpers.setPlaybackSpeed( 2 );
+					AmplitudeEventsHelpers.setPlaybackSpeed( 2 );
 				break;
 				case 2:
-					AmplitudeEventHelpers.setPlaybackSpeed( 1 );
+					AmplitudeEventsHelpers.setPlaybackSpeed( 1 );
 				break;
 			}
 
@@ -719,11 +761,13 @@ export default {
 		}
 	},
 
-	/*--------------------------------------------------------------------------
-		HANDLER FOR: 'amplitude-skip-to'
-
-		Handles an event on a skip to button.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Handles an event on a skip to button.
+	 *
+	 * HANDLER FOR: 'amplitude-skip-to'
+	 *
+	 * @access private
+	 */
 	skipTo: function(){
 		if( !config.is_touch_moving ){
 			/*
