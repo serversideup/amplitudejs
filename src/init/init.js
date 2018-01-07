@@ -371,7 +371,7 @@ let AmplitudeInitializer = (function () {
 			If the user has selected a starting playlist, we need to set the starting playlist
 			and sync the visuals
 		*/
-		if( userConfig.starting_playlist != '' ){
+		if( userConfig.starting_playlist != '' && userConfig.starting_playlist != undefined ){
 			/*
 				Set the active playlist to the starting playlist by the user
 			*/

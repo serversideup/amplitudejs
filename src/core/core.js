@@ -300,6 +300,99 @@ let AmplitudeCore = (function() {
 	}
 
 	/**
+	 * Plays the song at a specific index in the songs array
+	 *
+	 * Public Accessor: Amplitude.playSongAtIndex( song )
+	 *
+	 * @access public
+	 * @param {number} index - The number representing the song in the songs array
+	 */
+	 function playSongAtIndex( index ){
+		 /*
+				Stop the current song.
+		 */
+		 stop();
+
+		 /*
+				Determine if there is a new playlist, if so set the active playlist and change the song.
+		 */
+		 if( AmplitudeHelpers.checkNewPlaylist( null ) ){
+			 AmplitudeHelpers.setActivePlaylist( null );
+
+			 AmplitudeHelpers.changeSong( index );
+		 }
+
+		 /*
+				Check if the song is new. If so, change the song.
+		 */
+		 if( AmplitudeHelpers.checkNewSong( index ) ){
+			 AmplitudeHelpers.changeSong( index );
+		 }
+
+		 /*
+			 Sync all of the play pause buttons.
+		 */
+		 AmplitudeVisualSync.syncMainPlayPause('playing');
+		 AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'playing' );
+		 AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
+
+		 /*
+			 Play the song
+		 */
+		 play();
+	 }
+
+	 /**
+		* Plays a song at the index passed in for the playlist provided. The index passed
+		* in should be the index of the song in the playlist and not the songs array.
+		*
+		* @access public
+		* @param {number} index 		- The number representing the song in the playlist array.
+		* @param {string} playlist 	- The key string representing the playlist we are playing the song from.
+		*
+		*/
+	 function playPlaylistSongAtIndex( index, playlist ){
+			 /*
+			 		Stop the current song.
+			 */
+			 stop();
+
+			 /*
+			 		Get the index of the song in the songs array. This is the integer at the index
+					in the playlist.
+			 */
+			 let songIndex = config.playlists[ playlist ][ index ];
+
+			 /*
+			 		Determine if there is a new playlist, if so set the active playlist and change the song.
+			 */
+			 if( AmplitudeHelpers.checkNewPlaylist( playlist ) ){
+				 AmplitudeHelpers.setActivePlaylist( playlist );
+
+				 AmplitudeHelpers.changeSong( songIndex );
+			 }
+
+			 /*
+			 		Check if the song is new. If so, change the song.
+			 */
+			if( AmplitudeHelpers.checkNewSong( songIndex ) ){
+			 AmplitudeHelpers.changeSong( songIndex );
+			}
+
+			/*
+				Sync all of the play pause buttons.
+			*/
+			AmplitudeVisualSync.syncMainPlayPause('playing');
+			AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'playing' );
+			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
+
+			/*
+				Play the song
+			*/
+			play();
+	 }
+
+	/**
 	 * Sets the playback speed for the song.
 	 *
 	 * @param {number} playbackSpeed The speed we want the song to play back at.
@@ -329,6 +422,8 @@ let AmplitudeCore = (function() {
 		disconnectStream: disconnectStream,
 		reconnectStream: reconnectStream,
 		playNow: playNow,
+		playSongAtIndex: playSongAtIndex,
+		playPlaylistSongAtIndex: playPlaylistSongAtIndex,
 		setPlaybackSpeed: setPlaybackSpeed
 	}
 })();

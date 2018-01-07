@@ -288,9 +288,33 @@ var Amplitude = (function () {
 	 * @access public
 	 * @param {object} song 	- JSON representation of a song.
 	 */
-	function playNow( song, playlist, index ){
-		// IF PLAYLIST IS SET, SET PLAYLIST, IF INDEX IS SET SET INDEX
+	function playNow( song ){
 		AmplitudeCore.playNow( song );
+	}
+
+	/**
+	 * Plays a song at the index passed in from the songs array.
+	 *
+	 * Public Accessor: Amplitude.playSongAtIndex( song )
+	 *
+	 * @access public
+	 * @param {number} index 	- The number representing the song in the songs array.
+	 */
+	function playSongAtIndex( index ){
+		AmplitudeCore.playSongAtIndex( index );
+	}
+
+	/**
+	 * Plays a song at the index passed in for the playlist provided. The index passed
+	 * in should be the index of the song in the playlist and not the songs array.
+	 *
+	 * @access public
+	 * @param {number} index 		- The number representing the song in the playlist array.
+	 * @param {string} playlist - The key string representing the playlist we are playing the song from.
+	 *
+	 */
+	function playPlaylistSongAtIndex( index, playlist ){
+		AmplitudeCore.playPlaylistSongAtIndex( index, playlist );
 	}
 
 	/**
@@ -583,6 +607,8 @@ var Amplitude = (function () {
 		getSongAtPlaylistIndex: getSongAtPlaylistIndex,
 		addSong: addSong,
 		playNow: playNow,
+		playSongAtIndex: playSongAtIndex,
+		playPlaylistSongAtIndex: playPlaylistSongAtIndex,
 		play: play,
 		pause: pause,
 		audio: getAudio,
