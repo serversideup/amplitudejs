@@ -153,7 +153,7 @@ and reference it anywhere on your page using the 'amplitude-song-info' attribute
 data like:
 
 ```html
-	<span class="made-up-key" amplitude-song-info="made_up_key"></span>
+	<span class="made-up-key" amplitude-song-info="made_up_key" amplitude-main-song-info="true"></span>
 ```
 
 It is important to note that in multiple song environments, the order that you list the songs makes a difference. When utitlizing
