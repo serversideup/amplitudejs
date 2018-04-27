@@ -29,7 +29,7 @@ import AmplitudeHandlers from './handlers.js';
 |	bindRepeat()
 |	bindPlaybackSpeed()
 |	bindSkipTo()
-| bindProgress()
+|      bindProgress()
 */
 var AmplitudeEvents = (function () {
 	/*--------------------------------------------------------------------------
