@@ -89,7 +89,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 						If nothing else matches, set the selector's inner HTML to '00'
 					*/
 					}else{
-						currentHourSelectors[i].innerHTML = '00';
+						currentHourSelectors[i].innerHTML = '0';
 					}
 				}
 			}
@@ -97,7 +97,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 	}
 
 	/*--------------------------------------------------------------------------
-		Resets the current hours displays to 00
+		Resets the current hours displays to 0
 	--------------------------------------------------------------------------*/
 	function resetCurrentHours(){
 		/*
@@ -110,7 +110,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 			to 00.
 		*/
 		for( var i = 0; i < hourSelectors.length; i++ ){
-			hourSelectors[i].innerHTML = '00';
+			hourSelectors[i].innerHTML = '0';
 		}
 	}
 
@@ -310,7 +310,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 			time is computed by joining minutes and seconds.
 		*/
 		var timeText = currentTime.minutes+':'+currentTime.seconds;
-		if ( currentTime.hours != '00' ) {
+		if ( currentTime.hours > 0 ) {
 			timeText = currentTime.hours + ':' + timeText;
 		}
 		for( let i = 0, l=currentTimeSelectors.length; i < l; i++ ){
@@ -521,7 +521,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 						If nothing else matches, set the selector's inner HTML to '00'
 					*/
 					}else{
-						durationHourSelectors[i].innerHTML = '00';
+						durationHourSelectors[i].innerHTML = '0';
 					}
 				}
 			}
@@ -696,7 +696,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 		var durationText = '00:00';
 		if( !isNaN( durationTime.minutes ) && !isNaN( durationTime.seconds ) ){
 			durationText = durationTime.minutes+':'+durationTime.seconds;
-			if( !isNaN( durationTime.hours ) && durationTime.hours != '00' ){
+			if( !isNaN( durationTime.hours ) && durationTime.hours > 0 ){
 				durationText = durationTime.hours+':'+durationText;
 			}
 		}
@@ -748,7 +748,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 					(remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds);
 
 				if(remainingHours > 0) {
-					timeRemaining = (remainingHours < 10 ? '0' + remainingHours : remainingHours) + ':' + timeRemaining;
+					timeRemaining = remainingHours + ':' + timeRemaining;
 				}
 			}
 		}
