@@ -309,8 +309,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 			Set the time selector's inner html to the current time for the song. The current
 			time is computed by joining minutes and seconds.
 		*/
+		var timeText = currentTime.minutes+':'+currentTime.seconds;
+		if ( currentTime.hours != '00' ) {
+			timeText = currentTime.hours + ':' + timeText;
+		}
 		for( let i = 0, l=currentTimeSelectors.length; i < l; i++ ){
-			currentTimeSelectors[i].innerHTML = currentTime.minutes+':'+currentTime.seconds;
+			currentTimeSelectors[i].innerHTML = timeText;
 		}
 
 	}
@@ -689,12 +693,15 @@ var AmplitudeVisualSyncHelpers = (function() {
 			Set the time selector's inner html to the duration time for the song. The duration
 			time is computed by joining minutes and seconds.
 		*/
-		for( var i = 0; i < durationTimeSelectors.length; i++ ){
-			if( !isNaN( durationTime.minutes ) && !isNaN( durationTime.seconds ) ){
-				durationTimeSelectors[i].innerHTML = durationTime.minutes+':'+durationTime.seconds;
-			}else{
-				durationTimeSelectors[i].innerHTML = '00:00';
+		var durationText = '00:00';
+		if( !isNaN( durationTime.minutes ) && !isNaN( durationTime.seconds ) ){
+			durationText = durationTime.minutes+':'+durationTime.seconds;
+			if( !isNaN( durationTime.hours ) && durationTime.hours != '00' ){
+				durationText = durationTime.hours+':'+durationText;
 			}
+		}
+		for( var i = 0; i < durationTimeSelectors.length; i++ ){
+			durationTimeSelectors[i].innerHTML = durationText;
 		}
 
 	}
@@ -733,22 +740,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 				*/
 				var timeRemainingTotalSeconds = totalDurationSeconds - totalCurrentSeconds;
 
-				/*
-					Find how many seconds are remaining.
-				*/
-				var timeRemainingSeconds = ( Math.floor( timeRemainingTotalSeconds % 60 ) < 10 ? '0' : '' ) +
-											  		Math.floor( timeRemainingTotalSeconds % 60 );
+				var remainingHours = Math.floor(timeRemainingTotalSeconds / 3600);
+				var remainingMinutes = Math.floor((timeRemainingTotalSeconds - (remainingHours * 3600)) / 60);
+				var remainingSeconds = timeRemainingTotalSeconds - (remainingHours * 3600) - (remainingMinutes * 60);
 
-				/*
-					Find how many minutes are remaining.
-				*/
-				var timeRemainingMinutes = ( Math.floor( timeRemainingTotalSeconds / 60 ) < 10 ? '0' : '' ) +
-															Math.floor( timeRemainingTotalSeconds / 60 );
+				timeRemaining = (remainingMinutes < 10 ? '0' + remainingMinutes : remainingMinutes) + ':' +
+					(remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds);
 
-				/*
-					Build the time remaining.
-				*/
-				timeRemaining = timeRemainingMinutes+':'+timeRemainingSeconds;
+				if(remainingHours > 0) {
+					timeRemaining = (remainingHours < 10 ? '0' + remainingHours : remainingHours) + ':' + timeRemaining;
+				}
 			}
 		}
 

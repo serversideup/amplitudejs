@@ -53,7 +53,7 @@ var AmplitudeEventHelpers = (function() {
 			If the user is more than 60 minutes into the song, then
 			we extract the hours.
 		*/
-		if( currentMinutes > 60 ){
+		if( currentMinutes >= 60 ){
 			currentHours 		= Math.floor( currentMinutes / 60 );
 			currentMinutes 		= currentMinutes % 60;
 
@@ -121,7 +121,7 @@ var AmplitudeEventHelpers = (function() {
 			If there is more than 60 minutes in the song, then we
 			extract the hours.
 		*/
-		if( songDurationMinutes > 60 ){
+		if( songDurationMinutes >= 60 ){
 			songDurationHours 		= Math.floor( songDurationMinutes / 60 );
 			songDurationMinutes 	= songDurationMinutes % 60;
 
