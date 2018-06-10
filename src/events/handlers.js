@@ -47,8 +47,8 @@ export default {
 			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
 		*/
 		if( config.active_song.buffered.length - 1 >= 0 ){
-			var bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
-			var duration =  config.active_song.duration;
+			let bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
+			let duration =  config.active_song.duration;
 
 			config.buffered = ( ( bufferedEnd / duration ) * 100 );
 		}
@@ -68,17 +68,17 @@ export default {
 			/*
 				Compute the current time
 			*/
-			var currentTime = AmplitudeEventsHelpers.computeCurrentTimes();
+			let currentTime = AmplitudeEventsHelpers.computeCurrentTimes();
 
 			/*
 				Compute the song completion percentage
 			*/
-			var songCompletionPercentage = AmplitudeEventsHelpers.computeSongCompletionPercentage();
+			let songCompletionPercentage = AmplitudeEventsHelpers.computeSongCompletionPercentage();
 
 			/*
 				Computes the song duration
 			*/
-			var songDuration = AmplitudeEventsHelpers.computeSongDuration();
+			let songDuration = AmplitudeEventsHelpers.computeSongDuration();
 
 			/*
 				Sync the current time elements with the current
@@ -157,8 +157,8 @@ export default {
 			Help from: http://jsbin.com/badimipi/1/edit?html,js,output
 		*/
 		if( config.active_song.buffered.length - 1 >= 0 ){
-			var bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
-			var duration =  config.active_song.duration;
+			let bufferedEnd = config.active_song.buffered.end( config.active_song.buffered.length - 1 );
+			let duration =  config.active_song.duration;
 
 			config.buffered = ( ( bufferedEnd / duration ) * 100 );
 		}
@@ -186,8 +186,8 @@ export default {
 				case it is possible the user could click a different play
 				class and change the song.
 			*/
-			var playButtonSongIndex = this.getAttribute('amplitude-song-index');
-			var playButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
+			let playButtonSongIndex = this.getAttribute('amplitude-song-index');
+			let playButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
 
 			if( playButtonPlaylistIndex == null && playButtonSongIndex == null ){
 				AmplitudeEventsHelpers.setSongPlayPause( config.active_playlist, config.active_index );
@@ -250,8 +250,8 @@ export default {
 	 */
 	pause: function(){
 		if( !config.is_touch_moving ){
-			var pauseButtonSongIndex = this.getAttribute('amplitude-song-index');
-			var pauseButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
+			let pauseButtonSongIndex = this.getAttribute('amplitude-song-index');
+			let pauseButtonPlaylistIndex = this.getAttribute('amplitude-playlist');
 
 			if( pauseButtonSongIndex == null && pauseButtonPlaylistIndex == null ){
 				AmplitudeEventsHelpers.setSongPlayPause( config.active_playlist, config.active_index );
@@ -327,7 +327,7 @@ export default {
 				Syncs playlist main play pause buttons
 			*/
 			}else if( this.getAttribute('amplitude-playlist-main-play-pause') != null ){
-				var playlist 	= this.getAttribute('amplitude-playlist');
+				let playlist 	= this.getAttribute('amplitude-playlist');
 
 				AmplitudeEventsHelpers.setPlaylistPlayPause( playlist );
 
@@ -335,8 +335,8 @@ export default {
 				Syncs amplitude individual song buttons
 			*/
 			}else{
-				var playlist 	= this.getAttribute('amplitude-playlist');
-				var songIndex 	= this.getAttribute('amplitude-song-index');
+				let playlist 	= this.getAttribute('amplitude-playlist');
+				let songIndex 	= this.getAttribute('amplitude-song-index');
 
 				AmplitudeEventsHelpers.setSongPlayPause( playlist, songIndex );
 			}
@@ -499,7 +499,7 @@ export default {
 		/*
 			Gets the percentage of the song we will be setting the location for.
 		*/
-		var locationPercentage = this.value;
+		let locationPercentage = this.value;
 
 		/*
 			Checks to see if the element has an attribute for amplitude-main-play-pause
@@ -510,7 +510,7 @@ export default {
 				If the active song is not live, set the current time
 			*/
 			if( !config.active_metadata.live ){
-				var currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
+				let currentTime = ( config.active_song.duration ) * ( locationPercentage / 100 );
 
 				if( isFinite( currentTime ) ){
 					config.active_song.currentTime = currentTime;
@@ -528,7 +528,7 @@ export default {
 			Syncs playlist main play pause buttons
 		*/
 		if( this.getAttribute('amplitude-playlist-song-slider') != null ){
-			var playlist 	= this.getAttribute('amplitude-playlist');
+			let playlist 	= this.getAttribute('amplitude-playlist');
 
 			/*
 				We don't want to song slide a playlist that's not the
@@ -552,8 +552,8 @@ export default {
 		if( this.getAttribute('amplitude-playlist-song-slider') == null
 			&& this.getAttribute('amplitude-main-song-slider') == null ){
 
-			var playlist 	= this.getAttribute('amplitude-playlist');
-			var songIndex 	= this.getAttribute('amplitude-song-index');
+			let playlist 	= this.getAttribute('amplitude-playlist');
+			let songIndex 	= this.getAttribute('amplitude-song-index');
 
 			if( config.active_index == songIndex ){
 				/*
@@ -627,7 +627,7 @@ export default {
 				/*
 					Gets the playlist of the next button.
 				*/
-				var playlist = this.getAttribute('amplitude-playlist');
+				let playlist = this.getAttribute('amplitude-playlist');
 
 				/*
 					Sets the next playlist
@@ -667,7 +667,7 @@ export default {
 				/*
 					Gets the playlist of the previous button.
 				*/
-				var playlist = this.getAttribute('amplitude-playlist');
+				let playlist = this.getAttribute('amplitude-playlist');
 
 				/*
 					Sets the previous playlist
@@ -700,7 +700,7 @@ export default {
 					Gets the playlist attribute of the shuffle button and
 					set shuffle to on for the playlist.
 				*/
-				var playlist = this.getAttribute('amplitude-playlist');
+				let playlist = this.getAttribute('amplitude-playlist');
 				AmplitudeEventsHelpers.setShuffle( playlist );
 			}
 		}
@@ -774,7 +774,7 @@ export default {
 				Determines if the skip to button is in the scope of a playlist.
 			*/
 			if( this.hasAttribute('amplitude-playlist') ){
-				var playlist = this.getAttribute('amplitude-playlist');
+				let playlist = this.getAttribute('amplitude-playlist');
 
 				if( AmplitudeCoreHelpers.checkNewPlaylist( playlist ) ){
 					AmplitudeCoreHelpers.setActivePlaylist( playlist );
@@ -783,8 +783,8 @@ export default {
 					Gets the location, playlist and song index that is being skipped
 					to.
 				*/
-				var seconds = parseInt( this.getAttribute('amplitude-location') );
-				var songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
+				let seconds = parseInt( this.getAttribute('amplitude-location') );
+				let songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
 
 				/*
 					Changes the song to where it's being skipped and then
@@ -806,8 +806,8 @@ export default {
 					Gets the location and song index that is being skipped
 					to.
 				*/
-				var seconds = parseInt( this.getAttribute('amplitude-location') );
-				var songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
+			 	let seconds = parseInt( this.getAttribute('amplitude-location') );
+			 	let songIndex = parseInt( this.getAttribute( 'amplitude-song-index') );
 
 				/*
 					Changes the song to where it's being skipped and then

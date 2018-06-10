@@ -23,13 +23,13 @@ import AmplitudeInitializer from '../init/init.js';
  *
  * @module soundcloud/AmplitudeSoundcloud
  */
-var AmplitudeSoundcloud = (function() {
+let AmplitudeSoundcloud = (function() {
 
 	/**
 	 * Defines the temporary user config used while we configure soundcloud
 	 * @type {object}
 	 */
-	var tempUserConfig = {};
+	let tempUserConfig = {};
 
 	/**
 	 * Loads the soundcloud SDK for use with Amplitude so the user doesn't have
@@ -49,8 +49,8 @@ var AmplitudeSoundcloud = (function() {
 		/*
 			Gets the head tag for the document and create a script element.
 		*/
-		var head = document.getElementsByTagName('head')[0];
-		var script = document.createElement('script');
+		let head = document.getElementsByTagName('head')[0];
+		let script = document.createElement('script');
 
 		script.type = 'text/javascript';
 
@@ -103,9 +103,9 @@ var AmplitudeSoundcloud = (function() {
 		/*
 			Define the regex to find the soundcloud URLs
 		*/
-		var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+		let soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
 
-		for( var i = 0; i < config.songs.length; i++ ){
+		for( let i = 0; i < config.songs.length; i++ ){
 			/*
 				If the URL matches soundcloud, we grab
 				that url and get the streamable link

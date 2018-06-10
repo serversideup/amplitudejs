@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AmplitudeJS Testing</title>
+    <title>AmplitudeJS Multiple Songs Example</title>
 
-    <!-- Include Resource Stylesheets -->
-		<link rel="stylesheet" type="text/css" href="../resources/css/foundation.min.css"/>
+    <!-- Foundation Framework CSS -->
+    <link rel="stylesheet" href="css/foundation.min.css">
 
     <!-- Include font -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
 
-		<!--
-			Include Resource Javascript
-
-			NOTE: These are for handling things outside of the scope of AmplitudeJS
-		-->
-		<script type="text/javascript" src="../resources/js/jquery.js"></script>
-		<script type="text/javascript" src="../resources/js/foundation.min.js"></script>
-
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="../../dist/amplitude.js"></script>
 
-
-		<!--
-			Include UX functions JS
-
-			NOTE: These are for handling things outside of the scope of AmplitudeJS
-		-->
-		<script type="text/javascript" src="js/functions.js"></script>
+    <!-- Foundation jQuery and Functions -->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/foundation.min.js"></script>
 
 		<!-- Include Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
   </head>
   <body>
 
-    <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
+    <div class="grid-x grid-padding-x">
+      <div class="large-12 medium-12 small-12 cell">
         <div class="player">
           <img src="../album-art/we-are-but-hunks-of-wood.jpg" class="album-art"/>
           <div class="meta-container">
@@ -121,24 +109,12 @@
           }
         ]
       });
-
-      document.getElementById('song-played-progress-1').addEventListener('click', function( e ){
-        if( Amplitude.getActiveIndex() == 0 ){
-          var offset = this.getBoundingClientRect();
-          var x = e.pageX - offset.left;
-
-          Amplitude.setSongPlayedPercentage( ( parseFloat( x ) / parseFloat( this.offsetWidth) ) * 100 );
-        }
-      });
-
-      document.getElementById('song-played-progress-2').addEventListener('click', function( e ){
-        if( Amplitude.getActiveIndex() == 1 ){
-          var offset = this.getBoundingClientRect();
-          var x = e.pageX - offset.left;
-
-          Amplitude.setSongPlayedPercentage( ( parseFloat( x ) / parseFloat( this.offsetWidth) ) * 100 );
-        }
-      });
     </script>
+    <!--
+      Include UX functions JS
+
+      NOTE: These are for handling things outside of the scope of AmplitudeJS
+    -->
+    <script type="text/javascript" src="js/functions.js"></script>
   </body>
 </html>

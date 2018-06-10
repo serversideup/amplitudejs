@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="18px" viewBox="0 0 25 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>volume-x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="05.100.00-OpenSource-Amplitude" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="HD_05.100.00-521Website_OpenSource-Amplitude" transform="translate(-620.000000, -882.000000)" stroke-width="2" stroke="#607D8B">
+            <g id="Lead-in">
+                <g id="Player" transform="translate(368.000000, 454.000000)">
+                    <g id="Controllers/Status/Info" transform="translate(0.000000, 352.000000)">
+                        <g id="Volume" transform="translate(253.000000, 77.000000)">
+                            <g id="Mute">
+                                <g id="volume-x">
+                                    <polygon id="Shape" points="9.85714286 0 4.38095238 4.38095238 0 4.38095238 0 10.952381 4.38095238 10.952381 9.85714286 15.3333333"></polygon>
+                                    <path d="M23,4.38095238 L16.4285714,10.952381" id="Shape"></path>
+                                    <path d="M16.4285714,4.38095238 L23,10.952381" id="Shape"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,259 @@
+div#progress-container{
+  width: 70%;
+  float: left;
+  position: relative;
+  height: 20px;
+  cursor: pointer;
+
+  &:hover{
+    input[type=range].amplitude-song-slider::-webkit-slider-thumb{
+      display: block;
+    }
+    input[type=range].amplitude-song-slider::-moz-range-thumb{
+      visibility: visible;
+    }
+  }
+
+  progress#song-played-progress{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    right: 0;
+    width: 100%;
+    z-index: 60;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 5px;
+    background: transparent;
+    border: none; /* Needed for Firefox */
+  }
+  @media all and (-ms-high-contrast:none)
+  {
+    *::-ms-backdrop, progress#song-played-progress {
+      color: #00A0FF;
+      border: none;
+      background-color: #CFD8DC;
+    }
+  }
+
+  @supports (-ms-ime-align:auto) {
+    progress#song-played-progress {
+      color: #00A0FF;
+      border: none;
+    }
+  }
+
+  progress#song-played-progress[value]::-webkit-progress-bar{
+    background: none;
+    border-radius: 5px;
+  }
+
+  progress#song-played-progress[value]::-webkit-progress-value{
+    background-color: #00A0FF;
+    border-radius: 5px;
+  }
+
+  progress#song-played-progress::-moz-progress-bar{
+    background: none;
+    border-radius: 5px;
+    background-color: #00A0FF;
+    height: 5px;
+    margin-top: -2px;
+  }
+
+  progress#song-buffered-progress{
+    position: absolute;
+    left: 0;
+    top: 8px;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 5px;
+    background: transparent;
+    border: none;
+    background-color: #D7DEE3;
+  }
+
+  progress#song-buffered-progress[value]::-webkit-progress-bar{
+    background-color: #CFD8DC;
+    border-radius: 5px;
+  }
+
+  progress#song-buffered-progress[value]::-webkit-progress-value{
+    background-color: #78909C;
+    border-radius: 5px;
+    transition: width .1s ease;
+  }
+
+  progress#song-buffered-progress::-moz-progress-bar{
+    background: none;
+    border-radius: 5px;
+    background-color: #78909C;
+    height: 5px;
+    margin-top: -2px;
+  }
+
+  progress::-ms-fill {
+      border: none;
+  }
+
+  @-moz-document url-prefix() {
+    progress#song-buffered-progress{
+      top: 9px;
+      border: none;
+    }
+  }
+
+  @media all and (-ms-high-contrast:none)
+  {
+    *::-ms-backdrop, progress#song-buffered-progress {
+      color: #78909C;
+      border: none;
+    }
+  }
+
+  @supports (-ms-ime-align:auto) {
+    progress#song-buffered-progress {
+      color: #78909C;
+      border: none;
+    }
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    margin: 7.5px 0;
+    position: absolute;
+    z-index: 9999;
+    top: -7px;
+    height: 20px;
+    cursor: pointer;
+    background-color: inherit;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    background: #0075a9;
+    border-radius: 0px;
+    border: 0px solid #010101;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 1px solid #00a0ff;
+    height: 15px;
+    width: 15px;
+    border-radius: 16px;
+    background: #00a0ff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -7.5px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #00adfb;
+  }
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    background: #0075a9;
+    border-radius: 0px;
+    border: 0px solid #010101;
+  }
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 1px solid #00a0ff;
+    height: 15px;
+    width: 15px;
+    border-radius: 16px;
+    background: #00a0ff;
+    cursor: pointer;
+  }
+  input[type=range]::-ms-track {
+    width: 100%;
+    height: 0px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+    background: #003d57;
+    border: 0px solid #010101;
+    border-radius: 0px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+  }
+  input[type=range]::-ms-fill-upper {
+    background: #0075a9;
+    border: 0px solid #010101;
+    border-radius: 0px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+  }
+  input[type=range]::-ms-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 1px solid #00a0ff;
+    height: 15px;
+    width: 15px;
+    border-radius: 16px;
+    background: #00a0ff;
+    cursor: pointer;
+    height: 0px;
+    display: block;
+  }
+  /*
+    IE 11
+  */
+  @media all and (-ms-high-contrast:none){
+    *::-ms-backdrop, input[type="range"].amplitude-song-slider{
+      padding: 0px;
+    }
+
+    *::-ms-backdrop, input[type=range].amplitude-song-slider::-ms-thumb{
+      height: 15px;
+      width: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: -8px;
+    }
+
+    *::-ms-backdrop, input[type=range].amplitude-song-slider::-ms-track{
+      border-width: 15px 0;
+      border-color: transparent;
+    }
+
+    *::-ms-backdrop, input[type=range].amplitude-song-slider::-ms-fill-lower {
+      background: #CFD8DC;
+      border-radius: 10px;
+    }
+
+    *::-ms-backdrop, input[type=range].amplitude-song-slider::-ms-fill-upper {
+      background: #CFD8DC;
+      border-radius: 10px;
+    }
+  }
+  @supports (-ms-ime-align:auto) {
+    input[type=range].amplitude-song-slider::-ms-thumb{
+      height: 15px;
+      width: 15px;
+      margin-top: 3px;
+    }
+  }
+  input[type=range]:focus::-ms-fill-lower {
+    background: #0075a9;
+  }
+  input[type=range]:focus::-ms-fill-upper {
+    background: #00adfb;
+  }
+}

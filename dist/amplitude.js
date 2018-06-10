@@ -760,8 +760,8 @@ var AmplitudeVisualSync = function () {
   	Iterate over all of the song sliders and set them to
   	0 essentially resetting them.
   */
-		for (var i = 0; i < songSliders.length; i++) {
-			songSliders[i].value = 0;
+		for (var _i = 0; _i < songSliders.length; _i++) {
+			songSliders[_i].value = 0;
 		}
 	}
 
@@ -780,8 +780,8 @@ var AmplitudeVisualSync = function () {
   	Iterate over all of the song buffered progress bar and
   	set them to 0 which is like re-setting them.
   */
-		for (var i = 0; i < songBufferedProgressBars.length; i++) {
-			songBufferedProgressBars[i].value = 0;
+		for (var _i2 = 0; _i2 < songBufferedProgressBars.length; _i2++) {
+			songBufferedProgressBars[_i2].value = 0;
 		}
 	}
 
@@ -793,8 +793,8 @@ var AmplitudeVisualSync = function () {
 	function resetSongPlayedProgressBars() {
 		var songPlayedProgressBars = document.getElementsByClassName("amplitude-song-played-progress");
 
-		for (var i = 0; i < songPlayedProgressBars.length; i++) {
-			songPlayedProgressBars[i].value = 0;
+		for (var _i3 = 0; _i3 < songPlayedProgressBars.length; _i3++) {
+			songPlayedProgressBars[_i3].value = 0;
 		}
 	}
 
@@ -810,8 +810,8 @@ var AmplitudeVisualSync = function () {
 		/*
   	Removes all of the active song containrs.
   */
-		for (var i = 0; i < songContainers.length; i++) {
-			songContainers[i].classList.remove('amplitude-active-song-container');
+		for (var _i4 = 0; _i4 < songContainers.length; _i4++) {
+			songContainers[_i4].classList.remove('amplitude-active-song-container');
 		}
 
 		/*
@@ -820,20 +820,20 @@ var AmplitudeVisualSync = function () {
   */
 		if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
 			if (document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"]')) {
-				var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"]');
+				var _songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"]');
 
-				for (i = 0; i < songContainers.length; i++) {
-					if (!songContainers[i].hasAttribute('amplitude-playlist')) {
-						songContainers[i].classList.add('amplitude-active-song-container');
+				for (var _i5 = 0; _i5 < _songContainers.length; _i5++) {
+					if (!_songContainers[_i5].hasAttribute('amplitude-playlist')) {
+						_songContainers[_i5].classList.add('amplitude-active-song-container');
 					}
 				}
 			}
 		} else {
 			if (document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"][amplitude-playlist="' + _config2.default.active_playlist + '"]')) {
-				var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"][amplitude-playlist="' + _config2.default.active_playlist + '"]');
+				var _songContainers2 = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="' + _config2.default.active_index + '"][amplitude-playlist="' + _config2.default.active_playlist + '"]');
 
-				for (i = 0; i < songContainers.length; i++) {
-					songContainers[i].classList.add('amplitude-active-song-container');
+				for (i = 0; i < _songContainers2.length; i++) {
+					_songContainers2[i].classList.add('amplitude-active-song-container');
 				}
 			}
 		}
@@ -870,22 +870,22 @@ var AmplitudeVisualSync = function () {
   	set these to the new values, or clear them if the active song
   	doesn't have the info set.
   */
-		for (var i = 0; i < songInfoElements.length; i++) {
+		for (var _i6 = 0; _i6 < songInfoElements.length; _i6++) {
 			/*
    	Get the info so we can check if the active meta data has the
    	key.
    */
-			var info = songInfoElements[i].getAttribute('amplitude-song-info');
+			var info = songInfoElements[_i6].getAttribute('amplitude-song-info');
 
 			/*
    	Get the song info element playlist.
    */
-			var playlist = songInfoElements[i].getAttribute('amplitude-playlist');
+			var playlist = songInfoElements[_i6].getAttribute('amplitude-playlist');
 
 			/*
    	Get the main song info flag.
    */
-			var main = songInfoElements[i].getAttribute('amplitude-main-song-info');
+			var main = songInfoElements[_i6].getAttribute('amplitude-main-song-info');
 
 			/*
    	If the playlists match or the element is a main element, then
@@ -899,9 +899,9 @@ var AmplitudeVisualSync = function () {
     */
 				if (_config2.default.active_metadata[info] != undefined) {
 					if (imageMetaDataKeys.indexOf(info) >= 0) {
-						songInfoElements[i].setAttribute('src', _config2.default.active_metadata[info]);
+						songInfoElements[_i6].setAttribute('src', _config2.default.active_metadata[info]);
 					} else {
-						songInfoElements[i].innerHTML = _config2.default.active_metadata[info];
+						songInfoElements[_i6].innerHTML = _config2.default.active_metadata[info];
 					}
 				} else {
 					/*
@@ -912,12 +912,12 @@ var AmplitudeVisualSync = function () {
      */
 					if (imageMetaDataKeys.indexOf(info) >= 0) {
 						if (_config2.default.default_album_art != '') {
-							songInfoElements[i].setAttribute('src', _config2.default.default_album_art);
+							songInfoElements[_i6].setAttribute('src', _config2.default.default_album_art);
 						} else {
-							songInfoElements[i].setAttribute('src', '');
+							songInfoElements[_i6].setAttribute('src', '');
 						}
 					} else {
-						songInfoElements[i].innerHTML = '';
+						songInfoElements[_i6].innerHTML = '';
 					}
 				}
 			}
@@ -954,17 +954,17 @@ var AmplitudeVisualSync = function () {
   	set these to the new values, or clear them if the active song
   	doesn't have the info set.
   */
-		for (var i = 0; i < songInfoElements.length; i++) {
+		for (var _i7 = 0; _i7 < songInfoElements.length; _i7++) {
 			/*
    	Get the info so we can check if the active meta data has the
    	key.
    */
-			var info = songInfoElements[i].getAttribute('amplitude-song-info');
+			var info = songInfoElements[_i7].getAttribute('amplitude-song-info');
 
 			/*
    	Get the song info element playlist.
    */
-			var elementPlaylist = songInfoElements[i].getAttribute('amplitude-playlist');
+			var elementPlaylist = songInfoElements[_i7].getAttribute('amplitude-playlist');
 
 			/*
    	If the playlists match or the element is a main element, then
@@ -978,9 +978,9 @@ var AmplitudeVisualSync = function () {
     */
 				if (song[info] != undefined) {
 					if (imageMetaDataKeys.indexOf(info) >= 0) {
-						songInfoElements[i].setAttribute('src', song[info]);
+						songInfoElements[_i7].setAttribute('src', song[info]);
 					} else {
-						songInfoElements[i].innerHTML = song[info];
+						songInfoElements[_i7].innerHTML = song[info];
 					}
 				} else {
 					/*
@@ -991,12 +991,12 @@ var AmplitudeVisualSync = function () {
      */
 					if (imageMetaDataKeys.indexOf(info) >= 0) {
 						if (song.default_album_art != '') {
-							songInfoElements[i].setAttribute('src', song.default_album_art);
+							songInfoElements[_i7].setAttribute('src', song.default_album_art);
 						} else {
-							songInfoElements[i].setAttribute('src', '');
+							songInfoElements[_i7].setAttribute('src', '');
 						}
 					} else {
-						songInfoElements[i].innerHTML = '';
+						songInfoElements[_i7].innerHTML = '';
 					}
 				}
 			}
@@ -1020,13 +1020,13 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the playback speed classes
   	applying the right speed class for visual purposes.
   */
-		for (var i = 0; i < playbackSpeedClasses.length; i++) {
+		for (var _i8 = 0; _i8 < playbackSpeedClasses.length; _i8++) {
 			/*
    	Removes all of the old playback speed classes.
    */
-			playbackSpeedClasses[i].classList.remove('amplitude-playback-speed-10');
-			playbackSpeedClasses[i].classList.remove('amplitude-playback-speed-15');
-			playbackSpeedClasses[i].classList.remove('amplitude-playback-speed-20');
+			playbackSpeedClasses[_i8].classList.remove('amplitude-playback-speed-10');
+			playbackSpeedClasses[_i8].classList.remove('amplitude-playback-speed-15');
+			playbackSpeedClasses[_i8].classList.remove('amplitude-playback-speed-20');
 
 			/*
    	Switch the current playback speed and apply the appropriate
@@ -1034,13 +1034,13 @@ var AmplitudeVisualSync = function () {
    */
 			switch (_config2.default.playback_speed) {
 				case 1:
-					playbackSpeedClasses[i].classList.add('amplitude-playback-speed-10');
+					playbackSpeedClasses[_i8].classList.add('amplitude-playback-speed-10');
 					break;
 				case 1.5:
-					playbackSpeedClasses[i].classList.add('amplitude-playback-speed-15');
+					playbackSpeedClasses[_i8].classList.add('amplitude-playback-speed-15');
 					break;
 				case 2:
-					playbackSpeedClasses[i].classList.add('amplitude-playback-speed-20');
+					playbackSpeedClasses[_i8].classList.add('amplitude-playback-speed-20');
 					break;
 			}
 		}
@@ -1061,8 +1061,8 @@ var AmplitudeVisualSync = function () {
   	Iterate over all of the song buffered progress bar and
   	set them to 0 which is like re-setting them.
   */
-		for (var i = 0; i < songBufferedProgressBars.length; i++) {
-			songBufferedProgressBars[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+		for (var _i9 = 0; _i9 < songBufferedProgressBars.length; _i9++) {
+			songBufferedProgressBars[_i9].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
 		}
 	}
 
@@ -1079,8 +1079,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the volume sliders for the song, setting the value
   	to the config value.
   */
-		for (var i = 0; i < amplitudeVolumeSliders.length; i++) {
-			amplitudeVolumeSliders[i].value = _config2.default.active_song.volume * 100;
+		for (var _i10 = 0; _i10 < amplitudeVolumeSliders.length; _i10++) {
+			amplitudeVolumeSliders[_i10].value = _config2.default.active_song.volume * 100;
 		}
 	}
 
@@ -1098,8 +1098,8 @@ var AmplitudeVisualSync = function () {
 		/*
   	Sets all of the elements to pause
   */
-		for (var i = 0; i < playPauseElements.length; i++) {
-			_helpers2.default.setElementPause(playPauseElements[i]);
+		for (var _i11 = 0; _i11 < playPauseElements.length; _i11++) {
+			_helpers2.default.setElementPause(playPauseElements[_i11]);
 		}
 	}
 
@@ -1127,17 +1127,17 @@ var AmplitudeVisualSync = function () {
   	Iterate over all of the play pause elements syncing the
   	display visually.
   */
-		for (var i = 0; i < playPauseElements.length; i++) {
+		for (var _i12 = 0; _i12 < playPauseElements.length; _i12++) {
 			/*
    	Determines what classes we should add and remove
    	from the elements.
    */
 			switch (state) {
 				case 'playing':
-					_helpers2.default.setElementPlay(playPauseElements[i]);
+					_helpers2.default.setElementPlay(playPauseElements[_i12]);
 					break;
 				case 'paused':
-					_helpers2.default.setElementPause(playPauseElements[i]);
+					_helpers2.default.setElementPause(playPauseElements[_i12]);
 					break;
 			}
 		}
@@ -1167,7 +1167,7 @@ var AmplitudeVisualSync = function () {
 		/*
   	Iterate over the play pause elements, syncing the state accordingly.
   */
-		for (var i = 0; i < playlistPlayPauseElements.length; i++) {
+		for (var _i13 = 0; _i13 < playlistPlayPauseElements.length; _i13++) {
 			/*
    	If the element has the same playlist attribute as the playlist
    	passed in and the state is playing, we set the element to
@@ -1175,11 +1175,11 @@ var AmplitudeVisualSync = function () {
    	means the element doesn't match the active playlist or the
    	state is paused.
    */
-			if (playlistPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist && state == 'playing') {
+			if (playlistPlayPauseElements[_i13].getAttribute('amplitude-playlist') == playlist && state == 'playing') {
 
-				_helpers2.default.setElementPlay(playlistPlayPauseElements[i]);
+				_helpers2.default.setElementPlay(playlistPlayPauseElements[_i13]);
 			} else {
-				_helpers2.default.setElementPause(playlistPlayPauseElements[i]);
+				_helpers2.default.setElementPause(playlistPlayPauseElements[_i13]);
 			}
 		}
 	}
@@ -1216,24 +1216,24 @@ var AmplitudeVisualSync = function () {
 			/*
    	Iterate over all of the song play pause elements
    */
-			for (var i = 0; i < songPlayPauseElements.length; i++) {
+			for (var _i14 = 0; _i14 < songPlayPauseElements.length; _i14++) {
 				/*
     	If the song element has an attribute for amplitude-playlist then
     	we set it to paused no matter what because the state of the player
     	is not in a playlist mode.
     */
-				if (songPlayPauseElements[i].hasAttribute('amplitude-playlist')) {
-					_helpers2.default.setElementPause(songPlayPauseElements[i]);
+				if (songPlayPauseElements[_i14].hasAttribute('amplitude-playlist')) {
+					_helpers2.default.setElementPause(songPlayPauseElements[_i14]);
 				} else {
 					/*
      	If the state of the song is playing and the song index matches the
      	index of the song we have, we set the element to playing otherwise
      	we set the element to paused.
      */
-					if (state == 'playing' && songPlayPauseElements[i].getAttribute('amplitude-song-index') == song) {
-						_helpers2.default.setElementPlay(songPlayPauseElements[i]);
+					if (state == 'playing' && songPlayPauseElements[_i14].getAttribute('amplitude-song-index') == song) {
+						_helpers2.default.setElementPlay(songPlayPauseElements[_i14]);
 					} else {
-						_helpers2.default.setElementPause(songPlayPauseElements[i]);
+						_helpers2.default.setElementPause(songPlayPauseElements[_i14]);
 					}
 				}
 			}
@@ -1243,18 +1243,18 @@ var AmplitudeVisualSync = function () {
    	amplitude-song-index attribute. Some have amplitude-playlist which
    	means they are individual songs within a playlist.
    */
-			var songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
+			var _songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
 
 			/*
    	Iterate over all of the individual play pause elements.
    */
-			for (var i = 0; i < songPlayPauseElements.length; i++) {
+			for (var _i15 = 0; _i15 < _songPlayPauseElements.length; _i15++) {
 				/*
     	Since we have an active playlist this time, we want any stand alone
     	songs to be set to paused since the scope is within a playlist.
     		We check to see if the element has an amplitude-playlist attribute.
     */
-				if (songPlayPauseElements[i].hasAttribute('amplitude-playlist')) {
+				if (_songPlayPauseElements[_i15].hasAttribute('amplitude-playlist')) {
 
 					/*
      	Check to see if the song index matches the index passed in and the
@@ -1262,17 +1262,17 @@ var AmplitudeVisualSync = function () {
      	state of the player is playing, then we set the element to play. If those
      	three parameters are not met, set the element to pause.
      */
-					if (songPlayPauseElements[i].getAttribute('amplitude-song-index') == song && songPlayPauseElements[i].getAttribute('amplitude-playlist') == playlist && state == 'playing') {
-						_helpers2.default.setElementPlay(songPlayPauseElements[i]);
+					if (_songPlayPauseElements[_i15].getAttribute('amplitude-song-index') == song && _songPlayPauseElements[_i15].getAttribute('amplitude-playlist') == playlist && state == 'playing') {
+						_helpers2.default.setElementPlay(_songPlayPauseElements[_i15]);
 					} else {
-						_helpers2.default.setElementPause(songPlayPauseElements[i]);
+						_helpers2.default.setElementPause(_songPlayPauseElements[_i15]);
 					}
 				} else {
 					/*
      	Set any individual songs (songs outside of a playlist scope) to pause
      	since we are in the scope of a playlist.
      */
-					_helpers2.default.setElementPause(songPlayPauseElements[i]);
+					_helpers2.default.setElementPause(_songPlayPauseElements[_i15]);
 				}
 			}
 		}
@@ -1296,13 +1296,13 @@ var AmplitudeVisualSync = function () {
   	'amplitude-repeat-off' class. If it's off, then do the
   	opposite.
   */
-		for (var i = 0; i < repeatClasses.length; i++) {
+		for (var _i16 = 0; _i16 < repeatClasses.length; _i16++) {
 			if (_config2.default.repeat) {
-				repeatClasses[i].classList.add('amplitude-repeat-on');
-				repeatClasses[i].classList.remove('amplitude-repeat-off');
+				repeatClasses[_i16].classList.add('amplitude-repeat-on');
+				repeatClasses[_i16].classList.remove('amplitude-repeat-off');
 			} else {
-				repeatClasses[i].classList.remove('amplitude-repeat-on');
-				repeatClasses[i].classList.add('amplitude-repeat-off');
+				repeatClasses[_i16].classList.remove('amplitude-repeat-on');
+				repeatClasses[_i16].classList.add('amplitude-repeat-off');
 			}
 		}
 	}
@@ -1325,13 +1325,13 @@ var AmplitudeVisualSync = function () {
   	is not-muted then we add the amplitude-not-muted classe and remove
   	the amplitude muted class otherwise we do the opposite.
   */
-		for (var i = 0; i < muteClasses.length; i++) {
+		for (var _i17 = 0; _i17 < muteClasses.length; _i17++) {
 			if (!state) {
-				muteClasses[i].classList.add('amplitude-not-muted');
-				muteClasses[i].classList.remove('amplitude-muted');
+				muteClasses[_i17].classList.add('amplitude-not-muted');
+				muteClasses[_i17].classList.remove('amplitude-muted');
 			} else {
-				muteClasses[i].classList.remove('amplitude-not-muted');
-				muteClasses[i].classList.add('amplitude-muted');
+				muteClasses[_i17].classList.remove('amplitude-not-muted');
+				muteClasses[_i17].classList.add('amplitude-muted');
 			}
 		}
 	}
@@ -1351,12 +1351,12 @@ var AmplitudeVisualSync = function () {
 		/*
   	Iterate over all of the shuffle buttons.
   */
-		for (var i = 0; i < shuffleButtons.length; i++) {
+		for (var _i18 = 0; _i18 < shuffleButtons.length; _i18++) {
 			/*
    	Ensure the shuffle button doesn't belong to a playlist. We have
    	a separate method for that.
    */
-			if (shuffleButtons[i].getAttribute('amplitude-playlist') == null) {
+			if (shuffleButtons[_i18].getAttribute('amplitude-playlist') == null) {
 				/*
     	If the state of the player is shuffled on, true, then
     	we add the 'amplitude-shuffle-on' class and remove the
@@ -1364,11 +1364,11 @@ var AmplitudeVisualSync = function () {
     	then we do the opposite.
     */
 				if (state) {
-					shuffleButtons[i].classList.add('amplitude-shuffle-on');
-					shuffleButtons[i].classList.remove('amplitude-shuffle-off');
+					shuffleButtons[_i18].classList.add('amplitude-shuffle-on');
+					shuffleButtons[_i18].classList.remove('amplitude-shuffle-off');
 				} else {
-					shuffleButtons[i].classList.add('amplitude-shuffle-off');
-					shuffleButtons[i].classList.remove('amplitude-shuffle-on');
+					shuffleButtons[_i18].classList.add('amplitude-shuffle-off');
+					shuffleButtons[_i18].classList.remove('amplitude-shuffle-on');
 				}
 			}
 		}
@@ -1390,12 +1390,12 @@ var AmplitudeVisualSync = function () {
 		/*
   	Iterate over all of the shuffle buttons
   */
-		for (var i = 0; i < shuffleButtons.length; i++) {
+		for (var _i19 = 0; _i19 < shuffleButtons.length; _i19++) {
 			/*
    	Ensure that the playlist the shuffle button belongs to matches the
    	playlist we are syncing the state for.
    */
-			if (shuffleButtons[i].getAttribute('amplitude-playlist') == playlist) {
+			if (shuffleButtons[_i19].getAttribute('amplitude-playlist') == playlist) {
 				/*
     	If the state of the playlist is shuffled on, true, then
     	we add the 'amplitude-shuffle-on' class and remove the
@@ -1403,11 +1403,11 @@ var AmplitudeVisualSync = function () {
     	then we do the opposite.
     */
 				if (state) {
-					shuffleButtons[i].classList.add('amplitude-shuffle-on');
-					shuffleButtons[i].classList.remove('amplitude-shuffle-off');
+					shuffleButtons[_i19].classList.add('amplitude-shuffle-on');
+					shuffleButtons[_i19].classList.remove('amplitude-shuffle-off');
 				} else {
-					shuffleButtons[i].classList.add('amplitude-shuffle-off');
-					shuffleButtons[i].classList.remove('amplitude-shuffle-on');
+					shuffleButtons[_i19].classList.add('amplitude-shuffle-off');
+					shuffleButtons[_i19].classList.remove('amplitude-shuffle-on');
 				}
 			}
 		}
@@ -1434,8 +1434,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the main sliders and sets the value to the
   	percentage of the song played.
   */
-		for (var i = 0; i < mainSongSliders.length; i++) {
-			mainSongSliders[i].value = location;
+		for (var _i20 = 0; _i20 < mainSongSliders.length; _i20++) {
+			mainSongSliders[_i20].value = location;
 		}
 	}
 
@@ -1461,8 +1461,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the playlist sliders and sets the value to the
   	percentage of the song played.
   */
-		for (var i = 0; i < playlistSongSliders.length; i++) {
-			playlistSongSliders[i].value = location;
+		for (var _i21 = 0; _i21 < playlistSongSliders.length; _i21++) {
+			playlistSongSliders[_i21].value = location;
 		}
 	}
 
@@ -1494,24 +1494,24 @@ var AmplitudeVisualSync = function () {
    	Iterates over all of the playlist sliders and set the value to the
    	percentage of the song played.
    */
-			for (var i = 0; i < songSliders.length; i++) {
-				songSliders[i].value = location;
+			for (var _i22 = 0; _i22 < songSliders.length; _i22++) {
+				songSliders[_i22].value = location;
 			}
 		} else {
 			/*
    	Get the individual song slider by index
    */
-			var songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-song-index="' + songIndex + '"]');
+			var _songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-song-index="' + songIndex + '"]');
 
 			/*
    	Iterats over all of the song sliders that have the index of
    	the song we are sliding. If the song doesn't have a playlist
    	attribute, we set the location.
    */
-			for (var i = 0; i < songSliders.length; i++) {
-				if (!songSliders[i].hasAttribute('amplitude-playlist')) {
+			for (var _i23 = 0; _i23 < _songSliders.length; _i23++) {
+				if (!_songSliders[_i23].hasAttribute('amplitude-playlist')) {
 					if (location != 0) {
-						songSliders[i].value = location;
+						_songSliders[_i23].value = location;
 					}
 				}
 			}
@@ -1534,8 +1534,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the sliders and sets their volume
   	to the volume of the song.
   */
-		for (var i = 0; i < volumeSliders.length; i++) {
-			volumeSliders[i].value = volume;
+		for (var _i24 = 0; _i24 < volumeSliders.length; _i24++) {
+			volumeSliders[_i24].value = volume;
 		}
 	}
 
@@ -1574,6 +1574,67 @@ var AmplitudeVisualSync = function () {
 	}
 
 	/**
+  * Sets the meta data for songs loaded in the songs array
+  */
+	function syncSongsMetaData() {
+		/*
+  	Define the image meta data keys. These are managed separately
+  	since we aren't actually changing the inner HTML of these elements.
+  */
+		var imageMetaDataKeys = ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
+
+		/*
+  	These are the ignored keys that we won't be worrying about displaying.
+  	Every other key in the song object can be displayed.
+  */
+		var ignoredKeys = ['url', 'live'];
+
+		/*
+  	Get all of the song info elements
+  */
+		var songInfoElements = document.querySelectorAll('[amplitude-song-info]');
+
+		/*
+  	Iterate over all of the song info elements. We will either
+  	set these to the new values, or clear them if the active song
+  	doesn't have the info set.
+  */
+		for (var _i25 = 0; _i25 < songInfoElements.length; _i25++) {
+
+			/*
+   	For this method we do not want the element to have any playlist or
+   	main song info. This way we aren't adjusting the main song information for the
+   	global player or the playlist player.
+   */
+			if (songInfoElements[_i25].getAttribute('amplitude-playlist') == null && songInfoElements[_i25].getAttribute('amplitude-main-song-info') == null && songInfoElements[_i25].getAttribute('amplitude-song-index') != null) {
+
+				/*
+    		Get the info so we can check if the active meta data has the
+    		key.
+    	*/
+				var info = songInfoElements[_i25].getAttribute('amplitude-song-info');
+				var index = songInfoElements[_i25].getAttribute('amplitude-song-index');
+
+				/*
+    	Make sure that the song index they are referencing is defined.
+    */
+				if (_config2.default.songs[index][info] != undefined) {
+
+					/*
+     	If it's an image meta data key, then we set the src attribute of
+     	the element. Otherwise we set the inner HTML of the element.
+     */
+					if (imageMetaDataKeys.indexOf(info) >= 0) {
+						songInfoElements[_i25].setAttribute('src', _config2.default.songs[index][info]);
+					} else {
+						songInfoElements[_i25].innerHTML = _config2.default.songs[index][info];
+					}
+				}
+			}
+		}
+	}
+
+	/**
  	Returns the publically available functions
  	@TODO Re-order to order of methods in module
  */
@@ -1601,7 +1662,8 @@ var AmplitudeVisualSync = function () {
 		syncPlaylistSliderLocation: syncPlaylistSliderLocation,
 		syncSongSliderLocation: syncSongSliderLocation,
 		syncVolumeSliderLocation: syncVolumeSliderLocation,
-		syncSongDuration: syncSongDuration
+		syncSongDuration: syncSongDuration,
+		syncSongsMetaData: syncSongsMetaData
 	};
 }();
 
@@ -4182,6 +4244,11 @@ var AmplitudeInitializer = function () {
 		_visual2.default.setPlayPauseButtonsToPause();
 
 		/*
+  	Sets the meta data for the songs automatically.
+  */
+		_visual2.default.syncSongsMetaData();
+
+		/*
   	If the user has autoplay enabled, then begin playing the song. Everything should
   	be configured for this to be ready to play.
   */
@@ -4762,10 +4829,10 @@ exports.default = {
     	Syncs amplitude individual song buttons
     */
 			} else {
-				var playlist = this.getAttribute('amplitude-playlist');
+				var _playlist = this.getAttribute('amplitude-playlist');
 				var songIndex = this.getAttribute('amplitude-song-index');
 
-				_helpers2.default.setSongPlayPause(playlist, songIndex);
+				_helpers2.default.setSongPlayPause(_playlist, songIndex);
 			}
 		}
 	},
@@ -4973,7 +5040,7 @@ exports.default = {
   */
 		if (this.getAttribute('amplitude-playlist-song-slider') == null && this.getAttribute('amplitude-main-song-slider') == null) {
 
-			var playlist = this.getAttribute('amplitude-playlist');
+			var _playlist2 = this.getAttribute('amplitude-playlist');
 			var songIndex = this.getAttribute('amplitude-song-index');
 
 			if (_config2.default.active_index == songIndex) {
@@ -4986,11 +5053,11 @@ exports.default = {
 
 				_visual2.default.syncMainSliderLocation();
 
-				if (_config2.default.active_playlist != '' && _config2.default.active_playlist != null && _config2.default.active_playlist == playlist) {
-					_visual2.default.syncPlaylistSliderLocation(playlist, location);
+				if (_config2.default.active_playlist != '' && _config2.default.active_playlist != null && _config2.default.active_playlist == _playlist2) {
+					_visual2.default.syncPlaylistSliderLocation(_playlist2, location);
 				}
 
-				_visual2.default.syncSongSliderLocation(playlist, songIndex, location);
+				_visual2.default.syncSongSliderLocation(_playlist2, songIndex, location);
 			}
 		}
 	},
@@ -5219,23 +5286,23 @@ exports.default = {
     	Gets the location and song index that is being skipped
     	to.
     */
-				var seconds = parseInt(this.getAttribute('amplitude-location'));
-				var songIndex = parseInt(this.getAttribute('amplitude-song-index'));
+				var _seconds = parseInt(this.getAttribute('amplitude-location'));
+				var _songIndex = parseInt(this.getAttribute('amplitude-song-index'));
 
 				/*
     	Changes the song to where it's being skipped and then
     	play the song.
     */
-				_helpers4.default.changeSong(songIndex);
+				_helpers4.default.changeSong(_songIndex);
 				_core2.default.play();
 
 				_visual2.default.syncMainPlayPause('playing');
-				_visual2.default.syncSongPlayPause(null, songIndex, 'playing');
+				_visual2.default.syncSongPlayPause(null, _songIndex, 'playing');
 
 				/*
     	Skip to the location in the song.
     */
-				_core2.default.skipToLocation(seconds);
+				_core2.default.skipToLocation(_seconds);
 			}
 		}
 	}
@@ -5560,7 +5627,7 @@ var Amplitude = function () {
 	/**
   * Plays a song at the index passed in from the songs array.
   *
-  * Public Accessor: Amplitude.playSongAtIndex( song )
+  * Public Accessor: Amplitude.playSongAtIndex( index )
   *
   * @access public
   * @param {number} index 	- The number representing the song in the songs array.
@@ -5755,8 +5822,8 @@ var Amplitude = function () {
 			}
 		} else {
 
-			for (var i = 0; i < _config2.default.playlist[playlist].length; i++) {
-				songsArray.push(_config2.default.songs[i]);
+			for (var _i = 0; _i < _config2.default.playlist[playlist].length; _i++) {
+				songsArray.push(_config2.default.songs[_i]);
 			}
 		}
 
@@ -6168,10 +6235,12 @@ var AmplitudeVisualSyncHelpers = function () {
 		/*
   	Gets all of the song hour selectors.
   */
+		var hourSelectors = [];
+
 		if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
-			var hourSelectors = ['.amplitude-current-hours[amplitude-main-current-hours="true"]', '.amplitude-current-hours[amplitude-playlist-current-hours="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-current-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			hourSelectors = ['.amplitude-current-hours[amplitude-main-current-hours="true"]', '.amplitude-current-hours[amplitude-playlist-current-hours="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-current-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		} else {
-			var hourSelectors = ['.amplitude-current-hours[amplitude-main-current-hours="true"]', '.amplitude-current-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			hourSelectors = ['.amplitude-current-hours[amplitude-main-current-hours="true"]', '.amplitude-current-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		}
 
 		/*
@@ -6249,10 +6318,12 @@ var AmplitudeVisualSyncHelpers = function () {
 		/*
   	Gets all of the song minute selectors.
   */
+		var minuteSelectors = [];
+
 		if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
-			var minuteSelectors = ['.amplitude-current-minutes[amplitude-main-current-minutes="true"]', '.amplitude-current-minutes[amplitude-playlist-current-minutes="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-current-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			minuteSelectors = ['.amplitude-current-minutes[amplitude-main-current-minutes="true"]', '.amplitude-current-minutes[amplitude-playlist-current-minutes="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-current-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		} else {
-			var minuteSelectors = ['.amplitude-current-minutes[amplitude-main-current-minutes="true"]', '.amplitude-current-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			minuteSelectors = ['.amplitude-current-minutes[amplitude-main-current-minutes="true"]', '.amplitude-current-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		}
 
 		/*
@@ -6326,10 +6397,12 @@ var AmplitudeVisualSyncHelpers = function () {
   	Gets all of the song second selectors. If the active playlist
   	is not null, then we get the playlist selectors.
   */
+		var secondSelectors = [];
+
 		if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
-			var secondSelectors = ['.amplitude-current-seconds[amplitude-main-current-seconds="true"]', '.amplitude-current-seconds[amplitude-playlist-current-seconds="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-current-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			secondSelectors = ['.amplitude-current-seconds[amplitude-main-current-seconds="true"]', '.amplitude-current-seconds[amplitude-playlist-current-seconds="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-current-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		} else {
-			var secondSelectors = ['.amplitude-current-seconds[amplitude-main-current-seconds="true"]', '.amplitude-current-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			secondSelectors = ['.amplitude-current-seconds[amplitude-main-current-seconds="true"]', '.amplitude-current-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		}
 
 		/*
@@ -6529,12 +6602,12 @@ var AmplitudeVisualSyncHelpers = function () {
 				/*
     	Get all of the song progress bars
     */
-				var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-song-index="' + _config2.default.active_index + '"]');
+				var _songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-song-index="' + _config2.default.active_index + '"]');
 
-				for (var i = 0; i < songPlayedProgressBars.length; i++) {
-					var max = songPlayedProgressBars[i].max;
+				for (var _i = 0; _i < _songPlayedProgressBars.length; _i++) {
+					var _max = _songPlayedProgressBars[_i].max;
 
-					songPlayedProgressBars[i].value = songPlayedPercentage / 100 * max;
+					_songPlayedProgressBars[_i].value = songPlayedPercentage / 100 * _max;
 				}
 			}
 		}
@@ -6574,10 +6647,12 @@ var AmplitudeVisualSyncHelpers = function () {
 		/*
   	Gets all of the song hour selectors.
   */
+		var hourSelectors = [];
+
 		if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
-			var hourSelectors = ['.amplitude-duration-hours[amplitude-main-duration-hours="true"]', '.amplitude-duration-hours[amplitude-playlist-duration-hours="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-duration-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			hourSelectors = ['.amplitude-duration-hours[amplitude-main-duration-hours="true"]', '.amplitude-duration-hours[amplitude-playlist-duration-hours="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-duration-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		} else {
-			var hourSelectors = ['.amplitude-duration-hours[amplitude-main-duration-hours="true"]', '.amplitude-duration-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			hourSelectors = ['.amplitude-duration-hours[amplitude-main-duration-hours="true"]', '.amplitude-duration-hours[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		}
 
 		/*
@@ -6635,10 +6710,12 @@ var AmplitudeVisualSyncHelpers = function () {
 		/*
   	Gets all of the song minute selectors.
   */
+		var minuteSelectors = [];
+
 		if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
-			var minuteSelectors = ['.amplitude-duration-minutes[amplitude-main-duration-minutes="true"]', '.amplitude-duration-minutes[amplitude-playlist-duration-minutes="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-duration-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			minuteSelectors = ['.amplitude-duration-minutes[amplitude-main-duration-minutes="true"]', '.amplitude-duration-minutes[amplitude-playlist-duration-minutes="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-duration-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		} else {
-			var minuteSelectors = ['.amplitude-duration-minutes[amplitude-main-duration-minutes="true"]', '.amplitude-duration-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			minuteSelectors = ['.amplitude-duration-minutes[amplitude-main-duration-minutes="true"]', '.amplitude-duration-minutes[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		}
 
 		/*
@@ -6692,10 +6769,12 @@ var AmplitudeVisualSyncHelpers = function () {
   	Gets all of the song second selectors. If the active playlist
   	is not null, then we get the playlist selectors.
   */
+		var secondSelectors = [];
+
 		if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
-			var secondSelectors = ['.amplitude-duration-seconds[amplitude-main-duration-seconds="true"]', '.amplitude-duration-seconds[amplitude-playlist-duration-seconds="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-duration-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			secondSelectors = ['.amplitude-duration-seconds[amplitude-main-duration-seconds="true"]', '.amplitude-duration-seconds[amplitude-playlist-duration-seconds="true"][amplitude-playlist="' + _config2.default.active_playlist + '"]', '.amplitude-duration-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		} else {
-			var secondSelectors = ['.amplitude-duration-seconds[amplitude-main-duration-seconds="true"]', '.amplitude-duration-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
+			secondSelectors = ['.amplitude-duration-seconds[amplitude-main-duration-seconds="true"]', '.amplitude-duration-seconds[amplitude-song-index="' + _config2.default.active_index + '"]'];
 		}
 
 		/*

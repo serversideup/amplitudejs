@@ -1,0 +1,97 @@
+div#amplitude-right{
+  padding: 0px;
+  overflow-y: scroll;
+
+  div.song{
+    cursor: pointer;
+    padding: 10px;
+
+    div.song-now-playing-icon-container{
+      float: left;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+
+      img.now-playing{
+        display: none;
+        margin-top: 15px;
+      }
+    }
+
+    div.play-button-container{
+      display: none;
+      background: url('../img/list-play-light.png') no-repeat;
+      width: 22px;
+      height: 22px;
+      margin-top: 10px;
+    }
+
+    div.play-button-container:hover{
+      background: url('../img/list-play-hover.png') no-repeat;
+    }
+
+    &.amplitude-active-song-container{
+      div.song-now-playing-icon-container{
+        img.now-playing{
+          display: block;
+        }
+      }
+      &:hover{
+        div.play-button-container{
+          display: none;
+        }
+      }
+    }
+
+    div.song-meta-data{
+      float: left;
+      width: calc( 100% - 110px );
+
+      span.song-title{
+        color: #272726;
+        font-size: 16px;
+        display: block;
+        font-weight: 300;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      span.song-artist{
+        color: #607D8B;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    img.bandcamp-grey{
+      float: left;
+      display: block;
+      margin-top: 10px;
+    }
+    img.bandcamp-white{
+      float: left;
+      display: none;
+      margin-top: 10px;
+    }
+    span.song-duration{
+      float: left;
+      width: 55px;
+      text-align: center;
+      line-height: 45px;
+      color: #607D8B;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  div.song:after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

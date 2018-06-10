@@ -36,11 +36,11 @@ $(document).ready(function(){
 		jQuery(this).css('background-color', '#00A0FF');
 		jQuery(this).find('.song-meta-data .song-title').css('color', '#FFFFFF');
 		jQuery(this).find('.song-meta-data .song-artist').css('color', '#FFFFFF');
-		
+
 		if( !jQuery(this).hasClass('amplitude-active-song-container') ){
 			jQuery(this).find('.play-button-container').css('display', 'block');
 		}
-		
+
 		jQuery(this).find('img.bandcamp-grey').css('display', 'none');
 		jQuery(this).find('img.bandcamp-white').css('display', 'block');
 		jQuery(this).find('.song-duration').css('color', '#FFFFFF');
@@ -72,8 +72,10 @@ $(document).ready(function(){
 */
 function adjustPlayerHeights(){
 	if( Foundation.MediaQuery.atLeast('medium') ) {
-		$('#amplitude-right').css('max-height', $('#amplitude-left').height()+'px');
+		var left = $('div#amplitude-left').width();
+		var bottom = $('div#player-left-bottom').outerHeight();
+		$('#amplitude-right').css('height', ( left + bottom )+'px');
 	}else{
-		$('#amplitude-right').css('max-height', 'initial' );
+		$('#amplitude-right').css('height', 'initial');
 	}
 }

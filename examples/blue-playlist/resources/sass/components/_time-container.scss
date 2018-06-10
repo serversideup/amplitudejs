@@ -1,0 +1,25 @@
+div#time-container{
+  span.current-time{
+    color: #607D8B;
+    font-size: 14px;
+    font-weight: 700;
+    float: left;
+    width: 15%;
+    text-align: center;
+  }
+
+  span.duration{
+    color: #607D8B;
+    font-size: 14px;
+    font-weight: 700;
+    float: left;
+    width: 15%;
+    text-align: center;
+  }
+}
+
+div#time-container:after{
+  content: "";
+  display: table;
+  clear: both;
+}

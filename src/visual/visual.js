@@ -16,7 +16,7 @@ import AmplitudeVisualSyncHelpers from './helpers.js';
  *
  * @module visual/AmplitudeVisualSync
  */
-var AmplitudeVisualSync = (function() {
+let AmplitudeVisualSync = (function() {
 	/**
 	 * Visually displays the current time on the screen. This is called on
 	 * time update for the current song.
@@ -77,13 +77,13 @@ var AmplitudeVisualSync = (function() {
 	 * @access public
 	 */
 	function resetSongSliders(){
-		var songSliders = document.getElementsByClassName("amplitude-song-slider");
+		let songSliders = document.getElementsByClassName("amplitude-song-slider");
 
 		/*
 			Iterate over all of the song sliders and set them to
 			0 essentially resetting them.
 		*/
-		for( var i = 0; i < songSliders.length; i++ ){
+		for( let i = 0; i < songSliders.length; i++ ){
 			songSliders[i].value = 0;
 		}
 	}
@@ -97,13 +97,13 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the song buffered progress bars.
 		*/
-		var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
+		let songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
 
 		/*
 			Iterate over all of the song buffered progress bar and
 			set them to 0 which is like re-setting them.
 		*/
-		for( var i = 0; i < songBufferedProgressBars.length; i++ ){
+		for( let i = 0; i < songBufferedProgressBars.length; i++ ){
 			songBufferedProgressBars[i].value = 0;
 		}
 	}
@@ -114,9 +114,9 @@ var AmplitudeVisualSync = (function() {
 	 * @access public
 	 */
 	function resetSongPlayedProgressBars(){
-		var songPlayedProgressBars = document.getElementsByClassName("amplitude-song-played-progress");
+		let songPlayedProgressBars = document.getElementsByClassName("amplitude-song-played-progress");
 
-		for( var i = 0; i < songPlayedProgressBars.length; i++ ){
+		for( let i = 0; i < songPlayedProgressBars.length; i++ ){
 			songPlayedProgressBars[i].value = 0;
 		}
 	}
@@ -128,12 +128,12 @@ var AmplitudeVisualSync = (function() {
 	 * @access public
 	 */
 	function setActiveContainer(){
-		var songContainers = document.getElementsByClassName('amplitude-song-container');
+		let songContainers = document.getElementsByClassName('amplitude-song-container');
 
 		/*
 			Removes all of the active song containrs.
 		*/
-		for( var i = 0; i < songContainers.length; i++ ){
+		for( let i = 0; i < songContainers.length; i++ ){
 			songContainers[i].classList.remove('amplitude-active-song-container');
 		}
 
@@ -143,9 +143,9 @@ var AmplitudeVisualSync = (function() {
 		*/
 		if( config.active_playlist == '' || config.active_playlist == null ){
 			if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]') ){
-				var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]');
+				let songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"]');
 
-				for( i = 0; i < songContainers.length; i++ ){
+				for( let i = 0; i < songContainers.length; i++ ){
 					if( !songContainers[i].hasAttribute('amplitude-playlist') ){
 						songContainers[i].classList.add('amplitude-active-song-container');
 					}
@@ -153,7 +153,7 @@ var AmplitudeVisualSync = (function() {
 			}
 		}else{
 			if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]') ){
-				var songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]');
+				let songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]');
 
 				for( i = 0; i < songContainers.length; i++ ){
 					songContainers[i].classList.add('amplitude-active-song-container');
@@ -175,40 +175,40 @@ var AmplitudeVisualSync = (function() {
 			Define the image meta data keys. These are managed separately
 			since we aren't actually changing the inner HTML of these elements.
 		*/
-		var imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
+		let imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
 
 		/*
 			These are the ignored keys that we won't be worrying about displaying.
 			Every other key in the song object can be displayed.
 		*/
-		var ignoredKeys 		= ['url', 'live'];
+		let ignoredKeys 		= ['url', 'live'];
 
 		/*
 			Get all of the song info elements
 		*/
-		var songInfoElements = document.querySelectorAll('[amplitude-song-info]');
+		let songInfoElements = document.querySelectorAll('[amplitude-song-info]');
 
 		/*
 			Iterate over all of the song info elements. We will either
 			set these to the new values, or clear them if the active song
 			doesn't have the info set.
 		*/
-		for( var i = 0; i < songInfoElements.length; i++ ){
+		for( let i = 0; i < songInfoElements.length; i++ ){
 			/*
 				Get the info so we can check if the active meta data has the
 				key.
 			*/
-			var info = songInfoElements[i].getAttribute('amplitude-song-info');
+			let info = songInfoElements[i].getAttribute('amplitude-song-info');
 
 			/*
 				Get the song info element playlist.
 			*/
-			var playlist = songInfoElements[i].getAttribute('amplitude-playlist');
+			let playlist = songInfoElements[i].getAttribute('amplitude-playlist');
 
 			/*
 				Get the main song info flag.
 			*/
-			var main = songInfoElements[i].getAttribute('amplitude-main-song-info');
+			let main = songInfoElements[i].getAttribute('amplitude-main-song-info');
 
 			/*
 				If the playlists match or the element is a main element, then
@@ -259,35 +259,35 @@ var AmplitudeVisualSync = (function() {
 			Define the image meta data keys. These are managed separately
 			since we aren't actually changing the inner HTML of these elements.
 		*/
-		var imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
+		let imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
 
 		/*
 			These are the ignored keys that we won't be worrying about displaying.
 			Every other key in the song object can be displayed.
 		*/
-		var ignoredKeys 		= ['url', 'live'];
+		let ignoredKeys 		= ['url', 'live'];
 
 		/*
 			Get all of the song info elements
 		*/
-		var songInfoElements = document.querySelectorAll('[amplitude-song-info][amplitude-playlist="'+playlist+'"]');
+		let songInfoElements = document.querySelectorAll('[amplitude-song-info][amplitude-playlist="'+playlist+'"]');
 
 		/*
 			Iterate over all of the song info elements. We will either
 			set these to the new values, or clear them if the active song
 			doesn't have the info set.
 		*/
-		for( var i = 0; i < songInfoElements.length; i++ ){
+		for( let i = 0; i < songInfoElements.length; i++ ){
 			/*
 				Get the info so we can check if the active meta data has the
 				key.
 			*/
-			var info = songInfoElements[i].getAttribute('amplitude-song-info');
+			let info = songInfoElements[i].getAttribute('amplitude-song-info');
 
 			/*
 				Get the song info element playlist.
 			*/
-			var elementPlaylist = songInfoElements[i].getAttribute('amplitude-playlist');
+		 	let elementPlaylist = songInfoElements[i].getAttribute('amplitude-playlist');
 
 			/*
 				If the playlists match or the element is a main element, then
@@ -337,13 +337,13 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the playback speed classes.
 		*/
-		var playbackSpeedClasses = document.getElementsByClassName("amplitude-playback-speed");
+		let playbackSpeedClasses = document.getElementsByClassName("amplitude-playback-speed");
 
 		/*
 			Iterates over all of the playback speed classes
 			applying the right speed class for visual purposes.
 		*/
-		for( var i = 0; i < playbackSpeedClasses.length; i++ ){
+		for( let i = 0; i < playbackSpeedClasses.length; i++ ){
 			/*
 				Removes all of the old playback speed classes.
 			*/
@@ -378,13 +378,13 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the song buffered progress bars.
 		*/
-		var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
+		let songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
 
 		/*
 			Iterate over all of the song buffered progress bar and
 			set them to 0 which is like re-setting them.
 		*/
-		for( var i = 0; i < songBufferedProgressBars.length; i++ ){
+		for( let i = 0; i < songBufferedProgressBars.length; i++ ){
 			songBufferedProgressBars[i].value = parseFloat( parseFloat( config.buffered ) / 100 );
 		}
 	}
@@ -396,13 +396,13 @@ var AmplitudeVisualSync = (function() {
 	 * @access public
 	 */
 	function syncVolumeSliders(){
-		var amplitudeVolumeSliders = document.getElementsByClassName("amplitude-volume-slider");
+		let amplitudeVolumeSliders = document.getElementsByClassName("amplitude-volume-slider");
 
 		/*
 			Iterates over all of the volume sliders for the song, setting the value
 			to the config value.
 		*/
-		for( var i = 0; i < amplitudeVolumeSliders.length; i++ ){
+		for( let i = 0; i < amplitudeVolumeSliders.length; i++ ){
 			amplitudeVolumeSliders[i].value = config.active_song.volume * 100;
 		}
 	}
@@ -416,12 +416,12 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the play pause elements
 		*/
-		var playPauseElements = document.querySelectorAll('.amplitude-play-pause');
+		let playPauseElements = document.querySelectorAll('.amplitude-play-pause');
 
 		/*
 			Sets all of the elements to pause
 		*/
-		for( var i = 0; i < playPauseElements.length; i++ ){
+		for( let i = 0; i < playPauseElements.length; i++ ){
 			AmplitudeVisualSyncHelpers.setElementPause( playPauseElements[i] );
 		}
 	}
@@ -450,7 +450,7 @@ var AmplitudeVisualSync = (function() {
 			Iterate over all of the play pause elements syncing the
 			display visually.
 		*/
-		for( var i = 0; i < playPauseElements.length; i++ ){
+		for( let i = 0; i < playPauseElements.length; i++ ){
 			/*
 				Determines what classes we should add and remove
 				from the elements.
@@ -485,12 +485,12 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Get all of the main playlist play pause elements
 		*/
-		var playlistPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-playlist-main-play-pause="true"]');
+		let playlistPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-playlist-main-play-pause="true"]');
 
 		/*
 			Iterate over the play pause elements, syncing the state accordingly.
 		*/
-		for( var i = 0; i < playlistPlayPauseElements.length; i++ ){
+		for( let i = 0; i < playlistPlayPauseElements.length; i++ ){
 			/*
 				If the element has the same playlist attribute as the playlist
 				passed in and the state is playing, we set the element to
@@ -535,12 +535,12 @@ var AmplitudeVisualSync = (function() {
 				amplitude-song-index attribute. Some have amplitude-playlist which
 				means they are individual songs within a playlist.
 			*/
-			var songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
+			let songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
 
 			/*
 				Iterate over all of the song play pause elements
 			*/
-			for( var i = 0; i < songPlayPauseElements.length; i++ ){
+			for( let i = 0; i < songPlayPauseElements.length; i++ ){
 				/*
 					If the song element has an attribute for amplitude-playlist then
 					we set it to paused no matter what because the state of the player
@@ -567,12 +567,12 @@ var AmplitudeVisualSync = (function() {
 				amplitude-song-index attribute. Some have amplitude-playlist which
 				means they are individual songs within a playlist.
 			*/
-			var songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
+			let songPlayPauseElements = document.querySelectorAll('.amplitude-play-pause[amplitude-song-index]');
 
 			/*
 				Iterate over all of the individual play pause elements.
 			*/
-			for( var i = 0; i < songPlayPauseElements.length; i++ ){
+			for( let i = 0; i < songPlayPauseElements.length; i++ ){
 				/*
 					Since we have an active playlist this time, we want any stand alone
 					songs to be set to paused since the scope is within a playlist.
@@ -615,7 +615,7 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the repeat classes
 		*/
-		var repeatClasses = document.getElementsByClassName("amplitude-repeat");
+		let repeatClasses = document.getElementsByClassName("amplitude-repeat");
 
 		/*
 			Iterate over all of the repeat classes. If repeat is on,
@@ -623,7 +623,7 @@ var AmplitudeVisualSync = (function() {
 			'amplitude-repeat-off' class. If it's off, then do the
 			opposite.
 		*/
-		for( var i = 0; i < repeatClasses.length; i++ ){
+		for( let i = 0; i < repeatClasses.length; i++ ){
 			if( config.repeat ){
 				repeatClasses[i].classList.add('amplitude-repeat-on');
 				repeatClasses[i].classList.remove('amplitude-repeat-off');
@@ -645,14 +645,14 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Get all of the mute buttons.
 		*/
-		var muteClasses = document.getElementsByClassName("amplitude-mute");
+		let muteClasses = document.getElementsByClassName("amplitude-mute");
 
 		/*
 			Iterate over all of the mute classes. If the state of the player
 			is not-muted then we add the amplitude-not-muted classe and remove
 			the amplitude muted class otherwise we do the opposite.
 		*/
-		for( var i = 0; i < muteClasses.length; i++ ){
+		for( let i = 0; i < muteClasses.length; i++ ){
 			if( !state ){
 				muteClasses[i].classList.add( 'amplitude-not-muted' );
 				muteClasses[i].classList.remove( 'amplitude-muted' );
@@ -673,12 +673,12 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets the shuffle buttons.
 		*/
-		var shuffleButtons = document.getElementsByClassName("amplitude-shuffle");
+		let shuffleButtons = document.getElementsByClassName("amplitude-shuffle");
 
 		/*
 			Iterate over all of the shuffle buttons.
 		*/
-		for( var i = 0; i < shuffleButtons.length; i++ ){
+		for( let i = 0; i < shuffleButtons.length; i++ ){
 			/*
 				Ensure the shuffle button doesn't belong to a playlist. We have
 				a separate method for that.
@@ -712,12 +712,12 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the shuffle buttons.
 		*/
-		var shuffleButtons = document.getElementsByClassName("amplitude-shuffle");
+		let shuffleButtons = document.getElementsByClassName("amplitude-shuffle");
 
 		/*
 			Iterate over all of the shuffle buttons
 		*/
-		for( var i = 0; i < shuffleButtons.length; i++ ){
+		for( let i = 0; i < shuffleButtons.length; i++ ){
 			/*
 				Ensure that the playlist the shuffle button belongs to matches the
 				playlist we are syncing the state for.
@@ -755,13 +755,13 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets the main song sliders
 		*/
-		var mainSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-main-song-slider="true"]');
+		let mainSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-main-song-slider="true"]');
 
 		/*
 			Iterates over all of the main sliders and sets the value to the
 			percentage of the song played.
 		*/
-		for( var i = 0; i < mainSongSliders.length; i++ ){
+		for( let i = 0; i < mainSongSliders.length; i++ ){
 			mainSongSliders[i].value = location;
 		}
 	}
@@ -782,13 +782,13 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets the playlist song sliders
 		*/
-		var playlistSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-playlist-song-slider="true"][amplitude-playlist="'+playlist+'"]');
+		let playlistSongSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-playlist-song-slider="true"][amplitude-playlist="'+playlist+'"]');
 
 		/*
 			Iterates over all of the playlist sliders and sets the value to the
 			percentage of the song played.
 		*/
-		for( var i = 0; i < playlistSongSliders.length; i++ ){
+		for( let i = 0; i < playlistSongSliders.length; i++ ){
 			playlistSongSliders[i].value = location;
 		}
 	}
@@ -815,27 +815,27 @@ var AmplitudeVisualSync = (function() {
 				Gets the song sliders for the individual songs and the
 				playlist
 			*/
-			var songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-playlist="'+playlist+'"][amplitude-song-index="'+songIndex+'"]');
+			let songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-playlist="'+playlist+'"][amplitude-song-index="'+songIndex+'"]');
 
 			/*
 				Iterates over all of the playlist sliders and set the value to the
 				percentage of the song played.
 			*/
-			for( var i = 0; i < songSliders.length; i++ ){
+			for( let i = 0; i < songSliders.length; i++ ){
 				songSliders[i].value = location;
 			}
 		}else{
 			/*
 				Get the individual song slider by index
 			*/
-			var songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-song-index="'+songIndex+'"]');
+			let songSliders = document.querySelectorAll('.amplitude-song-slider[amplitude-song-index="'+songIndex+'"]');
 
 			/*
 				Iterats over all of the song sliders that have the index of
 				the song we are sliding. If the song doesn't have a playlist
 				attribute, we set the location.
 			*/
-			for( var i = 0; i < songSliders.length; i++ ){
+			for( let i = 0; i < songSliders.length; i++ ){
 				if( !songSliders[i].hasAttribute('amplitude-playlist') ){
 					if( location != 0 ){
 						songSliders[i].value = location;
@@ -855,13 +855,13 @@ var AmplitudeVisualSync = (function() {
 		/*
 			Gets all of the volume sliders
 		*/
-		var volumeSliders = document.querySelectorAll('.amplitude-volume-slider');
+		let volumeSliders = document.querySelectorAll('.amplitude-volume-slider');
 
 		/*
 			Iterates over all of the sliders and sets their volume
 			to the volume of the song.
 		*/
-		for( var i = 0; i < volumeSliders.length; i++ ){
+		for( let i = 0; i < volumeSliders.length; i++ ){
 			volumeSliders[i].value = volume;
 		}
 	}
@@ -901,6 +901,69 @@ var AmplitudeVisualSync = (function() {
 	}
 
 	/**
+	 * Sets the meta data for songs loaded in the songs array
+	 */
+	 function syncSongsMetaData(){
+		 /*
+ 			Define the image meta data keys. These are managed separately
+ 			since we aren't actually changing the inner HTML of these elements.
+ 		*/
+ 		let imageMetaDataKeys 	= ['cover_art_url', 'station_art_url', 'podcast_episode_cover_art_url'];
+
+ 		/*
+ 			These are the ignored keys that we won't be worrying about displaying.
+ 			Every other key in the song object can be displayed.
+ 		*/
+ 		let ignoredKeys 		= ['url', 'live'];
+
+ 		/*
+ 			Get all of the song info elements
+ 		*/
+ 		let songInfoElements = document.querySelectorAll('[amplitude-song-info]');
+
+ 		/*
+ 			Iterate over all of the song info elements. We will either
+ 			set these to the new values, or clear them if the active song
+ 			doesn't have the info set.
+ 		*/
+ 		for( let i = 0; i < songInfoElements.length; i++ ){
+
+			/*
+				For this method we do not want the element to have any playlist or
+				main song info. This way we aren't adjusting the main song information for the
+				global player or the playlist player.
+			*/
+			if( songInfoElements[i].getAttribute('amplitude-playlist') == null
+					&& songInfoElements[i].getAttribute('amplitude-main-song-info') == null
+				  && songInfoElements[i].getAttribute('amplitude-song-index') != null ){
+
+					/*
+		 				Get the info so we can check if the active meta data has the
+		 				key.
+		 			*/
+		 			let info = songInfoElements[i].getAttribute('amplitude-song-info');
+					let index = songInfoElements[i].getAttribute('amplitude-song-index');
+
+					/*
+						Make sure that the song index they are referencing is defined.
+					*/
+					if( config.songs[index][info] != undefined ){
+
+						/*
+							If it's an image meta data key, then we set the src attribute of
+							the element. Otherwise we set the inner HTML of the element.
+						*/
+						if( imageMetaDataKeys.indexOf( info ) >= 0 ){
+							songInfoElements[i].setAttribute('src', config.songs[index][info]);
+						}else{
+							songInfoElements[i].innerHTML = config.songs[index][info];
+						}
+					}
+	 			}
+		}
+	}
+
+	/**
 		Returns the publically available functions
 		@TODO Re-order to order of methods in module
 	*/
@@ -928,7 +991,8 @@ var AmplitudeVisualSync = (function() {
 		syncPlaylistSliderLocation: syncPlaylistSliderLocation,
 		syncSongSliderLocation: syncSongSliderLocation,
 		syncVolumeSliderLocation: syncVolumeSliderLocation,
-		syncSongDuration: syncSongDuration
+		syncSongDuration: syncSongDuration,
+		syncSongsMetaData: syncSongsMetaData
 	}
 })();
 

@@ -28,7 +28,7 @@ import AmplitudeCoreHelpers from '../core/helpers.js';
  *
  * @module events/AmplitudeEventsHelpers
  */
-var AmplitudeEventsHelpers = (function() {
+let AmplitudeEventsHelpers = (function() {
 	/**
 	 * Computes the current song time. Breaks down where the song is into
 	 * hours, minutes, seconds and formats it to be displayed to the user.
@@ -39,23 +39,23 @@ var AmplitudeEventsHelpers = (function() {
 		/*
 			Initialize the current time object that will be returned.
 		*/
-		var currentTime = {};
+		let currentTime = {};
 
 		/*
 			Computes the current seconds for the song.
 		*/
-		var currentSeconds = ( Math.floor( config.active_song.currentTime % 60 ) < 10 ? '0' : '' ) +
+		let currentSeconds = ( Math.floor( config.active_song.currentTime % 60 ) < 10 ? '0' : '' ) +
 							    Math.floor( config.active_song.currentTime % 60 );
 
 		/*
 			Computes the current minutes for the song.
 		*/
-		var currentMinutes = Math.floor( config.active_song.currentTime / 60 );
+		let currentMinutes = Math.floor( config.active_song.currentTime / 60 );
 
 		/*
 			Initialize the current hours variable.
 		*/
-		var currentHours = '00';
+		let currentHours = '00';
 
 		/*
 			If the current minutes is less than 10, we add a leading 0.
@@ -109,23 +109,23 @@ var AmplitudeEventsHelpers = (function() {
 		/*
 			Initialize the song duration object that will be returned.
 		*/
-		var songDuration = {};
+		let songDuration = {};
 
 		/*
 			Computes the duration of the song's seconds.
 		*/
-		var songDurationSeconds = ( Math.floor( config.active_song.duration % 60 ) < 10 ? '0' : '' ) +
+		let songDurationSeconds = ( Math.floor( config.active_song.duration % 60 ) < 10 ? '0' : '' ) +
 									  		Math.floor( config.active_song.duration % 60 );
 
 		/*
 			Computes the duration of the song's minutes.
 		*/
-		var songDurationMinutes = Math.floor( config.active_song.duration / 60 );
+		let songDurationMinutes = Math.floor( config.active_song.duration / 60 );
 
 		/*
 			Initialize the hours duration variable.
 		*/
-		var songDurationHours = '00';
+		let songDurationHours = '00';
 
 		/*
 			If the song duration minutes is less than 10, we add a leading 0.
@@ -497,11 +497,11 @@ var AmplitudeEventsHelpers = (function() {
 			Initializes the next index variable. This will be the
 			index of the song that is next.
 		*/
-		var nextIndex = 0;
+		let nextIndex = 0;
         /*
           Ensure we don't loop in the playlist if config.repeat is not true
         */
-		var endOfList = false;
+		let endOfList = false;
 
 		/*
 			If the shuffle is on, we use the shuffled list of
@@ -593,14 +593,14 @@ var AmplitudeEventsHelpers = (function() {
 		/*
 			Initializes the next index
 		*/
-		var nextIndex = 0;
+		let nextIndex = 0;
 
     /*
       Used to determine whether the playlist looped over
       If it did, only play if repeat is allowed, end otherwise
       @TODO: Different settings for song loop, in-playlist loop and global loop
     */
-		var endOfList = false;
+		let endOfList = false;
 		/*
 			If the playlist is shuffled we get the next index of the playlist.
 		*/
@@ -608,7 +608,7 @@ var AmplitudeEventsHelpers = (function() {
 			/*
 				Gets the shuffled playlist's active song index.
 			*/
-			var shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
+			let shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
 
 			/*
 				If the index + 1 is less than the length of the playlist, we increment
@@ -637,7 +637,7 @@ var AmplitudeEventsHelpers = (function() {
 				Gets the index of the active song within the scope
 				of the playlist.
 			*/
-			var playlistActiveSongIndex = config.playlists[ playlist ].indexOf( parseInt( config.active_index ) );
+			let playlistActiveSongIndex = config.playlists[ playlist ].indexOf( parseInt( config.active_index ) );
 
 			/*
 				Checks to see if the next index is still less than the length of the playlist.
@@ -701,7 +701,7 @@ var AmplitudeEventsHelpers = (function() {
 			Initializes the prev index variable. This will be the
 			index of the song that is next.
 		*/
-		var prevIndex = 0;
+		let prevIndex = 0;
 
 		/*
 			If the shuffle is on for the individual songs, we get the previous
@@ -784,7 +784,7 @@ var AmplitudeEventsHelpers = (function() {
 			Initializes the prev index variable. This will be the
 			index of the song that is next.
 		*/
-		var prevIndex = 0;
+		let prevIndex = 0;
 
 		/*
 			If the shuffle is on for the playlist, we get the previous
@@ -794,7 +794,7 @@ var AmplitudeEventsHelpers = (function() {
 			/*
 				Gets the active song index for the shuffled playlist
 			*/
-			var shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
+			let shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
 
 			/*
 				If the shuffled song active index is greater than or equal to 0,
@@ -821,7 +821,7 @@ var AmplitudeEventsHelpers = (function() {
 			/*
 				Gets the active song index for the playlist
 			*/
-			var playlistActiveSongIndex = config.playlists[ playlist ].indexOf( parseInt( config.active_index ) );
+			let playlistActiveSongIndex = config.playlists[ playlist ].indexOf( parseInt( config.active_index ) );
 
 			/*
 				If the active song index in the playlist - 1 is greater than

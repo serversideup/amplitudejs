@@ -456,7 +456,7 @@ the "default_album_art" key.  Once again, this is handled on initialization.
 Debug mode outputs verbose updates when Amplitude actions take place to see the current config and statuses
 of the AmplitudeJS player. To turn on AmplitudeJS debug mode you can set it in the config or call:
 
-```
+```javascript
 Amplitude.setDebug( true );
 ```
 
@@ -647,7 +647,7 @@ clicked, the playlist will play the first song in the playlist assigned to the b
 play pause button add an element with the class of 'amplitude-play-pause' an attribute of 'amplitude-playlist-main-play-pause="true"' and an
 attribute of 'amplitude-playlist="{playlist-index}'.
 
-```
+```html
 <span class="button amplitude-play-pause amplitude-paused" amplitude-playlist-main-play-pause="true" amplitude-playlist="{index}"></span>
 ```
 
@@ -657,12 +657,12 @@ If the song is in a playlist you will have to add an attribute stating the playl
 also have to have an attribute of the song index on the element.
 
 Playlist Song:
-```
+```html
 <span class="button amplitude-play-pause" amplitude-song-index="{song_index}" amplitude-playlist="{song_playlist}"></span>
 ```
 
 Individual Song:
-```
+```html
 <span class="button amplitude-play-pause amplitude-paused" amplitude-song-index="{song_index}"></span>
 ```
 
@@ -883,12 +883,12 @@ text into any element defined appropriately. This give much more flexibility whe
 in a variety of audio scenarios such as for radio stations and podcasts. To add an element that contains
 a piece of meta data regarding the now playing song simply add:
 
-```
+```html
 <span amplitude-song-info="{song_meta_index}" amplitude-main-song-info="true"></span>
 ```
 
 If it's a main element for a playlist add the key for the playlist:
-```
+```html
 <span amplitude-song-info="{song_meta_index}" amplitude-playlist="{playlist_index}"></span>
 ```
 
@@ -899,122 +899,122 @@ player, scoped in a playlist or for a specific song. There are three sets of tim
 The song duration can only be set for the active song since the metadata isn't preloaded for all of the songs. The time remaining is a count down for how much time is left for a song.
 
 Main Current Time - Displays in MM:SS
-```
+```html
 <span class="amplitude-current-time" amplitude-main-current-time="true"></span>
 ```
 
 Main Current Hours
-```
+```html
 <span class="amplitude-current-hours" amplitude-main-current-hours="true"></span>
 ```
 
 Main Current Minutes
-```
+```html
 <span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>
 ```
 
 Main Current Seconds
-```
+```html
 <span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
 ```
 
 Current Hours For Playlist
-```
+```html
 <span class="amplitude-current-hours" amplitude-playlist-current-hours="true" amplitude-playlist="{playlist_key}"></span>
 ```
 
 Current Minutes For Playlist
-```
+```html
 <span class="amplitude-current-minutes" amplitude-playlist-current-minutes="true" amplitude-playlist="{playlist_key}"></span>
 ```
 
 Current Seconds For Playlist
-```
+```html
 <span class="amplitude-current-seconds" amplitude-playlist-current-seconds="true" amplitude-playlist="{playlist_key}"></span>
 ```
 
 Current Hours For Song
-```
+```html
 <span class="amplitude-current-hours" amplitude-song-index="{song_index}"></span>
 ```
 
 Current Minutes For Song
-```
+```html
 <span class="amplitude-current-minutes" amplitude-song-index="{song_index}"></span>
 ```
 
 Current Seconds For Song
-```
+```html
 <span class="amplitude-current-seconds" amplitude-song-index="{song_index}"></span>
 ```
 
 Main Duration Time MM:SS
-```
+```html
 <span class="amplitud-duration-time" amplitude-main-duration-time="true"></span>
 ```
 
 Main Duration Time - Displays in MM:SS
-```
+```html
 <span class="amplitude-duration-time" amplitude-main-duration-time="true"></span>
 ```
 
 Main Duration Hours
-```
+```html
 <span class="amplitude-duration-hours" amplitude-main-duration-hours="true"></span>
 ```
 
 Main Duration Minutes
-```
+```html
 <span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>
 ```
 
 Main Duration Seconds
-```
+```html
 <span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
 ```
 
 Duration Hours For Playlist
-```
+```html
 <span class="amplitude-duration-hours" amplitude-playlist-duration-hours="true" amplitude-playlist="{playlist_key}"></span>
 ```
 
 Duration Minutes For Playlist
-```
+```html
 <span class="amplitude-duration-minutes" amplitude-playlist-duration-minutes="true" amplitude-playlist="{playlist_key}"></span>
 ```
 
 Duration Seconds For Playlist
-```
+```html
 <span class="amplitude-duration-seconds" amplitude-playlist-duration-seconds="true" amplitude-playlist="{playlist_key}"></span>
 ```
 
 Duration Hours For Song
-```
+```html
 <span class="amplitude-duration-hours" amplitude-song-index="{song_index}"></span>
 ```
 
 Duration Minutes For Song
-```
+```html
 <span class="amplitude-duration-minutes" amplitude-song-index="{song_index}"></span>
 ```
 
 Duration Seconds For Song
-```
+```html
 <span class="amplitude-duration-seconds" amplitude-song-index="{song_index}"></span>
 ```
 
 Main Time Remaining For Song
-```
+```html
 <span class="amplitude-time-remaining" amplitude-main-time-remaining="true"></span>
 ```
 
 Playlist Main Time Remaining For Song
-```
+```html
 <span class="amplitude-time-remaining" amplitude-playlist-main-time-remaining="{playlist_key}"></span>
 ```
 
 Song Time Remaining
-```
+```html
 <span class="amplitude-time-remaining" amplitude-song-index="{song_index}"></span>
 ```
 
@@ -1027,7 +1027,7 @@ user to change config variables, add new songs, play now, etc.
 The bind new elements function should be called whenever a new song element is added to the page. This will
 bind all of the event handlers for that element.
 
-```
+```javascript
 Amplitude.bindNewElements()
 ```
 
@@ -1035,26 +1035,26 @@ Amplitude.bindNewElements()
 To change the debug mode setting, you can call the setDebug method any time and start to receive data
 about the state of the player or turn off debugging.
 
-```
+```javascript
 Amplitude.setDebug( {bool} );
 ```
 
 ### Get Active Song Metadata
 Returns the active song's metadata as a JSON object.
 
-```
+```javascript
 Amplitude.getActiveSongMetadata();
 ```
 
 ### Get Song By Index
 Returns a song's metadata at a specific index.
-```
+```javascript
 Amplitude.getSongByIndex( {index} );
 ```
 
 ### Get Song At Playlist Index
 Returns a song at a playlist's index.
-```
+```javascript
 Amplitude.getSongAtPlaylistIndex( {playlistIndex}, {index} );
 ```
 
@@ -1063,7 +1063,7 @@ Adds a song to the AmplitudeJS player. You will need to write a method yourself 
 of things to fit your custom design, and then call the bindNewElements() method to make sure it works.
 This method returns the index of the song added to the player.
 
-```
+```javascript
 Amplitude.addSong( {song_object} );
 ```
 
@@ -1071,88 +1071,88 @@ Amplitude.addSong( {song_object} );
 In AmplitudeJS 2.0 this was referred to as 'Dynamic Mode'. Now you can just pass a song to AmplitudeJS and it
 will automatically play. If there are visual elements, then they will sync as well.
 
-```
+```javascript
 Amplitude.playNow( {song_object} );
 ```
 
 ### Play
 This simply plays whatever song is active.
 
-```
+```javascript
 Amplitude.play()
 ```
 
 ### Pause
 This simply pauses whatever song is active.
-```
+```javascript
 Amplitude.pause()
 ```
 
 ### Get Audio
 This returns the actual audio element. This is mainly used for writing extensions but exposes the core of
 AmplitudeJS. This returns the audio element used by AmplitudeJS.
-```
+```javascript
 Amplitude.audio()
 ```
 
 ### Get songs (Version 3.2)
 This method returns all of the songs defined in AmplitudeJS. It can be used for a variety of different functions. It's extremely helpful if you are AJAX loading songs and want to see the contents of the song array.
-```
+```javascript
 Amplitude.getSongs()
 ```
 
 ### Get Songs In Playlist (Version 3.2)
 This method returns all of the songs in a playlist. Since the user defines a playlist with a key and the indexes of the songs, this will map the keys to the songs and return all of the songs in the playlist.
-```
+```javascript
 Amplitude.getSongsInPlaylist( playlistKey )
 ```
 
 ### Get Songs State (Version 3.2)
 This method returns the current order of the songs. It can be used for determining what song is next. If shuffle is on, it will return the shuffled list of songs.
-```
+```javascript
 Amplitude.getSongsState()
 ```
 
 ### Get Songs State Playlist (Version 3.2)
 This method returns the current order of the songs in a playlist. If needed this can be used to determine the next song in a playlist. This accounts for whether the playlist has been shuffled or not.
-```
+```javascript
 Amplitude.getSongsStatePlaylist( playlist )
 ```
 
 ### Get Active Index (Version 3.2)
 This method returns the index of the active song in the songs array.
-```
+```javascript
 Amplitude.getActiveIndex()
 ```
 
 ### Get Active Index State (Version 3.2)
 This method returns the index of the active song in the songs array but accounts for if shuffle has been enabled or not.
-```
+```javascript
 Amplitude.getActiveIndexState()
 ```
 
 ### Get Version (Version 3.2)
 This method returns the version of AmplitudeJS being used.
-```
+```javascript
 Amplitude.getVersion()
 ```
 
 ### Get Buffered (Version 3.2)
 This method returns the buffered percentage of the now playing song. This can be used to show how much of the song has been buffered and ready to be played.
-```
+```javascript
 Amplitude.getBuffered()
 ```
 
 ### Get Song Played Percentage (Version 3.2)
 This method returns the percentage of the song played. When implementing a 3rd party tracking element, you can set the percentage of the element to the percentage played of the song.
-```
+```javascript
 Amplitude.getSongPlayedPercentage()
 ```
 You can combine this method with the time_update callback and whenever the time updates your method can call Amplitude.getSongPlayedPercentage() and you can set your tracking element correctly.
 
 ### Set Song Played Percentage (Version 3.2)
 This method allows you to set the percentage of the active song. The method accepts a float between 0 and 100 for the percentage of the song to be set to.
-```
+```javascript
 Amplitude.setSongPlayedPercentage( percentage )
 ```
 ## Tutorials

@@ -1,0 +1,65 @@
+div.meta-container {
+  float: left;
+  width: calc(100% - 245px);
+  padding: 10px;
+
+  div.song-title {
+    text-align: center;
+    color: #263238;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  div.song-artist {
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    color: #263238;
+    margin-top: 10px;
+  }
+
+  div.time-container {
+    font-family: Helvetica;
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 10px;
+
+    &:after{
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    div.current-time {
+      float: left;
+    }
+
+    div.duration {
+      float: right;
+    }
+  }
+}
+
+/*
+  Small only
+*/
+@media screen and (max-width: 39.9375em) {
+  div.meta-container {
+    width: 100%;
+  }
+}
+
+/*
+  Medium only
+*/
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+}
+
+/*
+  Large Only
+*/
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+
+}

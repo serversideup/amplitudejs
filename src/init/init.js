@@ -341,6 +341,11 @@ let AmplitudeInitializer = (function () {
 		AmplitudeVisualSync.setPlayPauseButtonsToPause();
 
 		/*
+			Sets the meta data for the songs automatically.
+		*/
+		AmplitudeVisualSync.syncSongsMetaData();
+
+		/*
 			If the user has autoplay enabled, then begin playing the song. Everything should
 			be configured for this to be ready to play.
 		*/

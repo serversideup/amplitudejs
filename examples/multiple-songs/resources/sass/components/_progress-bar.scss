@@ -1,0 +1,32 @@
+progress.amplitude-song-played-progress:not([value]) {
+  background-color: #313252;
+}
+
+progress.amplitude-song-played-progress {
+  background-color: #d7dee3;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  display: block;
+  cursor: pointer;
+  border-radius: 3px;
+  height: 8px;
+  border: none;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #d7dee3;
+  border-radius: 3px;
+}
+
+progress[value]::-moz-progress-bar {
+  background-color: #00a0ff;
+  border-radius: 3px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #00a0ff;
+  border-radius: 3px;
+}

@@ -59,7 +59,7 @@ import config from './config.js';
  * @module Amplitude
  */
 
-var Amplitude = (function () {
+let Amplitude = (function () {
 	/**
 	 * The main init function.  The user will call this through
 	 * Amplitude.init({}) and pass in their settings.
@@ -251,7 +251,7 @@ var Amplitude = (function () {
 	 * @returns {object} JSON representation for the song at a specific index.
 	 */
 	function getSongAtPlaylistIndex( playlist, index ){
-		var songIndex = config.playlists[playlist][index];
+		let songIndex = config.playlists[playlist][index];
 
 		return config.songs[songIndex];
 	}
@@ -295,7 +295,7 @@ var Amplitude = (function () {
 	/**
 	 * Plays a song at the index passed in from the songs array.
 	 *
-	 * Public Accessor: Amplitude.playSongAtIndex( song )
+	 * Public Accessor: Amplitude.playSongAtIndex( index )
 	 *
 	 * @access public
 	 * @param {number} index 	- The number representing the song in the songs array.
@@ -443,9 +443,9 @@ var Amplitude = (function () {
 	 * @param {string} playlist 	- The playlist key
 	 */
 	function getSongsInPlaylist( playlist ){
-		var songsArray = [];
+		let songsArray = [];
 
-		for( var i = 0; i < config.playlists[playlist].length; i++ ){
+		for( let i = 0; i < config.playlists[playlist].length; i++ ){
 			songsArray.push( config.songs[i] );
 		}
 
@@ -479,17 +479,17 @@ var Amplitude = (function () {
 	 * @todo Finish commenting
 	 */
 	function getSongsStatePlaylist( playlist ){
-		var songsArray = [];
+		let songsArray = [];
 
 		if( config.shuffled_status[playlist] ){
 
-			for( var i = 0; i < config.shuffled_playlists[playlist].length; i++ ){
+			for( let i = 0; i < config.shuffled_playlists[playlist].length; i++ ){
 				songsArray.push( config.songs[i] );
 			}
 
 		}else{
 
-			for( var i = 0; i < config.playlist[playlist].length; i++ ){
+			for( let i = 0; i < config.playlist[playlist].length; i++ ){
 				songsArray.push( config.songs[i] );
 			}
 		}

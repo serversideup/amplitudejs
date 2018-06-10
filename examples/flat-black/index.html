@@ -4,7 +4,7 @@
     <title>AmplitudeJS Testing</title>
 
     <!-- Include Resource Stylesheets -->
-		<link rel="stylesheet" type="text/css" href="../resources/css/foundation.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/foundation.min.css"/>
 
     <!-- Include font -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
@@ -14,22 +14,14 @@
 
 			NOTE: These are for handling things outside of the scope of AmplitudeJS
 		-->
-		<script type="text/javascript" src="../resources/js/jquery.js"></script>
-		<script type="text/javascript" src="../resources/js/foundation.min.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/foundation.min.js"></script>
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="../../dist/amplitude.js"></script>
 
-
-		<!--
-			Include UX functions JS
-
-			NOTE: These are for handling things outside of the scope of AmplitudeJS
-		-->
-		<script type="text/javascript" src="js/functions.js"></script>
-
 		<!-- Include Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
   </head>
   <body>
     <div class="row">
@@ -50,8 +42,8 @@
                   </span>
 
                   <div class="song-meta-container">
-                    <span class="song-name">Risin' High (feat Raashan Ahmad)</span>
-                    <span class="song-artist-album">Ancient Astronauts - We Are to Answer</span>
+                    <span class="song-name" amplitude-song-info="name" amplitude-song-index="0"></span>
+                    <span class="song-artist-album"><span amplitude-song-info="artist" amplitude-song-index="0"></span> - <span amplitude-song-info="album" amplitude-song-index="0"></span></span>
                   </div>
 
                   <span class="song-duration">
@@ -65,8 +57,8 @@
                   </span>
 
                   <div class="song-meta-container">
-                    <span class="song-name">The Gun</span>
-                    <span class="song-artist-album">Lorn - Ask The Dust</span>
+                    <span class="song-name" amplitude-song-info="name" amplitude-song-index="1"></span>
+                    <span class="song-artist-album"><span amplitude-song-info="artist" amplitude-song-index="1"></span> - <span amplitude-song-info="album" amplitude-song-index="1"></span></span>
                   </div>
 
                   <span class="song-duration">
@@ -374,4 +366,11 @@
 		});
 
 	</script>
+
+  <!--
+    Include UX functions JS
+
+    NOTE: These are for handling things outside of the scope of AmplitudeJS
+  -->
+  <script type="text/javascript" src="js/functions.js"></script>
 </html>

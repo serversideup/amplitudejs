@@ -1,0 +1,28 @@
+div#meta-container{
+  text-align: center;
+  margin-top: 5px;
+
+  span.song-name{
+    display: block;
+    color: #272726;
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  div.song-artist-album{
+    color: #607D8B;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span{
+      display: block;
+    }
+  }
+}

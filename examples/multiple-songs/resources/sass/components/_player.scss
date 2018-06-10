@@ -1,0 +1,45 @@
+div.player{
+  border: 1px solid #eaeaea;
+  margin-bottom: 20px;
+  max-width: 750px;
+  margin: auto;
+  margin-top: 40px;
+
+  &:after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  img.album-art {
+    width: 245px;
+    height: 245px;
+    float: left;
+  }
+}
+
+/*
+  Small only
+*/
+@media screen and (max-width: 39.9375em) {
+  div.player{
+    img.album-art{
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+/*
+  Medium only
+*/
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+}
+
+/*
+  Large Only
+*/
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+
+}

@@ -10,7 +10,7 @@ import config from '../config.js';
  *
  * @module visual/AmplitudeVisualSyncHelpers
  */
-var AmplitudeVisualSyncHelpers = (function() {
+let AmplitudeVisualSyncHelpers = (function() {
 	/**
 	 * Updates any elements that display the current hour for the song.
 	 *
@@ -21,14 +21,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song hour selectors.
 		*/
+		let hourSelectors = [];
+
 		if( config.active_playlist != null && config.active_playlist != '' ){
-			var hourSelectors = [
+			hourSelectors = [
 				'.amplitude-current-hours[amplitude-main-current-hours="true"]',
 				'.amplitude-current-hours[amplitude-playlist-current-hours="true"][amplitude-playlist="'+config.active_playlist+'"]',
 				'.amplitude-current-hours[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}else{
-			var hourSelectors = [
+			hourSelectors = [
 				'.amplitude-current-hours[amplitude-main-current-hours="true"]',
 				'.amplitude-current-hours[amplitude-song-index="'+config.active_index+'"]'
 			];
@@ -41,12 +43,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 			/*
 				Get all of the hour selectors
 			*/
-			var currentHourSelectors = document.querySelectorAll( hourSelectors.join() );
+			const currentHourSelectors = document.querySelectorAll( hourSelectors.join() );
 
 			/*
 				Set the current hour selector's inner html to hours passed in.
 			*/
-			for( var i = 0; i < currentHourSelectors.length; i++ ){
+			for( let i = 0; i < currentHourSelectors.length; i++ ){
 				/*
 					If the selector is a main selector, we set the hours.
 				*/
@@ -92,13 +94,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets the hour display elements
 		*/
-		var hourSelectors = document.querySelectorAll('.amplitude-current-hours');
+		let hourSelectors = document.querySelectorAll('.amplitude-current-hours');
 
 		/*
 			Iterates over all of the hour selectors and sets the inner HTML
 			to 00.
 		*/
-		for( var i = 0; i < hourSelectors.length; i++ ){
+		for( let i = 0; i < hourSelectors.length; i++ ){
 			hourSelectors[i].innerHTML = '00';
 		}
 	}
@@ -113,14 +115,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song minute selectors.
 		*/
+		let minuteSelectors = [];
+
 		if( config.active_playlist != null && config.active_playlist != '' ){
-			var minuteSelectors = [
+			minuteSelectors = [
 				'.amplitude-current-minutes[amplitude-main-current-minutes="true"]',
 				'.amplitude-current-minutes[amplitude-playlist-current-minutes="true"][amplitude-playlist="'+config.active_playlist+'"]',
 				'.amplitude-current-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}else{
-			var minuteSelectors = [
+			minuteSelectors = [
 				'.amplitude-current-minutes[amplitude-main-current-minutes="true"]',
 				'.amplitude-current-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
@@ -179,13 +183,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets the minutes display elements
 		*/
-		var minuteSelectors = document.querySelectorAll('.amplitude-current-minutes');
+		let minuteSelectors = document.querySelectorAll('.amplitude-current-minutes');
 
 		/*
 			Iterates over all of the minute selectors and sets the inner HTML
 			to 00.
 		*/
-		for( var i = 0; i < minuteSelectors.length; i++ ){
+		for( let i = 0; i < minuteSelectors.length; i++ ){
 			minuteSelectors[i].innerHTML = '00';
 		}
 	}
@@ -201,14 +205,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 			Gets all of the song second selectors. If the active playlist
 			is not null, then we get the playlist selectors.
 		*/
+		let secondSelectors = [];
+
 		if( config.active_playlist != null && config.active_playlist != '' ){
-			var secondSelectors = [
+			secondSelectors = [
 				'.amplitude-current-seconds[amplitude-main-current-seconds="true"]',
 				'.amplitude-current-seconds[amplitude-playlist-current-seconds="true"][amplitude-playlist="'+config.active_playlist+'"]',
 				'.amplitude-current-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}else{
-			var secondSelectors = [
+			secondSelectors = [
 				'.amplitude-current-seconds[amplitude-main-current-seconds="true"]',
 				'.amplitude-current-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
@@ -217,7 +223,7 @@ var AmplitudeVisualSyncHelpers = (function() {
     /*
     	Get all of the second selectors
     */
-    var currentSecondSelectors = document.querySelectorAll( secondSelectors.join() );
+    const currentSecondSelectors = document.querySelectorAll( secondSelectors.join() );
 
     /*
     	Iterate over all of the second selectors.
@@ -267,13 +273,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets the seconds display elements
 		*/
-		var secondSelectors = document.querySelectorAll('.amplitude-current-seconds');
+		let secondSelectors = document.querySelectorAll('.amplitude-current-seconds');
 
 		/*
 			Iterates over all of the seconds selectors and sets the inner HTML
 			to 00.
 		*/
-		for( var i = 0; i < secondSelectors.length; i++ ){
+		for( let i = 0; i < secondSelectors.length; i++ ){
 			secondSelectors[i].innerHTML = '00';
 		}
 	}
@@ -289,7 +295,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song time selectors.
 		*/
-		var timeSelectors = [
+		let timeSelectors = [
 			'.amplitude-current-time[amplitude-main-current-time="true"]',
 			'.amplitude-current-time[amplitude-playlist-main-current-time="'+config.active_playlist+'"]',
 			'.amplitude-current-time[amplitude-song-index="'+config.active_index+'"]'
@@ -298,7 +304,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Get all of the time selectors.
 		*/
-		var currentTimeSelectors = document.querySelectorAll( timeSelectors.join() );
+		let currentTimeSelectors = document.querySelectorAll( timeSelectors.join() );
 
 		/*
 			Set the time selector's inner html to the current time for the song. The current
@@ -319,13 +325,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets the time selector display elements
 		*/
-		var timeSelectors = document.querySelectorAll('.amplitude-current-time');
+		let timeSelectors = document.querySelectorAll('.amplitude-current-time');
 
 		/*
 			Iterates over all of the time selectors and sets the inner HTML
 			to 00.
 		*/
-		for( var i = 0; i < timeSelectors.length; i++ ){
+		for( let i = 0; i < timeSelectors.length; i++ ){
 			timeSelectors[i].innerHTML = '00:00';
 		}
 	}
@@ -356,10 +362,10 @@ var AmplitudeVisualSyncHelpers = (function() {
 			/*
 				Get all of the song progress bars
 			*/
-			var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-main-song-played-progress="true"]');
+			let songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-main-song-played-progress="true"]');
 
-			for( var i = 0; i < songPlayedProgressBars.length; i++ ){
-				var max = songPlayedProgressBars[i].max;
+			for( let i = 0; i < songPlayedProgressBars.length; i++ ){
+				let max = songPlayedProgressBars[i].max;
 
 				songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
 			}
@@ -380,10 +386,10 @@ var AmplitudeVisualSyncHelpers = (function() {
 			/*
 				Get all of the song progress bars
 			*/
-			var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-playlist-song-played-progress="true"][amplitude-playlist="'+config.active_playlist+'"]');
+			let songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-playlist-song-played-progress="true"][amplitude-playlist="'+config.active_playlist+'"]');
 
-			for( var i = 0; i < songPlayedProgressBars.length; i++ ){
-				var max = songPlayedProgressBars[i].max;
+			for( let i = 0; i < songPlayedProgressBars.length; i++ ){
+				let max = songPlayedProgressBars[i].max;
 
 				songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
 			}
@@ -409,10 +415,10 @@ var AmplitudeVisualSyncHelpers = (function() {
 				/*
 					Get all of the song progress bars
 				*/
-				var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-playlist="'+config.active_playlist+'"][amplitude-song-index="'+config.active_index+'"]');
+			 let songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-playlist="'+config.active_playlist+'"][amplitude-song-index="'+config.active_index+'"]');
 
-				for( var i = 0; i < songPlayedProgressBars.length; i++ ){
-					var max = songPlayedProgressBars[i].max;
+				for( let i = 0; i < songPlayedProgressBars.length; i++ ){
+				 let max = songPlayedProgressBars[i].max;
 
 					songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
 				}
@@ -420,10 +426,10 @@ var AmplitudeVisualSyncHelpers = (function() {
 				/*
 					Get all of the song progress bars
 				*/
-				var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-song-index="'+config.active_index+'"]');
+				let songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[amplitude-song-index="'+config.active_index+'"]');
 
-				for( var i = 0; i < songPlayedProgressBars.length; i++ ){
-					var max = songPlayedProgressBars[i].max;
+				for( let i = 0; i < songPlayedProgressBars.length; i++ ){
+					let max = songPlayedProgressBars[i].max;
 
 					songPlayedProgressBars[i].value = ( songPlayedPercentage / 100 ) * max;
 				}
@@ -465,14 +471,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song hour selectors.
 		*/
+		let hourSelectors = [];
+
 		if( config.active_playlist != null && config.active_playlist != '' ){
-			var hourSelectors = [
+			hourSelectors = [
 				'.amplitude-duration-hours[amplitude-main-duration-hours="true"]',
 				'.amplitude-duration-hours[amplitude-playlist-duration-hours="true"][amplitude-playlist="'+config.active_playlist+'"]',
 				'.amplitude-duration-hours[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}else{
-			var hourSelectors = [
+			hourSelectors = [
 				'.amplitude-duration-hours[amplitude-main-duration-hours="true"]',
 				'.amplitude-duration-hours[amplitude-song-index="'+config.active_index+'"]'
 			];
@@ -485,12 +493,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 			/*
 				Get all of the hour selectors
 			*/
-			var durationHourSelectors = document.querySelectorAll( hourSelectors.join() );
+			let durationHourSelectors = document.querySelectorAll( hourSelectors.join() );
 
 			/*
 				Set the duration hour selector's inner html to hours passed in.
 			*/
-			for( var i = 0; i < durationHourSelectors.length; i++ ){
+			for( let i = 0; i < durationHourSelectors.length; i++ ){
 				/*
 					If the selector is a main selector, we set the hours.
 				*/
@@ -537,14 +545,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song minute selectors.
 		*/
+		let minuteSelectors = [];
+
 		if( config.active_playlist != null && config.active_playlist != '' ){
-			var minuteSelectors = [
+			minuteSelectors = [
 				'.amplitude-duration-minutes[amplitude-main-duration-minutes="true"]',
 				'.amplitude-duration-minutes[amplitude-playlist-duration-minutes="true"][amplitude-playlist="'+config.active_playlist+'"]',
 				'.amplitude-duration-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}else{
-			var minuteSelectors = [
+			minuteSelectors = [
 				'.amplitude-duration-minutes[amplitude-main-duration-minutes="true"]',
 				'.amplitude-duration-minutes[amplitude-song-index="'+config.active_index+'"]'
 			];
@@ -553,12 +563,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Get all of the minute selectors
 		*/
-		var durationMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
+		let durationMinuteSelectors = document.querySelectorAll( minuteSelectors.join() );
 
 		/*
 			Set the duration minute selector's inner html to minutes passed in.
 		*/
-		for( var i = 0; i < durationMinuteSelectors.length; i++ ){
+		for( let i = 0; i < durationMinuteSelectors.length; i++ ){
 			/*
 				If the selector is a main selector, we set the seconds.
 			*/
@@ -606,14 +616,16 @@ var AmplitudeVisualSyncHelpers = (function() {
 			Gets all of the song second selectors. If the active playlist
 			is not null, then we get the playlist selectors.
 		*/
+		let secondSelectors = [];
+
 		if( config.active_playlist != null && config.active_playlist != '' ){
-			var secondSelectors = [
+			secondSelectors = [
 				'.amplitude-duration-seconds[amplitude-main-duration-seconds="true"]',
 				'.amplitude-duration-seconds[amplitude-playlist-duration-seconds="true"][amplitude-playlist="'+config.active_playlist+'"]',
 				'.amplitude-duration-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
 		}else{
-			var secondSelectors = [
+			secondSelectors = [
 				'.amplitude-duration-seconds[amplitude-main-duration-seconds="true"]',
 				'.amplitude-duration-seconds[amplitude-song-index="'+config.active_index+'"]'
 			];
@@ -622,12 +634,12 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Get all of the second selectors
 		*/
-		var durationSecondSelectors = document.querySelectorAll( secondSelectors.join() );
+		let durationSecondSelectors = document.querySelectorAll( secondSelectors.join() );
 
 		/*
 			Iterate over all of the second selectors.
 		*/
-		for( var i = 0; i < durationSecondSelectors.length; i++ ){
+		for( let i = 0; i < durationSecondSelectors.length; i++ ){
 			/*
 				If the selector is a main selector, we set the seconds.
 			*/
@@ -674,7 +686,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song time selectors.
 		*/
-		var timeSelectors = [
+		let timeSelectors = [
 			'.amplitude-duration-time[amplitude-main-duration-time="true"]',
 			'.amplitude-duration-time[amplitude-playlist-main-duration-time="'+config.active_playlist+'"]',
 			'.amplitude-duration-time[amplitude-song-index="'+config.active_index+'"]'
@@ -683,13 +695,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Get all of the time selectors.
 		*/
-		var durationTimeSelectors = document.querySelectorAll( timeSelectors.join() );
+		let durationTimeSelectors = document.querySelectorAll( timeSelectors.join() );
 
 		/*
 			Set the time selector's inner html to the duration time for the song. The duration
 			time is computed by joining minutes and seconds.
 		*/
-		for( var i = 0; i < durationTimeSelectors.length; i++ ){
+		for( let i = 0; i < durationTimeSelectors.length; i++ ){
 			if( !isNaN( durationTime.minutes ) && !isNaN( durationTime.seconds ) ){
 				durationTimeSelectors[i].innerHTML = durationTime.minutes+':'+durationTime.seconds;
 			}else{
@@ -710,7 +722,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Initialize time remaining.
 		*/
-		var timeRemaining = '00:00';
+		let timeRemaining = '00:00';
 
 		/*
 			Ensure that all values are defined.
@@ -719,8 +731,8 @@ var AmplitudeVisualSyncHelpers = (function() {
 			/*
 				Initialize the total current seconds and total duration seconds
 			*/
-			var totalCurrentSeconds = parseInt( currentTime.seconds ) + ( parseInt( currentTime.minutes ) * 60 ) + ( ( parseInt( currentTime.hours ) * 60 * 60 ) );
-			var totalDurationSeconds = parseInt( songDuration.seconds ) + ( parseInt( songDuration.minutes ) * 60 ) + ( ( parseInt( songDuration.hours ) * 60 * 60 ) );
+			let totalCurrentSeconds = parseInt( currentTime.seconds ) + ( parseInt( currentTime.minutes ) * 60 ) + ( ( parseInt( currentTime.hours ) * 60 * 60 ) );
+			let totalDurationSeconds = parseInt( songDuration.seconds ) + ( parseInt( songDuration.minutes ) * 60 ) + ( ( parseInt( songDuration.hours ) * 60 * 60 ) );
 
 			/*
 				If the two variables are numbers we continue the computing.
@@ -729,18 +741,18 @@ var AmplitudeVisualSyncHelpers = (function() {
 				/*
 					Find the total remaining seconds.
 				*/
-				var timeRemainingTotalSeconds = totalDurationSeconds - totalCurrentSeconds;
+				let timeRemainingTotalSeconds = totalDurationSeconds - totalCurrentSeconds;
 
 				/*
 					Find how many seconds are remaining.
 				*/
-				var timeRemainingSeconds = ( Math.floor( timeRemainingTotalSeconds % 60 ) < 10 ? '0' : '' ) +
+				let timeRemainingSeconds = ( Math.floor( timeRemainingTotalSeconds % 60 ) < 10 ? '0' : '' ) +
 											  		Math.floor( timeRemainingTotalSeconds % 60 );
 
 				/*
 					Find how many minutes are remaining.
 				*/
-				var timeRemainingMinutes = ( Math.floor( timeRemainingTotalSeconds / 60 ) < 10 ? '0' : '' ) +
+				let timeRemainingMinutes = ( Math.floor( timeRemainingTotalSeconds / 60 ) < 10 ? '0' : '' ) +
 															Math.floor( timeRemainingTotalSeconds / 60 );
 
 				/*
@@ -753,7 +765,7 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Gets all of the song time selectors.
 		*/
-		var timeSelectors = [
+	 let timeSelectors = [
 			'.amplitude-time-remaining[amplitude-main-time-remaining="true"]',
 			'.amplitude-time-remaining[amplitude-playlist-main-time-remaining="'+config.active_playlist+'"]',
 			'.amplitude-time-remaining[amplitude-song-index="'+config.active_index+'"]'
@@ -762,13 +774,13 @@ var AmplitudeVisualSyncHelpers = (function() {
 		/*
 			Get all of the time selectors.
 		*/
-		var timeRemainingSelectors = document.querySelectorAll( timeSelectors.join() );
+	 let timeRemainingSelectors = document.querySelectorAll( timeSelectors.join() );
 
 		/*
 			Set the time selector's inner html to the duration time for the song. The duration
 			time is computed by joining minutes and seconds.
 		*/
-		for( var i = 0; i < timeRemainingSelectors.length; i++ ){
+		for( let i = 0; i < timeRemainingSelectors.length; i++ ){
 			timeRemainingSelectors[i].innerHTML = timeRemaining;
 		}
 	}

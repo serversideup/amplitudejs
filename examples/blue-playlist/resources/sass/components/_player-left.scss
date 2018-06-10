@@ -1,0 +1,27 @@
+div#amplitude-left{
+  padding: 0px;
+  border-right: 1px solid #CFD8DC;
+
+  div#player-left-bottom{
+    background-color: #F1F1F1;
+    padding: 20px 10px;
+
+    div#volume-container:after{
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+}
+
+/* Small only */
+@media screen and (max-width: 39.9375em) {
+	div#amplitude-player{
+		div#amplitude-left{
+			img[amplitude-song-info="cover_art_url"]{
+				width: auto;
+				height: auto;
+			}
+		}
+	}
+}
