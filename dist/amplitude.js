@@ -4155,6 +4155,22 @@ var AmplitudeInitializer = function () {
 		}
 
 		/*
+  	Initialize a sh
+  */
+		if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
+			_config2.default.shuffle_on = true;
+			_helpers2.default.shuffleSongs();
+
+			/*
+   	Visually sync the shuffle statuses
+   */
+			_visual2.default.syncShuffle(_config2.default.shuffle_on);
+
+			console.log(_config2.default.shuffle_list[0]);
+			_helpers2.default.changeSong(_config2.default.shuffle_list[0].original_index);
+		}
+
+		/*
   	Allows the user to set whether they want to continue to the next song
   	when the current song finishes or not. In any scenario that's not a playlist,
   	contining to the next song may not be desired.
