@@ -5474,6 +5474,50 @@ var Amplitude = function () {
 	}
 
 	/**
+  * Sets the shuffle state for the player.
+  *
+  * Public Accessor: Amplitude.setShuffle()
+  *
+  * @access public
+  */
+	function setShuffle() {
+		_helpers4.default.setShuffle(null);
+	}
+
+	/**
+  * Sets the shuffle state for the playlist
+  *
+  * Public Accessor: Amplitude.setShufflePlaylist( playlistKey )
+  *
+  * @access public
+ * @param {string} playlistKey 	- The key representing the playlist ID to to shuffle the playlist.
+  */
+	function setShufflePlaylist(playlistKey) {
+		_helpers4.default.setShuffle(playlistKey);
+	}
+
+	/**
+  * Sets the repeat state for the player.
+ *
+ * Public Accessor: Amplitude.setRepeat()
+ *
+ * @access public
+  */
+	function setRepeat() {
+		if (!_config2.default.is_touch_moving) {
+			/*
+   	Sets repeat to the opposite of what it was set to
+   */
+			_helpers4.default.setRepeat(!_config2.default.repeat);
+
+			/*
+   	Visually sync repeat
+   */
+			_visual2.default.syncRepeat();
+		}
+	}
+
+	/**
   * Gets the default album art for the player
   *
   * Public Accessor: Amplitude.getDefaultAlbumArt()
@@ -5932,6 +5976,9 @@ var Amplitude = function () {
 		getRepeat: getRepeat,
 		getShuffle: getShuffle,
 		getShufflePlaylist: getShufflePlaylist,
+		setShuffle: setShuffle,
+		setShufflePlaylist: setShufflePlaylist,
+		setRepeat: setRepeat,
 		getDefaultAlbumArt: getDefaultAlbumArt,
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,
