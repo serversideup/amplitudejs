@@ -4166,7 +4166,6 @@ var AmplitudeInitializer = function () {
    */
 			_visual2.default.syncShuffle(_config2.default.shuffle_on);
 
-			console.log(_config2.default.shuffle_list[0]);
 			_helpers2.default.changeSong(_config2.default.shuffle_list[0].original_index);
 		}
 
@@ -4621,7 +4620,8 @@ exports.default = {
   *
   * @access public
   */
-	keydown: function keydown() {
+	keydown: function keydown(event) {
+		console.log(event);
 		_helpers2.default.runKeyEvent(event.which);
 	},
 

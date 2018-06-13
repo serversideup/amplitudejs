@@ -103,7 +103,7 @@ export default {
 	 *
 	 * @access public
 	 */
-	keydown: function(){
+	keydown: function( event ){
 		AmplitudeEventsHelpers.runKeyEvent( event.which );
 	},
 
