@@ -185,6 +185,28 @@ let Amplitude = (function () {
 		}
 
 	/**
+	 * Sets the repeat state for the song.
+	 *
+	 * Public Accessor: Amplitude.setRepeatSong()
+	 *
+	 * @access public
+	 */
+	 function setRepeatSong(){
+		 if( !config.is_touch_moving ){
+			 /*
+				 Sets repeat to the opposite of what it was set to
+			 */
+			 AmplitudeEventsHelpers.setRepeatSong( !config.repeat_song );
+
+			 /*
+				 Visually sync repeat song
+			 */
+			 AmplitudeVisualSync.syncRepeatSong();
+		 }
+	 }
+
+
+	/**
 	 * Gets the default album art for the player
 	 *
 	 * Public Accessor: Amplitude.getDefaultAlbumArt()
@@ -321,6 +343,77 @@ let Amplitude = (function () {
 		config.songs.push( song );
 		return config.songs.length - 1;
 	}
+
+	/**
+	 * Adds a song to a playlist. This will allow Amplitude to play the song in the
+	 * playlist
+	 *
+	 * Public Accessor: Amplitude.addSongToPlaylist( song_json, playlist_key )
+	 *
+	 * @access public
+	 * @param {object} song 			- JSON representation of a song.
+	 * @param {string} playlist		- Playlist we are adding the song to.
+	 * @returns {mixed} New index of song in playlist or null if no playlist exists
+	 */
+	 function addSongToPlaylist( song, playlist ){
+		 	/*
+	 			Ensures we have a songs array to push to. This is step 1.
+	 		*/
+	 		if( config.songs == undefined ){
+	 			config.songs = [];
+	 		}
+
+	 		config.songs.push( song );
+
+			var songIndex = config.songs.length - 1;
+
+			/*
+				Ensures the playlist is valid to push the song on to.
+			*/
+			if( config.playlists[playlist] != undefined ){
+				config.playlists[playlist].push( songIndex );
+
+				return config.playlists[playlist].length - 1;
+			}else{
+				return null;
+			}
+	 }
+
+	 /**
+ 	 * Removes a song from the song array
+ 	 *
+ 	 * Public Accessor: Amplitude.removeSong( index )
+ 	 *
+ 	 * @access public
+ 	 * @param {integer} index 			- Index of the song being removed
+ 	 * @returns {boolean} True if removed false if not.
+ 	 */
+	 function removeSong( index ){
+		 if( config.songs[index] != undefined ){
+			 config.songs.splice( index, 1 );
+			 return true;
+		 }else{
+		 	return false;
+		 }
+	 }
+
+	 /**
+ 	 * Removes a song from the playlist
+ 	 *
+ 	 * Public Accessor: Amplitude.removeSongFromPlaylist( index, playlist )
+ 	 *
+ 	 * @access public
+ 	 * @param {integer} index 			- Index of the song being removed from the playlist.
+ 	 * @param {string} playlist			- Playlist we are removing the song from.
+ 	 * @returns {boolean} True if removed false if not.
+ 	 */
+	 function removeSongFromPlaylist( index, playlist ){
+		 if( config.playlists[playlist] != undefined ){
+			 config.playlists[playlist].splice( index, 1 );
+		 }else{
+			 return false;
+		 }
+	 }
 
 	/**
 	 * When you pass a song object it plays that song right awawy.  It sets
@@ -644,6 +737,7 @@ let Amplitude = (function () {
 		setShuffle: setShuffle,
 		setShufflePlaylist: setShufflePlaylist,
 		setRepeat: setRepeat,
+		setRepeatSong: setRepeatSong,
 		getDefaultAlbumArt: getDefaultAlbumArt,
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,
@@ -653,6 +747,9 @@ let Amplitude = (function () {
 		getSongByIndex: getSongByIndex,
 		getSongAtPlaylistIndex: getSongAtPlaylistIndex,
 		addSong: addSong,
+		addSongToPlaylist: addSongToPlaylist,
+		removeSong: removeSong,
+		removeSongFromPlaylist: removeSongFromPlaylist,
 		playNow: playNow,
 		playSongAtIndex: playSongAtIndex,
 		playPlaylistSongAtIndex: playPlaylistSongAtIndex,

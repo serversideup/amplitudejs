@@ -728,6 +728,27 @@ export default {
 	},
 
 	/**
+	 * Handles an event on the repeat song button
+	 *
+	 * HANDLER FOR: 'amplitude-repeat-song'
+	 *
+	 * @access private
+	 */
+	repeatSong: function(){
+		if( !config.is_touch_moving ){
+			/*
+				Sets repeat song to the opposite of what it was set to
+			*/
+			AmplitudeEventsHelpers.setRepeatSong( !config.repeat_song );
+
+			/*
+				Visually sync repeat song
+			*/
+			AmplitudeVisualSync.syncRepeatSong();
+		}
+	},
+
+	/**
 	 * Handles an event on the playback speed button
 	 *
 	 * HANDLER FOR: 'amplitude-playback-speed'

@@ -79,6 +79,8 @@ module.exports = {
 
 	repeat: false,
 
+	repeat_song: false,
+
 	shuffle_list: {},
 
 	shuffle_on: false,

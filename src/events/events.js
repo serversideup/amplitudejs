@@ -145,6 +145,11 @@ let AmplitudeEvents = (function () {
 		bindRepeat();
 
 		/*
+			Binds 'amplitude-repeat-song' event handlers.
+		*/
+		bindRepeatSong();
+
+		/*
 			Binds 'amplitude-playback-speed' event handlers.
 		*/
 		bindPlaybackSpeed();
@@ -659,6 +664,42 @@ let AmplitudeEvents = (function () {
 			}else{
 				repeat_classes[i].removeEventListener('click', AmplitudeHandlers.repeat );
 				repeat_classes[i].addEventListener('click', AmplitudeHandlers.repeat );
+			}
+		}
+	}
+
+	/**
+	 * Binds click and touchend events for amplitude repeat song buttons.
+	 *
+	 * Binds: class="amplitude-repeat-song"
+	 *
+	 * @access private
+	 */
+	function bindRepeatSong(){
+		/*
+			Gets all of the elements with the class amplitude-repeat-song
+		*/
+		let repeatSongClasses = document.getElementsByClassName("amplitude-repeat-song");
+
+		/*
+			Iterates over all of the repeat song classes and binds the event interaction
+			methods to the element. If the browser is mobile, then the event is touchend
+			otherwise it is click.
+		*/
+		for( let i = 0; i < repeatSongClasses.length; i++ ){
+			/*
+				Since we are re-binding everything we remove any classes that signify
+				a state of the repeat control.
+			*/
+			repeatSongClasses[i].classList.remove('amplitude-repeat-song-on');
+			repeatSongClasses[i].classList.add('amplitude-repeat-song-off');
+
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				repeatSongClasses[i].removeEventListener('touchend', AmplitudeHandlers.repeatSong );
+				repeatSongClasses[i].addEventListener('touchend', AmplitudeHandlers.repeatSong );
+			}else{
+				repeatSongClasses[i].removeEventListener('click', AmplitudeHandlers.repeatSong );
+				repeatSongClasses[i].addEventListener('click', AmplitudeHandlers.repeatSong );
 			}
 		}
 	}

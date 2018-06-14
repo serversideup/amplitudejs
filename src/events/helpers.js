@@ -200,6 +200,16 @@ let AmplitudeEventsHelpers = (function() {
 	}
 
 	/**
+	 * Sets the state of the repeat song
+	 *
+	 * @access public
+	 * @param {boolean} repeat - A boolean representing whether the repeat shoudl be on or off for the song.
+	 */
+	 function setRepeatSong( repeat ){
+		 config.repeat_song = repeat;
+	 }
+
+	/**
 	 * Sets the main play pause buttons to the current state of the song.
 	 *
 	 * @access public
@@ -503,45 +513,57 @@ let AmplitudeEventsHelpers = (function() {
         */
 		let endOfList = false;
 
-		/*
-			If the shuffle is on, we use the shuffled list of
-			songs to determine our next song.
-		*/
-		if( config.shuffle_on ){
+		if( config.repeat_song ){
 			/*
-				If the active shuffle index + 1 is less than the length, then
-				we use the next shuffle otherwise we go to the beginning
-				of the shuffle list.
+				If the playlist is shuffled, get the now playing index.
 			*/
-			if( ( parseInt( config.shuffle_active_index ) + 1 ) < config.shuffle_list.length ){
-				config.shuffle_active_index = parseInt( config.shuffle_active_index ) + 1;
-
-				/*
-					Set the next index to be the index of the song in the shuffle list.
-				*/
-				nextIndex = config.shuffle_list[ parseInt( config.shuffle_active_index ) ].original_index;
+			if( config.shuffle_on ){
+				nextIndex = config.shuffle_active_index;
 			}else{
-				config.shuffle_active_index = 0;
-				nextIndex = 0;
-				endOfList = true;
+				nextIndex = config.active_index;
 			}
 		}else{
-			/*
-				If the active index + 1 is less than the length of the songs, then
-				we use the next song otherwise we go to the beginning of the
-				song list.
-			*/
-			if( ( parseInt( config.active_index ) + 1 ) < config.songs.length ){
-				config.active_index = parseInt( config.active_index ) + 1;
-			}else{
-				config.active_index = 0;
-				endOfList = true;
-			}
 
 			/*
-				Sets the next index.
+				If the shuffle is on, we use the shuffled list of
+				songs to determine our next song.
 			*/
-			nextIndex = config.active_index;
+			if( config.shuffle_on ){
+				/*
+					If the active shuffle index + 1 is less than the length, then
+					we use the next shuffle otherwise we go to the beginning
+					of the shuffle list.
+				*/
+				if( ( parseInt( config.shuffle_active_index ) + 1 ) < config.shuffle_list.length ){
+					config.shuffle_active_index = parseInt( config.shuffle_active_index ) + 1;
+
+					/*
+						Set the next index to be the index of the song in the shuffle list.
+					*/
+					nextIndex = config.shuffle_list[ parseInt( config.shuffle_active_index ) ].original_index;
+				}else{
+					config.shuffle_active_index = 0;
+					nextIndex = 0;
+					endOfList = true;
+				}
+			}else{
+				/*
+					If the active index + 1 is less than the length of the songs, then
+					we use the next song otherwise we go to the beginning of the
+					song list.
+				*/
+				if( ( parseInt( config.active_index ) + 1 ) < config.songs.length ){
+					config.active_index = parseInt( config.active_index ) + 1;
+				}else{
+					config.active_index = 0;
+					endOfList = true;
+				}
+
+				/*
+					Sets the next index.
+				*/
+				nextIndex = config.active_index;
+			}
 		}
 
 		/*
@@ -580,6 +602,13 @@ let AmplitudeEventsHelpers = (function() {
     	Call after next callback
     */
     AmplitudeCoreHelpers.runCallback('after_next');
+
+		/*
+			If we are repeating the song, call the song repeated callback
+		*/
+		if( config.repeat_song ){
+			AmplitudeCoreHelpers.runCallback('song_repeated');
+		}
 	}
 
 	/**
@@ -601,59 +630,75 @@ let AmplitudeEventsHelpers = (function() {
       @TODO: Different settings for song loop, in-playlist loop and global loop
     */
 		let endOfList = false;
-		/*
-			If the playlist is shuffled we get the next index of the playlist.
-		*/
-		if( config.shuffled_statuses[ playlist ] ){
-			/*
-				Gets the shuffled playlist's active song index.
-			*/
-			let shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
 
+		/*
+			If we are repeating the song, then we just start the song over.
+		*/
+
+		if( config.repeat_song ){
 			/*
-				If the index + 1 is less than the length of the playlist, we increment
-				the next index otherwise we take the first index of 0.
+				If the playlist is shuffled, get the now playing index.
 			*/
-			if( shuffledPlaylistActiveSongIndex + 1 < config.shuffled_playlists[ playlist ].length ){
-				/*
-					Set the shuffled playlist active song index.
-				*/
-				config.shuffled_active_indexes[ playlist ] = shuffledPlaylistActiveSongIndex + 1;
-				/*
-					Get the index of the song that we will be switching to.
-				*/
+			if( config.shuffled_statuses[ playlist ] ){
 				nextIndex = config.shuffled_playlists[ playlist ][ config.shuffled_active_indexes[ playlist ] ].original_index;
 			}else{
-				/*
-					Sets the active shuffled playlist active index to 0 and gets the original index of
-					the song at the shuffled index of 0.
-				*/
-				config.shuffled_active_indexes[ playlist ] = 0;
-				nextIndex = config.shuffled_playlists[ playlist ][0].original_index;
-				endOfList = true;
+				nextIndex = config.active_index;
 			}
 		}else{
 			/*
-				Gets the index of the active song within the scope
-				of the playlist.
+				If the playlist is shuffled we get the next index of the playlist.
 			*/
-			let playlistActiveSongIndex = config.playlists[ playlist ].indexOf( parseInt( config.active_index ) );
+			if( config.shuffled_statuses[ playlist ] ){
+				/*
+					Gets the shuffled playlist's active song index.
+				*/
+				let shuffledPlaylistActiveSongIndex = parseInt( config.shuffled_active_indexes[ playlist ] );
 
-			/*
-				Checks to see if the next index is still less than the length of the playlist.
-				If it is, use the next index othwerwise get the first song in the playlist.
-			*/
-			if( playlistActiveSongIndex + 1 < config.playlists[ playlist ].length ){
-				config.active_index = parseInt( config.playlists[ playlist ][ playlistActiveSongIndex + 1 ] );
+				/*
+					If the index + 1 is less than the length of the playlist, we increment
+					the next index otherwise we take the first index of 0.
+				*/
+				if( shuffledPlaylistActiveSongIndex + 1 < config.shuffled_playlists[ playlist ].length ){
+					/*
+						Set the shuffled playlist active song index.
+					*/
+					config.shuffled_active_indexes[ playlist ] = shuffledPlaylistActiveSongIndex + 1;
+					/*
+						Get the index of the song that we will be switching to.
+					*/
+					nextIndex = config.shuffled_playlists[ playlist ][ config.shuffled_active_indexes[ playlist ] ].original_index;
+				}else{
+					/*
+						Sets the active shuffled playlist active index to 0 and gets the original index of
+						the song at the shuffled index of 0.
+					*/
+					config.shuffled_active_indexes[ playlist ] = 0;
+					nextIndex = config.shuffled_playlists[ playlist ][0].original_index;
+					endOfList = true;
+				}
 			}else{
-				config.active_index = parseInt( config.playlists[ playlist ][0] );
-				endOfList = true;
-			}
+				/*
+					Gets the index of the active song within the scope
+					of the playlist.
+				*/
+				let playlistActiveSongIndex = config.playlists[ playlist ].indexOf( parseInt( config.active_index ) );
 
-			/*
-				Sets the next inex to the active index in the config.
-			*/
-			nextIndex = config.active_index;
+				/*
+					Checks to see if the next index is still less than the length of the playlist.
+					If it is, use the next index othwerwise get the first song in the playlist.
+				*/
+				if( playlistActiveSongIndex + 1 < config.playlists[ playlist ].length ){
+					config.active_index = parseInt( config.playlists[ playlist ][ playlistActiveSongIndex + 1 ] );
+				}else{
+					config.active_index = parseInt( config.playlists[ playlist ][0] );
+					endOfList = true;
+				}
+
+				/*
+					Sets the next inex to the active index in the config.
+				*/
+				nextIndex = config.active_index;
+			}
 		}
 
 		/*
@@ -687,6 +732,13 @@ let AmplitudeEventsHelpers = (function() {
     	Call after next callback
     */
     AmplitudeCoreHelpers.runCallback('after_next');
+
+		/*
+			If we are repeating the song, call the song repeated callback
+		*/
+		if( config.repeat_song ){
+			AmplitudeCoreHelpers.runCallback('song_repeated');
+		}
 	}
 
 	/**
@@ -981,6 +1033,7 @@ let AmplitudeEventsHelpers = (function() {
 		computeSongCompletionPercentage: computeSongCompletionPercentage,
 		setPlaybackSpeed: setPlaybackSpeed,
 		setRepeat: setRepeat,
+		setRepeatSong: setRepeatSong,
 		setMainPlayPause: setMainPlayPause,
 		setPlaylistPlayPause: setPlaylistPlayPause,
 		setSongPlayPause: setSongPlayPause,

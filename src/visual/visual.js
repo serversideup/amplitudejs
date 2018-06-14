@@ -635,6 +635,35 @@ let AmplitudeVisualSync = (function() {
 	}
 
 	/**
+	 * Syncs repeat for all of the repeat song buttons. Users
+	 * can apply styles to the 'amplitude-repeat-song-on' and
+	 * 'amplitude-repeat-song-off' classes. They represent the state
+	 * of the player.
+	 */
+	function syncRepeatSong(){
+		/*
+			Gets all of the repeat song classes
+		*/
+		let repeatSongClasses = document.getElementsByClassName("amplitude-repeat-song");
+
+		/*
+			Iterate over all of the repeat song classes. If repeat is on,
+			then add the 'amplitude-repeat-song-on' class and remove the
+			'amplitude-repeat-song-off' class. If it's off, then do the
+			opposite.
+		*/
+		for( let i = 0; i < repeatSongClasses.length; i++ ){
+			if( config.repeat_song ){
+				repeatSongClasses[i].classList.add('amplitude-repeat-song-on');
+				repeatSongClasses[i].classList.remove('amplitude-repeat-song-off');
+			}else{
+				repeatSongClasses[i].classList.remove('amplitude-repeat-song-on');
+				repeatSongClasses[i].classList.add('amplitude-repeat-song-off');
+			}
+		}
+	}
+
+	/**
 	 * Syncs mute for all of the mute buttons. This represents the
 	 * state of the player if it's muted or not.
 	 *
@@ -984,6 +1013,7 @@ let AmplitudeVisualSync = (function() {
 		syncPlaylistPlayPause: syncPlaylistPlayPause,
 		syncSongPlayPause: syncSongPlayPause,
 		syncRepeat: syncRepeat,
+		syncRepeatSong: syncRepeatSong,
 		syncMute: syncMute,
 		syncShuffle: syncShuffle,
 		syncPlaylistShuffle: syncPlaylistShuffle,

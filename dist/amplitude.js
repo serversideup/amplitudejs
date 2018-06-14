@@ -164,6 +164,8 @@ module.exports = {
 
   repeat: false,
 
+  repeat_song: false,
+
   shuffle_list: {},
 
   shuffle_on: false,
@@ -1308,6 +1310,35 @@ var AmplitudeVisualSync = function () {
 	}
 
 	/**
+  * Syncs repeat for all of the repeat song buttons. Users
+  * can apply styles to the 'amplitude-repeat-song-on' and
+  * 'amplitude-repeat-song-off' classes. They represent the state
+  * of the player.
+  */
+	function syncRepeatSong() {
+		/*
+  	Gets all of the repeat song classes
+  */
+		var repeatSongClasses = document.getElementsByClassName("amplitude-repeat-song");
+
+		/*
+  	Iterate over all of the repeat song classes. If repeat is on,
+  	then add the 'amplitude-repeat-song-on' class and remove the
+  	'amplitude-repeat-song-off' class. If it's off, then do the
+  	opposite.
+  */
+		for (var _i17 = 0; _i17 < repeatSongClasses.length; _i17++) {
+			if (_config2.default.repeat_song) {
+				repeatSongClasses[_i17].classList.add('amplitude-repeat-song-on');
+				repeatSongClasses[_i17].classList.remove('amplitude-repeat-song-off');
+			} else {
+				repeatSongClasses[_i17].classList.remove('amplitude-repeat-song-on');
+				repeatSongClasses[_i17].classList.add('amplitude-repeat-song-off');
+			}
+		}
+	}
+
+	/**
   * Syncs mute for all of the mute buttons. This represents the
   * state of the player if it's muted or not.
   *
@@ -1325,13 +1356,13 @@ var AmplitudeVisualSync = function () {
   	is not-muted then we add the amplitude-not-muted classe and remove
   	the amplitude muted class otherwise we do the opposite.
   */
-		for (var _i17 = 0; _i17 < muteClasses.length; _i17++) {
+		for (var _i18 = 0; _i18 < muteClasses.length; _i18++) {
 			if (!state) {
-				muteClasses[_i17].classList.add('amplitude-not-muted');
-				muteClasses[_i17].classList.remove('amplitude-muted');
+				muteClasses[_i18].classList.add('amplitude-not-muted');
+				muteClasses[_i18].classList.remove('amplitude-muted');
 			} else {
-				muteClasses[_i17].classList.remove('amplitude-not-muted');
-				muteClasses[_i17].classList.add('amplitude-muted');
+				muteClasses[_i18].classList.remove('amplitude-not-muted');
+				muteClasses[_i18].classList.add('amplitude-muted');
 			}
 		}
 	}
@@ -1351,12 +1382,12 @@ var AmplitudeVisualSync = function () {
 		/*
   	Iterate over all of the shuffle buttons.
   */
-		for (var _i18 = 0; _i18 < shuffleButtons.length; _i18++) {
+		for (var _i19 = 0; _i19 < shuffleButtons.length; _i19++) {
 			/*
    	Ensure the shuffle button doesn't belong to a playlist. We have
    	a separate method for that.
    */
-			if (shuffleButtons[_i18].getAttribute('amplitude-playlist') == null) {
+			if (shuffleButtons[_i19].getAttribute('amplitude-playlist') == null) {
 				/*
     	If the state of the player is shuffled on, true, then
     	we add the 'amplitude-shuffle-on' class and remove the
@@ -1364,11 +1395,11 @@ var AmplitudeVisualSync = function () {
     	then we do the opposite.
     */
 				if (state) {
-					shuffleButtons[_i18].classList.add('amplitude-shuffle-on');
-					shuffleButtons[_i18].classList.remove('amplitude-shuffle-off');
+					shuffleButtons[_i19].classList.add('amplitude-shuffle-on');
+					shuffleButtons[_i19].classList.remove('amplitude-shuffle-off');
 				} else {
-					shuffleButtons[_i18].classList.add('amplitude-shuffle-off');
-					shuffleButtons[_i18].classList.remove('amplitude-shuffle-on');
+					shuffleButtons[_i19].classList.add('amplitude-shuffle-off');
+					shuffleButtons[_i19].classList.remove('amplitude-shuffle-on');
 				}
 			}
 		}
@@ -1390,12 +1421,12 @@ var AmplitudeVisualSync = function () {
 		/*
   	Iterate over all of the shuffle buttons
   */
-		for (var _i19 = 0; _i19 < shuffleButtons.length; _i19++) {
+		for (var _i20 = 0; _i20 < shuffleButtons.length; _i20++) {
 			/*
    	Ensure that the playlist the shuffle button belongs to matches the
    	playlist we are syncing the state for.
    */
-			if (shuffleButtons[_i19].getAttribute('amplitude-playlist') == playlist) {
+			if (shuffleButtons[_i20].getAttribute('amplitude-playlist') == playlist) {
 				/*
     	If the state of the playlist is shuffled on, true, then
     	we add the 'amplitude-shuffle-on' class and remove the
@@ -1403,11 +1434,11 @@ var AmplitudeVisualSync = function () {
     	then we do the opposite.
     */
 				if (state) {
-					shuffleButtons[_i19].classList.add('amplitude-shuffle-on');
-					shuffleButtons[_i19].classList.remove('amplitude-shuffle-off');
+					shuffleButtons[_i20].classList.add('amplitude-shuffle-on');
+					shuffleButtons[_i20].classList.remove('amplitude-shuffle-off');
 				} else {
-					shuffleButtons[_i19].classList.add('amplitude-shuffle-off');
-					shuffleButtons[_i19].classList.remove('amplitude-shuffle-on');
+					shuffleButtons[_i20].classList.add('amplitude-shuffle-off');
+					shuffleButtons[_i20].classList.remove('amplitude-shuffle-on');
 				}
 			}
 		}
@@ -1434,8 +1465,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the main sliders and sets the value to the
   	percentage of the song played.
   */
-		for (var _i20 = 0; _i20 < mainSongSliders.length; _i20++) {
-			mainSongSliders[_i20].value = location;
+		for (var _i21 = 0; _i21 < mainSongSliders.length; _i21++) {
+			mainSongSliders[_i21].value = location;
 		}
 	}
 
@@ -1461,8 +1492,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the playlist sliders and sets the value to the
   	percentage of the song played.
   */
-		for (var _i21 = 0; _i21 < playlistSongSliders.length; _i21++) {
-			playlistSongSliders[_i21].value = location;
+		for (var _i22 = 0; _i22 < playlistSongSliders.length; _i22++) {
+			playlistSongSliders[_i22].value = location;
 		}
 	}
 
@@ -1494,8 +1525,8 @@ var AmplitudeVisualSync = function () {
    	Iterates over all of the playlist sliders and set the value to the
    	percentage of the song played.
    */
-			for (var _i22 = 0; _i22 < songSliders.length; _i22++) {
-				songSliders[_i22].value = location;
+			for (var _i23 = 0; _i23 < songSliders.length; _i23++) {
+				songSliders[_i23].value = location;
 			}
 		} else {
 			/*
@@ -1508,10 +1539,10 @@ var AmplitudeVisualSync = function () {
    	the song we are sliding. If the song doesn't have a playlist
    	attribute, we set the location.
    */
-			for (var _i23 = 0; _i23 < _songSliders.length; _i23++) {
-				if (!_songSliders[_i23].hasAttribute('amplitude-playlist')) {
+			for (var _i24 = 0; _i24 < _songSliders.length; _i24++) {
+				if (!_songSliders[_i24].hasAttribute('amplitude-playlist')) {
 					if (location != 0) {
-						_songSliders[_i23].value = location;
+						_songSliders[_i24].value = location;
 					}
 				}
 			}
@@ -1534,8 +1565,8 @@ var AmplitudeVisualSync = function () {
   	Iterates over all of the sliders and sets their volume
   	to the volume of the song.
   */
-		for (var _i24 = 0; _i24 < volumeSliders.length; _i24++) {
-			volumeSliders[_i24].value = volume;
+		for (var _i25 = 0; _i25 < volumeSliders.length; _i25++) {
+			volumeSliders[_i25].value = volume;
 		}
 	}
 
@@ -1599,21 +1630,21 @@ var AmplitudeVisualSync = function () {
   	set these to the new values, or clear them if the active song
   	doesn't have the info set.
   */
-		for (var _i25 = 0; _i25 < songInfoElements.length; _i25++) {
+		for (var _i26 = 0; _i26 < songInfoElements.length; _i26++) {
 
 			/*
    	For this method we do not want the element to have any playlist or
    	main song info. This way we aren't adjusting the main song information for the
    	global player or the playlist player.
    */
-			if (songInfoElements[_i25].getAttribute('amplitude-playlist') == null && songInfoElements[_i25].getAttribute('amplitude-main-song-info') == null && songInfoElements[_i25].getAttribute('amplitude-song-index') != null) {
+			if (songInfoElements[_i26].getAttribute('amplitude-playlist') == null && songInfoElements[_i26].getAttribute('amplitude-main-song-info') == null && songInfoElements[_i26].getAttribute('amplitude-song-index') != null) {
 
 				/*
     		Get the info so we can check if the active meta data has the
     		key.
     	*/
-				var info = songInfoElements[_i25].getAttribute('amplitude-song-info');
-				var index = songInfoElements[_i25].getAttribute('amplitude-song-index');
+				var info = songInfoElements[_i26].getAttribute('amplitude-song-info');
+				var index = songInfoElements[_i26].getAttribute('amplitude-song-index');
 
 				/*
     	Make sure that the song index they are referencing is defined.
@@ -1625,9 +1656,9 @@ var AmplitudeVisualSync = function () {
      	the element. Otherwise we set the inner HTML of the element.
      */
 					if (imageMetaDataKeys.indexOf(info) >= 0) {
-						songInfoElements[_i25].setAttribute('src', _config2.default.songs[index][info]);
+						songInfoElements[_i26].setAttribute('src', _config2.default.songs[index][info]);
 					} else {
-						songInfoElements[_i25].innerHTML = _config2.default.songs[index][info];
+						songInfoElements[_i26].innerHTML = _config2.default.songs[index][info];
 					}
 				}
 			}
@@ -1655,6 +1686,7 @@ var AmplitudeVisualSync = function () {
 		syncPlaylistPlayPause: syncPlaylistPlayPause,
 		syncSongPlayPause: syncSongPlayPause,
 		syncRepeat: syncRepeat,
+		syncRepeatSong: syncRepeatSong,
 		syncMute: syncMute,
 		syncShuffle: syncShuffle,
 		syncPlaylistShuffle: syncPlaylistShuffle,
@@ -2286,6 +2318,11 @@ var AmplitudeEvents = function () {
 		bindRepeat();
 
 		/*
+  	Binds 'amplitude-repeat-song' event handlers.
+  */
+		bindRepeatSong();
+
+		/*
   	Binds 'amplitude-playback-speed' event handlers.
   */
 		bindPlaybackSpeed();
@@ -2805,6 +2842,42 @@ var AmplitudeEvents = function () {
 	}
 
 	/**
+  * Binds click and touchend events for amplitude repeat song buttons.
+  *
+  * Binds: class="amplitude-repeat-song"
+  *
+  * @access private
+  */
+	function bindRepeatSong() {
+		/*
+  	Gets all of the elements with the class amplitude-repeat-song
+  */
+		var repeatSongClasses = document.getElementsByClassName("amplitude-repeat-song");
+
+		/*
+  	Iterates over all of the repeat song classes and binds the event interaction
+  	methods to the element. If the browser is mobile, then the event is touchend
+  	otherwise it is click.
+  */
+		for (var i = 0; i < repeatSongClasses.length; i++) {
+			/*
+   	Since we are re-binding everything we remove any classes that signify
+   	a state of the repeat control.
+   */
+			repeatSongClasses[i].classList.remove('amplitude-repeat-song-on');
+			repeatSongClasses[i].classList.add('amplitude-repeat-song-off');
+
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				repeatSongClasses[i].removeEventListener('touchend', _handlers2.default.repeatSong);
+				repeatSongClasses[i].addEventListener('touchend', _handlers2.default.repeatSong);
+			} else {
+				repeatSongClasses[i].removeEventListener('click', _handlers2.default.repeatSong);
+				repeatSongClasses[i].addEventListener('click', _handlers2.default.repeatSong);
+			}
+		}
+	}
+
+	/**
   * Binds click and touchend events for amplitude playback speed buttons.
   *
   * Binds: class="amplitude-playback-speed"
@@ -3094,6 +3167,16 @@ var AmplitudeEventsHelpers = function () {
   */
 	function setRepeat(repeat) {
 		_config2.default.repeat = repeat;
+	}
+
+	/**
+  * Sets the state of the repeat song
+  *
+  * @access public
+  * @param {boolean} repeat - A boolean representing whether the repeat shoudl be on or off for the song.
+  */
+	function setRepeatSong(repeat) {
+		_config2.default.repeat_song = repeat;
 	}
 
 	/**
@@ -3401,45 +3484,57 @@ var AmplitudeEventsHelpers = function () {
   */
 		var endOfList = false;
 
-		/*
-  	If the shuffle is on, we use the shuffled list of
-  	songs to determine our next song.
-  */
-		if (_config2.default.shuffle_on) {
+		if (_config2.default.repeat_song) {
 			/*
-   	If the active shuffle index + 1 is less than the length, then
-   	we use the next shuffle otherwise we go to the beginning
-   	of the shuffle list.
+   	If the playlist is shuffled, get the now playing index.
    */
-			if (parseInt(_config2.default.shuffle_active_index) + 1 < _config2.default.shuffle_list.length) {
-				_config2.default.shuffle_active_index = parseInt(_config2.default.shuffle_active_index) + 1;
-
-				/*
-    	Set the next index to be the index of the song in the shuffle list.
-    */
-				nextIndex = _config2.default.shuffle_list[parseInt(_config2.default.shuffle_active_index)].original_index;
+			if (_config2.default.shuffle_on) {
+				nextIndex = _config2.default.shuffle_active_index;
 			} else {
-				_config2.default.shuffle_active_index = 0;
-				nextIndex = 0;
-				endOfList = true;
+				nextIndex = _config2.default.active_index;
 			}
 		} else {
-			/*
-   	If the active index + 1 is less than the length of the songs, then
-   	we use the next song otherwise we go to the beginning of the
-   	song list.
-   */
-			if (parseInt(_config2.default.active_index) + 1 < _config2.default.songs.length) {
-				_config2.default.active_index = parseInt(_config2.default.active_index) + 1;
-			} else {
-				_config2.default.active_index = 0;
-				endOfList = true;
-			}
 
 			/*
-   	Sets the next index.
+   	If the shuffle is on, we use the shuffled list of
+   	songs to determine our next song.
    */
-			nextIndex = _config2.default.active_index;
+			if (_config2.default.shuffle_on) {
+				/*
+    	If the active shuffle index + 1 is less than the length, then
+    	we use the next shuffle otherwise we go to the beginning
+    	of the shuffle list.
+    */
+				if (parseInt(_config2.default.shuffle_active_index) + 1 < _config2.default.shuffle_list.length) {
+					_config2.default.shuffle_active_index = parseInt(_config2.default.shuffle_active_index) + 1;
+
+					/*
+     	Set the next index to be the index of the song in the shuffle list.
+     */
+					nextIndex = _config2.default.shuffle_list[parseInt(_config2.default.shuffle_active_index)].original_index;
+				} else {
+					_config2.default.shuffle_active_index = 0;
+					nextIndex = 0;
+					endOfList = true;
+				}
+			} else {
+				/*
+    	If the active index + 1 is less than the length of the songs, then
+    	we use the next song otherwise we go to the beginning of the
+    	song list.
+    */
+				if (parseInt(_config2.default.active_index) + 1 < _config2.default.songs.length) {
+					_config2.default.active_index = parseInt(_config2.default.active_index) + 1;
+				} else {
+					_config2.default.active_index = 0;
+					endOfList = true;
+				}
+
+				/*
+    	Sets the next index.
+    */
+				nextIndex = _config2.default.active_index;
+			}
 		}
 
 		/*
@@ -3475,6 +3570,13 @@ var AmplitudeEventsHelpers = function () {
   	Call after next callback
   */
 		_helpers2.default.runCallback('after_next');
+
+		/*
+  	If we are repeating the song, call the song repeated callback
+  */
+		if (_config2.default.repeat_song) {
+			_helpers2.default.runCallback('song_repeated');
+		}
 	}
 
 	/**
@@ -3498,59 +3600,75 @@ var AmplitudeEventsHelpers = function () {
     @TODO: Different settings for song loop, in-playlist loop and global loop
   */
 		var endOfList = false;
-		/*
-  	If the playlist is shuffled we get the next index of the playlist.
-  */
-		if (_config2.default.shuffled_statuses[playlist]) {
-			/*
-   	Gets the shuffled playlist's active song index.
-   */
-			var shuffledPlaylistActiveSongIndex = parseInt(_config2.default.shuffled_active_indexes[playlist]);
 
+		/*
+  	If we are repeating the song, then we just start the song over.
+  */
+
+		if (_config2.default.repeat_song) {
 			/*
-   	If the index + 1 is less than the length of the playlist, we increment
-   	the next index otherwise we take the first index of 0.
+   	If the playlist is shuffled, get the now playing index.
    */
-			if (shuffledPlaylistActiveSongIndex + 1 < _config2.default.shuffled_playlists[playlist].length) {
-				/*
-    	Set the shuffled playlist active song index.
-    */
-				_config2.default.shuffled_active_indexes[playlist] = shuffledPlaylistActiveSongIndex + 1;
-				/*
-    	Get the index of the song that we will be switching to.
-    */
+			if (_config2.default.shuffled_statuses[playlist]) {
 				nextIndex = _config2.default.shuffled_playlists[playlist][_config2.default.shuffled_active_indexes[playlist]].original_index;
 			} else {
-				/*
-    	Sets the active shuffled playlist active index to 0 and gets the original index of
-    	the song at the shuffled index of 0.
-    */
-				_config2.default.shuffled_active_indexes[playlist] = 0;
-				nextIndex = _config2.default.shuffled_playlists[playlist][0].original_index;
-				endOfList = true;
+				nextIndex = _config2.default.active_index;
 			}
 		} else {
 			/*
-   	Gets the index of the active song within the scope
-   	of the playlist.
+   	If the playlist is shuffled we get the next index of the playlist.
    */
-			var playlistActiveSongIndex = _config2.default.playlists[playlist].indexOf(parseInt(_config2.default.active_index));
+			if (_config2.default.shuffled_statuses[playlist]) {
+				/*
+    	Gets the shuffled playlist's active song index.
+    */
+				var shuffledPlaylistActiveSongIndex = parseInt(_config2.default.shuffled_active_indexes[playlist]);
 
-			/*
-   	Checks to see if the next index is still less than the length of the playlist.
-   	If it is, use the next index othwerwise get the first song in the playlist.
-   */
-			if (playlistActiveSongIndex + 1 < _config2.default.playlists[playlist].length) {
-				_config2.default.active_index = parseInt(_config2.default.playlists[playlist][playlistActiveSongIndex + 1]);
+				/*
+    	If the index + 1 is less than the length of the playlist, we increment
+    	the next index otherwise we take the first index of 0.
+    */
+				if (shuffledPlaylistActiveSongIndex + 1 < _config2.default.shuffled_playlists[playlist].length) {
+					/*
+     	Set the shuffled playlist active song index.
+     */
+					_config2.default.shuffled_active_indexes[playlist] = shuffledPlaylistActiveSongIndex + 1;
+					/*
+     	Get the index of the song that we will be switching to.
+     */
+					nextIndex = _config2.default.shuffled_playlists[playlist][_config2.default.shuffled_active_indexes[playlist]].original_index;
+				} else {
+					/*
+     	Sets the active shuffled playlist active index to 0 and gets the original index of
+     	the song at the shuffled index of 0.
+     */
+					_config2.default.shuffled_active_indexes[playlist] = 0;
+					nextIndex = _config2.default.shuffled_playlists[playlist][0].original_index;
+					endOfList = true;
+				}
 			} else {
-				_config2.default.active_index = parseInt(_config2.default.playlists[playlist][0]);
-				endOfList = true;
-			}
+				/*
+    	Gets the index of the active song within the scope
+    	of the playlist.
+    */
+				var playlistActiveSongIndex = _config2.default.playlists[playlist].indexOf(parseInt(_config2.default.active_index));
 
-			/*
-   	Sets the next inex to the active index in the config.
-   */
-			nextIndex = _config2.default.active_index;
+				/*
+    	Checks to see if the next index is still less than the length of the playlist.
+    	If it is, use the next index othwerwise get the first song in the playlist.
+    */
+				if (playlistActiveSongIndex + 1 < _config2.default.playlists[playlist].length) {
+					_config2.default.active_index = parseInt(_config2.default.playlists[playlist][playlistActiveSongIndex + 1]);
+				} else {
+					_config2.default.active_index = parseInt(_config2.default.playlists[playlist][0]);
+					endOfList = true;
+				}
+
+				/*
+    	Sets the next inex to the active index in the config.
+    */
+				nextIndex = _config2.default.active_index;
+			}
 		}
 
 		/*
@@ -3584,6 +3702,13 @@ var AmplitudeEventsHelpers = function () {
   	Call after next callback
   */
 		_helpers2.default.runCallback('after_next');
+
+		/*
+  	If we are repeating the song, call the song repeated callback
+  */
+		if (_config2.default.repeat_song) {
+			_helpers2.default.runCallback('song_repeated');
+		}
 	}
 
 	/**
@@ -3875,6 +4000,7 @@ var AmplitudeEventsHelpers = function () {
 		computeSongCompletionPercentage: computeSongCompletionPercentage,
 		setPlaybackSpeed: setPlaybackSpeed,
 		setRepeat: setRepeat,
+		setRepeatSong: setRepeatSong,
 		setMainPlayPause: setMainPlayPause,
 		setPlaylistPlayPause: setPlaylistPlayPause,
 		setSongPlayPause: setSongPlayPause,
@@ -5223,6 +5349,27 @@ exports.default = {
 	},
 
 	/**
+  * Handles an event on the repeat song button
+  *
+  * HANDLER FOR: 'amplitude-repeat-song'
+  *
+  * @access private
+  */
+	repeatSong: function repeatSong() {
+		if (!_config2.default.is_touch_moving) {
+			/*
+   	Sets repeat song to the opposite of what it was set to
+   */
+			_helpers2.default.setRepeatSong(!_config2.default.repeat_song);
+
+			/*
+   	Visually sync repeat song
+   */
+			_visual2.default.syncRepeatSong();
+		}
+	},
+
+	/**
   * Handles an event on the playback speed button
   *
   * HANDLER FOR: 'amplitude-playback-speed'
@@ -5533,6 +5680,27 @@ var Amplitude = function () {
 	}
 
 	/**
+  * Sets the repeat state for the song.
+  *
+  * Public Accessor: Amplitude.setRepeatSong()
+  *
+  * @access public
+  */
+	function setRepeatSong() {
+		if (!_config2.default.is_touch_moving) {
+			/*
+    Sets repeat to the opposite of what it was set to
+   */
+			_helpers4.default.setRepeatSong(!_config2.default.repeat_song);
+
+			/*
+    Visually sync repeat song
+   */
+			_visual2.default.syncRepeatSong();
+		}
+	}
+
+	/**
   * Gets the default album art for the player
   *
   * Public Accessor: Amplitude.getDefaultAlbumArt()
@@ -5667,6 +5835,77 @@ var Amplitude = function () {
 
 		_config2.default.songs.push(song);
 		return _config2.default.songs.length - 1;
+	}
+
+	/**
+  * Adds a song to a playlist. This will allow Amplitude to play the song in the
+  * playlist
+  *
+  * Public Accessor: Amplitude.addSongToPlaylist( song_json, playlist_key )
+  *
+  * @access public
+  * @param {object} song 			- JSON representation of a song.
+  * @param {string} playlist		- Playlist we are adding the song to.
+  * @returns {mixed} New index of song in playlist or null if no playlist exists
+  */
+	function addSongToPlaylist(song, playlist) {
+		/*
+  	Ensures we have a songs array to push to. This is step 1.
+  */
+		if (_config2.default.songs == undefined) {
+			_config2.default.songs = [];
+		}
+
+		_config2.default.songs.push(song);
+
+		var songIndex = _config2.default.songs.length - 1;
+
+		/*
+  	Ensures the playlist is valid to push the song on to.
+  */
+		if (_config2.default.playlists[playlist] != undefined) {
+			_config2.default.playlists[playlist].push(songIndex);
+
+			return _config2.default.playlists[playlist].length - 1;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+  * Removes a song from the song array
+  *
+  * Public Accessor: Amplitude.removeSong( index )
+  *
+  * @access public
+  * @param {integer} index 			- Index of the song being removed
+  * @returns {boolean} True if removed false if not.
+  */
+	function removeSong(index) {
+		if (_config2.default.songs[index] != undefined) {
+			_config2.default.songs.splice(index, 1);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+  * Removes a song from the playlist
+  *
+  * Public Accessor: Amplitude.removeSongFromPlaylist( index, playlist )
+  *
+  * @access public
+  * @param {integer} index 			- Index of the song being removed from the playlist.
+  * @param {string} playlist			- Playlist we are removing the song from.
+  * @returns {boolean} True if removed false if not.
+  */
+	function removeSongFromPlaylist(index, playlist) {
+		if (_config2.default.playlists[playlist] != undefined) {
+			_config2.default.playlists[playlist].splice(index, 1);
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -5994,6 +6233,7 @@ var Amplitude = function () {
 		setShuffle: setShuffle,
 		setShufflePlaylist: setShufflePlaylist,
 		setRepeat: setRepeat,
+		setRepeatSong: setRepeatSong,
 		getDefaultAlbumArt: getDefaultAlbumArt,
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,
@@ -6003,6 +6243,9 @@ var Amplitude = function () {
 		getSongByIndex: getSongByIndex,
 		getSongAtPlaylistIndex: getSongAtPlaylistIndex,
 		addSong: addSong,
+		addSongToPlaylist: addSongToPlaylist,
+		removeSong: removeSong,
+		removeSongFromPlaylist: removeSongFromPlaylist,
 		playNow: playNow,
 		playSongAtIndex: playSongAtIndex,
 		playPlaylistSongAtIndex: playPlaylistSongAtIndex,
