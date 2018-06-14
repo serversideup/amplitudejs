@@ -4621,7 +4621,6 @@ exports.default = {
   * @access public
   */
 	keydown: function keydown(event) {
-		console.log(event);
 		_helpers2.default.runKeyEvent(event.which);
 	},
 
@@ -5882,7 +5881,7 @@ var Amplitude = function () {
 			}
 		} else {
 
-			for (var _i = 0; _i < _config2.default.playlist[playlist].length; _i++) {
+			for (var _i = 0; _i < _config2.default.playlists[playlist].length; _i++) {
 				songsArray.push(_config2.default.songs[_i]);
 			}
 		}
