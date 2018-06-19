@@ -68,17 +68,9 @@ let AmplitudeEventsHelpers = (function() {
 			If the user is more than 60 minutes into the song, then
 			we extract the hours.
 		*/
-		if( currentMinutes > 60 ){
+		if( currentMinutes >= 60 ){
 			currentHours 		= Math.floor( currentMinutes / 60 );
 			currentMinutes 		= currentMinutes % 60;
-
-			/*
-				If the user is less than 10 hours in, we append the
-				additional 0 to the hours.
-			*/
-			if( currentHours < 10 ){
-				currentHours = '0'+currentHours;
-			}
 
 			/*
 				If the user is less than 10 minutes in, we append the
@@ -125,7 +117,7 @@ let AmplitudeEventsHelpers = (function() {
 		/*
 			Initialize the hours duration variable.
 		*/
-		let songDurationHours = '00';
+		var songDurationHours = '0';
 
 		/*
 			If the song duration minutes is less than 10, we add a leading 0.
@@ -138,17 +130,9 @@ let AmplitudeEventsHelpers = (function() {
 			If there is more than 60 minutes in the song, then we
 			extract the hours.
 		*/
-		if( songDurationMinutes > 60 ){
+		if( songDurationMinutes >= 60 ){
 			songDurationHours 		= Math.floor( songDurationMinutes / 60 );
 			songDurationMinutes 	= songDurationMinutes % 60;
-
-			/*
-				If the song duration hours is less than 10 we append
-				the additional 0.
-			*/
-			if( songDurationHours < 10 ){
-				songDurationHours = '0'+songDurationHours;
-			}
 
 			/*
 				If the song duration minutes is less than 10 we append
