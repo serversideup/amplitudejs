@@ -554,6 +554,7 @@ div#black-player {
   background-color: #333333;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
   font-family: "Lato", sans-serif;
+  margin: auto;
   margin-right: 50px;
   margin-top: 50px;
 }
@@ -938,6 +939,16 @@ body {
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#1e5799", endColorstr="#7db9e8",GradientType=1 );
   /* IE6-9 fallback on horizontal gradient */
+}
+body span.playlist-title {
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
 }
 
 /*
