@@ -95,7 +95,7 @@ export default {
 		When the keydown event is fired, we determine which function should be run
 		based on what was passed in.
 	--------------------------------------------------------------------------*/
-	keydown: function(){
+	keydown: function( event ){
 		AmplitudeEventHelpers.runKeyEvent( event.which );
 	},
 
