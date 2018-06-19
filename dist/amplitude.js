@@ -2225,26 +2225,35 @@ var _handlers2 = _interopRequireDefault(_handlers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * AmplitudeJS Events module. Binds all of the events listened to by AmplitudeJS
- * to the appropriate functions
- *
- * @module events/AmplitudeEvents
- */
-
-
-/**
- * AmplitudeJS Core Helpers Module
- *
- * @module core/AmplitudeCoreHelpers
- */
+/*
+|----------------------------------------------------------------------------------------------------
+| EVENTS METHODS
+|----------------------------------------------------------------------------------------------------
+| These methods are called when we need to bind events to certain elements.
+|
+| METHODS:
+| 	initializeEvents()
+|	bindPlay()
+|	bindPause()
+|	bindPlayPause()
+|	bindStop()
+|	bindMute()
+|	bindVolumeUp()
+|	bindVolumeDown()
+|	bindSongSlider()
+|	bindVolumeSlider()
+|	bindNext()
+|	bindPrev()
+|	bindShuffle()
+|	bindRepeat()
+|	bindPlaybackSpeed()
+|	bindSkipTo()
+|      bindProgress()
+*/
 var AmplitudeEvents = function () {
-	/**
-  * Initializes the handlers for the events listened to by Amplitude
-  *
-  * Public Accessor: AmplitudeEvents.initializeEvents()
-  * @access public
-  */
+	/*--------------------------------------------------------------------------
+ 	Initializes the handlers for the events listened to by Amplitude
+ --------------------------------------------------------------------------*/
 	function initializeEvents() {
 		/*
   	Write out debug message
@@ -2359,11 +2368,6 @@ var AmplitudeEvents = function () {
 		bindRepeat();
 
 		/*
-  	Binds 'amplitude-repeat-song' event handlers.
-  */
-		bindRepeatSong();
-
-		/*
   	Binds 'amplitude-playback-speed' event handlers.
   */
 		bindPlaybackSpeed();
@@ -2374,68 +2378,55 @@ var AmplitudeEvents = function () {
 		bindSkipTo();
 	}
 
-	/**
-  * On time update for the audio element, update visual displays that
-  * represent the time on either a visualized element or time display.
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	On time update for the audio element, update visual displays that
+ 		represent the time on either a visualized element or time display.
+ --------------------------------------------------------------------------*/
 	function bindTimeUpdate() {
 		_config2.default.active_song.removeEventListener('timeupdate', _handlers2.default.updateTime);
 		_config2.default.active_song.addEventListener('timeupdate', _handlers2.default.updateTime);
 
-		/*
-  Also bind change of duratuion
-  */
+		// also bind change of duratuion
 		_config2.default.active_song.removeEventListener('durationchange', _handlers2.default.updateTime);
 		_config2.default.active_song.addEventListener('durationchange', _handlers2.default.updateTime);
 	}
 
-	/**
-  * On keydown, we listen to what key got pressed so we can map the key to
-  * a function. This allows the user to map pause and play, next, etc. to key
-  * presses.
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	On keydown, we listen to what key got pressed so we can map the key to
+ 	a function. This allows the user to map pause and play, next, etc. to key
+ 	presses.
+ --------------------------------------------------------------------------*/
 	function bindKeyDownEventHandlers() {
-		document.removeEventListener("keydown", _handlers2.default.keydown);
+		document.removeEventListener("keydown", _helpers2.default.keydown);
 		document.addEventListener("keydown", _handlers2.default.keydown);
 	}
 
-	/**
-  * When the audio element has ended playing, we handle the song
-  * ending. In a single song or multiple modular song instance,
-  * this just synchronizes the visuals for time and song time
-  * visualization, but for a playlist it determines whether
-  * it should play the next song or not.
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	When the audio element has ended playing, we handle the song
+ 	ending. In a single song or multiple modular song instance,
+ 	this just synchronizes the visuals for time and song time
+ 	visualization, but for a playlist it determines whether
+ 	it should play the next song or not.
+ --------------------------------------------------------------------------*/
 	function bindSongEnded() {
 		_config2.default.active_song.removeEventListener('ended', _handlers2.default.songEnded);
 		_config2.default.active_song.addEventListener('ended', _handlers2.default.songEnded);
 	}
 
-	/**
-  * As the audio is loaded, the progress event gets fired. We bind into this
-  * to grab the buffered percentage of the song. We can then add more elements
-  * to show the buffered amount.
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	As the audio is loaded, the progress event gets fired. We bind into this
+ 	to grab the buffered percentage of the song. We can then add more elements
+ 	to show the buffered amount.
+ --------------------------------------------------------------------------*/
 	function bindProgress() {
 		_config2.default.active_song.removeEventListener('progress', _handlers2.default.progess);
 		_config2.default.active_song.addEventListener('progress', _handlers2.default.progress);
 	}
 
-	/**
-  * Binds click and touchend events for amplitude play buttons.
-  *
-  * Binds: class="amplitude-play"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-play"
+ 		Binds click and touchend events for amplitude play buttons.
+ --------------------------------------------------------------------------*/
 	function bindPlay() {
 		/*
   	Gets all of the elements with the class amplitude-play
@@ -2458,13 +2449,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude pause buttons.
-  *
-  * Binds: class="amplitude-pause"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-pause"
+ 		Binds click and touchend events for amplitude pause buttons.
+ --------------------------------------------------------------------------*/
 	function bindPause() {
 		/*
   	Gets all of the elements with the class amplitude-pause
@@ -2487,13 +2475,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude play pause buttons.
-  *
-  * Binds: class="amplitude-play-pause"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-play-pause"
+ 		Binds click and touchend events for amplitude play pause buttons.
+ --------------------------------------------------------------------------*/
 	function bindPlayPause() {
 		/*
   	Gets all of the elements with the class amplitude-play-pause
@@ -2516,13 +2501,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude stop buttons
-  *
-  * Binds: class="amplitude-stop"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-stop"
+ 		Binds click and touchend events for amplitude stop buttons
+ --------------------------------------------------------------------------*/
 	function bindStop() {
 		/*
   	Gets all of the elements with the class amplitude-stop
@@ -2545,13 +2527,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude mute buttons
-  *
-  * Binds: class="amplitude-mute"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-mute"
+ 		Binds click and touchend events for amplitude mute buttons
+ --------------------------------------------------------------------------*/
 	function bindMute() {
 		/*
   	Gets all of the elements with the class amplitue-mute
@@ -2587,13 +2566,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude volume up buttons
-  *
-  * Binds: class="amplitude-volume-up"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-volume-up"
+ 		Binds click and touchend events for amplitude volume up buttons
+ --------------------------------------------------------------------------*/
 	function bindVolumeUp() {
 		/*
   	Gets all of the elements with the class amplitude-volume-up
@@ -2629,13 +2605,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude volume down buttons
-  *
-  * Binds: class="amplitude-volume-down"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-volume-down"
+ 		Binds click and touchend events for amplitude volume down buttons
+ --------------------------------------------------------------------------*/
 	function bindVolumeDown() {
 		/*
   	Gets all of the elements with the class amplitude-volume-down
@@ -2671,13 +2644,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds change and input events for amplitude song slider inputs
-  *
-  * Binds: class="amplitude-song-slider"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-song-slider"
+ 		Binds change and input events for amplitude song slider inputs
+ --------------------------------------------------------------------------*/
 	function bindSongSlider() {
 		/*
   	Gets browser so if we need to apply overrides, like we usually
@@ -2707,13 +2677,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds change and input events for amplitude volume slider inputs
-  *
-  * Binds: class="amplitude-volume-slider"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-volume-slider"
+ 		Binds change and input events for amplitude volume slider inputs
+ --------------------------------------------------------------------------*/
 	function bindVolumeSlider() {
 		/*
   	Gets browser so if we need to apply overrides, like we usually
@@ -2752,17 +2719,14 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude next buttons.
-  *
-  * Binds: class="amplitude-next"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-next"
+ 		Binds click and touchend events for amplitude next buttons.
+ --------------------------------------------------------------------------*/
 	function bindNext() {
 		/*
   	Gets all of the elements with the class amplitude-next
-    */
+        */
 		var next_classes = document.getElementsByClassName("amplitude-next");
 
 		/*
@@ -2781,13 +2745,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude prev buttons.
-  *
-  * Binds: class="amplitude-prev"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-prev"
+ 		Binds click and touchend events for amplitude prev buttons.
+ --------------------------------------------------------------------------*/
 	function bindPrev() {
 		/*
   	Gets all of the elements with the class amplitude-prev
@@ -2810,13 +2771,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude shuffle buttons.
-  *
-  * Binds: class="amplitude-shuffle"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-shuffle"
+ 		Binds click and touchend events for amplitude shuffle buttons.
+ --------------------------------------------------------------------------*/
 	function bindShuffle() {
 		/*
   	Gets all of the elements with the class amplitude-shuffle
@@ -2846,13 +2804,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude repeat buttons.
-  *
-  * Binds: class="amplitude-repeat"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-repeat"
+ 		Binds click and touchend events for amplitude repeat buttons.
+ --------------------------------------------------------------------------*/
 	function bindRepeat() {
 		/*
   	Gets all of the elements with the class amplitude-repeat
@@ -2882,49 +2837,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude repeat song buttons.
-  *
-  * Binds: class="amplitude-repeat-song"
-  *
-  * @access private
-  */
-	function bindRepeatSong() {
-		/*
-  	Gets all of the elements with the class amplitude-repeat-song
-  */
-		var repeatSongClasses = document.getElementsByClassName("amplitude-repeat-song");
-
-		/*
-  	Iterates over all of the repeat song classes and binds the event interaction
-  	methods to the element. If the browser is mobile, then the event is touchend
-  	otherwise it is click.
-  */
-		for (var i = 0; i < repeatSongClasses.length; i++) {
-			/*
-   	Since we are re-binding everything we remove any classes that signify
-   	a state of the repeat control.
-   */
-			repeatSongClasses[i].classList.remove('amplitude-repeat-song-on');
-			repeatSongClasses[i].classList.add('amplitude-repeat-song-off');
-
-			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-				repeatSongClasses[i].removeEventListener('touchend', _handlers2.default.repeatSong);
-				repeatSongClasses[i].addEventListener('touchend', _handlers2.default.repeatSong);
-			} else {
-				repeatSongClasses[i].removeEventListener('click', _handlers2.default.repeatSong);
-				repeatSongClasses[i].addEventListener('click', _handlers2.default.repeatSong);
-			}
-		}
-	}
-
-	/**
-  * Binds click and touchend events for amplitude playback speed buttons.
-  *
-  * Binds: class="amplitude-playback-speed"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-playback-speed"
+ 		Binds click and touchend events for amplitude playback speed buttons.
+ --------------------------------------------------------------------------*/
 	function bindPlaybackSpeed() {
 		/*
   	Gets all of the elements with the class amplitude-playback-speed
@@ -2947,13 +2863,10 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/**
-  * Binds click and touchend events for amplitude skip to buttons.
-  *
-  * Binds: class="amplitude-skip-to"
-  *
-  * @access private
-  */
+	/*--------------------------------------------------------------------------
+ 	BINDS: class="amplitude-skip-to"
+ 		Binds click and touchend events for amplitude skip to buttons.
+ --------------------------------------------------------------------------*/
 	function bindSkipTo() {
 		/*
   	Gets all of the skip to elements with the class 'amplitude-skip-to'
@@ -2976,23 +2889,13 @@ var AmplitudeEvents = function () {
 		}
 	}
 
-	/*
- 	Returns the publicly accessible methods
- */
 	return {
 		initializeEvents: initializeEvents
 	};
-}();
-
-/**
- * AmplitudeJS Event Handlers Module
- *
- * @module events/AmplitudeHandlers
- */
-/**
- * Imports the config module
- * @module config
- */
+}(); /*
+     	Import the necessary classes and config to use
+     	with the events.
+     */
 exports.default = AmplitudeEvents;
 module.exports = exports['default'];
 
@@ -3080,17 +2983,9 @@ var AmplitudeEventsHelpers = function () {
   	If the user is more than 60 minutes into the song, then
   	we extract the hours.
   */
-		if (currentMinutes > 60) {
+		if (currentMinutes >= 60) {
 			currentHours = Math.floor(currentMinutes / 60);
 			currentMinutes = currentMinutes % 60;
-
-			/*
-   	If the user is less than 10 hours in, we append the
-   	additional 0 to the hours.
-   */
-			if (currentHours < 10) {
-				currentHours = '0' + currentHours;
-			}
 
 			/*
    	If the user is less than 10 minutes in, we append the
@@ -3136,7 +3031,7 @@ var AmplitudeEventsHelpers = function () {
 		/*
   	Initialize the hours duration variable.
   */
-		var songDurationHours = '00';
+		var songDurationHours = '0';
 
 		/*
   	If the song duration minutes is less than 10, we add a leading 0.
@@ -3149,17 +3044,9 @@ var AmplitudeEventsHelpers = function () {
   	If there is more than 60 minutes in the song, then we
   	extract the hours.
   */
-		if (songDurationMinutes > 60) {
+		if (songDurationMinutes >= 60) {
 			songDurationHours = Math.floor(songDurationMinutes / 60);
 			songDurationMinutes = songDurationMinutes % 60;
-
-			/*
-   	If the song duration hours is less than 10 we append
-   	the additional 0.
-   */
-			if (songDurationHours < 10) {
-				songDurationHours = '0' + songDurationHours;
-			}
 
 			/*
    	If the song duration minutes is less than 10 we append
