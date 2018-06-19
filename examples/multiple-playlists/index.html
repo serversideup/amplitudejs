@@ -16,6 +16,7 @@
 		-->
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/foundation.min.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
 
 		<!-- Include Amplitude JS -->
 		<script type="text/javascript" src="../../dist/amplitude.js"></script>
@@ -26,10 +27,223 @@
   <body>
     <div class="grid-x">
       <div class="large-6 medium-6 small-12 large-centered medium-centered cell">
-        
+        <div id="white-player">
+          <div class="white-player-top">
+            <div class="grid-x">
+              <div class="large-3 medium-3 small-3 cell">
+
+              </div>
+              <div class="large-6 medium-6 small-6 cell">
+                <span class="now-playing">Now Playing</span>
+              </div>
+              <div class="large-3 medium-3 small-3 cell">
+                <img src="./img/show-playlist.svg" class="show-playlist"/>
+              </div>
+            </div>
+          </div>
+
+          <div id="white-player-center">
+            <img amplitude-song-info="cover_art_url" amplitude-playlist="trip_hop" class="main-album-art"/>
+
+            <div class="song-meta-data">
+              <span amplitude-song-info="name" amplitude-playlist="trip_hop" class="song-name"></span>
+              <span amplitude-song-info="artist" amplitude-playlist="trip_hop" class="song-artist"></span>
+            </div>
+
+            <div class="time-progress">
+              <div class="grid-x">
+                <div class="large-12 medium-12 small-12 cell">
+                  <div id="progress-container">
+                    <input type="range" class="amplitude-song-slider" amplitude-playlist-song-slider="true" amplitude-playlist="trip_hop"/>
+  				          <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-playlist-song-played-progress="true" amplitude-playlist="trip_hop"></progress>
+  				          <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid-x">
+                <div class="large-6 medium-6 small-6 cell">
+                  <span class="current-time">
+  				          <span class="amplitude-current-minutes" amplitude-playlist-current-minutes="true" amplitude-playlist="trip_hop"></span>:<span class="amplitude-current-seconds" amplitude-playlist-current-seconds="true" amplitude-playlist="trip_hop"></span>
+  				        </span>
+                </div>
+                <div class="large-6 medium-6 small-6 cell">
+                  <span class="duration">
+  				          <span class="amplitude-duration-minutes" amplitude-playlist-duration-minutes="true" amplitude-playlist="trip_hop"></span>:<span class="amplitude-duration-seconds" amplitude-playlist-duration-seconds="true" amplitude-playlist="trip_hop"></span>
+  				        </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="white-player-controls">
+            <div class="grid-x">
+              <div class="large-12 medium-12 small-12 cell">
+                <div class="amplitude-shuffle amplitude-shuffle-off" amplitude-playlist="trip_hop"  id="shuffle"></div>
+                <div class="amplitude-prev" amplitude-playlist="trip_hop" id="previous"></div>
+                <div class="amplitude-play-pause" amplitude-playlist-main-play-pause="true" amplitude-playlist="trip_hop" id="play-pause"></div>
+                <div class="amplitude-next" amplitude-playlist="trip_hop" id="next"></div>
+                <div class="amplitude-repeat" amplitude-playlist="trip_hop" id="repeat"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="white-player-playlist-container">
+            <div class="white-player-playlist-top">
+              <div class="grid-x">
+                <div class="large-3 medium-3 small-3 cell">
+
+                </div>
+                <div class="large-6 medium-6 small-6 cell">
+                  <span class="queue">Queue</span>
+                </div>
+                <div class="large-3 medium-3 small-3 cell">
+                  <img src="./img/close.svg" class="close-playlist"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="white-player-up-next">
+              Up Next
+            </div>
+
+            <div class="white-player-playlist">
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="0" amplitude-playlist="trip_hop">
+                <img src="../album-art/we-are-to-answer.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">Risin' High (feat Raashan Ahmad)</span>
+                  <span class="playlist-artist-album">Ancient Astronauts &bull; We Are to Answer</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="1" amplitude-playlist="trip_hop">
+                <img src="../album-art/ask-the-dust.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">The Gun</span>
+                  <span class="playlist-artist-album">Lorn &bull; Ask The Dust</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="2" amplitude-playlist="trip_hop">
+                <img src="../album-art/anvil.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">The Gun</span>
+                  <span class="playlist-artist-album">Lorn &bull; Anvil</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="3" amplitude-playlist="trip_hop">
+                <img src="../album-art/we-are-to-answer.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">I Came Running</span>
+                  <span class="playlist-artist-album">Ancient Astronauts &bull; We Are to Answer</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="4" amplitude-playlist="trip_hop">
+                <img src="../album-art/key.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">Terrain</span>
+                  <span class="playlist-artist-album">pg.lost &bull; Key</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="5" amplitude-playlist="trip_hop">
+                <img src="../album-art/guidance.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">Vorel</span>
+                  <span class="playlist-artist-album">Russian Circles &bull; Guidance</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="6" amplitude-playlist="trip_hop">
+                <img src="../album-art/die-digital.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">Intro / Sweet Glory</span>
+                  <span class="playlist-artist-album">Die Digital &bull; Jimkata</span>
+                </div>
+              </div>
+              <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="7" amplitude-playlist="trip_hop">
+                <img src="../album-art/we-are-but-hunks-of-wood.jpg"/>
+
+                <div class="playlist-song-meta">
+                  <span class="playlist-song-name">Offcut #6</span>
+                  <span class="playlist-artist-album">Little People &bull; We Are But Hunks of Wood Remixes</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="white-player-playlist-controls">
+              <img amplitude-song-info="cover_art_url" amplitude-playlist="trip_hop" class="playlist-album-art"/>
+
+              <div class="playlist-controls">
+                <div class="grid-x">
+                  <div class="large-6 medium-6 small-6 cell">
+                    <span amplitude-song-info="name" amplitude-playlist="trip_hop" class="song-name"></span>
+                    <span amplitude-song-info="artist" amplitude-playlist="trip_hop" class="song-artist"></span>
+                  </div>
+                  <div class="large-6 medium-6 small-6 cell">
+                    <div class="playlist-control-wrapper">
+                      <div class="amplitude-prev" id="playlist-previous" amplitude-playlst-"trip_hop"></div>
+                      <div class="amplitude-play-pause" amplitude-playlist-main-play-pause="true" amplitude-playlist="trip_hop" id="playlist-play-pause"></div>
+                      <div class="amplitude-next" id="playlist-next" amplitude-playlist="trip_hop"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="large-6 medium-6 small-12 large-centered medium-centered cell">
+        <div id="black-player">
+          <div id="black-player-playlist">
+            <div class="black-player-song amplitude-song-container amplitude-play-pause" amplitude-song-index="4" amplitude-playlist="emancipator">
+              <img src="../album-art/soon-it-will-be-cold-enough.jpg">
+              <div class="song-meta-container">
+                <span class="individual-song-name">First Snow</span>
+                <span class="individual-song-artist">Emancipator</span>
+              </div>
+            </div>
+            <div class="black-player-song amplitude-song-container amplitude-play-pause" amplitude-song-index="9" amplitude-playlist="emancipator">
+              <img src="../album-art/from-dusk-to-dawn.jpg">
+              <div class="song-meta-container">
+                <span class="individual-song-name">Dusk To Dawn</span>
+                <span class="individual-song-artist">Emancipator</span>
+              </div>
+            </div>
+            <div class="black-player-song amplitude-song-container amplitude-play-pause" amplitude-song-index="10" amplitude-playlist="emancipator">
+              <img src="../album-art/soon-it-will-be-cold-enough.jpg">
+              <div class="song-meta-container">
+                <span class="individual-song-name">Anthem</span>
+                <span class="individual-song-artist">Emancipator</span>
+              </div>
+            </div>
+          </div>
+          <div id="black-player-controls">
+            <img amplitude-song-info="cover_art_url" amplitude-playlist="emancipator" class="playlist-album-art"/>
+            <div class="black-player-controls-container">
+              <span amplitude-song-info="name" amplitude-playlist="emancipator" class="song-name"></span>
+              <span amplitude-song-info="artist" amplitude-playlist="emancipator" class="song-artist"></span>
 
+              <div id="progress-container-black">
+                <input type="range" class="amplitude-song-slider" amplitude-playlist-song-slider="true" amplitude-playlist="emancipator"/>
+                <progress id="song-played-progress-black" class="amplitude-song-played-progress" amplitude-playlist-song-played-progress="true" amplitude-playlist="emancipator"></progress>
+                <progress id="song-buffered-progress-black" class="amplitude-buffered-progress" value="0"></progress>
+              </div>
+
+              <div>
+                <div class="amplitude-shuffle amplitude-shuffle-off" amplitude-playlist="emancipator" id="shuffle-black"></div>
+                <div class="amplitude-prev" amplitude-playlist="emancipator" id="previous-black"></div>
+                <div class="amplitude-play-pause" amplitude-playlist-main-play-pause="true" amplitude-playlist="emancipator" id="play-pause-black"></div>
+                <div class="amplitude-next" amplitude-playlist="emancipator" id="next-black"></div>
+                <div class="amplitude-repeat" amplitude-playlist="emancipator" id="repeat-black"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
@@ -119,9 +333,10 @@
           4, 9, 10
         ],
         "trip_hop": [
-          0, 1, 2, 3, 4, 5, 6, 7, 8
+          0, 1, 2, 3, 5, 6, 7, 8
         ]
-      }
+      },
+      starting_playlist: 'trip_hop'
     });
   </script>
 </html>

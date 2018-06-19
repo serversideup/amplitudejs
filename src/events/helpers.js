@@ -194,10 +194,41 @@ let AmplitudeEventsHelpers = (function() {
 	 *
 	 * @access public
 	 * @param {boolean} repeat - A boolean representing whether the repeat should be on or off
+	 * @param {string} playlist - The key of the playlist for repeating
 	 */
-	function setRepeat( repeat ){
-		config.repeat = repeat;
+	function setRepeat( repeat, playlist ){
+		/*
+		  If the playlist is null, then we are dealing with the global
+		  repeat status.
+		*/
+		if( playlist == null ){
+			/*
+				Set the global repeat to be toggled
+			*/
+			config.repeat = repeat;
+
+			/*
+				Visually sync repeat
+			*/
+			AmplitudeVisualSync.syncRepeat();
+		}else{
+			/*
+				Set the playlist repeat to be toggled.
+			*/
+			config.repeat_statuses[playlist] = repeat;
+
+			/*
+				Visually sync playlist repeat
+			*/
+			AmplitudeVisualSync.syncRepeatPlaylist( playlist );
+		}
+
+
+/** When song ends and in playlis mode and done with playlist check repeat  **/
+
+
 	}
+
 
 	/**
 	 * Sets the state of the repeat song
@@ -711,14 +742,25 @@ let AmplitudeEventsHelpers = (function() {
 			Changes the song to the next song in the playlist.
 		*/
 		AmplitudeCoreHelpers.changeSong( nextIndex );
-		AmplitudeCoreHelpers.setActivePlaylist( playlist );
 
 		/*
-			If the song has ended and repeat is on, play the song.
+			If it's the end of the song in the playlist, and repeat for
+			the playlist is not on, do nothing.
 		*/
-    if( !( songEnded && !config.repeat && endOfList ) ){
-			AmplitudeCore.play();
+		if( endOfList && !config.repeat_statuses[playlist] ){
+
+		}else{
+			/*
+				If the song has ended and repeat is on, play the song.
+			*/
+	    if( !( songEnded && !config.repeat_statuses[playlist] && endOfList ) ){
+				AmplitudeCore.play();
+			}
 		}
+
+		AmplitudeCoreHelpers.setActivePlaylist( playlist );
+
+
 
     /*
     	Syncs the main play pause button, playlist play pause button and

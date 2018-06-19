@@ -1,0 +1,74 @@
+div#white-player-controls{
+  text-align: center;
+  padding-bottom: 35px;
+
+  div#shuffle{
+    display: inline-block;
+    width: 19px;
+    height: 16px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 24px;
+
+    &.amplitude-shuffle-off{
+      background: url('../img/shuffle-off.svg');
+    }
+
+    &.amplitude-shuffle-on{
+      background: url('../img/shuffle-on.svg');
+    }
+  }
+
+  div#previous{
+    display: inline-block;
+    height: 53px;
+    width: 53px;
+    cursor: pointer;
+    background: url('../img/previous.svg');
+    vertical-align: middle;
+    margin-right: 16px;
+  }
+
+  div#play-pause{
+    display: inline-block;
+    width: 85px;
+    height: 85px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 16px;
+
+    &.amplitude-paused{
+      background: url('../img/play.svg');
+    }
+
+    &.amplitude-playing{
+      background: url('../img/pause.svg');
+    }
+  }
+
+  div#next{
+    display: inline-block;
+    height: 53px;
+    width: 53px;
+    cursor: pointer;
+    background: url('../img/next.svg');
+    vertical-align: middle;
+    margin-right: 24px;
+  }
+
+  div#repeat{
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+    cursor: pointer;
+    vertical-align: middle;
+
+    &.amplitude-repeat-off{
+      background: url('../img/repeat-off.svg');
+    }
+
+    &.amplitude-repeat-on{
+      background: url('../img/repeat-on.svg');
+    }
+  }
+}

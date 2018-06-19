@@ -1,0 +1,42 @@
+div.black-player-song{
+  border-bottom: 1px solid #979797;
+
+  img{
+    height: 52px;
+    width: 52px;
+    float: left;
+  }
+
+  div.song-meta-container{
+    width: calc( 100% - 52px );
+    float: left;
+    padding-left: 10px;
+
+    span.individual-song-name{
+      display: block;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    span.individual-song-artist{
+      display: block;
+      color: rgba( 255, 255, 255, .7 );
+      font-size: 13px;
+    }
+  }
+
+  &.amplitude-active-song-container{
+    div.song-meta-container{
+      span.individual-song-name{
+        color: #2EBD59;
+      }
+    }
+  }
+}
+
+div.black-player-song::after{
+  content: "";
+  display: table;
+  clear: both;
+}

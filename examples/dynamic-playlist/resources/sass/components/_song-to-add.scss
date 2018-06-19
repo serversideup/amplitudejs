@@ -1,0 +1,24 @@
+div.song-to-add{
+  width: 70%;
+  margin: auto;
+
+  img{
+    border-radius: 6px;
+    margin-top: 50px;
+  }
+
+  a.add-to-playlist-button{
+    background-color: white;
+    color: #CC5CAD;
+    box-shadow: 0px 12px 24px rgba( 0, 0, 0, .12 );
+    text-align: center;
+    max-width: 150px;
+    border-radius: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+}

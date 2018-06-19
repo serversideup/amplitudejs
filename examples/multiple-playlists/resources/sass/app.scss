@@ -5,18 +5,33 @@
 /*
   2. Components
 */
-  @import 'components/list-screen';
-  @import 'components/header';
-  @import 'components/player-top';
-  @import 'components/progress-bar';
-  @import 'components/player-middle';
-  @import 'components/player-bottom';
+  /*
+    White Player
+  */
+  @import 'components/white-player';
+  @import 'components/white-player-top';
+  @import 'components/white-player-center';
+  @import 'components/white-player-controls';
+  @import 'components/white-player-playlist-container';
+  @import 'components/white-player-playlist-top';
+  @import 'components/white-player-up-next';
+  @import 'components/white-player-playlist';
+  @import 'components/white-player-playlist-song';
+  @import 'components/white-player-playlist-controls';
+
+  /*
+    Black Player
+  */
+  @import 'components/black-player';
+  @import 'components/black-player-playlist';
+  @import 'components/black-player-controls';
+  @import 'components/black-player-song';
 
 /*
   3. Layout
 */
   @import 'layout/body';
-  @import 'layout/player';
+
 
 /*
   4. Pages

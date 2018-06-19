@@ -155,7 +155,7 @@ let AmplitudeVisualSync = (function() {
 			if( document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]') ){
 				let songContainers = document.querySelectorAll('.amplitude-song-container[amplitude-song-index="'+config.active_index+'"][amplitude-playlist="'+config.active_playlist+'"]');
 
-				for( i = 0; i < songContainers.length; i++ ){
+				for( let i = 0; i < songContainers.length; i++ ){
 					songContainers[i].classList.add('amplitude-active-song-container');
 				}
 			}
@@ -635,6 +635,43 @@ let AmplitudeVisualSync = (function() {
 	}
 
 	/**
+	 * Syncs repeat for all of the playlist repeat buttons. Users
+	 * can apply styles to the `amplitude-repeat-on` and `amplitude-repeat-off`
+	 * classes. They repreent the state of the playlist in the player.
+	 */
+	 function syncRepeatPlaylist( playlist ){
+		 /*
+			 Gets all of the repeat buttons.
+		 */
+		 let repeatButtons = document.getElementsByClassName("amplitude-repeat");
+
+		 /*
+			 Iterate over all of the repeat buttons
+		 */
+		 for( let i = 0; i < repeatButtons.length; i++ ){
+			 /*
+				 Ensure that the repeat button belongs to matches the
+				 playlist we are syncing the state for.
+			 */
+			 if( repeatButtons[i].getAttribute('amplitude-playlist') == playlist ){
+				 /*
+					 If the state of the playlist is shuffled on, true, then
+					 we add the 'amplitude-repeat-on' class and remove the
+					 'amplitude-repeat-off' class. If the player is not shuffled
+					 then we do the opposite.
+				 */
+				 if( config.repeat_statuses[playlist] ){
+					 repeatButtons[i].classList.add( 'amplitude-repeat-on');
+					 repeatButtons[i].classList.remove( 'amplitude-repeat-off');
+				 }else{
+					 repeatButtons[i].classList.add( 'amplitude-repeat-off');
+					 repeatButtons[i].classList.remove( 'amplitude-repeat-on');
+				 }
+			 }
+		 }
+	 }
+
+	/**
 	 * Syncs repeat for all of the repeat song buttons. Users
 	 * can apply styles to the 'amplitude-repeat-song-on' and
 	 * 'amplitude-repeat-song-off' classes. They represent the state
@@ -1014,6 +1051,7 @@ let AmplitudeVisualSync = (function() {
 		syncSongPlayPause: syncSongPlayPause,
 		syncRepeat: syncRepeat,
 		syncRepeatSong: syncRepeatSong,
+		syncRepeatPlaylist: syncRepeatPlaylist,
 		syncMute: syncMute,
 		syncShuffle: syncShuffle,
 		syncPlaylistShuffle: syncPlaylistShuffle,

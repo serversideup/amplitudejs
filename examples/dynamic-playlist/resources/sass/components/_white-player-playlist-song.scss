@@ -1,0 +1,54 @@
+div.white-player-playlist-song{
+  border-bottom: 1px solid #F5F5F6;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+
+  &:hover{
+    background-color: rgba( 211, 94, 154, .30 );
+  }
+
+  &.amplitude-active-song-container{
+    background-color: rgba( 238, 100, 82, .30 );
+  }
+
+  img{
+    width: 48px;
+    height: 48px;
+    border-radius: 3px;
+    margin-left: 16px;
+    float: left;
+  }
+
+  div.playlist-song-meta{
+    float: left;
+    margin-left: 15px;
+    width: calc( 100% - 80px );
+
+    span.playlist-song-name{
+      color: #414344;
+      font-size: 14px;
+      display: block;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span.playlist-artist-album{
+      color: #AAAFB3;
+      font-size: 12px;
+      display: block;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+div.white-player-playlist-song::after{
+  content: "";
+  display: table;
+  clear: both;
+}

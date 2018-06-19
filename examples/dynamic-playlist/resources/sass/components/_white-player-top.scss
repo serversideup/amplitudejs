@@ -1,0 +1,18 @@
+div.white-player-top{
+  height: 64px;
+  text-align: center;
+
+  span.now-playing{
+    color: #414344;
+    font-family: "Lato", sans-serif;
+    line-height: 64px;
+    font-weight: 600;
+  }
+
+  img.show-playlist{
+    margin-right: 16px;
+    margin-top: 22px;
+    float: right;
+    cursor: pointer;
+  }
+}

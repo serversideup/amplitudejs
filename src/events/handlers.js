@@ -716,14 +716,22 @@ export default {
 	repeat: function(){
 		if( !config.is_touch_moving ){
 			/*
-				Sets repeat to the opposite of what it was set to
+				Check to see if the repeat button belongs to a playlist
 			*/
-			AmplitudeEventsHelpers.setRepeat( !config.repeat );
-
-			/*
-				Visually sync repeat
-			*/
-			AmplitudeVisualSync.syncRepeat();
+			if( this.getAttribute('amplitude-playlist') == ''
+				|| this.getAttribute('amplitude-playlist') == null ){
+					/*
+						Sets repeat to the opposite of what it was set to
+					*/
+					AmplitudeEventsHelpers.setRepeat( !config.repeat, null );
+				}else{
+					/*
+						Gets the playlist attribute of the repeat button and
+						set repeat to on for the playlist.
+					*/
+					let playlist = this.getAttribute('amplitude-playlist');
+					AmplitudeEventsHelpers.setRepeat( !config.repeat_statuses[playlist], playlist );
+				}
 		}
 	},
 

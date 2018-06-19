@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="19px" viewBox="0 0 16 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 4 + path-1 copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Spotify-Mini-Player-Concept" transform="translate(-400.000000, -492.000000)" fill="#FFFFFF">
+            <g id="Player" transform="translate(284.000000, 410.000000)">
+                <g id="Controls" transform="translate(70.000000, 66.000000)">
+                    <g id="Rectangle-4-+-path-1-copy-2" transform="translate(54.282895, 25.835938) scale(-1, -1) translate(-54.282895, -25.835938) translate(46.282895, 16.335938)">
+                        <rect id="Rectangle-4" x="12.5713526" y="0.78259778" width="3.05304276" height="18.0444993" rx="1.52652138"></rect>
+                        <path d="M12.1320536,9.06460194 C12.3730045,9.27484556 12.5713526,9.48092595 12.5713526,9.81051579 C12.5713526,10.1394118 12.430274,10.3392473 12.1320536,10.5557358 L1.58049838,18.7580127 C1.40519785,18.8773589 0.710281419,18.9287056 0.701202109,18.1612816 L0.701202109,1.45905609 C0.701900518,0.749223647 1.33675382,0.693019905 1.58049838,0.863018877 L12.1320536,9.06460194 Z" id="path-1-copy"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

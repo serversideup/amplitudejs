@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>play-btn</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Spotify-Mini-Player-Concept" transform="translate(-439.000000, -475.000000)">
+            <g id="Player" transform="translate(284.000000, 410.000000)">
+                <g id="Controls" transform="translate(70.000000, 66.000000)">
+                    <g id="play-btn" transform="translate(86.000000, 0.000000)">
+                        <circle id="Oval-3" stroke="#FFFFFF" cx="25" cy="25" r="25"></circle>
+                        <path d="M21.0508333,14.2608333 L33.6408333,24.1108333 C33.9283333,24.3633333 34.165,24.6108333 34.165,25.0066667 L34.165,25.0066667 C34.165,25.4016667 33.9966667,25.6416667 33.6408333,25.9016667 L21.0508333,35.7525 C20.8416667,35.8958333 20.0125,35.9575 20.0016667,35.0358333 L20.0016667,14.9766667 C20.0025,14.1241667 20.76,14.0566667 21.0508333,14.2608333 L21.0508333,14.2608333 Z" id="path-1" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

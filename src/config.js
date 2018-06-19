@@ -24,6 +24,7 @@
  * @property {object} 	config.shuffled_playlists				- Will contain shuffled playlists.
  * @property {string} 	config.starting_playlist 				- The starting playlist the player will intiialize to.
  * @property {object} 	config.shuffled_statuses 				- Contains whether the current playlist is in shuffle mode or not.
+ * @property {object} 	config.repeat_statuses 					- Contains whether the playlist is in repeat mode or not.
  * @property {object} 	config.shuffled_active_indexes	- Contains the active index in a shuffled playlist.
  * @property {boolean} 	config.repeat 									- When repeat is on, when the song ends the song will replay itself.
  * @property {object} 	config.shuffle_list							- When shuffled, gets populated with the songs the user provided in a random order.
@@ -76,6 +77,8 @@ module.exports = {
 	shuffled_statuses: {},
 
 	shuffled_active_indexes: {},
+
+	repeat_statuses: {},
 
 	repeat: false,
 

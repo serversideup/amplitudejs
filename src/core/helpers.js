@@ -333,7 +333,7 @@ let AmplitudeHelpers = (function () {
 		*/
 		for( let i = 0; i < config.playlists[playlist].length; i++ ){
 			shuffleTemp[i] = config.songs[ config.playlists[playlist][i] ];
-			shuffleTemp[i].original_index = i;
+			shuffleTemp[i].original_index = config.playlists[playlist][i];
 		}
 
 		/*

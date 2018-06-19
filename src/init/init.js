@@ -129,6 +129,11 @@ let AmplitudeInitializer = (function () {
 			initializePlaylistShuffleStatuses();
 
 			/*
+				Initialize the repeat status for the playlits.
+			*/
+			initializePlaylistsRepeatStatuses();
+			
+			/*
 				Initialize temporary place holders for shuffle lists.
 			*/
 			initializePlaylistShuffleLists();
@@ -504,6 +509,23 @@ let AmplitudeInitializer = (function () {
 			config.shuffled_statuses[ key ] = false;
 		}
 	}
+
+	/**
+	 * Initializes the repeat statuses for each of the playlists.  These will
+	 * be referenced when we repeat individual playlits.
+	 *
+	 * @access private
+	 */
+	 function initializePlaylistsRepeatStatuses(){
+		 /*
+ 			Iterate over all of the playlists the user defined adding
+ 			the playlist key to the repeated playlist array and creating
+ 			and empty object to house the statuses.
+ 		*/
+ 		for ( let key in config.playlists ) {
+ 			config.repeat_statuses[ key ] = false;
+ 		}
+	 }
 
 	/**
 	 * Initializes the shuffled playlist placeholders. These will be set for

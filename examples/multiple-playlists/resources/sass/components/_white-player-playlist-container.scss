@@ -1,0 +1,11 @@
+div#white-player-playlist-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 9999;
+  display: none;
+  border-radius: 8px;
+}
