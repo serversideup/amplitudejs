@@ -5110,8 +5110,9 @@ var Amplitude = function () {
 	function getSongsInPlaylist(playlist) {
 		var songsArray = [];
 
-		for (var i = 0; i < _config2.default.playlist[playlist].length; i++) {
-			songsArray.push(_config2.default.songs[i]);
+		for (var i = 0; i < _config2.default.playlists[playlist].length; i++) {
+		    var songIndex = _config2.default.playlists[playlist][i];
+			songsArray.push(_config2.default.songs[songIndex]);
 		}
 
 		return songsArray;
@@ -5146,7 +5147,7 @@ var Amplitude = function () {
 			}
 		} else {
 
-			for (var i = 0; i < _config2.default.playlist[playlist].length; i++) {
+			for (var i = 0; i < _config2.default.playlists[playlist].length; i++) {
 				songsArray.push(_config2.default.songs[i]);
 			}
 		}
