@@ -7,13 +7,6 @@ about: If something isn't working as expected 🤔
 #### Issue description
 <!-- Replace this comment with a short explanation of what is going on -->
 
-
-#### Environment
- >
-
-#### Issue description
-<!-- Replace this comment with a short explanation of what is going on -->
-
 #### Environment
 
 <!-- If you have privacy concerns about using What's My Browser, at least copy and paste the contents and remove your IP address -->
