@@ -131,7 +131,7 @@ return /******/ (function(modules) { // webpackBootstrap
  * @property {boolean} 	config.continue_next 						- Determines when a song ends, we should continue to the next song.
  */
 module.exports = {
-  version: '3.2.3',
+  version: '3.3.0',
 
   active_song: new Audio(),
 
