@@ -118,6 +118,12 @@ These are set and passed in during the Amplitude.init() method:
 | volume_decrement 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
 | soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
 | soundcloud_use_art 	  | false 		  | Boolean 				| Determines if we should use the SoundCloud album art by default 							|
+| continue_next | true | boolean | Determines if when a song ends, do we continue to the next song |
+| starting_playlist | '' | JSON Object | If there are multiple playlists, determine which one will be started by default |
+| start_song | '' | Integer | The index of the song that AmplitudeJS should start with. |
+| shuffle_on | false | Boolean | When on, gets set to true so when traversing through songs, AmplitudeJS knows whether or not to use the songs object or the shuffle_list |
+
+A note about `autoplay`. In newer versions of Safari on iOS, user interaction has to take place before the song can be autoplayed. This is for bandwidth restrictions and not playing music in unwanted areas. For More information, visit: [https://www.reddit.com/r/webdev/comments/71nkym/safari_11_has_a_major_change_to_web_audio_api/](https://www.reddit.com/r/webdev/comments/71nkym/safari_11_has_a_major_change_to_web_audio_api/)
 
 ### Song Objects
 
@@ -479,6 +485,9 @@ There are a variety of callbacks that AmplitudeJS calls at certain times and the
 | time_update 		| Occurs when the time has updated 								 |
 | album_change 		| Occurs when an album changes 										 |
 | song_change 		| Occurs when a song has been changed 						 |
+| time_updated 		| Occurs when the current song time has been updated |
+| playlist_changed | Occurs when the active playlist has changed |
+| song_repeated  	| Occurs when the now playing song has been repeated |
 
 To bind to a callback you add a function to your callbacks object with the key of one of the callbacks listed above. That key will be a function. When the callback is called, the function the user passes will be run. For example, After the user clicks play we want to increase the play count. I'd set up a callback that has a method to increase the play count:
 
@@ -632,6 +641,7 @@ There are 3 levels of Play/Pause buttons.
 2. Playlist Play/Pause - Plays or pauses the active song in the scope of the playlist.
 3. Song Play/Pause - Plays or pauses an individual song.
 
+
 ##### Global Play/Pause
 The global play pause button plays or pauses the current song depending on the state of the AmplitudeJS player. This button
 does not account for whether the song is in a playlist or an individual song, it's whatever song is active the functionality works
@@ -774,7 +784,7 @@ To add a playlist shuffle button add the following HTML:
 This shuffle button contains the attribute that defines the playlist key. This will shuffle only the playlist defined.
 
 #### Repeat Button
-The repeat button, when active, will repeat the current song when the song has ended. This is a global level element.
+The repeat button, when active, will repeat the entire songs array when the there are no songs. This is a global level element.
 The button can be styled based off of the state of the classes applied to the button. When repeat is not on, the button
 will have a class of 'amplitude-repeat-off' applied to the element and when repeat is on, the class 'amplitude-repeat-on'
 applied to the class.
@@ -782,6 +792,14 @@ applied to the class.
 To add the repeat button, add the following HTML:
 ```html
 <span class="amplitude-repeat"></span>
+```
+
+##### Repeat Song
+The repeat song button, when active, will repeat the individual song when the song has ended. The button can be styled based off of the sate of classes applied to the button. When the repeat is not on, the button will have a class of 'amplitude-repeat-song-off' and when on, 'amplitude-repeat-song-on'.
+
+To add the repeat song button, add the following HTML:
+```html
+<span class="amplitude-repeat-song"></span>
 ```
 
 #### Playback Speed Button
@@ -891,6 +909,14 @@ If it's a main element for a playlist add the key for the playlist:
 ```html
 <span amplitude-song-info="{song_meta_index}" amplitude-playlist="{playlist_index}"></span>
 ```
+
+#### Autofill Meta Data
+Sometimes when building a player, you don't know what every song is on load and need to load songs dynamically. As of AmplitudeJS version 3.3 this is not a problem. AmplitudeJS will autofill the meta data for lists of songs if you do a combination of the following on the element.
+
+1. 'amplitude-song-info' - Defines the information you want injected into the element. This is the key of the song object.
+2. 'amplitude-song-index' - Defines the index of the song in the songs array that you want to inject into the element.
+
+This is super convenient when loading songs dynamically either server side or loading after the page has loaded.
 
 #### Time Metadata
 There are certain elements that contain time data about the active song. You can add these elements to your document
@@ -1031,6 +1057,83 @@ bind all of the event handlers for that element.
 Amplitude.bindNewElements()
 ```
 
+### Get Active Playlist
+This method will return the key of the active playlist.
+
+```javascript
+Amplitude.getActivePlaylist()
+```
+
+### Get Playback Speed
+Returns the current playback speed for the player.
+
+```javascript
+Amplitude.getPlaybackSpeed()
+```
+
+### Get Repeat
+Returns the state of the global repeat status for the player.
+
+```javascript
+Amplitude.getRepeat()
+```
+
+### Get Shuffle
+Returns the current state of the global shuffle status for the player.
+
+```javascript
+Amplitude.getShuffle()
+```
+
+### Get Shuffle Playlist
+Returns the state of the shuffle flag for a playlist.
+
+```javascript
+Amplitude.getShufflePlaylist( playlistKey )
+```
+
+### Set Shuffle
+Sets the global shuffle state for AmplitudeJS.
+
+```javascript
+Amplitude.setShuffle()
+```
+
+### Set Shuffle Playlist
+Sets the shuffle state for a playlist.
+
+```javascript
+Amplitude.setShufflePlaylist( playlistKey )
+```
+
+### Set Repeat
+Sets the global repeat status for AmplitudeJS
+
+```javascript
+Amplitude.setRepeat()
+```
+
+### Set Repeat Song
+Sets the global state to determine if we should repeat the individual song upon completion.
+
+```javascript
+Amplitude.setRepeatSong()
+```
+
+### Get Default Album Art
+Returns the default album art URL set in the player.
+
+```javascript
+Amplitude.getDefaultAlbumArt()
+```
+
+### Set Default Album Art
+Sets the default album art for the player to the URL provided.
+
+```javascript
+Amplitude.setDefaultAlbumArt( url )
+```
+
 ### Set Debug
 To change the debug mode setting, you can call the setDebug method any time and start to receive data
 about the state of the player or turn off debugging.
@@ -1067,6 +1170,41 @@ This method returns the index of the song added to the player.
 Amplitude.addSong( {song_object} );
 ```
 
+### Add Song To Playlist
+Adds a song to a specific playlist within AmplitudeJS. Once the song is added you will need to update the visual side of the player yourself.  After you update the visual side, run the `Amplitude.bindNewElements()` method to make sure the functionality is there for the new element.
+
+```javascript
+Amplitude.addSongToPlaylist( songObject, playlistKey )
+```
+
+### Remove Song
+Removes a song from the global song array. You will have to remove the containing element by yourself.
+
+```javascript
+Amplitude.removeSong( indexOfSong )
+```
+
+### Remove Song From Playlist
+Removes a song from a playlist. You will have to update the visual side by yourself.
+
+```javascript
+Amplitude.removeSongFromPlaylist( indexOfSongInPlaylist, playlistKey )
+```
+
+### Play Song At Index
+Plays whatever song is set in the config at the specified index.
+
+```javascript
+Amplitude.playSongAtIndex( songIndex )
+```
+
+### Play Playlist Song At Index
+Plays the song in a playlist at the specified index.
+
+```javascript
+Amplitude.playPlaylistSongAtIndex( playlistIndex, playlistKey )
+```
+
 ### Play Now
 In AmplitudeJS 2.0 this was referred to as 'Dynamic Mode'. Now you can just pass a song to AmplitudeJS and it
 will automatically play. If there are visual elements, then they will sync as well.
@@ -1086,6 +1224,20 @@ Amplitude.play()
 This simply pauses whatever song is active.
 ```javascript
 Amplitude.pause()
+```
+
+### Next
+Plays the next song either in the playlist or globally.
+
+```javascript
+Amplitude.next( playlistKey = null )
+```
+
+### Prev
+Plays the previous song either in the playlist or globally.
+
+```javascript
+Amplitude.prev( playlistKey = null )
 ```
 
 ### Get Audio
@@ -1155,6 +1307,14 @@ This method allows you to set the percentage of the active song. The method acce
 ```javascript
 Amplitude.setSongPlayedPercentage( percentage )
 ```
+
+### Skip To
+Allows the user to skip to a specific location in the song whether that song is in a playlist or not.
+
+```javascript
+Amplitude.skipTo( seconds, songIndex, playlist = null )
+```
+
 ## Tutorials
 We use ServerSideUp for all of our tutorials. Here's a list of tutorials that can be helpful when developing with AmplitudeJS:
 - [Set Song Played Percentage with AmplitudeJS](https://serversideup.net/set-song-played-percentage-amplitudejs/)
