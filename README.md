@@ -45,9 +45,9 @@ Amplitude.js is a lightweight JavaScript library that allows you to control the 
 
 ## Browsers support
 
-| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome | 
+| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome |
 <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" /></br>Opera |
-| --------- | --------- | --------- | --------- | --------- | 
+| --------- | --------- | --------- | --------- | --------- |
 | IE11, Edge| 4.0+| 3.5+| 4.0+| 10.5+|
 
 ## Installation
@@ -68,7 +68,7 @@ Download it via NPM to your existing project:
 npm install --save amplitudejs
 ```
 
-You will see the file under `node_modules/amplitudejs/dist/amplitude.js`. 
+You will see the file under `node_modules/amplitudejs/dist/amplitude.js`.
 
 ### Option 3: Manual download
 Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
@@ -121,4 +121,4 @@ There are a lot more features that are explained in greater detail in our [lates
 
 ## Reporting Issues
 
-If you are experiencing any issues or if you have a feature request, please [open up a new GitHub Issue](https://github.com/521dimensions/amplitudejs/issues/new)
+If you are experiencing any issues or if you have a feature request, please [open up a new GitHub Issue](https://github.com/521dimensions/amplitudejs/issues/new/choose)
