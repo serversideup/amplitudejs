@@ -1,6 +1,6 @@
 /**
  * @name 		Amplitude.js
- * @version 3.2.0
+ * @version 3.3.0
  * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
 */
 
