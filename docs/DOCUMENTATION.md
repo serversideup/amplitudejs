@@ -1044,6 +1044,19 @@ Song Time Remaining
 <span class="amplitude-time-remaining" amplitude-song-index="{song_index}"></span>
 ```
 
+### Song Container
+This is a unique element. What this does is allow you to assign a container to the visual representation of a song or a song in a playlist. When that song is currently playing, the class `amplitude-active-song-container` will be applied to the song container element. This way you can style the element to show the active song.
+
+For a single song container it would be:
+```html
+	<div class="amplitude-song-container" amplitude-song-index="{X}"></div>
+```
+
+For a playlist song container it would be:
+```html
+	<div class="amplitude-song-container" amplitude-playlist="{playlist_key}" amplitude-song-index="{X}"></div>
+```
+
 
 ## Public Functions
 There are a variety of public functions that AmplitudeJS exposes to the user. These methods allow the
