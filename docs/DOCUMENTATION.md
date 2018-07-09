@@ -836,6 +836,10 @@ This link will go to the song at index 7 on the playlist rock and the location o
 
 The easiest way to implement song tracking is through an HTML 5 Range slider. The sliding functionality is already taken care of for you and it provides a smooth UX. There are some downfalls with this element since you can't style the before and after pieces. We also have an HTML 5 progress element that allows for easy styling of before and after but requires some custom JS to update the interaction. No worries, though the tutorial will be linked!
 
+Note that features like the tracking slider and progress bar depend on the browser being able to request the audio file in arbitrary
+chunks. Firefox can work around lack of support from the server, but for these features to work properly, your server must support
+[Content-Range HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range).
+
 To add a song slider, add the following element:
 ```html
 <input type="range" class="amplitude-song-slider" amplitude-main-song-slider="true" step=".1"/>
