@@ -4418,7 +4418,6 @@ var AmplitudeInitializer = function () {
    */
 			_config2.default.active_playlist = userConfig.starting_playlist;
 
-			console.log(userConfig);
 			/*
    	Check if the user defined a song to start with in the playlist.
    */
@@ -7277,3 +7276,4 @@ module.exports = exports['default'];
 /***/ })
 /******/ ]);
 });
+//# sourceMappingURL=amplitude.js.map
