@@ -23,6 +23,7 @@
  * @property {object} 	config.start_song 							- The index of the song that AmplitudeJS should start with.
  * @property {object} 	config.shuffled_playlists				- Will contain shuffled playlists.
  * @property {string} 	config.starting_playlist 				- The starting playlist the player will intiialize to.
+ * @property {string} 	config.starting_playlist_song 	- The index of the song in the playlist that should be started.
  * @property {object} 	config.shuffled_statuses 				- Contains whether the current playlist is in shuffle mode or not.
  * @property {object} 	config.repeat_statuses 					- Contains whether the playlist is in repeat mode or not.
  * @property {object} 	config.shuffled_active_indexes	- Contains the active index in a shuffled playlist.
@@ -73,6 +74,8 @@ module.exports = {
 	shuffled_playlists: {},
 
 	starting_playlist: '',
+
+	starting_playlist_song: '',
 
 	shuffled_statuses: {},
 

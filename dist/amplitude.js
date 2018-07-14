@@ -108,6 +108,7 @@ return /******/ (function(modules) { // webpackBootstrap
  * @property {object} 	config.start_song 							- The index of the song that AmplitudeJS should start with.
  * @property {object} 	config.shuffled_playlists				- Will contain shuffled playlists.
  * @property {string} 	config.starting_playlist 				- The starting playlist the player will intiialize to.
+ * @property {string} 	config.starting_playlist_song 	- The index of the song in the playlist that should be started.
  * @property {object} 	config.shuffled_statuses 				- Contains whether the current playlist is in shuffle mode or not.
  * @property {object} 	config.repeat_statuses 					- Contains whether the playlist is in repeat mode or not.
  * @property {object} 	config.shuffled_active_indexes	- Contains the active index in a shuffled playlist.
@@ -158,6 +159,8 @@ module.exports = {
   shuffled_playlists: {},
 
   starting_playlist: '',
+
+  starting_playlist_song: '',
 
   shuffled_statuses: {},
 
@@ -265,6 +268,8 @@ var AmplitudeHelpers = function () {
 		_config2.default.playlists = {};
 		_config2.default.start_song = '';
 		_config2.default.shuffled_playlists = {};
+		_config2.default.starting_playlist = '';
+		_config2.default.starting_playlist_song = '';
 		_config2.default.shuffled_statuses = {};
 		_config2.default.repeat = false;
 		_config2.default.shuffle_list = {};
@@ -3999,6 +4004,42 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                               * Imports the config module
+                                                                                                                                                                                                                                                                               * @module config
+                                                                                                                                                                                                                                                                               */
+
+
+/**
+ * AmplitudeJS Core Module
+ * @module core/AmplitudeCore
+ */
+
+
+/**
+ * AmplitudeJS Core Helpers
+ * @module core/AmplitudeHelpers
+ */
+
+
+/**
+ * AmplitudeJS Events
+ * @module events/AmplitudeEvents
+ */
+
+
+/**
+ * AmplitudeJS Soundcloud
+ * @module soundcloud/AmplitudeSoundcloud
+ */
+
+
+/**
+ * AmplitudeJS Visual Sync
+ * @module visual/AmplitudeVisualSync
+*/
+
+
 var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
@@ -4030,22 +4071,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * initialization for AmplitudeJS.
  *
  * @module init/AmplitudeInitializer
- */
-
-
-/**
- * AmplitudeJS Soundcloud
- * @module soundcloud/AmplitudeSoundcloud
- */
-
-
-/**
- * AmplitudeJS Core Helpers
- * @module core/AmplitudeHelpers
- */
-/**
- * Imports the config module
- * @module config
  */
 var AmplitudeInitializer = function () {
 
@@ -4387,16 +4412,41 @@ var AmplitudeInitializer = function () {
   	If the user has selected a starting playlist, we need to set the starting playlist
   	and sync the visuals
   */
-		if (userConfig.starting_playlist != '' && userConfig.starting_playlist != undefined) {
+		if (userConfig.starting_playlist != undefined && userConfig.starting_playlist != '') {
 			/*
    	Set the active playlist to the starting playlist by the user
    */
 			_config2.default.active_playlist = userConfig.starting_playlist;
 
+			console.log(userConfig);
 			/*
-   	Set the player to the first song in the playlist
+   	Check if the user defined a song to start with in the playlist.
    */
-			_helpers2.default.changeSong(userConfig.playlists[userConfig.starting_playlist][0]);
+			if (userConfig.starting_playlist_song != undefined && userConfig.starting_playlist_song != '') {
+				/*
+    	Ensure the song is a valid index.
+    */
+				if (_typeof(userConfig.playlists[userConfig.starting_playlist][parseInt(userConfig.starting_playlist_song)]) != undefined) {
+					/*
+     	Set the player to the song defined by the user.
+     */
+					_helpers2.default.changeSong(userConfig.playlists[userConfig.starting_playlist][parseInt(userConfig.starting_playlist_song)]);
+				} else {
+					/*
+     	Set the player to the first song in the playlist
+     */
+					_helpers2.default.changeSong(userConfig.playlists[userConfig.starting_playlist][0]);
+					/*
+     	Debug that the song index doesn't exist
+     */
+					_helpers2.default.writeDebugMessage('The index of ' + userConfig.starting_playlist_song + ' does not exist in the playlist ' + userConfig.starting_playlist);
+				}
+			} else {
+				/*
+    	Set the player to the first song in the playlist
+    */
+				_helpers2.default.changeSong(userConfig.playlists[userConfig.starting_playlist][0]);
+			}
 
 			/*
    	Sync the main and song play pause buttons.
@@ -4591,22 +4641,6 @@ var AmplitudeInitializer = function () {
 	};
 }();
 
-/**
- * AmplitudeJS Visual Sync
- * @module visual/AmplitudeVisualSync
-*/
-
-
-/**
- * AmplitudeJS Events
- * @module events/AmplitudeEvents
- */
-
-
-/**
- * AmplitudeJS Core Module
- * @module core/AmplitudeCore
- */
 exports.default = AmplitudeInitializer;
 module.exports = exports['default'];
 

@@ -132,7 +132,7 @@ let AmplitudeInitializer = (function () {
 				Initialize the repeat status for the playlits.
 			*/
 			initializePlaylistsRepeatStatuses();
-			
+
 			/*
 				Initialize temporary place holders for shuffle lists.
 			*/
@@ -396,16 +396,40 @@ let AmplitudeInitializer = (function () {
 			If the user has selected a starting playlist, we need to set the starting playlist
 			and sync the visuals
 		*/
-		if( userConfig.starting_playlist != '' && userConfig.starting_playlist != undefined ){
+		if( userConfig.starting_playlist != undefined && userConfig.starting_playlist != '' ){
 			/*
 				Set the active playlist to the starting playlist by the user
 			*/
 			config.active_playlist = userConfig.starting_playlist;
 
 			/*
-				Set the player to the first song in the playlist
+				Check if the user defined a song to start with in the playlist.
 			*/
-			AmplitudeHelpers.changeSong( userConfig.playlists[ userConfig.starting_playlist ][0] );
+			if( userConfig.starting_playlist_song != undefined && userConfig.starting_playlist_song != '' ){
+				/*
+					Ensure the song is a valid index.
+				*/
+				if( typeof userConfig.playlists[ userConfig.starting_playlist ][ parseInt( userConfig.starting_playlist_song ) ] != undefined ){
+					/*
+						Set the player to the song defined by the user.
+					*/
+					AmplitudeHelpers.changeSong( userConfig.playlists[ userConfig.starting_playlist ][ parseInt( userConfig.starting_playlist_song ) ] );
+				}else{
+					/*
+						Set the player to the first song in the playlist
+					*/
+					AmplitudeHelpers.changeSong( userConfig.playlists[ userConfig.starting_playlist ][0] );
+					/*
+						Debug that the song index doesn't exist
+					*/
+					AmplitudeHelpers.writeDebugMessage( 'The index of '+userConfig.starting_playlist_song+' does not exist in the playlist '+userConfig.starting_playlist );
+				}
+			}else{
+				/*
+					Set the player to the first song in the playlist
+				*/
+				AmplitudeHelpers.changeSong( userConfig.playlists[ userConfig.starting_playlist ][0] );
+			}
 
 			/*
 				Sync the main and song play pause buttons.
