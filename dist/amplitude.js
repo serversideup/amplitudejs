@@ -1936,6 +1936,9 @@ var AmplitudeCore = function () {
 			_config2.default.active_song.muted = false;
 		}
 
+		/*
+  	Sets the volume in the config so we can reference it later on.
+  */
 		_config2.default.volume = volumeLevel;
 
 		/*
@@ -6251,6 +6254,29 @@ var Amplitude = function () {
 		_core2.default.skipToLocation(seconds);
 	}
 
+	/**
+  * Sets the meta data for a song in the songs array. This will set any
+  * meta data for a song besides the URL. The URL could cause issues if the
+  * song was playing.
+  *
+  * Public Accessor: Amplitude.setMetaData()
+  *
+  * @access public
+  * @param {number} index					- The index of the song in the songs array.
+  * @param {object} metaData 			- The object containing the meta data we are updating.
+  */
+	function setMetaData(index, metaData) {
+		for (var key in metaData) {
+			if (metaData.hasOwnProperty(key)) {
+				if (key != 'url' && key != 'URL') {
+					_config2.default.songs[index][key] = metaData[key];
+				}
+			}
+		}
+
+		_visual2.default.displaySongMetadata();
+	}
+
 	/*
  	Returns all of the publically accesible methods.
  */
@@ -6294,7 +6320,8 @@ var Amplitude = function () {
 		getActiveIndexState: getActiveIndexState,
 		getVersion: getVersion,
 		getBuffered: getBuffered,
-		skipTo: skipTo
+		skipTo: skipTo,
+		setMetaData: setMetaData
 	};
 }();
 

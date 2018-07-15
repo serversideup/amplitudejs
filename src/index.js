@@ -727,6 +727,29 @@ let Amplitude = (function () {
 		AmplitudeCore.skipToLocation( seconds );
 	}
 
+	/**
+	 * Sets the meta data for a song in the songs array. This will set any
+	 * meta data for a song besides the URL. The URL could cause issues if the
+	 * song was playing.
+	 *
+	 * Public Accessor: Amplitude.setMetaData()
+	 *
+	 * @access public
+	 * @param {number} index					- The index of the song in the songs array.
+	 * @param {object} metaData 			- The object containing the meta data we are updating.
+	 */
+	 function setMetaData( index, metaData ){
+			for ( var key in metaData ) {
+				if ( metaData.hasOwnProperty( key ) ){
+					if( key != 'url' && key != 'URL' ){
+						config.songs[index][key] = metaData[key];
+					}
+				}
+			}
+
+			AmplitudeVisualSync.displaySongMetadata();
+	 }
+
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -770,7 +793,8 @@ let Amplitude = (function () {
 		getActiveIndexState: getActiveIndexState,
 		getVersion: getVersion,
 		getBuffered: getBuffered,
-		skipTo: skipTo
+		skipTo: skipTo,
+		setMetaData: setMetaData
 	}
 })();
 
