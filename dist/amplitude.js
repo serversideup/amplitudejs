@@ -6105,7 +6105,8 @@ var Amplitude = function () {
 		var songsArray = [];
 
 		for (var i = 0; i < _config2.default.playlists[playlist].length; i++) {
-			songsArray.push(_config2.default.songs[i]);
+			var songIndex = _config2.default.playlists[playlist][i];
+			songsArray.push(_config2.default.songs[songIndex]);
 		}
 
 		return songsArray;

@@ -586,7 +586,8 @@ let Amplitude = (function () {
 		let songsArray = [];
 
 		for( let i = 0; i < config.playlists[playlist].length; i++ ){
-			songsArray.push( config.songs[i] );
+			let songIndex = config.playlists[playlist][i];
+			songsArray.push( config.songs[songIndex] );
 		}
 
 		return songsArray;
