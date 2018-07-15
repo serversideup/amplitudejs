@@ -443,7 +443,7 @@ var AmplitudeEvents = (function () {
 			have to do for anything cool in IE, we can do that.
 		*/
 		var ua 		= window.navigator.userAgent;
-        var msie 	= ua.indexOf("MSIE ");
+    var msie 	= ua.indexOf("MSIE ");
 
 		/*
 			Gets all of the elements with the class amplitude-song-slider

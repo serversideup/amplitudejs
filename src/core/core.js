@@ -163,9 +163,16 @@ let AmplitudeCore = (function() {
 		*/
 		if( volumeLevel == 0 ){
 			AmplitudeVisualSync.syncMute( true );
+			config.active_song.muted = true;
 		}else{
 			AmplitudeVisualSync.syncMute( false );
+			config.active_song.muted = false;
 		}
+
+		/*
+			Sets the volume in the config so we can reference it later on.
+		*/
+		config.volume = volumeLevel;
 
 		/*
 			Set the volume of the active song.

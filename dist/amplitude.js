@@ -1930,9 +1930,13 @@ var AmplitudeCore = function () {
   */
 		if (volumeLevel == 0) {
 			_visual2.default.syncMute(true);
+			_config2.default.active_song.muted = true;
 		} else {
 			_visual2.default.syncMute(false);
+			_config2.default.active_song.muted = false;
 		}
+
+		_config2.default.volume = volumeLevel;
 
 		/*
   	Set the volume of the active song.
