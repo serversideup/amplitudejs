@@ -341,6 +341,7 @@ let Amplitude = (function () {
 		}
 
 		config.songs.push( song );
+		AmplitudeEventsHelpers.setNext();
 		return config.songs.length - 1;
 	}
 
@@ -372,6 +373,8 @@ let Amplitude = (function () {
 			*/
 			if( config.playlists[playlist] != undefined ){
 				config.playlists[playlist].push( songIndex );
+
+				AmplitudeEventsHelpers.setNextPlaylist( playlist );
 
 				return config.playlists[playlist].length - 1;
 			}else{

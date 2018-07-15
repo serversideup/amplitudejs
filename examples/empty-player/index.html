@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AmplitudeJS Single Song Example</title>
+
+    <!-- Foundation Framework CSS -->
+    <link rel="stylesheet" href="css/foundation.min.css">
+
+    <!-- Include font -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
+
+
+		<!-- Include Amplitude JS -->
+		<script type="text/javascript" src="../../dist/amplitude.js"></script>
+
+    <!-- Foundation jQuery and Functions -->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/foundation.min.js"></script>
+
+		<!--
+			Include UX functions JS
+
+			NOTE: These are for handling things outside of the scope of AmplitudeJS
+		-->
+		<script type="text/javascript" src="js/functions.js"></script>
+
+		<!-- Include Style Sheet -->
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+  </head>
+  <body>
+    <div class="grid-x grid-padding-x">
+      <div class="large-12 medium-12 small-12 cell">
+        <div id="single-song-player">
+          <img amplitude-song-info="cover_art_url" amplitude-main-song-info="true"/>
+          <div class="bottom-container">
+            <progress class="amplitude-song-played-progress" amplitude-main-song-played-progress="true" id="song-played-progress"></progress>
+
+            <div class="time-container">
+              <span class="current-time">
+                <span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>:<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
+              </span>
+              <span class="duration">
+                <span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>:<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
+              </span>
+            </div>
+
+            <div class="control-container">
+              <div class="amplitude-play-pause" amplitude-main-play-pause="true" id="play-pause"></div>
+              <div class="meta-container">
+                <span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
+                <span amplitude-song-info="artist" amplitude-main-song-info="true"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="add-song-button">
+          Add Song
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      Amplitude.init({
+        "bindings": {
+          37: 'prev',
+          39: 'next',
+          32: 'play_pause'
+        },
+        "songs": [
+
+        ]
+      });
+
+      window.onkeydown = function(e) {
+          return !(e.keyCode == 32);
+      };
+
+      /*
+        Handles a click on the song played progress bar.
+      */
+      document.getElementById('song-played-progress').addEventListener('click', function( e ){
+        var offset = this.getBoundingClientRect();
+        var x = e.pageX - offset.left;
+
+        Amplitude.setSongPlayedPercentage( ( parseFloat( x ) / parseFloat( this.offsetWidth) ) * 100 );
+      });
+    </script>
+  </body>
+</html>

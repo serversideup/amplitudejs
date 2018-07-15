@@ -1,0 +1,39 @@
+div.time-container {
+  opacity: 0.5;
+  font-family: 'Open Sans';
+  font-weight: 100;
+  font-size: 12px;
+  color: #fff;
+  height: 15px;
+
+  span.current-time {
+    float: left;
+    margin-left: 5px;
+  }
+
+  span.duration {
+    float: right;
+    margin-right: 5px;
+  }
+}
+
+/*
+  Small only
+*/
+@media screen and (max-width: 39.9375em) {
+
+}
+
+/*
+  Medium only
+*/
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+}
+
+/*
+  Large Only
+*/
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+
+}

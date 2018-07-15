@@ -5858,6 +5858,7 @@ var Amplitude = function () {
 		}
 
 		_config2.default.songs.push(song);
+		_helpers4.default.setNext();
 		return _config2.default.songs.length - 1;
 	}
 
@@ -5889,6 +5890,8 @@ var Amplitude = function () {
   */
 		if (_config2.default.playlists[playlist] != undefined) {
 			_config2.default.playlists[playlist].push(songIndex);
+
+			_helpers4.default.setNextPlaylist(playlist);
 
 			return _config2.default.playlists[playlist].length - 1;
 		} else {

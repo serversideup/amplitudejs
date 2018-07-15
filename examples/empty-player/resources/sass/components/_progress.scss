@@ -1,0 +1,48 @@
+progress.amplitude-song-played-progress{
+  background-color: #313252;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  display: block;
+  cursor: pointer;
+  border: none;
+
+  &:not([value]) {
+    background-color: #313252;
+  }
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #313252;
+}
+
+progress[value]::-moz-progress-bar {
+  background-color: #00a0ff;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #00a0ff;
+}
+
+
+/*
+  Small only
+*/
+@media screen and (max-width: 39.9375em) {
+
+}
+
+/*
+  Medium only
+*/
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+}
+
+/*
+  Large Only
+*/
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+
+}
