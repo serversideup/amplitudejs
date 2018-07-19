@@ -5690,12 +5690,12 @@ var Amplitude = function () {
 	}
 
 	/**
-  * Sets the repeat state for the player.
+ * Sets the repeat state for the player.
  *
  * Public Accessor: Amplitude.setRepeat()
  *
  * @access public
-  */
+ */
 	function setRepeat() {
 		if (!_config2.default.is_touch_moving) {
 			/*
@@ -5705,6 +5705,28 @@ var Amplitude = function () {
 
 			/*
    	Visually sync repeat
+   */
+			_visual2.default.syncRepeat();
+		}
+	}
+
+	/**
+  * Sets the repeat state for a playlist.
+  *
+  * Public Accessor: Amplitude.setRepeatPlaylist( playlistKey )
+  *
+  * @access public
+  * @param {string} playlistKey 	- The key representing the playlist ID to to shuffle the playlist.
+  */
+	function setRepeatPlaylist(playlistKey) {
+		if (!_config2.default.is_touch_moving) {
+			/*
+   	Sets repeat for the playlist to the opposite of what it was set to.
+   */
+			AmplitudeEventHelpers.setRepeat(!_config2.default.repeat_statuses[playlistKey], playlistKey);
+
+			/*
+    Visually sync repeat
    */
 			_visual2.default.syncRepeat();
 		}
@@ -6292,6 +6314,7 @@ var Amplitude = function () {
 		setShufflePlaylist: setShufflePlaylist,
 		setRepeat: setRepeat,
 		setRepeatSong: setRepeatSong,
+		setRepeatPlaylist: setRepeatPlaylist,
 		getDefaultAlbumArt: getDefaultAlbumArt,
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,

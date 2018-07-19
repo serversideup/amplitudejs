@@ -590,7 +590,7 @@ export default {
 			based on the user's intent.
 		*/
 		AmplitudeCore.setVolume( this.value );
-		
+
 		/*
 			Sync the volume slider locations
 		*/
