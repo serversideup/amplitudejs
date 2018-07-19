@@ -5644,6 +5644,17 @@ var Amplitude = function () {
 	}
 
 	/**
+  * Gets the repeat state for a playlist
+  *
+  * Public Accessor: Amplitude.getRepeatPlaylist()
+  *
+  * @access public
+  */
+	function getRepeatPlaylist(playlistKey) {
+		return _config2.default.repeat_statuses[playlistKey];
+	}
+
+	/**
   * Returns the shuffle state of the player.
   *
   * Public Accessor: Amplitude.getShuffle()
@@ -5723,7 +5734,7 @@ var Amplitude = function () {
 			/*
    	Sets repeat for the playlist to the opposite of what it was set to.
    */
-			AmplitudeEventHelpers.setRepeat(!_config2.default.repeat_statuses[playlistKey], playlistKey);
+			_helpers4.default.setRepeat(!_config2.default.repeat_statuses[playlistKey], playlistKey);
 
 			/*
     Visually sync repeat
@@ -6308,6 +6319,7 @@ var Amplitude = function () {
 		getActivePlaylist: getActivePlaylist,
 		getPlaybackSpeed: getPlaybackSpeed,
 		getRepeat: getRepeat,
+		getRepeatPlaylist: getRepeatPlaylist,
 		getShuffle: getShuffle,
 		getShufflePlaylist: getShufflePlaylist,
 		setShuffle: setShuffle,
