@@ -209,11 +209,6 @@ let Amplitude = (function () {
 			 	Sets repeat for the playlist to the opposite of what it was set to.
 			 */
 			 AmplitudeEventsHelpers.setRepeat( !config.repeat_statuses[playlistKey], playlistKey );
-
-			 /*
-				 Visually sync repeat
-			 */
-			 AmplitudeVisualSync.syncRepeat();
 		 }
 	 }
 

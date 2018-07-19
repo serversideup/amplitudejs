@@ -5735,11 +5735,6 @@ var Amplitude = function () {
    	Sets repeat for the playlist to the opposite of what it was set to.
    */
 			_helpers4.default.setRepeat(!_config2.default.repeat_statuses[playlistKey], playlistKey);
-
-			/*
-    Visually sync repeat
-   */
-			_visual2.default.syncRepeat();
 		}
 	}
 
