@@ -316,6 +316,11 @@ let AmplitudeInitializer = (function () {
 			 			  				50 );
 
 		/*
+			Sets the delay between songs if the user has it set. This should be in MS.
+		*/
+		config.delay = ( userConfig.delay != undefined ? userConfig.delay : 0 );
+
+		/*
 			The user can set the volume increment and decrement values between 1 and 100
 			for when the volume up or down button is pressed.  The default is an increase
 			or decrease of 5.

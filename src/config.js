@@ -45,6 +45,7 @@
  * @property {boolean}	config.buffered									- How much of the song is buffered.
  * @property {object} 	config.bindings									- Array of bindings to certain key events.
  * @property {boolean} 	config.continue_next 						- Determines when a song ends, we should continue to the next song.
+ * @property {number}   config.delay 										- Sets the delay between songs in MS.
  */
 module.exports = {
 	version: '3.3.0',
@@ -119,5 +120,7 @@ module.exports = {
 
 	bindings: {},
 
-	continue_next: true
+	continue_next: true,
+
+	delay: 0
 };

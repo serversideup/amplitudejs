@@ -115,33 +115,36 @@ export default {
 	 * @access public
 	 */
 	songEnded: function(){
-		if( config.continue_next ){
-			/*
-				If the active playlist is not set, we set the
-				next song that's in the songs array.
-			*/
-			if( config.active_playlist == ''
-				|| config.active_playlist == null ){
-					AmplitudeEventsHelpers.setNext( true );
+		setTimeout( function(){
+			if( config.continue_next ){
+				/*
+					If the active playlist is not set, we set the
+					next song that's in the songs array.
+				*/
+				if( config.active_playlist == ''
+					|| config.active_playlist == null ){
+						AmplitudeEventsHelpers.setNext( true );
+				}else{
+					/*
+						Set the next song in the playlist
+					*/
+					AmplitudeEventsHelpers.setNextPlaylist( config.active_playlist, true );
+				}
 			}else{
-				/*
-					Set the next song in the playlist
-				*/
-				AmplitudeEventsHelpers.setNextPlaylist( config.active_playlist, true );
-			}
-		}else{
-			if( !config.is_touch_moving ){
-				/*
-					Sets all of the play/pause buttons to pause
-				*/
-				AmplitudeVisualSync.setPlayPauseButtonsToPause();
+				if( !config.is_touch_moving ){
+					/*
+						Sets all of the play/pause buttons to pause
+					*/
+					AmplitudeVisualSync.setPlayPauseButtonsToPause();
 
-				/*
-					Stops the active song.
-				*/
-				AmplitudeCore.stop();
+					/*
+						Stops the active song.
+					*/
+					AmplitudeCore.stop();
+				}
 			}
-		}
+		}, config.delay );
+
 	},
 
 	/**

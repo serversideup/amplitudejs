@@ -130,6 +130,7 @@ return /******/ (function(modules) { // webpackBootstrap
  * @property {boolean}	config.buffered									- How much of the song is buffered.
  * @property {object} 	config.bindings									- Array of bindings to certain key events.
  * @property {boolean} 	config.continue_next 						- Determines when a song ends, we should continue to the next song.
+ * @property {number}   config.delay 										- Sets the delay between songs in MS.
  */
 module.exports = {
   version: '3.3.0',
@@ -204,7 +205,9 @@ module.exports = {
 
   bindings: {},
 
-  continue_next: true
+  continue_next: true,
+
+  delay: 0
 };
 
 /***/ }),
@@ -4343,6 +4346,11 @@ var AmplitudeInitializer = function () {
 		_config2.default.volume = userConfig.volume != undefined ? userConfig.volume : 50;
 
 		/*
+  	Sets the delay between songs if the user has it set. This should be in MS.
+  */
+		_config2.default.delay = userConfig.delay != undefined ? userConfig.delay : 0;
+
+		/*
   	The user can set the volume increment and decrement values between 1 and 100
   	for when the volume up or down button is pressed.  The default is an increase
   	or decrease of 5.
@@ -4782,32 +4790,34 @@ exports.default = {
   * @access public
   */
 	songEnded: function songEnded() {
-		if (_config2.default.continue_next) {
-			/*
-   	If the active playlist is not set, we set the
-   	next song that's in the songs array.
-   */
-			if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
-				_helpers2.default.setNext(true);
+		setTimeout(function () {
+			if (_config2.default.continue_next) {
+				/*
+    	If the active playlist is not set, we set the
+    	next song that's in the songs array.
+    */
+				if (_config2.default.active_playlist == '' || _config2.default.active_playlist == null) {
+					_helpers2.default.setNext(true);
+				} else {
+					/*
+     	Set the next song in the playlist
+     */
+					_helpers2.default.setNextPlaylist(_config2.default.active_playlist, true);
+				}
 			} else {
-				/*
-    	Set the next song in the playlist
-    */
-				_helpers2.default.setNextPlaylist(_config2.default.active_playlist, true);
-			}
-		} else {
-			if (!_config2.default.is_touch_moving) {
-				/*
-    	Sets all of the play/pause buttons to pause
-    */
-				_visual2.default.setPlayPauseButtonsToPause();
+				if (!_config2.default.is_touch_moving) {
+					/*
+     	Sets all of the play/pause buttons to pause
+     */
+					_visual2.default.setPlayPauseButtonsToPause();
 
-				/*
-    	Stops the active song.
-    */
-				_core2.default.stop();
+					/*
+     	Stops the active song.
+     */
+					_core2.default.stop();
+				}
 			}
-		}
+		}, _config2.default.delay);
 	},
 
 	/**
