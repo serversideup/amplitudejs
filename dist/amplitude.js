@@ -6315,6 +6315,18 @@ var Amplitude = function () {
 		_visual2.default.displaySongMetadata();
 	}
 
+	/**
+  * Sets the delay between the songs when they are finished.
+ *
+ * Public Accessor: Amplitude.setDelay()
+ *
+ * @access public
+ * @param {number} delay 	- The millisecond delay time between songs
+  */
+	function setDelay(time) {
+		_config2.default.delay = time;
+	}
+
 	/*
  	Returns all of the publically accesible methods.
  */
@@ -6361,7 +6373,8 @@ var Amplitude = function () {
 		getVersion: getVersion,
 		getBuffered: getBuffered,
 		skipTo: skipTo,
-		setMetaData: setMetaData
+		setMetaData: setMetaData,
+		setDelay: setDelay
 	};
 }();
 

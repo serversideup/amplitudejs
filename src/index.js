@@ -778,6 +778,18 @@ let Amplitude = (function () {
 			AmplitudeVisualSync.displaySongMetadata();
 	 }
 
+	 /**
+	  * Sets the delay between the songs when they are finished.
+		*
+		* Public Accessor: Amplitude.setDelay()
+		*
+		* @access public
+		* @param {number} delay 	- The millisecond delay time between songs
+	  */
+		function setDelay( time ){
+			config.delay = time;
+		}
+
 	/*
 		Returns all of the publically accesible methods.
 	*/
@@ -824,7 +836,8 @@ let Amplitude = (function () {
 		getVersion: getVersion,
 		getBuffered: getBuffered,
 		skipTo: skipTo,
-		setMetaData: setMetaData
+		setMetaData: setMetaData,
+		setDelay: setDelay
 	}
 })();
 
