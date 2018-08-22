@@ -133,7 +133,7 @@ return /******/ (function(modules) { // webpackBootstrap
  * @property {number}   config.delay 										- Sets the delay between songs in MS.
  */
 module.exports = {
-  version: '3.3.0',
+  version: '3.3.1',
 
   active_song: new Audio(),
 
@@ -5813,7 +5813,7 @@ var Amplitude = function () {
   *
   * @access public
   */
-	function getSongPlayed() {
+	function getSongPlayedSeconds() {
 		/*
   	Returns the amount of seconds the song has played.
   */
@@ -6376,6 +6376,8 @@ var Amplitude = function () {
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,
 		setSongPlayedPercentage: setSongPlayedPercentage,
+		getSongPlayedSeconds: getSongPlayedSeconds,
+		getSongDuration: getSongDuration,
 		setDebug: setDebug,
 		getActiveSongMetadata: getActiveSongMetadata,
 		getSongByIndex: getSongByIndex,
@@ -6426,7 +6428,7 @@ var Amplitude = function () {
  */
 /**
  * @name 		Amplitude.js
- * @version 3.3.0
+ * @version 3.3.1
  * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
 */
 

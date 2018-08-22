@@ -48,7 +48,7 @@
  * @property {number}   config.delay 										- Sets the delay between songs in MS.
  */
 module.exports = {
-	version: '3.3.0',
+	version: '3.3.1',
 
 	active_song: new Audio(),
 
