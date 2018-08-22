@@ -278,7 +278,7 @@ let Amplitude = (function () {
 	 *
 	 * @access public
 	 */
-	function getSongPlayed(){
+	function getSongPlayedSeconds(){
 		/*
 			Returns the amount of seconds the song has played.
 		*/
@@ -839,6 +839,8 @@ let Amplitude = (function () {
 		setDefaultAlbumArt: setDefaultAlbumArt,
 		getSongPlayedPercentage: getSongPlayedPercentage,
 		setSongPlayedPercentage: setSongPlayedPercentage,
+		getSongPlayedSeconds: getSongPlayedSeconds,
+		getSongDuration: getSongDuration,
 		setDebug: setDebug,
 		getActiveSongMetadata: getActiveSongMetadata,
 		getSongByIndex: getSongByIndex,
