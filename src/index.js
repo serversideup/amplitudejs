@@ -272,6 +272,34 @@ let Amplitude = (function () {
 	}
 
 	/**
+	 * Allows the user to get the amount of seconds the song has played.
+	 *
+	 * Public Accessor: Amplitude.getSongPlayed();
+	 *
+	 * @access public
+	 */
+	function getSongPlayed(){
+		/*
+			Returns the amount of seconds the song has played.
+		*/
+		return config.active_song.currentTime;
+	}
+
+	/**
+	 * Allows the user to get the duration of the current song
+	 *
+	 * Public Accessor: Amplitude.getSongPlayed();
+	 *
+	 * @access public
+	 */
+	function getSongDuration(){
+		/*
+			Returns the duration of the current song
+		*/
+		return config.active_song.duration;
+	}
+
+	/**
 	 * Allows the user to set how far into the song they want to be. This is
 	 * helpful for implementing custom range sliders. Only works on the current song.
 	 *
