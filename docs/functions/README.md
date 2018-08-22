@@ -345,6 +345,20 @@ You can combine this method with the time_update callback and whenever the time
 updates your method can call Amplitude.getSongPlayedPercentage() and you can set
 your tracking element correctly.
 
+## Get Song Played Seconds
+This method returns the current seconds the user is into the song.
+
+```javascript
+Amplitude.getSongPlayedSeconds()
+```
+
+## Get Song Duration
+Returns the duration of the current song.
+
+```javascript
+Amplitude.getSongDuration()
+```
+
 ## Set Song Played Percentage
 This method allows you to set the percentage of the active song. The method
 accepts a float between 0 and 100 for the percentage of the song to be set to.
