@@ -46,5 +46,5 @@ about the active audio.
 
 All elements can be styled simply based off of class or if you want to define
 specific ids in CSS. Besides album art, you could apply these classes to a
-variety of elements.  Album art has to be an <img> element, but the other
+variety of elements.  Album art has to be an `<img>` element, but the other
 elements could be whatever.

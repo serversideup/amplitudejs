@@ -40,4 +40,4 @@ AmplitudeJS supports SoundCloud integration. When adding a song from SoundCloud
 use the SoundCloud streamable URL and provide a soundcloud_client in the config.
 AmplitudeJS will configure all of the data necessary from the
 SoundCloud API to go with the song.  You can even use the album art by setting
-the soundcloud_use_art to true in the config during the Amplitude.init() method.
+the `soundcloud_use_art` to `true` in the config during the Amplitude.init() method.

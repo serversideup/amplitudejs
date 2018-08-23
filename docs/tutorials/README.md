@@ -40,3 +40,4 @@ We use [ServerSideUp](https://serversideup.net) for all of our tutorials. Here's
 a list of tutorials that can be helpful when developing with AmplitudeJS:
 
 - [Set Song Played Percentage with AmplitudeJS](https://serversideup.net/set-song-played-percentage-amplitudejs/)
+- [AmplitudeJS: From the Ground Up](https://serversideup.net/courses/amplitudejs-from-the-ground-up/)
