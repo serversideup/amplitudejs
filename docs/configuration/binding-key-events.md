@@ -38,7 +38,7 @@ meta:
 # Binding Key Events
 This allows you to configure certain
 events to trigger on key presses. The main piece of information needed is the
-key code (http://keycode.info/)[http://keycode.info/]. Once you have that, you
+key code [http://keycode.info/](http://keycode.info/). Once you have that, you
 can make an object that references a certain event key. There are 6 events that
 you can bind a key code to:
 
