@@ -4,18 +4,25 @@
  */
 import config from '../config.js';
 
+import Checks from '../utilities/checks.js';
+import AudioNavigation from '../utilities/audioNavigation.js';
+
+import PlayPauseElements from '../visual/playPauseElements.js';
+import MetaDataElements from '../visual/metaDataElements.js';
+
 /**
- * AmplitudeJS Core Helpers
- * @module core/helpers
+ * Imports AmplitudeJS Callback Utility
+ * @module utilities/callbacks
  */
-import AmplitudeHelpers from './helpers.js';
+import Callbacks from '../utilities/callbacks.js';
 
 /**
- * AmplitudeJS Visual Sync
- * @module visual/visual
-*/
-import AmplitudeVisualSync from '../visual/visual.js';
+ * Imports AmplitudeJS Debug Utility
+ * @module utilities/debug
+ */
+import Debug from '../utilities/debug.js';
 
+import Visualizations from '../fx/visualizations.js';
 /**
  * Interacts directly with native functions of the Audio element. Logic
  * leading up to these methods are handled by click handlers which call
@@ -23,9 +30,9 @@ import AmplitudeVisualSync from '../visual/visual.js';
  * Every other function that leads to these prepare the information to be
  * acted upon by these functions.
  *
- * @module core/AmplitudeCore
+ * @module core/Core
  */
-let AmplitudeCore = (function() {
+let Core = (function() {
 	/**
 	 * Plays the active song. If the current song is live, it reconnects
 	 * the stream before playing.
@@ -35,10 +42,8 @@ let AmplitudeCore = (function() {
 	 * @access public
 	 */
 	function play(){
-		/*
-			Run the before play callback
-		*/
-		AmplitudeHelpers.runCallback('before_play');
+		Visualizations.stop();
+		Visualizations.run();
 
 		/*
 			If the audio is live we re-conenct the stream.
@@ -62,13 +67,8 @@ let AmplitudeCore = (function() {
 			Play the song and set the playback rate to the playback
 			speed.
 		*/
-		config.active_song.play();
-		config.active_song.playbackRate = config.playback_speed;
-
-		/*
-			Run the after play callback
-		*/
-		AmplitudeHelpers.runCallback('after_play');
+		config.audio.play();
+		config.audio.playbackRate = config.playback_speed;
 	}
 
 	/**
@@ -79,15 +79,12 @@ let AmplitudeCore = (function() {
 	 * @access public
 	 */
 	function pause(){
-		/*
-			Run the before pause callback.
-		*/
-		AmplitudeHelpers.runCallback('before_pause');
+		Visualizations.stop();
 
 		/*
 			Pause the active song.
 		*/
-		config.active_song.pause();
+		config.audio.pause();
 
 		/*
 			Flag that pause button was clicked.
@@ -101,11 +98,6 @@ let AmplitudeCore = (function() {
 		if( config.active_metadata.live ){
 			disconnectStream();
 		}
-
-		/*
-			Run the after pause callback.
-		*/
-		AmplitudeHelpers.runCallback('after_pause');
 	}
 
 	/**
@@ -118,22 +110,19 @@ let AmplitudeCore = (function() {
 	 * @access public
 	 */
 	function stop(){
-		/*
-			Runs the before stop callback.
-		*/
-		AmplitudeHelpers.runCallback('before_stop');
+		Visualizations.stop();
 
 		/*
 			Set the current time of the song to 0 which will reset the song.
 		*/
-		if( config.active_song.currentTime != 0 ){
-			config.active_song.currentTime = 0;
+		if( config.audio.currentTime != 0 ){
+			config.audio.currentTime = 0;
 		}
 
 		/*
 			Run pause so the song will stop
 		*/
-		config.active_song.pause();
+		config.audio.pause();
 
 		/*
 			If the song is live, disconnect the stream.
@@ -143,9 +132,9 @@ let AmplitudeCore = (function() {
 		}
 
 		/*
-			Run the after stop callback
+			Run the stop callback
 		*/
-		AmplitudeHelpers.runCallback('after_stop');
+		Callbacks.run('stop');
 	}
 
 	/**
@@ -162,11 +151,9 @@ let AmplitudeCore = (function() {
 			If the volume is set to mute somewhere else, we sync the display.
 		*/
 		if( volumeLevel == 0 ){
-			AmplitudeVisualSync.syncMute( true );
-			config.active_song.muted = true;
+			config.audio.muted = true;
 		}else{
-			AmplitudeVisualSync.syncMute( false );
-			config.active_song.muted = false;
+			config.audio.muted = false;
 		}
 
 		/*
@@ -177,7 +164,7 @@ let AmplitudeCore = (function() {
 		/*
 			Set the volume of the active song.
 		*/
-		config.active_song.volume = volumeLevel / 100;
+		config.audio.volume = volumeLevel / 100;
 	}
 
 	/**
@@ -196,7 +183,7 @@ let AmplitudeCore = (function() {
 			song to the percentage the user passed in.
 		*/
 		if( !config.active_metadata.live ){
-			config.active_song.currentTime = ( config.active_song.duration ) * ( song_percentage / 100 );
+			config.audio.currentTime = ( config.audio.duration ) * ( song_percentage / 100 );
 		}
 	}
 
@@ -214,16 +201,16 @@ let AmplitudeCore = (function() {
 			see if the seconds will work. We only bind the event handler
 			once and remove it once it's fired.
 		*/
-		config.active_song.addEventListener('canplaythrough', function(){
+		config.audio.addEventListener('canplaythrough', function(){
 			/*
 				If the active song duration is greater than or equal to the
 				amount of seconds the user wants to skip to and the seconds
 				is greater than 0, we skip to the seconds defined.
 			*/
-			if( config.active_song.duration >= seconds && seconds > 0 ){
-				config.active_song.currentTime = seconds;
+			if( config.audio.duration >= seconds && seconds > 0 ){
+				config.audio.currentTime = seconds;
 			}else{
-				AmplitudeHelpers.writeDebugMessage('Amplitude can\'t skip to a location greater than the duration of the audio or less than 0');
+				Debug.writeMessage('Amplitude can\'t skip to a location greater than the duration of the audio or less than 0');
 			}
 		}, { once: true });
 	}
@@ -236,8 +223,8 @@ let AmplitudeCore = (function() {
 	 * @access public
 	 */
 	function disconnectStream(){
-		config.active_song.src = '';
-		config.active_song.load();
+		config.audio.src = '';
+		config.audio.load();
 	}
 
 	/**
@@ -248,156 +235,9 @@ let AmplitudeCore = (function() {
 	 * @access public\
 	 */
 	function reconnectStream(){
-		config.active_song.src = config.active_metadata.url;
-		config.active_song.load();
+		config.audio.src = config.active_metadata.url;
+		config.audio.load();
 	}
-
-	/**
-	 * When you pass a song object it plays that song right awawy.  It sets
-	 * the active song in the config to the song you pass in and synchronizes
-	 * the visuals.
-	 *
-	 * Public Accessor: Amplitude.playNow( song )
-	 *
-	 * @access public
-	 * @param {object} song - JSON representation of a song.
-	 */
-	function playNow( song ){
-		/*
-			Makes sure the song object has a URL associated with it
-			or there will be nothing to play.
-		*/
-		if( song.url ){
-			config.active_song.src 	= song.url;
-			config.active_metadata 	= song;
-			config.active_album 	= song.album;
-		}else{
-			/*
-				Write error message since the song passed in doesn't
-				have a URL.
-			*/
-			AmplitudeHelpers.writeDebugMessage('The song needs to have a URL!');
-		}
-
-		/*
-			Sets the main song control status visual
-		*/
-		AmplitudeVisualSync.syncMainPlayPause('playing');
-
-		/*
-			Update the song meta data
-		*/
-		AmplitudeVisualSync.displaySongMetadata();
-
-
-		/*
-			Reset the song sliders, song progress bar info, and
-			reset times. This ensures everything stays in sync.
-		*/
-		AmplitudeVisualSync.resetSongSliders();
-
-		AmplitudeVisualSync.resetSongPlayedProgressBars();
-
-		AmplitudeVisualSync.resetTimes();
-
-		/*
-			Plays the song.
-		*/
-		play();
-	}
-
-	/**
-	 * Plays the song at a specific index in the songs array
-	 *
-	 * Public Accessor: Amplitude.playSongAtIndex( song )
-	 *
-	 * @access public
-	 * @param {number} index - The number representing the song in the songs array
-	 */
-	 function playSongAtIndex( index ){
-		 /*
-				Stop the current song.
-		 */
-		 stop();
-
-		 /*
-				Determine if there is a new playlist, if so set the active playlist and change the song.
-		 */
-		 if( AmplitudeHelpers.checkNewPlaylist( null ) ){
-			 AmplitudeHelpers.setActivePlaylist( null );
-
-			 AmplitudeHelpers.changeSong( index );
-		 }
-
-		 /*
-				Check if the song is new. If so, change the song.
-		 */
-		 if( AmplitudeHelpers.checkNewSong( index ) ){
-			 AmplitudeHelpers.changeSong( index );
-		 }
-
-		 /*
-			 Sync all of the play pause buttons.
-		 */
-		 AmplitudeVisualSync.syncMainPlayPause('playing');
-		 AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'playing' );
-		 AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
-
-		 /*
-			 Play the song
-		 */
-		 play();
-	 }
-
-	 /**
-		* Plays a song at the index passed in for the playlist provided. The index passed
-		* in should be the index of the song in the playlist and not the songs array.
-		*
-		* @access public
-		* @param {number} index 		- The number representing the song in the playlist array.
-		* @param {string} playlist 	- The key string representing the playlist we are playing the song from.
-		*
-		*/
-	 function playPlaylistSongAtIndex( index, playlist ){
-			 /*
-			 		Stop the current song.
-			 */
-			 stop();
-
-			 /*
-			 		Get the index of the song in the songs array. This is the integer at the index
-					in the playlist.
-			 */
-			 let songIndex = config.playlists[ playlist ][ index ];
-
-			 /*
-			 		Determine if there is a new playlist, if so set the active playlist and change the song.
-			 */
-			 if( AmplitudeHelpers.checkNewPlaylist( playlist ) ){
-				 AmplitudeHelpers.setActivePlaylist( playlist );
-
-				 AmplitudeHelpers.changeSong( songIndex );
-			 }
-
-			 /*
-			 		Check if the song is new. If so, change the song.
-			 */
-			if( AmplitudeHelpers.checkNewSong( songIndex ) ){
-			 AmplitudeHelpers.changeSong( songIndex );
-			}
-
-			/*
-				Sync all of the play pause buttons.
-			*/
-			AmplitudeVisualSync.syncMainPlayPause('playing');
-			AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'playing' );
-			AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
-
-			/*
-				Play the song
-			*/
-			play();
-	 }
 
 	/**
 	 * Sets the playback speed for the song.
@@ -413,7 +253,7 @@ let AmplitudeCore = (function() {
 		/*
 			Set the active song playback rate.
 		*/
-		config.active_song.playbackRate = config.playback_speed;
+		config.audio.playbackRate = config.playback_speed;
 	}
 
 	/*
@@ -428,11 +268,8 @@ let AmplitudeCore = (function() {
 		skipToLocation: skipToLocation,
 		disconnectStream: disconnectStream,
 		reconnectStream: reconnectStream,
-		playNow: playNow,
-		playSongAtIndex: playSongAtIndex,
-		playPlaylistSongAtIndex: playPlaylistSongAtIndex,
 		setPlaybackSpeed: setPlaybackSpeed
 	}
 })();
 
-export default AmplitudeCore
+export default Core

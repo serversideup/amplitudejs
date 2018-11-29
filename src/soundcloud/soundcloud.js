@@ -5,12 +5,6 @@
 import config from '../config.js';
 
 /**
- * Imports the helper functions for the core module
- * @module core/AmplitudeHelers
- */
-import AmplitudeHelpers from '../core/helpers.js';
-
-/**
  * Imports the initializer
  * @module init/AmplitudeInitializer
  */
@@ -21,9 +15,9 @@ import AmplitudeInitializer from '../init/init.js';
  * and get the information we need from SoundCloud to make the songs
  * streamable through Amplitude
  *
- * @module soundcloud/AmplitudeSoundcloud
+ * @module soundcloud/SoundCloud
  */
-let AmplitudeSoundcloud = (function() {
+let SoundCloud = (function() {
 
 	/**
 	 * Defines the temporary user config used while we configure soundcloud
@@ -182,4 +176,4 @@ let AmplitudeSoundcloud = (function() {
 	}
 })();
 
-export default AmplitudeSoundcloud
+export default SoundCloud

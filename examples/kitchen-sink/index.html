@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>AmplitudeJS Testing</title>
+		<!-- Include Resource Stylesheets -->
+		<link rel="stylesheet" type="text/css" href="css/foundation.min.css"/>
+
+		<!--
+			Include Resource Javascript
+
+			NOTE: These are for handling things outside of the scope of AmplitudeJS
+		-->
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/foundation.min.js"></script>
+
+		<!-- Include Amplitude JS -->
+		<script type="text/javascript" src="../../dist/amplitude.js"></script>
+
+		<!-- Include Amplitude JS Visualizations -->
+		<script type="text/javascript" src="../../dist/visualizations/michaelbromley.js"></script>
+		<script type="text/javascript" src="../../dist/visualizations/bar.js"></script>
+		<!--
+			Include UX functions JS
+
+			NOTE: These are for handling things outside of the scope of AmplitudeJS
+		-->
+		<script type="text/javascript" src="js/functions.js"></script>
+	</head>
+	<style>
+		h3{
+			text-align: center;
+		}
+
+		div.control-container{
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin: auto;
+			padding: 10px;
+			margin-bottom: 30px;
+		}
+
+		div.amplitude-visualization{
+			background-color: black;
+			width: 100%;
+			height: 300px;
+		}
+
+		img.art{
+			max-width: 200px;
+		}
+
+		.amplitude-mute.amplitude-muted::before{
+			content: 'Mute (Muted)';
+		}
+
+		.amplitude-mute.amplitude-not-muted::before{
+			content: 'Mute (Not Muted)';
+		}
+
+		.amplitude-playback-speed.amplitude-playback-speed-10::before{
+			content: 'Playback Speed (10)';
+		}
+
+		.amplitude-playback-speed.amplitude-playback-speed-15::before{
+			content: 'Playback Speed (15)';
+		}
+
+		.amplitude-playback-speed.amplitude-playback-speed-20::before{
+			content: 'Playback Speed (20)';
+		}
+
+		.amplitude-play-pause.amplitude-playing::before{
+			content: 'Play/Pause (Playing)';
+		}
+
+		.amplitude-play-pause.amplitude-paused::before{
+			content: 'Play/Pause (Paused)';
+		}
+
+		.amplitude-repeat.amplitude-repeat-off::before{
+			content: 'Repeat (Off)';
+		}
+
+		.amplitude-repeat.amplitude-repeat-on::before{
+			content: 'Repeat (On)';
+		}
+
+		.amplitude-repeat-song.amplitude-repeat-song-on::before{
+			content: 'Repeat Song (On)';
+		}
+
+		.amplitude-repeat-song.amplitude-repeat-song-off::before{
+			content: 'Repeat Song (Off)';
+		}
+
+		.amplitude-shuffle.amplitude-shuffle-off::before{
+			content: 'Shuffle (Off)';
+		}
+
+		.amplitude-shuffle.amplitude-shuffle-on::before{
+			content: 'Shuffle (On)';
+		}
+
+		.song-title{
+			display: block;
+		}
+
+		.song-artist{
+			display: block;
+		}
+
+		.amplitude-active-song-container{
+			background-color: rgba( 0, 0, 200, .4 );
+		}
+
+
+	 	.amplitude-wave-form svg{
+		  stroke: black;
+		  height: 100px;
+		  width: 100%;
+			stroke-width: .5px;
+		}
+
+		.amplitude-wave-form svg g{
+		  stroke: black;
+		  height: 100px;
+		  width: 100%;
+		}
+
+		.amplitude-wave-form svg g path{
+			stroke: black;
+		  height: 100px;
+		  width: 100%;
+		}
+	</style>
+	<body>
+		<div class="grid-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<h3>Public Functions</h3>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<a class="button" id="amplitude-bind-new-elements">Bind New Elements</a>
+				<a class="button" id="amplitude-get-active-playlist">Get Active Playlist</a>
+				<a class="button" id="amplitude-get-playback-speed">Get Playback Speed</a>
+				<a class="button" id="amplitude-get-repeat">Get Repeat</a>
+				<a class="button" id="amplitude-get-repeat-playlist">Get Repeat Playlist (Trip Hop)</a>
+				<a class="button" id="amplitude-get-shuffle">Get Shuffle</a>
+				<a class="button" id="amplitude-get-shuffle-playlist">Get Shuffle Playlist (Trip Hop)</a>
+				<a class="button" id="amplitude-set-shuffle-on">Set Shuffle On</a>
+				<a class="button" id="amplitude-set-shuffle-off">Set Shuffle Off</a>
+				<a class="button" id="amplitude-set-shuffle-playlist-on">Set Shuffle Playlist On (Trip Hop)</a>
+				<a class="button" id="amplitude-set-shuffle-playlist-off">Set Shuffle Playlist Off (Trip Hop)</a>
+				<a class="button" id="amplitude-set-repeat-on">Set Repeat On</a>
+				<a class="button" id="amplitude-set-repeat-off">Set Repeat Off</a>
+				<a class="button" id="amplitude-set-repeat-song-on">Set Repeat Song On</a>
+				<a class="button" id="amplitude-set-repeat-song-off">Set Repeat Song Off</a>
+				<a class="button" id="amplitude-set-repeat-playlist-on">Set Repeat Playlist On (Trip Hop)</a>
+				<a class="button" id="amplitude-set-repeat-playlist-off">Set Repeat Playlist Off (Trip Hop)</a>
+				<a class="button" id="amplitude-get-default-album-art">Get Default Album Art</a>
+				<a class="button" id="amplitude-set-default-album-art">Set Default Album Art</a>
+				<a class="button" id="amplitude-get-song-played-percentage">Get Song Played Percentage</a>
+				<a class="button" id="amplitude-set-song-played-percentage">Set Song Played Percentage</a>
+				<a class="button" id="amplitude-get-song-played-seconds">Get Song Played Seconds</a>
+				<a class="button" id="amplitude-get-song-duration">Get Song Duration</a>
+				<a class="button" id="amplitude-set-debug-on">Set Debug On</a>
+				<a class="button" id="amplitude-set-debug-off">Set Debug Off</a>
+				<a class="button" id="amplitude-get-active-song-metadata">Get Active Song Meta Data</a>
+				<a class="button" id="amplitude-get-active-playlist-metadata">Get Active Playlist Meta Data</a>
+				<a class="button" id="amplitude-get-song-by-index">Get Song By Index</a>
+				<a class="button" id="amplitude-get-song-at-playlist-index">Get Song At Playlist Index</a>
+				<a class="button" id="amplitude-add-song">Add Song</a>
+				<a class="button" id="amplitude-add-song-to-playlist">Add Song To Playlist</a>
+				<a class="button" id="amplitude-remove-song">Remove Song</a>
+				<a class="button" id="amplitude-remove-song-from-playlist">Remove Song From Playlist</a>
+				<a class="button" id="amplitude-play-now">Play Now</a>
+				<a class="button" id="amplitude-play-song-at-index">Play Song At Index</a>
+				<a class="button" id="amplitude-play-song-at-playlist-index">Play Song At Playlist Index</a>
+				<a class="button" id="amplitude-play">Play</a>
+				<a class="button" id="amplitude-pause">Pause</a>
+				<a class="button" id="amplitude-audio">Get Audio</a>
+				<a class="button" id="amplitude-analyser">Get Analyser</a>
+				<a class="button" id="amplitude-next">Next</a>
+				<a class="button" id="amplitude-next-playlist">Next (Trip Hop)</a>
+				<a class="button" id="amplitude-prev">Prev</a>
+				<a class="button" id="amplitude-prev-playlist">Prev (Trip Hop)</a>
+				<a class="button" id="amplitude-get-songs">Get Songs</a>
+				<a class="button" id="amplitude-get-songs-in-playlist">Get Songs In Playlist (Trip Hop)</a>
+				<a class="button" id="amplitude-get-songs-state">Get Songs State</a>
+				<a class="button" id="amplitude-get-songs-state-playlist">Get Songs State Playlist (Trip Hop)</a>
+				<a class="button" id="amplitude-get-active-index">Get Active Index</a>
+				<a class="button" id="amplitude-get-active-index-state">Get Active Index State</a>
+				<a class="button" id="amplitude-get-version">Get Version</a>
+				<a class="button" id="amplitude-get-buffered">Get Buffered</a>
+				<a class="button" id="amplitude-skip-to">Skip To 30 Seconds In Anvil by Lorn</a>
+				<a class="button" id="amplitude-skip-to-playlist">Skip To 30 Seconds In Vorel by Russian Circles in Trip Hop</a>
+				<a class="button" id="amplitude-set-meta-data">Set Meta Data ZEZE</a>
+				<a class="button" id="amplitude-set-meta-data-playlist">Set Meta Data Playlist Vorel</a>
+				<a class="button" id="amplitude-set-delay">Set Delay</a>
+				<a class="button" id="amplitude-get-player-state">Get Player State</a>
+				<a class="button" id="amplitude-add-playlist">Add Playlist</a>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<div id="amplitude-function-output"></div>
+				<pre id="amplitude-function-output-pre"></pre>
+			</div>
+		</div>
+
+		<div class="grid-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<h3>Global</h3>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<h3>Global Visualization</h3>
+
+				<div class="amplitude-visualization"></div>
+				<div class="amplitude-wave-form"></div>
+			</div>
+		</div>
+
+
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-8 medium-8 small-12 cell control-container">
+				<div class="grid-x">
+					<div class="large-6 medium-6 small-12 cell">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<span data-amplitude-song-info="name"></span>
+							</div>
+						</div>
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<span data-amplitude-song-info="artist"></span>
+							</div>
+						</div>
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<span data-amplitude-song-info="album"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<img data-amplitude-song-info="cover_art_url" class="art"/>
+							</div>
+						</div>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds"></span><br>
+								Current Time: <span class="amplitude-current-time"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds"></span><br>
+								Duration Time: <span class="amplitude-duration-time"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="large-8 medium-8 small-12 cell control-container">
+				<div class="button amplitude-mute">
+
+				</div>
+				<div class="button amplitude-prev">
+					Prev
+				</div>
+				<div class="button amplitude-next">
+					Next
+				</div>
+				<div class="button amplitude-pause">
+					Pause
+				</div>
+				<div class="button amplitude-play">
+					Play
+				</div>
+				<div class="button amplitude-playback-speed">
+
+				</div>
+				<div class="button amplitude-play-pause">
+
+				</div>
+				<div class="button amplitude-stop">
+					Stop
+				</div>
+				<div class="button amplitude-volume-down">
+					Volume Down
+				</div>
+				<div class="button amplitude-volume-up">
+					Volume Up
+				</div>
+				<div class="button amplitude-repeat">
+
+				</div>
+				<div class="button amplitude-repeat-song">
+
+				</div>
+				<div class="button amplitude-shuffle">
+
+				</div>
+				<div class="button amplitude-skip-to" data-amplitude-song-index="3" data-amplitude-location="30">
+					Skip to 30 seconds into "I Came Running" by "Ancient Astronauts"
+				</div>
+			</div>
+			<div class="large-8 medium-8 small-12 cell control-container">
+				<div class="grid-x">
+					<div class="large-6 medium-6 small-12 cell">
+						Volume:
+						<input type="range" class="amplitude-volume-slider"/>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider"/>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Progress:
+						<progress class="amplitude-song-played-progress"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Buffered:
+						<progress class="amplitude-buffered-progress"></progress>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<h3>Playlists</h3>
+				<hr>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-4 medium-4 small-12 cell">
+				<h3>Ancient Astronauts</h3>
+
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 medium-12 small-12 cell">
+						<h3>Playlist Visualization</h3>
+
+						<div class="amplitude-visualization" data-amplitude-playlist="ancient_astronauts"></div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="name" data-amplitude-playlist="ancient_astronauts"></span>
+									</div>
+								</div>
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="artist" data-amplitude-playlist="ancient_astronauts"></span>
+									</div>
+								</div>
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="album" data-amplitude-playlist="ancient_astronauts"></span>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<img data-amplitude-song-info="cover_art_url" class="art" data-amplitude-playlist="ancient_astronauts"/>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<div class="amplitude-wave-form" data-amplitude-playlist="ancient_astronauts"></div>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										Current Hours: <span class="amplitude-current-hours" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Current Minutes: <span class="amplitude-current-minutes" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Current Seconds: <span class="amplitude-current-seconds" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Current Time: <span class="amplitude-current-time" data-amplitude-playlist="ancient_astronauts"></span><br>
+
+										<br>
+
+										Duration Hours: <span class="amplitude-duration-hours" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Duration Minutes: <span class="amplitude-duration-minutes" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Duration Time: <span class="amplitude-duration-time" data-amplitude-playlist="ancient_astronauts"></span><br>
+										Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-playlist="ancient_astronauts"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="button amplitude-prev" data-amplitude-playlist="ancient_astronauts">
+							Prev
+						</div>
+						<div class="button amplitude-next" data-amplitude-playlist="ancient_astronauts">
+							Next
+						</div>
+						<div class="button amplitude-pause" data-amplitude-playlist="ancient_astronauts">
+							Pause
+						</div>
+						<div class="button amplitude-play" data-amplitude-playlist="ancient_astronauts">
+							Play
+						</div>
+						<div class="button amplitude-play-pause" data-amplitude-playlist="ancient_astronauts">
+
+						</div>
+						<div class="button amplitude-repeat" data-amplitude-playlist="ancient_astronauts">
+
+						</div>
+						<div class="button amplitude-shuffle" data-amplitude-playlist="ancient_astronauts">
+
+						</div>
+						<div class="button amplitude-skip-to" data-amplitude-song-index="3" data-amplitude-location="30" data-amplitude-playlist="ancient_astronauts">
+							Skip to 30 seconds into "I Came Running" by "Ancient Astronauts"
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-playlist="ancient_astronauts"/>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-playlist="ancient_astronauts"></progress>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								Buffered:
+								<progress class="amplitude-buffered-progress" data-amplitude-playlist="ancient_astronauts"></progress>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x amplitue-song-container" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts">
+							<div class="large-12 medium-12 small-12 cell">
+								<span class="song-title" data-amplitude-song-info="name" data-amplitude-song-index="0"></span>
+								<span class="song-artist" data-amplitude-song-info="artist" data-amplitude-song-index="0"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts">
+							<img class="song-artwork" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="0" data-amplitude-playlist="ancient_astronauts"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts">
+							<img class="song-artwork" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="1" data-amplitude-playlist="ancient_astronauts"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="large-4 medium-4 small-12 cell">
+				<h3>Trip Hop</h3>
+
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 medium-12 small-12 cell">
+						<h3>Playlist Visualization</h3>
+
+						<div class="amplitude-visualization" data-amplitude-playlist="trip_hop"></div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<span data-amplitude-playlist-info="title" data-amplitude-playlist="trip_hop"></span><br>
+						<span data-amplitude-playlist-info="author" data-amplitude-playlist="trip_hop"></span>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="name" data-amplitude-playlist="trip_hop"></span>
+									</div>
+								</div>
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="artist" data-amplitude-playlist="trip_hop"></span>
+									</div>
+								</div>
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="album" data-amplitude-playlist="trip_hop"></span>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<img data-amplitude-song-info="cover_art_url" data-amplitude-playlist="trip_hop" class="art"/>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<div class="amplitude-wave-form" data-amplitude-playlist="trip_hop"></div>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										Current Hours: <span class="amplitude-current-hours" data-amplitude-playlist="trip_hop"></span><br>
+										Current Minutes: <span class="amplitude-current-minutes" data-amplitude-playlist="trip_hop"></span><br>
+										Current Seconds: <span class="amplitude-current-seconds" data-amplitude-playlist="trip_hop"></span><br>
+										Current Time: <span class="amplitude-current-time" data-amplitude-playlist="trip_hop"></span><br>
+
+										<br>
+
+										Duration Hours: <span class="amplitude-duration-hours" data-amplitude-playlist="trip_hop"></span><br>
+										Duration Minutes: <span class="amplitude-duration-minutes" data-amplitude-playlist="trip_hop"></span><br>
+										Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-playlist="trip_hop"></span><br>
+										Duration Time: <span class="amplitude-duration-time" data-amplitude-playlist="trip_hop"></span><br>
+										Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-playlist="trip_hop"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="button amplitude-prev" data-amplitude-playlist="trip_hop">
+							Prev
+						</div>
+						<div class="button amplitude-next" data-amplitude-playlist="trip_hop">
+							Next
+						</div>
+						<div class="button amplitude-pause" data-amplitude-playlist="trip_hop">
+							Pause
+						</div>
+						<div class="button amplitude-play" data-amplitude-playlist="trip_hop">
+							Play
+						</div>
+						<div class="button amplitude-play-pause" data-amplitude-playlist="trip_hop">
+
+						</div>
+						<div class="button amplitude-repeat" data-amplitude-playlist="trip_hop">
+
+						</div>
+						<div class="button amplitude-shuffle" data-amplitude-playlist="trip_hop">
+
+						</div>
+						<div class="button amplitude-skip-to" data-amplitude-song-index="6" data-amplitude-location="23" data-amplitude-playlist="trip_hop">
+							Skip to 23 seconds into "Vorel" by "Russian Circles"
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-playlist="trip_hop"/>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								Buffered:
+								<progress class="amplitude-buffered-progress" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop">
+							<img class="song-artwork" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="0" data-amplitude-playlist="trip_hop"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop">
+							<img class="song-artwork" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="1" data-amplitude-playlist="trip_hop"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop">
+							<img class="song-artwork" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="2" data-amplitude-playlist="trip_hop"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop">
+							<img class="song-artwork" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="3" data-amplitude-playlist="trip_hop"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop">
+							<img class="song-artwork" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="4" data-amplitude-playlist="trip_hop"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop">
+							<img class="song-artwork" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="5" data-amplitude-playlist="trip_hop"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="large-4 medium-4 small-12 cell">
+				<h3>Emancipator</h3>
+
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 medium-12 small-12 cell">
+						<h3>Playlist Visualization</h3>
+
+						<div class="amplitude-visualization" data-amplitude-playlist="emancipator"></div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<span data-amplitude-playlist-info="title" data-amplitude-playlist="emancipator"></span>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="name" data-amplitude-playlist="emancipator"></span>
+									</div>
+								</div>
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="artist" data-amplitude-playlist="emancipator"></span>
+									</div>
+								</div>
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<span data-amplitude-song-info="album" data-amplitude-playlist="emancipator"></span>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<img data-amplitude-song-info="cover_art_url" data-amplitude-playlist="emancipator" class="art"/>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										<div class="amplitude-wave-form" data-amplitude-playlist="emancipator"></div>
+									</div>
+								</div>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								<div class="grid-x">
+									<div class="large-12 medium-12 small-12 cell">
+										Current Hours: <span class="amplitude-current-hours" data-amplitude-playlist="emancipator"></span><br>
+										Current Minutes: <span class="amplitude-current-minutes" data-amplitude-playlist="emancipator"></span><br>
+										Current Seconds: <span class="amplitude-current-seconds" data-amplitude-playlist="emancipator"></span><br>
+										Current Time: <span class="amplitude-current-time" data-amplitude-playlist="emancipator"></span><br>
+
+										<br>
+
+										Duration Hours: <span class="amplitude-duration-hours" data-amplitude-playlist="emancipator"></span><br>
+										Duration Minutes: <span class="amplitude-duration-minutes" data-amplitude-playlist="emancipator"></span><br>
+										Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-playlist="emancipator"></span><br>
+										Duration Time: <span class="amplitude-duration-time" data-amplitude-playlist="emancipator"></span><br>
+										Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-playlist="emancipator"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="button amplitude-prev" data-amplitude-playlist="emancipator">
+							Prev
+						</div>
+						<div class="button amplitude-next" data-amplitude-playlist="emancipator">
+							Next
+						</div>
+						<div class="button amplitude-pause" data-amplitude-playlist="emancipator">
+							Pause
+						</div>
+						<div class="button amplitude-play" data-amplitude-playlist="emancipator">
+							Play
+						</div>
+						<div class="button amplitude-play-pause" data-amplitude-playlist="emancipator">
+
+						</div>
+						<div class="button amplitude-repeat" data-amplitude-playlist="emancipator">
+
+						</div>
+						<div class="button amplitude-shuffle" data-amplitude-playlist="emancipator">
+
+						</div>
+						<div class="button amplitude-skip-to" data-amplitude-song-index="9" data-amplitude-location="67" data-amplitude-playlist="emancipator">
+							Skip to 1 minute and 7 seconds into "Dusk To Dawn" by "Emancipator"
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="grid-x">
+							<div class="large-12 medium-12 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-playlist="emancipator"/>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-playlist="emancipator"></progress>
+							</div>
+							<div class="large-12 medium-12 small-12 cell">
+								Buffered:
+								<progress class="amplitude-buffered-progress" data-amplitude-playlist="emancipator"></progress>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-x">
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="0" data-amplitude-playlist="emancipator">
+							<div class="amplitude-visualization" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></div>
+							<div class="amplitude-wave-form" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></div>
+							<img class="song-artwork" data-amplitude-song-index="0" data-amplitude-playlist="emancipator" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="0" data-amplitude-playlist="emancipator" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="0" data-amplitude-playlist="emancipator" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="0" data-amplitude-playlist="emancipator">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="0" data-amplitude-playlist="emancipator">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="0" data-amplitude-playlist="emancipator">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="0" data-amplitude-playlist="emancipator"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours" data-amplitude-song-index="0"  data-amplitude-playlist="emancipator"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes" data-amplitude-song-index="0"  data-amplitude-playlist="emancipator"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="0"  data-amplitude-playlist="emancipator"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="0"  data-amplitude-playlist="emancipator"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="0"  data-amplitude-playlist="emancipator"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="1" data-amplitude-playlist="emancipator">
+							<img class="song-artwork" data-amplitude-song-index="1" data-amplitude-playlist="emancipator" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="1" data-amplitude-playlist="emancipator" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="1" data-amplitude-playlist="emancipator" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="1" data-amplitude-playlist="emancipator">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="1" data-amplitude-playlist="emancipator">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="1" data-amplitude-playlist="emancipator">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="1" data-amplitude-playlist="emancipator"></span>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 medium-12 small-12 cell control-container">
+						<div class="amplitude-song-container" data-amplitude-song-index="2" data-amplitude-playlist="emancipator">
+							<img class="song-artwork" data-amplitude-song-index="2" data-amplitude-playlist="emancipator" data-amplitude-song-info="cover_art_url"/>
+							<span class="song-title" data-amplitude-song-index="2" data-amplitude-playlist="emancipator" data-amplitude-song-info="name"></span>
+							<span class="song-artist" data-amplitude-song-index="2" data-amplitude-playlist="emancipator" data-amplitude-song-info="artist"></span>
+							<hr>
+							<div class="button amplitude-play" data-amplitude-song-index="2" data-amplitude-playlist="emancipator">
+								Play
+							</div>
+							<div class="button amplitude-pause" data-amplitude-song-index="2" data-amplitude-playlist="emancipator">
+								Pause
+							</div>
+							<div class="button amplitude-play-pause" data-amplitude-song-index="2" data-amplitude-playlist="emancipator">
+
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Song Slider:
+								<input type="range" class="amplitude-song-slider" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"/>
+
+								Song Progress:
+								<progress class="amplitude-song-played-progress" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></progress>
+							</div>
+							<div class="large-6 medium-6 small-12 cell">
+								Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Current Time: <span class="amplitude-current-time" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+
+								<br>
+
+								Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span><br>
+								Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="2" data-amplitude-playlist="emancipator"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="grid-x">
+			<div class="large-12 medium-12 small-12 cell">
+				<h3>Songs</h3>
+				<hr>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="0">
+					<img class="song-artwork" data-amplitude-song-index="0" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="0" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="0" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="0">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="0">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="0">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="0"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="0"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="0"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="0"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="0"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="0"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="0"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="0"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="0"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="0"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="0"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="1">
+					<img class="song-artwork" data-amplitude-song-index="1" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="1" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="1" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="1">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="1">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="1">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="1"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="1"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="1"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="1"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="1"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="1"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="1"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="1"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="1"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="1"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="1"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="2">
+					<img class="song-artwork" data-amplitude-song-index="2" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="2" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="2" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="2">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="2">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="2">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="2"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="2"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="2"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="2"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="2"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="2"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="2"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="2"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="2"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="2"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="2"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="3">
+					<img class="song-artwork" data-amplitude-song-index="3" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="3" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="3" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="3">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="3">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="3">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="3"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="3"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="3"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="3"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="3"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="3"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="3"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="3"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="3"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="3"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="3"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="4">
+					<img class="song-artwork" data-amplitude-song-index="4" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="4" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="4" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="4">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="4">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="4">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="4"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="4"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="4"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="4"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="4"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="4"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="4"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="4"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="4"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="4"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="4"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="5">
+					<img class="song-artwork" data-amplitude-song-index="5" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="5" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="5" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="5">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="5">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="5">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="5"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="5"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="5"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="5"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="5"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="5"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="5"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="5"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="5"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="5"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="5"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="6">
+					<img class="song-artwork" data-amplitude-song-index="6" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="6" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="6" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="6">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="6">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="6">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="6"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="6"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="6"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="6"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="6"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="6"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="6"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="6"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="6"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="6"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="6"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="7">
+					<img class="song-artwork" data-amplitude-song-index="7" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="7" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="7" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="7">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="7">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="7">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="7"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="7"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="7"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="7"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="7"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="7"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="7"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="7"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="7"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="7"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="7"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="8">
+					<img class="song-artwork" data-amplitude-song-index="8" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="8" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="8" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="8">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="8">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="8">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="8"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="8"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="8"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="8"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="8"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="8"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="8"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="8"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="8"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="8"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="8"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="9">
+					<img class="song-artwork" data-amplitude-song-index="9" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="9" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="9" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="9">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="9">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="9">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="9"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="9"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="9"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="9"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="9"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="9"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="9"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="9"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="9"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="9"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="9"></span>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 medium-3 small-12 cell control-container">
+				<div class="amplitude-song-container" data-amplitude-song-index="10">
+					<div class="amplitude-visualization" data-amplitude-song-index="10"></div>
+					<img class="song-artwork" data-amplitude-song-index="10" data-amplitude-song-info="cover_art_url"/>
+					<span class="song-title" data-amplitude-song-index="10" data-amplitude-song-info="name"></span>
+					<span class="song-artist" data-amplitude-song-index="10" data-amplitude-song-info="artist"></span>
+					<hr>
+					<div class="button amplitude-play" data-amplitude-song-index="10">
+						Play
+					</div>
+					<div class="button amplitude-pause" data-amplitude-song-index="10">
+						Pause
+					</div>
+					<div class="button amplitude-play-pause" data-amplitude-song-index="10">
+
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Song Slider:
+						<input type="range" class="amplitude-song-slider" data-amplitude-song-index="10"/>
+
+						Song Progress:
+						<progress class="amplitude-song-played-progress" data-amplitude-song-index="10"></progress>
+					</div>
+					<div class="large-6 medium-6 small-12 cell">
+						Current Hours: <span class="amplitude-current-hours" data-amplitude-song-index="10"></span><br>
+						Current Minutes: <span class="amplitude-current-minutes" data-amplitude-song-index="10"></span><br>
+						Current Seconds: <span class="amplitude-current-seconds" data-amplitude-song-index="10"></span><br>
+						Current Time: <span class="amplitude-current-time" data-amplitude-song-index="10"></span><br>
+
+						<br>
+
+						Duration Hours: <span class="amplitude-duration-hours"data-amplitude-song-index="10"></span><br>
+						Duration Minutes: <span class="amplitude-duration-minutes"data-amplitude-song-index="10"></span><br>
+						Duration Seconds: <span class="amplitude-duration-seconds" data-amplitude-song-index="10"></span><br>
+						Duration Time: <span class="amplitude-duration-time" data-amplitude-song-index="10"></span><br>
+						Duration Count Down: <span class="amplitude-time-remaining" data-amplitude-song-index="10"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		Amplitude.init({
+			bindings: {
+        37: 'prev',
+        39: 'next',
+        32: 'play_pause'
+      },
+			debug: true,
+			visualization: 'michaelbromley_visualization',
+			songs: [
+				{
+					"name": "Risin' High (feat Raashan Ahmad)",
+					"artist": "Ancient Astronauts",
+					"album": "We Are to Answer",
+					"url": "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
+					"cover_art_url": "../album-art/we-are-to-answer.jpg",
+					"time_callbacks": {
+						1: function(){
+							console.log( 1 );
+						},
+						2: function(){
+							console.log( 2 );
+						},
+						30: function(){
+							console.log( 30 );
+						}
+					}
+				},
+				{
+					"name": "The Gun",
+					"artist": "Lorn",
+					"album": "Ask The Dust",
+					"url": "../songs/08 The Gun.mp3",
+					"cover_art_url": "../album-art/ask-the-dust.jpg",
+					"visualization": "bar_visualization"
+				},
+				{
+					"name": "Anvil",
+					"artist": "Lorn",
+					"album": "Anvil",
+					"url": "../songs/LORN - ANVIL.mp3",
+					"cover_art_url": "../album-art/anvil.jpg",
+					"visualization": "michaelbromley_visualization"
+				},
+				{
+					"name": "I Came Running",
+					"artist": "Ancient Astronauts",
+					"album": "We Are to Answer",
+					"url": "../songs/ICameRunning-AncientAstronauts.mp3",
+					"cover_art_url": "../album-art/we-are-to-answer.jpg",
+					"visualization": "bar_visualization"
+				},
+				{
+					"name": "First Snow",
+					"artist": "Emancipator",
+					"album": "Soon It Will Be Cold Enough",
+					"url": "../songs/FirstSnow-Emancipator.mp3",
+					"cover_art_url": "../album-art/soon-it-will-be-cold-enough.jpg",
+					"visualization": "michaelbromley_visualization"
+				},
+				{
+					"name": "Terrain",
+					"artist": "pg.lost",
+					"album": "Key",
+					"url": "../songs/Terrain-pglost.mp3",
+					"cover_art_url": "../album-art/key.jpg",
+					"visualization": "michaelbromley_visualization"
+				},
+				{
+					"name": "Vorel",
+					"artist": "Russian Circles",
+					"album": "Guidance",
+					"url": "../songs/Vorel-RussianCircles.mp3",
+					"cover_art_url": "../album-art/guidance.jpg",
+					"visualization": "bar_visualization"
+				},
+				{
+					"name": "Intro / Sweet Glory",
+					"artist": "Jimkata",
+					"album": "Die Digital",
+					"url": "../songs/IntroSweetGlory-Jimkata.mp3",
+					"cover_art_url": "../album-art/die-digital.jpg",
+					"visualization": "michaelbromley_visualization"
+				},
+				{
+					"name": "Offcut #6",
+					"artist": "Little People",
+					"album": "We Are But Hunks of Wood Remixes",
+					"url": "../songs/Offcut6-LittlePeople.mp3",
+					"cover_art_url": "../album-art/we-are-but-hunks-of-wood.jpg",
+					"visualization": "bar_visualization"
+				},
+				{
+					"name": "Dusk To Dawn",
+					"artist": "Emancipator",
+					"album": "Dusk To Dawn",
+					"url": "../songs/DuskToDawn-Emancipator.mp3",
+					"cover_art_url": "../album-art/from-dusk-to-dawn.jpg",
+					"visualization": "michaelbromley_visualization"
+				},
+				{
+					"name": "Anthem",
+					"artist": "Emancipator",
+					"album": "Soon It Will Be Cold Enough",
+					"url": "../songs/Anthem-Emancipator.mp3",
+					"cover_art_url": "../album-art/soon-it-will-be-cold-enough.jpg",
+					"visualization": "bar_visualization"
+				},
+				{
+					"name": "ZEZE",
+					"artist": "Kodak Black",
+					"album": "ZEZE",
+					"url": "https://soundcloud.com/kodak-black/zeze-feat-travis-scott-offset-1",
+					"visualization": "michaelbromley_visualization"
+				}
+			],
+
+			soundcloud_client: '7f4a6ed1488c1ebdf31600767b9b6350',
+
+			playlists: {
+				"ancient_astronauts": {
+					songs: [0, 3],
+					title: 'Best of Ancient Astronauts'
+				},
+				"trip_hop": {
+					songs: [1, 2, 5, 6, 7, 8],
+					title: 'Trip Hop Mix 2018',
+					author: 'Dan Pastori',
+					visualization: 'bar_visualization'
+				},
+				"emancipator": {
+					songs: [4, 9, 10],
+					title: 'Emancipator\'s Greatest Hits',
+					visualization: 'michaelbromley_visualization'
+				}
+			},
+
+			visualizations: [
+				{
+					object: MichaelBromleyVisualization,
+					params: {
+
+					}
+				},
+				{
+					object: BarVisualization,
+					params: {
+						bar_color: '#00FF00'
+					}
+				},
+			]
+		});
+	</script>
+</html>

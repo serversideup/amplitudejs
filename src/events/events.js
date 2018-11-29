@@ -1,45 +1,59 @@
+/**
+ * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ */
 /*
 	Import the necessary classes and config to use
 	with the events.
 */
 import config from '../config.js';
-import AmplitudeHelpers from '../core/helpers.js';
-import AmplitudeHandlers from './handlers.js';
 
-/*
-|----------------------------------------------------------------------------------------------------
-| EVENTS METHODS
-|----------------------------------------------------------------------------------------------------
-| These methods are called when we need to bind events to certain elements.
-|
-| METHODS:
-| 	initializeEvents()
-|	bindPlay()
-|	bindPause()
-|	bindPlayPause()
-|	bindStop()
-|	bindMute()
-|	bindVolumeUp()
-|	bindVolumeDown()
-|	bindSongSlider()
-|	bindVolumeSlider()
-|	bindNext()
-|	bindPrev()
-|	bindShuffle()
-|	bindRepeat()
-|	bindPlaybackSpeed()
-|	bindSkipTo()
-|      bindProgress()
-*/
-var AmplitudeEvents = (function () {
-	/*--------------------------------------------------------------------------
-		Initializes the handlers for the events listened to by Amplitude
-	--------------------------------------------------------------------------*/
-	function initializeEvents(){
+/**
+ * Imports all of the handler objects used by the events.
+ */
+import KeyDown from './keydown.js';
+import TimeUpdate from './timeUpdate.js';
+import Ended from './ended.js';
+import Progress from './progress.js';
+import Play from './play.js';
+import Pause from './pause.js';
+import PlayPause from './playPause.js';
+import Stop from './stop.js';
+import Mute from './mute.js';
+import VolumeUp from './volumeUp.js';
+import VolumeDown from './volumeDown.js';
+import SongSlider from './songSlider.js';
+import VolumeSlider from './volumeSlider.js';
+import Next from './next.js';
+import Prev from './prev.js';
+import Repeat from './repeat.js';
+import RepeatSong from './repeatSong.js';
+import PlaybackSpeed from './playbackSpeed.js';
+import Shuffle from './shuffle.js';
+import SkipTo from './skipTo.js';
+import WaveForm from '../fx/waveform.js';
+
+/**
+ * Imports the utility classes used by the evnets.
+ */
+import Debug from '../utilities/debug.js';
+
+/**
+ * AmplitudeJS Events Module. Handles all of the events we listen to in
+ * AmplitudeJS.
+ *
+ * @module events/Events
+ */
+var Events = (function () {
+	/**
+	 * Initializes the handlers for the events listened to by Amplitude
+	 *
+	 * @access public
+	 */
+	function initialize(){
 		/*
 			Write out debug message
 		*/
-		AmplitudeHelpers.writeDebugMessage( 'Beginning initialization of event handlers..' );
+		Debug.writeMessage( 'Beginning initialization of event handlers..' );
 
 		/*
 			Sets flag that the screen is moving and not a tap
@@ -149,6 +163,11 @@ var AmplitudeEvents = (function () {
 		bindRepeat();
 
 		/*
+			Binds 'amplitude-repeat-song' event handlers.
+		*/
+		bindRepeatSong();
+
+		/*
 			Binds 'amplitude-playback-speed' event handlers.
 		*/
 		bindPlaybackSpeed();
@@ -157,58 +176,76 @@ var AmplitudeEvents = (function () {
 			Binds 'amplitude-skip-to' event handlers.
 		*/
 		bindSkipTo();
+
+		/*
+			Binds `canplaythrough` event to build the waveform.
+		*/
+		bindCanPlayThrough();
 	}
 
-	/*--------------------------------------------------------------------------
-		On time update for the audio element, update visual displays that
-			represent the time on either a visualized element or time display.
-	--------------------------------------------------------------------------*/
+	/**
+	 * On time update for the audio element, update visual displays that
+	 * represent the time on either a visualized element or time display.
+	 *
+	 * @access private
+	 */
 	function bindTimeUpdate(){
-		config.active_song.removeEventListener( 'timeupdate', AmplitudeHandlers.updateTime );
-		config.active_song.addEventListener( 'timeupdate', AmplitudeHandlers.updateTime );
+		/*
+			Bind for time update
+		*/
+		config.audio.removeEventListener( 'timeupdate', TimeUpdate.handle );
+		config.audio.addEventListener( 'timeupdate', TimeUpdate.handle );
 
-    // also bind change of duratuion
-		config.active_song.removeEventListener( 'durationchange', AmplitudeHandlers.updateTime );
-		config.active_song.addEventListener( 'durationchange', AmplitudeHandlers.updateTime );
+    /*
+			Bind for duration change
+		*/
+		config.audio.removeEventListener( 'durationchange', TimeUpdate.handle );
+		config.audio.addEventListener( 'durationchange', TimeUpdate.handle );
 	}
 
-	/*--------------------------------------------------------------------------
-		On keydown, we listen to what key got pressed so we can map the key to
-		a function. This allows the user to map pause and play, next, etc. to key
-		presses.
-	--------------------------------------------------------------------------*/
+	/**
+	 * On keydown, we listen to what key got pressed so we can map the key to
+	 * a function. This allows the user to map pause and play, next, etc. to key
+	 * presses.
+	 *
+	 * @access private
+	 */
 	function bindKeyDownEventHandlers(){
-		document.removeEventListener("keydown", AmplitudeHelpers.keydown );
-		document.addEventListener("keydown", AmplitudeHandlers.keydown );
+		document.removeEventListener("keydown", KeyDown.handle );
+		document.addEventListener("keydown", KeyDown.handle );
 	}
 
-	/*--------------------------------------------------------------------------
-		When the audio element has ended playing, we handle the song
-		ending. In a single song or multiple modular song instance,
-		this just synchronizes the visuals for time and song time
-		visualization, but for a playlist it determines whether
-		it should play the next song or not.
-	--------------------------------------------------------------------------*/
+	/**
+	 * When the audio element has ended playing, we handle the song
+ 	 * ending. In a single song or multiple modular song instance,
+ 	 * this just synchronizes the visuals for time and song time
+ 	 * visualization, but for a playlist it determines whether
+ 	 * it should play the next song or not.
+	 *
+	 * @access private
+	 */
 	function bindSongEnded(){
-		config.active_song.removeEventListener( 'ended', AmplitudeHandlers.songEnded );
-		config.active_song.addEventListener( 'ended', AmplitudeHandlers.songEnded );
+		config.audio.removeEventListener( 'ended', Ended.handle );
+		config.audio.addEventListener( 'ended', Ended.handle );
 	}
 
-	/*--------------------------------------------------------------------------
-		As the audio is loaded, the progress event gets fired. We bind into this
-		to grab the buffered percentage of the song. We can then add more elements
-		to show the buffered amount.
-	--------------------------------------------------------------------------*/
+	/**
+	 * As the audio is loaded, the progress event gets fired. We bind into this
+	 * to grab the buffered percentage of the song. We can then add more elements
+	 * to show the buffered amount.
+	 *
+	 * @access private
+	 */
 	function bindProgress(){
-		config.active_song.removeEventListener( 'progress', AmplitudeHandlers.progess );
-		config.active_song.addEventListener( 'progress', AmplitudeHandlers.progress );
+		config.audio.removeEventListener( 'progress',Progress.handle );
+		config.audio.addEventListener( 'progress', Progress.handle );
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-play"
-
-		Binds click and touchend events for amplitude play buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS play buttons
+	 *
+	 * @access private
+	 */
 	function bindPlay(){
 		/*
 			Gets all of the elements with the class amplitude-play
@@ -222,20 +259,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < play_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent ) ) {
-				play_classes[i].removeEventListener('touchend', AmplitudeHandlers.play );
-				play_classes[i].addEventListener('touchend', AmplitudeHandlers.play );
+				play_classes[i].removeEventListener('touchend', Play.handle );
+				play_classes[i].addEventListener('touchend', Play.handle );
 			}else{
-				play_classes[i].removeEventListener('click', AmplitudeHandlers.play );
-				play_classes[i].addEventListener('click', AmplitudeHandlers.play );
+				play_classes[i].removeEventListener('click', Play.handle );
+				play_classes[i].addEventListener('click', Play.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-pause"
-
-		Binds click and touchend events for amplitude pause buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS pause buttons.
+	 *
+	 * @access private
+	 */
 	function bindPause(){
 		/*
 			Gets all of the elements with the class amplitude-pause
@@ -249,20 +286,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < pause_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				pause_classes[i].removeEventListener('touchend', AmplitudeHandlers.pause );
-				pause_classes[i].addEventListener('touchend', AmplitudeHandlers.pause );
+				pause_classes[i].removeEventListener('touchend', Pause.handle );
+				pause_classes[i].addEventListener('touchend', Pause.handle );
 			}else{
-				pause_classes[i].removeEventListener('click', AmplitudeHandlers.pause );
-				pause_classes[i].addEventListener('click', AmplitudeHandlers.pause );
+				pause_classes[i].removeEventListener('click', Pause.handle );
+				pause_classes[i].addEventListener('click', Pause.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-play-pause"
-
-		Binds click and touchend events for amplitude play pause buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS play pause buttons
+	 *
+	 * @access private
+	 */
 	function bindPlayPause(){
 		/*
 			Gets all of the elements with the class amplitude-play-pause
@@ -276,20 +313,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < play_pause_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				play_pause_classes[i].removeEventListener('touchend', AmplitudeHandlers.playPause );
-				play_pause_classes[i].addEventListener('touchend', AmplitudeHandlers.playPause );
+				play_pause_classes[i].removeEventListener('touchend', PlayPause.handle );
+				play_pause_classes[i].addEventListener('touchend', PlayPause.handle );
 			}else{
-				play_pause_classes[i].removeEventListener('click', AmplitudeHandlers.playPause );
-				play_pause_classes[i].addEventListener('click', AmplitudeHandlers.playPause );
+				play_pause_classes[i].removeEventListener('click', PlayPause.handle );
+				play_pause_classes[i].addEventListener('click', PlayPause.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-stop"
-
-		Binds click and touchend events for amplitude stop buttons
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS stop buttons
+	 *
+	 * @access private
+	 */
 	function bindStop(){
 		/*
 			Gets all of the elements with the class amplitude-stop
@@ -303,20 +340,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < stop_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				stop_classes[i].removeEventListener('touchend', AmplitudeHandlers.stop );
-				stop_classes[i].addEventListener('touchend', AmplitudeHandlers.stop );
+				stop_classes[i].removeEventListener('touchend', Stop.handle );
+				stop_classes[i].addEventListener('touchend', Stop.handle );
 			}else{
-				stop_classes[i].removeEventListener('click', AmplitudeHandlers.stop );
-				stop_classes[i].addEventListener('click', AmplitudeHandlers.stop );
+				stop_classes[i].removeEventListener('click', Stop.handle );
+				stop_classes[i].addEventListener('click', Stop.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-mute"
-
-		Binds click and touchend events for amplitude mute buttons
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS mute buttons
+	 *
+	 * @access private
+	 */
 	function bindMute(){
 		/*
 			Gets all of the elements with the class amplitue-mute
@@ -340,23 +377,23 @@ var AmplitudeEvents = (function () {
 					is turned on.
 				*/
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-					AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+					Debug.writeMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
-					mute_classes[i].removeEventListener('touchend', AmplitudeHandlers.mute );
-					mute_classes[i].addEventListener('touchend', AmplitudeHandlers.mute );
+					mute_classes[i].removeEventListener('touchend', Mute.handle );
+					mute_classes[i].addEventListener('touchend', Mute.handle );
 				}
 			}else{
-				mute_classes[i].removeEventListener('click', AmplitudeHandlers.mute );
-				mute_classes[i].addEventListener('click', AmplitudeHandlers.mute );
+				mute_classes[i].removeEventListener('click', Mute.handle );
+				mute_classes[i].addEventListener('click', Mute.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-volume-up"
-
-		Binds click and touchend events for amplitude volume up buttons
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS Volume Up Buttons
+	 *
+	 * @access private
+	 */
 	function bindVolumeUp(){
 		/*
 			Gets all of the elements with the class amplitude-volume-up
@@ -380,23 +417,23 @@ var AmplitudeEvents = (function () {
 					is turned on.
 				*/
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-					AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+					Debug.writeMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
-					volume_up_classes[i].removeEventListener('touchend', AmplitudeHandlers.volumeUp );
-					volume_up_classes[i].addEventListener('touchend', AmplitudeHandlers.volumeUp );
+					volume_up_classes[i].removeEventListener('touchend', VolumeUp.handle );
+					volume_up_classes[i].addEventListener('touchend', VolumeUp.handle );
 				}
 			}else{
-				volume_up_classes[i].removeEventListener('click', AmplitudeHandlers.volumeUp );
-				volume_up_classes[i].addEventListener('click', AmplitudeHandlers.volumeUp );
+				volume_up_classes[i].removeEventListener('click', VolumeUp.handle );
+				volume_up_classes[i].addEventListener('click', VolumeUp.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-volume-down"
-
-		Binds click and touchend events for amplitude volume down buttons
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS Volume Down Buttons
+	 *
+	 * @access private
+	 */
 	function bindVolumeDown(){
 		/*
 			Gets all of the elements with the class amplitude-volume-down
@@ -420,23 +457,23 @@ var AmplitudeEvents = (function () {
 					is turned on.
 				*/
 				if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-					AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+					Debug.writeMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 				}else{
-					volume_down_classes[i].removeEventListener('touchend', AmplitudeHandlers.volumeDown );
-					volume_down_classes[i].addEventListener('touchend', AmplitudeHandlers.volumeDown );
+					volume_down_classes[i].removeEventListener('touchend', VolumeDown.handle );
+					volume_down_classes[i].addEventListener('touchend', VolumeDown.handle );
 				}
 			}else{
-				volume_down_classes[i].removeEventListener('click', AmplitudeHandlers.volumeDown );
-				volume_down_classes[i].addEventListener('click', AmplitudeHandlers.volumeDown );
+				volume_down_classes[i].removeEventListener('click', VolumeDown.handle );
+				volume_down_classes[i].addEventListener('click', VolumeDown.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-song-slider"
-
-		Binds change and input events for amplitude song slider inputs
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds change and input events for AmplitudeJS Song Slider Inputs
+	 *
+	 * @access private
+	 */
 	function bindSongSlider(){
 		/*
 			Gets browser so if we need to apply overrides, like we usually
@@ -457,27 +494,27 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < song_sliders.length; i++ ){
 			if ( msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./) ){
-				song_sliders[i].removeEventListener('change', AmplitudeHandlers.songSlider );
-				song_sliders[i].addEventListener('change', AmplitudeHandlers.songSlider );
+				song_sliders[i].removeEventListener('change', SongSlider.handle );
+				song_sliders[i].addEventListener('change', SongSlider.handle );
 			}else{
-				song_sliders[i].removeEventListener('input', AmplitudeHandlers.songSlider );
-				song_sliders[i].addEventListener('input', AmplitudeHandlers.songSlider );
+				song_sliders[i].removeEventListener('input', SongSlider.handle );
+				song_sliders[i].addEventListener('input', SongSlider.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-volume-slider"
-
-		Binds change and input events for amplitude volume slider inputs
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds change and input events fro AmplitudeJS Volume Slider inputs
+	 *
+	 * @access private
+	 */
 	function bindVolumeSlider(){
 		/*
 			Gets browser so if we need to apply overrides, like we usually
 			have to do for anything cool in IE, we can do that.
 		*/
 		var ua 		= window.navigator.userAgent;
-        var msie 	= ua.indexOf("MSIE ");
+    var msie 	= ua.indexOf("MSIE ");
 
         /*
 			Gets all of the elements with the class amplitude-volume-slider
@@ -496,24 +533,24 @@ var AmplitudeEvents = (function () {
 				the device.
 			*/
 			if( /iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-				AmplitudeHelpers.writeDebugMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
+				Debug.writeMessage( 'iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4' );
 			}else{
 				if ( msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./) ){
-					volume_sliders[i].removeEventListener('change', AmplitudeHandlers.volumeSlider );
-					volume_sliders[i].addEventListener('change', AmplitudeHandlers.volumeSlider );
+					volume_sliders[i].removeEventListener('change', VolumeSlider.handle );
+					volume_sliders[i].addEventListener('change', VolumeSlider.handle );
 				}else{
-					volume_sliders[i].removeEventListener('input', AmplitudeHandlers.volumeSlider );
-					volume_sliders[i].addEventListener('input', AmplitudeHandlers.volumeSlider );
+					volume_sliders[i].removeEventListener('input', VolumeSlider.handle );
+					volume_sliders[i].addEventListener('input', VolumeSlider.handle );
 				}
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-next"
-
-		Binds click and touchend events for amplitude next buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events fro AmplitudeJS Next buttons
+	 *
+	 * @access private
+	 */
 	function bindNext(){
 		/*
 			Gets all of the elements with the class amplitude-next
@@ -527,20 +564,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < next_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				next_classes[i].removeEventListener('touchend', AmplitudeHandlers.next );
-				next_classes[i].addEventListener('touchend', AmplitudeHandlers.next );
+				next_classes[i].removeEventListener('touchend', Next.handle );
+				next_classes[i].addEventListener('touchend', Next.handle );
 			}else{
-				next_classes[i].removeEventListener('click', AmplitudeHandlers.next );
-				next_classes[i].addEventListener('click', AmplitudeHandlers.next );
+				next_classes[i].removeEventListener('click', Next.handle );
+				next_classes[i].addEventListener('click', Next.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-prev"
-
-		Binds click and touchend events for amplitude prev buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS prev buttons.
+	 *
+	 * @access private
+	 */
 	function bindPrev(){
 		/*
 			Gets all of the elements with the class amplitude-prev
@@ -554,20 +591,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < prev_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				prev_classes[i].removeEventListener('touchend', AmplitudeHandlers.prev );
-				prev_classes[i].addEventListener('touchend', AmplitudeHandlers.prev );
+				prev_classes[i].removeEventListener('touchend', Prev.handle );
+				prev_classes[i].addEventListener('touchend', Prev.handle );
 			}else{
-				prev_classes[i].removeEventListener('click', AmplitudeHandlers.prev );
-				prev_classes[i].addEventListener('click', AmplitudeHandlers.prev );
+				prev_classes[i].removeEventListener('click', Prev.handle );
+				prev_classes[i].addEventListener('click', Prev.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-shuffle"
-
-		Binds click and touchend events for amplitude shuffle buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS shuffle buttons.
+	 *
+	 * @access private
+	 */
 	function bindShuffle(){
 		/*
 			Gets all of the elements with the class amplitude-shuffle
@@ -588,20 +625,20 @@ var AmplitudeEvents = (function () {
 			shuffle_classes[i].classList.add('amplitude-shuffle-off');
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				shuffle_classes[i].removeEventListener('touchend', AmplitudeHandlers.shuffle );
-				shuffle_classes[i].addEventListener('touchend', AmplitudeHandlers.shuffle );
+				shuffle_classes[i].removeEventListener('touchend', Shuffle.handle );
+				shuffle_classes[i].addEventListener('touchend', Shuffle.handle );
 			}else{
-				shuffle_classes[i].removeEventListener('click', AmplitudeHandlers.shuffle );
-				shuffle_classes[i].addEventListener('click', AmplitudeHandlers.shuffle );
+				shuffle_classes[i].removeEventListener('click', Shuffle.handle );
+				shuffle_classes[i].addEventListener('click', Shuffle.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-repeat"
-
-		Binds click and touchend events for amplitude repeat buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS repeat buttons.
+	 *
+	 * @access private
+	 */
 	function bindRepeat(){
 		/*
 			Gets all of the elements with the class amplitude-repeat
@@ -622,20 +659,54 @@ var AmplitudeEvents = (function () {
 			repeat_classes[i].classList.add('amplitude-repeat-off');
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				repeat_classes[i].removeEventListener('touchend', AmplitudeHandlers.repeat );
-				repeat_classes[i].addEventListener('touchend', AmplitudeHandlers.repeat );
+				repeat_classes[i].removeEventListener( 'touchend', Repeat.handle );
+				repeat_classes[i].addEventListener( 'touchend', Repeat.handle );
 			}else{
-				repeat_classes[i].removeEventListener('click', AmplitudeHandlers.repeat );
-				repeat_classes[i].addEventListener('click', AmplitudeHandlers.repeat );
+				repeat_classes[i].removeEventListener( 'click',  Repeat.handle );
+				repeat_classes[i].addEventListener( 'click',  Repeat.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-playback-speed"
+	/**
+	 * Binds click and touchend events for AmplitudeJS repeat song buttons.
+	 *
+	 * @access private
+	 */
+	function bindRepeatSong(){
+		/*
+			Gets all of the elements with the class amplitude-repeat-song
+		*/
+		var repeat_song_classes = document.getElementsByClassName("amplitude-repeat-song");
 
-		Binds click and touchend events for amplitude playback speed buttons.
-	--------------------------------------------------------------------------*/
+		/*
+			Iterates over all of the repeat song classes and binds the event interaction
+			methods to the element. If the browser is mobile, then the event is touchend
+			otherwise it is click.
+		*/
+		for( var i = 0; i < repeat_song_classes.length; i++ ){
+			/*
+				Since we are re-binding everything we remove any classes that signify
+				a state of the repeat control.
+			*/
+			repeat_song_classes[i].classList.remove('amplitude-repeat-on');
+			repeat_song_classes[i].classList.add('amplitude-repeat-off');
+
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				repeat_song_classes[i].removeEventListener( 'touchend', RepeatSong.handle );
+				repeat_song_classes[i].addEventListener( 'touchend', RepeatSong.handle );
+			}else{
+				repeat_song_classes[i].removeEventListener( 'click',  RepeatSong.handle );
+				repeat_song_classes[i].addEventListener( 'click',  RepeatSong.handle );
+			}
+		}
+	}
+
+	/**
+	 * Binds click and touchend events for AmplitudeJS playback speed buttons
+	 *
+	 * @access private
+	 */
 	function bindPlaybackSpeed(){
 		/*
 			Gets all of the elements with the class amplitude-playback-speed
@@ -649,20 +720,20 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < playback_speed_classes.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				playback_speed_classes[i].removeEventListener('touchend', AmplitudeHandlers.playbackSpeed );
-				playback_speed_classes[i].addEventListener('touchend', AmplitudeHandlers.playbackSpeed );
+				playback_speed_classes[i].removeEventListener('touchend', PlaybackSpeed.handle );
+				playback_speed_classes[i].addEventListener('touchend', PlaybackSpeed.handle );
 			}else{
-				playback_speed_classes[i].removeEventListener('click', AmplitudeHandlers.playbackSpeed );
-				playback_speed_classes[i].addEventListener('click', AmplitudeHandlers.playbackSpeed );
+				playback_speed_classes[i].removeEventListener('click', PlaybackSpeed.handle );
+				playback_speed_classes[i].addEventListener('click', PlaybackSpeed.handle );
 			}
 		}
 	}
 
-	/*--------------------------------------------------------------------------
-		BINDS: class="amplitude-skip-to"
-
-		Binds click and touchend events for amplitude skip to buttons.
-	--------------------------------------------------------------------------*/
+	/**
+	 * Binds click and touchend events for AmplitudeJS skip to buttons.
+	 *
+	 * @access private
+	 */
 	function bindSkipTo(){
 		/*
 			Gets all of the skip to elements with the class 'amplitude-skip-to'
@@ -676,18 +747,31 @@ var AmplitudeEvents = (function () {
 		*/
 		for( var i = 0; i < skipToClasses.length; i++ ){
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				skipToClasses[i].removeEventListener('touchend', AmplitudeHandlers.skipTo );
-				skipToClasses[i].addEventListener('touchend', AmplitudeHandlers.skipTo );
+				skipToClasses[i].removeEventListener('touchend', SkipTo.handle );
+				skipToClasses[i].addEventListener('touchend', SkipTo.handle );
 			}else{
-				skipToClasses[i].removeEventListener('click', AmplitudeHandlers.skipTo );
-				skipToClasses[i].addEventListener('click', AmplitudeHandlers.skipTo );
+				skipToClasses[i].removeEventListener('click', SkipTo.handle );
+				skipToClasses[i].addEventListener('click', SkipTo.handle );
 			}
 		}
 	}
 
+	/**
+	 * Binds can play through to a song.
+	 *
+	 * @access private
+	 */
+	function bindCanPlayThrough(){
+		config.audio.removeEventListener( 'canplaythrough', WaveForm.build );
+		config.audio.addEventListener( 'canplaythrough', WaveForm.build );
+	}
+
+	/*
+		Returns the public facing functions.
+	*/
 	return {
-		initializeEvents: initializeEvents
+		initialize: initialize
 	}
 })();
 
-export default AmplitudeEvents
+export default Events
