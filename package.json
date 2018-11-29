@@ -10,8 +10,10 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
     "chai": "^4.1.2",
+    "husky": "^1.2.0",
     "mocha": "^4.0.1",
     "prettier": "1.15.1",
+    "pretty-quick": "^1.8.0",
     "watch": "^1.0.2",
     "webpack": "^2.6.0"
   },
@@ -25,6 +27,11 @@
     "build": "node_modules/.bin/webpack",
     "watch": "watch 'node_modules/.bin/webpack' dist",
     "test": "mocha"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "repository": {
     "type": "git",
