@@ -1,26 +1,28 @@
-import config from '../config.js';
+import config from "../config.js";
 
 /**
  * Keeps the volume slider elements in sync.
  * @module visual/VolumeSliderElements
  */
-let VolumeSliderElements = (function(){
+let VolumeSliderElements = (function() {
   /**
-	 * Visually syncs the volume sliders so they are all the same if there
-	 * are more than one.
-	 *
-	 * @access public
+   * Visually syncs the volume sliders so they are all the same if there
+   * are more than one.
+   *
+   * @access public
    */
-  function sync(){
-    let volumeSliders = document.getElementsByClassName("amplitude-volume-slider");
+  function sync() {
+    let volumeSliders = document.getElementsByClassName(
+      "amplitude-volume-slider"
+    );
 
-		/*
+    /*
 			Iterates over all of the volume sliders for the song, setting the value
 			to the config value.
 		*/
-		for( let i = 0; i < volumeSliders.length; i++ ){
-			volumeSliders[i].value = config.audio.volume * 100;
-		}
+    for (let i = 0; i < volumeSliders.length; i++) {
+      volumeSliders[i].value = config.audio.volume * 100;
+    }
   }
 
   /**
@@ -28,7 +30,7 @@ let VolumeSliderElements = (function(){
    */
   return {
     sync: sync
-  }
+  };
 })();
 
-export default VolumeSliderElements
+export default VolumeSliderElements;

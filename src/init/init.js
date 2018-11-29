@@ -54,8 +54,8 @@ import Events from "../events/events.js";
  * @module fx/Fx
  */
 import Fx from "../fx/fx.js";
-import Visualizations from '../fx/visualizations.js';
-import WaveForm from '../fx/waveform.js';
+import Visualizations from "../fx/visualizations.js";
+import WaveForm from "../fx/waveform.js";
 
 /**
  * AmplitudeJS Audio Navigation Module.
@@ -108,8 +108,6 @@ import PlaybackSpeedElements from "../visual/playbackSpeedElements.js";
  * @module visual/RepeatElements
  */
 import RepeatElements from "../visual/repeatElements.js";
-
-
 
 /**
  * AmplitudeJS Initializer Module. Helps with the handling of all of the
@@ -186,8 +184,11 @@ let Initializer = (function() {
     if (Fx.webAudioAPIAvailable()) {
       Fx.configureWebAudioAPI();
 
-      if( userConfig.waveforms != undefined && userConfig.waveforms.sample_rate != undefined ){
-        config.waveforms.sample_rate = userConfig.waveforms.sample_rate
+      if (
+        userConfig.waveforms != undefined &&
+        userConfig.waveforms.sample_rate != undefined
+      ) {
+        config.waveforms.sample_rate = userConfig.waveforms.sample_rate;
       }
 
       WaveForm.init();
@@ -196,16 +197,21 @@ let Initializer = (function() {
         If the user is registering visualizations on init,
         we set them right away.
       */
-      if( userConfig.visualizations != undefined
-          && userConfig.visualizations.length > 0 ){
-            /*
+      if (
+        userConfig.visualizations != undefined &&
+        userConfig.visualizations.length > 0
+      ) {
+        /*
               Iterate over all of the visualizations and
               register them in our player.
             */
-            for( let i = 0; i < userConfig.visualizations.length; i++ ){
-              Visualizations.register(userConfig.visualizations[i].object, userConfig.visualizations[i].params);
-            }
-          }
+        for (let i = 0; i < userConfig.visualizations.length; i++) {
+          Visualizations.register(
+            userConfig.visualizations[i].object,
+            userConfig.visualizations[i].params
+          );
+        }
+      }
     } else {
       Debug.writeMessage(
         "The Web Audio API is not available on this platform. We are using your defined backups!"

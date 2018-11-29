@@ -2,64 +2,67 @@
  * Imports the config module
  * @module config
  */
-import config from '../config.js';
+import config from "../config.js";
 
 /**
  * Builds a waveform for the current audio.
  * Help from: https://robots.thoughtbot.com/javascript-audio-api
  * https://stackoverflow.com/questions/21347833/html-svg-not-drawing-works-in-other-pages
  */
-let WaveForm = (function(){
-  let buffer = '';
+let WaveForm = (function() {
+  let buffer = "";
   let sampleRate = config.waveforms.sample_rate;
-  let peaks = '';
+  let peaks = "";
 
-  function init(){
+  function init() {
     /*
       Grabs all of the waveform elements on the page.
     */
-    let waveforms = document.querySelectorAll( '.amplitude-wave-form' );
+    let waveforms = document.querySelectorAll(".amplitude-wave-form");
 
     /*
       If there are waveforms, we iterate over them and set them up to display
       properly.
     */
-    if( waveforms.length > 0 ){
+    if (waveforms.length > 0) {
       /*
         Iterate over all of the waveforms and build the SVG parts.
       */
-      for( let i = 0; i < waveforms.length; i++ ){
+      for (let i = 0; i < waveforms.length; i++) {
         /*
           Clear the inner HTML of the element if we are replacing the waveform.
         */
-        waveforms[i].innerHTML = '';
+        waveforms[i].innerHTML = "";
 
         /*
           Inserts an SVG into the element.
         */
-        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg' );
-        svg.setAttribute( 'viewBox', '0 -1 '+sampleRate+' 2' );
-        svg.setAttribute( 'preserveAspectRatio', 'none' );
+        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 -1 " + sampleRate + " 2");
+        svg.setAttribute("preserveAspectRatio", "none");
 
         /*
           Add a g component to the SVG
         */
-        let g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        svg.appendChild( g );
+        let g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        svg.appendChild(g);
 
         /*
           Add a path component to the g
         */
-        let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', '');
-        path.setAttribute('id', 'waveform');
+        let path = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "path"
+        );
+        path.setAttribute("d", "");
+        path.setAttribute("id", "waveform");
 
-        g.appendChild( path );
+        g.appendChild(path);
 
         /*
           Append the SVG to the waveform.
         */
-        waveforms[i].appendChild( svg );
+        waveforms[i].appendChild(svg);
       }
     }
   }
@@ -67,13 +70,22 @@ let WaveForm = (function(){
   /**
    * Builds each waveform for the page.
    */
-  function build(){
-    if( config.web_audio_api_available ){
+  function build() {
+    if (config.web_audio_api_available) {
       /*
         If we don't have the wave form built, we need to build the waveform by loading
         the src with an array buffer.
       */
-      if( config.waveforms.built[ Math.abs( config.audio.src.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0) )  ] == undefined ){
+      if (
+        config.waveforms.built[
+          Math.abs(
+            config.audio.src.split("").reduce(function(a, b) {
+              a = (a << 5) - a + b.charCodeAt(0);
+              return a & a;
+            }, 0)
+          )
+        ] == undefined
+      ) {
         /*
           Initializes a new XML Http Request.
         */
@@ -82,28 +94,30 @@ let WaveForm = (function(){
         /*
           Opens the src parameter for the audio file to read in.
         */
-        req.open( "GET", config.audio.src, true );
+        req.open("GET", config.audio.src, true);
         req.responseType = "arraybuffer";
 
         /*
           When the ready state changes, check to see if we can render the
           wave form.
         */
-        req.onreadystatechange = function (e) {
+        req.onreadystatechange = function(e) {
           /*
             When the request is complete, then we begin decoding the
             audio to build the waveform.
           */
-          if( req.readyState == 4 ) {
+          if (req.readyState == 4) {
             /*
               If the status is 200 means the response is a success and
               we decode the audio data.
             */
-            if( req.status == 200 ){
+            if (req.status == 200) {
               /*
                 Decode the audio data and process the waveform.
               */
-              config.context.decodeAudioData( req.response, function( bufferedAudio ){
+              config.context.decodeAudioData(req.response, function(
+                bufferedAudio
+              ) {
                 /*
                   Set the buffer to the audio returned.
                 */
@@ -112,19 +126,28 @@ let WaveForm = (function(){
                 /*
                   Get the peaks in the audio.
                 */
-                peaks = getPeaks( sampleRate, buffer );
+                peaks = getPeaks(sampleRate, buffer);
 
                 /*
                   Build the SVG
                 */
-                process( sampleRate, buffer, peaks );
+                process(sampleRate, buffer, peaks);
               });
             }
           }
         };
         req.send();
-      }else{
-        displayWaveForms( config.waveforms.built[ Math.abs( config.audio.src.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0) ) ] );
+      } else {
+        displayWaveForms(
+          config.waveforms.built[
+            Math.abs(
+              config.audio.src.split("").reduce(function(a, b) {
+                a = (a << 5) - a + b.charCodeAt(0);
+                return a & a;
+              }, 0)
+            )
+          ]
+        );
       }
     }
   }
@@ -136,25 +159,41 @@ let WaveForm = (function(){
    * @param {arraybuffer} buffer - The Web Audio API
    * @param {array} peaks - The peaks in the audio.
    */
-  function process( sampleRate, buffer, peaks ){
+  function process(sampleRate, buffer, peaks) {
     /*
       If we have a buffer, we find the peaks in the audio.
     */
     if (buffer) {
       let totalPeaks = peaks.length;
 
-      let d = '';
-      for( let peakNumber = 0; peakNumber < totalPeaks; peakNumber++ ){
-        if (peakNumber%2 === 0) {
-          d += ` M${~~(peakNumber/2)}, ${peaks.shift()}`;
+      let d = "";
+      for (let peakNumber = 0; peakNumber < totalPeaks; peakNumber++) {
+        if (peakNumber % 2 === 0) {
+          d += ` M${~~(peakNumber / 2)}, ${peaks.shift()}`;
         } else {
-          d += ` L${~~(peakNumber/2)}, ${peaks.shift()}`;
+          d += ` L${~~(peakNumber / 2)}, ${peaks.shift()}`;
         }
       }
 
-      config.waveforms.built[ Math.abs( config.audio.src.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0) )  ] = d;
+      config.waveforms.built[
+        Math.abs(
+          config.audio.src.split("").reduce(function(a, b) {
+            a = (a << 5) - a + b.charCodeAt(0);
+            return a & a;
+          }, 0)
+        )
+      ] = d;
 
-      displayWaveForms( config.waveforms.built[ Math.abs( config.audio.src.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0) )  ] );
+      displayWaveForms(
+        config.waveforms.built[
+          Math.abs(
+            config.audio.src.split("").reduce(function(a, b) {
+              a = (a << 5) - a + b.charCodeAt(0);
+              return a & a;
+            }, 0)
+          )
+        ]
+      );
     }
   }
 
@@ -164,19 +203,23 @@ let WaveForm = (function(){
    * @param {number} length - The sample size of the audio.
    * @param {array} buffer - The array buffer used to find the peaks in the audio.
    */
-  function getPeaks( length, buffer ){
+  function getPeaks(length, buffer) {
     /*
       Set the parameters needed to build the SVG.
     */
     const sampleSize = buffer.length / length;
-    const sampleStep = ~~( sampleSize / 10 ) || 1;
+    const sampleStep = ~~(sampleSize / 10) || 1;
     const numberOfChannels = buffer.numberOfChannels;
     const mergedPeaks = [];
 
     /*
       Iterate over the channels and find the peaks.
     */
-    for ( let channelNumber = 0; channelNumber < numberOfChannels; channelNumber++ ) {
+    for (
+      let channelNumber = 0;
+      channelNumber < numberOfChannels;
+      channelNumber++
+    ) {
       /*
         Initialize the peaks array and set the channel data to what
         the buffer has in its channel data.
@@ -203,11 +246,19 @@ let WaveForm = (function(){
         /*
 
         */
-        for (let sampleIndex = start; sampleIndex < end; sampleIndex += sampleStep) {
+        for (
+          let sampleIndex = start;
+          sampleIndex < end;
+          sampleIndex += sampleStep
+        ) {
           const value = channelData[sampleIndex];
 
-          if (value > max) { max = value; }
-          if (value < min) { min = value; }
+          if (value > max) {
+            max = value;
+          }
+          if (value < min) {
+            min = value;
+          }
         }
 
         peaks[2 * peakNumber] = max;
@@ -231,28 +282,29 @@ let WaveForm = (function(){
    *
    * @param {path} svg - The drawing of the waveform.
    */
-  function displayWaveForms( svg ){
-    let waveformElements = document.querySelectorAll( '.amplitude-wave-form' );
+  function displayWaveForms(svg) {
+    let waveformElements = document.querySelectorAll(".amplitude-wave-form");
 
-    for( let i = 0; i < waveformElements.length; i++ ){
-      let playlist = waveformElements[i].getAttribute('data-amplitude-playlist');
-      let song = waveformElements[i].getAttribute('data-amplitude-song-index');
+    for (let i = 0; i < waveformElements.length; i++) {
+      let playlist = waveformElements[i].getAttribute(
+        "data-amplitude-playlist"
+      );
+      let song = waveformElements[i].getAttribute("data-amplitude-song-index");
 
-
-      if( playlist == null && song == null ){
-        displayGlobalWaveform( waveformElements[i], svg );
+      if (playlist == null && song == null) {
+        displayGlobalWaveform(waveformElements[i], svg);
       }
 
-      if( playlist != null && song == null ){
-        displayPlaylistWaveform( waveformElements[i], svg, playlist );
+      if (playlist != null && song == null) {
+        displayPlaylistWaveform(waveformElements[i], svg, playlist);
       }
 
-      if( playlist == null && song != null ){
-        displaySongWaveform( waveformElements[i], svg, song );
+      if (playlist == null && song != null) {
+        displaySongWaveform(waveformElements[i], svg, song);
       }
 
-      if( playlist != null && song != null ){
-        displaySongInPlaylistWaveform( waveformElements[i], svg, playlist, song );
+      if (playlist != null && song != null) {
+        displaySongInPlaylistWaveform(waveformElements[i], svg, playlist, song);
       }
     }
   }
@@ -260,43 +312,45 @@ let WaveForm = (function(){
   /**
    * Displays a global wave form.
    */
-  function displayGlobalWaveform( element, svg ){
-    let waveformPath = element.querySelector( 'svg g path' );
+  function displayGlobalWaveform(element, svg) {
+    let waveformPath = element.querySelector("svg g path");
 
-    waveformPath.setAttribute('d', svg);
+    waveformPath.setAttribute("d", svg);
   }
 
   /**
    * Displays a playlist wave form.
    */
-  function displayPlaylistWaveform( element, svg, playlist ){
-    if( config.active_playlist == playlist ){
-      let waveformPath = element.querySelector( 'svg g path' );
+  function displayPlaylistWaveform(element, svg, playlist) {
+    if (config.active_playlist == playlist) {
+      let waveformPath = element.querySelector("svg g path");
 
-      waveformPath.setAttribute('d', svg);
+      waveformPath.setAttribute("d", svg);
     }
   }
 
   /**
    * Displays a song wave form.
    */
-  function displaySongWaveform( element, svg, song ){
-    if( config.active_index == song ){
-      let waveformPath = element.querySelector( 'svg g path' );
+  function displaySongWaveform(element, svg, song) {
+    if (config.active_index == song) {
+      let waveformPath = element.querySelector("svg g path");
 
-      waveformPath.setAttribute('d', svg);
+      waveformPath.setAttribute("d", svg);
     }
   }
 
   /**
    * Displays a song in playlist waveform.
    */
-  function displaySongInPlaylistWaveform( element, svg, playlist, song ){
-    if( config.active_playlist == playlist
-      && config.playlists[ config.active_playlist ].active_index == song ){
-      let waveformPath = element.querySelector( 'svg g path' );
+  function displaySongInPlaylistWaveform(element, svg, playlist, song) {
+    if (
+      config.active_playlist == playlist &&
+      config.playlists[config.active_playlist].active_index == song
+    ) {
+      let waveformPath = element.querySelector("svg g path");
 
-      waveformPath.setAttribute('d', svg);
+      waveformPath.setAttribute("d", svg);
     }
   }
 
@@ -306,7 +360,7 @@ let WaveForm = (function(){
   return {
     init: init,
     build: build
-  }
+  };
 })();
 
-export default WaveForm
+export default WaveForm;

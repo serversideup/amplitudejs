@@ -50,97 +50,95 @@
  * @property {string}		config.player_state 						- The current state of the player.
  */
 module.exports = {
-	version: '3.3.1',
+  version: "3.3.1",
 
-	audio: new Audio(),
+  audio: new Audio(),
 
-	active_metadata: {},
+  active_metadata: {},
 
-	active_album: '',
+  active_album: "",
 
-	active_index: 0,
+  active_index: 0,
 
-	active_playlist: '',
+  active_playlist: "",
 
-	autoplay: false,
+  autoplay: false,
 
-	playback_speed: 1.0,
+  playback_speed: 1.0,
 
-	callbacks: {},
+  callbacks: {},
 
-	songs: [],
+  songs: [],
 
-	playlists: {},
+  playlists: {},
 
-	start_song: '',
+  start_song: "",
 
-	starting_playlist: '',
+  starting_playlist: "",
 
-	starting_playlist_song: '',
+  starting_playlist_song: "",
 
-	repeat: false,
+  repeat: false,
 
-	repeat_song: false,
+  repeat_song: false,
 
-	shuffle_list: {},
+  shuffle_list: {},
 
-	shuffle_on: false,
+  shuffle_on: false,
 
-	default_album_art: '',
+  default_album_art: "",
 
-	default_playlist_art: '',
+  default_playlist_art: "",
 
-	debug: false,
+  debug: false,
 
-	volume: .5,
+  volume: 0.5,
 
-	pre_mute_volume: .5,
+  pre_mute_volume: 0.5,
 
-	volume_increment: 5,
+  volume_increment: 5,
 
-	volume_decrement: 5,
+  volume_decrement: 5,
 
-	soundcloud_client: '',
+  soundcloud_client: "",
 
-	soundcloud_use_art: false,
+  soundcloud_use_art: false,
 
-	soundcloud_song_count: 0,
+  soundcloud_song_count: 0,
 
-	soundcloud_songs_ready: 0,
+  soundcloud_songs_ready: 0,
 
-	is_touch_moving: false,
+  is_touch_moving: false,
 
-	buffered: 0,
+  buffered: 0,
 
-	bindings: {},
+  bindings: {},
 
-	continue_next: true,
+  continue_next: true,
 
-	delay: 0,
+  delay: 0,
 
-	player_state: 'stopped',
+  player_state: "stopped",
 
-	web_audio_api_available: false,
+  web_audio_api_available: false,
 
-	context: null,
+  context: null,
 
-	source: null,
+  source: null,
 
-	analyser: null,
+  analyser: null,
 
-	visualizations: {
+  visualizations: {
+    available: [],
 
-		available: [],
+    active: [],
 
-		active: [],
+    backup: ""
+  },
 
-		backup: ''
-	},
+  waveforms: {
+    sample_rate: 100,
 
-	waveforms: {
-
-		sample_rate: 100,
-
-		built: []
-	}
+    built: []
+  }
 };

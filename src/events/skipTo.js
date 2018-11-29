@@ -2,37 +2,37 @@
  * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
  */
 
-import config from '../config.js';
+import config from "../config.js";
 
 /**
  * Imports AmplitudeJS Debug Utility
  * @module utilities/debug
  */
-import Debug from '../utilities/debug.js';
+import Debug from "../utilities/debug.js";
 
 /**
  * Imports the AmplitudeJS Audio Navigation Utility
  * @module utilities/AudioNavigation
  */
-import AudioNavigation from '../utilities/audioNavigation.js';
+import AudioNavigation from "../utilities/audioNavigation.js";
 
 /**
  * Imports the AmplitudeJS Checks Utility
  * @module utilities/Checks
  */
-import Checks from '../utilities/checks.js';
+import Checks from "../utilities/checks.js";
 
 /**
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
  */
-import Core from '../core/core.js';
+import Core from "../core/core.js";
 
 /**
  * Imports the AmplitudeJS play pause elements.
  * @module visual/PlayPauseElements
  */
-import PlayPauseElements from '../visual/playPauseElements.js';
+import PlayPauseElements from "../visual/playPauseElements.js";
 
 /**
  * Handles the skip to event.
@@ -40,61 +40,68 @@ import PlayPauseElements from '../visual/playPauseElements.js';
  * @module events/SkipTo
  * TODO: MODERNIZE THIS SO IT HAS THE SAME FORMAT
  */
-let SkipTo = (function(){
-
+let SkipTo = (function() {
   /**
-	 * Handles an event on a skip to button.
-	 *
-	 * HANDLER FOR:       class="amplitude-skip-to"
+   * Handles an event on a skip to button.
+   *
+   * HANDLER FOR:       class="amplitude-skip-to"
    *
    * GLOBAL:            class="amplitude-skip-to" amplitude-song-index="song_index" amplitude-location="seconds"
    * PLAYLIST:          class="amplitude-skip-to" amplitude-playlist="playlist_key" amplitude-song-index="song_index" amplitude-location="seconds"
-	 *
-	 * @access public
-	 */
-  function handle(){
+   *
+   * @access public
+   */
+  function handle() {
     /*
       If the touch is moving, we do not want to accidentally touch the play
       pause element and fire an event.
     */
-    if( !config.is_touch_moving ){
+    if (!config.is_touch_moving) {
       /*
         Extracts the needed attributes from the element.
       */
-      let playlist    = this.getAttribute('data-amplitude-playlist');
-      let songIndex   = this.getAttribute('data-amplitude-song-index');
-      let location    = this.getAttribute('data-amplitude-location');
+      let playlist = this.getAttribute("data-amplitude-playlist");
+      let songIndex = this.getAttribute("data-amplitude-song-index");
+      let location = this.getAttribute("data-amplitude-location");
 
       /*
         If the location is null, write a message. We can't skip to a location
         that is null
       */
-      if( location == null ){
-        Debug.writeMessage('You must add an \'data-amplitude-location\' attribute in seconds to your \'amplitude-skip-to\' element.');
+      if (location == null) {
+        Debug.writeMessage(
+          "You must add an 'data-amplitude-location' attribute in seconds to your 'amplitude-skip-to' element."
+        );
       }
 
       /*
         If the song index is null, write a debug message. We can't skip to a location
         of a null song.
       */
-      if( songIndex == null ){
-        Debug.writeMessage('You must add an \'data-amplitude-song-index\' attribute to your \'amplitude-skip-to\' element.');
+      if (songIndex == null) {
+        Debug.writeMessage(
+          "You must add an 'data-amplitude-song-index' attribute to your 'amplitude-skip-to' element."
+        );
       }
 
       /*
         If the location and song index are set, continue.
       */
-      if( location != null && songIndex != null ){
+      if (location != null && songIndex != null) {
         /*
   				Determines if the skip to button is in the scope of a playlist.
   			*/
-        if( playlist == null ){
-          handleSkipToSong( parseInt( songIndex ), parseInt( location ) );
-        }else{
-          handleSkipToPlaylist( playlist, parseInt( songIndex ), parseInt( location ) );
+        if (playlist == null) {
+          handleSkipToSong(parseInt(songIndex), parseInt(location));
+        } else {
+          handleSkipToPlaylist(
+            playlist,
+            parseInt(songIndex),
+            parseInt(location)
+          );
         }
       }
-		}
+    }
   }
 
   /**
@@ -104,14 +111,13 @@ let SkipTo = (function(){
    * @param {string} songIndex  - The index of the song being skipped to
    * @param {number} location   - The seconds location of the song in the playlist.
    */
-  function handleSkipToSong( songIndex, location ){
+  function handleSkipToSong(songIndex, location) {
     /*
       Changes the song to where it's being skipped and then
       play the song.
     */
-    AudioNavigation.changeSong( config.songs[songIndex], songIndex );
+    AudioNavigation.changeSong(config.songs[songIndex], songIndex);
     Core.play();
-
 
     /*
       Syncs all of the play pause buttons now that we've skipped.
@@ -122,7 +128,7 @@ let SkipTo = (function(){
     /*
       Skip to the location in the song.
     */
-    Core.skipToLocation( location );
+    Core.skipToLocation(location);
   }
 
   /**
@@ -133,19 +139,23 @@ let SkipTo = (function(){
    * @param {string} songIndex  - The index of the song in the playlist
    * @param {number} location   - The seconds location of the song in the playlist.
    */
-  function handleSkipToPlaylist( playlist, songIndex, location ){
+  function handleSkipToPlaylist(playlist, songIndex, location) {
     /*
       Checks if we are skipping to a new playlist
     */
-    if( Checks.newPlaylist( playlist ) ){
-      AudioNavigation.setActivePlaylist( playlist );
+    if (Checks.newPlaylist(playlist)) {
+      AudioNavigation.setActivePlaylist(playlist);
     }
 
     /*
       Changes the song to where it's being skipped and then
       play the song.
     */
-    AudioNavigation.changeSongPlaylist( playlist, config.playlists[playlist].songs[ songIndex ], songIndex );
+    AudioNavigation.changeSongPlaylist(
+      playlist,
+      config.playlists[playlist].songs[songIndex],
+      songIndex
+    );
     Core.play();
 
     /*
@@ -158,7 +168,7 @@ let SkipTo = (function(){
     /*
       Skip to the location in the song.
     */
-    Core.skipToLocation( location );
+    Core.skipToLocation(location);
   }
 
   /**
@@ -166,7 +176,7 @@ let SkipTo = (function(){
    */
   return {
     handle: handle
-  }
+  };
 })();
 
-export default SkipTo
+export default SkipTo;

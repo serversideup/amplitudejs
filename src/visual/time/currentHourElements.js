@@ -2,122 +2,149 @@
  * Imports the config module
  * @module config
  */
-import config from '../../config.js';
+import config from "../../config.js";
 
-let CurrentHourElements = (function(){
-  function sync( hours ){
-    syncGlobal( hours );
-    syncPlaylist( hours );
-    syncSong( hours );
-    syncSongInPlaylist( hours );
+let CurrentHourElements = (function() {
+  function sync(hours) {
+    syncGlobal(hours);
+    syncPlaylist(hours);
+    syncSong(hours);
+    syncSongInPlaylist(hours);
   }
 
   /**
-	 * Updates any elements that display the current hour for the song.
-	 *
-	 * @access public
-	 * @param {number} hours 	- An integer conaining how many hours into the song.
-	 */
-  function syncGlobal( hours ){
-		/*
-			Get all of the hour selectors
-		*/
-		const currentHourSelectors = document.querySelectorAll( '.amplitude-current-hours' );
-
-		/*
-			Set the current hour selector's inner html to hours passed in.
-		*/
-		for( let i = 0; i < currentHourSelectors.length; i++ ){
-      let playlist = currentHourSelectors[i].getAttribute('data-amplitude-playlist');
-      let songIndex = currentHourSelectors[i].getAttribute('data-amplitude-song-index');
-
-      /*
-        Updates the current hour selector for a global display.
-      */
-      if( playlist == null && songIndex == null ){
-        currentHourSelectors[i].innerHTML = hours;
-      }
-		}
-  }
-
-  function syncPlaylist( hours ){
+   * Updates any elements that display the current hour for the song.
+   *
+   * @access public
+   * @param {number} hours 	- An integer conaining how many hours into the song.
+   */
+  function syncGlobal(hours) {
     /*
 			Get all of the hour selectors
 		*/
-		const currentHourPlaylistSelectors = document.querySelectorAll( '.amplitude-current-hours[data-amplitude-playlist="'+config.active_playlist+'"]' );
+    const currentHourSelectors = document.querySelectorAll(
+      ".amplitude-current-hours"
+    );
 
-		/*
+    /*
 			Set the current hour selector's inner html to hours passed in.
 		*/
-		for( let i = 0; i < currentHourPlaylistSelectors.length; i++ ){
-      let songIndex = currentHourPlaylistSelectors[i].getAttribute('data-amplitude-song-index');
+    for (let i = 0; i < currentHourSelectors.length; i++) {
+      let playlist = currentHourSelectors[i].getAttribute(
+        "data-amplitude-playlist"
+      );
+      let songIndex = currentHourSelectors[i].getAttribute(
+        "data-amplitude-song-index"
+      );
 
       /*
         Updates the current hour selector for a global display.
       */
-      if( songIndex == null ){
-        currentHourPlaylistSelectors[i].innerHTML = hours;
+      if (playlist == null && songIndex == null) {
+        currentHourSelectors[i].innerHTML = hours;
       }
-		}
+    }
   }
 
-  function syncSong( hours ){
-    if( config.active_playlist == null ){
+  function syncPlaylist(hours) {
+    /*
+			Get all of the hour selectors
+		*/
+    const currentHourPlaylistSelectors = document.querySelectorAll(
+      '.amplitude-current-hours[data-amplitude-playlist="' +
+        config.active_playlist +
+        '"]'
+    );
+
+    /*
+			Set the current hour selector's inner html to hours passed in.
+		*/
+    for (let i = 0; i < currentHourPlaylistSelectors.length; i++) {
+      let songIndex = currentHourPlaylistSelectors[i].getAttribute(
+        "data-amplitude-song-index"
+      );
+
+      /*
+        Updates the current hour selector for a global display.
+      */
+      if (songIndex == null) {
+        currentHourPlaylistSelectors[i].innerHTML = hours;
+      }
+    }
+  }
+
+  function syncSong(hours) {
+    if (config.active_playlist == null) {
       /*
   			Get all of the hour selectors
   		*/
-  		const currentHourSongSelectors = document.querySelectorAll( '.amplitude-current-hours[data-amplitude-song-index="'+config.active_index+'"]' );
+      const currentHourSongSelectors = document.querySelectorAll(
+        '.amplitude-current-hours[data-amplitude-song-index="' +
+          config.active_index +
+          '"]'
+      );
 
-  		/*
+      /*
   			Set the current hour selector's inner html to hours passed in.
   		*/
-  		for( let i = 0; i < currentHourSongSelectors.length; i++ ){
-        let playlist = currentHourSongSelectors[i].getAttribute('data-amplitude-playlist');
+      for (let i = 0; i < currentHourSongSelectors.length; i++) {
+        let playlist = currentHourSongSelectors[i].getAttribute(
+          "data-amplitude-playlist"
+        );
 
         /*
           Updates the current hour selector for a global display.
         */
-        if( playlist == null ){
+        if (playlist == null) {
           currentHourSongSelectors[i].innerHTML = hours;
         }
-  		}
+      }
     }
   }
 
-  function syncSongInPlaylist( hours ){
-    let activePlaylistIndex = config.active_playlist != '' && config.active_playlist != null ? config.playlists[ config.active_playlist ].active_index : null;
+  function syncSongInPlaylist(hours) {
+    let activePlaylistIndex =
+      config.active_playlist != "" && config.active_playlist != null
+        ? config.playlists[config.active_playlist].active_index
+        : null;
     /*
 			Get all of the hour selectors
 		*/
-		const currentHourPlaylistSongSelectors = document.querySelectorAll( '.amplitude-current-hours[data-amplitude-playlist="'+config.active_playlist+'"][data-amplitude-song-index="'+activePlaylistIndex+'"]' );
+    const currentHourPlaylistSongSelectors = document.querySelectorAll(
+      '.amplitude-current-hours[data-amplitude-playlist="' +
+        config.active_playlist +
+        '"][data-amplitude-song-index="' +
+        activePlaylistIndex +
+        '"]'
+    );
 
-		/*
+    /*
 			Set the current hour selector's inner html to hours passed in.
 		*/
-		for( let i = 0; i < currentHourPlaylistSongSelectors.length; i++ ){
+    for (let i = 0; i < currentHourPlaylistSongSelectors.length; i++) {
       currentHourPlaylistSongSelectors[i].innerHTML = hours;
-		}
+    }
   }
 
-  function resetTimes(){
+  function resetTimes() {
     /*
       Gets the hour display elements
     */
-    let hourSelectors = document.querySelectorAll('.amplitude-current-hours');
+    let hourSelectors = document.querySelectorAll(".amplitude-current-hours");
 
     /*
       Iterates over all of the hour selectors and sets the inner HTML
       to 00.
     */
-    for( var i = 0; i < hourSelectors.length; i++ ){
-      hourSelectors[i].innerHTML = '00';
+    for (var i = 0; i < hourSelectors.length; i++) {
+      hourSelectors[i].innerHTML = "00";
     }
   }
 
   return {
     sync: sync,
     resetTimes: resetTimes
-  }
+  };
 })();
 
-export default CurrentHourElements
+export default CurrentHourElements;

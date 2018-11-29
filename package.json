@@ -26,6 +26,7 @@
   "scripts": {
     "build": "node_modules/.bin/webpack",
     "watch": "watch 'node_modules/.bin/webpack' dist",
+    "prettier": "npx pretty-quick",
     "test": "mocha"
   },
   "husky": {

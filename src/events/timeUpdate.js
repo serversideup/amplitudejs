@@ -6,47 +6,45 @@
  * Imports the config module
  * @module config
  */
-import config from '../config.js';
+import config from "../config.js";
 
 /**
  * Imports the Buffered Progress Elements visual class
  * @module visual/bufferedProgressElements
  */
-import BufferedProgressElements from '../visual/bufferedProgressElements.js';
+import BufferedProgressElements from "../visual/bufferedProgressElements.js";
 
-import TimeElements from '../visual/timeElements.js';
+import TimeElements from "../visual/timeElements.js";
 
-
-import SongSliderElements from '../visual/songSliderElements.js';
-import SongPlayedProgressElements from '../visual/songPlayedProgressElements.js';
-
+import SongSliderElements from "../visual/songSliderElements.js";
+import SongPlayedProgressElements from "../visual/songPlayedProgressElements.js";
 
 /**
  * Imports the Time utility class
  * @module utilities/Time
  */
-import Time from '../utilities/time.js';
+import Time from "../utilities/time.js";
 
 /**
  * Imports the Callback utility class
  * @module utilities/Callbacks
  */
-import Callbacks from '../utilities/callbacks.js';
+import Callbacks from "../utilities/callbacks.js";
 
 /**
  * AmplitudeJS Event Handler for Time Update
  *
  * @module events/TimeUpdate
  */
-let TimeUpdate = (function(){
+let TimeUpdate = (function() {
   /**
-	 * When the time updates on the active song, we sync the current time displays
-	 *
-	 * HANDLER FOR: timeupdate
-	 *
-	 * @access public
-	 */
-  function handle(){
+   * When the time updates on the active song, we sync the current time displays
+   *
+   * HANDLER FOR: timeupdate
+   *
+   * @access public
+   */
+  function handle() {
     /*
       Computes the buffered time.
     */
@@ -71,15 +69,17 @@ let TimeUpdate = (function(){
   /**
    * Computes the buffered time
    */
-  function computeBufferedTime(){
+  function computeBufferedTime() {
     /*
       Help from: http://jsbin.com/badimipi/1/edit?html,js,output
     */
-    if( config.audio.buffered.length - 1 >= 0 ){
-      let bufferedEnd = config.audio.buffered.end( config.audio.buffered.length - 1 );
-      let duration =  config.audio.duration;
+    if (config.audio.buffered.length - 1 >= 0) {
+      let bufferedEnd = config.audio.buffered.end(
+        config.audio.buffered.length - 1
+      );
+      let duration = config.audio.duration;
 
-      config.buffered = ( ( bufferedEnd / duration ) * 100 );
+      config.buffered = (bufferedEnd / duration) * 100;
     }
   }
 
@@ -87,14 +87,14 @@ let TimeUpdate = (function(){
    * Updates the current time information.
    * @access private
    */
-  function updateTimeInformation(){
+  function updateTimeInformation() {
     /*
       If the current song is not live, then
       we can update the time information. Otherwise the
       current time updates wouldn't mean much since the time
       is infinite.
     */
-    if( !config.active_metadata.live ){
+    if (!config.active_metadata.live) {
       /*
         Compute the current time
       */
@@ -115,38 +115,41 @@ let TimeUpdate = (function(){
         location of the song and the song duration elements with
         the duration of the song.
       */
-      TimeElements.syncCurrentTimes( currentTime );
+      TimeElements.syncCurrentTimes(currentTime);
 
+      SongSliderElements.sync(
+        songCompletionPercentage,
+        config.active_playlist,
+        config.active_index
+      );
+      SongPlayedProgressElements.sync(songCompletionPercentage);
 
-      SongSliderElements.sync( songCompletionPercentage, config.active_playlist, config.active_index);
-      SongPlayedProgressElements.sync( songCompletionPercentage );
-
-      TimeElements.syncDurationTimes( currentTime, songDuration );
+      TimeElements.syncDurationTimes(currentTime, songDuration);
     }
   }
 
   /**
    * Runs a callback at a certain time in the song.
    */
-  function runTimeCallbacks(){
+  function runTimeCallbacks() {
     /*
       Gets the current seconds into the song.
     */
-    let currentSeconds = Math.floor( config.audio.currentTime );
+    let currentSeconds = Math.floor(config.audio.currentTime);
 
     /*
       Checks to see if there is a callback at the certain seconds into the song.
     */
-    if( config.active_metadata.time_callbacks[ currentSeconds ] != undefined ){
+    if (config.active_metadata.time_callbacks[currentSeconds] != undefined) {
       /*
         Checks to see if the callback has been run. Since the time updates more than
         one second, we don't want the callback to run X times.
       */
-      if( !config.active_metadata.time_callbacks[ currentSeconds ].run ){
-        config.active_metadata.time_callbacks[ currentSeconds ].run = true;
-        config.active_metadata.time_callbacks[ currentSeconds ]();
+      if (!config.active_metadata.time_callbacks[currentSeconds].run) {
+        config.active_metadata.time_callbacks[currentSeconds].run = true;
+        config.active_metadata.time_callbacks[currentSeconds]();
       }
-    }else{
+    } else {
       /*
         Iterate over all of the callbacks for a song. If the song has one, we flag
         the run as false. This occurs because we have passed the active second for
@@ -154,9 +157,9 @@ let TimeUpdate = (function(){
         seeks back or not run in the future.
       */
       for (var seconds in config.active_metadata.time_callbacks) {
-          if (config.active_metadata.time_callbacks.hasOwnProperty(seconds)) {
-              config.active_metadata.time_callbacks[seconds].run = false;
-          }
+        if (config.active_metadata.time_callbacks.hasOwnProperty(seconds)) {
+          config.active_metadata.time_callbacks[seconds].run = false;
+        }
       }
     }
   }
@@ -165,7 +168,7 @@ let TimeUpdate = (function(){
    */
   return {
     handle: handle
-  }
+  };
 })();
 
-export default TimeUpdate
+export default TimeUpdate;

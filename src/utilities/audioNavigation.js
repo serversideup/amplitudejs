@@ -2,35 +2,35 @@
  * Imports the config module
  * @module config
  */
-import config from '../config.js';
+import config from "../config.js";
 
-import Core from '../core/core.js';
+import Core from "../core/core.js";
 
-import Callbacks from '../utilities/callbacks.js';
-import Checks from '../utilities/checks.js';
+import Callbacks from "../utilities/callbacks.js";
+import Checks from "../utilities/checks.js";
 
-import PlayPauseElements from '../visual/playPauseElements.js';
-import SongSliderElements from '../visual/songSliderElements.js';
-import SongPlayedProgressElements from '../visual/songPlayedProgressElements.js';
-import TimeElements from '../visual/timeElements.js';
+import PlayPauseElements from "../visual/playPauseElements.js";
+import SongSliderElements from "../visual/songSliderElements.js";
+import SongPlayedProgressElements from "../visual/songPlayedProgressElements.js";
+import TimeElements from "../visual/timeElements.js";
 
-import MetaDataElements from '../visual/metaDataElements.js';
-import ContainerElements from '../visual/containerElements.js';
+import MetaDataElements from "../visual/metaDataElements.js";
+import ContainerElements from "../visual/containerElements.js";
 
 /**
  * AmplitudeJS Audio Navigation Utility.
  *
  * @module utilities/AudioNavigation
  */
-let AudioNavigation = (function(){
+let AudioNavigation = (function() {
   /**
-	 * Sets the next song
-	 *
-	 * @access public
-	 * @param {boolean} [songEnded=false] If the song ended, this is set to true
-	 * so we take into effect the repeat setting.
-	*/
-  function setNext( songEnded = false ){
+   * Sets the next song
+   *
+   * @access public
+   * @param {boolean} [songEnded=false] If the song ended, this is set to true
+   * so we take into effect the repeat setting.
+   */
+  function setNext(songEnded = false) {
     /*
       Initializes the next index variable. This will be the
       index of the song that is next.
@@ -47,48 +47,48 @@ let AudioNavigation = (function(){
       Determines if we are repeating the song or not. If we are repeating,
       the next song will be the same song index.
     */
-    if( config.repeat_song ){
+    if (config.repeat_song) {
       /*
         If the playlist is shuffled, get the now playing index.
       */
-      if( config.shuffle_on ){
+      if (config.shuffle_on) {
         nextIndex = config.active_index;
         nextSong = config.shuffle_list[nextIndex];
-      }else{
+      } else {
         nextIndex = config.active_index;
         nextSong = config.songs[nextIndex];
       }
-    }else{
+    } else {
       /*
         If the shuffle is on, we use the shuffled list of
         songs to determine our next song.
       */
-      if( config.shuffle_on ){
+      if (config.shuffle_on) {
         /*
           If the active shuffle index + 1 is less than the length, then
           we use the next shuffle otherwise we go to the beginning
           of the shuffle list.
         */
-        if( ( parseInt( config.active_index ) + 1 ) < config.shuffle_list.length ){
+        if (parseInt(config.active_index) + 1 < config.shuffle_list.length) {
           /*
             Set the next index to be the index of the song in the shuffle list.
           */
-          nextIndex = parseInt( config.active_index ) + 1;
-        }else{
+          nextIndex = parseInt(config.active_index) + 1;
+        } else {
           nextIndex = 0;
           endOfList = true;
         }
 
         nextSong = config.shuffle_list[nextIndex];
-      }else{
+      } else {
         /*
           If the active index + 1 is less than the length of the songs, then
           we use the next song otherwise we go to the beginning of the
           song list.
         */
-        if( ( parseInt( config.active_index ) + 1 ) < config.songs.length ){
-          nextIndex = parseInt( config.active_index ) + 1;
-        }else{
+        if (parseInt(config.active_index) + 1 < config.songs.length) {
+          nextIndex = parseInt(config.active_index) + 1;
+        } else {
           nextIndex = 0;
           endOfList = true;
         }
@@ -103,34 +103,33 @@ let AudioNavigation = (function(){
     /*
       Change the song after the next button has been pressed.
     */
-    changeSong( nextSong, nextIndex );
+    changeSong(nextSong, nextIndex);
 
     /*
    		If it's the end of the list and repeat is not on, do nothing.
    	*/
-   	if( endOfList && !config.repeat ){
-
-   	}else{
-   		/*
+    if (endOfList && !config.repeat) {
+    } else {
+      /*
    			If the song has ended and repeat is on, play the song.
    		*/
-       if( !( songEnded && !config.repeat && endOfList ) ){
-       	Core.play();
-       }
-   	}
+      if (!(songEnded && !config.repeat && endOfList)) {
+        Core.play();
+      }
+    }
 
     /*
       Sync the play pause elements and run the
       after next callback.
     */
     PlayPauseElements.sync();
-    Callbacks.run('next');
+    Callbacks.run("next");
 
     /*
       If we repeated the song, run the repeat song callback.
     */
-    if( config.repeat_song ){
-      Callbacks.run('song_repeated');
+    if (config.repeat_song) {
+      Callbacks.run("song_repeated");
     }
   }
 
@@ -141,7 +140,7 @@ let AudioNavigation = (function(){
    * @param {boolean} [songEnded=false] - If the song ended, this is set to true
    * so we take into effect the repeat setting.
    */
-  function setNextPlaylist( playlist, songEnded = false ){
+  function setNextPlaylist(playlist, songEnded = false) {
     /*
       Initializes the next index
     */
@@ -156,45 +155,51 @@ let AudioNavigation = (function(){
     /*
       If we are repeating the song, then we just start the song over.
     */
-    if( config.repeat_song ){
+    if (config.repeat_song) {
       /*
         If the playlist is shuffled, get the now playing index.
       */
-      if( config.playlists[playlist].shuffle ){
+      if (config.playlists[playlist].shuffle) {
         nextIndex = config.playlists[playlist].active_index;
-        nextSong = config.playlists[playlist].shuffle_list[ nextIndex ];
-      }else{
+        nextSong = config.playlists[playlist].shuffle_list[nextIndex];
+      } else {
         nextIndex = config.playlists[playlist].active_index;
-        nextSong = config.playlists[playlist].songs[ nextIndex ];
+        nextSong = config.playlists[playlist].songs[nextIndex];
       }
-    }else{
+    } else {
       /*
         If the playlist is shuffled we get the next index of the playlist.
       */
-      if( config.playlists[playlist].shuffle ){
+      if (config.playlists[playlist].shuffle) {
         /*
           If the active shuffle index + 1 is less than the length of the shuffle list,
           then we use the next shuffle otherwise we go to the beginning of the shuffle list.
         */
-        if( ( parseInt( config.playlists[playlist].active_index ) + 1 ) < config.playlists[playlist].shuffle_list.length ){
+        if (
+          parseInt(config.playlists[playlist].active_index) + 1 <
+          config.playlists[playlist].shuffle_list.length
+        ) {
           /*
             Set the next index to be the index of the song in the shuffle list.
           */
           nextIndex = config.playlists[playlist].active_index + 1;
-        }else{
+        } else {
           nextIndex = 0;
           endOfList = true;
         }
 
-        nextSong = config.playlists[playlist].shuffle_list[ nextIndex ];
-      }else{
+        nextSong = config.playlists[playlist].shuffle_list[nextIndex];
+      } else {
         /*
           If the active index +1 is less than the length of the songs in the playlist,
           then we use the next song otherwise we go to the beginning of the playlist.
         */
-        if( ( parseInt( config.playlists[playlist].active_index ) + 1 ) < config.playlists[playlist].songs.length ){
-          nextIndex = parseInt( config.playlists[playlist].active_index ) + 1;
-        }else{
+        if (
+          parseInt(config.playlists[playlist].active_index) + 1 <
+          config.playlists[playlist].songs.length
+        ) {
+          nextIndex = parseInt(config.playlists[playlist].active_index) + 1;
+        } else {
           nextIndex = 0;
           endOfList = true;
         }
@@ -209,20 +214,19 @@ let AudioNavigation = (function(){
     /*
       Sets the active playlist to the playlist we are on.
     */
-    setActivePlaylist( playlist );
+    setActivePlaylist(playlist);
 
     /*
       Change the song within the playlist.
     */
-    changeSongPlaylist( playlist, nextSong, nextIndex );
+    changeSongPlaylist(playlist, nextSong, nextIndex);
 
     /*
       If it's the end of the playlist and we aren't repeating, do nothing.
     */
-    if( endOfList && !config.repeat ){
-
-    }else{
-      if( !( songEnded && !config.repeat && endOfList ) ){
+    if (endOfList && !config.repeat) {
+    } else {
+      if (!(songEnded && !config.repeat && endOfList)) {
         Core.play();
       }
     }
@@ -231,13 +235,13 @@ let AudioNavigation = (function(){
       Sync the play pause buttons.
     */
     PlayPauseElements.sync();
-    Callbacks.run('next');
+    Callbacks.run("next");
 
     /*
       Repeat the song.
     */
-    if( config.repeat_song ){
-      Callbacks.run( 'song_repeated' );
+    if (config.repeat_song) {
+      Callbacks.run("song_repeated");
     }
   }
 
@@ -246,7 +250,7 @@ let AudioNavigation = (function(){
    *
    * @access private
    */
-  function setPrevious(){
+  function setPrevious() {
     /*
       Initializes the previous index
     */
@@ -256,47 +260,47 @@ let AudioNavigation = (function(){
     /*
       If we are repeating the song, then we just start the song over.
     */
-    if( config.repeat_song ){
+    if (config.repeat_song) {
       /*
         If the config is shuffled, get the now playing index.
       */
-      if( config.shuffle_on ){
+      if (config.shuffle_on) {
         previousIndex = config.active_index;
-        previousSong = config.shuffle_list[ previousIndex ];
-      }else{
+        previousSong = config.shuffle_list[previousIndex];
+      } else {
         previousIndex = config.active_index;
-        previousSong = config.songs[ previousIndex ];
+        previousSong = config.songs[previousIndex];
       }
-    }else{
+    } else {
       /*
         Get the previous index. If the previous index will be less than 0, get the
         last song of the array and continue.
       */
-      if( ( parseInt( config.active_index ) - 1 ) >= 0 ){
-        previousIndex = parseInt( config.active_index - 1 );
-      }else{
-        previousIndex = parseInt( config.songs.length - 1 );
+      if (parseInt(config.active_index) - 1 >= 0) {
+        previousIndex = parseInt(config.active_index - 1);
+      } else {
+        previousIndex = parseInt(config.songs.length - 1);
       }
 
       /*
         If the config is shuffled, we grab the song from the shuffle list
       */
-      if( config.shuffle_on ){
+      if (config.shuffle_on) {
         /*
           Grab song from the shuffle list
         */
-        previousSong = config.shuffle_list[ previousIndex ];
-      }else{
+        previousSong = config.shuffle_list[previousIndex];
+      } else {
         /*
           Grab song from the songs array
         */
-        previousSong = config.songs[ previousIndex ];
+        previousSong = config.songs[previousIndex];
       }
     }
     /*
       Change the song after the next button has been pressed.
     */
-    changeSong( previousSong, previousIndex );
+    changeSong(previousSong, previousIndex);
 
     Core.play();
 
@@ -305,13 +309,13 @@ let AudioNavigation = (function(){
       after next callback.
     */
     PlayPauseElements.sync();
-    Callbacks.run('prev');
+    Callbacks.run("prev");
 
     /*
       If we repeated the song, run the repeat song callback.
     */
-    if( config.repeat_song ){
-      Callbacks.run('song_repeated');
+    if (config.repeat_song) {
+      Callbacks.run("song_repeated");
     }
   }
 
@@ -322,7 +326,7 @@ let AudioNavigation = (function(){
    *
    * @prop {string} playlist  - The playlist we are navigating in.
    */
-  function setPreviousPlaylist( playlist ){
+  function setPreviousPlaylist(playlist) {
     /*
       Initializes the previous index
     */
@@ -332,53 +336,53 @@ let AudioNavigation = (function(){
     /*
       If we are repeating the song, then we just start the song over.
     */
-    if( config.repeat_song ){
+    if (config.repeat_song) {
       /*
         If the playlist is shuffled, get the now playing index.
       */
-      if( config.playlists[playlist].shuffle ){
+      if (config.playlists[playlist].shuffle) {
         previousIndex = config.playlists[playlist].active_index;
-        previousSong = config.playlists[playlist].shuffle_list[ previousIndex ];
-      }else{
+        previousSong = config.playlists[playlist].shuffle_list[previousIndex];
+      } else {
         previousIndex = config.playlists[playlist].active_index;
-        previousSong = config.playlists[playlist].songs[ previousIndex ];
+        previousSong = config.playlists[playlist].songs[previousIndex];
       }
-    }else{
+    } else {
       /*
         Get the previous index. If the previous index will be less than 0, get the
         last song of the array and continue.
       */
-      if( ( parseInt( config.playlists[playlist].active_index ) - 1 ) >= 0 ){
-        previousIndex = parseInt( config.playlists[playlist].active_index - 1 );
-      }else{
-        previousIndex = parseInt( config.playlists[playlist].songs.length - 1 );
+      if (parseInt(config.playlists[playlist].active_index) - 1 >= 0) {
+        previousIndex = parseInt(config.playlists[playlist].active_index - 1);
+      } else {
+        previousIndex = parseInt(config.playlists[playlist].songs.length - 1);
       }
 
       /*
         If the playlist is shuffled, we grab the song from the shuffle list
       */
-      if( config.playlists[playlist].shuffle ){
+      if (config.playlists[playlist].shuffle) {
         /*
           Grab song from the shuffle list
         */
-        previousSong = config.playlists[playlist].shuffle_list[ previousIndex ];
-      }else{
+        previousSong = config.playlists[playlist].shuffle_list[previousIndex];
+      } else {
         /*
           Grab song from the songs array
         */
-        previousSong = config.playlists[playlist].songs[ previousIndex ];
+        previousSong = config.playlists[playlist].songs[previousIndex];
       }
     }
 
     /*
       Sets the active playlist to the playlist we are on.
     */
-    setActivePlaylist( playlist );
+    setActivePlaylist(playlist);
 
     /*
       Change the song within the playlist.
     */
-    changeSongPlaylist( playlist, previousSong, previousIndex );
+    changeSongPlaylist(playlist, previousSong, previousIndex);
 
     /*
       Plays the song
@@ -389,13 +393,13 @@ let AudioNavigation = (function(){
       Sync the play pause buttons.
     */
     PlayPauseElements.sync();
-    Callbacks.run('prev');
+    Callbacks.run("prev");
 
     /*
       Repeat the song.
     */
-    if( config.repeat_song ){
-      Callbacks.run( 'song_repeated' );
+    if (config.repeat_song) {
+      Callbacks.run("song_repeated");
     }
   }
 
@@ -406,19 +410,19 @@ let AudioNavigation = (function(){
    * @prop {object} song  - The song we are changing to.
    * @prop {number} index - The index we are changing to.
    */
-  function changeSong( song, index ){
+  function changeSong(song, index) {
     /*
       Prepare the song change.
     */
-    prepareSongChange( song );
+    prepareSongChange(song);
 
     /*
       Change the song.
     */
-    config.audio.src 	      = song.url;
-    config.active_metadata 	= song;
-    config.active_album    	= song.album;
-    config.active_index 		= index;
+    config.audio.src = song.url;
+    config.active_metadata = song;
+    config.active_album = song.album;
+    config.active_index = index;
 
     /*
       Set new information now that the song has changed.
@@ -434,19 +438,19 @@ let AudioNavigation = (function(){
    * @prop {object} song     - The song we are changing to in the playlist.
    * @prop {number} index    - The inded of the song we are changing to in the playlist.
    */
-  function changeSongPlaylist( playlist, song, index ){
+  function changeSongPlaylist(playlist, song, index) {
     /*
       Prepare the song change.
     */
-    prepareSongChange( song );
+    prepareSongChange(song);
 
     /*
       Change the song.
     */
-    config.audio.src 	      = song.url;
-    config.active_metadata 	= song;
-    config.active_album    	= song.album;
-    config.active_index 		= null;
+    config.audio.src = song.url;
+    config.active_metadata = song;
+    config.active_album = song.album;
+    config.active_index = null;
 
     config.playlists[playlist].active_index = index;
 
@@ -462,7 +466,7 @@ let AudioNavigation = (function(){
    * @access private
    * @prop {object} song  - The song we change to.
    */
-  function prepareSongChange( song ){
+  function prepareSongChange(song) {
     /*
       Stop the current song.
     */
@@ -479,8 +483,8 @@ let AudioNavigation = (function(){
     /*
       If an album changes, fire an album change.
     */
-    if( Checks.newAlbum( song ) ){
-      Callbacks.run('album_change');
+    if (Checks.newAlbum(song)) {
+      Callbacks.run("album_change");
     }
   }
 
@@ -489,7 +493,7 @@ let AudioNavigation = (function(){
    *
    * @access private
    */
-  function afterSongChange(){
+  function afterSongChange() {
     MetaDataElements.displayMetaData();
     ContainerElements.setActive();
     TimeElements.resetDurationTimes();
@@ -497,7 +501,7 @@ let AudioNavigation = (function(){
     /*
       Run the song change callback.
     */
-    Callbacks.run('song_change');
+    Callbacks.run("song_change");
   }
 
   /**
@@ -506,21 +510,21 @@ let AudioNavigation = (function(){
    * @access public
    * @param {string} playlist - The string of the playlist being set to active.
    */
-  function setActivePlaylist( playlist ){
+  function setActivePlaylist(playlist) {
     /*
       If the active playlist is different than the playlist being set,
       we run the `playlist_changed` callback.
     */
-    if( config.active_playlist != playlist ){
-      Callbacks.run('playlist_changed');
+    if (config.active_playlist != playlist) {
+      Callbacks.run("playlist_changed");
       /*
         Set the active playlist to the playlist parameter. Only need to
         set if it's different.
       */
       config.active_playlist = playlist;
 
-      if( playlist != null ){
-        config.playlists[ playlist ].active_index = 0;
+      if (playlist != null) {
+        config.playlists[playlist].active_index = 0;
       }
     }
   }
@@ -536,7 +540,7 @@ let AudioNavigation = (function(){
     changeSong: changeSong,
     changeSongPlaylist: changeSongPlaylist,
     setActivePlaylist: setActivePlaylist
-  }
+  };
 })();
 
-export default AudioNavigation
+export default AudioNavigation;

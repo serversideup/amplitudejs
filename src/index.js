@@ -826,10 +826,10 @@ let Amplitude = (function() {
       if (config.active_playlist == null || config.active_playlist == "") {
         AudioNavigation.setNext();
       } else {
-        AudioNavigation.setNextPlaylist( config.active_playlist );
+        AudioNavigation.setNextPlaylist(config.active_playlist);
       }
     } else {
-      AudioNavigation.setNextPlaylist( playlist );
+      AudioNavigation.setNextPlaylist(playlist);
     }
   }
 
@@ -857,10 +857,10 @@ let Amplitude = (function() {
       if (config.active_playlist == null || config.active_playlist == "") {
         AudioNavigation.setPrevious();
       } else {
-        AudioNavigation.setPreviousPlaylist( config.active_playlist );
+        AudioNavigation.setPreviousPlaylist(config.active_playlist);
       }
     } else {
-      AudioNavigation.setPreviousPlaylist( playlist );
+      AudioNavigation.setPreviousPlaylist(playlist);
     }
   }
 
@@ -971,15 +971,19 @@ let Amplitude = (function() {
       /*
         Checks if we are skipping to a new playlist
       */
-      if( Checks.newPlaylist( playlist ) ){
-        AudioNavigation.setActivePlaylist( playlist );
+      if (Checks.newPlaylist(playlist)) {
+        AudioNavigation.setActivePlaylist(playlist);
       }
 
       /*
         Changes the song to where it's being skipped and then
         play the song.
       */
-      AudioNavigation.changeSongPlaylist( playlist, config.playlists[playlist].songs[ songIndex ], songIndex );
+      AudioNavigation.changeSongPlaylist(
+        playlist,
+        config.playlists[playlist].songs[songIndex],
+        songIndex
+      );
       Core.play();
 
       /*
@@ -992,15 +996,14 @@ let Amplitude = (function() {
       /*
         Skip to the location in the song.
       */
-      Core.skipToLocation( seconds );
-    }else{
+      Core.skipToLocation(seconds);
+    } else {
       /*
         Changes the song to where it's being skipped and then
         play the song.
       */
-      AudioNavigation.changeSong( config.songs[songIndex], songIndex );
+      AudioNavigation.changeSong(config.songs[songIndex], songIndex);
       Core.play();
-
 
       /*
         Syncs all of the play pause buttons now that we've skipped.
@@ -1011,7 +1014,7 @@ let Amplitude = (function() {
       /*
         Skip to the location in the song.
       */
-      Core.skipToLocation( seconds );
+      Core.skipToLocation(seconds);
     }
   }
 
@@ -1027,28 +1030,32 @@ let Amplitude = (function() {
    * @param {object} metaData 			- The object containing the meta data we are updating.
    * @param {string} playlist       - The playlist we are updating the song meta data for.
    */
-  function setSongMetaData( index, metaData, playlist = null ) {
+  function setSongMetaData(index, metaData, playlist = null) {
     /*
       Update the meta data for a song in a playlist.
     */
-    if( playlist != '' && playlist != null && config.playlists[playlist] != undefined ){
+    if (
+      playlist != "" &&
+      playlist != null &&
+      config.playlists[playlist] != undefined
+    ) {
       /*
         Set all of the defined meta data properties
       */
       for (var key in metaData) {
         if (metaData.hasOwnProperty(key)) {
-          if (key != "url" && key != "URL" && key != 'live' && key != 'LIVE' ) {
+          if (key != "url" && key != "URL" && key != "live" && key != "LIVE") {
             config.playlists[playlist].songs[index][key] = metaData[key];
           }
         }
       }
-    }else{
+    } else {
       /*
         Update the meta data for a song.
       */
       for (var key in metaData) {
         if (metaData.hasOwnProperty(key)) {
-          if (key != "url" && key != "URL" && key != 'live' && key != 'LIVE' ) {
+          if (key != "url" && key != "URL" && key != "live" && key != "LIVE") {
             config.songs[index][key] = metaData[key];
           }
         }
@@ -1062,25 +1069,25 @@ let Amplitude = (function() {
     MetaDataElements.syncMetaData();
   }
 
-  function setPlaylistMetaData( playlist, metaData ){
-    if( config.playlists[playlist] != undefined ){
+  function setPlaylistMetaData(playlist, metaData) {
+    if (config.playlists[playlist] != undefined) {
       /*
   			These are the ignored keys that we won't be worrying about displaying.
   			Every other key in the playlist object can be displayed.
   		*/
-  		let ignoredKeys = ['repeat', 'shuffle', 'shuffle_list', 'songs', 'src'];
+      let ignoredKeys = ["repeat", "shuffle", "shuffle_list", "songs", "src"];
 
-      for( var key in metaData ){
-        if( metaData.hasOwnProperty( key ) ){
-          if( ignoredKeys.indexOf( key ) < 0 ){
+      for (var key in metaData) {
+        if (metaData.hasOwnProperty(key)) {
+          if (ignoredKeys.indexOf(key) < 0) {
             config.playlists[playlist][key] = metaData[key];
           }
         }
       }
 
       MetaDataElements.displayPlaylistMetaData();
-    }else{
-      Debug.writeMessage( 'You must provide a valid playlist key!' );
+    } else {
+      Debug.writeMessage("You must provide a valid playlist key!");
     }
   }
 
@@ -1103,7 +1110,7 @@ let Amplitude = (function() {
    *
    * @access public
    */
-  function getDelay(){
+  function getDelay() {
     return config.delay;
   }
 
@@ -1138,15 +1145,17 @@ let Amplitude = (function() {
    * @param {string} playlist - The playlist we are setting the visualization for.
    * @param {string} visualizationKey - The key of the visualization we are adding to the playlist.
    */
-  function setPlaylistVisualization( playlist, visualizationKey ){
-    if( config.playlists[ playlist ] != undefined ){
-      if( config.visualizations.available[ visualizationKey ] != undefined ){
-        config.playlists[ playlist ].visualization = visualizationKey;
-      }else{
-        Debug.writeMessage('A visualization does not exist for the key provided.');
+  function setPlaylistVisualization(playlist, visualizationKey) {
+    if (config.playlists[playlist] != undefined) {
+      if (config.visualizations.available[visualizationKey] != undefined) {
+        config.playlists[playlist].visualization = visualizationKey;
+      } else {
+        Debug.writeMessage(
+          "A visualization does not exist for the key provided."
+        );
       }
-    }else{
-      Debug.writeMessage('The playlist for the key provided does not exist');
+    } else {
+      Debug.writeMessage("The playlist for the key provided does not exist");
     }
   }
 
@@ -1156,15 +1165,17 @@ let Amplitude = (function() {
    * @param {number} songIndex - The index of the song in the songs array we are setting the visualization for.
    * @param {string} visualizationKey - The key of the visualization we are adding to the playlist.
    */
-  function setSongVisualization( songIndex, visualizationKey ){
-    if( config.songs[ songIndex ] ){
-      if( config.visualizations.available[ visualizationKey ] != undefined ){
-        config.songs[ songIndex ].visualization = visualizationKey;
-      }else{
-        Debug.writeMessage('A visualization does not exist for the key provided.');
+  function setSongVisualization(songIndex, visualizationKey) {
+    if (config.songs[songIndex]) {
+      if (config.visualizations.available[visualizationKey] != undefined) {
+        config.songs[songIndex].visualization = visualizationKey;
+      } else {
+        Debug.writeMessage(
+          "A visualization does not exist for the key provided."
+        );
       }
-    }else{
-      Debug.writeMessage('A song at that index is undefined');
+    } else {
+      Debug.writeMessage("A song at that index is undefined");
     }
   }
 
@@ -1175,26 +1186,36 @@ let Amplitude = (function() {
    * @param {number} songIndex - The index we are setting the visualization for.
    * @param {strong} visualizationKey - The key of the visualization we are adding to the song in the playlist.
    */
-  function setSongInPlaylistVisualization( playlist, songIndex, visualizationKey ){
-    if( config.playlists[ playlist ].songs[ songIndex ] != undefined ){
-      if( config.visualizations.available[ visualizationKey ] != undefined ){
-        config.playlists[ playlist ].songs[ songIndex ].visualization = visualizationKey;
-      }else{
-        Debug.writeMessage('A visualization does not exist for the key provided.');
+  function setSongInPlaylistVisualization(
+    playlist,
+    songIndex,
+    visualizationKey
+  ) {
+    if (config.playlists[playlist].songs[songIndex] != undefined) {
+      if (config.visualizations.available[visualizationKey] != undefined) {
+        config.playlists[playlist].songs[
+          songIndex
+        ].visualization = visualizationKey;
+      } else {
+        Debug.writeMessage(
+          "A visualization does not exist for the key provided."
+        );
       }
-    }else{
-      Debug.writeMessage('The song in the playlist at that key is not defined');
+    } else {
+      Debug.writeMessage("The song in the playlist at that key is not defined");
     }
   }
 
   /**
    * Sets the global visualization default.
    */
-  function setGlobalVisualization( visualizationKey ){
-    if( config.visualizations.available[ visualizationKey ] != undefined ){
+  function setGlobalVisualization(visualizationKey) {
+    if (config.visualizations.available[visualizationKey] != undefined) {
       config.visualization = visualizationKey;
-    }else{
-      Debug.writeMessage('A visualization does not exist for the key provided.');
+    } else {
+      Debug.writeMessage(
+        "A visualization does not exist for the key provided."
+      );
     }
   }
 

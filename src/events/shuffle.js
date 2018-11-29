@@ -5,25 +5,25 @@
  * Imports the config module
  * @module config
  */
-import config from '../config.js';
+import config from "../config.js";
 
 /**
  * Imports the shuffler utility
  * @module utilities/Shuffler
  */
-import Shuffler from '../utilities/shuffler.js';
+import Shuffler from "../utilities/shuffler.js";
 
 /**
  * Imports the visual shuffle elements
  * @module visual/ShuffleElements
  */
-import ShuffleElements from '../visual/shuffleElements.js';
+import ShuffleElements from "../visual/shuffleElements.js";
 
 /**
  * Handles all of the shuffle events
  * @module events/Shuffle
  */
-let Shuffle = (function(){
+let Shuffle = (function() {
   /**
    * Handles an event on the shuffle button
    *
@@ -34,32 +34,32 @@ let Shuffle = (function(){
    *
    * @access public
    */
-  function handle(){
+  function handle() {
     /*
       If the touch is moving, we do not want to accidentally touch the play
       pause element and fire an event.
     */
-    if( !config.is_touch_moving ){
+    if (!config.is_touch_moving) {
       /*
         Get the playlist attribute
       */
-      let playlist = this.getAttribute('data-amplitude-playlist');
+      let playlist = this.getAttribute("data-amplitude-playlist");
 
       /*
 				Check to see if the shuffle button belongs to a playlist
 			*/
-      if( playlist == null ){
+      if (playlist == null) {
         handleGlobalShuffle();
-      }else{
-        handlePlaylistShuffle( playlist );
+      } else {
+        handlePlaylistShuffle(playlist);
       }
-		}
+    }
   }
 
   /**
    * Handles the event on the global shuffle button.
    */
-  function handleGlobalShuffle(){
+  function handleGlobalShuffle() {
     /*
       Either shuffles or removes shuffle on the global state.
     */
@@ -68,7 +68,7 @@ let Shuffle = (function(){
     /*
       Visualize the shuffle state change.
     */
-    ShuffleElements.syncMain( config.shuffle_on );
+    ShuffleElements.syncMain(config.shuffle_on);
   }
 
   /**
@@ -76,16 +76,16 @@ let Shuffle = (function(){
    *
    * @param {string} playlist - The playlist string the shuffle button belongs to.
    */
-  function handlePlaylistShuffle( playlist ){
+  function handlePlaylistShuffle(playlist) {
     /*
       Either shuffles or removes shuffle on the playlist state.
     */
-    Shuffler.toggleShufflePlaylist( playlist );
+    Shuffler.toggleShufflePlaylist(playlist);
 
     /*
       Visually sync the playlist shuffle statuses.
     */
-    ShuffleElements.syncPlaylist( playlist );
+    ShuffleElements.syncPlaylist(playlist);
   }
 
   /**
@@ -93,7 +93,7 @@ let Shuffle = (function(){
    */
   return {
     handle: handle
-  }
+  };
 })();
 
-export default Shuffle
+export default Shuffle;

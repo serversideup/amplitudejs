@@ -5,45 +5,45 @@
 /**
  * Imports the config to use the values
  */
-import config from '../config.js';
+import config from "../config.js";
 
 /**
  * Imports the AmplitudeJS Core Methods
  * @module core/core
  */
-import Core from '../core/core.js';
+import Core from "../core/core.js";
 
 /**
  * Imports the AmplitudeJS Visual Mute Elements
  * @module visual/MuteElements
  */
-import MuteElements from '../visual/muteElements.js';
+import MuteElements from "../visual/muteElements.js";
 
 /**
  * Imports the AmplitudeJS Visual Volume Slider Elements
  * @module visual/VolumeSliderElements
  */
-import VolumeSliderElements from '../visual/volumeSliderElements.js';
+import VolumeSliderElements from "../visual/volumeSliderElements.js";
 
 /**
  * Handles all events for a volume up event.
  * @module events/VolumeUp
  */
-let VolumeUp = (function(){
+let VolumeUp = (function() {
   /**
-	 * Handles a click on a volume up element.
-	 *
-	 * HANDLER FOR:       class="amplitude-volume-up"
-	 *
-	 * @access public
-	 */
-  function handle(){
+   * Handles a click on a volume up element.
+   *
+   * HANDLER FOR:       class="amplitude-volume-up"
+   *
+   * @access public
+   */
+  function handle() {
     /*
       We don't fire this if the user is touching the screen and it's moving.
       This could lead to a mis-fire
     */
-    if( !config.is_touch_moving ){
-			/*
+    if (!config.is_touch_moving) {
+      /*
 				The volume range is from 0 to 1 for an audio element. We make this
 				a base of 100 for ease of working with.
 
@@ -55,28 +55,28 @@ let VolumeUp = (function(){
 			*/
       let volume = null;
 
-			if( ( config.volume + config.volume_increment ) <= 100 ){
-				volume = config.volume + config.volume_increment;
-			}else{
-				volume = 100;
-			}
+      if (config.volume + config.volume_increment <= 100) {
+        volume = config.volume + config.volume_increment;
+      } else {
+        volume = 100;
+      }
 
-			/*
+      /*
 				Calls the core function to set the volume to the computed value
 				based on the user's intent.
 			*/
-			Core.setVolume( volume );
+      Core.setVolume(volume);
 
       /*
         Sync Mute Elements.
       */
-      MuteElements.setMuted( config.volume == 0 ? true : false );
+      MuteElements.setMuted(config.volume == 0 ? true : false);
 
       /*
         Sync Volume Slider Elements
       */
-			VolumeSliderElements.sync();
-		}
+      VolumeSliderElements.sync();
+    }
   }
 
   /**
@@ -84,7 +84,7 @@ let VolumeUp = (function(){
    */
   return {
     handle: handle
-  }
+  };
 })();
 
-export default VolumeUp
+export default VolumeUp;
