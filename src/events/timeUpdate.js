@@ -140,7 +140,8 @@ let TimeUpdate = (function() {
     /*
       Checks to see if there is a callback at the certain seconds into the song.
     */
-    if (config.active_metadata.time_callbacks[currentSeconds] != undefined) {
+    if (config.active_metadata.time_callbacks != undefined
+        && config.active_metadata.time_callbacks[currentSeconds] != undefined) {
       /*
         Checks to see if the callback has been run. Since the time updates more than
         one second, we don't want the callback to run X times.

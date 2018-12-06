@@ -117,6 +117,8 @@ import PlayPauseElements from "./visual/playPauseElements.js";
  */
 import MetaDataElements from "./visual/metaDataElements.js";
 
+import Debug from "./utilities/debug.js";
+
 /**
  * Amplitude should just be an interface to the public functions.
  * Everything else should be handled by other objects
@@ -452,9 +454,9 @@ let Amplitude = (function() {
    * @returns {object} JSON representation for the song at a specific index.
    */
   function getSongAtPlaylistIndex(playlist, index) {
-    let songIndex = config.playlists[playlist].songs[index];
+    let song = config.playlists[playlist].songs[index];
 
-    return config.songs[songIndex];
+    return song;
   }
 
   /**
@@ -503,7 +505,7 @@ let Amplitude = (function() {
         config.playlists[playlist].shuffle_list.push(song);
       }
 
-      return config.playlists[playlist].length - 1;
+      return config.playlists[playlist].songs.length - 1;
     } else {
       Debug.writeMessage("Playlist doesn't exist!");
       return null;
@@ -550,6 +552,8 @@ let Amplitude = (function() {
       config.playlists[key].repeat = false;
       config.playlists[key].shuffle = false;
       config.playlists[key].shuffle_list = [];
+
+      return config.playlists[key];
     } else {
       Debug.writeMessage("A playlist already exists with that key!");
       return null;
@@ -728,7 +732,7 @@ let Amplitude = (function() {
     /*
 			Check if the song is new. If so, change the song.
 		*/
-    if (Checks.newSong(playlist, songIndex)) {
+    if (Checks.newSong(playlist, index)) {
       AudioNavigation.changeSongPlaylist(
         playlist,
         config.playlists[playlist].songs[index],
@@ -810,7 +814,7 @@ let Amplitude = (function() {
    * Public Accessor: Amplitude.next( playlist );
    *
    * @access public
-   * @param {string} [playlist = null] 	- The playlist key
+   * @param {string} [playlist = null 	- The playlist key
    */
   function next(playlist = null) {
     let nextData = {};
@@ -840,7 +844,6 @@ let Amplitude = (function() {
    *
    * @access public
    * @param {string} [playlist = null] 	- The playlist key
-   * TODO: FIX FOR 4.0
    */
   function prev(playlist = null) {
     let prevData = {};

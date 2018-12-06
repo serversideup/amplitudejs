@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/utilities/time.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/utilities</a> time.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.56% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>2/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">20% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.56% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/36</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ */
+&nbsp;
+import config from "../config.js";
+&nbsp;
+/**
+ * The utility to handle the computation of time in AmplitudeJS.
+ * @module utilities/Time
+ */
+let Time = (function() {
+  /**
+   * Computes the current song time. Breaks down where the song is into
+   * hours, minutes, seconds and formats it to be displayed to the user.
+   *
+   * @access public
+   */
+  function <span class="fstat-no" title="function not covered" >computeCurrentTimes(</span>) {
+    /*
+			Initialize the current time object that will be returned.
+		*/
+    let currentTime = <span class="cstat-no" title="statement not covered" >{};</span>
+&nbsp;
+    /*
+			Computes the current seconds for the song.
+		*/
+    let currentSeconds =
+<span class="cstat-no" title="statement not covered" >      (Math.floor(config.audio.currentTime % 60) &lt; 10 ? "0" : "") +</span>
+      Math.floor(config.audio.currentTime % 60);
+&nbsp;
+    /*
+			Computes the current minutes for the song.
+		*/
+    let currentMinutes = <span class="cstat-no" title="statement not covered" >Math.floor(config.audio.currentTime / 60);</span>
+&nbsp;
+    /*
+			Initialize the current hours variable.
+		*/
+    let currentHours = <span class="cstat-no" title="statement not covered" >"00";</span>
+&nbsp;
+    /*
+			If the current minutes is less than 10, we add a leading 0.
+		*/
+<span class="cstat-no" title="statement not covered" >    if (currentMinutes &lt; 10) {</span>
+<span class="cstat-no" title="statement not covered" >      currentMinutes = "0" + currentMinutes;</span>
+    }
+&nbsp;
+    /*
+			If the user is more than 60 minutes into the song, then
+			we extract the hours.
+		*/
+<span class="cstat-no" title="statement not covered" >    if (currentMinutes &gt;= 60) {</span>
+<span class="cstat-no" title="statement not covered" >      currentHours = Math.floor(currentMinutes / 60);</span>
+<span class="cstat-no" title="statement not covered" >      currentMinutes = currentMinutes % 60;</span>
+&nbsp;
+      /*
+				If the user is less than 10 minutes in, we append the
+				additional 0 to the minutes.
+			*/
+<span class="cstat-no" title="statement not covered" >      if (currentMinutes &lt; 10) {</span>
+<span class="cstat-no" title="statement not covered" >        currentMinutes = "0" + currentMinutes;</span>
+      }
+    }
+&nbsp;
+    /*
+			Build a clean current time object and send back the appropriate information.
+		*/
+<span class="cstat-no" title="statement not covered" >    currentTime.seconds = currentSeconds;</span>
+<span class="cstat-no" title="statement not covered" >    currentTime.minutes = currentMinutes;</span>
+<span class="cstat-no" title="statement not covered" >    currentTime.hours = currentHours;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return currentTime;</span>
+  }
+&nbsp;
+  /**
+   * Computes the current song duration. Breaks down where the song is into
+   * hours, minutes, seconds and formats it to be displayed to the user.
+   *
+   * @access public
+   */
+  function <span class="fstat-no" title="function not covered" >computeSongDuration(</span>) {
+    /*
+			Initialize the song duration object that will be returned.
+		*/
+    let songDuration = <span class="cstat-no" title="statement not covered" >{};</span>
+&nbsp;
+    /*
+			Computes the duration of the song's seconds.
+		*/
+    let songDurationSeconds =
+<span class="cstat-no" title="statement not covered" >      (Math.floor(config.audio.duration % 60) &lt; 10 ? "0" : "") +</span>
+      Math.floor(config.audio.duration % 60);
+&nbsp;
+    /*
+			Computes the duration of the song's minutes.
+		*/
+    let songDurationMinutes = <span class="cstat-no" title="statement not covered" >Math.floor(config.audio.duration / 60);</span>
+&nbsp;
+    /*
+			Initialize the hours duration variable.
+		*/
+    var songDurationHours = <span class="cstat-no" title="statement not covered" >"00";</span>
+&nbsp;
+    /*
+			If the song duration minutes is less than 10, we add a leading 0.
+		*/
+<span class="cstat-no" title="statement not covered" >    if (songDurationMinutes &lt; 10) {</span>
+<span class="cstat-no" title="statement not covered" >      songDurationMinutes = "0" + songDurationMinutes;</span>
+    }
+&nbsp;
+    /*
+			If there is more than 60 minutes in the song, then we
+			extract the hours.
+		*/
+<span class="cstat-no" title="statement not covered" >    if (songDurationMinutes &gt;= 60) {</span>
+<span class="cstat-no" title="statement not covered" >      songDurationHours = Math.floor(songDurationMinutes / 60);</span>
+<span class="cstat-no" title="statement not covered" >      songDurationMinutes = songDurationMinutes % 60;</span>
+&nbsp;
+      /*
+				If the song duration minutes is less than 10 we append
+				the additional 0.
+			*/
+<span class="cstat-no" title="statement not covered" >      if (songDurationMinutes &lt; 10) {</span>
+<span class="cstat-no" title="statement not covered" >        songDurationMinutes = "0" + songDurationMinutes;</span>
+      }
+    }
+&nbsp;
+    /*
+			Build a clean song duration object and send back the appropriate information.
+		*/
+<span class="cstat-no" title="statement not covered" >    songDuration.seconds = isNaN(songDurationSeconds)</span>
+      ? "00"
+      : songDurationSeconds;
+<span class="cstat-no" title="statement not covered" >    songDuration.minutes = isNaN(songDurationMinutes)</span>
+      ? "00"
+      : songDurationMinutes;
+<span class="cstat-no" title="statement not covered" >    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return songDuration;</span>
+  }
+&nbsp;
+  /**
+   * Computes the song completion percentage.
+   *
+   * @access public
+   */
+  function <span class="fstat-no" title="function not covered" >computeSongCompletionPercentage(</span>) {
+<span class="cstat-no" title="statement not covered" >    return (config.audio.currentTime / config.audio.duration) * 100;</span>
+  }
+&nbsp;
+  /**
+   * Sets the current time for the audio.
+   *
+   * @access public
+   */
+  function <span class="fstat-no" title="function not covered" >setCurrentTime(</span>time) {
+    /*
+      If the song is not live, we can set the current time.
+    */
+<span class="cstat-no" title="statement not covered" >    if (!config.active_metadata.live) {</span>
+      /*
+        Makes sure the number is finite to set the time.
+      */
+<span class="cstat-no" title="statement not covered" >      if (isFinite(time)) {</span>
+<span class="cstat-no" title="statement not covered" >        config.audio.currentTime = time;</span>
+      }
+    }
+  }
+&nbsp;
+  /**
+   * Defines what is returned by the module
+   */
+  return {
+    computeCurrentTimes: computeCurrentTimes,
+    computeSongDuration: computeSongDuration,
+    computeSongCompletionPercentage: computeSongCompletionPercentage,
+    setCurrentTime: setCurrentTime
+  };
+})();
+&nbsp;
+export default Time;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Dec 06 2018 12:36:44 GMT-0800 (PST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

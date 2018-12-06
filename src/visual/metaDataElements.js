@@ -333,7 +333,8 @@ let MetaDataElements = (function() {
   return {
     displayMetaData: displayMetaData,
     setFirstSongInPlaylist: setFirstSongInPlaylist,
-    syncMetaData: syncMetaData
+    syncMetaData: syncMetaData,
+    displayPlaylistMetaData: displayPlaylistMetaData
   };
 })();
 

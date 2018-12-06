@@ -189,7 +189,7 @@ let Core = (function() {
 		*/
     if (!config.active_metadata.live) {
       config.audio.currentTime =
-        config.audio.duration * (song_percentage / 100);
+        config.audio.duration * (songPercentage / 100);
     }
   }
 

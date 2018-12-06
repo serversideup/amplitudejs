@@ -137,7 +137,7 @@ let Pause = (function() {
       Checks to see if the active playlist is null and the song matches
       the active index.
     */
-    if (config.active_playlist == null && config.active_index == song) {
+    if ( ( config.active_playlist == "" || config.active_playlist == null ) && config.active_index == song) {
       /*
         Pauses the song.
       */

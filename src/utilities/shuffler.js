@@ -43,7 +43,7 @@ let Shuffler = (function() {
     */
     if (config.shuffle_on) {
       config.shuffle_on = false;
-      config.shuffle_list = {};
+      config.shuffle_list = [];
     } else {
       config.shuffle_on = true;
       shuffleSongs();

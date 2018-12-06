@@ -8960,7 +8960,7 @@ var TimeUpdate = function () {
     /*
       Checks to see if there is a callback at the certain seconds into the song.
     */
-    if (_config2.default.active_metadata.time_callbacks[currentSeconds] != undefined) {
+    if (_config2.default.active_metadata.time_callbacks != undefined && _config2.default.active_metadata.time_callbacks[currentSeconds] != undefined) {
       /*
         Checks to see if the callback has been run. Since the time updates more than
         one second, we don't want the callback to run X times.
@@ -9515,6 +9515,10 @@ var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
+var _debug = __webpack_require__(4);
+
+var _debug2 = _interopRequireDefault(_debug);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -9526,62 +9530,59 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 /**
- * Play Pause Elements
- * @module visual/PlayPauseElements
+ * Meta Data Elements
+ * @module visual/MetaDataElements
  */
 
 
 /**
- * Song Played Progress Elements
- * @module visual/SongPlayedProgressElements
+ * Time Elements
+ * @module visual/TimeElements
  */
 
 
 /**
- * Visual Repeat Elements
- * @module visual/RepeatElements
- */
-
-
-/****************************************************
- * FX Modules
- ****************************************************/
-/**
- * Imports the visualizations module
- * @module fx/Visualizations
- */
-
-
-/**
- * Repeater Module
- *
- * @module utilities/Repeater
- */
-
-
-/**
- * Imports the config state module.
- * @module ConfigState
+ * Song Slider Elements
+ * @module visual/SongSliderElements
  */
 
 
 /****************************************************
- * Core
+ * Elements
  ****************************************************/
 /**
- * AmplitudeJS Core Module
- *
- * @module core/Core
+ * Visual Shuffle Elements
+ * @module visual/ShuffleElements
  */
+
+
 /**
- * @name 		Amplitude.js
- * @version 4.0
- * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ * Imports the checks
+ * @module utilities/Checks
  */
+
+
 /**
- * AmplitudeJS Initializer Module
- *
- * @module init/AmplitudeInitializer
+ * Imports the audio navigation
+ * @module utilities/AudioNavigation
+ */
+
+
+/****************************************************
+ * Utilities
+ ****************************************************/
+/**
+ * Shuffler Module
+ * @module utilities/Shuffler
+ */
+
+
+/****************************************************
+ * Config
+ ****************************************************/
+/**
+ * Imports the config module
+ * @module config
  */
 var Amplitude = function () {
   /**
@@ -9912,9 +9913,9 @@ var Amplitude = function () {
    * @returns {object} JSON representation for the song at a specific index.
    */
   function getSongAtPlaylistIndex(playlist, index) {
-    var songIndex = _config2.default.playlists[playlist].songs[index];
+    var song = _config2.default.playlists[playlist].songs[index];
 
-    return _config2.default.songs[songIndex];
+    return song;
   }
 
   /**
@@ -9963,9 +9964,9 @@ var Amplitude = function () {
         _config2.default.playlists[playlist].shuffle_list.push(song);
       }
 
-      return _config2.default.playlists[playlist].length - 1;
+      return _config2.default.playlists[playlist].songs.length - 1;
     } else {
-      Debug.writeMessage("Playlist doesn't exist!");
+      _debug2.default.writeMessage("Playlist doesn't exist!");
       return null;
     }
   }
@@ -10010,8 +10011,10 @@ var Amplitude = function () {
       _config2.default.playlists[key].repeat = false;
       _config2.default.playlists[key].shuffle = false;
       _config2.default.playlists[key].shuffle_list = [];
+
+      return _config2.default.playlists[key];
     } else {
-      Debug.writeMessage("A playlist already exists with that key!");
+      _debug2.default.writeMessage("A playlist already exists with that key!");
       return null;
     }
   }
@@ -10069,7 +10072,7 @@ var Amplitude = function () {
       Write error message since the song passed in doesn't
       have a URL.
       */
-      Debug.writeMessage("The song needs to have a URL!");
+      _debug2.default.writeMessage("The song needs to have a URL!");
     }
 
     /*
@@ -10184,7 +10187,7 @@ var Amplitude = function () {
     /*
     Check if the song is new. If so, change the song.
     */
-    if (_checks2.default.newSong(playlist, songIndex)) {
+    if (_checks2.default.newSong(playlist, index)) {
       _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[index], index);
     }
 
@@ -10262,7 +10265,7 @@ var Amplitude = function () {
    * Public Accessor: Amplitude.next( playlist );
    *
    * @access public
-   * @param {string} [playlist = null] 	- The playlist key
+   * @param {string} [playlist = null 	- The playlist key
    */
   function next() {
     var playlist = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -10294,7 +10297,6 @@ var Amplitude = function () {
    *
    * @access public
    * @param {string} [playlist = null] 	- The playlist key
-   * TODO: FIX FOR 4.0
    */
   function prev() {
     var playlist = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -10539,7 +10541,7 @@ var Amplitude = function () {
 
       _metaDataElements2.default.displayPlaylistMetaData();
     } else {
-      Debug.writeMessage("You must provide a valid playlist key!");
+      _debug2.default.writeMessage("You must provide a valid playlist key!");
     }
   }
 
@@ -10602,10 +10604,10 @@ var Amplitude = function () {
       if (_config2.default.visualizations.available[visualizationKey] != undefined) {
         _config2.default.playlists[playlist].visualization = visualizationKey;
       } else {
-        Debug.writeMessage("A visualization does not exist for the key provided.");
+        _debug2.default.writeMessage("A visualization does not exist for the key provided.");
       }
     } else {
-      Debug.writeMessage("The playlist for the key provided does not exist");
+      _debug2.default.writeMessage("The playlist for the key provided does not exist");
     }
   }
 
@@ -10620,10 +10622,10 @@ var Amplitude = function () {
       if (_config2.default.visualizations.available[visualizationKey] != undefined) {
         _config2.default.songs[songIndex].visualization = visualizationKey;
       } else {
-        Debug.writeMessage("A visualization does not exist for the key provided.");
+        _debug2.default.writeMessage("A visualization does not exist for the key provided.");
       }
     } else {
-      Debug.writeMessage("A song at that index is undefined");
+      _debug2.default.writeMessage("A song at that index is undefined");
     }
   }
 
@@ -10639,10 +10641,10 @@ var Amplitude = function () {
       if (_config2.default.visualizations.available[visualizationKey] != undefined) {
         _config2.default.playlists[playlist].songs[songIndex].visualization = visualizationKey;
       } else {
-        Debug.writeMessage("A visualization does not exist for the key provided.");
+        _debug2.default.writeMessage("A visualization does not exist for the key provided.");
       }
     } else {
-      Debug.writeMessage("The song in the playlist at that key is not defined");
+      _debug2.default.writeMessage("The song in the playlist at that key is not defined");
     }
   }
 
@@ -10653,7 +10655,7 @@ var Amplitude = function () {
     if (_config2.default.visualizations.available[visualizationKey] != undefined) {
       _config2.default.visualization = visualizationKey;
     } else {
-      Debug.writeMessage("A visualization does not exist for the key provided.");
+      _debug2.default.writeMessage("A visualization does not exist for the key provided.");
     }
   }
 
@@ -10722,59 +10724,62 @@ var Amplitude = function () {
 }();
 
 /**
- * Meta Data Elements
- * @module visual/MetaDataElements
+ * Play Pause Elements
+ * @module visual/PlayPauseElements
  */
 
 
 /**
- * Time Elements
- * @module visual/TimeElements
+ * Song Played Progress Elements
+ * @module visual/SongPlayedProgressElements
  */
 
 
 /**
- * Song Slider Elements
- * @module visual/SongSliderElements
- */
-
-
-/****************************************************
- * Elements
- ****************************************************/
-/**
- * Visual Shuffle Elements
- * @module visual/ShuffleElements
- */
-
-
-/**
- * Imports the checks
- * @module utilities/Checks
- */
-
-
-/**
- * Imports the audio navigation
- * @module utilities/AudioNavigation
+ * Visual Repeat Elements
+ * @module visual/RepeatElements
  */
 
 
 /****************************************************
- * Utilities
+ * FX Modules
  ****************************************************/
 /**
- * Shuffler Module
- * @module utilities/Shuffler
+ * Imports the visualizations module
+ * @module fx/Visualizations
+ */
+
+
+/**
+ * Repeater Module
+ *
+ * @module utilities/Repeater
+ */
+
+
+/**
+ * Imports the config state module.
+ * @module ConfigState
  */
 
 
 /****************************************************
- * Config
+ * Core
  ****************************************************/
 /**
- * Imports the config module
- * @module config
+ * AmplitudeJS Core Module
+ *
+ * @module core/Core
+ */
+/**
+ * @name 		Amplitude.js
+ * @version 4.0
+ * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ */
+/**
+ * AmplitudeJS Initializer Module
+ *
+ * @module init/AmplitudeInitializer
  */
 exports.default = Amplitude;
 module.exports = exports["default"];

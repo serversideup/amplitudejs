@@ -90,7 +90,7 @@ let Repeat = (function() {
     /*
       Sets repeat to the opposite of what it was set to for the playlist.
     */
-    RepeatElements.setRepeatPlaylist(
+    Repeater.setRepeatPlaylist(
       !config.playlists[playlist].repeat,
       playlist
     );

@@ -422,7 +422,7 @@ let AudioNavigation = (function() {
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
-    config.active_index = index;
+    config.active_index = parseInt( index );
 
     /*
       Set new information now that the song has changed.
@@ -452,7 +452,7 @@ let AudioNavigation = (function() {
     config.active_album = song.album;
     config.active_index = null;
 
-    config.playlists[playlist].active_index = index;
+    config.playlists[playlist].active_index = parseInt( index );
 
     /*
       Set new information now that the song has changed.
