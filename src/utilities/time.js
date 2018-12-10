@@ -65,9 +65,9 @@ let Time = (function() {
     /*
 			Build a clean current time object and send back the appropriate information.
 		*/
-    currentTime.seconds = currentSeconds;
-    currentTime.minutes = currentMinutes;
-    currentTime.hours = currentHours;
+    currentTime.seconds = parseInt( currentSeconds );
+    currentTime.minutes = parseInt( currentMinutes );
+    currentTime.hours = parseInt( currentHours );
 
     return currentTime;
   }
@@ -134,7 +134,7 @@ let Time = (function() {
     songDuration.minutes = isNaN(songDurationMinutes)
       ? "00"
       : songDurationMinutes;
-    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours;
+    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours.toString();
 
     return songDuration;
   }

@@ -27,7 +27,7 @@ let Shuffler = (function() {
     if (shuffle) {
       shuffleSongs();
     } else {
-      config.shuffle_list = {};
+      config.shuffle_list = [];
     }
   }
 

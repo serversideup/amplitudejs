@@ -60,7 +60,7 @@ module.exports = {
 
   active_index: 0,
 
-  active_playlist: "",
+  active_playlist: null,
 
   autoplay: false,
 

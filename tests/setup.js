@@ -152,6 +152,7 @@ let Setup = (function(){
     });
 
     config.audio.currentTime = 30;
+    config.audio.duration = 100;
   }
 
   function initializeTestingElement(){
@@ -177,7 +178,10 @@ let Setup = (function(){
     */
     Object.defineProperty( HTMLMediaElement.prototype, "duration", {
       get(){
-        return 100;
+        return self.duration;
+      },
+      set( newValue ){
+        self.duration = newValue;
       },
       writeable: true
     });

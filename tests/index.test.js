@@ -37,8 +37,8 @@ test('AmplitudeJS Initializes Playlists Correctly', () => {
 /**
  * Ensures the active playlist after init is ""
  */
-test('AmplitudeJS Get Active Playlist Returns "" With Default Init', () => {
-  expect( Amplitude.getActivePlaylist() ).toBe("");
+test('AmplitudeJS Get Active Playlist Returns null With Default Init', () => {
+  expect( Amplitude.getActivePlaylist() ).toBe( null );
 });
 
 /**
@@ -348,7 +348,7 @@ test( 'AmplitudeJS goes to the previous song', () => {
   Amplitude.prev();
 
   expect( config.active_index ).toBe( config.songs.length - 1 );
-  expect( config.active_playlist ).toBe("");
+  expect( config.active_playlist ).toBe(null);
 });
 
 

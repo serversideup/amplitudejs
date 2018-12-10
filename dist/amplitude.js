@@ -443,7 +443,7 @@ var Core = function () {
     song to the percentage the user passed in.
     */
     if (!_config2.default.active_metadata.live) {
-      _config2.default.audio.currentTime = _config2.default.audio.duration * (song_percentage / 100);
+      _config2.default.audio.currentTime = _config2.default.audio.duration * (songPercentage / 100);
     }
   }
 
@@ -1266,7 +1266,7 @@ var AudioNavigation = function () {
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
-    _config2.default.active_index = index;
+    _config2.default.active_index = parseInt(index);
 
     /*
       Set new information now that the song has changed.
@@ -1296,7 +1296,7 @@ var AudioNavigation = function () {
     _config2.default.active_album = song.album;
     _config2.default.active_index = null;
 
-    _config2.default.playlists[playlist].active_index = index;
+    _config2.default.playlists[playlist].active_index = parseInt(index);
 
     /*
       Set new information now that the song has changed.
@@ -2220,7 +2220,8 @@ var MetaDataElements = function () {
   return {
     displayMetaData: displayMetaData,
     setFirstSongInPlaylist: setFirstSongInPlaylist,
-    syncMetaData: syncMetaData
+    syncMetaData: syncMetaData,
+    displayPlaylistMetaData: displayPlaylistMetaData
   };
 }(); /**
       * Imports the config module
@@ -2584,7 +2585,7 @@ var Shuffler = function () {
     */
     if (_config2.default.shuffle_on) {
       _config2.default.shuffle_on = false;
-      _config2.default.shuffle_list = {};
+      _config2.default.shuffle_list = [];
     } else {
       _config2.default.shuffle_on = true;
       shuffleSongs();
@@ -6940,7 +6941,7 @@ var Pause = function () {
       Checks to see if the active playlist is null and the song matches
       the active index.
     */
-    if (_config2.default.active_playlist == null && _config2.default.active_index == song) {
+    if ((_config2.default.active_playlist == "" || _config2.default.active_playlist == null) && _config2.default.active_index == song) {
       /*
         Pauses the song.
       */
@@ -8049,7 +8050,7 @@ var Repeat = function () {
     /*
       Sets repeat to the opposite of what it was set to for the playlist.
     */
-    _repeatElements2.default.setRepeatPlaylist(!_config2.default.playlists[playlist].repeat, playlist);
+    _repeater2.default.setRepeatPlaylist(!_config2.default.playlists[playlist].repeat, playlist);
 
     /*
       Visually sync playlist repeat
