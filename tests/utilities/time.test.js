@@ -1,10 +1,10 @@
-const Amplitude = require('../../src/index.js');
+const Amplitude = require("../../src/index.js");
 
-const config = require('../../src/config.js');
+const config = require("../../src/config.js");
 
-const Setup = require('../setup.js');
+const Setup = require("../setup.js");
 
-const Time = require('../../src/utilities/time.js');
+const Time = require("../../src/utilities/time.js");
 
 beforeEach(() => {
   Setup.initializeTestingElement();
@@ -15,48 +15,48 @@ afterEach(() => {
   Setup.resetConfig();
 });
 
-test('AmplitudeJS Time Utility Produces Correct Current Time', () => {
+test("AmplitudeJS Time Utility Produces Correct Current Time", () => {
   var currentTime = Time.computeCurrentTimes();
 
-  expect( currentTime ).toEqual( { seconds: 30, minutes: 0, hours: 0 } );
+  expect(currentTime).toEqual({ seconds: 30, minutes: 0, hours: 0 });
 
   config.audio.currentTime = 120;
 
   currentTime = Time.computeCurrentTimes();
 
-  expect( currentTime ).toEqual( { seconds: 0, minutes: 2, hours: 0 } );
+  expect(currentTime).toEqual({ seconds: 0, minutes: 2, hours: 0 });
 
   config.audio.currentTime = 3605;
 
   currentTime = Time.computeCurrentTimes();
 
-  expect( currentTime ).toEqual( { seconds: 5, minutes: 0, hours: 1 } );
+  expect(currentTime).toEqual({ seconds: 5, minutes: 0, hours: 1 });
 });
 
-test('AmplitudeJS Time Utility Produces Correct Duration Time', () => {
+test("AmplitudeJS Time Utility Produces Correct Duration Time", () => {
   var duration = Time.computeSongDuration();
 
-  expect( duration ).toEqual( { seconds: "40", minutes: "01", hours: "00" } );
+  expect(duration).toEqual({ seconds: "40", minutes: "01", hours: "00" });
 
   config.audio.duration = 245;
 
   duration = Time.computeSongDuration();
-  expect( duration ).toEqual( { seconds: "05", minutes: "04", hours: "00" } );
+  expect(duration).toEqual({ seconds: "05", minutes: "04", hours: "00" });
 
   config.audio.duration = 3605;
 
   duration = Time.computeSongDuration();
-  expect( duration ).toEqual( { seconds: "05", minutes: "00", hours: "1" } );
+  expect(duration).toEqual({ seconds: "05", minutes: "00", hours: "1" });
 });
 
-test('AmplitudeJS Time Utility Produces Correct Song Completion Percentage', () => {
+test("AmplitudeJS Time Utility Produces Correct Song Completion Percentage", () => {
   var songCompletionPercentage = Time.computeSongCompletionPercentage();
 
-  expect( songCompletionPercentage ).toBe( 30 );
+  expect(songCompletionPercentage).toBe(30);
 });
 
-test('AmplitudeJS Time Utility Sets The Correct Current Time', () => {
-  Time.setCurrentTime( 68 );
+test("AmplitudeJS Time Utility Sets The Correct Current Time", () => {
+  Time.setCurrentTime(68);
 
-  expect( config.audio.currentTime ).toBe( 68 );
+  expect(config.audio.currentTime).toBe(68);
 });

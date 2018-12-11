@@ -1,8 +1,4 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
@@ -90,10 +86,7 @@ let Repeat = (function() {
     /*
       Sets repeat to the opposite of what it was set to for the playlist.
     */
-    Repeater.setRepeatPlaylist(
-      !config.playlists[playlist].repeat,
-      playlist
-    );
+    Repeater.setRepeatPlaylist(!config.playlists[playlist].repeat, playlist);
 
     /*
       Visually sync playlist repeat

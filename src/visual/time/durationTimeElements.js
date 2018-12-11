@@ -4,7 +4,17 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the duration time elements.
+ *
+ * @module visual/time/DurationTimeElements.
+ */
 let DurationTimeElements = (function() {
+  /**
+   * Syncs the duration time for all elements.
+   *
+   * @param {Object} durationTime - The object containing all of the song duration times.
+   */
   function sync(durationTime) {
     let durationText = computeDurationText(durationTime);
 
@@ -14,6 +24,11 @@ let DurationTimeElements = (function() {
     syncSongInPlaylist(durationText);
   }
 
+  /**
+   * Sync the global song duration elements.
+   *
+   * @param {Object} durationText - The text for the song duration.
+   */
   function syncGlobal(durationText) {
     let durationTimeSelectors = document.querySelectorAll(
       ".amplitude-duration-time"
@@ -33,6 +48,11 @@ let DurationTimeElements = (function() {
     }
   }
 
+  /**
+   * Sync the playlist duration times.
+   *
+   * @param {Object} durationText - The text for the song duration.
+   */
   function syncPlaylist(durationText) {
     let durationTimeSelectors = document.querySelectorAll(
       '.amplitude-duration-time[data-amplitude-playlist="' +
@@ -51,6 +71,11 @@ let DurationTimeElements = (function() {
     }
   }
 
+  /**
+   * Sync the song duration times.
+   *
+   * @param {Object} durationText - The text for the song duration.
+   */
   function syncSong(durationText) {
     if (config.active_playlist == null) {
       let durationTimeSelectors = document.querySelectorAll(
@@ -71,6 +96,11 @@ let DurationTimeElements = (function() {
     }
   }
 
+  /**
+   * Sync the song in playlist duration times.
+   *
+   * @param {Object} durationText - An object containing the duration text.
+   */
   function syncSongInPlaylist(durationText) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -90,6 +120,9 @@ let DurationTimeElements = (function() {
     }
   }
 
+  /**
+   * Resets all of the duration times to empty.
+   */
   function resetTimes() {
     let durationTimeSelectors = document.querySelectorAll(
       ".amplitude-duration-time"
@@ -100,6 +133,11 @@ let DurationTimeElements = (function() {
     }
   }
 
+  /**
+   * Computes the duration text
+   *
+   * @param {Object} durationTime - An object containint the duration times.
+   */
   function computeDurationText(durationTime) {
     var durationText = "00:00";
 
@@ -113,6 +151,9 @@ let DurationTimeElements = (function() {
     return durationText;
   }
 
+  /**
+   * Return publically accessible methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

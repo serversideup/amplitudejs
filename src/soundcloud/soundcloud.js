@@ -112,6 +112,120 @@ let SoundCloud = (function() {
   }
 
   /**
+   * Resolves an individual streamable URL.
+   *
+   * @param {string} url - The URL of the SoundCloud song to get the streamable URL from.
+   * @param {string} playlist - The playlist we are getting the streamable URL for.
+   * @param {Integer} index - The index of the song in the playlist or the songs array.
+   * @param {boolean} addToShuffleList - Whether we add to the shuffle list for the songs or playlist.
+   *
+   */
+  function resolveIndividualStreamableURL(
+    url,
+    playlist,
+    index,
+    addToShuffleList = false
+  ) {
+    SC.get("/resolve/?url=" + url, function(sound) {
+      /*
+        If streamable we get the url and bind the client ID to the end
+        so Amplitude can just stream the song normally. We then overwrite
+        the url the user provided with the streamable URL.
+      */
+      if (sound.streamable) {
+        if (playlist != null) {
+          config.playlists[playlist].songs[index].url =
+            sound.stream_url + "?client_id=" + config.soundcloud_client;
+
+          if (addToShuffleList) {
+            config.playlists[playlist].shuffle_list[index].url =
+              sound.stream_url + "?client_id=" + config.soundcloud_client;
+          }
+          /*
+            If the user want's to use soundcloud art, we overwrite the
+            cover_art_url with the soundcloud artwork url.
+          */
+          if (config.soundcloud_use_art) {
+            config.playlists[playlist].songs[index].cover_art_url =
+              sound.artwork_url;
+
+            if (addToShuffleList) {
+              config.playlists[playlist].shuffle_list[index].cover_art_url =
+                sound.artwork_url;
+            }
+          }
+
+          /*
+            Grab the extra metadata from soundcloud and bind it to the
+            song.  The user can get this through the public function:
+            getActiveSongMetadata
+          */
+          config.playlists[playlist].songs[index].soundcloud_data = sound;
+
+          if (addToShuffleList) {
+            config.playlists[playlist].shuffle_list[
+              index
+            ].soundcloud_data = sound;
+          }
+        } else {
+          config.songs[index].url =
+            sound.stream_url + "?client_id=" + config.soundcloud_client;
+
+          if (addToShuffleList) {
+            config.shuffle_list[index].stream_url +
+              "?client_id=" +
+              config.soundcloud_client;
+          }
+
+          /*
+            If the user want's to use soundcloud art, we overwrite the
+            cover_art_url with the soundcloud artwork url.
+          */
+          if (config.soundcloud_use_art) {
+            config.songs[index].cover_art_url = sound.artwork_url;
+
+            if (addToShuffleList) {
+              config.shuffle_list[index].cover_art_url = sound.artwork_url;
+            }
+          }
+
+          /*
+            Grab the extra metadata from soundcloud and bind it to the
+            song.  The user can get this through the public function:
+            getActiveSongMetadata
+          */
+          config.songs[index].soundcloud_data = sound;
+
+          if (addToShuffleList) {
+            config.shuffle_list[index].soundcloud_data = sound;
+          }
+        }
+      } else {
+        if (playlist != null) {
+          AmplitudeHelpers.writeDebugMessage(
+            config.playlists[playlist].songs[index].name +
+              " by " +
+              config.playlists[playlist].songs[index].artist +
+              " is not streamable by the Soundcloud API"
+          );
+        } else {
+          /*
+            If not streamable, then we print a message to the user stating
+            that the song with name X and artist X is not streamable. This
+            gets printed ONLY if they have debug turned on.
+          */
+          AmplitudeHelpers.writeDebugMessage(
+            config.songs[index].name +
+              " by " +
+              config.songs[index].artist +
+              " is not streamable by the Soundcloud API"
+          );
+        }
+      }
+    });
+  }
+
+  /**
    * Due to Soundcloud SDK being asynchronous, we need to scope the
    * index of the song in another function. The privateGetSoundcloudStreamableURLs
    * function does the actual iteration and scoping.
@@ -173,11 +287,24 @@ let SoundCloud = (function() {
     });
   }
 
+  /**
+   * Determines if a given URL is a SoundCloud URL.
+   *
+   * @param {string} url - The URL to test if it's a SoundCloud URL.
+   */
+  function isSoundCloudURL(url) {
+    let soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+
+    return url.match(soundcloud_regex);
+  }
+
   /*
 		Returns the publically accessible methods
 	*/
   return {
-    loadSoundCloud: loadSoundCloud
+    loadSoundCloud: loadSoundCloud,
+    resolveIndividualStreamableURL: resolveIndividualStreamableURL,
+    isSoundCloudURL: isSoundCloudURL
   };
 })();
 

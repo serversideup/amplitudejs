@@ -1,7 +1,4 @@
 /**
- * TODO: CLEAN THIS UP
- */
-/**
  * Imports the config module
  * @module config
  */

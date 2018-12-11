@@ -4,7 +4,18 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the duration countdown elements.
+ *
+ * @module visual/time/DurationCountDownTimeElements.
+ */
 let DurationCountDownTimeElements = (function() {
+  /**
+   * Syncs all of the countdown time elements.
+   *
+   * @param {object} countDownTime - The current time of the audio.
+   * @param {object} songDuration - The song duration of the audio.
+   */
   function sync(countDownTime, songDuration) {
     let timeRemaining = computeTimeRemaining(countDownTime, songDuration);
 
@@ -14,6 +25,11 @@ let DurationCountDownTimeElements = (function() {
     syncSongInPlaylist(timeRemaining);
   }
 
+  /**
+   * Syncs the global count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncGlobal(timeRemaining) {
     let durationTimeRemainingSelectors = document.querySelectorAll(
       ".amplitude-time-remaining"
@@ -33,6 +49,11 @@ let DurationCountDownTimeElements = (function() {
     }
   }
 
+  /**
+   * Syncs the playlist count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncPlaylist(timeRemaining) {
     let durationTimeRemainingSelectors = document.querySelectorAll(
       '.amplitude-time-remaining[data-amplitude-playlist="' +
@@ -51,6 +72,11 @@ let DurationCountDownTimeElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncSong(timeRemaining) {
     if (config.active_playlist == null) {
       let durationTimeRemainingSelectors = document.querySelectorAll(
@@ -71,6 +97,11 @@ let DurationCountDownTimeElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song in playlist count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncSongInPlaylist(timeRemaining) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -90,6 +121,9 @@ let DurationCountDownTimeElements = (function() {
     }
   }
 
+  /**
+   * Resets the count down times.
+   */
   function resetTimes() {
     let durationTimeRemainingSelectors = document.querySelectorAll(
       ".amplitude-time-remaining"
@@ -100,6 +134,12 @@ let DurationCountDownTimeElements = (function() {
     }
   }
 
+  /**
+   * Computes the time remaining for the audio.
+   *
+   * @param {object} currentTime - The current time of the audio.
+   * @param {object} songDuration - The duration of the audio.
+   */
   function computeTimeRemaining(currentTime, songDuration) {
     let timeRemaining = "00:00";
 
@@ -147,6 +187,9 @@ let DurationCountDownTimeElements = (function() {
     return timeRemaining;
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

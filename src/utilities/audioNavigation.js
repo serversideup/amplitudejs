@@ -4,17 +4,67 @@
  */
 import config from "../config.js";
 
+/**
+ * Imports the Core Module
+ *
+ * @module core/Core
+ */
 import Core from "../core/core.js";
 
+/**
+ * Imports the Callbacks Module
+ *
+ * @module utilities/Callbacks
+ */
 import Callbacks from "../utilities/callbacks.js";
+
+/**
+ * Imports the Checks Module
+ *
+ * @module utilities/Checks
+ */
 import Checks from "../utilities/checks.js";
 
+/**
+ * Imports the Play Pause Elements Module
+ *
+ * @module visual/PlayPauseElements
+ */
 import PlayPauseElements from "../visual/playPauseElements.js";
+
+/**
+ * Imports the Song Slider Elements Module
+ *
+ * @module visual/SongSliderElements
+ */
 import SongSliderElements from "../visual/songSliderElements.js";
+
+/**
+ * Imports the Song Played Progress Elements Module
+ *
+ * @module visual/SongPlayedProgressElements
+ */
 import SongPlayedProgressElements from "../visual/songPlayedProgressElements.js";
+
+/**
+ * Imports the Time Elements Module
+ *
+ * @module visual/TimeElements
+ */
 import TimeElements from "../visual/timeElements.js";
 
+/**
+ * Meta Data Elements Module
+ *
+ * @module visual/MetaDataElements
+ */
 import MetaDataElements from "../visual/metaDataElements.js";
+
+/**
+ * Container Elements Module
+ *
+ * @module visual/ContainerElements
+ */
 import ContainerElements from "../visual/containerElements.js";
 
 /**
@@ -302,6 +352,9 @@ let AudioNavigation = (function() {
     */
     changeSong(previousSong, previousIndex);
 
+    /*
+      Play the newest song.
+    */
     Core.play();
 
     /*
@@ -422,7 +475,7 @@ let AudioNavigation = (function() {
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
-    config.active_index = parseInt( index );
+    config.active_index = parseInt(index);
 
     /*
       Set new information now that the song has changed.
@@ -452,7 +505,7 @@ let AudioNavigation = (function() {
     config.active_album = song.album;
     config.active_index = null;
 
-    config.playlists[playlist].active_index = parseInt( index );
+    config.playlists[playlist].active_index = parseInt(index);
 
     /*
       Set new information now that the song has changed.

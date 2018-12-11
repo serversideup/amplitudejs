@@ -521,6 +521,28 @@ $(document).ready(function(){
 	});
 
 	/**
+	 * Test add SoundCloud Song.
+	 */
+	$('#amplitude-add-soundcloud-song').on('click', function(){
+		$('#amplitude-function-output').html('');
+		$('#amplitude-function-output-pre').html('');
+
+		let song = {
+			name: "Seen It All",
+			artist: "DJ East Oakland Boy",
+			url: "https://soundcloud.com/roypacshakur/seen-it-all-young-jeezy-x-jayz"
+		}
+
+		Amplitude.addSong( song );
+
+		$('#amplitude-function-output').html('Song Added: '+JSON.stringify(song, null, 4));
+
+		let config = Amplitude.getConfig();
+
+		$('#amplitude-function-output-pre').append('Current Config: '+JSON.stringify(config, null, 4) );
+	});
+
+	/**
 	 * Test add song to playlist.
 	 */
 	$('#amplitude-add-song-to-playlist').on('click', function(){
@@ -538,6 +560,28 @@ $(document).ready(function(){
 		Amplitude.addSongToPlaylist( song, 'trip_hop' );
 
 		$('#amplitude-function-output').html('Song Added To Trip Hop Playlist: '+JSON.stringify(song, null, 4));
+
+		let config = Amplitude.getConfig();
+
+		$('#amplitude-function-output-pre').append('Current Config: '+JSON.stringify(config, null, 4) );
+	});
+
+	/**
+	 * Test add SoundCloud Song.
+	 */
+	$('#amplitude-add-soundcloud-song-to-playlist').on('click', function(){
+		$('#amplitude-function-output').html('');
+		$('#amplitude-function-output-pre').html('');
+
+		let song = {
+			name: "Seen It All",
+			artist: "DJ East Oakland Boy",
+			url: "https://soundcloud.com/roypacshakur/seen-it-all-young-jeezy-x-jayz"
+		}
+
+		Amplitude.addSongToPlaylist( song, 'trip_hop' );
+
+		$('#amplitude-function-output').html('Song Added: '+JSON.stringify(song, null, 4));
 
 		let config = Amplitude.getConfig();
 

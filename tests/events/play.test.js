@@ -1,8 +1,8 @@
-const Amplitude = require('../../src/index.js');
+const Amplitude = require("../../src/index.js");
 
-const config = require('../../src/config.js');
+const config = require("../../src/config.js");
 
-const Setup = require('../setup.js');
+const Setup = require("../setup.js");
 
 beforeEach(() => {
   buildPlayButtons();
@@ -14,7 +14,7 @@ afterEach(() => {
   Setup.resetConfig();
 });
 
-function buildPlayButtons(){
+function buildPlayButtons() {
   document.body.innerHTML =
     '<div class="amplitude-play" id="global-play"></div>' +
     '<div class="amplitude-play" data-amplitude-playlist="emancipator" id="playlist-play"></div>' +
@@ -22,44 +22,43 @@ function buildPlayButtons(){
     '<div class="amplitude-play" data-amplitude-playlist="emancipator" data-amplitude-song-index="1" id="song-in-playlist-play"></div>';
 }
 
-test('AmplitudeJS Global Play Plays the song', () => {
+test("AmplitudeJS Global Play Plays the song", () => {
   config.audio.paused = true;
 
-  document.getElementById('global-play').click();
+  document.getElementById("global-play").click();
 
-  expect( config.active_metadata ).toBe( config.songs[0] );
-  expect( config.audio.paused ).toBe( false );
+  expect(config.active_metadata).toBe(config.songs[0]);
+  expect(config.audio.paused).toBe(false);
 });
 
-
-test('AmplitudeJS Playlist Play Changes Playlist, Plays Song', () => {
+test("AmplitudeJS Playlist Play Changes Playlist, Plays Song", () => {
   config.audio.paused = true;
 
-  document.getElementById('playlist-play').click();
+  document.getElementById("playlist-play").click();
 
-  expect( config.active_playlist ).toBe( 'emancipator' );
-  expect( config.active_metadata ).toBe( config.playlists['emancipator'].songs[0] );
-  expect( config.audio.paused ).toBe( false );
+  expect(config.active_playlist).toBe("emancipator");
+  expect(config.active_metadata).toBe(config.playlists["emancipator"].songs[0]);
+  expect(config.audio.paused).toBe(false);
 });
 
-test('AmplitudeJS Song Play Nullifies Playlist, Plays Song Defined', () => {
+test("AmplitudeJS Song Play Nullifies Playlist, Plays Song Defined", () => {
   config.audio.paused = true;
-  config.active_playlist = 'emancipator';
+  config.active_playlist = "emancipator";
 
-  document.getElementById('song-play').click();
+  document.getElementById("song-play").click();
 
-  expect( config.active_playlist ).toBe( null );
-  expect( config.active_metadata ).toBe( config.songs[1] );
-  expect( config.audio.paused ).toBe( false );
+  expect(config.active_playlist).toBe(null);
+  expect(config.active_metadata).toBe(config.songs[1]);
+  expect(config.audio.paused).toBe(false);
 });
 
-test('AmplitudeJS Song In Playlist Play Plays Song Defined In Playlist', () => {
+test("AmplitudeJS Song In Playlist Play Plays Song Defined In Playlist", () => {
   config.audio.paused = true;
 
-  document.getElementById('song-in-playlist-play').click();
+  document.getElementById("song-in-playlist-play").click();
 
-  expect( config.active_playlist ).toBe('emancipator');
-  expect( config.active_metadata ).toBe( config.playlists['emancipator'].songs[1] );
-  expect( config.playlists['emancipator'].active_index ).toBe( 1 );
-  expect( config.audio.paused ).toBe( false );
+  expect(config.active_playlist).toBe("emancipator");
+  expect(config.active_metadata).toBe(config.playlists["emancipator"].songs[1]);
+  expect(config.playlists["emancipator"].active_index).toBe(1);
+  expect(config.audio.paused).toBe(false);
 });

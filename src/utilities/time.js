@@ -1,7 +1,7 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ * Imports the config module
+ * @module config
  */
-
 import config from "../config.js";
 
 /**
@@ -65,9 +65,9 @@ let Time = (function() {
     /*
 			Build a clean current time object and send back the appropriate information.
 		*/
-    currentTime.seconds = parseInt( currentSeconds );
-    currentTime.minutes = parseInt( currentMinutes );
-    currentTime.hours = parseInt( currentHours );
+    currentTime.seconds = parseInt(currentSeconds);
+    currentTime.minutes = parseInt(currentMinutes);
+    currentTime.hours = parseInt(currentHours);
 
     return currentTime;
   }
@@ -134,7 +134,9 @@ let Time = (function() {
     songDuration.minutes = isNaN(songDurationMinutes)
       ? "00"
       : songDurationMinutes;
-    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours.toString();
+    songDuration.hours = isNaN(songDurationHours)
+      ? "00"
+      : songDurationHours.toString();
 
     return songDuration;
   }

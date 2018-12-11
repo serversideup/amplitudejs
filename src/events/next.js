@@ -1,12 +1,26 @@
-import Core from "../core/core.js";
-import PlayPauseElements from "../visual/playPauseElements.js";
-import Callbacks from "../utilities/callbacks.js";
-
 /**
  * Imports the config module
  * @module config
  */
 import config from "../config.js";
+
+/**
+ * Imports the AmplitudeJS Core module.
+ * @module core/core
+ */
+import Core from "../core/core.js";
+
+/**
+ * Imports the Play Pause Elements Module.
+ * @module visual/PlayPauseElements
+ */
+import PlayPauseElements from "../visual/playPauseElements.js";
+
+/**
+ * Imports the Callbacks Module
+ * @module utilities/Callbacks
+ */
+import Callbacks from "../utilities/callbacks.js";
 
 /**
  * Imports the Amplitude Audio Navigation Utility

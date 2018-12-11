@@ -1,5 +1,14 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from "../config.js";
 
+/**
+ * Handles the state of the config object.
+ *
+ * @module utilities/ConfigState
+ */
 let ConfigState = (function() {
   /**
    * Resets the config to the default state. This is called on initialize
@@ -15,7 +24,6 @@ let ConfigState = (function() {
     config.active_album = "";
     config.active_index = 0;
     config.active_playlist = null;
-    config.autoplay = false;
     config.playback_speed = 1.0;
     config.callbacks = {};
     config.songs = [];
@@ -40,15 +48,28 @@ let ConfigState = (function() {
     config.continue_next = true;
   }
 
+  /**
+   * Sets the state of the player.
+   */
   function setPlayerState() {
+    /*
+      If paused and the current time is 0 the player is stopped.
+    */
     if (config.audio.paused && config.audio.currentTime == 0) {
       config.player_state = "stopped";
     }
 
+    /*
+      If paused and the current time is greater than 0 the player is
+      paused.
+    */
     if (config.audio.paused && config.audio.currentTime > 0) {
       config.player_state = "paused";
     }
 
+    /*
+      If playing, the current state is playing.
+    */
     if (!config.audio.paused) {
       config.player_state = "playing";
     }

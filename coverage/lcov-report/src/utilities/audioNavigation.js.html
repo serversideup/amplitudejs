@@ -589,7 +589,110 @@
 544
 545
 546
-547</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -892,6 +995,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1141,17 +1247,67 @@
  */
 import config from "../config.js";
 &nbsp;
+/**
+ * Imports the Core Module
+ *
+ * @module core/Core
+ */
 import Core from "../core/core.js";
 &nbsp;
+/**
+ * Imports the Callbacks Module
+ *
+ * @module utilities/Callbacks
+ */
 import Callbacks from "../utilities/callbacks.js";
+&nbsp;
+/**
+ * Imports the Checks Module
+ *
+ * @module utilities/Checks
+ */
 import Checks from "../utilities/checks.js";
 &nbsp;
+/**
+ * Imports the Play Pause Elements Module
+ *
+ * @module visual/PlayPauseElements
+ */
 import PlayPauseElements from "../visual/playPauseElements.js";
+&nbsp;
+/**
+ * Imports the Song Slider Elements Module
+ *
+ * @module visual/SongSliderElements
+ */
 import SongSliderElements from "../visual/songSliderElements.js";
+&nbsp;
+/**
+ * Imports the Song Played Progress Elements Module
+ *
+ * @module visual/SongPlayedProgressElements
+ */
 import SongPlayedProgressElements from "../visual/songPlayedProgressElements.js";
+&nbsp;
+/**
+ * Imports the Time Elements Module
+ *
+ * @module visual/TimeElements
+ */
 import TimeElements from "../visual/timeElements.js";
 &nbsp;
+/**
+ * Meta Data Elements Module
+ *
+ * @module visual/MetaDataElements
+ */
 import MetaDataElements from "../visual/metaDataElements.js";
+&nbsp;
+/**
+ * Container Elements Module
+ *
+ * @module visual/ContainerElements
+ */
 import ContainerElements from "../visual/containerElements.js";
 &nbsp;
 /**
@@ -1439,6 +1595,9 @@ let AudioNavigation = (function() {
     */
     changeSong(previousSong, previousIndex);
 &nbsp;
+    /*
+      Play the newest song.
+    */
     Core.play();
 &nbsp;
     /*
@@ -1559,7 +1718,7 @@ let AudioNavigation = (function() {
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
-    config.active_index = parseInt( index );
+    config.active_index = parseInt(index);
 &nbsp;
     /*
       Set new information now that the song has changed.
@@ -1589,7 +1748,7 @@ let AudioNavigation = (function() {
     config.active_album = song.album;
     config.active_index = null;
 &nbsp;
-    config.playlists[playlist].active_index = parseInt( index );
+    config.playlists[playlist].active_index = parseInt(index);
 &nbsp;
     /*
       Set new information now that the song has changed.
@@ -1687,7 +1846,7 @@ export default AudioNavigation;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 10 2018 08:32:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 08:07:57 GMT-0800 (PST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

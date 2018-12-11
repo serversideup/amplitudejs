@@ -234,7 +234,25 @@
 189
 190
 191
-192</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,7 +278,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -296,7 +313,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -316,7 +332,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -368,7 +383,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -379,6 +393,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -425,8 +443,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import config from "../config.js";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Imports the config module
+ * @module config
+ */
+import config from "../config.js";
 &nbsp;
+/**
+ * Handles the syncing of the song played progress elements.
+ *
+ * @module visual/SongPlayedProgressElements
+ */
 let SongPlayedProgressElements = (function() {
   /**
    * Syncs the song played progress bars. These are HTML5 progress elements.
@@ -446,7 +473,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function <span class="fstat-no" title="function not covered" >syncGlobal(</span>percentage) {
     /*
@@ -482,7 +508,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access public
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function <span class="fstat-no" title="function not covered" >syncPlaylist(</span>percentage) {
     /*
@@ -517,7 +542,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function <span class="fstat-no" title="function not covered" >syncSong(</span>percentage) {
 <span class="cstat-no" title="statement not covered" >    if (config.active_playlist == null) {</span>
@@ -554,7 +578,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function <span class="fstat-no" title="function not covered" >syncSongInPlaylist(</span>percentage) {
     /*
@@ -577,6 +600,10 @@ let SongPlayedProgressElements = (function() {
           '"]'
       );
 &nbsp;
+      /*
+        Iterates over all of the song played progress elements
+        and sets them accordingly.
+      */
 <span class="cstat-no" title="statement not covered" >      for (let i = 0; i &lt; songPlayedProgressBars.length; i++) {</span>
         let playlist = <span class="cstat-no" title="statement not covered" >songPlayedProgressBars[i].getAttribute(</span>
           "data-amplitude-playlist"
@@ -622,7 +649,7 @@ export default SongPlayedProgressElements;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 10 2018 08:32:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 08:07:57 GMT-0800 (PST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

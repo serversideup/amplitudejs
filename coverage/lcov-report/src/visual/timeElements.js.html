@@ -142,7 +142,27 @@
 97
 98
 99
-100</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,6 +223,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">370x</span>
 <span class="cline-any cline-yes">370x</span>
 <span class="cline-any cline-yes">370x</span>
@@ -210,10 +233,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,11 +256,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
@@ -301,6 +341,9 @@ import DurationTimeElements from "./time/durationTimeElements.js";
  * @module visual/TimeElements
  */
 let TimeElements = (function() {
+  /**
+   * Resets the current times.
+   */
   function resetCurrentTimes() {
     CurrentTimeElements.resetTimes();
     CurrentHourElements.resetTimes();
@@ -308,6 +351,11 @@ let TimeElements = (function() {
     CurrentSecondElements.resetTimes();
   }
 &nbsp;
+  /**
+   * Syncs the current time elements to the time provided.
+   *
+   * @param {Object} currentTime - An object representing the current time of the audio.
+   */
   function <span class="fstat-no" title="function not covered" >syncCurrentTimes(</span>currentTime) {
 <span class="cstat-no" title="statement not covered" >    CurrentTimeElements.sync(currentTime);</span>
 <span class="cstat-no" title="statement not covered" >    CurrentHourElements.sync(currentTime.hours);</span>
@@ -315,6 +363,9 @@ let TimeElements = (function() {
 <span class="cstat-no" title="statement not covered" >    CurrentSecondElements.sync(currentTime.seconds);</span>
   }
 &nbsp;
+  /**
+   * Resets the duration times.
+   */
   function resetDurationTimes() {
     DurationCountDownTimeElements.resetTimes();
     DurationHourElements.resetTimes();
@@ -323,6 +374,12 @@ let TimeElements = (function() {
     DurationTimeElements.resetTimes();
   }
 &nbsp;
+  /**
+   * Syncs the duration times to the times provided.
+   *
+   * @param {Object} currentTime - An object representing the current time of the audio.
+   * @param {Object} songDuration - An object representing the duration of the audio
+   */
   function <span class="fstat-no" title="function not covered" >syncDurationTimes(</span>currentTime, songDuration) {
 <span class="cstat-no" title="statement not covered" >    DurationCountDownTimeElements.sync(currentTime, songDuration);</span>
 <span class="cstat-no" title="statement not covered" >    DurationTimeElements.sync(songDuration);</span>
@@ -331,6 +388,9 @@ let TimeElements = (function() {
 <span class="cstat-no" title="statement not covered" >    DurationSecondElements.sync(songDuration.seconds);</span>
   }
 &nbsp;
+  /**
+   * Returns the publically accessible methods.
+   */
   return {
     resetCurrentTimes: resetCurrentTimes,
     syncCurrentTimes: syncCurrentTimes,
@@ -346,7 +406,7 @@ export default TimeElements;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 10 2018 08:32:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 08:07:57 GMT-0800 (PST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

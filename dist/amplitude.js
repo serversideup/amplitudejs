@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 47);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -83,59 +83,10 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-/**
- * These variables make Amplitude run. The config is the most important
- * containing active settings and parameters.
- *
- * The config JSON is the global settings for ALL of Amplitude functions.
- * This is global and contains all of the user preferences. The default
- * settings are set, and the user overwrites them when they initialize
- * Amplitude.
- *
- * @module config
- * @type {object}
- * @property {string}  	config.version          				- The current version of AmplitudeJS.
- * @property {object} 	config.audio 		 								-	Handles all of the audio.
- * @property {object} 	config.active_metadata					- Contains the active metadata for the song.
- * @property {string} 	config.active_album							- Holds the active album name. Used to check and see if the album changed and run the album changed callback.
- * @property {number} 	config.active_index							- Contains the index of the actively playing song.
- * @property {string} 	config.active_playlist					- Contains the key to the active playlist index.
- * @property {boolean}	config.autoplay									- Set to true to autoplay the song
- * @property {number} 	config.playback_speed						- Sets the initial playback speed of the song. The values for this can be 1.0, 1.5, 2.0
- * @property {object} 	config.callbacks								- The user can pass a JSON object with a key => value store of callbacks to be run at certain events.
- * @property {array} 		config.songs										- Contains all of the songs the user has passed to Amplitude to use.
- * @property {object} 	config.playlists								- Contains all of the playlists the user created.
- * @property {object} 	config.start_song 							- The index of the song that AmplitudeJS should start with.
- * @property {string} 	config.starting_playlist 				- The starting playlist the player will intiialize to.
- * @property {string} 	config.starting_playlist_song 	- The index of the song in the playlist that should be started.
- * @property {boolean} 	config.repeat 									- When repeat is on, when the song ends the song will replay itself.
- * @property {object} 	config.shuffle_list							- When shuffled, gets populated with the songs the user provided in a random order.
- * @property {boolean} 	config.shuffle_on								- When on, gets set to true so when traversing through songs, AmplitudeJS knows whether or not to use the songs object or the shuffle_list
- * @property {string}		config.default_album_art 				- The user can set default album art to be displayed if the song they set doesn't contain album art.
- * @property {string} 	config.default_playlist_art 		- The user can set default playlist art to be displayed if the playlist they are setting meta data for doesn't contain an art picture.
- * @property {boolean} 	config.debug										- When set to true, AmplitudeJS will print to the console any errors providing helpful feedback to the user.
- * @property {number} 	config.volume 									- The user can set the initial volume to a number between 0 and 1 over-riding the default of .5
- * @property {number} 	config.pre_mute_volume 					- This is set on mute so that when a user un-mutes AmplitudeJS knows what to restore the volume to.
- * @property {number}		config.volume_increment 				- The default values are an integer between 1 and 100 for how much the volume should increase when the user presses the volume up button.
- * @property {number}		config.volume_decrement 				- The default values are an integer between 1 and 100 for how much the volume should decrease when the user presses the volume down button.
- * @property {string} 	config.soundcloud_client 				- When using SoundCloud, the user will have to provide their API Client ID
- * @property {boolean} 	config.soundcloud_use_art 			- The user can set this to true and AmplitudeJS will use the album art for the song returned from the Soundcloud API
- * @property {number} 	config.soundcloud_song_count 		- Used on config to count how many songs are from Soundcloud and compare it to how many are ready for when to move to the rest of the configuration
- * @property {number} 	config.soundcloud_songs_ready 	- Used on config to count how many songs are ready so when we get all of the data from the SoundCloud API that we need this should match the SoundCloud song count meaning we can move to the rest of the config.
- * @property {integer}	config.is_touch_moving 					- Flag for if the user is moving the screen.
- * @property {boolean}	config.buffered									- How much of the song is buffered.
- * @property {object} 	config.bindings									- Array of bindings to certain key events.
- * @property {boolean} 	config.continue_next 						- Determines when a song ends, we should continue to the next song.
- * @property {number}   config.delay 										- Sets the delay between songs in MS.
- * @property {boolean}  config.use_web_audio_api 				- Flag that determines if the user wants to use Web Audio API Components.
- * @property {boolean}  config.web_audio_api_available  - Flag that determines if the Web Audio API is available.
- * @property {object}  	config.context 									- Web Audio API Context
- * @property {object}		config.source 									- Web Audio API Source
- * @property {object} 	config.analyser 								- Web Audio API Analyser
- * @property {string}		config.player_state 						- The current state of the player.
- */
+var _package = __webpack_require__(59);
+
 module.exports = {
-  version: "3.3.1",
+  version: _package.version,
 
   audio: new Audio(),
 
@@ -145,9 +96,7 @@ module.exports = {
 
   active_index: 0,
 
-  active_playlist: "",
-
-  autoplay: false,
+  active_playlist: null,
 
   playback_speed: 1.0,
 
@@ -226,7 +175,56 @@ module.exports = {
 
     built: []
   }
-};
+}; /**
+    * These variables make Amplitude run. The config is the most important
+    * containing active settings and parameters.
+    *
+    * The config JSON is the global settings for ALL of Amplitude functions.
+    * This is global and contains all of the user preferences. The default
+    * settings are set, and the user overwrites them when they initialize
+    * Amplitude.
+    *
+    * @module config
+    * @type {object}
+    * @property {string}  	config.version          				- The current version of AmplitudeJS.
+    * @property {object} 	config.audio 		 								-	Handles all of the audio.
+    * @property {object} 	config.active_metadata					- Contains the active metadata for the song.
+    * @property {string} 	config.active_album							- Holds the active album name. Used to check and see if the album changed and run the album changed callback.
+    * @property {number} 	config.active_index							- Contains the index of the actively playing song.
+    * @property {string} 	config.active_playlist					- Contains the key to the active playlist index.
+    * @property {number} 	config.playback_speed						- Sets the initial playback speed of the song. The values for this can be 1.0, 1.5, 2.0
+    * @property {object} 	config.callbacks								- The user can pass a JSON object with a key => value store of callbacks to be run at certain events.
+    * @property {array} 		config.songs										- Contains all of the songs the user has passed to Amplitude to use.
+    * @property {object} 	config.playlists								- Contains all of the playlists the user created.
+    * @property {object} 	config.start_song 							- The index of the song that AmplitudeJS should start with.
+    * @property {string} 	config.starting_playlist 				- The starting playlist the player will intiialize to.
+    * @property {string} 	config.starting_playlist_song 	- The index of the song in the playlist that should be started.
+    * @property {boolean} 	config.repeat 									- When repeat is on, when the song ends the song will replay itself.
+    * @property {object} 	config.shuffle_list							- When shuffled, gets populated with the songs the user provided in a random order.
+    * @property {boolean} 	config.shuffle_on								- When on, gets set to true so when traversing through songs, AmplitudeJS knows whether or not to use the songs object or the shuffle_list
+    * @property {string}		config.default_album_art 				- The user can set default album art to be displayed if the song they set doesn't contain album art.
+    * @property {string} 	config.default_playlist_art 		- The user can set default playlist art to be displayed if the playlist they are setting meta data for doesn't contain an art picture.
+    * @property {boolean} 	config.debug										- When set to true, AmplitudeJS will print to the console any errors providing helpful feedback to the user.
+    * @property {number} 	config.volume 									- The user can set the initial volume to a number between 0 and 1 over-riding the default of .5
+    * @property {number} 	config.pre_mute_volume 					- This is set on mute so that when a user un-mutes AmplitudeJS knows what to restore the volume to.
+    * @property {number}		config.volume_increment 				- The default values are an integer between 1 and 100 for how much the volume should increase when the user presses the volume up button.
+    * @property {number}		config.volume_decrement 				- The default values are an integer between 1 and 100 for how much the volume should decrease when the user presses the volume down button.
+    * @property {string} 	config.soundcloud_client 				- When using SoundCloud, the user will have to provide their API Client ID
+    * @property {boolean} 	config.soundcloud_use_art 			- The user can set this to true and AmplitudeJS will use the album art for the song returned from the Soundcloud API
+    * @property {number} 	config.soundcloud_song_count 		- Used on config to count how many songs are from Soundcloud and compare it to how many are ready for when to move to the rest of the configuration
+    * @property {number} 	config.soundcloud_songs_ready 	- Used on config to count how many songs are ready so when we get all of the data from the SoundCloud API that we need this should match the SoundCloud song count meaning we can move to the rest of the config.
+    * @property {integer}	config.is_touch_moving 					- Flag for if the user is moving the screen.
+    * @property {boolean}	config.buffered									- How much of the song is buffered.
+    * @property {object} 	config.bindings									- Array of bindings to certain key events.
+    * @property {boolean} 	config.continue_next 						- Determines when a song ends, we should continue to the next song.
+    * @property {number}   config.delay 										- Sets the delay between songs in MS.
+    * @property {boolean}  config.use_web_audio_api 				- Flag that determines if the user wants to use Web Audio API Components.
+    * @property {boolean}  config.web_audio_api_available  - Flag that determines if the Web Audio API is available.
+    * @property {object}  	config.context 									- Web Audio API Context
+    * @property {object}		config.source 									- Web Audio API Source
+    * @property {object} 	config.analyser 								- Web Audio API Analyser
+    * @property {string}		config.player_state 						- The current state of the player.
+    */
 
 /***/ }),
 /* 1 */
@@ -843,7 +841,7 @@ var _songSliderElements = __webpack_require__(14);
 
 var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
 
-var _songPlayedProgressElements = __webpack_require__(18);
+var _songPlayedProgressElements = __webpack_require__(19);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
@@ -1622,8 +1620,7 @@ var ConfigState = function () {
     _config2.default.active_metadata = {};
     _config2.default.active_album = "";
     _config2.default.active_index = 0;
-    _config2.default.active_playlist = "";
-    _config2.default.autoplay = false;
+    _config2.default.active_playlist = null;
     _config2.default.playback_speed = 1.0;
     _config2.default.callbacks = {};
     _config2.default.songs = [];
@@ -1637,7 +1634,6 @@ var ConfigState = function () {
     _config2.default.default_album_art = "";
     _config2.default.default_playlist_art = "";
     _config2.default.debug = false;
-    _config2.default.handle_song_elements = true;
     _config2.default.volume = 0.5;
     _config2.default.pre_mute_volume = 0.5;
     _config2.default.volume_increment = 5;
@@ -1948,8 +1944,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * These methods help display the audio's meta data
  *
- * TODO Update to new structure for all elements
- * TODO Can we merge all 3?
  * @module visual/MetaDataElements
  */
 var MetaDataElements = function () {
@@ -2569,7 +2563,7 @@ var Shuffler = function () {
     if (shuffle) {
       shuffleSongs();
     } else {
-      _config2.default.shuffle_list = {};
+      _config2.default.shuffle_list = [];
     }
   }
 
@@ -3571,6 +3565,294 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
+var _init = __webpack_require__(20);
+
+var _init2 = _interopRequireDefault(_init);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * These helpers wrap around the basic methods of the Soundcloud API
+ * and get the information we need from SoundCloud to make the songs
+ * streamable through Amplitude
+ *
+ * @module soundcloud/SoundCloud
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+var SoundCloud = function () {
+  /**
+   * Defines the temporary user config used while we configure soundcloud
+   * @type {object}
+   */
+  var tempUserConfig = {};
+
+  /**
+   * Loads the soundcloud SDK for use with Amplitude so the user doesn't have
+   * to load it themselves.
+   * With help from: http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file
+   *
+   * @access public
+   * @param {object} userConfig 	- The config defined by the user for AmplitudeJS
+   */
+  function loadSoundCloud(userConfig) {
+    /*
+    Sets the temporary config to the config passed by the user so we can make changes
+    and not break the actual config.
+    */
+    tempUserConfig = userConfig;
+
+    /*
+    Gets the head tag for the document and create a script element.
+    */
+    var head = document.getElementsByTagName("head")[0];
+    var script = document.createElement("script");
+
+    script.type = "text/javascript";
+
+    /*
+    URL to the remote soundcloud SDK
+    */
+    script.src = "https://connect.soundcloud.com/sdk.js";
+    script.onreadystatechange = initSoundcloud;
+    script.onload = initSoundcloud;
+
+    /*
+    Add the script to the head of the document.
+    */
+    head.appendChild(script);
+  }
+
+  /**
+   * Initializes soundcloud with the key provided.
+   *
+   * @access private
+   */
+  function initSoundcloud() {
+    /*
+    Calls the SoundCloud initialize function
+    from their API and sends it the client_id
+    that the user passed in.
+    */
+    SC.initialize({
+      client_id: _config2.default.soundcloud_client
+    });
+
+    /*
+    Gets the streamable URLs to run through Amplitue. This is
+    VERY important since Amplitude can't stream the copy and pasted
+    link from the SoundCloud page, but can resolve the streaming
+    URLs from the link.
+    */
+    getStreamableURLs();
+  }
+
+  /**
+   * Gets the streamable URL from the URL provided for
+   * all of the soundcloud links.  This will loop through
+   * and set all of the information for the soundcloud
+   * urls.
+   *
+   * @access private
+   */
+  function getStreamableURLs() {
+    /*
+    Define the regex to find the soundcloud URLs
+    */
+    var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+
+    for (var i = 0; i < _config2.default.songs.length; i++) {
+      /*
+      If the URL matches soundcloud, we grab
+      that url and get the streamable link
+      if there is one.
+      */
+      if (_config2.default.songs[i].url.match(soundcloud_regex)) {
+        _config2.default.soundcloud_song_count++;
+        resolveStreamable(_config2.default.songs[i].url, i);
+      }
+    }
+  }
+
+  function resolveIndividualStreamableURL(url, playlist, index) {
+    var addToShuffleList = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+    SC.get("/resolve/?url=" + url, function (sound) {
+      /*
+        If streamable we get the url and bind the client ID to the end
+        so Amplitude can just stream the song normally. We then overwrite
+        the url the user provided with the streamable URL.
+      */
+      if (sound.streamable) {
+        if (playlist != null) {
+          _config2.default.playlists[playlist].songs[index].url = sound.stream_url + "?client_id=" + _config2.default.soundcloud_client;
+
+          if (addToShuffleList) {
+            _config2.default.playlists[playlist].shuffle_list[index].url = sound.stream_url + "?client_id=" + _config2.default.soundcloud_client;
+          }
+          /*
+            If the user want's to use soundcloud art, we overwrite the
+            cover_art_url with the soundcloud artwork url.
+          */
+          if (_config2.default.soundcloud_use_art) {
+            _config2.default.playlists[playlist].songs[index].cover_art_url = sound.artwork_url;
+
+            if (addToShuffleList) {
+              _config2.default.playlists[playlist].shuffle_list[index].cover_art_url = sound.artwork_url;
+            }
+          }
+
+          /*
+            Grab the extra metadata from soundcloud and bind it to the
+            song.  The user can get this through the public function:
+            getActiveSongMetadata
+          */
+          _config2.default.playlists[playlist].songs[index].soundcloud_data = sound;
+
+          if (addToShuffleList) {
+            _config2.default.playlists[playlist].shuffle_list[index].soundcloud_data = sound;
+          }
+        } else {
+          _config2.default.songs[index].url = sound.stream_url + "?client_id=" + _config2.default.soundcloud_client;
+
+          if (addToShuffleList) {
+            _config2.default.shuffle_list[index].stream_url + "?client_id=" + _config2.default.soundcloud_client;
+          }
+
+          /*
+            If the user want's to use soundcloud art, we overwrite the
+            cover_art_url with the soundcloud artwork url.
+          */
+          if (_config2.default.soundcloud_use_art) {
+            _config2.default.songs[index].cover_art_url = sound.artwork_url;
+
+            if (addToShuffleList) {
+              _config2.default.shuffle_list[index].cover_art_url = sound.artwork_url;
+            }
+          }
+
+          /*
+            Grab the extra metadata from soundcloud and bind it to the
+            song.  The user can get this through the public function:
+            getActiveSongMetadata
+          */
+          _config2.default.songs[index].soundcloud_data = sound;
+
+          if (addToShuffleList) {
+            _config2.default.shuffle_list[index].soundcloud_data = sound;
+          }
+        }
+      } else {
+        if (playlist != null) {
+          AmplitudeHelpers.writeDebugMessage(_config2.default.playlists[playlist].songs[index].name + " by " + _config2.default.playlists[playlist].songs[index].artist + " is not streamable by the Soundcloud API");
+        } else {
+          /*
+            If not streamable, then we print a message to the user stating
+            that the song with name X and artist X is not streamable. This
+            gets printed ONLY if they have debug turned on.
+          */
+          AmplitudeHelpers.writeDebugMessage(_config2.default.songs[index].name + " by " + _config2.default.songs[index].artist + " is not streamable by the Soundcloud API");
+        }
+      }
+    });
+  }
+
+  /**
+   * Due to Soundcloud SDK being asynchronous, we need to scope the
+   * index of the song in another function. The privateGetSoundcloudStreamableURLs
+   * function does the actual iteration and scoping.
+   *
+   * @access private
+   * @param {string} url 		- URL of the soundcloud song
+   * @param {number} index 	- The index of the soundcloud song in the songs array.
+   */
+  function resolveStreamable(url, index) {
+    SC.get("/resolve/?url=" + url, function (sound) {
+      /*
+      If streamable we get the url and bind the client ID to the end
+      so Amplitude can just stream the song normally. We then overwrite
+      the url the user provided with the streamable URL.
+      */
+      if (sound.streamable) {
+        _config2.default.songs[index].url = sound.stream_url + "?client_id=" + _config2.default.soundcloud_client;
+
+        /*
+        If the user want's to use soundcloud art, we overwrite the
+        cover_art_url with the soundcloud artwork url.
+        */
+        if (_config2.default.soundcloud_use_art) {
+          _config2.default.songs[index].cover_art_url = sound.artwork_url;
+        }
+
+        /*
+        Grab the extra metadata from soundcloud and bind it to the
+        song.  The user can get this through the public function:
+        getActiveSongMetadata
+        */
+        _config2.default.songs[index].soundcloud_data = sound;
+      } else {
+        /*
+        If not streamable, then we print a message to the user stating
+        that the song with name X and artist X is not streamable. This
+        gets printed ONLY if they have debug turned on.
+        */
+        AmplitudeHelpers.writeDebugMessage(_config2.default.songs[index].name + " by " + _config2.default.songs[index].artist + " is not streamable by the Soundcloud API");
+      }
+      /*
+      Increments the song ready counter.
+      */
+      _config2.default.soundcloud_songs_ready++;
+
+      /*
+      When all songs are accounted for, then amplitude is ready
+      to rock and we set the rest of the config.
+      */
+      if (_config2.default.soundcloud_songs_ready == _config2.default.soundcloud_song_count) {
+        _init2.default.setConfig(tempUserConfig);
+      }
+    });
+  }
+
+  function isSoundCloudURL(url) {
+    var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+
+    return url.match(soundcloud_regex);
+  }
+
+  /*
+  Returns the publically accessible methods
+  */
+  return {
+    loadSoundCloud: loadSoundCloud,
+    resolveIndividualStreamableURL: resolveIndividualStreamableURL,
+    isSoundCloudURL: isSoundCloudURL
+  };
+}();
+
+/**
+ * Imports the initializer
+ * @module init/AmplitudeInitializer
+ */
+exports.default = SoundCloud;
+module.exports = exports["default"];
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -3662,7 +3944,7 @@ exports.default = ShuffleElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3697,7 +3979,6 @@ var SongPlayedProgressElements = function () {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncGlobal(percentage) {
     /*
@@ -3727,7 +4008,6 @@ var SongPlayedProgressElements = function () {
    *
    * @access public
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncPlaylist(percentage) {
     /*
@@ -3756,7 +4036,6 @@ var SongPlayedProgressElements = function () {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncSong(percentage) {
     if (_config2.default.active_playlist == null) {
@@ -3787,7 +4066,6 @@ var SongPlayedProgressElements = function () {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncSongInPlaylist(percentage) {
     /*
@@ -3837,7 +4115,7 @@ exports.default = SongPlayedProgressElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3960,7 +4238,7 @@ var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _soundcloud = __webpack_require__(48);
+var _soundcloud = __webpack_require__(17);
 
 var _soundcloud2 = _interopRequireDefault(_soundcloud);
 
@@ -3980,11 +4258,11 @@ var _shuffler = __webpack_require__(13);
 
 var _shuffler2 = _interopRequireDefault(_shuffler);
 
-var _events = __webpack_require__(25);
+var _events = __webpack_require__(26);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _fx = __webpack_require__(45);
+var _fx = __webpack_require__(46);
 
 var _fx2 = _interopRequireDefault(_fx);
 
@@ -3992,7 +4270,7 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
-var _waveform = __webpack_require__(20);
+var _waveform = __webpack_require__(21);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -4004,11 +4282,11 @@ var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
-var _playlists = __webpack_require__(47);
+var _playlists = __webpack_require__(48);
 
 var _playlists2 = _interopRequireDefault(_playlists);
 
-var _shuffleElements = __webpack_require__(17);
+var _shuffleElements = __webpack_require__(18);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
@@ -4032,7 +4310,7 @@ var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
-var _playbackSpeedElements = __webpack_require__(23);
+var _playbackSpeedElements = __webpack_require__(24);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
@@ -4139,14 +4417,6 @@ var Initializer = function () {
     }
 
     /*
-    Checks if the user has any playlists defined. If they do
-    we have to initialize the functionality for the playlists.
-    */
-    if (userConfig.playlists && countPlaylists(userConfig.playlists) > 0) {
-      _playlists2.default.initialize(userConfig.playlists);
-    }
-
-    /*
       Initialize default live settings
     */
     initializeDefaultLiveSettings();
@@ -4168,7 +4438,7 @@ var Initializer = function () {
 
       /*
       If the user provides a soundcloud client then we assume that
-      there are URLs in their songs that will reference SoundcCloud.
+      there are URLs in their songs that will reference SoundCloud.
       We then copy over the user config they provided to the
       temp_user_config so we don't mess up the global or their configs
       and load the soundcloud information.
@@ -4227,10 +4497,18 @@ var Initializer = function () {
    */
   function setConfig(userConfig) {
     /*
+      Checks if the user has any playlists defined. If they do
+      we have to initialize the functionality for the playlists.
+    */
+    if (userConfig.playlists && countPlaylists(userConfig.playlists) > 0) {
+      _playlists2.default.initialize(userConfig.playlists);
+    }
+
+    /*
     Check to see if the user entered a start song
     TODO: Make sure we `AudioNavigation.changeSongPlaylist()` if starting playlist is set.
     */
-    if (userConfig.start_song != undefined) {
+    if (userConfig.start_song != undefined && userConfig.starting_playlist) {
       /*
       Ensure what has been entered is an integer.
       */
@@ -4341,32 +4619,6 @@ var Initializer = function () {
     initializeElements();
 
     /*
-    If the user has autoplay enabled, then begin playing the song. Everything should
-    be configured for this to be ready to play.
-    */
-    if (userConfig.autoplay) {
-      /*
-      If the user hasn't set a starting playlist, set it to null otherwise initialize to the
-      starting playlist selected by the user.
-      */
-      if (userConfig.starting_playlist == "") {
-        _config2.default.active_playlist = null;
-      } else {
-        _config2.default.active_playlist = userConfig.starting_playlist;
-      }
-
-      /*
-      Sync the main and song play pause buttons.
-      */
-      _playPauseElements2.default.sync();
-
-      /*
-      Start playing the song
-      */
-      _core2.default.play();
-    }
-
-    /*
     If the user has selected a starting playlist, we need to set the starting playlist
     and sync the visuals
     */
@@ -4387,12 +4639,12 @@ var Initializer = function () {
           /*
           Set the player to the song defined by the user.
           */
-          _audioNavigation2.default.changeSong(userConfig.playlists[userConfig.starting_playlist].songs[parseInt(userConfig.starting_playlist_song)]);
+          _audioNavigation2.default.changeSongPlaylist(_config2.default.active_playlist, userConfig.playlists[userConfig.starting_playlist].songs[parseInt(userConfig.starting_playlist_song)], parseInt(userConfig.starting_playlist_song));
         } else {
           /*
           Set the player to the first song in the playlist
           */
-          _audioNavigation2.default.changeSong(userConfig.playlists[userConfig.starting_playlist].songs[0]);
+          _audioNavigation2.default.changeSongPlaylist(_config2.default.active_playlist, userConfig.playlists[userConfig.starting_playlist].songs[0], 0);
           /*
           Debug that the song index doesn't exist
           */
@@ -4402,7 +4654,7 @@ var Initializer = function () {
         /*
         Set the player to the first song in the playlist
         */
-        _audioNavigation2.default.changeSong(userConfig.playlists[userConfig.starting_playlist].songs[0]);
+        _audioNavigation2.default.changeSong(_config2.default.active_playlist, userConfig.playlists[userConfig.starting_playlist].songs[0], 0);
       }
 
       /*
@@ -4530,7 +4782,7 @@ exports.default = Initializer;
 module.exports = exports["default"];
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4870,7 +5122,7 @@ exports.default = WaveForm;
 module.exports = exports["default"];
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4945,9 +5197,9 @@ var Time = function () {
     /*
     Build a clean current time object and send back the appropriate information.
     */
-    currentTime.seconds = currentSeconds;
-    currentTime.minutes = currentMinutes;
-    currentTime.hours = currentHours;
+    currentTime.seconds = parseInt(currentSeconds);
+    currentTime.minutes = parseInt(currentMinutes);
+    currentTime.hours = parseInt(currentHours);
 
     return currentTime;
   }
@@ -5008,7 +5260,7 @@ var Time = function () {
     */
     songDuration.seconds = isNaN(songDurationSeconds) ? "00" : songDurationSeconds;
     songDuration.minutes = isNaN(songDurationMinutes) ? "00" : songDurationMinutes;
-    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours;
+    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours.toString();
 
     return songDuration;
   }
@@ -5058,7 +5310,7 @@ exports.default = Time;
 module.exports = exports["default"];
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5202,7 +5454,7 @@ exports.default = BufferedProgressElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5280,7 +5532,7 @@ exports.default = PlaybackSpeedElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5391,9 +5643,6 @@ var Ended = function () {
  * @module utilities/callbacks
  */
 /**
- * TODO: CLEAN THIS UP
- */
-/**
  * Imports the config module
  * @module config
  */
@@ -5401,7 +5650,7 @@ exports.default = Ended;
 module.exports = exports["default"];
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5415,87 +5664,87 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _keydown = __webpack_require__(26);
+var _keydown = __webpack_require__(27);
 
 var _keydown2 = _interopRequireDefault(_keydown);
 
-var _timeUpdate = __webpack_require__(41);
+var _timeUpdate = __webpack_require__(42);
 
 var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
 
-var _ended = __webpack_require__(24);
+var _ended = __webpack_require__(25);
 
 var _ended2 = _interopRequireDefault(_ended);
 
-var _progress = __webpack_require__(34);
+var _progress = __webpack_require__(35);
 
 var _progress2 = _interopRequireDefault(_progress);
 
-var _play = __webpack_require__(30);
+var _play = __webpack_require__(31);
 
 var _play2 = _interopRequireDefault(_play);
 
-var _pause = __webpack_require__(29);
+var _pause = __webpack_require__(30);
 
 var _pause2 = _interopRequireDefault(_pause);
 
-var _playPause = __webpack_require__(31);
+var _playPause = __webpack_require__(32);
 
 var _playPause2 = _interopRequireDefault(_playPause);
 
-var _stop = __webpack_require__(40);
+var _stop = __webpack_require__(41);
 
 var _stop2 = _interopRequireDefault(_stop);
 
-var _mute = __webpack_require__(27);
+var _mute = __webpack_require__(28);
 
 var _mute2 = _interopRequireDefault(_mute);
 
-var _volumeUp = __webpack_require__(44);
+var _volumeUp = __webpack_require__(45);
 
 var _volumeUp2 = _interopRequireDefault(_volumeUp);
 
-var _volumeDown = __webpack_require__(42);
+var _volumeDown = __webpack_require__(43);
 
 var _volumeDown2 = _interopRequireDefault(_volumeDown);
 
-var _songSlider = __webpack_require__(39);
+var _songSlider = __webpack_require__(40);
 
 var _songSlider2 = _interopRequireDefault(_songSlider);
 
-var _volumeSlider = __webpack_require__(43);
+var _volumeSlider = __webpack_require__(44);
 
 var _volumeSlider2 = _interopRequireDefault(_volumeSlider);
 
-var _next = __webpack_require__(28);
+var _next = __webpack_require__(29);
 
 var _next2 = _interopRequireDefault(_next);
 
-var _prev = __webpack_require__(33);
+var _prev = __webpack_require__(34);
 
 var _prev2 = _interopRequireDefault(_prev);
 
-var _repeat = __webpack_require__(35);
+var _repeat = __webpack_require__(36);
 
 var _repeat2 = _interopRequireDefault(_repeat);
 
-var _repeatSong = __webpack_require__(36);
+var _repeatSong = __webpack_require__(37);
 
 var _repeatSong2 = _interopRequireDefault(_repeatSong);
 
-var _playbackSpeed = __webpack_require__(32);
+var _playbackSpeed = __webpack_require__(33);
 
 var _playbackSpeed2 = _interopRequireDefault(_playbackSpeed);
 
-var _shuffle = __webpack_require__(37);
+var _shuffle = __webpack_require__(38);
 
 var _shuffle2 = _interopRequireDefault(_shuffle);
 
-var _skipTo = __webpack_require__(38);
+var _skipTo = __webpack_require__(39);
 
 var _skipTo2 = _interopRequireDefault(_skipTo);
 
-var _waveform = __webpack_require__(20);
+var _waveform = __webpack_require__(21);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -6261,7 +6510,7 @@ exports.default = Events;
 module.exports = exports["default"];
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6531,7 +6780,7 @@ exports.default = KeyDown;
 module.exports = exports["default"];
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6640,7 +6889,7 @@ exports.default = Mute;
 module.exports = exports["default"];
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6783,7 +7032,7 @@ exports.default = Next;
 module.exports = exports["default"];
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6996,7 +7245,7 @@ exports.default = Pause;
 module.exports = exports["default"];
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7311,7 +7560,7 @@ exports.default = Play;
 module.exports = exports["default"];
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7645,7 +7894,7 @@ exports.default = PlayPause;
 module.exports = exports["default"];
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7663,7 +7912,7 @@ var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _playbackSpeedElements = __webpack_require__(23);
+var _playbackSpeedElements = __webpack_require__(24);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
@@ -7739,7 +7988,7 @@ exports.default = PlaybackSpeed;
 module.exports = exports["default"];
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7872,7 +8121,7 @@ exports.default = Prev;
 module.exports = exports["default"];
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7886,7 +8135,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(22);
+var _bufferedProgressElements = __webpack_require__(23);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -7950,7 +8199,7 @@ exports.default = Progress;
 module.exports = exports["default"];
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8082,7 +8331,7 @@ exports.default = Repeat;
 module.exports = exports["default"];
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8167,7 +8416,7 @@ exports.default = RepeatSong;
 module.exports = exports["default"];
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8185,7 +8434,7 @@ var _shuffler = __webpack_require__(13);
 
 var _shuffler2 = _interopRequireDefault(_shuffler);
 
-var _shuffleElements = __webpack_require__(17);
+var _shuffleElements = __webpack_require__(18);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
@@ -8289,7 +8538,7 @@ exports.default = Shuffle;
 module.exports = exports["default"];
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8329,7 +8578,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Handles the skip to event.
  *
  * @module events/SkipTo
- * TODO: MODERNIZE THIS SO IT HAS THE SAME FORMAT
  */
 
 
@@ -8494,7 +8742,7 @@ exports.default = SkipTo;
 module.exports = exports["default"];
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8508,7 +8756,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _time = __webpack_require__(21);
+var _time = __webpack_require__(22);
 
 var _time2 = _interopRequireDefault(_time);
 
@@ -8715,7 +8963,7 @@ exports.default = SongSlider;
 module.exports = exports["default"];
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8746,7 +8994,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Handles all of the stop events
  * @module events/Stop
- * TODO: Should we make playlist version and song version as well?
  */
 
 
@@ -8806,7 +9053,7 @@ exports.default = Stop;
 module.exports = exports["default"];
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8820,7 +9067,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(22);
+var _bufferedProgressElements = __webpack_require__(23);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -8832,11 +9079,11 @@ var _songSliderElements = __webpack_require__(14);
 
 var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
 
-var _songPlayedProgressElements = __webpack_require__(18);
+var _songPlayedProgressElements = __webpack_require__(19);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
-var _time = __webpack_require__(21);
+var _time = __webpack_require__(22);
 
 var _time2 = _interopRequireDefault(_time);
 
@@ -9008,7 +9255,7 @@ exports.default = TimeUpdate;
 module.exports = exports["default"];
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9123,7 +9370,7 @@ exports.default = VolumeDown;
 module.exports = exports["default"];
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9209,7 +9456,7 @@ exports.default = VolumeSlider;
 module.exports = exports["default"];
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9324,7 +9571,7 @@ exports.default = VolumeUp;
 module.exports = exports["default"];
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9442,7 +9689,7 @@ exports.default = Fx;
 module.exports = exports["default"];
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9452,7 +9699,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _init = __webpack_require__(19);
+var _init = __webpack_require__(20);
 
 var _init2 = _interopRequireDefault(_init);
 
@@ -9488,7 +9735,7 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
-var _shuffleElements = __webpack_require__(17);
+var _shuffleElements = __webpack_require__(18);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
@@ -9500,7 +9747,7 @@ var _songSliderElements = __webpack_require__(14);
 
 var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
 
-var _songPlayedProgressElements = __webpack_require__(18);
+var _songPlayedProgressElements = __webpack_require__(19);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
@@ -9520,6 +9767,10 @@ var _debug = __webpack_require__(4);
 
 var _debug2 = _interopRequireDefault(_debug);
 
+var _soundcloud = __webpack_require__(17);
+
+var _soundcloud2 = _interopRequireDefault(_soundcloud);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -9531,59 +9782,62 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 /**
- * Meta Data Elements
- * @module visual/MetaDataElements
+ * Play Pause Elements
+ * @module visual/PlayPauseElements
  */
 
 
 /**
- * Time Elements
- * @module visual/TimeElements
+ * Song Played Progress Elements
+ * @module visual/SongPlayedProgressElements
  */
 
 
 /**
- * Song Slider Elements
- * @module visual/SongSliderElements
- */
-
-
-/****************************************************
- * Elements
- ****************************************************/
-/**
- * Visual Shuffle Elements
- * @module visual/ShuffleElements
- */
-
-
-/**
- * Imports the checks
- * @module utilities/Checks
- */
-
-
-/**
- * Imports the audio navigation
- * @module utilities/AudioNavigation
+ * Visual Repeat Elements
+ * @module visual/RepeatElements
  */
 
 
 /****************************************************
- * Utilities
+ * FX Modules
  ****************************************************/
 /**
- * Shuffler Module
- * @module utilities/Shuffler
+ * Imports the visualizations module
+ * @module fx/Visualizations
+ */
+
+
+/**
+ * Repeater Module
+ *
+ * @module utilities/Repeater
+ */
+
+
+/**
+ * Imports the config state module.
+ * @module ConfigState
  */
 
 
 /****************************************************
- * Config
+ * Core
  ****************************************************/
 /**
- * Imports the config module
- * @module config
+ * AmplitudeJS Core Module
+ *
+ * @module core/Core
+ */
+/**
+ * @name 		Amplitude.js
+ * @version 4.0
+ * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ */
+/**
+ * AmplitudeJS Initializer Module
+ *
+ * @module init/AmplitudeInitializer
  */
 var Amplitude = function () {
   /**
@@ -9943,6 +10197,10 @@ var Amplitude = function () {
       _config2.default.shuffle_list.push(song);
     }
 
+    if (_soundcloud2.default.isSoundCloudURL(song.url)) {
+      _soundcloud2.default.resolveIndividualStreamableURL(song.url, null, _config2.default.songs.length - 1, _config2.default.shuffle_on);
+    }
+
     return _config2.default.songs.length - 1;
   }
 
@@ -9963,6 +10221,10 @@ var Amplitude = function () {
 
       if (_config2.default.playlists[playlist].shuffle) {
         _config2.default.playlists[playlist].shuffle_list.push(song);
+      }
+
+      if (_soundcloud2.default.isSoundCloudURL(song.url)) {
+        _soundcloud2.default.resolveIndividualStreamableURL(song.url, playlist, _config2.default.playlists[playlist].songs.length - 1, _config2.default.playlists[playlist].shuffle);
       }
 
       return _config2.default.playlists[playlist].songs.length - 1;
@@ -10370,7 +10632,6 @@ var Amplitude = function () {
    *
    * @access public
    * @param {string} playlist 	- The playlist key
-   * @todo Finish commenting
    */
   function getSongsStatePlaylist(playlist) {
     if (_config2.default.playlists[playlist].shuffle) {
@@ -10725,68 +10986,65 @@ var Amplitude = function () {
 }();
 
 /**
- * Play Pause Elements
- * @module visual/PlayPauseElements
+ * Meta Data Elements
+ * @module visual/MetaDataElements
  */
 
 
 /**
- * Song Played Progress Elements
- * @module visual/SongPlayedProgressElements
+ * Time Elements
+ * @module visual/TimeElements
  */
 
 
 /**
- * Visual Repeat Elements
- * @module visual/RepeatElements
- */
-
-
-/****************************************************
- * FX Modules
- ****************************************************/
-/**
- * Imports the visualizations module
- * @module fx/Visualizations
- */
-
-
-/**
- * Repeater Module
- *
- * @module utilities/Repeater
- */
-
-
-/**
- * Imports the config state module.
- * @module ConfigState
+ * Song Slider Elements
+ * @module visual/SongSliderElements
  */
 
 
 /****************************************************
- * Core
+ * Elements
  ****************************************************/
 /**
- * AmplitudeJS Core Module
- *
- * @module core/Core
+ * Visual Shuffle Elements
+ * @module visual/ShuffleElements
  */
+
+
 /**
- * @name 		Amplitude.js
- * @version 4.0
- * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ * Imports the checks
+ * @module utilities/Checks
  */
+
+
 /**
- * AmplitudeJS Initializer Module
- *
- * @module init/AmplitudeInitializer
+ * Imports the audio navigation
+ * @module utilities/AudioNavigation
+ */
+
+
+/****************************************************
+ * Utilities
+ ****************************************************/
+/**
+ * Shuffler Module
+ * @module utilities/Shuffler
+ */
+
+
+/****************************************************
+ * Config
+ ****************************************************/
+/**
+ * Imports the config module
+ * @module config
  */
 exports.default = Amplitude;
 module.exports = exports["default"];
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10812,8 +11070,16 @@ var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
+var _soundcloud = __webpack_require__(17);
+
+var _soundcloud2 = _interopRequireDefault(_soundcloud);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * AmplitudeJS Debug Module
+ * @module utilities/Debug
+ */
 var PlaylistsInitializer = function () {
   function initialize(playlists) {
     /*
@@ -10825,6 +11091,11 @@ var PlaylistsInitializer = function () {
       Copy songs over from songs array.
     */
     copySongsToPlaylists();
+
+    /*
+      Grab any SoundCloud Data for the playlist songs if needed.
+    */
+    grabSoundCloudData();
 
     /*
       Initialize a scoped active index for each playlist.
@@ -10907,6 +11178,28 @@ var PlaylistsInitializer = function () {
     }
   }
 
+  function grabSoundCloudData() {
+    /*
+      Iterate over all of the config's playlists
+    */
+    for (var key in _config2.default.playlists) {
+      /*
+        Checks if the playlist key is accurate.
+      */
+      if (_config2.default.playlists.hasOwnProperty(key)) {
+        for (var i = 0; i < _config2.default.playlists[key].songs.length; i++) {
+          var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+
+          if (_config2.default.playlists[key].songs[i].url.match(soundcloud_regex)) {
+            if (_config2.default.playlists[key].songs[i].soundcloud_data == undefined) {
+              _soundcloud2.default.resolveIndividualStreamableURL(_config2.default.playlists[key].songs[i].url, key, i);
+            }
+          }
+        }
+      }
+    }
+  }
+
   /**
    * Initializes the shuffle statuses for each of the playlists. These will
    * be referenced when we shuffle individual playlists.
@@ -10981,208 +11274,7 @@ var PlaylistsInitializer = function () {
   };
 }();
 
-/**
- * AmplitudeJS Debug Module
- * @module utilities/Debug
- */
 exports.default = PlaylistsInitializer;
-module.exports = exports["default"];
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _init = __webpack_require__(19);
-
-var _init2 = _interopRequireDefault(_init);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * These helpers wrap around the basic methods of the Soundcloud API
- * and get the information we need from SoundCloud to make the songs
- * streamable through Amplitude
- *
- * @module soundcloud/SoundCloud
- */
-/**
- * Imports the config module
- * @module config
- */
-var SoundCloud = function () {
-  /**
-   * Defines the temporary user config used while we configure soundcloud
-   * @type {object}
-   */
-  var tempUserConfig = {};
-
-  /**
-   * Loads the soundcloud SDK for use with Amplitude so the user doesn't have
-   * to load it themselves.
-   * With help from: http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file
-   *
-   * @access public
-   * @param {object} userConfig 	- The config defined by the user for AmplitudeJS
-   */
-  function loadSoundCloud(userConfig) {
-    /*
-    Sets the temporary config to the config passed by the user so we can make changes
-    and not break the actual config.
-    */
-    tempUserConfig = userConfig;
-
-    /*
-    Gets the head tag for the document and create a script element.
-    */
-    var head = document.getElementsByTagName("head")[0];
-    var script = document.createElement("script");
-
-    script.type = "text/javascript";
-
-    /*
-    URL to the remote soundcloud SDK
-    */
-    script.src = "https://connect.soundcloud.com/sdk.js";
-    script.onreadystatechange = initSoundcloud;
-    script.onload = initSoundcloud;
-
-    /*
-    Add the script to the head of the document.
-    */
-    head.appendChild(script);
-  }
-
-  /**
-   * Initializes soundcloud with the key provided.
-   *
-   * @access private
-   */
-  function initSoundcloud() {
-    /*
-    Calls the SoundCloud initialize function
-    from their API and sends it the client_id
-    that the user passed in.
-    */
-    SC.initialize({
-      client_id: _config2.default.soundcloud_client
-    });
-
-    /*
-    Gets the streamable URLs to run through Amplitue. This is
-    VERY important since Amplitude can't stream the copy and pasted
-    link from the SoundCloud page, but can resolve the streaming
-    URLs from the link.
-    */
-    getStreamableURLs();
-  }
-
-  /**
-   * Gets the streamable URL from the URL provided for
-   * all of the soundcloud links.  This will loop through
-   * and set all of the information for the soundcloud
-   * urls.
-   *
-   * @access private
-   */
-  function getStreamableURLs() {
-    /*
-    Define the regex to find the soundcloud URLs
-    */
-    var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
-
-    for (var i = 0; i < _config2.default.songs.length; i++) {
-      /*
-      If the URL matches soundcloud, we grab
-      that url and get the streamable link
-      if there is one.
-      */
-      if (_config2.default.songs[i].url.match(soundcloud_regex)) {
-        _config2.default.soundcloud_song_count++;
-        resolveStreamable(_config2.default.songs[i].url, i);
-      }
-    }
-  }
-
-  /**
-   * Due to Soundcloud SDK being asynchronous, we need to scope the
-   * index of the song in another function. The privateGetSoundcloudStreamableURLs
-   * function does the actual iteration and scoping.
-   *
-   * @access private
-   * @param {string} url 		- URL of the soundcloud song
-   * @param {number} index 	- The index of the soundcloud song in the songs array.
-   */
-  function resolveStreamable(url, index) {
-    SC.get("/resolve/?url=" + url, function (sound) {
-      /*
-      If streamable we get the url and bind the client ID to the end
-      so Amplitude can just stream the song normally. We then overwrite
-      the url the user provided with the streamable URL.
-      */
-      if (sound.streamable) {
-        _config2.default.songs[index].url = sound.stream_url + "?client_id=" + _config2.default.soundcloud_client;
-
-        /*
-        If the user want's to use soundcloud art, we overwrite the
-        cover_art_url with the soundcloud artwork url.
-        */
-        if (_config2.default.soundcloud_use_art) {
-          _config2.default.songs[index].cover_art_url = sound.artwork_url;
-        }
-
-        /*
-        Grab the extra metadata from soundcloud and bind it to the
-        song.  The user can get this through the public function:
-        getActiveSongMetadata
-        */
-        _config2.default.songs[index].soundcloud_data = sound;
-      } else {
-        /*
-        If not streamable, then we print a message to the user stating
-        that the song with name X and artist X is not streamable. This
-        gets printed ONLY if they have debug turned on.
-        */
-        AmplitudeHelpers.writeDebugMessage(_config2.default.songs[index].name + " by " + _config2.default.songs[index].artist + " is not streamable by the Soundcloud API");
-      }
-      /*
-      Increments the song ready counter.
-      */
-      _config2.default.soundcloud_songs_ready++;
-
-      /*
-      When all songs are accounted for, then amplitude is ready
-      to rock and we set the rest of the config.
-      */
-      if (_config2.default.soundcloud_songs_ready == _config2.default.soundcloud_song_count) {
-        _init2.default.setConfig(tempUserConfig);
-      }
-    });
-  }
-
-  /*
-  Returns the publically accessible methods
-  */
-  return {
-    loadSoundCloud: loadSoundCloud
-  };
-}();
-
-/**
- * Imports the initializer
- * @module init/AmplitudeInitializer
- */
-exports.default = SoundCloud;
 module.exports = exports["default"];
 
 /***/ }),
@@ -11208,7 +11300,6 @@ var ContainerElements = function () {
    * containing visual information regarding the active song.
    *
    * @access public
-   * TODO: UPDATE TO 4.0
    */
   function setActive() {
     var songContainers = document.getElementsByClassName("amplitude-song-container");
@@ -11678,7 +11769,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * These methods help sync visual time elements.
  *
- * TODO: GET RID OF MAIN AND CONVERT TO NEW STRUCTURE
  * @module visual/CurrentTimeElements
  */
 var CurrentTimeElements = function () {
@@ -12371,6 +12461,58 @@ var DurationTimeElements = function () {
       */
 exports.default = DurationTimeElements;
 module.exports = exports["default"];
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"name": "amplitudejs",
+	"version": "4.0.0",
+	"description": "A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs",
+	"main": "dist/amplitude.js",
+	"devDependencies": {
+		"babel-core": "^6.18.2",
+		"babel-loader": "^7.0.0",
+		"babel-plugin-add-module-exports": "0.2.1",
+		"babel-polyfill": "^6.16.0",
+		"babel-preset-es2015": "^6.18.0",
+		"husky": "^1.2.0",
+		"jest": "^23.6.0",
+		"prettier": "1.15.1",
+		"pretty-quick": "^1.8.0",
+		"watch": "^1.0.2",
+		"webpack": "^2.6.0"
+	},
+	"directories": {
+		"doc": "docs"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "node_modules/.bin/webpack",
+		"watch": "watch 'node_modules/.bin/webpack' dist",
+		"prettier": "npx pretty-quick",
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/521dimensions/amplitudejs.git"
+	},
+	"keywords": [
+		"webaudio",
+		"html5",
+		"javascript",
+		"audio-player"
+	],
+	"author": "521 Dimensions (https://521dimensions.com)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/521dimensions/amplitudejs/issues"
+	},
+	"homepage": "https://github.com/521dimensions/amplitudejs#readme"
+};
 
 /***/ })
 /******/ ]);

@@ -4,7 +4,17 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the duration seconds elements.
+ *
+ * @module visual/time/DurationSecondElements.
+ */
 let DurationSecondElements = (function() {
+  /**
+   * Sync the duration seconds elements.
+   *
+   * @param {Integer} seconds - The duration seconds for the audio.
+   */
   function sync(seconds) {
     syncGlobal(seconds);
     syncPlaylist(seconds);
@@ -12,6 +22,11 @@ let DurationSecondElements = (function() {
     syncSongInPlaylist(seconds);
   }
 
+  /**
+   * Syncs the global duration seconds elements.
+   *
+   * @param {Integer} seconds - the duration seconds for the audio.
+   */
   function syncGlobal(seconds) {
     let durationSecondSelectors = document.querySelectorAll(
       ".amplitude-duration-seconds"
@@ -31,6 +46,11 @@ let DurationSecondElements = (function() {
     }
   }
 
+  /**
+   * Syncs the playlist duration seconds for the audio.
+   *
+   * @param {Integer} seconds - The duration seconds for the audio.
+   */
   function syncPlaylist(seconds) {
     let durationSecondSelectors = document.querySelectorAll(
       '.amplitude-duration-seconds[data-amplitude-playlist="' +
@@ -49,6 +69,11 @@ let DurationSecondElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song duration seconds.
+   *
+   * @param {Integer} seconds - The duration seconds for the audio.
+   */
   function syncSong(seconds) {
     if (config.active_playlist == null) {
       let durationSecondSelectors = document.querySelectorAll(
@@ -69,6 +94,11 @@ let DurationSecondElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song in playlist duration seconds.
+   *
+   * @param {Integer} seconds - The duration seconds of the audio.
+   */
   function syncSongInPlaylist(seconds) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -88,6 +118,9 @@ let DurationSecondElements = (function() {
     }
   }
 
+  /**
+   * Resets the duration seconds elements to '00'
+   */
   function resetTimes() {
     let durationSecondSelectors = document.querySelectorAll(
       ".amplitude-duration-seconds"
@@ -98,6 +131,9 @@ let DurationSecondElements = (function() {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

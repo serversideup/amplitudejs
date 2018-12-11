@@ -7,7 +7,6 @@ import config from "../../config.js";
 /**
  * These methods help sync visual time elements.
  *
- * TODO: GET RID OF MAIN AND CONVERT TO NEW STRUCTURE
  * @module visual/CurrentTimeElements
  */
 let CurrentTimeElements = (function() {
@@ -203,6 +202,9 @@ let CurrentTimeElements = (function() {
     }
   }
 
+  /**
+   * Returns the publically facing methods
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

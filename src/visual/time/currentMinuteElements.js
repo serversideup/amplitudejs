@@ -4,7 +4,17 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the current time minutes elements.
+ *
+ * @module visual/time/CurrentMinuteElements
+ */
 let CurrentMinuteElements = (function() {
+  /**
+   * Syncs the current minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function sync(minutes) {
     syncGlobal(minutes);
     syncPlaylist(minutes);
@@ -12,6 +22,11 @@ let CurrentMinuteElements = (function() {
     syncSongInPlaylist(minutes);
   }
 
+  /**
+   * Syncs the global current minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncGlobal(minutes) {
     /*
 			Get all of the minute selectors
@@ -40,6 +55,11 @@ let CurrentMinuteElements = (function() {
     }
   }
 
+  /**
+   * Syncs the playlist minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncPlaylist(minutes) {
     /*
 			Get all of the minute selectors
@@ -67,6 +87,11 @@ let CurrentMinuteElements = (function() {
     }
   }
 
+  /**
+   * Syncs the current song minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncSong(minutes) {
     if (config.active_playlist == null) {
       /*
@@ -96,6 +121,11 @@ let CurrentMinuteElements = (function() {
     }
   }
 
+  /**
+   * Syncs the current song in playlist minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncSongInPlaylist(minutes) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -121,6 +151,9 @@ let CurrentMinuteElements = (function() {
     }
   }
 
+  /**
+   * Reset the current times.
+   */
   function resetTimes() {
     /*
       Gets the minute display elements
@@ -138,6 +171,9 @@ let CurrentMinuteElements = (function() {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

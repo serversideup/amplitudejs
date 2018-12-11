@@ -4,6 +4,12 @@
  */
 import config from "../config.js";
 
+/**
+ * Handles all of the visual syncing to the state of the config for the repeat
+ * elements.
+ *
+ * @module visual/RepeatElements
+ */
 let RepeatElements = (function() {
   /**
    * Syncs repeat for all of the repeat buttons. Users
@@ -104,6 +110,9 @@ let RepeatElements = (function() {
     }
   }
 
+  /*
+    Returns the publically available methods.
+  */
   return {
     syncRepeat: syncRepeat,
     syncRepeatPlaylist: syncRepeatPlaylist,

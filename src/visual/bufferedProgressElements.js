@@ -22,6 +22,9 @@ let BufferedProgressElements = (function() {
     syncSongInPlaylist();
   }
 
+  /**
+   * Sync the global song buffered progress elements.
+   */
   function syncGlobal() {
     /*
 			Gets all of the song buffered progress bars.
@@ -50,6 +53,9 @@ let BufferedProgressElements = (function() {
     }
   }
 
+  /**
+   * Sync the playlist song buffered progress elements.
+   */
   function syncPlaylist() {
     /*
 			Gets all of the song buffered progress bars.
@@ -77,6 +83,9 @@ let BufferedProgressElements = (function() {
     }
   }
 
+  /**
+   * Sync the song song buffered progress elements.
+   */
   function syncSong() {
     /*
 			Gets all of the song buffered progress bars.
@@ -104,6 +113,9 @@ let BufferedProgressElements = (function() {
     }
   }
 
+  /**
+   * Sync the song in playlist song buffered progress elements.
+   */
   function syncSongInPlaylist() {
     let activePlaylistIndex =
       config.active_playlist != null && config.active_playlist != ""

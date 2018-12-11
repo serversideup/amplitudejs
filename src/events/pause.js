@@ -1,11 +1,13 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-/**
  * Imports the config module
  * @module config
  */
 import config from "../config.js";
+
+/**
+ * Imports the ConfigState module.
+ * @module utilities/ConfigState
+ */
 import ConfigState from "../utilities/configState.js";
 
 /**
@@ -137,7 +139,10 @@ let Pause = (function() {
       Checks to see if the active playlist is null and the song matches
       the active index.
     */
-    if ( ( config.active_playlist == "" || config.active_playlist == null ) && config.active_index == song) {
+    if (
+      (config.active_playlist == "" || config.active_playlist == null) &&
+      config.active_index == song
+    ) {
       /*
         Pauses the song.
       */

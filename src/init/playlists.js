@@ -1,3 +1,7 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from "../config.js";
 
 /**
@@ -6,11 +10,35 @@ import config from "../config.js";
  */
 import Debug from "../utilities/debug.js";
 
+/**
+ * AmplitudeJS Checks Utility.
+ * @module utilities/Checks
+ */
 import Checks from "../utilities/checks.js";
 
+/**
+ * AmplitudeJS Visual Meta Data Elements Module
+ * @module visual/MetaDataElements
+ */
 import MetaDataElements from "../visual/metaDataElements.js";
 
+/**
+ * AmplitudeJS SoundCloud Meta module
+ * @module soundcloud/Soundcloud
+ */
+import SoundCloud from "../soundcloud/soundcloud.js";
+
+/**
+ * Handles the initialization of the playlists.
+ *
+ * @module init/PlaylistsInitializer
+ */
 let PlaylistsInitializer = (function() {
+  /**
+   * Initializes the playlists for AmplitudeJS
+   *
+   * @param {Object} playlists - The playlists defined by the user.
+   */
   function initialize(playlists) {
     /*
       Copy the playlists over to Amplitude
@@ -21,6 +49,11 @@ let PlaylistsInitializer = (function() {
       Copy songs over from songs array.
     */
     copySongsToPlaylists();
+
+    /*
+      Grab any SoundCloud Data for the playlist songs if needed.
+    */
+    grabSoundCloudData();
 
     /*
       Initialize a scoped active index for each playlist.
@@ -105,6 +138,48 @@ let PlaylistsInitializer = (function() {
                   " in playlist with key: " +
                   key +
                   " is not defined in your songs array!"
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Grabs the SoundCloud data for any song in the playlist that
+   * the user needs to grab data for.
+   *
+   * @access private
+   */
+  function grabSoundCloudData() {
+    /*
+      Iterate over all of the config's playlists
+    */
+    for (let key in config.playlists) {
+      /*
+        Checks if the playlist key is accurate.
+      */
+      if (config.playlists.hasOwnProperty(key)) {
+        /*
+          Iterate over all of the songs in the playlist and see if
+          they need to grab the SoundCloud data for the song.
+        */
+        for (let i = 0; i < config.playlists[key].songs.length; i++) {
+          /*
+            Only Grab the data if the URL is a SoundCloud URL.
+          */
+          if (SoundCloud.isSoundCloudURL(config.playlists[key].songs[i].url)) {
+            /*
+              Only grab the data if the SoundCloud data has not already been
+              grabbed for the audio. This could happen if the user defined the
+              song in the songs array and was grabbed before.
+            */
+            if (config.playlists[key].songs[i].soundcloud_data == undefined) {
+              SoundCloud.resolveIndividualStreamableURL(
+                config.playlists[key].songs[i].url,
+                key,
+                i
               );
             }
           }

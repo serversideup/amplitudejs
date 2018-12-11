@@ -1,3 +1,8 @@
+/**
+ * Handles the visual state for all of the mute elements.
+ *
+ * @module visual/MuteElements
+ */
 let MuteElements = (function() {
   /**
    * Syncs mute for all of the mute buttons. This represents the

@@ -1,3 +1,7 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from "../config.js";
 
 /**

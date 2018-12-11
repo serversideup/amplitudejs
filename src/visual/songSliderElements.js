@@ -1,8 +1,9 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ * Imports the config module
+ * @module config
  */
-
 import config from "../config.js";
+
 /**
  * Defines the visual representation of AmplitudeJS song slider elements.
  * @module visual/SongSliderElements

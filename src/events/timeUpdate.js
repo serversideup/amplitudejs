@@ -1,8 +1,4 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
@@ -14,9 +10,22 @@ import config from "../config.js";
  */
 import BufferedProgressElements from "../visual/bufferedProgressElements.js";
 
+/**
+ * Imports the Time Elements visual class.
+ * @module visual/timeElements
+ */
 import TimeElements from "../visual/timeElements.js";
 
+/**
+ * Imports the Song Slider Elements visual class.
+ * @module visual/songSliderElements
+ */
 import SongSliderElements from "../visual/songSliderElements.js";
+
+/**
+ * Imports the Song Played Progress Elements visual class.
+ * @module visual/songPlayedProgressElements
+ */
 import SongPlayedProgressElements from "../visual/songPlayedProgressElements.js";
 
 /**
@@ -117,13 +126,23 @@ let TimeUpdate = (function() {
       */
       TimeElements.syncCurrentTimes(currentTime);
 
+      /*
+        Sync the song slider elements.
+      */
       SongSliderElements.sync(
         songCompletionPercentage,
         config.active_playlist,
         config.active_index
       );
+
+      /*
+        Sync the song played progress elements.
+      */
       SongPlayedProgressElements.sync(songCompletionPercentage);
 
+      /*
+        Sync the duration time elements.
+      */
       TimeElements.syncDurationTimes(currentTime, songDuration);
     }
   }
@@ -140,8 +159,10 @@ let TimeUpdate = (function() {
     /*
       Checks to see if there is a callback at the certain seconds into the song.
     */
-    if (config.active_metadata.time_callbacks != undefined
-        && config.active_metadata.time_callbacks[currentSeconds] != undefined) {
+    if (
+      config.active_metadata.time_callbacks != undefined &&
+      config.active_metadata.time_callbacks[currentSeconds] != undefined
+    ) {
       /*
         Checks to see if the callback has been run. Since the time updates more than
         one second, we don't want the callback to run X times.

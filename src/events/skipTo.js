@@ -1,7 +1,7 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ * Imports the config module
+ * @module config
  */
-
 import config from "../config.js";
 
 /**
@@ -38,7 +38,6 @@ import PlayPauseElements from "../visual/playPauseElements.js";
  * Handles the skip to event.
  *
  * @module events/SkipTo
- * TODO: MODERNIZE THIS SO IT HAS THE SAME FORMAT
  */
 let SkipTo = (function() {
   /**

@@ -10,6 +10,9 @@ import config from "../config.js";
  * https://stackoverflow.com/questions/21347833/html-svg-not-drawing-works-in-other-pages
  */
 let WaveForm = (function() {
+  /*
+    Initialize the local variables used in the Waveform.
+  */
   let buffer = "";
   let sampleRate = config.waveforms.sample_rate;
   let peaks = "";
@@ -138,6 +141,11 @@ let WaveForm = (function() {
         };
         req.send();
       } else {
+        /*
+          If we already have a waveform, we grab the waveform that
+          was created for the song and display it. We do a simple hash
+          of the song URL so it's already unique.
+        */
         displayWaveForms(
           config.waveforms.built[
             Math.abs(
@@ -164,8 +172,14 @@ let WaveForm = (function() {
       If we have a buffer, we find the peaks in the audio.
     */
     if (buffer) {
+      /*
+        Get the total peaks in the song.
+      */
       let totalPeaks = peaks.length;
 
+      /*
+        Figure out the depth of the peak.
+      */
       let d = "";
       for (let peakNumber = 0; peakNumber < totalPeaks; peakNumber++) {
         if (peakNumber % 2 === 0) {
@@ -175,6 +189,9 @@ let WaveForm = (function() {
         }
       }
 
+      /*
+        Add the waveform to the built waveforms array.
+      */
       config.waveforms.built[
         Math.abs(
           config.audio.src.split("").reduce(function(a, b) {
@@ -184,6 +201,9 @@ let WaveForm = (function() {
         )
       ] = d;
 
+      /*
+        Display the waveform.
+      */
       displayWaveForms(
         config.waveforms.built[
           Math.abs(
@@ -244,7 +264,8 @@ let WaveForm = (function() {
         let max = channelData[0];
 
         /*
-
+          Iterate over the parts of the song starting to the
+          ending to display the waveform.
         */
         for (
           let sampleIndex = start;
@@ -261,9 +282,15 @@ let WaveForm = (function() {
           }
         }
 
+        /*
+          Set the max and min for the peak.
+        */
         peaks[2 * peakNumber] = max;
         peaks[2 * peakNumber + 1] = min;
 
+        /*
+          Merge the peaks
+        */
         if (channelNumber === 0 || max > mergedPeaks[2 * peakNumber]) {
           mergedPeaks[2 * peakNumber] = max;
         }
@@ -274,6 +301,9 @@ let WaveForm = (function() {
       }
     }
 
+    /*
+      Returns the merged peaks.
+    */
     return mergedPeaks;
   }
 
@@ -285,24 +315,48 @@ let WaveForm = (function() {
   function displayWaveForms(svg) {
     let waveformElements = document.querySelectorAll(".amplitude-wave-form");
 
+    /*
+      Iterate over all of the waveform elements and
+      display the waveform.
+    */
     for (let i = 0; i < waveformElements.length; i++) {
+      /*
+        Get the playlist attribute of the waveform element.
+      */
       let playlist = waveformElements[i].getAttribute(
         "data-amplitude-playlist"
       );
+
+      /*
+        Get the song index attribute of the waveform element.
+      */
       let song = waveformElements[i].getAttribute("data-amplitude-song-index");
 
+      /*
+        If the playlist is null and the song is null it's a global element.
+      */
       if (playlist == null && song == null) {
         displayGlobalWaveform(waveformElements[i], svg);
       }
 
+      /*
+        If the playlist is defined but the song is null it's a playlist element.
+      */
       if (playlist != null && song == null) {
         displayPlaylistWaveform(waveformElements[i], svg, playlist);
       }
 
+      /*
+        If the playlist is not defined and the song is not null it's a song
+        element.
+      */
       if (playlist == null && song != null) {
         displaySongWaveform(waveformElements[i], svg, song);
       }
 
+      /*
+        If the playlist and song are defined it's a song in the playlist element.
+      */
       if (playlist != null && song != null) {
         displaySongInPlaylistWaveform(waveformElements[i], svg, playlist, song);
       }
@@ -311,6 +365,9 @@ let WaveForm = (function() {
 
   /**
    * Displays a global wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
    */
   function displayGlobalWaveform(element, svg) {
     let waveformPath = element.querySelector("svg g path");
@@ -320,8 +377,15 @@ let WaveForm = (function() {
 
   /**
    * Displays a playlist wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {string} playlist - The playlist we are displaying the waveform for.
    */
   function displayPlaylistWaveform(element, svg, playlist) {
+    /*
+      Ensure the playlist is the active playlist.
+    */
     if (config.active_playlist == playlist) {
       let waveformPath = element.querySelector("svg g path");
 
@@ -331,8 +395,16 @@ let WaveForm = (function() {
 
   /**
    * Displays a song wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {Integer} song - The index of the song we are displaying the
+   * waveform for.
    */
   function displaySongWaveform(element, svg, song) {
+    /*
+      Ensure it's the active song being displayed.
+    */
     if (config.active_index == song) {
       let waveformPath = element.querySelector("svg g path");
 
@@ -342,8 +414,16 @@ let WaveForm = (function() {
 
   /**
    * Displays a song in playlist waveform.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {String} playlist - The playlist the waveform is in.
+   * @param {Integer} song - The index of the song we are displaying the waveform for.
    */
   function displaySongInPlaylistWaveform(element, svg, playlist, song) {
+    /*
+      Ensure it's the active song in the active playlist.
+    */
     if (
       config.active_playlist == playlist &&
       config.playlists[config.active_playlist].active_index == song

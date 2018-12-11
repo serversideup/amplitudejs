@@ -4,6 +4,11 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the current time hour elements.
+ *
+ * @module visual/time/CurrentHourElements
+ */
 let CurrentHourElements = (function() {
   function sync(hours) {
     syncGlobal(hours);
@@ -46,6 +51,11 @@ let CurrentHourElements = (function() {
     }
   }
 
+  /**
+   * Syncs the playlist current hour elements.
+   *
+   * @param {Integer} hour - The current audio hour.
+   */
   function syncPlaylist(hours) {
     /*
 			Get all of the hour selectors
@@ -73,6 +83,11 @@ let CurrentHourElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song hour elements.
+   *
+   * @param {Integer} hour - The current audio hour.
+   */
   function syncSong(hours) {
     if (config.active_playlist == null) {
       /*
@@ -102,6 +117,11 @@ let CurrentHourElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song in playlist song hour elements.
+   *
+   * @param {Integer} hour - The current audio hour.
+   */
   function syncSongInPlaylist(hours) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -126,6 +146,9 @@ let CurrentHourElements = (function() {
     }
   }
 
+  /**
+   * Reset the current hour elements.
+   */
   function resetTimes() {
     /*
       Gets the hour display elements
@@ -141,6 +164,9 @@ let CurrentHourElements = (function() {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

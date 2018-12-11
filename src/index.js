@@ -1,6 +1,6 @@
 /**
  * @name 		Amplitude.js
- * @version 4.0
+ * @version 4.0.0
  * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
  */
 /**
@@ -118,6 +118,8 @@ import PlayPauseElements from "./visual/playPauseElements.js";
 import MetaDataElements from "./visual/metaDataElements.js";
 
 import Debug from "./utilities/debug.js";
+
+import SoundCloud from "./soundcloud/soundcloud.js";
 
 /**
  * Amplitude should just be an interface to the public functions.
@@ -483,6 +485,15 @@ let Amplitude = (function() {
       config.shuffle_list.push(song);
     }
 
+    if (SoundCloud.isSoundCloudURL(song.url)) {
+      SoundCloud.resolveIndividualStreamableURL(
+        song.url,
+        null,
+        config.songs.length - 1,
+        config.shuffle_on
+      );
+    }
+
     return config.songs.length - 1;
   }
 
@@ -503,6 +514,15 @@ let Amplitude = (function() {
 
       if (config.playlists[playlist].shuffle) {
         config.playlists[playlist].shuffle_list.push(song);
+      }
+
+      if (SoundCloud.isSoundCloudURL(song.url)) {
+        SoundCloud.resolveIndividualStreamableURL(
+          song.url,
+          playlist,
+          config.playlists[playlist].songs.length - 1,
+          config.playlists[playlist].shuffle
+        );
       }
 
       return config.playlists[playlist].songs.length - 1;
@@ -914,7 +934,6 @@ let Amplitude = (function() {
    *
    * @access public
    * @param {string} playlist 	- The playlist key
-   * @todo Finish commenting
    */
   function getSongsStatePlaylist(playlist) {
     if (config.playlists[playlist].shuffle) {

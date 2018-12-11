@@ -218,7 +218,37 @@
 173
 174
 175
-176</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -337,21 +367,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,7 +375,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -394,10 +436,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-&nbsp;
-/**
  * Imports the config module
  * @module config
  */
@@ -409,9 +447,22 @@ import config from "../config.js";
  */
 import BufferedProgressElements from "../visual/bufferedProgressElements.js";
 &nbsp;
+/**
+ * Imports the Time Elements visual class.
+ * @module visual/timeElements
+ */
 import TimeElements from "../visual/timeElements.js";
 &nbsp;
+/**
+ * Imports the Song Slider Elements visual class.
+ * @module visual/songSliderElements
+ */
 import SongSliderElements from "../visual/songSliderElements.js";
+&nbsp;
+/**
+ * Imports the Song Played Progress Elements visual class.
+ * @module visual/songPlayedProgressElements
+ */
 import SongPlayedProgressElements from "../visual/songPlayedProgressElements.js";
 &nbsp;
 /**
@@ -512,13 +563,23 @@ let TimeUpdate = (function() {
       */
 <span class="cstat-no" title="statement not covered" >      TimeElements.syncCurrentTimes(currentTime);</span>
 &nbsp;
+      /*
+        Sync the song slider elements.
+      */
 <span class="cstat-no" title="statement not covered" >      SongSliderElements.sync(</span>
         songCompletionPercentage,
         config.active_playlist,
         config.active_index
       );
+&nbsp;
+      /*
+        Sync the song played progress elements.
+      */
 <span class="cstat-no" title="statement not covered" >      SongPlayedProgressElements.sync(songCompletionPercentage);</span>
 &nbsp;
+      /*
+        Sync the duration time elements.
+      */
 <span class="cstat-no" title="statement not covered" >      TimeElements.syncDurationTimes(currentTime, songDuration);</span>
     }
   }
@@ -535,8 +596,10 @@ let TimeUpdate = (function() {
     /*
       Checks to see if there is a callback at the certain seconds into the song.
     */
-<span class="cstat-no" title="statement not covered" >    if (config.active_metadata.time_callbacks != undefined</span>
-        &amp;&amp; config.active_metadata.time_callbacks[currentSeconds] != undefined) {
+<span class="cstat-no" title="statement not covered" >    if (</span>
+      config.active_metadata.time_callbacks != undefined &amp;&amp;
+      config.active_metadata.time_callbacks[currentSeconds] != undefined
+    ) {
       /*
         Checks to see if the callback has been run. Since the time updates more than
         one second, we don't want the callback to run X times.
@@ -574,7 +637,7 @@ export default TimeUpdate;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 10 2018 08:32:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 08:07:57 GMT-0800 (PST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

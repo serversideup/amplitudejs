@@ -7,8 +7,6 @@ import config from "../config.js";
 /**
  * These methods help display the audio's meta data
  *
- * TODO Update to new structure for all elements
- * TODO Can we merge all 3?
  * @module visual/MetaDataElements
  */
 let MetaDataElements = (function() {
@@ -107,6 +105,9 @@ let MetaDataElements = (function() {
     }
   }
 
+  /**
+   * Displays the playlist meta data.
+   */
   function displayPlaylistMetaData() {
     /*
 			Define the image meta data keys. These are managed separately
@@ -307,9 +308,18 @@ let MetaDataElements = (function() {
         }
       }
 
+      /*
+        If the song index and playlist are not null, continue.
+      */
       if (songIndex != null && playlist != null) {
+        /*
+          Get the info we are displaying.
+        */
         let info = songInfoElements[i].getAttribute("data-amplitude-song-info");
 
+        /*
+          Set the meta data accordingly.
+        */
         if (config.playlists[playlist].songs[songIndex][info] != undefined) {
           if (imageMetaDataKeys.indexOf(info) >= 0) {
             songInfoElements[i].setAttribute(
@@ -324,6 +334,9 @@ let MetaDataElements = (function() {
       }
     }
 
+    /*
+      Display the playlist meta data.
+    */
     displayPlaylistMetaData();
   }
 

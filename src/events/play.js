@@ -1,11 +1,13 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-/**
  * Imports the config module
  * @module config
  */
 import config from "../config.js";
+
+/**
+ * Imports the config state utility.
+ * @module utilities/ConfigState
+ */
 import ConfigState from "../utilities/configState.js";
 
 /**

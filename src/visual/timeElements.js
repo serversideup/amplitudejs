@@ -58,6 +58,9 @@ import DurationTimeElements from "./time/durationTimeElements.js";
  * @module visual/TimeElements
  */
 let TimeElements = (function() {
+  /**
+   * Resets the current times.
+   */
   function resetCurrentTimes() {
     CurrentTimeElements.resetTimes();
     CurrentHourElements.resetTimes();
@@ -65,6 +68,11 @@ let TimeElements = (function() {
     CurrentSecondElements.resetTimes();
   }
 
+  /**
+   * Syncs the current time elements to the time provided.
+   *
+   * @param {Object} currentTime - An object representing the current time of the audio.
+   */
   function syncCurrentTimes(currentTime) {
     CurrentTimeElements.sync(currentTime);
     CurrentHourElements.sync(currentTime.hours);
@@ -72,6 +80,9 @@ let TimeElements = (function() {
     CurrentSecondElements.sync(currentTime.seconds);
   }
 
+  /**
+   * Resets the duration times.
+   */
   function resetDurationTimes() {
     DurationCountDownTimeElements.resetTimes();
     DurationHourElements.resetTimes();
@@ -80,6 +91,12 @@ let TimeElements = (function() {
     DurationTimeElements.resetTimes();
   }
 
+  /**
+   * Syncs the duration times to the times provided.
+   *
+   * @param {Object} currentTime - An object representing the current time of the audio.
+   * @param {Object} songDuration - An object representing the duration of the audio
+   */
   function syncDurationTimes(currentTime, songDuration) {
     DurationCountDownTimeElements.sync(currentTime, songDuration);
     DurationTimeElements.sync(songDuration);
@@ -88,6 +105,9 @@ let TimeElements = (function() {
     DurationSecondElements.sync(songDuration.seconds);
   }
 
+  /**
+   * Returns the publically accessible methods.
+   */
   return {
     resetCurrentTimes: resetCurrentTimes,
     syncCurrentTimes: syncCurrentTimes,

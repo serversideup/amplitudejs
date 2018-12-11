@@ -1,6 +1,3 @@
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
 /*
 	Import the necessary classes and config to use
 	with the events.

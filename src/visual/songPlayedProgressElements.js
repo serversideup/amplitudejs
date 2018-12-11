@@ -1,5 +1,14 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from "../config.js";
 
+/**
+ * Handles the syncing of the song played progress elements.
+ *
+ * @module visual/SongPlayedProgressElements
+ */
 let SongPlayedProgressElements = (function() {
   /**
    * Syncs the song played progress bars. These are HTML5 progress elements.
@@ -19,7 +28,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncGlobal(percentage) {
     /*
@@ -55,7 +63,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access public
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncPlaylist(percentage) {
     /*
@@ -90,7 +97,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncSong(percentage) {
     if (config.active_playlist == null) {
@@ -127,7 +133,6 @@ let SongPlayedProgressElements = (function() {
    *
    * @access private
    * @param {number} songPlayedPercentage 	- The percent of the song completed.
-   * TODO CONVERT IS NAN TO OUR OWN METHOD
    */
   function syncSongInPlaylist(percentage) {
     /*
@@ -150,6 +155,10 @@ let SongPlayedProgressElements = (function() {
           '"]'
       );
 
+      /*
+        Iterates over all of the song played progress elements
+        and sets them accordingly.
+      */
       for (let i = 0; i < songPlayedProgressBars.length; i++) {
         let playlist = songPlayedProgressBars[i].getAttribute(
           "data-amplitude-playlist"

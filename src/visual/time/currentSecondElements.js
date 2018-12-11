@@ -4,7 +4,17 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the current time seconds elements.
+ *
+ * @module visual/time/CurrentSecondElements
+ */
 let CurrentSecondElements = (function() {
+  /**
+   * Syncs the current seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function sync(seconds) {
     syncGlobal(seconds);
     syncPlaylist(seconds);
@@ -12,6 +22,11 @@ let CurrentSecondElements = (function() {
     syncSongInPlaylist(seconds);
   }
 
+  /**
+   * Syncs the global current seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncGlobal(seconds) {
     /*
 			Get all of the second selectors
@@ -40,6 +55,11 @@ let CurrentSecondElements = (function() {
     }
   }
 
+  /**
+   * Syncs the playlist seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncPlaylist(seconds) {
     /*
 			Get all of the second selectors
@@ -67,6 +87,11 @@ let CurrentSecondElements = (function() {
     }
   }
 
+  /**
+   * Syncs the current song seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncSong(seconds) {
     if (config.active_playlist == null) {
       /*
@@ -96,6 +121,11 @@ let CurrentSecondElements = (function() {
     }
   }
 
+  /**
+   * Syncs the current song in playlist seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncSongInPlaylist(seconds) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -120,6 +150,9 @@ let CurrentSecondElements = (function() {
     }
   }
 
+  /**
+   * Reset the current seconds elements.
+   */
   function resetTimes() {
     /*
       Gets the second display elements
@@ -137,6 +170,9 @@ let CurrentSecondElements = (function() {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

@@ -16,6 +16,9 @@ import Debug from "./debug.js";
  * @module utilities/callbacks
  */
 let Callbacks = (function() {
+  /**
+   * Initializes the callbacks for the player.
+   */
   function initialize() {
     /*
       Event: abort

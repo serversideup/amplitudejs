@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">68.13% </span>
+        <span class="strong">67.74% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>124/182</span>
+        <span class='fraction'>126/186</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52% </span>
+        <span class="strong">51.92% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>52/100</span>
+        <span class='fraction'>54/104</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75.86% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>44/58</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">68.13% </span>
+        <span class="strong">67.74% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>124/182</span>
+        <span class='fraction'>126/186</span>
       </div>
     </div>
   </div>
@@ -1332,7 +1332,28 @@
 1287
 1288
 1289
-1290</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+1290
+1291
+1292
+1293
+1294
+1295
+1296
+1297
+1298
+1299
+1300
+1301
+1302
+1303
+1304
+1305
+1306
+1307
+1308
+1309</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1818,6 +1839,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1837,6 +1867,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -2237,7 +2276,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2623,7 +2661,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * @name 		Amplitude.js
- * @version 4.0
+ * @version 4.0.0
  * @author 	Dan Pastori (521 Dimensions) &lt;dan@521dimensions.com&gt;
  */
 /**
@@ -2741,6 +2779,8 @@ import PlayPauseElements from "./visual/playPauseElements.js";
 import MetaDataElements from "./visual/metaDataElements.js";
 &nbsp;
 import Debug from "./utilities/debug.js";
+&nbsp;
+import SoundCloud from "./soundcloud/soundcloud.js";
 &nbsp;
 /**
  * Amplitude should just be an interface to the public functions.
@@ -3106,6 +3146,15 @@ let Amplitude = (function() {
 <span class="cstat-no" title="statement not covered" >      config.shuffle_list.push(song);</span>
     }
 &nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (SoundCloud.isSoundCloudURL(song.url)) {
+<span class="cstat-no" title="statement not covered" >      SoundCloud.resolveIndividualStreamableURL(</span>
+        song.url,
+        null,
+        config.songs.length - 1,
+        config.shuffle_on
+      );
+    }
+&nbsp;
     return config.songs.length - 1;
   }
 &nbsp;
@@ -3126,6 +3175,15 @@ let Amplitude = (function() {
 &nbsp;
       <span class="missing-if-branch" title="if path not taken" >I</span>if (config.playlists[playlist].shuffle) {
 <span class="cstat-no" title="statement not covered" >        config.playlists[playlist].shuffle_list.push(song);</span>
+      }
+&nbsp;
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (SoundCloud.isSoundCloudURL(song.url)) {
+<span class="cstat-no" title="statement not covered" >        SoundCloud.resolveIndividualStreamableURL(</span>
+          song.url,
+          playlist,
+          config.playlists[playlist].songs.length - 1,
+          config.playlists[playlist].shuffle
+        );
       }
 &nbsp;
       return config.playlists[playlist].songs.length - 1;
@@ -3537,7 +3595,6 @@ let Amplitude = (function() {
    *
    * @access public
    * @param {string} playlist 	- The playlist key
-   * @todo Finish commenting
    */
   function getSongsStatePlaylist(playlist) {
     if (config.playlists[playlist].shuffle) {
@@ -3916,7 +3973,7 @@ export default Amplitude;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 10 2018 08:32:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 08:07:57 GMT-0800 (PST)
 </div>
 </div>
 <script src="../prettify.js"></script>

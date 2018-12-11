@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96.2% </span>
+        <span class="strong">96.15% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>76/79</span>
+        <span class='fraction'>75/78</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>6/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96.1% </span>
+        <span class="strong">96.15% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>74/77</span>
+        <span class='fraction'>75/78</span>
       </div>
     </div>
   </div>
@@ -381,7 +381,10 @@
 336
 337
 338
-339</td><td class="line-coverage quiet"><span class="cline-any cline-yes">31x</span>
+339
+340
+341
+342</td><td class="line-coverage quiet"><span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -390,6 +393,7 @@
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">159x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -532,16 +536,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">159x</span>
 <span class="cline-any cline-yes">159x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">159x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">159x</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">159x</span>
 <span class="cline-any cline-yes">239x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -708,8 +716,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">159x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">159x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -719,156 +725,155 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Amplitude = require('../src/index.js');
-const MichaelBromleyVisualization = require('../dist/visualizations/michaelbromley.js');
-const BarVisualization = require('../dist/visualizations/bar.js');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Amplitude = require("../src/index.js");
+const MichaelBromleyVisualization = require("../dist/visualizations/michaelbromley.js");
+const BarVisualization = require("../dist/visualizations/bar.js");
 &nbsp;
-const config = require('../src/config.js');
+const config = require("../src/config.js");
 &nbsp;
-let Setup = (function(){
-  function initializeAmplitude(){
+let Setup = (function() {
+  function initializeAmplitude() {
     Amplitude.init({
       bindings: {
-        37: 'prev',
-        39: 'next',
-        32: 'play_pause'
+        37: "prev",
+        39: "next",
+        32: "play_pause"
       },
       debug: false,
-      visualization: 'michaelbromley_visualization',
+      visualization: "michaelbromley_visualization",
       songs: [
         {
-          "name": "Risin' High (feat Raashan Ahmad)",
-          "artist": "Ancient Astronauts",
-          "album": "We Are to Answer",
-          "url": "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
-          "cover_art_url": "../album-art/we-are-to-answer.jpg",
-          "time_callbacks": {
-            1: <span class="fstat-no" title="function not covered" >fu</span>nction(){
-<span class="cstat-no" title="statement not covered" >              console.log( 1 );</span>
+          name: "Risin' High (feat Raashan Ahmad)",
+          artist: "Ancient Astronauts",
+          album: "We Are to Answer",
+          url:
+            "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
+          cover_art_url: "../album-art/we-are-to-answer.jpg",
+          time_callbacks: {
+            1: <span class="fstat-no" title="function not covered" >fu</span>nction() {
+<span class="cstat-no" title="statement not covered" >              console.log(1);</span>
             },
-            2: <span class="fstat-no" title="function not covered" >fu</span>nction(){
-<span class="cstat-no" title="statement not covered" >              console.log( 2 );</span>
+            2: <span class="fstat-no" title="function not covered" >fu</span>nction() {
+<span class="cstat-no" title="statement not covered" >              console.log(2);</span>
             },
-            30: <span class="fstat-no" title="function not covered" >fu</span>nction(){
-<span class="cstat-no" title="statement not covered" >              console.log( 30 );</span>
+            30: <span class="fstat-no" title="function not covered" >fu</span>nction() {
+<span class="cstat-no" title="statement not covered" >              console.log(30);</span>
             }
           }
         },
         {
-          "name": "The Gun",
-          "artist": "Lorn",
-          "album": "Ask The Dust",
-          "url": "../songs/08 The Gun.mp3",
-          "cover_art_url": "../album-art/ask-the-dust.jpg",
-          "visualization": "bar_visualization"
+          name: "The Gun",
+          artist: "Lorn",
+          album: "Ask The Dust",
+          url: "../songs/08 The Gun.mp3",
+          cover_art_url: "../album-art/ask-the-dust.jpg",
+          visualization: "bar_visualization"
         },
         {
-          "name": "Anvil",
-          "artist": "Lorn",
-          "album": "Anvil",
-          "url": "../songs/LORN - ANVIL.mp3",
-          "cover_art_url": "../album-art/anvil.jpg",
-          "visualization": "michaelbromley_visualization"
+          name: "Anvil",
+          artist: "Lorn",
+          album: "Anvil",
+          url: "../songs/LORN - ANVIL.mp3",
+          cover_art_url: "../album-art/anvil.jpg",
+          visualization: "michaelbromley_visualization"
         },
         {
-          "name": "I Came Running",
-          "artist": "Ancient Astronauts",
-          "album": "We Are to Answer",
-          "url": "../songs/ICameRunning-AncientAstronauts.mp3",
-          "cover_art_url": "../album-art/we-are-to-answer.jpg",
-          "visualization": "bar_visualization"
+          name: "I Came Running",
+          artist: "Ancient Astronauts",
+          album: "We Are to Answer",
+          url: "../songs/ICameRunning-AncientAstronauts.mp3",
+          cover_art_url: "../album-art/we-are-to-answer.jpg",
+          visualization: "bar_visualization"
         },
         {
-          "name": "First Snow",
-          "artist": "Emancipator",
-          "album": "Soon It Will Be Cold Enough",
-          "url": "../songs/FirstSnow-Emancipator.mp3",
-          "cover_art_url": "../album-art/soon-it-will-be-cold-enough.jpg",
-          "visualization": "michaelbromley_visualization"
+          name: "First Snow",
+          artist: "Emancipator",
+          album: "Soon It Will Be Cold Enough",
+          url: "../songs/FirstSnow-Emancipator.mp3",
+          cover_art_url: "../album-art/soon-it-will-be-cold-enough.jpg",
+          visualization: "michaelbromley_visualization"
         },
         {
-          "name": "Terrain",
-          "artist": "pg.lost",
-          "album": "Key",
-          "url": "../songs/Terrain-pglost.mp3",
-          "cover_art_url": "../album-art/key.jpg",
-          "visualization": "michaelbromley_visualization"
+          name: "Terrain",
+          artist: "pg.lost",
+          album: "Key",
+          url: "../songs/Terrain-pglost.mp3",
+          cover_art_url: "../album-art/key.jpg",
+          visualization: "michaelbromley_visualization"
         },
         {
-          "name": "Vorel",
-          "artist": "Russian Circles",
-          "album": "Guidance",
-          "url": "../songs/Vorel-RussianCircles.mp3",
-          "cover_art_url": "../album-art/guidance.jpg",
-          "visualization": "bar_visualization"
+          name: "Vorel",
+          artist: "Russian Circles",
+          album: "Guidance",
+          url: "../songs/Vorel-RussianCircles.mp3",
+          cover_art_url: "../album-art/guidance.jpg",
+          visualization: "bar_visualization"
         },
         {
-          "name": "Intro / Sweet Glory",
-          "artist": "Jimkata",
-          "album": "Die Digital",
-          "url": "../songs/IntroSweetGlory-Jimkata.mp3",
-          "cover_art_url": "../album-art/die-digital.jpg",
-          "visualization": "michaelbromley_visualization"
+          name: "Intro / Sweet Glory",
+          artist: "Jimkata",
+          album: "Die Digital",
+          url: "../songs/IntroSweetGlory-Jimkata.mp3",
+          cover_art_url: "../album-art/die-digital.jpg",
+          visualization: "michaelbromley_visualization"
         },
         {
-          "name": "Offcut #6",
-          "artist": "Little People",
-          "album": "We Are But Hunks of Wood Remixes",
-          "url": "../songs/Offcut6-LittlePeople.mp3",
-          "cover_art_url": "../album-art/we-are-but-hunks-of-wood.jpg",
-          "visualization": "bar_visualization"
+          name: "Offcut #6",
+          artist: "Little People",
+          album: "We Are But Hunks of Wood Remixes",
+          url: "../songs/Offcut6-LittlePeople.mp3",
+          cover_art_url: "../album-art/we-are-but-hunks-of-wood.jpg",
+          visualization: "bar_visualization"
         },
         {
-          "name": "Dusk To Dawn",
-          "artist": "Emancipator",
-          "album": "Dusk To Dawn",
-          "url": "../songs/DuskToDawn-Emancipator.mp3",
-          "cover_art_url": "../album-art/from-dusk-to-dawn.jpg",
-          "visualization": "michaelbromley_visualization"
+          name: "Dusk To Dawn",
+          artist: "Emancipator",
+          album: "Dusk To Dawn",
+          url: "../songs/DuskToDawn-Emancipator.mp3",
+          cover_art_url: "../album-art/from-dusk-to-dawn.jpg",
+          visualization: "michaelbromley_visualization"
         },
         {
-          "name": "Anthem",
-          "artist": "Emancipator",
-          "album": "Soon It Will Be Cold Enough",
-          "url": "../songs/Anthem-Emancipator.mp3",
-          "cover_art_url": "../album-art/soon-it-will-be-cold-enough.jpg",
-          "visualization": "bar_visualization"
+          name: "Anthem",
+          artist: "Emancipator",
+          album: "Soon It Will Be Cold Enough",
+          url: "../songs/Anthem-Emancipator.mp3",
+          cover_art_url: "../album-art/soon-it-will-be-cold-enough.jpg",
+          visualization: "bar_visualization"
         }
       ],
 &nbsp;
-      default_album_art: 'http://www.google.com',
+      default_album_art: "http://www.google.com",
 &nbsp;
       playlists: {
-        "ancient_astronauts": {
+        ancient_astronauts: {
           songs: [0, 3],
-          title: 'Best of Ancient Astronauts'
+          title: "Best of Ancient Astronauts"
         },
-        "trip_hop": {
+        trip_hop: {
           songs: [1, 2, 5, 6, 7, 8],
-          title: 'Trip Hop Mix 2018',
-          author: 'Dan Pastori',
-          visualization: 'bar_visualization'
+          title: "Trip Hop Mix 2018",
+          author: "Dan Pastori",
+          visualization: "bar_visualization"
         },
-        "emancipator": {
+        emancipator: {
           songs: [4, 9, 10],
-          title: 'Emancipator\'s Greatest Hits',
-          visualization: 'michaelbromley_visualization'
+          title: "Emancipator's Greatest Hits",
+          visualization: "michaelbromley_visualization"
         }
       },
 &nbsp;
       visualizations: [
         {
           object: MichaelBromleyVisualization,
-          params: {
-&nbsp;
-          }
+          params: {}
         },
         {
           object: BarVisualization,
           params: {
-            bar_color: '#00FF00'
+            bar_color: "#00FF00"
           }
-        },
+        }
       ]
     });
 &nbsp;
@@ -876,19 +881,25 @@ let Setup = (function(){
     config.audio.duration = 100;
   }
 &nbsp;
-  function initializeTestingElement(){
-    window.HTMLMediaElement.prototype.load = <span class="fstat-no" title="function not covered" >()</span> =&gt; { /* do nothing */ };
-    window.HTMLMediaElement.prototype.play = () =&gt; { self.paused = false; };
-    window.HTMLMediaElement.prototype.pause = () =&gt; { self.paused = true; };
+  function initializeTestingElement() {
+    window.HTMLMediaElement.prototype.load = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+      /* do nothing */
+    };
+    window.HTMLMediaElement.prototype.play = () =&gt; {
+      self.paused = false;
+    };
+    window.HTMLMediaElement.prototype.pause = () =&gt; {
+      self.paused = true;
+    };
 &nbsp;
     /*
       Simulate current time being 30 seconds.
     */
-    Object.defineProperty( HTMLMediaElement.prototype, "currentTime", {
-      get(){
+    Object.defineProperty(HTMLMediaElement.prototype, "currentTime", {
+      get() {
         return self.currentTime;
       },
-      set( newValue ){
+      set(newValue) {
         self.currentTime = newValue;
       },
       writeable: true
@@ -897,11 +908,11 @@ let Setup = (function(){
     /*
       Simulate current time being 100 for calculations.
     */
-    Object.defineProperty( HTMLMediaElement.prototype, "duration", {
-      get(){
+    Object.defineProperty(HTMLMediaElement.prototype, "duration", {
+      get() {
         return self.duration;
       },
-      set( newValue ){
+      set(newValue) {
         self.duration = newValue;
       },
       writeable: true
@@ -910,11 +921,11 @@ let Setup = (function(){
     /*
       Simulate playback rate
     */
-    Object.defineProperty( HTMLMediaElement.prototype, "playbackRate", {
-      get(){
+    Object.defineProperty(HTMLMediaElement.prototype, "playbackRate", {
+      get() {
         return self.playbackRate;
       },
-      set( newValue ){
+      set(newValue) {
         self.playbackRate = newValue;
       },
       writeable: true
@@ -923,11 +934,11 @@ let Setup = (function(){
     /*
       Simulate muted
     */
-    Object.defineProperty( HTMLMediaElement.prototype, "muted", {
-      get(){
+    Object.defineProperty(HTMLMediaElement.prototype, "muted", {
+      get() {
         return self.muted;
       },
-      set( newValue ){
+      set(newValue) {
         self.muted = newValue;
       },
       writeable: true
@@ -936,11 +947,11 @@ let Setup = (function(){
     /*
       Simulate volume
     */
-    Object.defineProperty( HTMLMediaElement.prototype, "volume", {
-      get(){
+    Object.defineProperty(HTMLMediaElement.prototype, "volume", {
+      get() {
         return self.volume;
       },
-      set( newValue ){
+      set(newValue) {
         self.volume = newValue;
       },
       writeable: true
@@ -949,19 +960,17 @@ let Setup = (function(){
     /*
       Simulate pause preference.
     */
-    Object.defineProperty( HTMLMediaElement.prototype, "paused", {
-      get(){
+    Object.defineProperty(HTMLMediaElement.prototype, "paused", {
+      get() {
         return self.paused;
       },
-      set( newValue ){
+      set(newValue) {
         self.paused = newValue;
       }
     });
   }
 &nbsp;
-  function resetConfig(){
-    config.version = "3.3.1";
-&nbsp;
+  function resetConfig() {
     config.audio = new Audio();
 &nbsp;
     config.active_metadata = {};
@@ -1053,17 +1062,17 @@ let Setup = (function(){
     initializeAmplitude: initializeAmplitude,
     initializeTestingElement: initializeTestingElement,
     resetConfig: resetConfig
-  }
+  };
 })();
 &nbsp;
-export default Setup
+export default Setup;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 10 2018 08:32:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 08:07:57 GMT-0800 (PST)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -54,7 +54,17 @@ import Events from "../events/events.js";
  * @module fx/Fx
  */
 import Fx from "../fx/fx.js";
+
+/**
+ * AmplitudeJS Visualizations Module
+ * @module fx/Visualizations
+ */
 import Visualizations from "../fx/visualizations.js";
+
+/**
+ * AmplitudeJS WaveForm Module
+ * @module fx/WaveForm
+ */
 import WaveForm from "../fx/waveform.js";
 
 /**
@@ -99,8 +109,22 @@ import VolumeSliderElements from "../visual/volumeSliderElements.js";
  */
 import TimeElements from "../visual/timeElements.js";
 
+/**
+ * Imports the AmplitudeJS Play/Pause Elements Module.
+ * @module visual/PlayPauseElements
+ */
 import PlayPauseElements from "../visual/playPauseElements.js";
+
+/**
+ * Imports the AmplitudeJS MetaData Elements Module.
+ * @module visual/MetaDataElements
+ */
 import MetaDataElements from "../visual/metaDataElements.js";
+
+/**
+ * Imports the AmplitudeJS PlaybackSpeedElements Module.
+ * @module visual/PlayBackSpeedElements
+ */
 import PlaybackSpeedElements from "../visual/playbackSpeedElements.js";
 
 /**
@@ -182,8 +206,14 @@ let Initializer = (function() {
 			user wants to use visualizations or not before proceeding.
 		*/
     if (Fx.webAudioAPIAvailable()) {
+      /*
+        Configure the Web Audio API If It's available.
+      */
       Fx.configureWebAudioAPI();
 
+      /*
+        Set the user waveform settings if provided.
+      */
       if (
         userConfig.waveforms != undefined &&
         userConfig.waveforms.sample_rate != undefined
@@ -191,6 +221,9 @@ let Initializer = (function() {
         config.waveforms.sample_rate = userConfig.waveforms.sample_rate;
       }
 
+      /*
+        Initialize the waveform.
+      */
       WaveForm.init();
 
       /*
@@ -216,14 +249,6 @@ let Initializer = (function() {
       Debug.writeMessage(
         "The Web Audio API is not available on this platform. We are using your defined backups!"
       );
-    }
-
-    /*
-			Checks if the user has any playlists defined. If they do
-			we have to initialize the functionality for the playlists.
-		*/
-    if (userConfig.playlists && countPlaylists(userConfig.playlists) > 0) {
-      PlaylistsInitializer.initialize(userConfig.playlists);
     }
 
     /*
@@ -254,13 +279,17 @@ let Initializer = (function() {
 
       /*
 				If the user provides a soundcloud client then we assume that
-				there are URLs in their songs that will reference SoundcCloud.
+				there are URLs in their songs that will reference SoundCloud.
 				We then copy over the user config they provided to the
 				temp_user_config so we don't mess up the global or their configs
 				and load the soundcloud information.
 			*/
       let tempUserConfig = {};
 
+      /*
+        If there's a soundcloud_client key set, we load the SoundCloud data
+        for all of the songs in the array.
+      */
       if (config.soundcloud_client != "") {
         tempUserConfig = userConfig;
 
@@ -313,10 +342,17 @@ let Initializer = (function() {
    */
   function setConfig(userConfig) {
     /*
+      Checks if the user has any playlists defined. If they do
+      we have to initialize the functionality for the playlists.
+    */
+    if (userConfig.playlists && countPlaylists(userConfig.playlists) > 0) {
+      PlaylistsInitializer.initialize(userConfig.playlists);
+    }
+
+    /*
 			Check to see if the user entered a start song
-			TODO: Make sure we `AudioNavigation.changeSongPlaylist()` if starting playlist is set.
 		*/
-    if (userConfig.start_song != undefined) {
+    if (userConfig.start_song != undefined && userConfig.starting_playlist) {
       /*
 				Ensure what has been entered is an integer.
 			*/
@@ -334,6 +370,10 @@ let Initializer = (function() {
       AudioNavigation.changeSong(config.songs[0], 0);
     }
 
+    /*
+      If the shuffle is on by default, shuffle the songs and
+      switch to the shuffled song.
+    */
     if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
       config.shuffle_on = true;
       Shuffler.shuffleSongs();
@@ -440,33 +480,10 @@ let Initializer = (function() {
       config.default_playlist_art = "";
     }
 
-    initializeElements();
-
     /*
-			If the user has autoplay enabled, then begin playing the song. Everything should
-			be configured for this to be ready to play.
-		*/
-    if (userConfig.autoplay) {
-      /*
-				If the user hasn't set a starting playlist, set it to null otherwise initialize to the
-				starting playlist selected by the user.
-			*/
-      if (userConfig.starting_playlist == "") {
-        config.active_playlist = null;
-      } else {
-        config.active_playlist = userConfig.starting_playlist;
-      }
-
-      /*
-				Sync the main and song play pause buttons.
-			*/
-      PlayPauseElements.sync();
-
-      /*
-				Start playing the song
-			*/
-      Core.play();
-    }
+      Initialize the visual elements
+    */
+    initializeElements();
 
     /*
 			If the user has selected a starting playlist, we need to set the starting playlist
@@ -499,17 +516,21 @@ let Initializer = (function() {
           /*
 						Set the player to the song defined by the user.
 					*/
-          AudioNavigation.changeSong(
+          AudioNavigation.changeSongPlaylist(
+            config.active_playlist,
             userConfig.playlists[userConfig.starting_playlist].songs[
               parseInt(userConfig.starting_playlist_song)
-            ]
+            ],
+            parseInt(userConfig.starting_playlist_song)
           );
         } else {
           /*
 						Set the player to the first song in the playlist
 					*/
-          AudioNavigation.changeSong(
-            userConfig.playlists[userConfig.starting_playlist].songs[0]
+          AudioNavigation.changeSongPlaylist(
+            config.active_playlist,
+            userConfig.playlists[userConfig.starting_playlist].songs[0],
+            0
           );
           /*
 						Debug that the song index doesn't exist
@@ -526,7 +547,9 @@ let Initializer = (function() {
 					Set the player to the first song in the playlist
 				*/
         AudioNavigation.changeSong(
-          userConfig.playlists[userConfig.starting_playlist].songs[0]
+          config.active_playlist,
+          userConfig.playlists[userConfig.starting_playlist].songs[0],
+          0
         );
       }
 

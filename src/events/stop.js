@@ -1,13 +1,13 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
 import config from "../config.js";
 
+/**
+ * Imports the config state module.
+ * @module utilities/configState
+ */
 import ConfigState from "../utilities/configState.js";
 
 /**
@@ -25,7 +25,6 @@ import Core from "../core/core.js";
 /**
  * Handles all of the stop events
  * @module events/Stop
- * TODO: Should we make playlist version and song version as well?
  */
 let Stop = (function() {
   /**
@@ -51,6 +50,9 @@ let Stop = (function() {
 			*/
       Core.stop();
 
+      /*
+        Set the state of the player.
+      */
       ConfigState.setPlayerState();
     }
   }

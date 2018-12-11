@@ -4,10 +4,28 @@
  */
 import config from "../config.js";
 
+/**
+ * Imports the Checks module.
+ * @module utilities/checks
+ */
 import Checks from "../utilities/checks.js";
+
+/**
+ * Imports the Audio Navigation module.
+ * @module utilities/audioNavigation
+ */
 import AudioNavigation from "../utilities/audioNavigation.js";
 
+/**
+ * Imports the Play/Pause Visual Elements module.
+ * @module visual/playPauseElements
+ */
 import PlayPauseElements from "../visual/playPauseElements.js";
+
+/**
+ * Imports the Meta Data Visual Elements module.
+ * @module visual/metaDataElements
+ */
 import MetaDataElements from "../visual/metaDataElements.js";
 
 /**
@@ -22,7 +40,12 @@ import Callbacks from "../utilities/callbacks.js";
  */
 import Debug from "../utilities/debug.js";
 
+/**
+ * Import the Visualizations from the FX module.
+ * @module fx/visualizations
+ */
 import Visualizations from "../fx/visualizations.js";
+
 /**
  * Interacts directly with native functions of the Audio element. Logic
  * leading up to these methods are handled by click handlers which call
@@ -188,8 +211,7 @@ let Core = (function() {
 			song to the percentage the user passed in.
 		*/
     if (!config.active_metadata.live) {
-      config.audio.currentTime =
-        config.audio.duration * (songPercentage / 100);
+      config.audio.currentTime = config.audio.duration * (songPercentage / 100);
     }
   }
 

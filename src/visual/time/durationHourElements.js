@@ -4,7 +4,17 @@
  */
 import config from "../../config.js";
 
+/**
+ * Handles all of the duration hours elements.
+ *
+ * @module visual/time/DurationHourElements.
+ */
 let DurationHourElements = (function() {
+  /**
+   * Sync the duration hours elements.
+   *
+   * @param {Integer} hours - The duration hours for the audio.
+   */
   function sync(hours) {
     syncGlobal(hours);
     syncPlaylist(hours);
@@ -12,6 +22,11 @@ let DurationHourElements = (function() {
     syncSongInPlaylist(hours);
   }
 
+  /**
+   * Syncs the global duration hours elements.
+   *
+   * @param {Integer} hours - the duration hours for the audio.
+   */
   function syncGlobal(hours) {
     let durationHourSelectors = document.querySelectorAll(
       ".amplitude-duration-hours"
@@ -31,6 +46,11 @@ let DurationHourElements = (function() {
     }
   }
 
+  /**
+   * Syncs the playlist duration hours for the audio.
+   *
+   * @param {Integer} hours - The duration hours for the audio.
+   */
   function syncPlaylist(hours) {
     let durationHourSelectors = document.querySelectorAll(
       '.amplitude-duration-hours[data-amplitude-playlist="' +
@@ -49,6 +69,11 @@ let DurationHourElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song duration hours.
+   *
+   * @param {Integer} hours - The duration hours for the audio.
+   */
   function syncSong(hours) {
     if (config.active_playlist == null) {
       let durationHourSelectors = document.querySelectorAll(
@@ -69,6 +94,11 @@ let DurationHourElements = (function() {
     }
   }
 
+  /**
+   * Syncs the song in playlist duration hours.
+   *
+   * @param {Integer} hours - The duration hours of the audio.
+   */
   function syncSongInPlaylist(hours) {
     let activePlaylistIndex =
       config.active_playlist != "" && config.active_playlist != null
@@ -88,6 +118,9 @@ let DurationHourElements = (function() {
     }
   }
 
+  /**
+   * Resets the duration shours elements to '00'
+   */
   function resetTimes() {
     let durationHourSelectors = document.querySelectorAll(
       ".amplitude-duration-hours"
@@ -98,6 +131,9 @@ let DurationHourElements = (function() {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

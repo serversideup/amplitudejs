@@ -1,14 +1,25 @@
+/**
+ * Imports the config module
+ * @module config
+ */
 import config from "../config.js";
 
+/**
+ * Handles all of the container elements.
+ *
+ * @param visual/ContainerElements
+ */
 let ContainerElements = (function() {
   /**
    * Applies the class 'amplitude-active-song-container' to the element
    * containing visual information regarding the active song.
    *
    * @access public
-   * TODO: UPDATE TO 4.0
    */
   function setActive() {
+    /*
+      Gets all of the song container elements.
+    */
     let songContainers = document.getElementsByClassName(
       "amplitude-song-container"
     );

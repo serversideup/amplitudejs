@@ -1,3 +1,6 @@
+/**
+ * Imports the config to use the values
+ */
 import config from "../config.js";
 
 /**

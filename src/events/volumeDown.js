@@ -1,8 +1,4 @@
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config to use the values
  */
 import config from "../config.js";

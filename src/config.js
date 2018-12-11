@@ -15,7 +15,6 @@
  * @property {string} 	config.active_album							- Holds the active album name. Used to check and see if the album changed and run the album changed callback.
  * @property {number} 	config.active_index							- Contains the index of the actively playing song.
  * @property {string} 	config.active_playlist					- Contains the key to the active playlist index.
- * @property {boolean}	config.autoplay									- Set to true to autoplay the song
  * @property {number} 	config.playback_speed						- Sets the initial playback speed of the song. The values for this can be 1.0, 1.5, 2.0
  * @property {object} 	config.callbacks								- The user can pass a JSON object with a key => value store of callbacks to be run at certain events.
  * @property {array} 		config.songs										- Contains all of the songs the user has passed to Amplitude to use.
@@ -49,8 +48,10 @@
  * @property {object} 	config.analyser 								- Web Audio API Analyser
  * @property {string}		config.player_state 						- The current state of the player.
  */
+import { version } from "../package.json";
+
 module.exports = {
-  version: "3.3.1",
+  version: version,
 
   audio: new Audio(),
 
@@ -61,8 +62,6 @@ module.exports = {
   active_index: 0,
 
   active_playlist: null,
-
-  autoplay: false,
 
   playback_speed: 1.0,
 
