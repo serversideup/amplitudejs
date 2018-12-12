@@ -286,6 +286,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports AmplitudeJS Debug Utility
  * @module utilities/debug
  */
+
+
+/**
+ * Imports the Meta Data Visual Elements module.
+ * @module visual/metaDataElements
+ */
+
+
+/**
+ * Imports the Audio Navigation module.
+ * @module utilities/audioNavigation
+ */
 /**
  * Imports the config module
  * @module config
@@ -531,8 +543,26 @@ var Core = function () {
 }();
 
 /**
+ * Import the Visualizations from the FX module.
+ * @module fx/visualizations
+ */
+
+
+/**
  * Imports AmplitudeJS Callback Utility
  * @module utilities/callbacks
+ */
+
+
+/**
+ * Imports the Play/Pause Visual Elements module.
+ * @module visual/playPauseElements
+ */
+
+
+/**
+ * Imports the Checks module.
+ * @module utilities/checks
  */
 exports.default = Core;
 module.exports = exports["default"];
@@ -800,9 +830,9 @@ var PlayPauseElements = function () {
     syncToPause: syncToPause
   };
 }(); /**
-      * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+      * Imports the config module
+      * @module config
       */
-
 exports.default = PlayPauseElements;
 module.exports = exports["default"];
 
@@ -863,6 +893,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * AmplitudeJS Audio Navigation Utility.
  *
  * @module utilities/AudioNavigation
+ */
+
+
+/**
+ * Meta Data Elements Module
+ *
+ * @module visual/MetaDataElements
+ */
+
+
+/**
+ * Imports the Song Played Progress Elements Module
+ *
+ * @module visual/SongPlayedProgressElements
+ */
+
+
+/**
+ * Imports the Play Pause Elements Module
+ *
+ * @module visual/PlayPauseElements
+ */
+
+
+/**
+ * Imports the Callbacks Module
+ *
+ * @module utilities/Callbacks
  */
 /**
  * Imports the config module
@@ -1144,6 +1202,9 @@ var AudioNavigation = function () {
     */
     changeSong(previousSong, previousIndex);
 
+    /*
+      Play the newest song.
+    */
     _core2.default.play();
 
     /*
@@ -1385,6 +1446,39 @@ var AudioNavigation = function () {
   };
 }();
 
+/**
+ * Container Elements Module
+ *
+ * @module visual/ContainerElements
+ */
+
+
+/**
+ * Imports the Time Elements Module
+ *
+ * @module visual/TimeElements
+ */
+
+
+/**
+ * Imports the Song Slider Elements Module
+ *
+ * @module visual/SongSliderElements
+ */
+
+
+/**
+ * Imports the Checks Module
+ *
+ * @module utilities/Checks
+ */
+
+
+/**
+ * Imports the Core Module
+ *
+ * @module core/Core
+ */
 exports.default = AudioNavigation;
 module.exports = exports["default"];
 
@@ -1434,8 +1528,10 @@ var Debug = function () {
   return {
     writeMessage: writeMessage
   };
-}();
-
+}(); /**
+      * Imports the config module
+      * @module config
+      */
 exports.default = Debug;
 module.exports = exports["default"];
 
@@ -1606,6 +1702,11 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles the state of the config object.
+ *
+ * @module utilities/ConfigState
+ */
 var ConfigState = function () {
   /**
    * Resets the config to the default state. This is called on initialize
@@ -1645,15 +1746,28 @@ var ConfigState = function () {
     _config2.default.continue_next = true;
   }
 
+  /**
+   * Sets the state of the player.
+   */
   function setPlayerState() {
+    /*
+      If paused and the current time is 0 the player is stopped.
+    */
     if (_config2.default.audio.paused && _config2.default.audio.currentTime == 0) {
       _config2.default.player_state = "stopped";
     }
 
+    /*
+      If paused and the current time is greater than 0 the player is
+      paused.
+    */
     if (_config2.default.audio.paused && _config2.default.audio.currentTime > 0) {
       _config2.default.player_state = "paused";
     }
 
+    /*
+      If playing, the current state is playing.
+    */
     if (!_config2.default.audio.paused) {
       _config2.default.player_state = "playing";
     }
@@ -1666,8 +1780,10 @@ var ConfigState = function () {
     resetConfig: resetConfig,
     setPlayerState: setPlayerState
   };
-}();
-
+}(); /**
+      * Imports the config module
+      * @module config
+      */
 exports.default = ConfigState;
 module.exports = exports["default"];
 
@@ -1702,6 +1818,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @module config
  */
 var Callbacks = function () {
+  /**
+   * Initializes the callbacks for the player.
+   */
   function initialize() {
     /*
       Event: abort
@@ -2025,6 +2144,9 @@ var MetaDataElements = function () {
     }
   }
 
+  /**
+   * Displays the playlist meta data.
+   */
   function displayPlaylistMetaData() {
     /*
     Define the image meta data keys. These are managed separately
@@ -2192,9 +2314,18 @@ var MetaDataElements = function () {
         }
       }
 
+      /*
+        If the song index and playlist are not null, continue.
+      */
       if (songIndex != null && playlist != null) {
+        /*
+          Get the info we are displaying.
+        */
         var _info = songInfoElements[i].getAttribute("data-amplitude-song-info");
 
+        /*
+          Set the meta data accordingly.
+        */
         if (_config2.default.playlists[playlist].songs[songIndex][_info] != undefined) {
           if (imageMetaDataKeys.indexOf(_info) >= 0) {
             songInfoElements[i].setAttribute("src", _config2.default.playlists[playlist].songs[songIndex][_info]);
@@ -2205,6 +2336,9 @@ var MetaDataElements = function () {
       }
     }
 
+    /*
+      Display the playlist meta data.
+    */
     displayPlaylistMetaData();
   }
 
@@ -2241,6 +2375,12 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the visual syncing to the state of the config for the repeat
+ * elements.
+ *
+ * @module visual/RepeatElements
+ */
 var RepeatElements = function () {
   /**
    * Syncs repeat for all of the repeat buttons. Users
@@ -2337,6 +2477,9 @@ var RepeatElements = function () {
     }
   }
 
+  /*
+    Returns the publically available methods.
+  */
   return {
     syncRepeat: syncRepeat,
     syncRepeatPlaylist: syncRepeatPlaylist,
@@ -2359,6 +2502,11 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/**
+ * Handles the visual state for all of the mute elements.
+ *
+ * @module visual/MuteElements
+ */
 var MuteElements = function () {
   /**
    * Syncs mute for all of the mute buttons. This represents the
@@ -2443,8 +2591,10 @@ var VolumeSliderElements = function () {
   return {
     sync: sync
   };
-}();
-
+}(); /**
+      * Imports the config module
+      * @module config
+      */
 exports.default = VolumeSliderElements;
 module.exports = exports["default"];
 
@@ -2517,13 +2667,9 @@ var Repeater = function () {
     setRepeatSong: setRepeatSong
   };
 }(); /**
-      * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+      * Imports the config module
+      * @module config
       */
-
-/**
- * Imports the config module
- * @module config
- */
 exports.default = Repeater;
 module.exports = exports["default"];
 
@@ -2721,13 +2867,9 @@ var Shuffler = function () {
     shufflePlaylistSongs: shufflePlaylistSongs
   };
 }(); /**
-      * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+      * Imports the config module
+      * @module config
       */
-
-/**
- * Imports the config module
- * @module config
- */
 exports.default = Shuffler;
 module.exports = exports["default"];
 
@@ -2951,9 +3093,9 @@ var SongSliderElements = function () {
     resetElements: resetElements
   };
 }(); /**
-      * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+      * Imports the config module
+      * @module config
       */
-
 exports.default = SongSliderElements;
 module.exports = exports["default"];
 
@@ -3036,6 +3178,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @module visual/time/CurrentHourElements
  */
 var TimeElements = function () {
+  /**
+   * Resets the current times.
+   */
   function resetCurrentTimes() {
     _currentTimeElements2.default.resetTimes();
     _currentHourElements2.default.resetTimes();
@@ -3043,6 +3188,11 @@ var TimeElements = function () {
     _currentSecondElements2.default.resetTimes();
   }
 
+  /**
+   * Syncs the current time elements to the time provided.
+   *
+   * @param {Object} currentTime - An object representing the current time of the audio.
+   */
   function syncCurrentTimes(currentTime) {
     _currentTimeElements2.default.sync(currentTime);
     _currentHourElements2.default.sync(currentTime.hours);
@@ -3050,6 +3200,9 @@ var TimeElements = function () {
     _currentSecondElements2.default.sync(currentTime.seconds);
   }
 
+  /**
+   * Resets the duration times.
+   */
   function resetDurationTimes() {
     _durationCountDownTimeElements2.default.resetTimes();
     _durationHourElements2.default.resetTimes();
@@ -3058,6 +3211,12 @@ var TimeElements = function () {
     _durationTimeElements2.default.resetTimes();
   }
 
+  /**
+   * Syncs the duration times to the times provided.
+   *
+   * @param {Object} currentTime - An object representing the current time of the audio.
+   * @param {Object} songDuration - An object representing the duration of the audio
+   */
   function syncDurationTimes(currentTime, songDuration) {
     _durationCountDownTimeElements2.default.sync(currentTime, songDuration);
     _durationTimeElements2.default.sync(songDuration);
@@ -3066,6 +3225,9 @@ var TimeElements = function () {
     _durationSecondElements2.default.sync(songDuration.seconds);
   }
 
+  /**
+   * Returns the publically accessible methods.
+   */
   return {
     resetCurrentTimes: resetCurrentTimes,
     syncCurrentTimes: syncCurrentTimes,
@@ -3676,6 +3838,15 @@ var SoundCloud = function () {
     }
   }
 
+  /**
+   * Resolves an individual streamable URL.
+   *
+   * @param {string} url - The URL of the SoundCloud song to get the streamable URL from.
+   * @param {string} playlist - The playlist we are getting the streamable URL for.
+   * @param {Integer} index - The index of the song in the playlist or the songs array.
+   * @param {boolean} addToShuffleList - Whether we add to the shuffle list for the songs or playlist.
+   *
+   */
   function resolveIndividualStreamableURL(url, playlist, index) {
     var addToShuffleList = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
@@ -3815,6 +3986,11 @@ var SoundCloud = function () {
     });
   }
 
+  /**
+   * Determines if a given URL is a SoundCloud URL.
+   *
+   * @param {string} url - The URL to test if it's a SoundCloud URL.
+   */
   function isSoundCloudURL(url) {
     var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
 
@@ -3960,6 +4136,11 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles the syncing of the song played progress elements.
+ *
+ * @module visual/SongPlayedProgressElements
+ */
 var SongPlayedProgressElements = function () {
   /**
    * Syncs the song played progress bars. These are HTML5 progress elements.
@@ -4079,6 +4260,10 @@ var SongPlayedProgressElements = function () {
       */
       var songPlayedProgressBars = document.querySelectorAll('.amplitude-song-played-progress[data-amplitude-playlist="' + _config2.default.active_playlist + '"][data-amplitude-song-index="' + activePlaylistIndex + '"]');
 
+      /*
+        Iterates over all of the song played progress elements
+        and sets them accordingly.
+      */
       for (var i = 0; i < songPlayedProgressBars.length; i++) {
         var playlist = songPlayedProgressBars[i].getAttribute("data-amplitude-playlist");
         var songIndex = songPlayedProgressBars[i].getAttribute("data-amplitude-song-index");
@@ -4109,8 +4294,10 @@ var SongPlayedProgressElements = function () {
     sync: sync,
     resetElements: resetElements
   };
-}();
-
+}(); /**
+      * Imports the config module
+      * @module config
+      */
 exports.default = SongPlayedProgressElements;
 module.exports = exports["default"];
 
@@ -4183,6 +4370,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 /**
+ * AmplitudeJS Visualizations Module
+ * @module fx/Visualizations
+ */
+
+
+/**
+ * AmplitudeJS WaveForm Module
+ * @module fx/WaveForm
+ */
+
+
+/**
  * AmplitudeJS Audio Navigation Module.
  * @module utilities/AudioNavigation
  */
@@ -4221,6 +4420,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /**
  * Imports the AmplitudeJS Time Elements
  * @module visual/TimeElements
+ */
+
+
+/**
+ * Imports the AmplitudeJS Play/Pause Elements Module.
+ * @module visual/PlayPauseElements
+ */
+
+
+/**
+ * Imports the AmplitudeJS MetaData Elements Module.
+ * @module visual/MetaDataElements
+ */
+
+
+/**
+ * Imports the AmplitudeJS PlaybackSpeedElements Module.
+ * @module visual/PlayBackSpeedElements
  */
 
 
@@ -4391,12 +4608,21 @@ var Initializer = function () {
     user wants to use visualizations or not before proceeding.
     */
     if (_fx2.default.webAudioAPIAvailable()) {
+      /*
+        Configure the Web Audio API If It's available.
+      */
       _fx2.default.configureWebAudioAPI();
 
+      /*
+        Set the user waveform settings if provided.
+      */
       if (userConfig.waveforms != undefined && userConfig.waveforms.sample_rate != undefined) {
         _config2.default.waveforms.sample_rate = userConfig.waveforms.sample_rate;
       }
 
+      /*
+        Initialize the waveform.
+      */
       _waveform2.default.init();
 
       /*
@@ -4445,6 +4671,10 @@ var Initializer = function () {
       */
       var tempUserConfig = {};
 
+      /*
+        If there's a soundcloud_client key set, we load the SoundCloud data
+        for all of the songs in the array.
+      */
       if (_config2.default.soundcloud_client != "") {
         tempUserConfig = userConfig;
 
@@ -4506,7 +4736,6 @@ var Initializer = function () {
 
     /*
     Check to see if the user entered a start song
-    TODO: Make sure we `AudioNavigation.changeSongPlaylist()` if starting playlist is set.
     */
     if (userConfig.start_song != undefined && userConfig.starting_playlist) {
       /*
@@ -4521,6 +4750,10 @@ var Initializer = function () {
       _audioNavigation2.default.changeSong(_config2.default.songs[0], 0);
     }
 
+    /*
+      If the shuffle is on by default, shuffle the songs and
+      switch to the shuffled song.
+    */
     if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
       _config2.default.shuffle_on = true;
       _shuffler2.default.shuffleSongs();
@@ -4616,6 +4849,9 @@ var Initializer = function () {
       _config2.default.default_playlist_art = "";
     }
 
+    /*
+      Initialize the visual elements
+    */
     initializeElements();
 
     /*
@@ -4804,6 +5040,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * https://stackoverflow.com/questions/21347833/html-svg-not-drawing-works-in-other-pages
  */
 var WaveForm = function () {
+  /*
+    Initialize the local variables used in the Waveform.
+  */
   var buffer = "";
   var sampleRate = _config2.default.waveforms.sample_rate;
   var peaks = "";
@@ -4921,6 +5160,11 @@ var WaveForm = function () {
         };
         req.send();
       } else {
+        /*
+          If we already have a waveform, we grab the waveform that
+          was created for the song and display it. We do a simple hash
+          of the song URL so it's already unique.
+        */
         displayWaveForms(_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
           a = (a << 5) - a + b.charCodeAt(0);
           return a & a;
@@ -4941,8 +5185,14 @@ var WaveForm = function () {
       If we have a buffer, we find the peaks in the audio.
     */
     if (buffer) {
+      /*
+        Get the total peaks in the song.
+      */
       var totalPeaks = peaks.length;
 
+      /*
+        Figure out the depth of the peak.
+      */
       var d = "";
       for (var peakNumber = 0; peakNumber < totalPeaks; peakNumber++) {
         if (peakNumber % 2 === 0) {
@@ -4952,11 +5202,17 @@ var WaveForm = function () {
         }
       }
 
+      /*
+        Add the waveform to the built waveforms array.
+      */
       _config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
         a = (a << 5) - a + b.charCodeAt(0);
         return a & a;
       }, 0))] = d;
 
+      /*
+        Display the waveform.
+      */
       displayWaveForms(_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
         a = (a << 5) - a + b.charCodeAt(0);
         return a & a;
@@ -5007,7 +5263,9 @@ var WaveForm = function () {
         var max = channelData[0];
 
         /*
-         */
+          Iterate over the parts of the song starting to the
+          ending to display the waveform.
+        */
         for (var sampleIndex = start; sampleIndex < end; sampleIndex += sampleStep) {
           var value = channelData[sampleIndex];
 
@@ -5019,9 +5277,15 @@ var WaveForm = function () {
           }
         }
 
+        /*
+          Set the max and min for the peak.
+        */
         _peaks[2 * peakNumber] = max;
         _peaks[2 * peakNumber + 1] = min;
 
+        /*
+          Merge the peaks
+        */
         if (channelNumber === 0 || max > mergedPeaks[2 * peakNumber]) {
           mergedPeaks[2 * peakNumber] = max;
         }
@@ -5032,6 +5296,9 @@ var WaveForm = function () {
       }
     }
 
+    /*
+      Returns the merged peaks.
+    */
     return mergedPeaks;
   }
 
@@ -5043,22 +5310,46 @@ var WaveForm = function () {
   function displayWaveForms(svg) {
     var waveformElements = document.querySelectorAll(".amplitude-wave-form");
 
+    /*
+      Iterate over all of the waveform elements and
+      display the waveform.
+    */
     for (var i = 0; i < waveformElements.length; i++) {
+      /*
+        Get the playlist attribute of the waveform element.
+      */
       var playlist = waveformElements[i].getAttribute("data-amplitude-playlist");
+
+      /*
+        Get the song index attribute of the waveform element.
+      */
       var song = waveformElements[i].getAttribute("data-amplitude-song-index");
 
+      /*
+        If the playlist is null and the song is null it's a global element.
+      */
       if (playlist == null && song == null) {
         displayGlobalWaveform(waveformElements[i], svg);
       }
 
+      /*
+        If the playlist is defined but the song is null it's a playlist element.
+      */
       if (playlist != null && song == null) {
         displayPlaylistWaveform(waveformElements[i], svg, playlist);
       }
 
+      /*
+        If the playlist is not defined and the song is not null it's a song
+        element.
+      */
       if (playlist == null && song != null) {
         displaySongWaveform(waveformElements[i], svg, song);
       }
 
+      /*
+        If the playlist and song are defined it's a song in the playlist element.
+      */
       if (playlist != null && song != null) {
         displaySongInPlaylistWaveform(waveformElements[i], svg, playlist, song);
       }
@@ -5067,6 +5358,9 @@ var WaveForm = function () {
 
   /**
    * Displays a global wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
    */
   function displayGlobalWaveform(element, svg) {
     var waveformPath = element.querySelector("svg g path");
@@ -5076,8 +5370,15 @@ var WaveForm = function () {
 
   /**
    * Displays a playlist wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {string} playlist - The playlist we are displaying the waveform for.
    */
   function displayPlaylistWaveform(element, svg, playlist) {
+    /*
+      Ensure the playlist is the active playlist.
+    */
     if (_config2.default.active_playlist == playlist) {
       var waveformPath = element.querySelector("svg g path");
 
@@ -5087,8 +5388,16 @@ var WaveForm = function () {
 
   /**
    * Displays a song wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {Integer} song - The index of the song we are displaying the
+   * waveform for.
    */
   function displaySongWaveform(element, svg, song) {
+    /*
+      Ensure it's the active song being displayed.
+    */
     if (_config2.default.active_index == song) {
       var waveformPath = element.querySelector("svg g path");
 
@@ -5098,8 +5407,16 @@ var WaveForm = function () {
 
   /**
    * Displays a song in playlist waveform.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {String} playlist - The playlist the waveform is in.
+   * @param {Integer} song - The index of the song we are displaying the waveform for.
    */
   function displaySongInPlaylistWaveform(element, svg, playlist, song) {
+    /*
+      Ensure it's the active song in the active playlist.
+    */
     if (_config2.default.active_playlist == playlist && _config2.default.playlists[_config2.default.active_playlist].active_index == song) {
       var waveformPath = element.querySelector("svg g path");
 
@@ -5197,9 +5514,9 @@ var Time = function () {
     /*
     Build a clean current time object and send back the appropriate information.
     */
-    currentTime.seconds = parseInt(currentSeconds);
-    currentTime.minutes = parseInt(currentMinutes);
-    currentTime.hours = parseInt(currentHours);
+    currentTime.seconds = currentSeconds;
+    currentTime.minutes = currentMinutes;
+    currentTime.hours = currentHours;
 
     return currentTime;
   }
@@ -5303,9 +5620,9 @@ var Time = function () {
     setCurrentTime: setCurrentTime
   };
 }(); /**
-      * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+      * Imports the config module
+      * @module config
       */
-
 exports.default = Time;
 module.exports = exports["default"];
 
@@ -5344,6 +5661,9 @@ var BufferedProgressElements = function () {
     syncSongInPlaylist();
   }
 
+  /**
+   * Sync the global song buffered progress elements.
+   */
   function syncGlobal() {
     /*
     Gets all of the song buffered progress bars.
@@ -5364,6 +5684,9 @@ var BufferedProgressElements = function () {
     }
   }
 
+  /**
+   * Sync the playlist song buffered progress elements.
+   */
   function syncPlaylist() {
     /*
     Gets all of the song buffered progress bars.
@@ -5383,6 +5706,9 @@ var BufferedProgressElements = function () {
     }
   }
 
+  /**
+   * Sync the song song buffered progress elements.
+   */
   function syncSong() {
     /*
     Gets all of the song buffered progress bars.
@@ -5402,6 +5728,9 @@ var BufferedProgressElements = function () {
     }
   }
 
+  /**
+   * Sync the song in playlist song buffered progress elements.
+   */
   function syncSongInPlaylist() {
     var activePlaylistIndex = _config2.default.active_playlist != null && _config2.default.active_playlist != "" ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -6499,9 +6828,6 @@ var Events = function () {
 /**
  * Imports the utility classes used by the evnets.
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
 /*
 	Import the necessary classes and config to use
 	with the events.
@@ -6769,10 +7095,6 @@ var KeyDown = function () {
  * @module utilities/Shuffle
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
@@ -6818,10 +7140,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports the AmplitudeJS Visual Mute Elements
  * @module visual/MuteElements
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
 /**
  * Imports the config to use the values
  */
@@ -6899,6 +7217,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
 var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
@@ -6910,10 +7232,6 @@ var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
 
 var _audioNavigation = __webpack_require__(3);
 
@@ -6935,6 +7253,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Imports the Amplitude Audio Navigation Utility
  * @module utilities/AudioNavigation
+ */
+
+
+/**
+ * Imports the Play Pause Elements Module.
+ * @module visual/PlayPauseElements
+ */
+/**
+ * Imports the config module
+ * @module config
  */
 var Next = function () {
   /**
@@ -7025,8 +7353,14 @@ var Next = function () {
 
 
 /**
- * Imports the config module
- * @module config
+ * Imports the Callbacks Module
+ * @module utilities/Callbacks
+ */
+
+
+/**
+ * Imports the AmplitudeJS Core module.
+ * @module core/core
  */
 exports.default = Next;
 module.exports = exports["default"];
@@ -7069,9 +7403,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
- */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
  */
 /**
  * Imports the config module
@@ -7241,6 +7572,12 @@ var Pause = function () {
  * Imports the AmplitudeJS Play Pause Elements
  * @module visual/PlayPauseElements
  */
+
+
+/**
+ * Imports the ConfigState module.
+ * @module utilities/ConfigState
+ */
 exports.default = Pause;
 module.exports = exports["default"];
 
@@ -7296,9 +7633,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
- */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
  */
 /**
  * Imports the config module
@@ -7556,6 +7890,12 @@ var Play = function () {
  * Imports the AmplitudeJS Checks Utility
  * @module utilities/Checks
  */
+
+
+/**
+ * Imports the config state utility.
+ * @module utilities/ConfigState
+ */
 exports.default = Play;
 module.exports = exports["default"];
 
@@ -7611,9 +7951,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
- */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
  */
 /**
  * Imports the config module
@@ -7890,6 +8227,12 @@ var PlayPause = function () {
  * Imports the AmplitudeJS Checks Utility
  * @module utilities/Checks
  */
+
+
+/**
+ * Import the config state utility.
+ * @module utilities/configState
+ */
 exports.default = PlayPause;
 module.exports = exports["default"];
 
@@ -7976,10 +8319,6 @@ var PlaybackSpeed = function () {
  * Imports the Playback Speed Visual Elements
  * @module visual/PlaybackSpeedElements
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
 /**
  * Imports the config module
  * @module config
@@ -8110,10 +8449,6 @@ var Prev = function () {
  * @module utilities/Debug
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
@@ -8146,10 +8481,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @module events/Progress
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
 /**
  * Imports the config module
  * @module config
@@ -8320,10 +8651,6 @@ var Repeat = function () {
  * @module visual/RepeatElements
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
@@ -8404,10 +8731,6 @@ var RepeatSong = function () {
  * Imports the AmplitudeJS Repeat Element
  * @module visual/RepeatElements
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
 /**
  * Imports the config module
  * @module config
@@ -8528,9 +8851,6 @@ var Shuffle = function () {
  * @module visual/ShuffleElements
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-/**
  * Imports the config module
  * @module config
  */
@@ -8592,9 +8912,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @module utilities/AudioNavigation
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ * Imports the config module
+ * @module config
  */
-
 var SkipTo = function () {
   /**
    * Handles an event on a skip to button.
@@ -8957,7 +9277,8 @@ var SongSlider = function () {
  * @module visual/SongSliderElements
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ * Imports the config module
+ * @module config
  */
 exports.default = SongSlider;
 module.exports = exports["default"];
@@ -9002,10 +9323,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @module visual/PlayPauseElements
  */
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
-/**
  * Imports the config module
  * @module config
  */
@@ -9033,6 +9350,9 @@ var Stop = function () {
       */
       _core2.default.stop();
 
+      /*
+        Set the state of the player.
+      */
       _configState2.default.setPlayerState();
     }
   }
@@ -9048,6 +9368,12 @@ var Stop = function () {
 /**
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
+ */
+
+
+/**
+ * Imports the config state module.
+ * @module utilities/configState
  */
 exports.default = Stop;
 module.exports = exports["default"];
@@ -9103,6 +9429,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Imports the Time utility class
  * @module utilities/Time
+ */
+
+
+/**
+ * Imports the Song Slider Elements visual class.
+ * @module visual/songSliderElements
  */
 
 
@@ -9189,9 +9521,19 @@ var TimeUpdate = function () {
       */
       _timeElements2.default.syncCurrentTimes(currentTime);
 
+      /*
+        Sync the song slider elements.
+      */
       _songSliderElements2.default.sync(songCompletionPercentage, _config2.default.active_playlist, _config2.default.active_index);
+
+      /*
+        Sync the song played progress elements.
+      */
       _songPlayedProgressElements2.default.sync(songCompletionPercentage);
 
+      /*
+        Sync the duration time elements.
+      */
       _timeElements2.default.syncDurationTimes(currentTime, songDuration);
     }
   }
@@ -9243,10 +9585,18 @@ var TimeUpdate = function () {
  * Imports the Callback utility class
  * @module utilities/Callbacks
  */
+
+
 /**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
+ * Imports the Song Played Progress Elements visual class.
+ * @module visual/songPlayedProgressElements
  */
 
+
+/**
+ * Imports the Time Elements visual class.
+ * @module visual/timeElements
+ */
 /**
  * Imports the config module
  * @module config
@@ -9293,10 +9643,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports the AmplitudeJS Visual Mute Elements
  * @module visual/MuteElements
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
 /**
  * Imports the config to use the values
  */
@@ -9408,6 +9754,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports the AmplitudeJS Visual Mute Elements
  * @module visual/MuteElements
  */
+/**
+ * Imports the config to use the values
+ */
 var VolumeSlider = function () {
   /**
    * Handles a change on the volume slider
@@ -9494,10 +9843,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports the AmplitudeJS Visual Mute Elements
  * @module visual/MuteElements
  */
-/**
- * NOTE: THIS FILE IS 4.0 READY REMOVE WHEN COMPLETE
- */
-
 /**
  * Imports the config to use the values
  */
@@ -9831,7 +10176,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 /**
  * @name 		Amplitude.js
- * @version 4.0
+ * @version 4.0.0
  * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
  */
 /**
@@ -11077,10 +11422,28 @@ var _soundcloud2 = _interopRequireDefault(_soundcloud);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * Handles the initialization of the playlists.
+ *
+ * @module init/PlaylistsInitializer
+ */
+
+
+/**
+ * AmplitudeJS Visual Meta Data Elements Module
+ * @module visual/MetaDataElements
+ */
+
+
+/**
  * AmplitudeJS Debug Module
  * @module utilities/Debug
  */
 var PlaylistsInitializer = function () {
+  /**
+   * Initializes the playlists for AmplitudeJS
+   *
+   * @param {Object} playlists - The playlists defined by the user.
+   */
   function initialize(playlists) {
     /*
       Copy the playlists over to Amplitude
@@ -11178,6 +11541,12 @@ var PlaylistsInitializer = function () {
     }
   }
 
+  /**
+   * Grabs the SoundCloud data for any song in the playlist that
+   * the user needs to grab data for.
+   *
+   * @access private
+   */
   function grabSoundCloudData() {
     /*
       Iterate over all of the config's playlists
@@ -11187,10 +11556,20 @@ var PlaylistsInitializer = function () {
         Checks if the playlist key is accurate.
       */
       if (_config2.default.playlists.hasOwnProperty(key)) {
+        /*
+          Iterate over all of the songs in the playlist and see if
+          they need to grab the SoundCloud data for the song.
+        */
         for (var i = 0; i < _config2.default.playlists[key].songs.length; i++) {
-          var soundcloud_regex = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
-
-          if (_config2.default.playlists[key].songs[i].url.match(soundcloud_regex)) {
+          /*
+            Only Grab the data if the URL is a SoundCloud URL.
+          */
+          if (_soundcloud2.default.isSoundCloudURL(_config2.default.playlists[key].songs[i].url)) {
+            /*
+              Only grab the data if the SoundCloud data has not already been
+              grabbed for the audio. This could happen if the user defined the
+              song in the songs array and was grabbed before.
+            */
             if (_config2.default.playlists[key].songs[i].soundcloud_data == undefined) {
               _soundcloud2.default.resolveIndividualStreamableURL(_config2.default.playlists[key].songs[i].url, key, i);
             }
@@ -11274,6 +11653,20 @@ var PlaylistsInitializer = function () {
   };
 }();
 
+/**
+ * AmplitudeJS SoundCloud Meta module
+ * @module soundcloud/Soundcloud
+ */
+
+
+/**
+ * AmplitudeJS Checks Utility.
+ * @module utilities/Checks
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
 exports.default = PlaylistsInitializer;
 module.exports = exports["default"];
 
@@ -11294,6 +11687,11 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the container elements.
+ *
+ * @param visual/ContainerElements
+ */
 var ContainerElements = function () {
   /**
    * Applies the class 'amplitude-active-song-container' to the element
@@ -11302,6 +11700,9 @@ var ContainerElements = function () {
    * @access public
    */
   function setActive() {
+    /*
+      Gets all of the song container elements.
+    */
     var songContainers = document.getElementsByClassName("amplitude-song-container");
 
     /*
@@ -11341,8 +11742,10 @@ var ContainerElements = function () {
   return {
     setActive: setActive
   };
-}();
-
+}(); /**
+      * Imports the config module
+      * @module config
+      */
 exports.default = ContainerElements;
 module.exports = exports["default"];
 
@@ -11363,6 +11766,11 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the current time hour elements.
+ *
+ * @module visual/time/CurrentHourElements
+ */
 var CurrentHourElements = function () {
   function sync(hours) {
     syncGlobal(hours);
@@ -11399,6 +11807,11 @@ var CurrentHourElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist current hour elements.
+   *
+   * @param {Integer} hour - The current audio hour.
+   */
   function syncPlaylist(hours) {
     /*
     Get all of the hour selectors
@@ -11420,6 +11833,11 @@ var CurrentHourElements = function () {
     }
   }
 
+  /**
+   * Syncs the song hour elements.
+   *
+   * @param {Integer} hour - The current audio hour.
+   */
   function syncSong(hours) {
     if (_config2.default.active_playlist == null) {
       /*
@@ -11443,6 +11861,11 @@ var CurrentHourElements = function () {
     }
   }
 
+  /**
+   * Syncs the song in playlist song hour elements.
+   *
+   * @param {Integer} hour - The current audio hour.
+   */
   function syncSongInPlaylist(hours) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
     /*
@@ -11458,6 +11881,9 @@ var CurrentHourElements = function () {
     }
   }
 
+  /**
+   * Reset the current hour elements.
+   */
   function resetTimes() {
     /*
       Gets the hour display elements
@@ -11473,6 +11899,9 @@ var CurrentHourElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -11501,7 +11930,17 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the current time minutes elements.
+ *
+ * @module visual/time/CurrentMinuteElements
+ */
 var CurrentMinuteElements = function () {
+  /**
+   * Syncs the current minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function sync(minutes) {
     syncGlobal(minutes);
     syncPlaylist(minutes);
@@ -11509,6 +11948,11 @@ var CurrentMinuteElements = function () {
     syncSongInPlaylist(minutes);
   }
 
+  /**
+   * Syncs the global current minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncGlobal(minutes) {
     /*
     Get all of the minute selectors
@@ -11531,6 +11975,11 @@ var CurrentMinuteElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncPlaylist(minutes) {
     /*
     Get all of the minute selectors
@@ -11552,6 +12001,11 @@ var CurrentMinuteElements = function () {
     }
   }
 
+  /**
+   * Syncs the current song minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncSong(minutes) {
     if (_config2.default.active_playlist == null) {
       /*
@@ -11575,6 +12029,11 @@ var CurrentMinuteElements = function () {
     }
   }
 
+  /**
+   * Syncs the current song in playlist minutes elements.
+   *
+   * @param {Integer} minutes - The current audio minutes.
+   */
   function syncSongInPlaylist(minutes) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -11591,6 +12050,9 @@ var CurrentMinuteElements = function () {
     }
   }
 
+  /**
+   * Reset the current times.
+   */
   function resetTimes() {
     /*
       Gets the minute display elements
@@ -11606,6 +12068,9 @@ var CurrentMinuteElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -11634,7 +12099,17 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the current time seconds elements.
+ *
+ * @module visual/time/CurrentSecondElements
+ */
 var CurrentSecondElements = function () {
+  /**
+   * Syncs the current seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function sync(seconds) {
     syncGlobal(seconds);
     syncPlaylist(seconds);
@@ -11642,6 +12117,11 @@ var CurrentSecondElements = function () {
     syncSongInPlaylist(seconds);
   }
 
+  /**
+   * Syncs the global current seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncGlobal(seconds) {
     /*
     Get all of the second selectors
@@ -11664,6 +12144,11 @@ var CurrentSecondElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncPlaylist(seconds) {
     /*
     Get all of the second selectors
@@ -11685,6 +12170,11 @@ var CurrentSecondElements = function () {
     }
   }
 
+  /**
+   * Syncs the current song seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncSong(seconds) {
     if (_config2.default.active_playlist == null) {
       /*
@@ -11708,6 +12198,11 @@ var CurrentSecondElements = function () {
     }
   }
 
+  /**
+   * Syncs the current song in playlist seconds elements.
+   *
+   * @param {Integer} seconds - The current audio seconds.
+   */
   function syncSongInPlaylist(seconds) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
     /*
@@ -11723,6 +12218,9 @@ var CurrentSecondElements = function () {
     }
   }
 
+  /**
+   * Reset the current seconds elements.
+   */
   function resetTimes() {
     /*
       Gets the second display elements
@@ -11738,6 +12236,9 @@ var CurrentSecondElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -11937,6 +12438,9 @@ var CurrentTimeElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -11965,7 +12469,18 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the duration countdown elements.
+ *
+ * @module visual/time/DurationCountDownTimeElements.
+ */
 var DurationCountDownTimeElements = function () {
+  /**
+   * Syncs all of the countdown time elements.
+   *
+   * @param {object} countDownTime - The current time of the audio.
+   * @param {object} songDuration - The song duration of the audio.
+   */
   function sync(countDownTime, songDuration) {
     var timeRemaining = computeTimeRemaining(countDownTime, songDuration);
 
@@ -11975,6 +12490,11 @@ var DurationCountDownTimeElements = function () {
     syncSongInPlaylist(timeRemaining);
   }
 
+  /**
+   * Syncs the global count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncGlobal(timeRemaining) {
     var durationTimeRemainingSelectors = document.querySelectorAll(".amplitude-time-remaining");
 
@@ -11988,6 +12508,11 @@ var DurationCountDownTimeElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncPlaylist(timeRemaining) {
     var durationTimeRemainingSelectors = document.querySelectorAll('.amplitude-time-remaining[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
 
@@ -12000,6 +12525,11 @@ var DurationCountDownTimeElements = function () {
     }
   }
 
+  /**
+   * Syncs the song count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncSong(timeRemaining) {
     if (_config2.default.active_playlist == null) {
       var durationTimeRemainingSelectors = document.querySelectorAll('.amplitude-time-remaining[data-amplitude-song-index="' + _config2.default.active_index + '"]');
@@ -12014,6 +12544,11 @@ var DurationCountDownTimeElements = function () {
     }
   }
 
+  /**
+   * Syncs the song in playlist count down time elements.
+   *
+   * @param {string} timeRemaining - The time remaining for the audio.
+   */
   function syncSongInPlaylist(timeRemaining) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -12024,6 +12559,9 @@ var DurationCountDownTimeElements = function () {
     }
   }
 
+  /**
+   * Resets the count down times.
+   */
   function resetTimes() {
     var durationTimeRemainingSelectors = document.querySelectorAll(".amplitude-time-remaining");
 
@@ -12032,6 +12570,12 @@ var DurationCountDownTimeElements = function () {
     }
   }
 
+  /**
+   * Computes the time remaining for the audio.
+   *
+   * @param {object} currentTime - The current time of the audio.
+   * @param {object} songDuration - The duration of the audio.
+   */
   function computeTimeRemaining(currentTime, songDuration) {
     var timeRemaining = "00:00";
 
@@ -12064,6 +12608,9 @@ var DurationCountDownTimeElements = function () {
     return timeRemaining;
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -12092,7 +12639,17 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the duration hours elements.
+ *
+ * @module visual/time/DurationHourElements.
+ */
 var DurationHourElements = function () {
+  /**
+   * Sync the duration hours elements.
+   *
+   * @param {Integer} hours - The duration hours for the audio.
+   */
   function sync(hours) {
     syncGlobal(hours);
     syncPlaylist(hours);
@@ -12100,6 +12657,11 @@ var DurationHourElements = function () {
     syncSongInPlaylist(hours);
   }
 
+  /**
+   * Syncs the global duration hours elements.
+   *
+   * @param {Integer} hours - the duration hours for the audio.
+   */
   function syncGlobal(hours) {
     var durationHourSelectors = document.querySelectorAll(".amplitude-duration-hours");
 
@@ -12113,6 +12675,11 @@ var DurationHourElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist duration hours for the audio.
+   *
+   * @param {Integer} hours - The duration hours for the audio.
+   */
   function syncPlaylist(hours) {
     var durationHourSelectors = document.querySelectorAll('.amplitude-duration-hours[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
 
@@ -12125,6 +12692,11 @@ var DurationHourElements = function () {
     }
   }
 
+  /**
+   * Syncs the song duration hours.
+   *
+   * @param {Integer} hours - The duration hours for the audio.
+   */
   function syncSong(hours) {
     if (_config2.default.active_playlist == null) {
       var durationHourSelectors = document.querySelectorAll('.amplitude-duration-hours[data-amplitude-song-index="' + _config2.default.active_index + '"]');
@@ -12139,6 +12711,11 @@ var DurationHourElements = function () {
     }
   }
 
+  /**
+   * Syncs the song in playlist duration hours.
+   *
+   * @param {Integer} hours - The duration hours of the audio.
+   */
   function syncSongInPlaylist(hours) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -12149,6 +12726,9 @@ var DurationHourElements = function () {
     }
   }
 
+  /**
+   * Resets the duration shours elements to '00'
+   */
   function resetTimes() {
     var durationHourSelectors = document.querySelectorAll(".amplitude-duration-hours");
 
@@ -12157,6 +12737,9 @@ var DurationHourElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -12185,7 +12768,17 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the duration minutes elements.
+ *
+ * @module visual/time/DurationMinuteElements.
+ */
 var DurationMinuteElements = function () {
+  /**
+   * Sync the duration minutes elements.
+   *
+   * @param {Integer} minutes - The duration minutes for the audio.
+   */
   function sync(minutes) {
     syncGlobal(minutes);
     syncPlaylist(minutes);
@@ -12193,6 +12786,11 @@ var DurationMinuteElements = function () {
     syncSongInPlaylist(minutes);
   }
 
+  /**
+   * Syncs the global duration minutes elements.
+   *
+   * @param {Integer} minutes - the duration minutes for the audio.
+   */
   function syncGlobal(minutes) {
     var durationMinuteSelectors = document.querySelectorAll(".amplitude-duration-minutes");
 
@@ -12206,6 +12804,11 @@ var DurationMinuteElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist duration minutes for the audio.
+   *
+   * @param {Integer} minutes - The duration minutes for the audio.
+   */
   function syncPlaylist(minutes) {
     var durationMinuteSelectors = document.querySelectorAll('.amplitude-duration-minutes[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
 
@@ -12218,6 +12821,11 @@ var DurationMinuteElements = function () {
     }
   }
 
+  /**
+   * Syncs the song duration minutes.
+   *
+   * @param {Integer} minutes - The duration minutes for the audio.
+   */
   function syncSong(minutes) {
     if (_config2.default.active_playlist == null) {
       var durationMinuteSelectors = document.querySelectorAll('.amplitude-duration-minutes[data-amplitude-song-index="' + _config2.default.active_index + '"]');
@@ -12232,6 +12840,11 @@ var DurationMinuteElements = function () {
     }
   }
 
+  /**
+   * Syncs the song in playlist duration minutes.
+   *
+   * @param {Integer} minutes - The duration minutes of the audio.
+   */
   function syncSongInPlaylist(minutes) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -12242,6 +12855,9 @@ var DurationMinuteElements = function () {
     }
   }
 
+  /**
+   * Resets the duration minutes elements to '00'
+   */
   function resetTimes() {
     var durationMinuteSelectors = document.querySelectorAll(".amplitude-duration-minutes");
 
@@ -12250,6 +12866,9 @@ var DurationMinuteElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -12278,7 +12897,17 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the duration seconds elements.
+ *
+ * @module visual/time/DurationSecondElements.
+ */
 var DurationSecondElements = function () {
+  /**
+   * Sync the duration seconds elements.
+   *
+   * @param {Integer} seconds - The duration seconds for the audio.
+   */
   function sync(seconds) {
     syncGlobal(seconds);
     syncPlaylist(seconds);
@@ -12286,6 +12915,11 @@ var DurationSecondElements = function () {
     syncSongInPlaylist(seconds);
   }
 
+  /**
+   * Syncs the global duration seconds elements.
+   *
+   * @param {Integer} seconds - the duration seconds for the audio.
+   */
   function syncGlobal(seconds) {
     var durationSecondSelectors = document.querySelectorAll(".amplitude-duration-seconds");
 
@@ -12299,6 +12933,11 @@ var DurationSecondElements = function () {
     }
   }
 
+  /**
+   * Syncs the playlist duration seconds for the audio.
+   *
+   * @param {Integer} seconds - The duration seconds for the audio.
+   */
   function syncPlaylist(seconds) {
     var durationSecondSelectors = document.querySelectorAll('.amplitude-duration-seconds[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
 
@@ -12311,6 +12950,11 @@ var DurationSecondElements = function () {
     }
   }
 
+  /**
+   * Syncs the song duration seconds.
+   *
+   * @param {Integer} seconds - The duration seconds for the audio.
+   */
   function syncSong(seconds) {
     if (_config2.default.active_playlist == null) {
       var durationSecondSelectors = document.querySelectorAll('.amplitude-duration-seconds[data-amplitude-song-index="' + _config2.default.active_index + '"]');
@@ -12325,6 +12969,11 @@ var DurationSecondElements = function () {
     }
   }
 
+  /**
+   * Syncs the song in playlist duration seconds.
+   *
+   * @param {Integer} seconds - The duration seconds of the audio.
+   */
   function syncSongInPlaylist(seconds) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -12335,6 +12984,9 @@ var DurationSecondElements = function () {
     }
   }
 
+  /**
+   * Resets the duration seconds elements to '00'
+   */
   function resetTimes() {
     var durationSecondSelectors = document.querySelectorAll(".amplitude-duration-seconds");
 
@@ -12343,6 +12995,9 @@ var DurationSecondElements = function () {
     }
   }
 
+  /**
+   * Returns the publically facing methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes
@@ -12371,7 +13026,17 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handles all of the duration time elements.
+ *
+ * @module visual/time/DurationTimeElements.
+ */
 var DurationTimeElements = function () {
+  /**
+   * Syncs the duration time for all elements.
+   *
+   * @param {Object} durationTime - The object containing all of the song duration times.
+   */
   function sync(durationTime) {
     var durationText = computeDurationText(durationTime);
 
@@ -12381,6 +13046,11 @@ var DurationTimeElements = function () {
     syncSongInPlaylist(durationText);
   }
 
+  /**
+   * Sync the global song duration elements.
+   *
+   * @param {Object} durationText - The text for the song duration.
+   */
   function syncGlobal(durationText) {
     var durationTimeSelectors = document.querySelectorAll(".amplitude-duration-time");
 
@@ -12394,6 +13064,11 @@ var DurationTimeElements = function () {
     }
   }
 
+  /**
+   * Sync the playlist duration times.
+   *
+   * @param {Object} durationText - The text for the song duration.
+   */
   function syncPlaylist(durationText) {
     var durationTimeSelectors = document.querySelectorAll('.amplitude-duration-time[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
 
@@ -12406,6 +13081,11 @@ var DurationTimeElements = function () {
     }
   }
 
+  /**
+   * Sync the song duration times.
+   *
+   * @param {Object} durationText - The text for the song duration.
+   */
   function syncSong(durationText) {
     if (_config2.default.active_playlist == null) {
       var durationTimeSelectors = document.querySelectorAll('.amplitude-duration-time[data-amplitude-song-index="' + _config2.default.active_index + '"]');
@@ -12420,6 +13100,11 @@ var DurationTimeElements = function () {
     }
   }
 
+  /**
+   * Sync the song in playlist duration times.
+   *
+   * @param {Object} durationText - An object containing the duration text.
+   */
   function syncSongInPlaylist(durationText) {
     var activePlaylistIndex = _config2.default.active_playlist != "" && _config2.default.active_playlist != null ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
 
@@ -12430,6 +13115,9 @@ var DurationTimeElements = function () {
     }
   }
 
+  /**
+   * Resets all of the duration times to empty.
+   */
   function resetTimes() {
     var durationTimeSelectors = document.querySelectorAll(".amplitude-duration-time");
 
@@ -12438,6 +13126,11 @@ var DurationTimeElements = function () {
     }
   }
 
+  /**
+   * Computes the duration text
+   *
+   * @param {Object} durationTime - An object containint the duration times.
+   */
   function computeDurationText(durationTime) {
     var durationText = "00:00";
 
@@ -12451,6 +13144,9 @@ var DurationTimeElements = function () {
     return durationText;
   }
 
+  /**
+   * Return publically accessible methods.
+   */
   return {
     sync: sync,
     resetTimes: resetTimes

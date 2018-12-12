@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="34px" viewBox="0 0 23 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Play</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="3.-Playlist-state" transform="translate(-277.000000, -606.000000)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4">
+            <g id="BG">
+                <g id="Small-player" transform="translate(0.000000, 579.000000)">
+                    <g id="Group-5" transform="translate(281.000000, 31.000000)">
+                        <path d="M-2,-4.37992443 L18.053759,13 L-2,30.3799244 L-2,-4.37992443 Z" id="Play"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

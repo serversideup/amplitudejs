@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="36px" viewBox="0 0 21 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Pause</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.2.-Heart-big" transform="translate(-177.000000, -514.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Buttons_pause" transform="translate(91.000000, 514.000000)">
+                <path d="M86,3 C86,1.34314575 87.3431458,2.22044605e-15 89,0 C90.6568542,-2.22044605e-15 92,1.34314575 92,3 L92,33 C92,34.6568542 90.6568542,36 89,36 C87.3431458,36 86,34.6568542 86,33 L86,3 Z M101,3 C101,1.34314575 102.343146,2.22044605e-15 104,0 C105.656854,-2.22044605e-15 107,1.34314575 107,3 L107,33 C107,34.6568542 105.656854,36 104,36 C102.343146,36 101,34.6568542 101,33 L101,3 Z" id="Pause"></path>
+            </g>
+        </g>
+    </g>
+</svg>

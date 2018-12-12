@@ -1,0 +1,91 @@
+div.top-container{
+  margin-bottom: 40px;
+  position: relative;
+
+  div.amplitude-visualization{
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 5px 31px 0 rgba(0,0,0,0.50);
+    margin: auto;
+    background-color: black;
+  }
+
+  img.now-playing-album-art{
+    width: 200px;
+    margin: auto;
+    box-shadow: 0 5px 31px 0 rgba(0,0,0,0.50);
+    display: none;
+  }
+
+  div.visualization-toggle{
+    width: 24px;
+    height: 24px;
+    top: 0;
+    right: 8px;
+    cursor: pointer;
+    position: absolute;
+
+    &.visualization-on{
+      background: url("../img/visualization-on.svg") no-repeat center;
+    }
+
+    &.visualization-off{
+      background: url("../img/visualization-off.svg") no-repeat center;
+    }
+  }
+
+  div.amplitude-shuffle{
+    width: 22px;
+    height: 13px;
+    cursor: pointer;
+    top: 48px;
+    right: 10px;
+    position: absolute;
+
+    &.amplitude-shuffle-on{
+      background: url("../img/shuffle-on.svg") no-repeat center;
+    }
+
+    &.amplitude-shuffle-off{
+      background: url("../img/shuffle-off.svg") no-repeat center;
+    }
+  }
+
+  div.amplitude-repeat{
+    width: 25px;
+    height: 15px;
+    cursor: pointer;
+    top: 85px;
+    right: 8px;
+    position: absolute;
+
+    &.amplitude-repeat-on{
+      background: url("../img/repeat-on.svg") no-repeat center;
+    }
+
+    &.amplitude-repeat-off{
+      background: url("../img/repeat-off.svg") no-repeat center;
+    }
+  }
+}
+
+/*
+  Small only
+*/
+@media screen and (max-width: 39.9375em) {
+
+}
+
+/*
+  Medium only
+*/
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+}
+
+/*
+  Large Only
+*/
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="44px" viewBox="0 0 30 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Play</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.-Pause-state" transform="translate(-173.000000, -510.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Buttons_play" transform="translate(107.000000, 510.000000)">
+                <path d="M66,5.50806269 C66,0.76471309 71.6900237,-1.7519898 75.2894726,1.39932015 L94.1266819,17.8912575 C96.6244394,20.0780389 96.6244394,23.9219611 94.1266819,26.1087425 L75.2894726,42.6006799 C71.6900237,45.7519898 66,43.2352869 66,38.4919373 L66,5.50806269 Z" id="Play"></path>
+            </g>
+        </g>
+    </g>
+</svg>

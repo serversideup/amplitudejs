@@ -1,0 +1,38 @@
+/*
+  1. Base
+*/
+  @import 'base/setup';
+
+/*
+  2. Components
+*/
+  @import 'components/top';
+  @import 'components/controls';
+  @import 'components/metadata';
+  @import 'components/waveform';
+  @import 'components/time';
+  @import 'components/song-slider';
+  @import 'components/arrow-up';
+  @import 'components/waveform-slider';
+
+/*
+  3. Layout
+*/
+  @import 'layout/visualizations-player';
+  @import 'layout/playlist';
+
+/*
+  4. Pages
+*/
+
+/*
+  5. Themes
+*/
+
+/*
+  6. Utils
+*/
+
+/*
+  7. Vendors
+*/

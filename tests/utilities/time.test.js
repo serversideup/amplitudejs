@@ -18,19 +18,19 @@ afterEach(() => {
 test("AmplitudeJS Time Utility Produces Correct Current Time", () => {
   var currentTime = Time.computeCurrentTimes();
 
-  expect(currentTime).toEqual({ seconds: 30, minutes: 0, hours: 0 });
+  expect(currentTime).toEqual({ seconds: "30", minutes: "00", hours: "00" });
 
   config.audio.currentTime = 120;
 
   currentTime = Time.computeCurrentTimes();
 
-  expect(currentTime).toEqual({ seconds: 0, minutes: 2, hours: 0 });
+  expect(currentTime).toEqual({ seconds: "00", minutes: "02", hours: "00" });
 
   config.audio.currentTime = 3605;
 
   currentTime = Time.computeCurrentTimes();
 
-  expect(currentTime).toEqual({ seconds: 5, minutes: 0, hours: 1 });
+  expect(currentTime).toEqual({ seconds: "05", minutes: "00", hours: 1 });
 });
 
 test("AmplitudeJS Time Utility Produces Correct Duration Time", () => {

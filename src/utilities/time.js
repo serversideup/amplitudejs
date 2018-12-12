@@ -65,9 +65,9 @@ let Time = (function() {
     /*
 			Build a clean current time object and send back the appropriate information.
 		*/
-    currentTime.seconds = parseInt(currentSeconds);
-    currentTime.minutes = parseInt(currentMinutes);
-    currentTime.hours = parseInt(currentHours);
+    currentTime.seconds = currentSeconds;
+    currentTime.minutes = currentMinutes;
+    currentTime.hours = currentHours;
 
     return currentTime;
   }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="15px" viewBox="0 0 24 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 6</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="2.-Play-state" transform="translate(-320.000000, -88.000000)" stroke="#FFFFFF" stroke-width="2">
+            <g id="Top" transform="translate(33.000000, 40.000000)">
+                <g id="icons_top" transform="translate(286.000000, 7.000000)">
+                    <g id="Group-6" transform="translate(2.000000, 42.000000)">
+                        <g id="Group-2" transform="translate(0.000000, 2.000000)">
+                            <path d="M0,0 L1.99791312,0 C4.20820467,0 7.27039169,1.27039169 8.8229629,2.8229629 L12.1770371,6.1770371 C13.7361165,7.73611646 16.7909921,9 19.0001925,9 L20,9" id="Path-7"></path>
+                            <path d="M0,8.8817842e-16 L1.99791312,8.8817842e-16 C4.20820467,8.8817842e-16 7.27039169,1.27039169 8.8229629,2.8229629 L12.1770371,6.1770371 C13.7361165,7.73611646 16.7909921,9 19.0001925,9 L20,9" id="Path-7" transform="translate(10.000000, 4.500000) scale(1, -1) translate(-10.000000, -4.500000) "></path>
+                        </g>
+                        <polygon id="Path-8" points="20 4 20 0 22 2"></polygon>
+                        <polygon id="Path-8" points="20 13 20 9 22 11"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

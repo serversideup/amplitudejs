@@ -1,0 +1,47 @@
+div.meta-data-container{
+  margin-top: 40px;
+  font-family: "Avenir", sans-serif;
+
+  span.now-playing-name{
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span.now-playing-artist-album{
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: rgba( 255, 255, 255, .7 );
+  }
+}
+
+/*
+  Small only
+*/
+@media screen and (max-width: 39.9375em) {
+
+}
+
+/*
+  Medium only
+*/
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+}
+
+/*
+  Large Only
+*/
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+
+}

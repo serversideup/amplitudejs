@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.4">
+        <g id="2.-Play-state" transform="translate(-319.000000, -125.000000)">
+            <g id="Top" transform="translate(33.000000, 40.000000)">
+                <g id="icons_top" transform="translate(286.000000, 7.000000)">
+                    <g id="Group" transform="translate(0.000000, 79.000000)">
+                        <path d="M-1.42108547e-14,7.5 C-1.42108547e-14,3.91014913 2.91259859,1 6.50173936,1 L19,1 C22.3137085,1 25,3.91745375 25,7.5 C25,11.0898509 22.0832545,14 18.4968065,14 L6.50319345,14 C2.91157888,14 -1.42108547e-14,11.0825462 -1.42108547e-14,7.5 Z M2,7.5 C2,9.98062704 4.01879799,12 6.50319345,12 L18.4968065,12 C20.9809347,12 23,9.98303303 23,7.5 C23,4.98501818 21.1690968,3 19,3 L6.50173936,3 C4.01639187,3 2,5.01549469 2,7.5 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                        <polygon id="Path-8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="20 4 20 0 22 2"></polygon>
+                        <polygon id="Path-8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(4.000000, 13.000000) scale(-1, 1) translate(-4.000000, -13.000000) " points="3 15 3 11 5 13"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
