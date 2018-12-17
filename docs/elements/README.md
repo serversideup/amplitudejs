@@ -37,7 +37,7 @@ meta:
 
 # Elements Introduction
 
-Amplitude.js comes with a variety of elements. Each element is picked up by a
+AmplitudeJS comes with a variety of elements. Each element is picked up by a
 class prefixed with 'amplitude-' and depending on the environment, an attribute
 that relates to the index of a song in your list of songs or a playlist you are
 using the element with. There are elements that some events are bound to such
@@ -48,3 +48,23 @@ All elements can be styled simply based off of class or if you want to define
 specific ids in CSS. Besides album art, you could apply these classes to a
 variety of elements.  Album art has to be an `<img>` element, but the other
 elements could be whatever.
+
+## Structure For elements
+
+AmplitudeJS has a standardized way to reference an element whether it's a metadata element or an interactive element. There are 4 levels of elements:
+
+* Global - Global elements control whatever is playing no matter the scope, or display whatever is playing no matter the scope.
+* Playlist - Playlist elements control within the scope of the playlist and display what's in the scope of the playlist.
+* Song - Song elements control what's in the scope of the song and what's displayed for the song.
+* Song In Playlist - Song in playlist elements control what's in the the scope of the song in the playlist.
+
+Not all elements have all 4 levels of functionality. For example, any element that deals with volume does not have anything but a global scope meaning you can't adjust volume for a single song or playlist it's handled globally.
+
+To scope an element or metadata display the following combination of classes and attributes should be provided:
+
+* Global: `class="amplitude-{element}"`
+* Playlist: `class="amplitude-{element}" data-amplitude-playlist="{playlist}"`
+* Song: `class="amplitude-{element}" data-amplitude-song-index="{song}"`
+* Song In Playlist: `class="amplitude-{element}" data-amplitude-song-index="{song}" data-amplitude-playlist="{playlist}"`
+
+One thing to note about the attribute `data-amplitude-song-index` on a Song in Playlist element is the index references the index of the song WITHIN the playlist! This is different than the song element that references the index of the song within the songs array!

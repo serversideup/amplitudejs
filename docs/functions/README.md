@@ -40,6 +40,13 @@ There are a variety of public functions that AmplitudeJS exposes to the user.
 These methods allow the user to change config variables, add new songs, play
 now, etc.
 
+## Get Config
+Returns the current AmplitudeJS configuration.
+
+```javascript
+Amplitude.getConfig();
+```
+
 ## Bind New Elements
 The bind new elements function should be called whenever a new song element is
 added to the page. This will bind all of the event handlers for that element.
@@ -77,7 +84,6 @@ Returns the state of the repeat status for the playlist.
 Amplitude.getRepeatPlaylist( playlistKey )
 ```
 
-
 ## Get Shuffle
 Returns the current state of the global shuffle status for the player.
 
@@ -96,21 +102,21 @@ Amplitude.getShufflePlaylist( playlistKey )
 Sets the global shuffle state for AmplitudeJS.
 
 ```javascript
-Amplitude.setShuffle()
+Amplitude.setShuffle( shuffleState )
 ```
 
 ## Set Shuffle Playlist
 Sets the shuffle state for a playlist.
 
 ```javascript
-Amplitude.setShufflePlaylist( playlistKey )
+Amplitude.setShufflePlaylist( playlistKey, shuffleState )
 ```
 
 ## Set Repeat
 Sets the global repeat status for AmplitudeJS
 
 ```javascript
-Amplitude.setRepeat()
+Amplitude.setRepeat( repeatState )
 ```
 
 ## Set Repeat Song
@@ -118,14 +124,14 @@ Sets the global state to determine if we should repeat the individual song upon
 completion.
 
 ```javascript
-Amplitude.setRepeatSong()
+Amplitude.setRepeatSong( repeatSongState )
 ```
 
 ## Set Repeat Playlist
-Sets the repeat for the playlist. This will toggle the playlist repeat status.
+Sets the repeat for the playlist.
 
 ```javascript
-Amplitude.setRepeatPlaylist( playlistKey )
+Amplitude.setRepeatPlaylist( playlistKey, repeatState )
 ```
 
 ## Get Default Album Art
@@ -140,6 +146,27 @@ Sets the default album art for the player to the URL provided.
 
 ```javascript
 Amplitude.setDefaultAlbumArt( url )
+```
+
+## Get Default Album Art
+Returns the URL of the default album art for the player.
+
+```javascript
+Amplitude.getDefaultAlbumArt()
+```
+
+## Get Default Playlist Art
+Gets the default art for a playlist.
+
+```javascript
+Amplitude.getDefaultPlaylistArt()
+```
+
+## Set Default Playlist Art
+Sets the default playlist art.
+
+```javascript
+Amplitude.setDefaultPlaylistArt( url )
 ```
 
 ## Set Debug
@@ -157,11 +184,18 @@ Returns the active song's metadata as a JSON object.
 Amplitude.getActiveSongMetadata();
 ```
 
-## Get Song By Index
+## Get Active Playlist Metadata
+Gets the active playlist's metadata as a JSON object.
+
+```javascript
+Amplitude.getActivePlaylistMetadata();
+```
+
+## Get Song At Index
 Returns a song's metadata at a specific index.
 
 ```javascript
-Amplitude.getSongByIndex( {index} );
+Amplitude.getSongAtIndex( {index} );
 ```
 
 ## Get Song At Playlist Index
@@ -264,7 +298,7 @@ extensions but exposes the core of AmplitudeJS. This returns the audio element
 used by AmplitudeJS.
 
 ```javascript
-Amplitude.audio()
+Amplitude.getAudio()
 ```
 
 ## Get songs
@@ -384,16 +418,100 @@ will be the amount of time delayed before the next song starts.
 Amplitude.setDelay( milliseconds )
 ```
 
-## Set Meta Data
+## Get Delay
+Gets the current delay between songs in milliseconds.
+
+```javascript
+Amplitude.getDelay();
+```
+
+## Set Song Meta Data
 You can set the meta data for any song in your song objects. This is helpful if
 you are doing a live stream and have a call back that returns the information of
 what song is currently playing.
 
 ```javascript
-Amplitude.setMetaData( index, metaData )
+Amplitude.setSongMetaData( index, metaData )
 ```
 
 The first parameter `index` is the index of the song in the songs array you are
 setting the meta data for. The `metaData` is an object that contains meta data
 similar to a song object. The keys that get passed will be updated on the song
 object at the index.  The only key that can not be updated is the `url`.
+
+## Set Playlist Meta Data
+You can set the metadata for the playlist. Similar to the songs object, you can do it for a playlist object.
+
+```javascript
+Amplitude.setPlaylistMetaData( playlist, metaData )
+```
+
+The first argument `playlist` is the key of the playlist we are setting the meta data for and the second object `metaData` is the object containing all of the keys we are updating.
+
+## Get Analyser
+
+Returns the Web Audio API Analyser. This allows for the user to bind to the active audio through the web audio API.
+
+```javascript
+Amplitude.getAnalyser()
+```
+
+## Get Player State
+
+Returns the current state of the player whether it's `playing`, `paused`, or `stopped`.
+
+```javascript
+Amplitude.getPlayerState()
+```
+## Add Playlist
+
+This method allows you to add a playlist to AmplitudeJS. To do this, you need a unique key for your playlist, the data describing your playlist such as `title`, `author`, etc. and an array of song objects for your playlist.
+
+```javascript
+Amplitude.addPlaylist( key, data, songs );
+```
+
+The first argument is the `key`. Remember this is a JSON key and should be formatted as such.
+
+The second argument is all of the data describing the playlist such as `name`, `title`, `author`, etc. in the form of a JSON object.
+
+Finally, the third argument is an array of song objects. These are the songs that will be added to the playlist.
+
+## Register Visualization
+
+The other way to register a visualization is through the public `Amplitude.registerVisualization( visualization, preferences )` method. The first parameter being the object included with the visualization file and the second parameter being a JSON object containing any of the parameters needed to overwrite defaults provided by the visualization.
+
+```javascript
+  Amplitude.registerVisualization( visualization, preferences );
+```
+
+## Set Global Visualization
+
+You can set the global visualization through the public method like this:
+
+```javascript
+  Amplitude.setGlobalVisualization( visualizationKey );
+```
+
+## Set Playlist Visualization
+
+You can set the visualization through the public facing method like this:
+
+```javascript
+  Amplitude.setPlaylistVisualization( playlist_key, visualization_key );
+```
+
+## Set Individual Song Visualization
+
+You can set the visualization for an individual song like so:
+
+```javascript
+  Amplitude.setSongVisualization( songIndex, visualizationKey );
+```
+
+## Set Individual Song In Playlist Visualization
+
+You can set the visualization for an individual song in a playlist using:
+
+```javascript
+Amplitude.setSongInPlaylistVisualization( playlistKey, songIndex, visualizationKey );

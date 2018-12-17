@@ -38,8 +38,8 @@ meta:
 # Meta Data Elements
 
 Meta data elements get their information filled in with meta data from the
-active song object. These can be any type of HTML element except when filling
-in cover_art_url, station_art_url, podcast_episode_cover_art_url.
+active song object or on initialization from the keyed song in the array. These can be any type of HTML element except when filling
+in cover_art_url, station_art_url, or podcast_episode_cover_art_url.
 
 These specific keys have to be on an img tag since they update the src attribute
 of the tag. Every other attribute fills in the inner html of the tag.
@@ -57,37 +57,43 @@ image.
 
 ## Text Metadata
 With text metadata describing a song, you can use whatever information you like
-and place it in whatever element you like. This is new to Amplitude 3.0.
-Previous versions of AmplitudeJS limited the user to certain meta data fields
-such as artist, album, title, etc. The newest version of AmplitudeJS allows the
-user to do whatever keys on a song object and insert that text into any element
-defined appropriately. This give much more flexibility when using AmplitudeJS
-in a variety of audio scenarios such as for radio stations and podcasts. To add
-an element that contains a piece of meta data regarding the now playing song
-simply add:
+and place it in whatever element you like. This give much more flexibility when using AmplitudeJS in a variety of audio scenarios such as for radio stations and podcasts. To add an element that contains a piece of meta data regarding the now playing song simply add:
 
 ```html
-<span amplitude-song-info="{song_meta_index}" amplitude-main-song-info="true"></span>
+<span data-amplitude-song-info="{song_meta_index}"></span>
 ```
 
-If it's a main element for a playlist add the key for the playlist:
+If it's an element for a playlist add the key for the playlist:
 ```html
-<span amplitude-song-info="{song_meta_index}" amplitude-playlist="{playlist_index}"></span>
+<span data-amplitude-song-info="{song_meta_index}" data-amplitude-playlist="{playlist_index}"></span>
 ```
 
 ## Autofill Meta Data
 Sometimes when building a player, you don't know what every song is on load and
-need to load songs dynamically. As of AmplitudeJS version 3.3 this is not a
+need to load songs dynamically. With AmplitudeJS this is not a
 problem. AmplitudeJS will autofill the meta data for lists of songs if you do a
 combination of the following on the element.
 
-1. 'amplitude-song-info' - Defines the information you want injected into the
+1. 'data-amplitude-song-info' - Defines the information you want injected into the
 element. This is the key of the song object.
-2. 'amplitude-song-index' - Defines the index of the song in the songs array
+2. 'data-amplitude-song-index' - Defines the index of the song in the songs array
 that you want to inject into the element.
 
 This is super convenient when loading songs dynamically either server side or
 loading after the page has loaded.
+
+## Playlist Meta Data
+When you add a playlist, you can add all sorts of other metadata to the playlist object, similar to who song objects work. AmplitudeJS also takes care of initializing this data on the screen if you have your meta data element keyed up correctly. Let's say you have a playlist title field represented by `title` in the playlist element that you want to display on the screen. You'd add an element that has the following attributes:
+
+```html
+<span data-amplitude-playlist-info="title" data-amplitude-playlist="{playlist_key}"></span>
+```
+
+Essentially you have to add an attribute with the key of the element and the playlist key in a format like this:
+
+```html
+<span data-amplitude-playlist-info="{info}" data-amplitude-playlist="{playlist_key}"></span>
+```
 
 ## Time Metadata
 There are certain elements that contain time data about the active song. You
@@ -101,122 +107,155 @@ time is left for a song.
 
 Main Current Time - Displays in MM:SS
 ```html
-<span class="amplitude-current-time" amplitude-main-current-time="true"></span>
+<span class="amplitude-current-time"></span>
 ```
 
 Main Current Hours
 ```html
-<span class="amplitude-current-hours" amplitude-main-current-hours="true"></span>
+<span class="amplitude-current-hours"></span>
 ```
 
 Main Current Minutes
 ```html
-<span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>
+<span class="amplitude-current-minutes"></span>
 ```
 
 Main Current Seconds
 ```html
-<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
+<span class="amplitude-current-seconds"></span>
+```
+
+Current Time For Playlist - Displays in MM:SS
+```html
+<span class="amplitude-current-time" data-amplitude-playlist="{playlist_key}"></span>
 ```
 
 Current Hours For Playlist
 ```html
-<span class="amplitude-current-hours" amplitude-playlist-current-hours="true" amplitude-playlist="{playlist_key}"></span>
+<span class="amplitude-current-hours"  data-amplitude-playlist="{playlist_key}"></span>
 ```
 
 Current Minutes For Playlist
 ```html
-<span class="amplitude-current-minutes" amplitude-playlist-current-minutes="true" amplitude-playlist="{playlist_key}"></span>
+<span class="amplitude-current-minutes" data-amplitude-playlist="{playlist_key}"></span>
 ```
 
 Current Seconds For Playlist
 ```html
-<span class="amplitude-current-seconds" amplitude-playlist-current-seconds="true" amplitude-playlist="{playlist_key}"></span>
+<span class="amplitude-current-seconds" data-amplitude-playlist="{playlist_key}"></span>
 ```
+
+Current Time For Song
+```html
+<span class="amplitude-current-time" data-amplitude-song-index="{song_index}"></span>
 
 Current Hours For Song
 ```html
-<span class="amplitude-current-hours" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-current-hours" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Current Minutes For Song
 ```html
-<span class="amplitude-current-minutes" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-current-minutes" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Current Seconds For Song
 ```html
-<span class="amplitude-current-seconds" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-current-seconds" data-amplitude-song-index="{song_index}"></span>
 ```
 
-Main Duration Time MM:SS
+Current Time For Song In Playlist
 ```html
-<span class="amplitud-duration-time" amplitude-main-duration-time="true"></span>
+<span class="amplitude-current-time" data-amplitude-playlist="{playlist_key}" data-amplitude-song-index="{song_index}"></span>
+
+Current Hours For Song In Playlist
+```html
+<span class="amplitude-current-hours" data-amplitude-playlist="{playlist_key}" data-amplitude-song-index="{song_index}"></span>
+```
+
+Current Minutes For Song In Playlist
+```html
+<span class="amplitude-current-minutes" data-amplitude-playlist="{playlist_key}" data-amplitude-song-index="{song_index}"></span>
+```
+
+Current Seconds For Song In Playlist
+```html
+<span class="amplitude-current-seconds" data-amplitude-playlist="{playlist_key}" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Main Duration Time - Displays in MM:SS
 ```html
-<span class="amplitude-duration-time" amplitude-main-duration-time="true"></span>
+<span class="amplitude-duration-time"></span>
 ```
 
 Main Duration Hours
 ```html
-<span class="amplitude-duration-hours" amplitude-main-duration-hours="true"></span>
+<span class="amplitude-duration-hours"></span>
 ```
 
 Main Duration Minutes
 ```html
-<span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>
+<span class="amplitude-duration-minutes"></span>
 ```
 
 Main Duration Seconds
 ```html
-<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
+<span class="amplitude-duration-seconds"></span>
+```
+
+Duration Time For Playlist - Displays in MM:SS
+```html
+<span class="amplitude-duration-time"></span>
 ```
 
 Duration Hours For Playlist
 ```html
-<span class="amplitude-duration-hours" amplitude-playlist-duration-hours="true" amplitude-playlist="{playlist_key}"></span>
+<span class="amplitude-duration-hours" data-amplitude-playlist="{playlist_key}"></span>
 ```
 
 Duration Minutes For Playlist
 ```html
-<span class="amplitude-duration-minutes" amplitude-playlist-duration-minutes="true" amplitude-playlist="{playlist_key}"></span>
+<span class="amplitude-duration-minutes" data-amplitude-playlist="{playlist_key}"></span>
 ```
 
 Duration Seconds For Playlist
 ```html
-<span class="amplitude-duration-seconds" amplitude-playlist-duration-seconds="true" amplitude-playlist="{playlist_key}"></span>
+<span class="amplitude-duration-seconds" data-amplitude-playlist="{playlist_key}"></span>
+```
+
+Duration Time For Song - Displays in MM:SS
+```html
+<span class="amplitude-duration-time" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Duration Hours For Song
 ```html
-<span class="amplitude-duration-hours" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-duration-hours" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Duration Minutes For Song
 ```html
-<span class="amplitude-duration-minutes" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-duration-minutes" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Duration Seconds For Song
 ```html
-<span class="amplitude-duration-seconds" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-duration-seconds" data-amplitude-song-index="{song_index}"></span>
 ```
 
 Main Time Remaining For Song
 ```html
-<span class="amplitude-time-remaining" amplitude-main-time-remaining="true"></span>
+<span class="amplitude-time-remaining"></span>
 ```
 
 Playlist Main Time Remaining For Song
 ```html
-<span class="amplitude-time-remaining" amplitude-playlist-main-time-remaining="{playlist_key}"></span>
+<span class="amplitude-time-remaining" data-amplitude-playlist="{playlist_key}"></span>
 ```
 
 Song Time Remaining
 ```html
-<span class="amplitude-time-remaining" amplitude-song-index="{song_index}"></span>
+<span class="amplitude-time-remaining" data-amplitude-song-index="{song_index}"></span>
 ```
 
 ## Song Container
@@ -228,10 +267,10 @@ active song.
 
 For a single song container it would be:
 ```html
-<div class="amplitude-song-container" amplitude-song-index="{X}"></div>
+<div class="amplitude-song-container" data-amplitude-song-index="{X}"></div>
 ```
 
 For a playlist song container it would be:
 ```html
-<div class="amplitude-song-container" amplitude-playlist="{playlist_key}" amplitude-song-index="{X}"></div>
+<div class="amplitude-song-container" data-amplitude-playlist="{playlist_key}" data-amplitude-song-index="{X}"></div>
 ```

@@ -39,29 +39,31 @@ meta:
 Amplitude JS contains many variables that can be configured to determine the
 functionality of AmplitudeJS.
 
-These are set and passed in during the Amplitude.init() method:
+These are set and passed in during the Amplitude.init() method or by the appropriate public facing method discussed in the `Public Functions` part of the documentation.
 
-| Setting | Default | Type | Functionality |
-|-----------------------|:-------------:|:-----------------------:|:-----------------------------------------------------------------------------------------|
-| autoplay      		  | false 		  | boolean 				| When true, autoplays the current song 													|
-| callbacks 			  | {} 			  | JSON Object  			| Object containing methods that get called at certain actions 									|
-| songs     			  | {}     		  | JSON Object 			| Object containing all of the songs used by AmplitudeJS 									|
-| playlists 			  | {}  	      | JSON Object 			| Object containing all of the playlists used by AmplitudeJS 								|
-| default_album_art 	  | '' 			  | URL 					| URL to the default album art image 														|
-| debug 				  | false 		  | Boolean 				| Determines if we should print out debugging to the console 								|
-| volume 				  | 50 			  | Integer (0 - 100) 		| The level of volume of the active audio with 0.0 being the quietest and 1.0 the loudest 	|
-| volume_increment 		  | 5			  | Integer (1 - 100) 		| How much the volume increments every time the volume increment pressed.					|
-| volume_decrement 		  | 5 			  | Integer (1 - 100) 		| How much the volume decrements every time the volume decrement pressed. 					|
-| soundclound_client 	  | '' 			  | String 					| The API key for SoundCloud if being used 													|
-| soundcloud_use_art 	  | false 		  | Boolean 				| Determines if we should use the SoundCloud album art by default 							|
-| continue_next | true | boolean | Determines if when a song ends, do we continue to the next song |
-| starting_playlist | '' | JSON Object | If there are multiple playlists, determine which one will be started by default |
-| starting_playlist_song | '' | Integer | Key of the song in the playlist that you'd like to start with|
-| start_song | '' | Integer | The index of the song that AmplitudeJS should start with. |
-| shuffle_on | false | Boolean | When on, gets set to true so when traversing through songs, AmplitudeJS knows whether or not to use the songs object or the shuffle_list |
-| delay | null | Integer | The millisecond delay set between songs. |
+| Setting | Default | Type | Functionality
+|---------|---------|------|--------------
+| playback_speed | 1.0 | Float | Determines how fast the audio should play back. This should one of the following values: 1.0, 1.5, 2.0
+| callbacks | {} | JSON Object | An object that contains the callbacks and functions AmplitudeJS should bind to.
+| songs | [] | Array | An array of song objects used to define how AmplitudeJS is being used.
+| playlists | {} | JSON Object | An object that contains playlist objects used by AmplitudeJS
+| start_song | '' | Integer | The index of the song AmplitudeJS should start playing with.
+| starting_playlist | '' | String | The key of the playlist AmplitudeJS should start with.
+| starting_playlist_song | '' | Integer | The index of the song in the playlist AmplitudeJS should start with.
+| shuffle_on | false | Boolean | Determines if we should start with the shuffle on.
+| default_album_art | '' | String | URL to the image to be used for default album art.
+| default_playlist_art | '' | String | URL to the image to be used as playlist artwork by default.
+| debug | false | Boolean | Determines if we should output any debug notes. Helpful for debugging
+| volume | 0.5 | Float | A value between 0 and 1.0 for how much volume should be added
+| volume_increment | 5 | Integer | How much the volume should increment each time the volume up button is pressed.
+| volume_decrement | 5 | Integer | How much the volume should decrement each time the volume down button is pressed.
+| soundcloud_client | '' | String | Client API for SoundCloud. Used if using a SoundCloud link.
+| soundcloud_use_art | false | Boolean | Determines if we should use the album art from SoundCloud instead of a URL provided.
+| bindings | {} | JSON Object | Contains all of the key bindings and what method they should run when pressed.
+| continue_next | true | Boolean | When a song is finished, determines if we should continue to the next song.
+| delay | 0 | Integer | The number of milliseconds to delay between songs.
+| visualizations | {} | JSON Object | The key and object store of all Web Audio API Visualizations that should be registered with AmplitudeJS.
+| waveforms.sample_rate | 100 | Integer | The amount of samples we should do for each song when generating a waveform. The higher the number, the longer it will take, but more defined the waveform will be.
+| preload | null | String | Can be set to "auto" which is default and loads the entire audio, "metadata" which only preloads the metadata only, or "none" which preloads nothing.
 
-A note about `autoplay`. In newer versions of Safari on iOS, user interaction
-has to take place before the song can be autoplayed. This is for bandwidth
-restrictions and not playing music in unwanted areas. For More information,
-visit: [https://www.reddit.com/r/webdev/comments/71nkym/safari_11_has_a_major_change_to_web_audio_api/](https://www.reddit.com/r/webdev/comments/71nkym/safari_11_has_a_major_change_to_web_audio_api/)
+Don't worry, this is just an overview of the different options. We will be diving deeper into what each of these do throughout the docs.

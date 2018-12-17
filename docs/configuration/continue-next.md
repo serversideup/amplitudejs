@@ -1,5 +1,5 @@
 ---
-title: Debug Mode - AmplitudeJS Documentation
+title: Continue Next - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/debug.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/continue-next.html
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,22 +35,11 @@ meta:
     content: "@521dimensions"
 ---
 
-# Debug Mode
-
-Debug mode outputs verbose updates when Amplitude actions take place to see the
-current config and statuses of the AmplitudeJS player. To turn on AmplitudeJS
-debug mode you can set it in the config or call:
-
-## Config
+AmplitudeJS allows you to stop playing a song after it has been finished. To stop a song after it has been finished playing you need to configure AmplitudeJS with the `continue_next` flag set to `false` on initialization. By default, AmplitudeJS will go to the next song in the list or playlist depending on state. To set the flag as false, initialize AmplitudeJS with the following parameter:
 
 ```javascript
   Amplitude.init({
-    songs: [...],
-    debug: true
-  })
-```
-
-## Method
-```javascript
-  Amplitude.setDebug( true );
+    "songs": [...],
+    "continue_next": false
+  });
 ```

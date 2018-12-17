@@ -1,5 +1,5 @@
 ---
-title: Debug Mode - AmplitudeJS Documentation
+title: Playback Speed - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/debug.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/playback-speed.html
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,22 +35,13 @@ meta:
     content: "@521dimensions"
 ---
 
-# Debug Mode
+# Setting the Default Playback Speed
 
-Debug mode outputs verbose updates when Amplitude actions take place to see the
-current config and statuses of the AmplitudeJS player. To turn on AmplitudeJS
-debug mode you can set it in the config or call:
-
-## Config
+By default, AmplitudeJS plays back the audio at the normal speed of `1.0`. However, you can initialize AmplitudeJS to play at `1.5`x the normal rate or `2.0`x times the normal rate. To do that, you can set the `playback_speed` attribute on initialization.
 
 ```javascript
   Amplitude.init({
-    songs: [...],
-    debug: true
-  })
-```
-
-## Method
-```javascript
-  Amplitude.setDebug( true );
+    songs: ['...'],
+    playback_speed: 2.0
+  });
 ```

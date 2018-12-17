@@ -1,5 +1,5 @@
 ---
-title: Setting Starting Volume - AmplitudeJS Documentation
+title: Shuffle - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/setting-starting-volume.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/shuffle.html
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,38 +35,15 @@ meta:
     content: "@521dimensions"
 ---
 
-# Setting the Starting Volume
+# Defaulting Shuffle On
 
-You can define the starting volume for when the user initially presses play.  
-To do this, you need to add a "volume" key to your initialization JSON.  This
-value is any number between 0 and 100. Think of this as a percentage.
-If you want the volume percentage at 35%, set this value equal to 35.
+You can turn shuffle on right away when initializing AmplitudeJS. To do that, simply initialize AmplitudeJS with the `shuffle_on` parameter like this:
 
 ```javascript
-	Amplitude.init({
-		"songs": [
-			{
-				"name": "Song Name 1",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg"
-			},
-			{
-				"name": "Song Name 2",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg"
-			},
-			{
-				"name": "Song Name 3",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg"
-			}
-		],
-		"volume": 35
-	});
+  Amplitude.init({
+    songs: ['...'],
+    shuffle_on: true
+  });
 ```
+
+By default, AmplitudeJS will shuffle the songs and start with the first song in the shuffled list.

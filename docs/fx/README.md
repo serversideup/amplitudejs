@@ -1,5 +1,5 @@
 ---
-title: Autoplay - AmplitudeJS Documentation
+title: FX Introduction - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/autoplay.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/fx/
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,38 +35,8 @@ meta:
     content: "@521dimensions"
 ---
 
-# Autoplay
+# FX Introduction
 
-Autoplay is simple, when set to true, Amplitude.js will play the song you set
-to to be the start song, or the first song in your config.
+Amplitude FX elements are a brand new feature that requires a special section. These elements include Waveforms and Visualizations for audio. These elements make use of the Web Audio API providing more power to fine tune your player and create beautiful web audio players! Since these players make use of the Web Audio API it's important to realize that the browser they run in has to support it: [https://caniuse.com/#feat=audio-api](https://caniuse.com/#feat=audio-api).
 
-```javascript
-	Amplitude.init({
-		"songs": [
-			{
-				"name": "Song Name 1",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg"
-			},
-			{
-				"name": "Song Name 2",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg"
-			},
-			{
-				"name": "Song Name 3",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg"
-			}
-		],
-		"autoplay": true
-	});
-```
-
-This will play the first song in the config on page load.
+As of this writing, most major browsers (besides IE 11 go figure) support it. If it's not supported, we simply won't use the Web Audio API in your player.

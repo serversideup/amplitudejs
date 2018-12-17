@@ -41,9 +41,12 @@ and feel of their audio player through the web without having to understand
 advanced scripting. In HTML5, the audio tag allows users to add common audio
 formats to their web page. The problem is that the audio playback interface is
 controlled by the browser. Amplitude.js puts you in control of the design by
-simply applying a class or ID to page elements. You can then style these
+simply applying a class and/or attributes to page elements. You can then style these
 elements through CSS and control your audio. Amplitude.js goes above and
 beyond by adding playlist capabilities (next, previous, shuffle), song meta
 data and visualizations. Amplitude.js is now mobile friendly as well. If it
 detects a request coming from a mobile device it will apply a touchstart event
 listener instead of a click to the appropriate elements.
+
+## Automated Tests
+AmplitudeJS ships with a full test suite written in Jest: [https://jestjs.io/](https://jestjs.io/) to ensure stable, production ready code. We tried to cover every scenario and even did some UI/UX tests. Like all of AmplitudeJS we welcome any critiques and contributes you may have for the tests.

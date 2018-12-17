@@ -36,22 +36,19 @@ meta:
 ---
 
 # Callbacks
-There are a variety of callbacks that AmplitudeJS calls at certain times and
-the developer can bind to.
+There are a variety of callbacks specific to AmplitudeJS that get called at certain times that the developer can bind to.
 
 
-| Callback        | Description 										   |
-| --------------- |--------------------------------------------------------|
-| before_play     | Occurs before the play method is called 			   |
-| after_play 	  	| Occurs after the play method is called 			     |
-| before_stop 	  | Occurs before the stop method is called 			   |
-| after_stop  	  | Occurs after the stop method is called 				   |
-| time_update 		| Occurs when the time has updated 								 |
-| album_change 		| Occurs when an album changes 										 |
-| song_change 		| Occurs when a song has been changed 						 |
-| time_updated 		| Occurs when the current song time has been updated |
-| playlist_changed | Occurs when the active playlist has changed |
-| song_repeated  	| Occurs when the now playing song has been repeated |
+| Callback            | Called When 										   
+| ------------------- |--------------------------------------------------------|
+| stop                | The active audio is stopped
+| initialized         | AmplitudeJS has finished initializing
+| song_repeated       | When the active audio has been repeated
+| next                | When the next audio has been played
+| prev                | When the prev audio has been played
+| album_change        | When the album has changed
+| song_change         | When the song has changed
+| playlist_changed    | When the playlist has changed.
 
 To bind to a callback you add a function to your callbacks object with the key
 of one of the callbacks listed above. That key will be a function. When the
@@ -60,8 +57,6 @@ after the user clicks play we want to increase the play count. I'd set up a
 callback that has a method to increase the play count:
 
 ```javascript
-var playCount = 0;
-
 Amplitude.init({
 		 "songs": [
 				 {
@@ -87,17 +82,39 @@ Amplitude.init({
 				 }
 		 ],
 		 "callbacks": {
-			 'after_play': function(){
-				 playCount++;
-				 alert( playCount );
+			 'stop': function(){
+				 console.log('Audio has been stopped.')
 			 }
 		 }
  });
 ```
 
-Every time the play button is called, the song will begin to play and after
-all the code has been run, the callback will increase the play count.
+Every time the audio has been stopped, a message is printed to the console.
 
-The 'time_update' callback is super helpful because this gets triggered when
-the song time updates. This can be used to call other AmplitudeJS events such
-as song played percentage and set 3rd party visualizations.
+There are also the native HTML 5 Audio events that the developer can bind too. For more descriptions on when these events are propagated check out: https://www.w3schools.com/tags/ref_av_dom.asp
+
+The list of native HTML 5 Audio Events that AmplitudeJS listens to are:
+
+* `abort`
+* `error`
+* `loadeddata`
+* `loadedmetadata`
+* `loadstart`
+* `pause`
+* `playing`
+* `play`
+* `progress`
+* `ratechange`
+* `seeked`
+* `seeking`
+* `stalled`
+* `suspend`
+* `timeupdate`
+* `volumechange`
+* `waiting`
+* `canplay`
+* `canplaythrough`
+* `durationchange`
+* `ended`
+
+Specifically the 'timeupdate' callback is super helpful because this gets triggered when the song time updates. This can be used to call other AmplitudeJS events such as song played percentage and set 3rd party visualizations.

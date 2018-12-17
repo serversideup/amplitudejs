@@ -1,5 +1,5 @@
 ---
-title: Debug Mode - AmplitudeJS Documentation
+title: Setting Starting Song and Playlist - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/debug.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/start-song-start-playlist.html
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,22 +35,46 @@ meta:
     content: "@521dimensions"
 ---
 
-# Debug Mode
+# Setting the Starting Audio and Starting Playlist
 
-Debug mode outputs verbose updates when Amplitude actions take place to see the
-current config and statuses of the AmplitudeJS player. To turn on AmplitudeJS
-debug mode you can set it in the config or call:
+When you initialize AmplitudeJS you can instruct AmplitudeJS to start at a certain song, certain playlist, and a certain song in a playlist.
 
-## Config
+## Set Starting Song
+
+To set a starting song, you simply need to add the `start_song` key and pass it the index of the song you want to start. By default this is 0, the first song in the array. To set it to the fourth song in the array, index 3, do this:
 
 ```javascript
   Amplitude.init({
-    songs: [...],
-    debug: true
-  })
+    songs: ['...'],
+    start_song: 3
+  });
 ```
 
-## Method
+## Set Starting Playlist
+
+You can also define which playlist to start with if you have multiple playlists. Similar to the `start_song` you need to pass the `starting_playlist` key to the `init` method:
+
 ```javascript
-  Amplitude.setDebug( true );
+  Amplitude.init({
+    songs: ['...'],
+    playlists: {
+      'key_of_starting_playlist': ['...']
+    }
+    starting_playlist: 'key_of_starting_playlist'
+  });
+```
+
+## Set Starting Song In Playlist
+
+Finally, you can set which song you want to start the player with inside which playlist. To do this, you need to define the `starting_playlist` key and the `starting_playlist_song` index like this:
+
+```javascript
+  Amplitude.init({
+    songs: ['...'],
+    playlists: {
+      'key_of_starting_playlist': ['...']
+    }
+    starting_playlist: 'key_of_starting_playlist',
+    starting_playlist_song: 3
+  });
 ```

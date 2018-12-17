@@ -37,165 +37,120 @@ meta:
 
 # Playlists
 
-The ability to make playlists has been introduced in Amplitude 3.0. You can now
-scope functionality of Amplitude.js into playlists such as play/pause buttons,
-meta data, next, prev, etc.  To make a playlist you must first define all of
-your songs as song objects in the songs array. This is like your library. You
-will then make a playlists object when you init Amplitude.js and you will give
-a key for the unique identifier for your playlist. This key will then contain
-an array of song indexes being used by your playlist. These are the index of
-the song in the songs array. The original songs array index will be used in
-*EVERY* reference even in a playlist. Consider it the unique ID of the song.
+Using playlists is an essential piece of functionality for AmplitudeJS. As a developer you have the ability to group audio by playlists. There are multiple advantages to this such as the ability to display unique groupings on the screen at once. A playlist could be an album, a group of songs, a podcast series, etc. It's all up to you on how you want to do it!
 
-That sounds like a lot, so let's break it down. We will be making a playlist f
-or Rock and Roll tracks using the following songs:
+There are multiple ways to initialize playlists. Let's start with doing it right away in the `Amplitude.init()` method.
 
 ```javascript
-	Amplitude.init({
-		"songs": [
-			{
-				"name": "Song Name 1",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "country"
-			},
-			{
-				"name": "Song Name 2",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			},
-			{
-				"name": "Song Name 3",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			},
-			{
-				"name": "Song Name 4",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "classical"
-			},
-			{
-				"name": "Song Name 5",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			},
-			{
-				"name": "Song Name 6",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "indie"
-			},
-			{
-				"name": "Song Name 7",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			}
-		]
-	});
+Amplitude.init({
+  songs: [
+    {
+      "name": "Risin' High (feat Raashan Ahmad)",
+      "artist": "Ancient Astronauts",
+      "album": "We Are to Answer",
+      "url": "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
+      "cover_art_url": "../album-art/we-are-to-answer.jpg"
+    },
+    {
+      "name": "The Gun",
+      "artist": "Lorn",
+      "album": "Ask The Dust",
+      "url": "../songs/08 The Gun.mp3",
+      "cover_art_url": "../album-art/ask-the-dust.jpg",
+    },
+    {
+      "name": "Anvil",
+      "artist": "Lorn",
+      "album": "Anvil",
+      "url": "../songs/LORN - ANVIL.mp3",
+      "cover_art_url": "../album-art/anvil.jpg",
+    },
+    {
+      "name": "I Came Running",
+      "artist": "Ancient Astronauts",
+      "album": "We Are to Answer",
+      "url": "../songs/ICameRunning-AncientAstronauts.mp3",
+      "cover_art_url": "../album-art/we-are-to-answer.jpg",
+    },
+    {
+      "name": "First Snow",
+      "artist": "Emancipator",
+      "album": "Soon It Will Be Cold Enough",
+      "url": "../songs/FirstSnow-Emancipator.mp3",
+      "cover_art_url": "../album-art/soon-it-will-be-cold-enough.jpg"
+    },
+    {
+      "name": "Terrain",
+      "artist": "pg.lost",
+      "album": "Key",
+      "url": "../songs/Terrain-pglost.mp3",
+      "cover_art_url": "../album-art/key.jpg"
+    },
+    {
+      "name": "Vorel",
+      "artist": "Russian Circles",
+      "album": "Guidance",
+      "url": "../songs/Vorel-RussianCircles.mp3",
+      "cover_art_url": "../album-art/guidance.jpg"
+    },
+    {
+      "name": "Intro / Sweet Glory",
+      "artist": "Jimkata",
+      "album": "Die Digital",
+      "url": "../songs/IntroSweetGlory-Jimkata.mp3",
+      "cover_art_url": "../album-art/die-digital.jpg"
+    },
+    {
+      "name": "Offcut #6",
+      "artist": "Little People",
+      "album": "We Are But Hunks of Wood Remixes",
+      "url": "../songs/Offcut6-LittlePeople.mp3",
+      "cover_art_url": "../album-art/we-are-but-hunks-of-wood.jpg"
+    },
+    {
+      "name": "Dusk To Dawn",
+      "artist": "Emancipator",
+      "album": "Dusk To Dawn",
+      "url": "../songs/DuskToDawn-Emancipator.mp3",
+      "cover_art_url": "../album-art/from-dusk-to-dawn.jpg"
+    }
+  ],
+
+
+  playlists: {
+    "ancient_astronauts": {
+      songs: [0, 3],
+      title: 'Best of Ancient Astronauts'
+    },
+    "trip_hop": {
+      songs: [1, 2, 5, 6, 7, 8]
+      title: 'Trip Hop Mix 2018',
+      author: 'Dan Pastori'
+    },
+    "emancipator": {
+      songs: [4, 9, {
+        "name": "Anthem",
+        "artist": "Emancipator",
+        "album": "Soon It Will Be Cold Enough",
+        "url": "../songs/Anthem-Emancipator.mp3",
+        "cover_art_url": "../album-art/soon-it-will-be-cold-enough.jpg"
+      }],
+      title: 'Emancipator\'s Greatest Hits'
+    }
+  }
+});
 ```
 
+At the most basic level, what's happening here is we initialize AmplitudeJS with a bunch of songs. We then group them into playlists using the `playlists` object. Each playlist is defined by a unique key, such as `trip_hop`. Within the playlist itself, you have to add another `songs` array. The songs array can contain either an index for the song that exists in the global songs array OR it can contain a song object itself (like in the `emancipator` playlist). This is useful if you want to scope a song in a playlist only. Now remember, this song is ONLY available within the scope of the playlist.
 
-At the end of your config, you will add a key that states you will have
-playlists including a playlist keyed as "rock_and_roll". Remember these are
-JSON keys so use underscores!
+Also within the playlist, there are some extra meta data fields such as `title` or `author`. You can any number of these and have them autofill in your display on initialization if you have an element with the attribute: `data-amplitude-playlist-info="{key}"`.
 
-```json
-	"playlists": {
-		"rock_and_roll": []
-	}
-```
+Playlists maintain their own state too. On the internals of AmplitudeJS the shuffle state and repeat state are held within the scope of the playlist.
 
-In the playlist we will be adding all the songs that have the genre rock. These
-are the indexes of songs that will be added.  Your final Amplitude.init()
-method will look like:
+Another way you can add playlists is through the `Amplitude.addPlaylist( key, data, songs)` method. This method accepts 3 parameters.
 
-```javascript
-	Amplitude.init({
-		"songs": [
-			{
-				"name": "Song Name 1",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "country"
-			},
-			{
-				"name": "Song Name 2",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			},
-			{
-				"name": "Song Name 3",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			},
-			{
-				"name": "Song Name 4",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "classical"
-			},
-			{
-				"name": "Song Name 5",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			},
-			{
-				"name": "Song Name 6",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "indie"
-			},
-			{
-				"name": "Song Name 7",
-				"artist": "Artist Name",
-				"album": "Album Name",
-				"url": "/song/url.mp3",
-				"cover_art_url": "/cover/art/url.jpg",
-				"genre": "rock"
-			}
-		],
-		"playlists": {
-			"rock_and_roll": [
-				1, 2, 4, 6
-			]
-		}
-	});
-```
+The `key` parameter is the key of the playlist such as `ancient_astronauts` up above. Remember this will be in a JSON format so use JSON specific key naming scheme.
 
-You now have a playlist with a key "rock_and_roll" that contains 4 songs from
-your library. As we add more features, you will see how this playlist key will
-come into play to scope the functions of Amplitude.js by playlist.
+The `data` is any of the meta data that works for the playlist. Anything you want to pass as meta data for the playlist can be passed in a JSON object.
+
+the `songs` is an array of song objects for your playlist. These songs will only get added to the new playlist. Each one of these can be either an index of the song in the songs array, or an entirely new song object that only gets added to the playlist.

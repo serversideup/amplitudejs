@@ -1,5 +1,5 @@
 ---
-title: Debug Mode - AmplitudeJS Documentation
+title: Setting Default Art - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/debug.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/default-art.html
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,22 +35,40 @@ meta:
     content: "@521dimensions"
 ---
 
-# Debug Mode
+# Default Art
 
-Debug mode outputs verbose updates when Amplitude actions take place to see the
-current config and statuses of the AmplitudeJS player. To turn on AmplitudeJS
-debug mode you can set it in the config or call:
+If you have audio that doesn't have a specific piece of album art, you can define
+a default image url using the "default_album_art" key. The value can be set on initialization or through a public method. You can also set the default playlist art for metadata. If you don't define a piece of album art for your playlist you can also set that on initialization through the "default_playlist_art" key or through a public method.
 
-## Config
+## Initialization Default Album Art
+
+```javascript
+	Amplitude.init({
+		"songs": [...],
+		"default_album_art": "/url/to/default.jpg"
+	});
+```
+
+## Public Set Method Default Album Art
+
+```javascript
+  Amplitude.setDefaultAlbumArt( "/url/to/default.jpg" );
+```
+
+## Initialization Default Playlist Album Art
 
 ```javascript
   Amplitude.init({
-    songs: [...],
-    debug: true
-  })
+    "songs": [...],
+    "playlists": {
+      ...
+    },
+    "default_playlist_art": "/url/to/default.jpg"
+  });
 ```
 
-## Method
+## Public Set Method Default Playlist Art
+
 ```javascript
-  Amplitude.setDebug( true );
+  Amplitude.setDefaultPlaylistArt( "/url/to/default.jpg" );
 ```

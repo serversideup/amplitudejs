@@ -1,5 +1,5 @@
 ---
-title: Debug Mode - AmplitudeJS Documentation
+title: Delay Between Audio - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/debug.html
+    content: https://521dimensions.com/open-source/amplitudejs/docs/configuration/delay.html
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,22 +35,31 @@ meta:
     content: "@521dimensions"
 ---
 
-# Debug Mode
+# Delay Between Audio
 
-Debug mode outputs verbose updates when Amplitude actions take place to see the
-current config and statuses of the AmplitudeJS player. To turn on AmplitudeJS
-debug mode you can set it in the config or call:
+AmplitudeJS allows the developer to add a time delay between the audio objects defined. By default, this value is `0`. When you initialize AmplitudeJS you can provide an integer in MS for how long you want AmplitudeJS to wait before it starts playing the next audio track.
 
-## Config
+## Initialization
+You can set this value on initialization:
 
 ```javascript
-  Amplitude.init({
-    songs: [...],
-    debug: true
-  })
+Amplitude.init({
+  songs: ['...'],
+  delay: 3000
+});
 ```
 
-## Method
+AmplitudeJS will now wait 3 seconds before playing the next track.
+
+## Public Function
+You can also set this value through a public function like this:
+
 ```javascript
-  Amplitude.setDebug( true );
+Amplitude.setDelay( 3000 );
+```
+
+If you need to see what the delay is set to, run:
+
+```javascript
+Amplitude.getDelay();
 ```

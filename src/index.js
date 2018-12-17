@@ -318,6 +318,17 @@ let Amplitude = (function() {
   }
 
   /**
+   * Gets the default playlist art for the playlists
+   *
+   * Public Accessor: Amplitude.getDefaultPlaylistArt()
+   *
+   * @access public
+   */
+  function getDefaultPlaylistArt(){
+    return config.default_playlist_art;
+  }
+
+  /**
    * Sets the default album art for the player
    *
    * Public Accessor: Amplitude.setDefaultAlbumArt( url )
@@ -328,6 +339,18 @@ let Amplitude = (function() {
   function setDefaultAlbumArt(url) {
     config.default_album_art = url;
   }
+
+  /**
+   * Sets the default playlist art for the player
+   *
+   * Public Accessor: Amplitude.setDefaultPlaylistArt( url )
+   *
+   * @access public
+   * @param {string} url - A string representing the URL of the new default playlist art.
+   */
+   function setDefaultPlaylistArt(url){
+     config.default_plalist_art = url;
+   }
 
   /**
    * Allows the user to get the percentage of the song played.
@@ -1261,6 +1284,8 @@ let Amplitude = (function() {
     setRepeatPlaylist: setRepeatPlaylist,
     getDefaultAlbumArt: getDefaultAlbumArt,
     setDefaultAlbumArt: setDefaultAlbumArt,
+    getDefaultPlaylistArt: getDefaultPlaylistArt,
+    setDefaultPlaylistArt: setDefaultPlaylistArt,
     getSongPlayedPercentage: getSongPlayedPercentage,
     setSongPlayedPercentage: setSongPlayedPercentage,
     getSongPlayedSeconds: getSongPlayedSeconds,
