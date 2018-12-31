@@ -57,7 +57,7 @@ No installation is required to use Amplitude.js. All you need to do is include a
 
 Replace `{{version-number}}` with the exact version number that you would like to use (see [our releases](https://github.com/521dimensions/amplitudejs/releases) for what version number to use):
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs@{{version-number}}/dist/amplitude.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/amplitudejs@{{version-number}}/dist/amplitude.js"></script>
 ```
 **NOTE:** It's best to set your version number manually to make sure you have full control of what version you are running. If you need to upgrade in the future, just change `{{version-number}}` to the latest version.
 
