@@ -10375,6 +10375,17 @@ var Amplitude = function () {
   }
 
   /**
+   * Gets the default playlist art for the playlists
+   *
+   * Public Accessor: Amplitude.getDefaultPlaylistArt()
+   *
+   * @access public
+   */
+  function getDefaultPlaylistArt() {
+    return _config2.default.default_playlist_art;
+  }
+
+  /**
    * Sets the default album art for the player
    *
    * Public Accessor: Amplitude.setDefaultAlbumArt( url )
@@ -10384,6 +10395,18 @@ var Amplitude = function () {
    */
   function setDefaultAlbumArt(url) {
     _config2.default.default_album_art = url;
+  }
+
+  /**
+   * Sets the default playlist art for the player
+   *
+   * Public Accessor: Amplitude.setDefaultPlaylistArt( url )
+   *
+   * @access public
+   * @param {string} url - A string representing the URL of the new default playlist art.
+   */
+  function setDefaultPlaylistArt(url) {
+    _config2.default.default_plalist_art = url;
   }
 
   /**
@@ -10756,11 +10779,6 @@ var Amplitude = function () {
     }
 
     /*
-    Sync all of the play pause buttons.
-    */
-    _playPauseElements2.default.sync();
-
-    /*
     Play the song
     */
     _core2.default.play();
@@ -10769,6 +10787,11 @@ var Amplitude = function () {
       Sets the state of the player.
     */
     _configState2.default.setPlayerState();
+
+    /*
+    Sync all of the play pause buttons.
+    */
+    _playPauseElements2.default.sync();
   }
 
   /**
@@ -11286,6 +11309,8 @@ var Amplitude = function () {
     setRepeatPlaylist: setRepeatPlaylist,
     getDefaultAlbumArt: getDefaultAlbumArt,
     setDefaultAlbumArt: setDefaultAlbumArt,
+    getDefaultPlaylistArt: getDefaultPlaylistArt,
+    setDefaultPlaylistArt: setDefaultPlaylistArt,
     getSongPlayedPercentage: getSongPlayedPercentage,
     setSongPlayedPercentage: setSongPlayedPercentage,
     getSongPlayedSeconds: getSongPlayedSeconds,

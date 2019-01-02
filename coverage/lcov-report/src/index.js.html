@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">67.74% </span>
+        <span class="strong">67.02% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>126/186</span>
+        <span class='fraction'>126/188</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">51.92% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>54/104</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75.86% </span>
+        <span class="strong">73.33% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>44/58</span>
+        <span class='fraction'>44/60</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">67.74% </span>
+        <span class="strong">67.02% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>126/186</span>
+        <span class='fraction'>126/188</span>
       </div>
     </div>
   </div>
@@ -1351,7 +1351,32 @@
 1306
 1307
 1308
-1309</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+1309
+1310
+1311
+1312
+1313
+1314
+1315
+1316
+1317
+1318
+1319
+1320
+1321
+1322
+1323
+1324
+1325
+1326
+1327
+1328
+1329
+1330
+1331
+1332
+1333
+1334</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1678,8 +1703,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2598,6 +2646,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2979,6 +3029,17 @@ let Amplitude = (function() {
   }
 &nbsp;
   /**
+   * Gets the default playlist art for the playlists
+   *
+   * Public Accessor: Amplitude.getDefaultPlaylistArt()
+   *
+   * @access public
+   */
+  function <span class="fstat-no" title="function not covered" >getDefaultPlaylistArt(</span>){
+<span class="cstat-no" title="statement not covered" >    return config.default_playlist_art;</span>
+  }
+&nbsp;
+  /**
    * Sets the default album art for the player
    *
    * Public Accessor: Amplitude.setDefaultAlbumArt( url )
@@ -2989,6 +3050,18 @@ let Amplitude = (function() {
   function setDefaultAlbumArt(url) {
     config.default_album_art = url;
   }
+&nbsp;
+  /**
+   * Sets the default playlist art for the player
+   *
+   * Public Accessor: Amplitude.setDefaultPlaylistArt( url )
+   *
+   * @access public
+   * @param {string} url - A string representing the URL of the new default playlist art.
+   */
+   function <span class="fstat-no" title="function not covered" >setDefaultPlaylistArt(</span>url){
+<span class="cstat-no" title="statement not covered" >     config.default_plalist_art = url;</span>
+   }
 &nbsp;
   /**
    * Allows the user to get the percentage of the song played.
@@ -3370,11 +3443,6 @@ let Amplitude = (function() {
     }
 &nbsp;
     /*
-			Sync all of the play pause buttons.
-		*/
-    PlayPauseElements.sync();
-&nbsp;
-    /*
 			Play the song
 		*/
     Core.play();
@@ -3383,6 +3451,11 @@ let Amplitude = (function() {
       Sets the state of the player.
     */
     ConfigState.setPlayerState();
+&nbsp;
+    /*
+			Sync all of the play pause buttons.
+		*/
+    PlayPauseElements.sync();
   }
 &nbsp;
   /**
@@ -3922,6 +3995,8 @@ let Amplitude = (function() {
     setRepeatPlaylist: setRepeatPlaylist,
     getDefaultAlbumArt: getDefaultAlbumArt,
     setDefaultAlbumArt: setDefaultAlbumArt,
+    getDefaultPlaylistArt: getDefaultPlaylistArt,
+    setDefaultPlaylistArt: setDefaultPlaylistArt,
     getSongPlayedPercentage: getSongPlayedPercentage,
     setSongPlayedPercentage: setSongPlayedPercentage,
     getSongPlayedSeconds: getSongPlayedSeconds,
@@ -3973,7 +4048,7 @@ export default Amplitude;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 11 2018 10:54:52 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 02 2019 10:19:11 GMT-0800 (PST)
 </div>
 </div>
 <script src="../prettify.js"></script>

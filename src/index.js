@@ -732,11 +732,6 @@ let Amplitude = (function() {
     }
 
     /*
-			Sync all of the play pause buttons.
-		*/
-    PlayPauseElements.sync();
-
-    /*
 			Play the song
 		*/
     Core.play();
@@ -745,6 +740,11 @@ let Amplitude = (function() {
       Sets the state of the player.
     */
     ConfigState.setPlayerState();
+
+    /*
+			Sync all of the play pause buttons.
+		*/
+    PlayPauseElements.sync();
   }
 
   /**
