@@ -4705,8 +4705,8 @@ var Initializer = function () {
    * @access public
    */
   function rebindDisplay() {
-    AmplitudeEvents.initializeEvents();
-    AmplitudeVisualSync.displaySongMetadata();
+    _events2.default.initialize();
+    _metaDataElements2.default.displayMetaData();
   }
 
   /**

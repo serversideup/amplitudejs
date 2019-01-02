@@ -69,7 +69,7 @@ $(document).ready(function(){
 
 function appendToSongDisplay( song, index ){
   $('.white-player-playlist').append(
-    '<div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" amplitude-song-index="'+index+'">'
+    '<div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="'+index+'">'
       + '<img src="'+song.cover_art_url+'"/>'
       + '<div class="playlist-song-meta">'
         + '<span class="playlist-song-name">'+song.name+'</span>'

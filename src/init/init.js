@@ -320,8 +320,8 @@ let Initializer = (function() {
    * @access public
    */
   function rebindDisplay() {
-    AmplitudeEvents.initializeEvents();
-    AmplitudeVisualSync.displaySongMetadata();
+    Events.initialize();
+    MetaDataElements.displayMetaData();
   }
 
   /**
