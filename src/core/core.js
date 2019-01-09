@@ -64,6 +64,9 @@ let AmplitudeCore = (function() {
 		*/
 		config.active_song.play();
 		config.active_song.playbackRate = config.playback_speed;
+    AmplitudeVisualSync.syncMainPlayPause('playing');
+    AmplitudeVisualSync.syncPlaylistPlayPause( config.active_playlist, 'playing' );
+    AmplitudeVisualSync.syncSongPlayPause( config.active_playlist, config.active_index, 'playing' );
 
 		/*
 			Run the after play callback
@@ -101,6 +104,8 @@ let AmplitudeCore = (function() {
 		if( config.active_metadata.live ){
 			disconnectStream();
 		}
+
+    AmplitudeVisualSync.setPlayPauseButtonsToPause();
 
 		/*
 			Run the after pause callback.

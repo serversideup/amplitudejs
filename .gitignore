@@ -6,3 +6,4 @@ node_modules/
 src/PENDING
 logs/
 examples/songs
+*.idea

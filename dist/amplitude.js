@@ -1834,6 +1834,9 @@ var AmplitudeCore = function () {
   */
 		_config2.default.active_song.play();
 		_config2.default.active_song.playbackRate = _config2.default.playback_speed;
+		_visual2.default.syncMainPlayPause('playing');
+		_visual2.default.syncPlaylistPlayPause(_config2.default.active_playlist, 'playing');
+		_visual2.default.syncSongPlayPause(_config2.default.active_playlist, _config2.default.active_index, 'playing');
 
 		/*
   	Run the after play callback
@@ -1871,6 +1874,8 @@ var AmplitudeCore = function () {
 		if (_config2.default.active_metadata.live) {
 			disconnectStream();
 		}
+
+		_visual2.default.setPlayPauseButtonsToPause();
 
 		/*
   	Run the after pause callback.
