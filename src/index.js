@@ -530,7 +530,10 @@ let Amplitude = (function () {
 	 * @access public
 	 */
 	function play(){
-		AmplitudeCore.play();
+	  return new Promise(resolve => {
+      AmplitudeCore.play();
+      resolve('playing song');
+    });
 	}
 
 	/**
