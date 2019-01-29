@@ -74,7 +74,7 @@ Like other meta data and interactive elements, waveforms follow the same structu
 To add a global waveform, display the following:
 
 ```html
-<div class="amplitude-waveform"></div>
+<div class="amplitude-wave-form"></div>
 ```
 
 This will display the active song's waveform.
@@ -84,7 +84,7 @@ This will display the active song's waveform.
 To add a playlist waveform element, display the following:
 
 ```html
-<div class="amplitude-waveform" data-amplitude-playlist="{playlist_key}"></div>
+<div class="amplitude-wave-form" data-amplitude-playlist="{playlist_key}"></div>
 ```
 
 ### Individual Song Waveform Element
@@ -92,7 +92,7 @@ To add a playlist waveform element, display the following:
 To add a waveform for an individual song, display the following:
 
 ```html
-<div class="amplitude-waveform" data-amplitude-song-index="{song_index}"></div>
+<div class="amplitude-wave-form" data-amplitude-song-index="{song_index}"></div>
 ```
 
 ### Individual Song In Playlist Waveform Element
@@ -100,5 +100,5 @@ To add a waveform for an individual song, display the following:
 To add a waveform for an individual song in a playlist, display the following:
 
 ```html
-<div class="amplitude-waveform" data-amplitude-song-index="{song_index}" data-amplitude-playlist="{playlist}"></div>
+<div class="amplitude-wave-form" data-amplitude-song-index="{song_index}" data-amplitude-playlist="{playlist}"></div>
 ```
