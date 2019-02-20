@@ -4614,6 +4614,27 @@ var Initializer = function () {
       _fx2.default.configureWebAudioAPI();
 
       /*
+         Activates the audio context after an event for the user.
+      */
+      document.documentElement.addEventListener("mousedown", function () {
+        if (_config2.default.context.state !== 'running') {
+          _config2.default.context.resume();
+        }
+      });
+
+      document.documentElement.addEventListener("keydown", function () {
+        if (_config2.default.context.state !== 'running') {
+          _config2.default.context.resume();
+        }
+      });
+
+      document.documentElement.addEventListener("keyup", function () {
+        if (_config2.default.context.state !== 'running') {
+          _config2.default.context.resume();
+        }
+      });
+
+      /*
         Set the user waveform settings if provided.
       */
       if (userConfig.waveforms != undefined && userConfig.waveforms.sample_rate != undefined) {

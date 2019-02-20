@@ -209,7 +209,33 @@ let Initializer = (function() {
       /*
         Configure the Web Audio API If It's available.
       */
-      Fx.configureWebAudioAPI();
+     Fx.configureWebAudioAPI();
+
+     /*
+        Activates the audio context after an event for the user.
+     */
+     document.documentElement.addEventListener(
+      "mousedown", function(){
+        if (config.context.state !== 'running') {
+          config.context.resume();
+        }
+      });
+
+      document.documentElement.addEventListener(
+      "keydown", function(){
+        if (config.context.state !== 'running') {
+          config.context.resume();
+        }
+      });
+
+      document.documentElement.addEventListener(
+        "keyup", function(){
+          if (config.context.state !== 'running') {
+            config.context.resume();
+          }
+       });
+  
+      
 
       /*
         Set the user waveform settings if provided.

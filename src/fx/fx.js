@@ -36,7 +36,7 @@ let Fx = (function() {
 				Web Audio API is available, set the context in our config.
 			*/
       config.context = new browserContext();
-
+      
       /*
 				Create an analyzer that we will use in the context.
 			*/
