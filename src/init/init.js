@@ -283,6 +283,11 @@ let Initializer = (function() {
     initializeDefaultLiveSettings();
 
     /*
+      Initialize default song indexes
+    */
+    initializeDefaultSongIndexes();
+
+    /*
 			When the preliminary config is ready, we are ready to proceed.
 		*/
     if (ready) {
@@ -689,6 +694,19 @@ let Initializer = (function() {
       }
     }
   }
+
+  /** 
+   * Initializes the index of the song in the songs array so
+   * we can reference it if needed
+   * 
+   * @access private
+   */
+  function initializeDefaultSongIndexes(){
+    for (let i = 0; i < config.songs.length; i++) {
+      config.songs[i].index = i;
+    }
+  }
+
 
   /*
 		Returns the publicly accessible methods

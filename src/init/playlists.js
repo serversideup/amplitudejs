@@ -123,6 +123,8 @@ let PlaylistsInitializer = (function() {
             if (Checks.isInt(config.playlists[key].songs[i])) {
               config.playlists[key].songs[i] =
                 config.songs[config.playlists[key].songs[i]];
+
+              config.playlists[key].songs[i].index = i;
             }
             /*
               Check to see if the index for the song in the playlist
@@ -139,6 +141,13 @@ let PlaylistsInitializer = (function() {
                   key +
                   " is not defined in your songs array!"
               );
+            }
+
+            /*
+              If not an int, then is a dedicated song, just set the index.
+            */
+            if (!Checks.isInt(config.playlists[key].songs[i]) ){
+              config.playlists[key].songs[i].index = i;
             }
           }
         }

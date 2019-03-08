@@ -4669,6 +4669,11 @@ var Initializer = function () {
     initializeDefaultLiveSettings();
 
     /*
+      Initialize default song indexes
+    */
+    initializeDefaultSongIndexes();
+
+    /*
     When the preliminary config is ready, we are ready to proceed.
     */
     if (ready) {
@@ -5022,6 +5027,18 @@ var Initializer = function () {
       if (_config2.default.songs[i].live == undefined) {
         _config2.default.songs[i].live = false;
       }
+    }
+  }
+
+  /** 
+   * Initializes the index of the song in the songs array so
+   * we can reference it if needed
+   * 
+   * @access private
+   */
+  function initializeDefaultSongIndexes() {
+    for (var i = 0; i < _config2.default.songs.length; i++) {
+      _config2.default.songs[i].index = i;
     }
   }
 
@@ -11573,6 +11590,8 @@ var PlaylistsInitializer = function () {
           for (var i = 0; i < _config2.default.playlists[key].songs.length; i++) {
             if (_checks2.default.isInt(_config2.default.playlists[key].songs[i])) {
               _config2.default.playlists[key].songs[i] = _config2.default.songs[_config2.default.playlists[key].songs[i]];
+
+              _config2.default.playlists[key].songs[i].index = i;
             }
             /*
               Check to see if the index for the song in the playlist
@@ -11580,6 +11599,13 @@ var PlaylistsInitializer = function () {
             */
             if (_checks2.default.isInt(_config2.default.playlists[key].songs[i]) && !_config2.default.songs[_config2.default.playlists[key].songs[i]]) {
               _debug2.default.writeMessage("The song index: " + _config2.default.playlists[key].songs[i] + " in playlist with key: " + key + " is not defined in your songs array!");
+            }
+
+            /*
+              If not an int, then is a dedicated song, just set the index.
+            */
+            if (!_checks2.default.isInt(_config2.default.playlists[key].songs[i])) {
+              _config2.default.playlists[key].songs[i].index = i;
             }
           }
         }
@@ -13210,7 +13236,7 @@ module.exports = exports["default"];
 
 module.exports = {
 	"name": "amplitudejs",
-	"version": "4.0.0",
+	"version": "4.1.0",
 	"description": "A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs",
 	"main": "dist/amplitude.js",
 	"devDependencies": {
