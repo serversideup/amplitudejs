@@ -117,6 +117,12 @@ import PlayPauseElements from "./visual/playPauseElements.js";
  */
 import MetaDataElements from "./visual/metaDataElements.js";
 
+/** 
+ * Playback Speed Elements
+ * @module visual/PlaybackSpeedElements
+ */
+import PlaybackSpeedElements from "./visual/playbackSpeedElements.js";
+
 import Debug from "./utilities/debug.js";
 
 import SoundCloud from "./soundcloud/soundcloud.js";
@@ -179,6 +185,30 @@ let Amplitude = (function() {
    */
   function getPlaybackSpeed() {
     return config.playback_speed;
+  }
+
+  /**
+   * Sets the playback speed
+   * 
+   * Public Accessor: Amplitude.setPlaybackSpeed( speed )
+   * 
+   * @access public
+   */
+  function setPlaybackSpeed( speed ) {
+    /*
+      Increments are set in .5 We only accept values
+      1, 1.5, 2
+
+      1 -> Regular Speed
+      1.5 -> 50% faster
+      2 -> Twice as fast
+    */
+    Core.setPlaybackSpeed( speed );
+
+    /*
+      Visually sync the playback speed.
+    */
+    PlaybackSpeedElements.sync();
   }
 
   /**
@@ -1273,6 +1303,7 @@ let Amplitude = (function() {
     bindNewElements: bindNewElements,
     getActivePlaylist: getActivePlaylist,
     getPlaybackSpeed: getPlaybackSpeed,
+    setPlaybackSpeed: setPlaybackSpeed,
     getRepeat: getRepeat,
     getRepeatPlaylist: getRepeatPlaylist,
     getShuffle: getShuffle,

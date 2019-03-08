@@ -871,7 +871,7 @@ var _songSliderElements = __webpack_require__(14);
 
 var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
 
-var _songPlayedProgressElements = __webpack_require__(19);
+var _songPlayedProgressElements = __webpack_require__(20);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
@@ -3727,7 +3727,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _init = __webpack_require__(20);
+var _init = __webpack_require__(21);
 
 var _init2 = _interopRequireDefault(_init);
 
@@ -4032,6 +4032,84 @@ var _config2 = _interopRequireDefault(_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * Defines the Playback Speed Visual Elements Handler
+ * @module visual/PlaybackSpeedElements
+ */
+var PlaybackSpeedElements = function () {
+  /**
+   * Sets all of the visual playback speed buttons to have the right class
+   * to display the background image that represents the current playback
+   * speed.
+   *
+   * @access public
+   */
+  function sync() {
+    /*
+    Gets all of the playback speed classes.
+    */
+    var playbackSpeedClasses = document.getElementsByClassName("amplitude-playback-speed");
+
+    /*
+    Iterates over all of the playback speed classes
+    applying the right speed class for visual purposes.
+    */
+    for (var i = 0; i < playbackSpeedClasses.length; i++) {
+      /*
+      Removes all of the old playback speed classes.
+      */
+      playbackSpeedClasses[i].classList.remove("amplitude-playback-speed-10");
+      playbackSpeedClasses[i].classList.remove("amplitude-playback-speed-15");
+      playbackSpeedClasses[i].classList.remove("amplitude-playback-speed-20");
+
+      /*
+      Switch the current playback speed and apply the appropriate
+      speed class.
+      */
+      switch (_config2.default.playback_speed) {
+        case 1:
+          playbackSpeedClasses[i].classList.add("amplitude-playback-speed-10");
+          break;
+        case 1.5:
+          playbackSpeedClasses[i].classList.add("amplitude-playback-speed-15");
+          break;
+        case 2:
+          playbackSpeedClasses[i].classList.add("amplitude-playback-speed-20");
+          break;
+      }
+    }
+  }
+
+  /**
+   * Returns the public facing methods
+   */
+  return {
+    sync: sync
+  };
+}(); /**
+      * Imports the config module
+      * @module config
+      */
+exports.default = PlaybackSpeedElements;
+module.exports = exports["default"];
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
  * Handles all of the shuffle elements
  * @module visual/ShuffleElements
  */
@@ -4120,7 +4198,7 @@ exports.default = ShuffleElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4302,7 +4380,7 @@ exports.default = SongPlayedProgressElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4487,7 +4565,7 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
-var _waveform = __webpack_require__(21);
+var _waveform = __webpack_require__(22);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -4503,7 +4581,7 @@ var _playlists = __webpack_require__(48);
 
 var _playlists2 = _interopRequireDefault(_playlists);
 
-var _shuffleElements = __webpack_require__(18);
+var _shuffleElements = __webpack_require__(19);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
@@ -4527,7 +4605,7 @@ var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
-var _playbackSpeedElements = __webpack_require__(24);
+var _playbackSpeedElements = __webpack_require__(18);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
@@ -5056,7 +5134,7 @@ exports.default = Initializer;
 module.exports = exports["default"];
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5477,7 +5555,7 @@ exports.default = WaveForm;
 module.exports = exports["default"];
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5665,7 +5743,7 @@ exports.default = Time;
 module.exports = exports["default"];
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5818,84 +5896,6 @@ var BufferedProgressElements = function () {
       * @module config
       */
 exports.default = BufferedProgressElements;
-module.exports = exports["default"];
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Defines the Playback Speed Visual Elements Handler
- * @module visual/PlaybackSpeedElements
- */
-var PlaybackSpeedElements = function () {
-  /**
-   * Sets all of the visual playback speed buttons to have the right class
-   * to display the background image that represents the current playback
-   * speed.
-   *
-   * @access public
-   */
-  function sync() {
-    /*
-    Gets all of the playback speed classes.
-    */
-    var playbackSpeedClasses = document.getElementsByClassName("amplitude-playback-speed");
-
-    /*
-    Iterates over all of the playback speed classes
-    applying the right speed class for visual purposes.
-    */
-    for (var i = 0; i < playbackSpeedClasses.length; i++) {
-      /*
-      Removes all of the old playback speed classes.
-      */
-      playbackSpeedClasses[i].classList.remove("amplitude-playback-speed-10");
-      playbackSpeedClasses[i].classList.remove("amplitude-playback-speed-15");
-      playbackSpeedClasses[i].classList.remove("amplitude-playback-speed-20");
-
-      /*
-      Switch the current playback speed and apply the appropriate
-      speed class.
-      */
-      switch (_config2.default.playback_speed) {
-        case 1:
-          playbackSpeedClasses[i].classList.add("amplitude-playback-speed-10");
-          break;
-        case 1.5:
-          playbackSpeedClasses[i].classList.add("amplitude-playback-speed-15");
-          break;
-        case 2:
-          playbackSpeedClasses[i].classList.add("amplitude-playback-speed-20");
-          break;
-      }
-    }
-  }
-
-  /**
-   * Returns the public facing methods
-   */
-  return {
-    sync: sync
-  };
-}(); /**
-      * Imports the config module
-      * @module config
-      */
-exports.default = PlaybackSpeedElements;
 module.exports = exports["default"];
 
 /***/ }),
@@ -6111,7 +6111,7 @@ var _skipTo = __webpack_require__(39);
 
 var _skipTo2 = _interopRequireDefault(_skipTo);
 
-var _waveform = __webpack_require__(21);
+var _waveform = __webpack_require__(22);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -8293,7 +8293,7 @@ var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _playbackSpeedElements = __webpack_require__(24);
+var _playbackSpeedElements = __webpack_require__(18);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
@@ -8508,7 +8508,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(23);
+var _bufferedProgressElements = __webpack_require__(24);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -8795,7 +8795,7 @@ var _shuffler = __webpack_require__(13);
 
 var _shuffler2 = _interopRequireDefault(_shuffler);
 
-var _shuffleElements = __webpack_require__(18);
+var _shuffleElements = __webpack_require__(19);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
@@ -9114,7 +9114,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _time = __webpack_require__(22);
+var _time = __webpack_require__(23);
 
 var _time2 = _interopRequireDefault(_time);
 
@@ -9431,7 +9431,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(23);
+var _bufferedProgressElements = __webpack_require__(24);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -9443,11 +9443,11 @@ var _songSliderElements = __webpack_require__(14);
 
 var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
 
-var _songPlayedProgressElements = __webpack_require__(19);
+var _songPlayedProgressElements = __webpack_require__(20);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
-var _time = __webpack_require__(22);
+var _time = __webpack_require__(23);
 
 var _time2 = _interopRequireDefault(_time);
 
@@ -10082,7 +10082,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _init = __webpack_require__(20);
+var _init = __webpack_require__(21);
 
 var _init2 = _interopRequireDefault(_init);
 
@@ -10118,7 +10118,7 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
-var _shuffleElements = __webpack_require__(18);
+var _shuffleElements = __webpack_require__(19);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
@@ -10130,7 +10130,7 @@ var _songSliderElements = __webpack_require__(14);
 
 var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
 
-var _songPlayedProgressElements = __webpack_require__(19);
+var _songPlayedProgressElements = __webpack_require__(20);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
@@ -10145,6 +10145,10 @@ var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
+
+var _playbackSpeedElements = __webpack_require__(18);
+
+var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
 var _debug = __webpack_require__(4);
 
@@ -10165,62 +10169,59 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 /**
- * Play Pause Elements
- * @module visual/PlayPauseElements
+ * Meta Data Elements
+ * @module visual/MetaDataElements
  */
 
 
 /**
- * Song Played Progress Elements
- * @module visual/SongPlayedProgressElements
+ * Time Elements
+ * @module visual/TimeElements
  */
 
 
 /**
- * Visual Repeat Elements
- * @module visual/RepeatElements
- */
-
-
-/****************************************************
- * FX Modules
- ****************************************************/
-/**
- * Imports the visualizations module
- * @module fx/Visualizations
- */
-
-
-/**
- * Repeater Module
- *
- * @module utilities/Repeater
- */
-
-
-/**
- * Imports the config state module.
- * @module ConfigState
+ * Song Slider Elements
+ * @module visual/SongSliderElements
  */
 
 
 /****************************************************
- * Core
+ * Elements
  ****************************************************/
 /**
- * AmplitudeJS Core Module
- *
- * @module core/Core
+ * Visual Shuffle Elements
+ * @module visual/ShuffleElements
  */
+
+
 /**
- * @name 		Amplitude.js
- * @version 4.0.0
- * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ * Imports the checks
+ * @module utilities/Checks
  */
+
+
 /**
- * AmplitudeJS Initializer Module
- *
- * @module init/AmplitudeInitializer
+ * Imports the audio navigation
+ * @module utilities/AudioNavigation
+ */
+
+
+/****************************************************
+ * Utilities
+ ****************************************************/
+/**
+ * Shuffler Module
+ * @module utilities/Shuffler
+ */
+
+
+/****************************************************
+ * Config
+ ****************************************************/
+/**
+ * Imports the config module
+ * @module config
  */
 var Amplitude = function () {
   /**
@@ -10274,6 +10275,29 @@ var Amplitude = function () {
    */
   function getPlaybackSpeed() {
     return _config2.default.playback_speed;
+  }
+
+  /**
+   * Sets the playback speed
+   * 
+   * Public Accessor: Amplitude.setPlaybackSpeed( speed )
+   * 
+   * @access public
+   */
+  function setPlaybackSpeed(speed) {
+    /*
+      Increments are set in .5 We only accept values
+      1, 1.5, 2
+       1 -> Regular Speed
+      1.5 -> 50% faster
+      2 -> Twice as fast
+    */
+    _core2.default.setPlaybackSpeed(speed);
+
+    /*
+      Visually sync the playback speed.
+    */
+    _playbackSpeedElements2.default.sync();
   }
 
   /**
@@ -11336,6 +11360,7 @@ var Amplitude = function () {
     bindNewElements: bindNewElements,
     getActivePlaylist: getActivePlaylist,
     getPlaybackSpeed: getPlaybackSpeed,
+    setPlaybackSpeed: setPlaybackSpeed,
     getRepeat: getRepeat,
     getRepeatPlaylist: getRepeatPlaylist,
     getShuffle: getShuffle,
@@ -11393,60 +11418,69 @@ var Amplitude = function () {
   };
 }();
 
-/**
- * Meta Data Elements
- * @module visual/MetaDataElements
+/** 
+ * Playback Speed Elements
+ * @module visual/PlaybackSpeedElements
  */
 
 
 /**
- * Time Elements
- * @module visual/TimeElements
+ * Play Pause Elements
+ * @module visual/PlayPauseElements
  */
 
 
 /**
- * Song Slider Elements
- * @module visual/SongSliderElements
- */
-
-
-/****************************************************
- * Elements
- ****************************************************/
-/**
- * Visual Shuffle Elements
- * @module visual/ShuffleElements
+ * Song Played Progress Elements
+ * @module visual/SongPlayedProgressElements
  */
 
 
 /**
- * Imports the checks
- * @module utilities/Checks
- */
-
-
-/**
- * Imports the audio navigation
- * @module utilities/AudioNavigation
+ * Visual Repeat Elements
+ * @module visual/RepeatElements
  */
 
 
 /****************************************************
- * Utilities
+ * FX Modules
  ****************************************************/
 /**
- * Shuffler Module
- * @module utilities/Shuffler
+ * Imports the visualizations module
+ * @module fx/Visualizations
+ */
+
+
+/**
+ * Repeater Module
+ *
+ * @module utilities/Repeater
+ */
+
+
+/**
+ * Imports the config state module.
+ * @module ConfigState
  */
 
 
 /****************************************************
- * Config
+ * Core
  ****************************************************/
 /**
- * Imports the config module
- * @module config
+ * AmplitudeJS Core Module
+ *
+ * @module core/Core
+ */
+/**
+ * @name 		Amplitude.js
+ * @version 4.0.0
+ * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ */
+/**
+ * AmplitudeJS Initializer Module
+ *
+ * @module init/AmplitudeInitializer
  */
 exports.default = Amplitude;
 module.exports = exports["default"];
