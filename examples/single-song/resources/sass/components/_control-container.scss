@@ -27,14 +27,14 @@ div.control-container{
     color: white;
     margin-top: 10px;
 
-    span[amplitude-song-info="name"] {
+    span[data-amplitude-song-info="name"] {
       font-family: "Open Sans", sans-serif;
       font-size: 18px;
       color: #fff;
       display: block;
     }
 
-    span[amplitude-song-info="artist"] {
+    span[data-amplitude-song-info="artist"] {
       font-family: "Open Sans", sans-serif;
       font-weight: 100;
       font-size: 14px;

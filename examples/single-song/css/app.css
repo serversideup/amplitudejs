@@ -25,12 +25,12 @@ div.control-container {
     text-align: center;
     color: white;
     margin-top: 10px; }
-    div.control-container div.meta-container span[amplitude-song-info="name"] {
+    div.control-container div.meta-container span[data-amplitude-song-info="name"] {
       font-family: "Open Sans", sans-serif;
       font-size: 18px;
       color: #fff;
       display: block; }
-    div.control-container div.meta-container span[amplitude-song-info="artist"] {
+    div.control-container div.meta-container span[data-amplitude-song-info="artist"] {
       font-family: "Open Sans", sans-serif;
       font-weight: 100;
       font-size: 14px;
@@ -133,8 +133,9 @@ div#single-song-player {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   margin-top: 50px;
   width: 100%;
-  max-width: 460px; }
-  div#single-song-player img[amplitude-song-info="cover_art_url"] {
+  max-width: 460px;
+  -webkit-font-smoothing: antialiased; }
+  div#single-song-player img[data-amplitude-song-info="cover_art_url"] {
     width: 100%;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px; }

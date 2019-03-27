@@ -16,27 +16,36 @@ div.white-player-playlist-controls{
     margin-left: 25px;
     width: calc( 100% - 89px );
 
-    span.song-name{
-      display: block;
-      color: #414344;
-      font-size: 20px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    div.playlist-meta-data{
+      display: inline-block;
+      width: calc(100% - 125px);
+      vertical-align: middle;
 
-    span.song-artist{
-      display: block;
-      color: #AAAFB3;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      span.song-name{
+        display: block;
+        color: #414344;
+        font-size: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+  
+      span.song-artist{
+        display: block;
+        color: #AAAFB3;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }  
     }
-
+    
     div.playlist-control-wrapper{
       text-align: center;
       margin-top: 10px;
+      display: inline-block;
+      width: 120px;
+      vertical-align: middle;
 
       div#playlist-previous{
         display: inline-block;

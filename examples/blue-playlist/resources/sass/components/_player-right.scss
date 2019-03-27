@@ -1,6 +1,9 @@
 div#amplitude-right{
   padding: 0px;
   overflow-y: scroll;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 
   div.song{
     cursor: pointer;
@@ -94,4 +97,13 @@ div#amplitude-right{
     display: table;
     clear: both;
   }
+}
+
+/* Small only */
+@media screen and (max-width: 39.9375em) {
+	div#amplitude-player{
+		div#amplitude-right{
+      width: 100%;
+		}
+	}
 }

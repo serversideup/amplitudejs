@@ -5,8 +5,9 @@ div#single-song-player {
   margin-top: 50px;
   width: 100%;
   max-width: 460px;
+  -webkit-font-smoothing: antialiased;
 
-  img[amplitude-song-info="cover_art_url"] {
+  img[data-amplitude-song-info="cover_art_url"] {
     width: 100%;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;

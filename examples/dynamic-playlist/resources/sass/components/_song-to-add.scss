@@ -1,10 +1,12 @@
 div.song-to-add{
-  width: 70%;
-  margin: auto;
+  width: 45%;
+  padding: 10px;
+  max-width: 250px;
 
   img{
     border-radius: 6px;
     margin-top: 50px;
+    width: 100%;
   }
 
   a.add-to-playlist-button{
@@ -20,5 +22,14 @@ div.song-to-add{
     display: block;
     margin-top: 10px;
     font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+/* Medium only */
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+  div.song-to-add{
+    width: 40%;
+    padding: 5px;
   }
 }

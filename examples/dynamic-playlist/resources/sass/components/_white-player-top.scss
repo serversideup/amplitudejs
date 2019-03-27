@@ -1,6 +1,16 @@
 div.white-player-top{
   height: 64px;
-  text-align: center;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  div{
+    flex: 1;
+
+    &.center{
+      text-align: center;
+    }
+  }
 
   span.now-playing{
     color: #414344;
@@ -10,9 +20,8 @@ div.white-player-top{
   }
 
   img.show-playlist{
-    margin-right: 16px;
-    margin-top: 22px;
     float: right;
     cursor: pointer;
+    margin-right: 10px;
   }
 }

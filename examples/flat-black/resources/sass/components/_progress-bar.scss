@@ -3,6 +3,7 @@ div#player-progress-bar-container {
   height: 4px;
   background-color: #000;
   position: relative;
+  margin-top: -6px;
 
   progress#song-played-progress {
     width: 100%;

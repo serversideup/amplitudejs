@@ -158,7 +158,9 @@ progress[value]::-webkit-progress-value {
   3. Layout
 */
 body {
-  background-color: #FFFFFF; }
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  padding: 20px; }
   body div#preload {
     display: none; }
 
