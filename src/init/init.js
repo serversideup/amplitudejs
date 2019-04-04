@@ -378,7 +378,7 @@ let Initializer = (function() {
     /*
 			Check to see if the user entered a start song
 		*/
-    if (userConfig.start_song != undefined && userConfig.starting_playlist) {
+    if (userConfig.start_song != undefined && !userConfig.starting_playlist) {
       /*
 				Ensure what has been entered is an integer.
 			*/
