@@ -65,7 +65,7 @@ div#visualizations-player-playlist {
 
   div.songs-container{
     padding-top: 35px;
-    height: calc( 100% - 55px );
+    height: 400px;
     padding-bottom: 90px;
     overflow-y: scroll;
 
@@ -139,13 +139,14 @@ div#visualizations-player-playlist {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 90px;
+    height: 40px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 25px;
     padding-right: 25px;
+    display: flex;
 
     img.cover-art-small{
       width: 50px;
