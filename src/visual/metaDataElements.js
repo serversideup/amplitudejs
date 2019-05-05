@@ -75,31 +75,16 @@ let MetaDataElements = (function() {
 					otherwise we clear it. If it's an image element then
 					we default it to the default info if needed.
 				*/
-        if (config.active_metadata[info] != undefined) {
-          if (imageMetaDataKeys.indexOf(info) >= 0) {
-            songInfoElements[i].setAttribute(
-              "src",
-              config.active_metadata[info]
-            );
-          } else {
-            songInfoElements[i].innerHTML = config.active_metadata[info];
-          }
+        let val = (config.active_metadata[info] != undefined) ? config.active_metadata[info] : null;
+        if (imageMetaDataKeys.indexOf(info) >= 0) {
+          val = val || config.default_album_art
+          songInfoElements[i].setAttribute(
+            "src",
+            val
+          );
         } else {
-          /*
-						We look for the default album art because
-						the actual key didn't exist. If the default album
-						art doesn't exist then we set the src attribute
-						to null.
-					*/
-          if (imageMetaDataKeys.indexOf(info) >= 0) {
-            if (config.default_album_art != "") {
-              songInfoElements[i].setAttribute("src", config.default_album_art);
-            } else {
-              songInfoElements[i].setAttribute("src", "");
-            }
-          } else {
-            songInfoElements[i].innerHTML = "";
-          }
+          val = val || ""
+          songInfoElements[i].innerHTML = val;
         }
       }
     }
@@ -290,21 +275,30 @@ let MetaDataElements = (function() {
         let info = songInfoElements[i].getAttribute("data-amplitude-song-info");
 
         /*
-				 Make sure that the song index they are referencing is defined.
-			 */
-        if (config.songs[songIndex][info] != undefined) {
+         Get the song info value referenced on the element.  Depending on the type of
+         element, we may need to fallback to another value when the direct value
+         we want isn't found.
+         i.e.
+            data-amplitude-song-info="cover_art_url" defaults to using the value
+            of "default_album_art" when "cover_art_url" is missing on the song.
+        */
+        let val = config.songs[songIndex][info] != undefined ? config.songs[songIndex][info] : null;
+        /*
+         If it's an image meta data key, then we set the src attribute of
+         the element. Otherwise we set the inner HTML of the element.
+        */
+        if (imageMetaDataKeys.indexOf(info) >= 0) {
           /*
-					 If it's an image meta data key, then we set the src attribute of
-					 the element. Otherwise we set the inner HTML of the element.
-				 */
-          if (imageMetaDataKeys.indexOf(info) >= 0) {
-            songInfoElements[i].setAttribute(
-              "src",
-              config.songs[songIndex][info]
-            );
-          } else {
-            songInfoElements[i].innerHTML = config.songs[songIndex][info];
-          }
+           If this is an image meta data key and the individual song doesn't
+           have the key, use the default_album_art
+           */
+          val = val || config.default_album_art
+          songInfoElements[i].setAttribute(
+            "src",
+            val
+          );
+        } else {
+          songInfoElements[i].innerHTML = val;
         }
       }
 

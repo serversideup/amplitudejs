@@ -21,7 +21,8 @@ let Setup = (function() {
           album: "We Are to Answer",
           url:
             "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
-          cover_art_url: "../album-art/we-are-to-answer.jpg",
+          // commented out in order to test default_album_art:
+          // cover_art_url: "../album-art/we-are-to-answer.jpg",
           time_callbacks: {
             1: function() {
               console.log(1);
