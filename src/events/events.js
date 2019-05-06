@@ -856,8 +856,10 @@ var Events = (function() {
    * @access private
    */
   function bindCanPlayThrough() {
-    config.audio.removeEventListener("canplaythrough", WaveForm.build);
-    config.audio.addEventListener("canplaythrough", WaveForm.build);
+    if( WaveForm.determineIfUsingWaveforms() ){
+      config.audio.removeEventListener("canplaythrough", WaveForm.build);
+      config.audio.addEventListener("canplaythrough", WaveForm.build);
+    }
   }
 
   /*

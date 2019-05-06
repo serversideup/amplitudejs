@@ -94,7 +94,17 @@ let Core = (function() {
     /*
 			Play the song and set the playback rate to the playback
 			speed.
-		*/
+    */
+    let playPromise = config.audio.play();
+
+    if( playPromise !== undefined ){
+      playPromise.then( _ => {
+
+      })
+      .catch( error => {
+
+      });
+    }
     config.audio.play();
     config.audio.playbackRate = config.playback_speed;
   }

@@ -434,12 +434,26 @@ let WaveForm = (function() {
     }
   }
 
+  /**
+   * Determines if the user is using waveforms
+   */
+  function determineIfUsingWaveforms(){
+    let waveforms = document.querySelectorAll(".amplitude-wave-form");
+
+    if( waveforms.length > 0 ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   /*
     Return the public methods.
   */
   return {
     init: init,
-    build: build
+    build: build,
+    determineIfUsingWaveforms: determineIfUsingWaveforms
   };
 })();
 

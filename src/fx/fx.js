@@ -43,6 +43,12 @@ let Fx = (function() {
       config.analyser = config.context.createAnalyser();
 
       /*
+				Set cross origin to anonymous so we have a better chance of being able
+				to use the power of the Web Audio API.
+			*/
+      config.audio.crossOrigin = "anonymous";
+      
+      /*
 				Bind the source to the Javascript Audio Element.
 			*/
       config.source = config.context.createMediaElementSource(config.audio);
@@ -56,12 +62,6 @@ let Fx = (function() {
 				Connect the context destination to the analyser.
 			*/
       config.analyser.connect(config.context.destination);
-
-      /*
-				Set cross origin to anonymous so we have a better chance of being able
-				to use the power of the Web Audio API.
-			*/
-      config.audio.crossOrigin = "anonymous";
     } else {
       AmplitudeHelpers.writeDebugMessage(
         "Web Audio API is unavailable! We will set any of your visualizations with your back up definition!"
@@ -103,12 +103,29 @@ let Fx = (function() {
     }
   }
 
+  /**
+   * Determines if the user is using any of the web audio API features.
+   */
+  function determineUsingAnyFX(){
+    let waveforms = document.querySelectorAll(".amplitude-wave-form");
+    let visualizationElements = document.querySelectorAll(
+      ".amplitude-visualization"
+    );
+
+    if( waveforms.length > 0 || visualizationElements.length > 0 ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   /*
 		Returns the publicly accessible methods
 	*/
   return {
     configureWebAudioAPI: configureWebAudioAPI,
-    webAudioAPIAvailable: webAudioAPIAvailable
+    webAudioAPIAvailable: webAudioAPIAvailable,
+    determineUsingAnyFX: determineUsingAnyFX
   };
 })();
 

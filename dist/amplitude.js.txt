@@ -337,11 +337,6 @@ var Core = function () {
     Play the song and set the playback rate to the playback
     speed.
     */
-    var playPromise = _config2.default.audio.play();
-
-    if (playPromise !== undefined) {
-      playPromise.then(function (_) {}).catch(function (error) {});
-    }
     _config2.default.audio.play();
     _config2.default.audio.playbackRate = _config2.default.playback_speed;
   }

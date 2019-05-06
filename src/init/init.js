@@ -206,70 +206,72 @@ let Initializer = (function() {
 			user wants to use visualizations or not before proceeding.
 		*/
     if (Fx.webAudioAPIAvailable()) {
-      /*
-        Configure the Web Audio API If It's available.
-      */
-     Fx.configureWebAudioAPI();
+      if( Fx.determineUsingAnyFX() ){
+        /*
+          Configure the Web Audio API If It's available.
+        */
+        Fx.configureWebAudioAPI();
 
-     /*
-        Activates the audio context after an event for the user.
-     */
-     document.documentElement.addEventListener(
-      "mousedown", function(){
-        if (config.context.state !== 'running') {
-          config.context.resume();
-        }
-      });
+        /*
+            Activates the audio context after an event for the user.
+        */
+        document.documentElement.addEventListener(
+          "mousedown", function(){
+            if (config.context.state !== 'running') {
+              config.context.resume();
+            }
+          });
 
-      document.documentElement.addEventListener(
-      "keydown", function(){
-        if (config.context.state !== 'running') {
-          config.context.resume();
-        }
-      });
+          document.documentElement.addEventListener(
+          "keydown", function(){
+            if (config.context.state !== 'running') {
+              config.context.resume();
+            }
+          });
 
-      document.documentElement.addEventListener(
-        "keyup", function(){
-          if (config.context.state !== 'running') {
-            config.context.resume();
-          }
-       });
+          document.documentElement.addEventListener(
+            "keyup", function(){
+              if (config.context.state !== 'running') {
+                config.context.resume();
+              }
+          });
   
       
 
-      /*
-        Set the user waveform settings if provided.
-      */
-      if (
-        userConfig.waveforms != undefined &&
-        userConfig.waveforms.sample_rate != undefined
-      ) {
-        config.waveforms.sample_rate = userConfig.waveforms.sample_rate;
-      }
+          /*
+            Set the user waveform settings if provided.
+          */
+          if (
+            userConfig.waveforms != undefined &&
+            userConfig.waveforms.sample_rate != undefined
+          ) {
+            config.waveforms.sample_rate = userConfig.waveforms.sample_rate;
+          }
 
-      /*
-        Initialize the waveform.
-      */
-      WaveForm.init();
+          /*
+            Initialize the waveform.
+          */
+          WaveForm.init();
 
-      /*
-        If the user is registering visualizations on init,
-        we set them right away.
-      */
-      if (
-        userConfig.visualizations != undefined &&
-        userConfig.visualizations.length > 0
-      ) {
-        /*
-              Iterate over all of the visualizations and
-              register them in our player.
-            */
-        for (let i = 0; i < userConfig.visualizations.length; i++) {
-          Visualizations.register(
-            userConfig.visualizations[i].object,
-            userConfig.visualizations[i].params
-          );
-        }
+          /*
+            If the user is registering visualizations on init,
+            we set them right away.
+          */
+          if (
+            userConfig.visualizations != undefined &&
+            userConfig.visualizations.length > 0
+          ) {
+            /*
+                  Iterate over all of the visualizations and
+                  register them in our player.
+                */
+            for (let i = 0; i < userConfig.visualizations.length; i++) {
+              Visualizations.register(
+                userConfig.visualizations[i].object,
+                userConfig.visualizations[i].params
+              );
+            }
+          }
       }
     } else {
       Debug.writeMessage(
