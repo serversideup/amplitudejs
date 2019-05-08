@@ -13,7 +13,7 @@ Amplitude.init({
       "album": "We Are to Answer",
       "url": "../songs/Ancient Astronauts - Risin' High (feat Raashan Ahmad).mp3",
       "cover_art_url": "../album-art/we-are-to-answer.jpg",
-      "visualization": "michaelbromley_visualization"
+      "visualization": "frequency_analyzer_visualization"
     },
     {
       "name": "The Gun",
@@ -106,6 +106,12 @@ Amplitude.init({
       object: MichaelBromleyVisualization,
       params: {
 
+      }
+    },
+    {
+      object: FrequencyAnalyzerVisualization,
+      params: {
+        type: 'dynamic'
       }
     }
   ]

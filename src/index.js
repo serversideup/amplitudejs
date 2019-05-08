@@ -1294,6 +1294,22 @@ let Amplitude = (function() {
     }
   }
 
+  /**
+   * Sets the active volume.
+   * @param {number} volumeLevel - A number between 1 and 100 as a percentage of
+   * min to max for a volume level.
+   */
+  function setVolume( volumeLevel ){
+    Core.setVolume( volumeLevel );
+  }
+
+  /**
+   * Gets the active volume.
+   */
+  function getVolume(){
+    return config.volume;
+  }
+
   /*
 		Returns all of the publically accesible methods.
 	*/
@@ -1357,7 +1373,9 @@ let Amplitude = (function() {
     setPlaylistVisualization: setPlaylistVisualization,
     setSongVisualization: setSongVisualization,
     setSongInPlaylistVisualization: setSongInPlaylistVisualization,
-    setGlobalVisualization: setGlobalVisualization
+    setGlobalVisualization: setGlobalVisualization,
+    getVolume: getVolume,
+    setVolume: setVolume
   };
 })();
 
