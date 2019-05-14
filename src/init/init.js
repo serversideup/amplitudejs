@@ -176,6 +176,11 @@ let Initializer = (function() {
     config.debug = userConfig.debug != undefined ? userConfig.debug : false;
 
     /*
+      Set default artwork, if specified.
+    */
+    setArt(userConfig)
+
+    /*
 			Checks to see if the user has songs defined.
 		*/
     if (userConfig.songs) {
@@ -494,24 +499,9 @@ let Initializer = (function() {
     Core.setVolume(config.volume);
 
     /*
-			If the user defines default album art, this image will display if the active
-			song doesn't have album art defined.
-		*/
-    if (userConfig.default_album_art != undefined) {
-      config.default_album_art = userConfig.default_album_art;
-    } else {
-      config.default_album_art = "";
-    }
-
-    /*
-			If the user defines default playlist art, this image will display if the user
-			tries to set up a playlist meta data image tag but doesn't have one defined.
-		*/
-    if (userConfig.default_playlist_art != undefined) {
-      config.default_playlist_art = userConfig.default_playlist_art;
-    } else {
-      config.default_playlist_art = "";
-    }
+     Set default artwork, if specified
+     */
+    setArt(userConfig)
 
     /*
       Initialize the visual elements
@@ -596,6 +586,35 @@ let Initializer = (function() {
 			Run after init callback
 		*/
     Callbacks.run("initialized");
+  }
+
+  /**
+   * Sets the default_album_art and default_playlist_art from the
+   * user supplied configuration.
+   *
+   * @access public
+   * @param {object} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
+   */
+  function setArt(userConfig){
+    /*
+      If the user defines default album art, this image will display if the active
+      song doesn't have album art defined.
+    */
+    if (userConfig.default_album_art != undefined) {
+      config.default_album_art = userConfig.default_album_art;
+    } else {
+      config.default_album_art = "";
+    }
+
+    /*
+			If the user defines default playlist art, this image will display if the user
+			tries to set up a playlist meta data image tag but doesn't have one defined.
+		*/
+    if (userConfig.default_playlist_art != undefined) {
+      config.default_playlist_art = userConfig.default_playlist_art;
+    } else {
+      config.default_playlist_art = "";
+    }
   }
 
   /**
