@@ -2117,28 +2117,13 @@ var MetaDataElements = function () {
         otherwise we clear it. If it's an image element then
         we default it to the default info if needed.
         */
-        if (_config2.default.active_metadata[info] != undefined) {
-          if (imageMetaDataKeys.indexOf(info) >= 0) {
-            songInfoElements[i].setAttribute("src", _config2.default.active_metadata[info]);
-          } else {
-            songInfoElements[i].innerHTML = _config2.default.active_metadata[info];
-          }
+        var val = _config2.default.active_metadata[info] != undefined ? _config2.default.active_metadata[info] : null;
+        if (imageMetaDataKeys.indexOf(info) >= 0) {
+          val = val || _config2.default.default_album_art;
+          songInfoElements[i].setAttribute("src", val);
         } else {
-          /*
-          We look for the default album art because
-          the actual key didn't exist. If the default album
-          art doesn't exist then we set the src attribute
-          to null.
-          */
-          if (imageMetaDataKeys.indexOf(info) >= 0) {
-            if (_config2.default.default_album_art != "") {
-              songInfoElements[i].setAttribute("src", _config2.default.default_album_art);
-            } else {
-              songInfoElements[i].setAttribute("src", "");
-            }
-          } else {
-            songInfoElements[i].innerHTML = "";
-          }
+          val = val || "";
+          songInfoElements[i].innerHTML = val;
         }
       }
     }
@@ -2299,18 +2284,27 @@ var MetaDataElements = function () {
         var info = songInfoElements[i].getAttribute("data-amplitude-song-info");
 
         /*
-        Make sure that the song index they are referencing is defined.
+         Get the song info value referenced on the element.  Depending on the type of
+         element, we may need to fallback to another value when the direct value
+         we want isn't found.
+         i.e.
+            data-amplitude-song-info="cover_art_url" defaults to using the value
+            of "default_album_art" when "cover_art_url" is missing on the song.
         */
-        if (_config2.default.songs[songIndex][info] != undefined) {
+        var val = _config2.default.songs[songIndex][info] != undefined ? _config2.default.songs[songIndex][info] : null;
+        /*
+         If it's an image meta data key, then we set the src attribute of
+         the element. Otherwise we set the inner HTML of the element.
+        */
+        if (imageMetaDataKeys.indexOf(info) >= 0) {
           /*
-          If it's an image meta data key, then we set the src attribute of
-          the element. Otherwise we set the inner HTML of the element.
-          */
-          if (imageMetaDataKeys.indexOf(info) >= 0) {
-            songInfoElements[i].setAttribute("src", _config2.default.songs[songIndex][info]);
-          } else {
-            songInfoElements[i].innerHTML = _config2.default.songs[songIndex][info];
-          }
+           If this is an image meta data key and the individual song doesn't
+           have the key, use the default_album_art
+           */
+          val = val || _config2.default.default_album_art;
+          songInfoElements[i].setAttribute("src", val);
+        } else {
+          songInfoElements[i].innerHTML = val;
         }
       }
 
@@ -4580,6 +4574,11 @@ var Initializer = function () {
     _config2.default.debug = userConfig.debug != undefined ? userConfig.debug : false;
 
     /*
+      Set default artwork, if specified.
+    */
+    setArt(userConfig);
+
+    /*
     Checks to see if the user has songs defined.
     */
     if (userConfig.songs) {
@@ -4851,24 +4850,9 @@ var Initializer = function () {
     _core2.default.setVolume(_config2.default.volume);
 
     /*
-    If the user defines default album art, this image will display if the active
-    song doesn't have album art defined.
-    */
-    if (userConfig.default_album_art != undefined) {
-      _config2.default.default_album_art = userConfig.default_album_art;
-    } else {
-      _config2.default.default_album_art = "";
-    }
-
-    /*
-    If the user defines default playlist art, this image will display if the user
-    tries to set up a playlist meta data image tag but doesn't have one defined.
-    */
-    if (userConfig.default_playlist_art != undefined) {
-      _config2.default.default_playlist_art = userConfig.default_playlist_art;
-    } else {
-      _config2.default.default_playlist_art = "";
-    }
+     Set default artwork, if specified
+     */
+    setArt(userConfig);
 
     /*
       Initialize the visual elements
@@ -4924,6 +4908,35 @@ var Initializer = function () {
     Run after init callback
     */
     _callbacks2.default.run("initialized");
+  }
+
+  /**
+   * Sets the default_album_art and default_playlist_art from the
+   * user supplied configuration.
+   *
+   * @access public
+   * @param {object} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
+   */
+  function setArt(userConfig) {
+    /*
+      If the user defines default album art, this image will display if the active
+      song doesn't have album art defined.
+    */
+    if (userConfig.default_album_art != undefined) {
+      _config2.default.default_album_art = userConfig.default_album_art;
+    } else {
+      _config2.default.default_album_art = "";
+    }
+
+    /*
+    If the user defines default playlist art, this image will display if the user
+    tries to set up a playlist meta data image tag but doesn't have one defined.
+    */
+    if (userConfig.default_playlist_art != undefined) {
+      _config2.default.default_playlist_art = userConfig.default_playlist_art;
+    } else {
+      _config2.default.default_playlist_art = "";
+    }
   }
 
   /**
@@ -13210,7 +13223,7 @@ module.exports = exports["default"];
 
 module.exports = {
 	"name": "amplitudejs",
-	"version": "4.0.0",
+	"version": "4.1.0",
 	"description": "A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs",
 	"main": "dist/amplitude.js",
 	"devDependencies": {
