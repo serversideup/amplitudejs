@@ -10,7 +10,7 @@
 	<a href="https://gitter.im/521dimensions/amplitudejs" target="_blank"><img src="https://badges.gitter.im/gitterHQ/gitter.svg" alt="Gitter"></a>
 	<a href="https://david-dm.org/521dimensions/amplitudejs" target="_blank"><img src="https://badgen.net/david/dep/521dimensions/amplitudejs" alt="david-dm"></a>
 	<a href="https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE" target="_blank"><img src="https://badgen.net/github/license/521dimensions/amplitudejs" alt="License"></a>
-	<a href="https://opencollective.com/amplitudejs"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+	<a href="https://opencollective.com/amplitudejs"><img src="https://badgen.net/badge/icon/Support%20Us?label=Open%20Collective&color=orange" alt="Support us"></a>
 </p>
 
 Amplitude.js is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). Amplitude.js is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
