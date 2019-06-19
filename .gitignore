@@ -1,8 +1,16 @@
-songs/*
-examples/testing/*
+# Common things
+.DS_Store
+node_modules/
+*.log
 Iconr
 icon*
-node_modules/
-src/PENDING
+.vscode
+.sass-cache
 logs/
+
+# AmplitudeJS Specifics
+songs/*
+examples/testing/*
+src/PENDING
 examples/songs
+coverage/
