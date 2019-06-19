@@ -4,11 +4,14 @@
 	</a>
 </p>
 <p align="center">
-	<a href="https://gitter.im/521dimensions/amplitudejs" target="_blank">
-		<img src="https://badges.gitter.im/gitterHQ/gitter.svg" alt="Gitter">
-	</a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank">
 		<img src="https://badge.fury.io/js/amplitudejs.svg" alt="npm version">
+	</a>
+	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank">
+		<img src="https://data.jsdelivr.com/v1/package/npm/amplitudejs/badge" alt="jsDelivr">
+	</a>
+	<a href="https://gitter.im/521dimensions/amplitudejs" target="_blank">
+		<img src="https://badges.gitter.im/gitterHQ/gitter.svg" alt="Gitter">
 	</a>
 	<a href="https://david-dm.org/521dimensions/amplitudejs" target="_blank">
 		<img src="https://david-dm.org/521dimensions/amplitudejs.svg" alt="david-dm">
