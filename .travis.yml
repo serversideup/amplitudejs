@@ -1,0 +1,10 @@
+language: node_js
+node_js: '8'
+script:
+- npm run build
+- travis_retry npm run test
+sudo: false
+dist: trusty
+cache:
+  directories:
+  - node_modules
