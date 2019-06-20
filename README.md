@@ -9,6 +9,8 @@
   <a title="Examples" href="https://521dimensions.com/open-source/amplitudejs/examples"><strong>Examples</strong></a>
   &#x2022;
   <a title="Tutorials" href="https://serversideup.net/search/?type=tutorials&tags=amplitudejs"><strong>Tutorials</strong></a>
+  &#x2022;
+  <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
 </p>
 <p align="center">
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
