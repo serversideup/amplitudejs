@@ -1,0 +1,19 @@
+language: node_js
+node_js: '8'
+script:
+- npm run build
+- travis_retry npm run test
+sudo: false
+dist: trusty
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: npm
+  email: opensource@521dimensions.com
+  api_key:
+    secure: cJ/rmLLExBC9GyBXUTHCZa0pOHa5rHTpIvly8ppB72nF8fMEbbuw3ZyyOz1MhBvsxvxlTX33SbWFt+vrqniFrV8yk+3vNJ3RD1TVqQx1piOnB47AzhK3oIOgQ+dW4+G2Z8QUwGO+n58MyHvsouO+3jZef9fAhAqvwDjSOOCO/T+g5JLAfKR19xXoJ448KlPBcAXpNFHUdQ9O09aRTrxQm2yq1rhMLq2mkfmP94DCYmyrK1elK5KffNXNDSr9ZY/2/Z+/TTxYYqGjt1zdTNQVvgHbGcv/Cjz7xkmbonRhCBEMREM4ip0+dqv3o/L2A19JEupPi81KzzjgoglGLm0NbxIrDtzGe0nOCjn1BEMK1duNMTqPO+BkPrxkgmEqmJVC31ltVGbtZr6TqZk75rfT3iiHLJCNeKutcaby+yQ5lPJr7mk1H0Z4mXJK1aUPAve1koz55l8VMxj/HNchsMOfKKplm2a8kqxfbcx9iaUqmvgkEeQnltFPdIiYQz8WUnYHPPra7Oo0XntnveE/AzplL9Cahx7KLOH4fzsNcCoZ7ZVG96U1LLsQuB0hKxoivDliR50QBaVM/rtTAy9gyFgzrDaarKJpPZGkmRG9HmBtFrs+cS1hWAG5yOmVrXCYdw6ytPnkpnyaZy/rcFNQqHGLvuPYocB0QbtwIcgH/1SHPJA=
+  on:
+    tags: true
+    repo: 521dimensions/amplitudejs
+    branch: master
