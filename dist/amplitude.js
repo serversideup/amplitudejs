@@ -11911,7 +11911,17 @@ var ContainerElements = function () {
         }
       }
     } else {
-      var activePlaylistIndex = _config2.default.active_playlist != null && _config2.default.active_playlist != "" ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
+      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
+        var activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].active_index;
+      } else {
+        var activePlaylistIndex = '';
+
+        if (_config2.default.playlists[_config2.default.active_playlist].shuffle) {
+          activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].shuffle_list[_config2.default.playlists[_config2.default.active_playlist].active_index].index;
+        } else {
+          activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].active_index;
+        }
+      }
 
       if (document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activePlaylistIndex + '"][data-amplitude-playlist="' + _config2.default.active_playlist + '"]')) {
         var _songContainers2 = document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activePlaylistIndex + '"][data-amplitude-playlist="' + _config2.default.active_playlist + '"]');

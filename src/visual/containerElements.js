@@ -65,9 +65,9 @@ let ContainerElements = (function() {
       }
     } else {
       if( config.active_playlist != null && config.active_playlist != '' ){
-        let activePlaylistIndex = null;
+        var activePlaylistIndex = config.playlists[ config.active_playlist ].active_index;
       }else{
-        let activePlaylistIndex = '';
+        var activePlaylistIndex = '';
 
         if( config.playlists[ config.active_playlist ].shuffle ){
           activePlaylistIndex = config.playlists[ config.active_playlist ].shuffle_list[ config.playlists[config.active_playlist].active_index ].index;
