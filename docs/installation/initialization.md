@@ -1,5 +1,5 @@
 ---
-title: Initializing - AmplitudeJS Documentation
+title: Initialization - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/initialization/
+    content: https://521dimensions.com/open-source/amplitudejs/docs/installation/initialization
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -34,19 +34,10 @@ meta:
   - name: creator
     content: "@521dimensions"
 ---
-
 # Initializing Amplitude.js
-To initialize Amplitude.js, you must call the Amplitude.init() method and pass
-in an object that contains an array of songs and settings. Amplitude.js will
-then take care of configuring and setting up your player by finding all of the
-Amplitude elements (defined later in the docs) and binding the appropriate
-event handlers.
+To initialize Amplitude.js, you must call the `Amplitude.init()` method and pass in an object that contains an array of songs and settings. Amplitude.js will then take care of configuring and setting up your player by finding all of the Amplitude elements (defined later in the docs) and binding the appropriate event handlers.
 
-To configure Amplitude.js, you need to call the init function on the Amplitude
-object and you can pass it a JSON object of configuration variables ( we will
-go through ALL of these in the documentation ). At the bare minimum, you need
-to pass it all of the song objects that your page will be using. More
-information about the song object next.
+To configure Amplitude.js, you need to call the init function on the Amplitude object and you can pass it a JSON object of configuration variables ( we will go through ALL of these in the documentation ). At the bare minimum, you need to pass it all of the song objects that your page will be using. More information about the song object next.
 
 ```javascript
 	Amplitude.init({
@@ -76,6 +67,4 @@ information about the song object next.
 	});
 ```
 
-This configuration will set up Amplitude.js to work the way you want it. The
-config JSON is used heavily to configure and optimize Amplitude.js for what
-your app needs.
+This configuration will set up Amplitude.js to work the way you want it. The config JSON is used heavily to configure and optimize Amplitude.js for what your app needs.

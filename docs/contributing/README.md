@@ -1,5 +1,5 @@
 ---
-title: Tutorials - AmplitudeJS Documentation
+title: Contributing - AmplitudeJS Documentation
 meta:
   - name: description
     content: Amplitude.js is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/tutorials/
+    content: https://521dimensions.com/open-source/amplitudejs/docs/contributing/
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
@@ -35,9 +35,21 @@ meta:
     content: "@521dimensions"
 ---
 
-# Tutorials
-We use [ServerSideUp](https://serversideup.net) for all of our tutorials. Here's
-a list of tutorials that can be helpful when developing with AmplitudeJS:
+# How to contribute to AmplitudeJS
+We greatly appeciate any efforts to help grow and maintain the AmplitudeJS community! There are number of ways that you can help AmplitudeJS:
 
-- [Set Song Played Percentage with AmplitudeJS](https://serversideup.net/set-song-played-percentage-amplitudejs/)
-- [AmplitudeJS: From the Ground Up](https://serversideup.net/courses/amplitudejs-from-the-ground-up/)
+## Share us on social media
+Any sort of help to get the word out is greatly appreciated. The easiest way to share us on social media is to [click the share icons on our homepage &rarr;](https://521dimensions.com/open-source/amplitudejs)
+
+## Help answer bugs on Github
+There are a number of Github issues that need help being answered. If you have some time available, [view our open Github issues &rarr;](https://github.com/521dimensions/amplitudejs/issues)
+
+## Answer questions on Gitter
+From time to time, people jump on Gitter to ask questions. You can be active in the discussion by [joining our Gitter &rarr;](https://gitter.im/521dimensions/amplitudejs)
+
+## Submit a pull request
+If you are looking to submit a feature or a bugfix, contributions are always welcome. [View our contributing guidelines &rarr;](https://github.com/521dimensions/amplitudejs/blob/master/.github/CONTRIBUTING.md)
+
+## Become a backer
+Maintaining an open source project takes a lot of effort and the project is not sustainable without proper financial support. If you really want to see AmplitudeJS grow and expand [support us on Open Collective &rarr;](https://opencollective.com/amplitudejs)
+
