@@ -1,6 +1,10 @@
 ---
-name: ❓ Support Question
-about: Not sure how something works or how to implement some functionality? Ask us here! (But please check the docs first 🙃)
+name: "❓ Support Question"
+about: "Not sure how something works or how to implement some functionality? Ask us
+  here! (But please check the docs first \U0001F643)"
+title: "[SUPPORT]"
+labels: question
+assignees: danpastori
 
 ---
 
