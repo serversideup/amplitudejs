@@ -36,16 +36,24 @@ let ContainerElements = (function() {
 			that represents the song at the index.
 		*/
     if (config.active_playlist == "" || config.active_playlist == null) {
+      let activeIndex = '';
+
+      if( config.shuffle_on ){
+        activeIndex = config.shuffle_list[ config.active_index ].index;
+      }else{
+        activeIndex = config.active_index;
+      }
+
       if (
         document.querySelectorAll(
           '.amplitude-song-container[data-amplitude-song-index="' +
-            config.active_index +
+            activeIndex +
             '"]'
         )
       ) {
         let songContainers = document.querySelectorAll(
           '.amplitude-song-container[data-amplitude-song-index="' +
-            config.active_index +
+            activeIndex +
             '"]'
         );
 
@@ -56,10 +64,17 @@ let ContainerElements = (function() {
         }
       }
     } else {
-      let activePlaylistIndex =
-        config.active_playlist != null && config.active_playlist != ""
-          ? config.playlists[config.active_playlist].active_index
-          : null;
+      if( config.active_playlist != null && config.active_playlist != '' ){
+        let activePlaylistIndex = null;
+      }else{
+        let activePlaylistIndex = '';
+
+        if( config.playlists[ config.active_playlist ].shuffle ){
+          activePlaylistIndex = config.playlists[ config.active_playlist ].shuffle_list[ config.playlists[config.active_playlist].active_index ].index;
+        }else{
+          activePlaylistIndex = config.playlists[ config.active_playlist ].active_index;
+        }
+      }
 
       if (
         document.querySelectorAll(

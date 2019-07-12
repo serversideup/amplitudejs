@@ -102,7 +102,7 @@ let AudioNavigation = (function() {
         If the playlist is shuffled, get the now playing index.
       */
       if (config.shuffle_on) {
-        nextIndex = config.active_index;
+        nextIndex = config.shuffle_list[ config.active_index ].index;
         nextSong = config.shuffle_list[nextIndex];
       } else {
         nextIndex = config.active_index;
@@ -123,13 +123,13 @@ let AudioNavigation = (function() {
           /*
             Set the next index to be the index of the song in the shuffle list.
           */
-          nextIndex = parseInt(config.active_index) + 1;
+          nextIndex = parseInt( config.active_index ) + 1;
         } else {
-          nextIndex = 0;
+          nextIndex = 0
           endOfList = true;
         }
 
-        nextSong = config.shuffle_list[nextIndex];
+        nextSong = config.shuffle_list[ nextIndex ];
       } else {
         /*
           If the active index + 1 is less than the length of the songs, then
@@ -475,6 +475,7 @@ let AudioNavigation = (function() {
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
+    
     config.active_index = parseInt(index);
 
     /*

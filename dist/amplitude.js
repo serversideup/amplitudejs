@@ -963,7 +963,7 @@ var AudioNavigation = function () {
         If the playlist is shuffled, get the now playing index.
       */
       if (_config2.default.shuffle_on) {
-        nextIndex = _config2.default.active_index;
+        nextIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
         nextSong = _config2.default.shuffle_list[nextIndex];
       } else {
         nextIndex = _config2.default.active_index;
@@ -1330,6 +1330,7 @@ var AudioNavigation = function () {
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
+
     _config2.default.active_index = parseInt(index);
 
     /*
@@ -11892,8 +11893,16 @@ var ContainerElements = function () {
     that represents the song at the index.
     */
     if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
-      if (document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + _config2.default.active_index + '"]')) {
-        var _songContainers = document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + _config2.default.active_index + '"]');
+      var activeIndex = '';
+
+      if (_config2.default.shuffle_on) {
+        activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
+      } else {
+        activeIndex = _config2.default.active_index;
+      }
+
+      if (document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activeIndex + '"]')) {
+        var _songContainers = document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activeIndex + '"]');
 
         for (var _i = 0; _i < _songContainers.length; _i++) {
           if (!_songContainers[_i].hasAttribute("data-amplitude-playlist")) {
