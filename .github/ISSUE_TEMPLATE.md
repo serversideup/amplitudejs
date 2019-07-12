@@ -9,7 +9,7 @@
 
 #### Environment
 
-<!-- On the device you are experiencing issues, go to https://www.whatsmybrowser.org/. Paste your URL below -->
+<!-- On the device you are experiencing issues, go to https://www.whatsmybrowser.org/. Paste your support URL below -->
 - What's My Browser Support link: {{ paste your support link here }}
 <!-- Run `Amplitude.getVersion()` in your browser console" -->
 - Amplitude.js Version:
