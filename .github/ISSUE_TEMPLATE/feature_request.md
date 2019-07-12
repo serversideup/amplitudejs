@@ -1,7 +1,6 @@
 ---
 name: "\U0001F680 Feature Request"
 about: Suggest a new feature ✨
-title: "[FEATURE REQUEST]"
 labels: feature-request
 assignees: ''
 
