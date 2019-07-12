@@ -24,7 +24,7 @@
 	<a href="https://opencollective.com/amplitudejs"><img src="https://badgen.net/badge/icon/Support%20Us?label=Open%20Collective&color=orange" alt="Support us"></a>
 </p>
 
-Amplitude.js is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). Amplitude.js is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
+AmplitudeJS is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). AmplitudeJS is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
 
 ## Sponsors
 
@@ -61,7 +61,7 @@ Get your company name and logo featured here! We are accepting sponsorships for 
 ## Installation
 
 ### Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
-No installation is required to use Amplitude.js. All you need to do is include a single line in your `<head>` section of your HTML page.
+No installation is required to use AmplitudeJS. All you need to do is include a single line in your `<head>` section of your HTML page.
 
 Replace `{{version-number}}` with the exact version number that you would like to use (see [our releases](https://github.com/521dimensions/amplitudejs/releases) for what version number to use):
 ```html
