@@ -1,6 +1,8 @@
 ---
-name: 🚀 Feature Request
-about: A suggestion for a new feature ✨
+name: "\U0001F680 Feature Request"
+about: Suggest a new feature ✨
+labels: feature-request
+assignees: ''
 
 ---
 

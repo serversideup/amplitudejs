@@ -1,17 +1,19 @@
 ---
-name: 🐛 Bug Report
-about: If something isn't working as expected 🤔
+name: "\U0001F41B Bug Report"
+about: "Something isn't working as expected \U0001F914"
+title: ''
+labels: bug
+assignees: danpastori
 
 ---
-
 #### Issue description
 <!-- Replace this comment with a short explanation of what is going on -->
 
 #### Environment
 
-<!-- If you have privacy concerns about using What's My Browser, at least copy and paste the contents and remove your IP address -->
-- [What's My Browser Support](https://www.whatsmybrowser.org/) link: < paste link here
-<!-- Run `Amplitude.getVersion()` in the console" -->
+<!-- On the device you are experiencing issues, go to https://www.whatsmybrowser.org/. Paste your support URL below -->
+- What's My Browser Support link: {{ paste your support link here }}
+<!-- Run `Amplitude.getVersion()` in your browser console" -->
 - Amplitude.js Version:
 
 #### Steps to reproduce the issue

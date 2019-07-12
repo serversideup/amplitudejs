@@ -13,6 +13,7 @@
   <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
 </p>
 <p align="center">
+	<a href="https://travis-ci.org/521dimensions/amplitudejs" target="_blank"><img src="https://travis-ci.org/521dimensions/amplitudejs.svg?branch=master" alt="Build Status"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
 	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank"><img src="https://badgen.net/jsdelivr/hits/npm/amplitudejs" alt="jsDelivr"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/dt/amplitudejs" alt="Downloads"></a>
@@ -23,7 +24,7 @@
 	<a href="https://opencollective.com/amplitudejs"><img src="https://badgen.net/badge/icon/Support%20Us?label=Open%20Collective&color=orange" alt="Support us"></a>
 </p>
 
-Amplitude.js is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). Amplitude.js is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
+AmplitudeJS is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). AmplitudeJS is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
 
 ## Sponsors
 
@@ -39,7 +40,7 @@ Get your company name and logo featured here! We are accepting sponsorships for 
 * 🎛 Public functions for unlimited control!
 
 
-## Browsers support
+## Browser support
 
 | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome |
 <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" /></br>Opera |
@@ -60,7 +61,7 @@ Get your company name and logo featured here! We are accepting sponsorships for 
 ## Installation
 
 ### Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
-No installation is required to use Amplitude.js. All you need to do is include a single line in your `<head>` section of your HTML page.
+No installation is required to use AmplitudeJS. All you need to do is include a single line in your `<head>` section of your HTML page.
 
 Replace `{{version-number}}` with the exact version number that you would like to use (see [our releases](https://github.com/521dimensions/amplitudejs/releases) for what version number to use):
 ```html
