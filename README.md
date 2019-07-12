@@ -13,6 +13,7 @@
   <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
 </p>
 <p align="center">
+	<a href="https://travis-ci.org/521dimensions/amplitudejs" target="_blank"><img src="https://travis-ci.org/521dimensions/amplitudejs.svg?branch=master" alt="Build Status"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
 	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank"><img src="https://badgen.net/jsdelivr/hits/npm/amplitudejs" alt="jsDelivr"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/dt/amplitudejs" alt="Downloads"></a>
