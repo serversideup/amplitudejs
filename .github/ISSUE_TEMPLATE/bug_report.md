@@ -6,13 +6,6 @@ labels: bug
 assignees: danpastori
 
 ---
-
-<!-- Please use this template to help us answer your question faster! -->
-
-<!-- FEATURE REQUESTS: If you are proposing a new feature, replace this entire text with a detailed description on why at least 90% of Amplitude.js users will want to use your feature. -->
-
-<!-- BUG REPORTS: Complete the sections below: -->
-
 #### Issue description
 <!-- Replace this comment with a short explanation of what is going on -->
 
