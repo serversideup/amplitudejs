@@ -16,3 +16,6 @@ We also have a few guidelines on getting started and how to contribute:
 1. Change directories into where you cloned the repository and run `npm install`
 2. Make your changes to the appropriate files in the `src` directory
 3. Run `npm run build` to process a build of your source code
+
+# Submitting a pull request
+We ask that any pull requests be submitted to our `dev` branch, which you can do here: https://github.com/521dimensions/amplitudejs/pull/new/dev
