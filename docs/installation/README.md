@@ -57,4 +57,4 @@ You will see the file under `node_modules/amplitudejs/dist/amplitude.js`.
 ## Option 3: Manual download
 Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
 
-Amplitude.js is now available for use! All that's left is initializing.
+Amplitude.js is now available for use! All that's left is [initializing &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/installation/initialization).

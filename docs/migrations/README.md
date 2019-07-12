@@ -1,5 +1,5 @@
 ---
-title: Migrating From 3.x To 4.0 - AmplitudeJS Documentation
+title: Migration Guides - AmplitudeJS Documentation
 meta:
   - name: description
     content: AmplitudeJS is the HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design a web audio player the way you want it to look.
@@ -12,7 +12,7 @@ meta:
   - name: og:description
     content: Amplitude.js is the open source HTML5 audio player for the modern era. Using no dependencies, take control of the browser and design an audio player the way you want it to look.
   - name: og:url
-    content: https://521dimensions.com/open-source/amplitudejs/docs/migrations
+    content: https://521dimensions.com/open-source/amplitudejs/docs/migration-guides
   - name: og:site_name
     content: Amplitude.js
   - name: og:image
