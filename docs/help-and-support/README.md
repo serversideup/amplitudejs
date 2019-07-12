@@ -35,22 +35,19 @@ meta:
     content: "@521dimensions"
 ---
 
-# Help & Support
-We have a number of methods to help you get any questions answered regarding AmplitudeJS.
-
-## Community Support
+# Community Support
 Since AmplitudeJS is open sourced under the MIT license, any participating member can assist you with your support question. [Learn more about Community Support &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#community-support)
 
-## Professional Support
+# Professional Support
 If you would like to get in touch directly with the creators of AmplitudeJS or if you have a more time sensitive request, you can contact the creators directly. [Get Professional Support &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support)
 
-## Demos & Examples
+# Demos & Examples
 We have a number of demos and examples available for you to freely use. [View the demos &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/examples/)
 
-## Tutorials
+# Tutorials
 We use [ServerSideUp](https://serversideup.net) for all of our tutorials. [See all of the tutorials &rarr;](https://serversideup.net/search/?type=tutorials&tags=amplitudejs)
 
-## Asking for support
+# Asking for support
 If you need help, here are a few tips:
 
 1. Be polite: You'd be shocked how many people demand everything for nothing.
@@ -58,15 +55,15 @@ If you need help, here are a few tips:
 
 Here is how you can make this process much easier for everyone:
 
-### Tell us what version you are running
+### 1. Tell us what version you are running
 You can find your version by running [Amplitude.getVersion()](https://521dimensions.com/open-source/amplitudejs/docs/functions/#get-version) in your browser console.
 
-![Get Version](GetVersion.png)
+![Get Version](./GetVersion.png)
 
-### Submit a public URL where the bug is happening
+### 2. Submit a public URL where the bug is happening
 Give us a link where you are experiencing the issue. It's really hard to help you if we can't see what you are looking at 😀
 
-### Tell us what device you are having issues with
+### 3. Tell us what device you are having issues with
 You can easily do this by visiting [https://www.whatsmybrowser.org/](https://www.whatsmybrowser.org/) from the device that you are having issues with. Once there, it will generate a "support URL" for you. We just need that URL and it will give us everything we need to know about your device to help you.
 
-![What's My Browser](BrowserInfo.png)
+![What's My Browser](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/docs/help-and-support/BrowserInfo.png)
