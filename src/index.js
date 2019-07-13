@@ -1,7 +1,6 @@
 /**
  * @name 		Amplitude.js
- * @version 4.2.0
- * @author 	Dan Pastori (521 Dimensions) <dan@521dimensions.com>
+ * @author 	Dan Pastori (521 Dimensions) <support@521dimensions.com>
  */
 /**
  * AmplitudeJS Initializer Module
