@@ -1,6 +1,6 @@
 <p align="center">
 	<a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">
-		<img src="https://521dimensions.com/img/open-source/amplitudejs/AmplitudeLogo-WithSlogan.svg" width="600" alt="AmplitudeJS Logo">
+		<img src="https://521dimensions.com/img/open-source/amplitudejs/AmplitudeJS-NoSlogan.svg" width="600" alt="AmplitudeJS Logo">
 	</a>
 </p>
 <p align="center">
@@ -11,6 +11,8 @@
   <a title="Tutorials" href="https://serversideup.net/search/?type=tutorials&tags=amplitudejs"><strong>Tutorials</strong></a>
   &#x2022;
   <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
+  &#x2022;
+  <a title="Get Professional Help" href="https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support"><strong>Get Professional Help</strong></a>
 </p>
 <p align="center">
 	<a href="https://travis-ci.org/521dimensions/amplitudejs" target="_blank"><img src="https://travis-ci.org/521dimensions/amplitudejs.svg?branch=master" alt="Build Status"></a>
@@ -26,9 +28,19 @@
 
 AmplitudeJS is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). AmplitudeJS is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
 
+## Demo
+<p align="center">
+	<a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">
+		<img src="https://521dimensions.com/img/open-source/amplitudejs/AmplitudeDemo.jpg" alt="MIT License" width="600">
+	</a><br />
+	Click the image above to go to the demo site or <a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">click here</a>.
+</p>
+
 ## Sponsors
 
-Get your company name and logo featured here! We are accepting sponsorships for AmplitudeJS. With a sponsorship, you will have your company logo linked and featured here and on our documentation site.
+AmplitudeJS is free to use under the MIT license, but the project is not sustainable without proper financial backing. If you rely on AmplitudeJS or would like to see this project grow, consider becoming a sponsor. Different levels have diferent perks.
+
+We'll even throw your logo in our README and on our website. [Become a sponsor &rarr;](https://opencollective.com/amplitudejs)
 
 ## Features
 * 🎨 100% customizable design of all player elements
@@ -38,6 +50,12 @@ Get your company name and logo featured here! We are accepting sponsorships for 
 * 🌊 Autogenerate waveforms and visualizations using the Web Audio API
 * 🎤 Live streaming support
 * 🎛 Public functions for unlimited control!
+* 🤵 Professionally supported [Get professional help &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support)
+
+## Don't just take our word for it
+* [GitHub: Release Radar · January 2019](https://www.notion.so/521dimensions/Update-Readme-to-reflect-current-player-and-marketing-eb4c411db5ef4bddbc6db4ccf9c2687f#dcc9e424f1ea48f1906aa0a80ca5f09d)
+* [CSS Tricks: Front-End Tools: My Favorite Finds of 2017](https://css-tricks.com/front-end-tools-favorite-finds-2017/)
+* [FossMint: AmplitudeJS - A Modern Open-Source HTML5 Audio Player](https://www.fossmint.com/amplitudejs-html5-audio-player-with-playlist/)
 
 
 ## Browser support
@@ -49,47 +67,15 @@ Get your company name and logo featured here! We are accepting sponsorships for 
 
 ## Example Players
 
-* [Blue Playlist](https://codepen.io/521dimensions/pen/BbXmJX)
-* [Dynamic Playlist](https://codepen.io/521dimensions/pen/wZKajG)
-* [Flat Black](https://codepen.io/521dimensions/pen/WWQwRw)
-* [Multiple Playlists](https://codepen.io/521dimensions/pen/JVYXBe)
-* [Multiple Songs](https://codepen.io/521dimensions/pen/QPjNYv)
-* [Visualizations and Waveforms](https://codepen.io/521dimensions/pen/ZZOXXG)
-* [Single Song](https://codepen.io/521dimensions/pen/OGyJyW)
+Looking for some cool examples to get started with? [View all of our example players &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/examples/index.html)
 
 
 ## Installation
-
-### Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
-No installation is required to use AmplitudeJS. All you need to do is include a single line in your `<head>` section of your HTML page.
-
-Replace `{{version-number}}` with the exact version number that you would like to use (see [our releases](https://github.com/521dimensions/amplitudejs/releases) for what version number to use):
-```html
-<script src="https://cdn.jsdelivr.net/npm/amplitudejs@{{version-number}}/dist/amplitude.js"></script>
-```
-**NOTE:** It's best to set your version number manually to make sure you have full control of what version you are running. If you need to upgrade in the future, just change `{{version-number}}` to the latest version.
-
-
-### Option 2: Automatic install via `npm`
-Download it via NPM to your existing project:
-```sh
-npm install --save amplitudejs
-```
-
-You will see the file under `node_modules/amplitudejs/dist/amplitude.js`.
-
-### Option 3: Manual download
-Download the `amplitude.js` file from [our releases page](https://github.com/521dimensions/amplitudejs/releases) and include the file manually with your project.
+Installation is a breeze and very flexible on how you want to use it. [View the installation instructions &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/installation/)
 
 
 ## Documentation & Usage
-There are a lot more features that are explained in greater detail in our [latest documentation](https://521dimensions.com/open-source/amplitudejs/docs). If you find errors or places for improvement on our documentation, submit a pull request with the documentation located at `/docs/DOCUMENTATION.md`. The documentation site reads directly from the GitHub Repo.
+All of our documentation is located in the `/docs` folder, but we made an even easier and more beautiful way to fully experience AmplitudeJS. [View our documentation site &rarr;](https://521dimensions.com/open-source/amplitudejs/docs)
 
-## Places we've been featured
-* [GitHub: Release Radar · January 2019](https://www.notion.so/521dimensions/Update-Readme-to-reflect-current-player-and-marketing-eb4c411db5ef4bddbc6db4ccf9c2687f#dcc9e424f1ea48f1906aa0a80ca5f09d)
-* [CSS Tricks: Front-End Tools: My Favorite Finds of 2017](https://css-tricks.com/front-end-tools-favorite-finds-2017/)
-* [FossMint: AmplitudeJS - A Modern Open-Source HTML5 Audio Player](https://www.fossmint.com/amplitudejs-html5-audio-player-with-playlist/)
-
-## Reporting Issues
-
-If you are experiencing any issues or if you have a feature request, please [open up a new GitHub Issue](https://github.com/521dimensions/amplitudejs/issues/new/choose)
+## Getting Help
+Feeling stuck? No worries! We have entire community built around helping eachother out. [Get help &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/help-and-support/)
