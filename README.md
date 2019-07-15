@@ -79,3 +79,6 @@ All of our documentation is located in the `/docs` folder, but we made an even e
 
 ## Getting Help
 Feeling stuck? No worries! We have entire community built around helping eachother out. [Get help &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/help-and-support/)
+
+## Roadmap
+We have all of our proposed features organized on our [roadmap](https://github.com/521dimensions/amplitudejs/projects/11). If you are interested in sponsoring a specific feature, just comment on that feature and we will get in touch with you soon!
