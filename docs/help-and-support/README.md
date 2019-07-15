@@ -35,19 +35,19 @@ meta:
     content: "@521dimensions"
 ---
 
-# Community Support
+## Community Support
 Since AmplitudeJS is open sourced under the MIT license, any participating member can assist you with your support question. [Learn more about Community Support &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#community-support)
 
-# Professional Support
+## Professional Support
 If you would like to get in touch directly with the creators of AmplitudeJS or if you have a more time sensitive request, you can contact the creators directly. [Get Professional Support &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support)
 
-# Demos & Examples
+## Demos & Examples
 We have a number of demos and examples available for you to freely use. [View the demos &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/examples/)
 
-# Tutorials
+## Tutorials
 We use [ServerSideUp](https://serversideup.net) for all of our tutorials. [See all of the tutorials &rarr;](https://serversideup.net/search/?type=tutorials&tags=amplitudejs)
 
-# Asking for support
+## Asking for support
 If you need help, here are a few tips:
 
 1. Be polite: You'd be shocked how many people demand everything for nothing.
