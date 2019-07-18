@@ -7094,9 +7094,9 @@ var KeyDown = function () {
       or null and set the previous song.
     */
     if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
-      _audioNavigation2.default.setPrev();
+      _audioNavigation2.default.setPrevious();
     } else {
-      _audioNavigation2.default.setPrevPlaylist(_config2.default.active_playlist);
+      _audioNavigation2.default.setPreviousPlaylist(_config2.default.active_playlist);
     }
   }
 
@@ -13355,7 +13355,7 @@ module.exports = exports["default"];
 /* 59 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"amplitudejs","version":"5.0.1","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
+module.exports = {"name":"amplitudejs","version":"5.0.2","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
 
 /***/ })
 /******/ ]);

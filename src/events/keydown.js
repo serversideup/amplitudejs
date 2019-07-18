@@ -165,9 +165,9 @@ let KeyDown = (function() {
       or null and set the previous song.
     */
     if (config.active_playlist == "" || config.active_playlist == null) {
-      AudioNavigation.setPrev();
+      AudioNavigation.setPrevious();
     } else {
-      AudioNavigation.setPrevPlaylist(config.active_playlist);
+      AudioNavigation.setPreviousPlaylist(config.active_playlist);
     }
   }
 
