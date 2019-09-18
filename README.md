@@ -53,7 +53,7 @@ We'll even throw your logo in our README and on our website. [Become a sponsor &
 * 🤵 Professionally supported [Get professional help &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support)
 
 ## Don't just take our word for it
-* [GitHub: Release Radar · January 2019](https://www.notion.so/521dimensions/Update-Readme-to-reflect-current-player-and-marketing-eb4c411db5ef4bddbc6db4ccf9c2687f#dcc9e424f1ea48f1906aa0a80ca5f09d)
+* [GitHub: Release Radar · January 2019](https://github.blog/2019-02-05-release-radar-january-2019/)
 * [CSS Tricks: Front-End Tools: My Favorite Finds of 2017](https://css-tricks.com/front-end-tools-favorite-finds-2017/)
 * [FossMint: AmplitudeJS - A Modern Open-Source HTML5 Audio Player](https://www.fossmint.com/amplitudejs-html5-audio-player-with-playlist/)
 
