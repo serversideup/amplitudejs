@@ -44,7 +44,7 @@ You can set this value on initialization:
 
 ```javascript
 Amplitude.init({
-  songs: ['...'],
+  songs: ["..."],
   delay: 3000
 });
 ```
