@@ -100,7 +100,7 @@ With the introduction of Amplitude FX Song Visualizations, you can apply a speci
 		"url": "/song/url.mp3",
 		"cover_art_url": "/cover/art/url.jpg",
 		"made_up_key": "I'm made up completely",
-    "visualization": "your_visualization_key"
+		"visualization": "your_visualization_key"
 	}
 ```
 Now when the song plays, the visualization you specify will be played in all visualization elements.
@@ -116,9 +116,9 @@ We first start with our individual song object and add a `time_callbacks` object
 		"album": "Album Name",
 		"url": "/song/url.mp3",
 		"cover_art_url": "/cover/art/url.jpg",
-    "time_callbacks": {
-
-    }
+    		"time_callbacks": {
+			
+    		}
 	}
 ```
 
@@ -131,17 +131,17 @@ Within that `time_callbacks` object, we can add functions that get called at a c
 		"album": "Album Name",
 		"url": "/song/url.mp3",
 		"cover_art_url": "/cover/art/url.jpg",
-    "time_callbacks": {
-      1: function(){
-        console.log( "1 second into the song" )
-      },
-      90: function(){
-        console.log( "1 minute 30 seconds into the song" );
-      },
-      110: function(){
-        console.log( "1 minute 50 seconds into the song" );
-      }
-    }
+    		"time_callbacks": {
+      			1: function(){
+        			console.log( "1 second into the song" )
+      			},
+      			90: function(){
+        			console.log( "1 minute 30 seconds into the song" );
+      			},
+      			110: function(){
+        			console.log( "1 minute 50 seconds into the song" );
+      			}
+    		}
 	}
 ```
 
