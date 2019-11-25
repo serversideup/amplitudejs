@@ -41,7 +41,7 @@ By default, AmplitudeJS plays back the audio at the normal speed of `1.0`. Howev
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     playback_speed: 2.0
   });
 ```

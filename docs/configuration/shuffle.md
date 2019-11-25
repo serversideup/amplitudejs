@@ -41,7 +41,7 @@ You can turn shuffle on right away when initializing AmplitudeJS. To do that, si
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     shuffle_on: true
   });
 ```

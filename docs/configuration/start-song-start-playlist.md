@@ -45,7 +45,7 @@ To set a starting song, you simply need to add the `start_song` key and pass it 
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     start_song: 3
   });
 ```
@@ -56,11 +56,11 @@ You can also define which playlist to start with if you have multiple playlists.
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     playlists: {
-      'key_of_starting_playlist': ['...']
+      "key_of_starting_playlist": ["..."]
     }
-    starting_playlist: 'key_of_starting_playlist'
+    starting_playlist: "key_of_starting_playlist"
   });
 ```
 
@@ -70,11 +70,11 @@ Finally, you can set which song you want to start the player with inside which p
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     playlists: {
-      'key_of_starting_playlist': ['...']
+      "key_of_starting_playlist": ["..."]
     }
-    starting_playlist: 'key_of_starting_playlist',
+    starting_playlist: "key_of_starting_playlist",
     starting_playlist_song: 3
   });
 ```

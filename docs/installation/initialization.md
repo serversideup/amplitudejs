@@ -41,7 +41,7 @@ To configure Amplitude.js, you need to call the init function on the Amplitude o
 
 ```javascript
 	Amplitude.init({
-		"songs": [
+		songs: [
 			{
 				"name": "Song Name 1",
 				"artist": "Artist Name",
