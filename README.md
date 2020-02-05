@@ -36,11 +36,12 @@ AmplitudeJS is a lightweight JavaScript library that allows you to control the d
 	Click the image above to go to the demo site or <a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">click here</a>.
 </p>
 
-## Sponsors
+## This software is community-run
 
-AmplitudeJS is free to use under the MIT license, but the project is not sustainable without proper financial backing. If you rely on AmplitudeJS or would like to see this project grow, consider becoming a sponsor. Different levels have diferent perks.
+Open-source software is not sustainable without proper financial support. Maintaining an open source project takes a lot of effort and resources. If you are very thankful for what you can do with AmplitudeJS or if you are using AmplitudeJS to make any sort of revenue, we kindly ask that you contribute any resources available to keep the community growing.
 
-We'll even throw your logo in our README and on our website. [Become a sponsor &rarr;](https://opencollective.com/amplitudejs)
+#### Special thanks to these people who believe in open-source projects:
+<a href="https://opencollective.com/amplitudejs#backers" target="_blank"><img src="https://opencollective.com/amplitudejs/backers.svg?width=890"></a>
 
 ## Features
 * 🎨 100% customizable design of all player elements
