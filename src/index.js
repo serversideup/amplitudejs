@@ -677,6 +677,7 @@ let Amplitude = (function() {
 			or there will be nothing to play.
 		*/
     if (song.url) {
+      config.audio = new Audio();
       config.audio.src = song.url;
       config.active_metadata = song;
       config.active_album = song.album;

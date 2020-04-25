@@ -498,6 +498,7 @@ var Core = function () {
    * @access public
    */
   function disconnectStream() {
+    _config2.default.audio = new Audio();
     _config2.default.audio.src = "";
     _config2.default.audio.load();
   }
@@ -510,6 +511,7 @@ var Core = function () {
    * @access public\
    */
   function reconnectStream() {
+    _config2.default.audio = new Audio();
     _config2.default.audio.src = _config2.default.active_metadata.url;
     _config2.default.audio.load();
   }
@@ -1327,6 +1329,7 @@ var AudioNavigation = function () {
     /*
       Change the song.
     */
+    _config2.default.audio = new Audio();
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -1356,6 +1359,7 @@ var AudioNavigation = function () {
     /*
       Change the song.
     */
+    _config2.default.audio = new Audio();
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -10809,6 +10813,7 @@ var Amplitude = function () {
     or there will be nothing to play.
     */
     if (song.url) {
+      _config2.default.audio = new Audio();
       _config2.default.audio.src = song.url;
       _config2.default.active_metadata = song;
       _config2.default.active_album = song.album;

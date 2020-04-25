@@ -472,6 +472,7 @@ let AudioNavigation = (function() {
     /*
       Change the song.
     */
+    config.audio = new Audio();
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
@@ -501,6 +502,7 @@ let AudioNavigation = (function() {
     /*
       Change the song.
     */
+    config.audio = new Audio();
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
