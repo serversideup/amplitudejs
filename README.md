@@ -36,7 +36,7 @@ AmplitudeJS is a lightweight JavaScript library that allows you to control the d
 	Click the image above to go to the demo site or <a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">click here</a>.
 </p>
 
-## This software is community-run
+## This Software is Community-run
 
 Open-source software is not sustainable without proper financial support. Maintaining an open source project takes a lot of effort and resources. If you are very thankful for what you can do with AmplitudeJS or if you are using AmplitudeJS to make any sort of revenue, we kindly ask that you contribute any resources available to keep the community growing.
 
@@ -59,7 +59,7 @@ Open-source software is not sustainable without proper financial support. Mainta
 * [FossMint: AmplitudeJS - A Modern Open-Source HTML5 Audio Player](https://www.fossmint.com/amplitudejs-html5-audio-player-with-playlist/)
 
 
-## Browser support
+## Browser Support
 
 | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" /></br>Opera |
 | ---------- | --------- | --------- | --------- | --------- |
