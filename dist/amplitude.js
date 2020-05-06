@@ -894,6 +894,10 @@ var _containerElements = __webpack_require__(49);
 
 var _containerElements2 = _interopRequireDefault(_containerElements);
 
+var _timeUpdate = __webpack_require__(22);
+
+var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -904,34 +908,37 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 /**
- * Meta Data Elements Module
+ * Container Elements Module
  *
- * @module visual/MetaDataElements
+ * @module visual/ContainerElements
  */
 
 
 /**
- * Imports the Song Played Progress Elements Module
+ * Imports the Time Elements Module
  *
- * @module visual/SongPlayedProgressElements
+ * @module visual/TimeElements
  */
 
 
 /**
- * Imports the Play Pause Elements Module
+ * Imports the Song Slider Elements Module
  *
- * @module visual/PlayPauseElements
+ * @module visual/SongSliderElements
  */
 
 
 /**
- * Imports the Callbacks Module
+ * Imports the Checks Module
  *
- * @module utilities/Callbacks
+ * @module utilities/Checks
  */
+
+
 /**
- * Imports the config module
- * @module config
+ * Imports the Core Module
+ *
+ * @module core/Core
  */
 var AudioNavigation = function () {
   /**
@@ -1329,7 +1336,23 @@ var AudioNavigation = function () {
     /*
       Change the song.
     */
-    _config2.default.audio = new Audio();
+    // We're removing/adding event listeners on 
+    // the two events we're interested in on the audio
+    // object. 
+    //
+    // Although Events.initialize() also does these,
+    // it does more things too, including re-adding
+    // global event handlers. If we called
+    // that on every song change, we'd have so 
+    // many memory leaks that we'd crash the browser
+    // after just a few song changes.
+    console.log("remove timeupdate and durationchange from song " + _config2.default.audio.src);
+    _config2.default.audio.removeEventListener("timeupdate", _timeUpdate2.default.handle);
+    _config2.default.audio.removeEventListener("durationchange", _timeUpdate2.default.handle);
+    _config2.default.audio = new Audio(song.url);
+    console.log("add timeupdate and durationchange to new song " + _config2.default.audio.src);
+    _config2.default.audio.addEventListener("durationchange", _timeUpdate2.default.handle);
+    _config2.default.audio.addEventListener("timeupdate", _timeUpdate2.default.handle);
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -1359,6 +1382,11 @@ var AudioNavigation = function () {
     /*
       Change the song.
     */
+
+    // See note in changeSong above. We don't have
+    // playlists at the moment so we don't 
+    // care about fixing the playlist handler
+
     _config2.default.audio = new Audio();
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
@@ -1456,38 +1484,39 @@ var AudioNavigation = function () {
   };
 }();
 
+// Used in changeSong below. See comment in that
+// function for more details
+
+
 /**
- * Container Elements Module
+ * Meta Data Elements Module
  *
- * @module visual/ContainerElements
+ * @module visual/MetaDataElements
  */
 
 
 /**
- * Imports the Time Elements Module
+ * Imports the Song Played Progress Elements Module
  *
- * @module visual/TimeElements
+ * @module visual/SongPlayedProgressElements
  */
 
 
 /**
- * Imports the Song Slider Elements Module
+ * Imports the Play Pause Elements Module
  *
- * @module visual/SongSliderElements
+ * @module visual/PlayPauseElements
  */
 
 
 /**
- * Imports the Checks Module
+ * Imports the Callbacks Module
  *
- * @module utilities/Checks
+ * @module utilities/Callbacks
  */
-
-
 /**
- * Imports the Core Module
- *
- * @module core/Core
+ * Imports the config module
+ * @module config
  */
 exports.default = AudioNavigation;
 module.exports = exports["default"];
@@ -4557,7 +4586,7 @@ var _shuffler = __webpack_require__(13);
 
 var _shuffler2 = _interopRequireDefault(_shuffler);
 
-var _events = __webpack_require__(26);
+var _events = __webpack_require__(27);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -4569,7 +4598,7 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
-var _waveform = __webpack_require__(22);
+var _waveform = __webpack_require__(23);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -5173,6 +5202,234 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
+var _bufferedProgressElements = __webpack_require__(25);
+
+var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
+
+var _timeElements = __webpack_require__(15);
+
+var _timeElements2 = _interopRequireDefault(_timeElements);
+
+var _songSliderElements = __webpack_require__(14);
+
+var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
+
+var _songPlayedProgressElements = __webpack_require__(20);
+
+var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
+
+var _time = __webpack_require__(24);
+
+var _time2 = _interopRequireDefault(_time);
+
+var _callbacks = __webpack_require__(7);
+
+var _callbacks2 = _interopRequireDefault(_callbacks);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Event Handler for Time Update
+ *
+ * @module events/TimeUpdate
+ */
+
+
+/**
+ * Imports the Time utility class
+ * @module utilities/Time
+ */
+
+
+/**
+ * Imports the Song Slider Elements visual class.
+ * @module visual/songSliderElements
+ */
+
+
+/**
+ * Imports the Buffered Progress Elements visual class
+ * @module visual/bufferedProgressElements
+ */
+var TimeUpdate = function () {
+  /**
+   * When the time updates on the active song, we sync the current time displays
+   *
+   * HANDLER FOR: timeupdate
+   *
+   * @access public
+   */
+  function handle() {
+    console.log("TimeUpdate.handle. Song duration for " + _config2.default.audio.src + " = " + _config2.default.audio.duration);
+
+    /*
+      Computes the buffered time.
+    */
+    computeBufferedTime();
+
+    /*
+      Sync the buffered progress elements.
+    */
+    _bufferedProgressElements2.default.sync();
+
+    /*
+      Updates the current time information.
+    */
+    updateTimeInformation();
+
+    /*
+      Run time callbacks
+    */
+    runTimeCallbacks();
+  }
+
+  /**
+   * Computes the buffered time
+   */
+  function computeBufferedTime() {
+    /*
+      Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+    */
+    if (_config2.default.audio.buffered.length - 1 >= 0) {
+      var bufferedEnd = _config2.default.audio.buffered.end(_config2.default.audio.buffered.length - 1);
+      var duration = _config2.default.audio.duration;
+
+      _config2.default.buffered = bufferedEnd / duration * 100;
+    }
+  }
+
+  /**
+   * Updates the current time information.
+   * @access private
+   */
+  function updateTimeInformation() {
+    /*
+      If the current song is not live, then
+      we can update the time information. Otherwise the
+      current time updates wouldn't mean much since the time
+      is infinite.
+    */
+    if (!_config2.default.active_metadata.live) {
+      /*
+        Compute the current time
+      */
+      var currentTime = _time2.default.computeCurrentTimes();
+
+      /*
+        Compute the song completion percentage
+      */
+      var songCompletionPercentage = _time2.default.computeSongCompletionPercentage();
+
+      /*
+        Computes the song duration
+      */
+      var songDuration = _time2.default.computeSongDuration();
+
+      /*
+        Sync the current time elements with the current
+        location of the song and the song duration elements with
+        the duration of the song.
+      */
+      _timeElements2.default.syncCurrentTimes(currentTime);
+
+      /*
+        Sync the song slider elements.
+      */
+      _songSliderElements2.default.sync(songCompletionPercentage, _config2.default.active_playlist, _config2.default.active_index);
+
+      /*
+        Sync the song played progress elements.
+      */
+      _songPlayedProgressElements2.default.sync(songCompletionPercentage);
+
+      /*
+        Sync the duration time elements.
+      */
+      _timeElements2.default.syncDurationTimes(currentTime, songDuration);
+    }
+  }
+
+  /**
+   * Runs a callback at a certain time in the song.
+   */
+  function runTimeCallbacks() {
+    /*
+      Gets the current seconds into the song.
+    */
+    var currentSeconds = Math.floor(_config2.default.audio.currentTime);
+
+    /*
+      Checks to see if there is a callback at the certain seconds into the song.
+    */
+    if (_config2.default.active_metadata.time_callbacks != undefined && _config2.default.active_metadata.time_callbacks[currentSeconds] != undefined) {
+      /*
+        Checks to see if the callback has been run. Since the time updates more than
+        one second, we don't want the callback to run X times.
+      */
+      if (!_config2.default.active_metadata.time_callbacks[currentSeconds].run) {
+        _config2.default.active_metadata.time_callbacks[currentSeconds].run = true;
+        _config2.default.active_metadata.time_callbacks[currentSeconds]();
+      }
+    } else {
+      /*
+        Iterate over all of the callbacks for a song. If the song has one, we flag
+        the run as false. This occurs because we have passed the active second for
+        the callback, so we flag it as not run. It will either run again if the user
+        seeks back or not run in the future.
+      */
+      for (var seconds in _config2.default.active_metadata.time_callbacks) {
+        if (_config2.default.active_metadata.time_callbacks.hasOwnProperty(seconds)) {
+          _config2.default.active_metadata.time_callbacks[seconds].run = false;
+        }
+      }
+    }
+  }
+  /**
+   * Returns public functions
+   */
+  return {
+    handle: handle
+  };
+}();
+
+/**
+ * Imports the Callback utility class
+ * @module utilities/Callbacks
+ */
+
+
+/**
+ * Imports the Song Played Progress Elements visual class.
+ * @module visual/songPlayedProgressElements
+ */
+
+
+/**
+ * Imports the Time Elements visual class.
+ * @module visual/timeElements
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+exports.default = TimeUpdate;
+module.exports = exports["default"];
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -5594,7 +5851,7 @@ exports.default = WaveForm;
 module.exports = exports["default"];
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5782,7 +6039,7 @@ exports.default = Time;
 module.exports = exports["default"];
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5938,7 +6195,7 @@ exports.default = BufferedProgressElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6056,7 +6313,7 @@ exports.default = Ended;
 module.exports = exports["default"];
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6070,39 +6327,39 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _keydown = __webpack_require__(27);
+var _keydown = __webpack_require__(28);
 
 var _keydown2 = _interopRequireDefault(_keydown);
 
-var _timeUpdate = __webpack_require__(42);
+var _timeUpdate = __webpack_require__(22);
 
 var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
 
-var _ended = __webpack_require__(25);
+var _ended = __webpack_require__(26);
 
 var _ended2 = _interopRequireDefault(_ended);
 
-var _progress = __webpack_require__(35);
+var _progress = __webpack_require__(36);
 
 var _progress2 = _interopRequireDefault(_progress);
 
-var _play = __webpack_require__(31);
+var _play = __webpack_require__(32);
 
 var _play2 = _interopRequireDefault(_play);
 
-var _pause = __webpack_require__(30);
+var _pause = __webpack_require__(31);
 
 var _pause2 = _interopRequireDefault(_pause);
 
-var _playPause = __webpack_require__(32);
+var _playPause = __webpack_require__(33);
 
 var _playPause2 = _interopRequireDefault(_playPause);
 
-var _stop = __webpack_require__(41);
+var _stop = __webpack_require__(42);
 
 var _stop2 = _interopRequireDefault(_stop);
 
-var _mute = __webpack_require__(28);
+var _mute = __webpack_require__(29);
 
 var _mute2 = _interopRequireDefault(_mute);
 
@@ -6114,7 +6371,7 @@ var _volumeDown = __webpack_require__(43);
 
 var _volumeDown2 = _interopRequireDefault(_volumeDown);
 
-var _songSlider = __webpack_require__(40);
+var _songSlider = __webpack_require__(41);
 
 var _songSlider2 = _interopRequireDefault(_songSlider);
 
@@ -6122,35 +6379,35 @@ var _volumeSlider = __webpack_require__(44);
 
 var _volumeSlider2 = _interopRequireDefault(_volumeSlider);
 
-var _next = __webpack_require__(29);
+var _next = __webpack_require__(30);
 
 var _next2 = _interopRequireDefault(_next);
 
-var _prev = __webpack_require__(34);
+var _prev = __webpack_require__(35);
 
 var _prev2 = _interopRequireDefault(_prev);
 
-var _repeat = __webpack_require__(36);
+var _repeat = __webpack_require__(37);
 
 var _repeat2 = _interopRequireDefault(_repeat);
 
-var _repeatSong = __webpack_require__(37);
+var _repeatSong = __webpack_require__(38);
 
 var _repeatSong2 = _interopRequireDefault(_repeatSong);
 
-var _playbackSpeed = __webpack_require__(33);
+var _playbackSpeed = __webpack_require__(34);
 
 var _playbackSpeed2 = _interopRequireDefault(_playbackSpeed);
 
-var _shuffle = __webpack_require__(38);
+var _shuffle = __webpack_require__(39);
 
 var _shuffle2 = _interopRequireDefault(_shuffle);
 
-var _skipTo = __webpack_require__(39);
+var _skipTo = __webpack_require__(40);
 
 var _skipTo2 = _interopRequireDefault(_skipTo);
 
-var _waveform = __webpack_require__(22);
+var _waveform = __webpack_require__(23);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -6915,7 +7172,7 @@ exports.default = Events;
 module.exports = exports["default"];
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7181,7 +7438,7 @@ exports.default = KeyDown;
 module.exports = exports["default"];
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7286,7 +7543,7 @@ exports.default = Mute;
 module.exports = exports["default"];
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7445,7 +7702,7 @@ exports.default = Next;
 module.exports = exports["default"];
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7661,7 +7918,7 @@ exports.default = Pause;
 module.exports = exports["default"];
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7979,7 +8236,7 @@ exports.default = Play;
 module.exports = exports["default"];
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8316,7 +8573,7 @@ exports.default = PlayPause;
 module.exports = exports["default"];
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8406,7 +8663,7 @@ exports.default = PlaybackSpeed;
 module.exports = exports["default"];
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8535,7 +8792,7 @@ exports.default = Prev;
 module.exports = exports["default"];
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8549,7 +8806,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(24);
+var _bufferedProgressElements = __webpack_require__(25);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -8609,7 +8866,7 @@ exports.default = Progress;
 module.exports = exports["default"];
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8737,7 +8994,7 @@ exports.default = Repeat;
 module.exports = exports["default"];
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8818,7 +9075,7 @@ exports.default = RepeatSong;
 module.exports = exports["default"];
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8937,7 +9194,7 @@ exports.default = Shuffle;
 module.exports = exports["default"];
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9141,7 +9398,7 @@ exports.default = SkipTo;
 module.exports = exports["default"];
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9155,7 +9412,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _time = __webpack_require__(23);
+var _time = __webpack_require__(24);
 
 var _time2 = _interopRequireDefault(_time);
 
@@ -9363,7 +9620,7 @@ exports.default = SongSlider;
 module.exports = exports["default"];
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9455,232 +9712,6 @@ var Stop = function () {
  * @module utilities/configState
  */
 exports.default = Stop;
-module.exports = exports["default"];
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _bufferedProgressElements = __webpack_require__(24);
-
-var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
-
-var _timeElements = __webpack_require__(15);
-
-var _timeElements2 = _interopRequireDefault(_timeElements);
-
-var _songSliderElements = __webpack_require__(14);
-
-var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
-
-var _songPlayedProgressElements = __webpack_require__(20);
-
-var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
-
-var _time = __webpack_require__(23);
-
-var _time2 = _interopRequireDefault(_time);
-
-var _callbacks = __webpack_require__(7);
-
-var _callbacks2 = _interopRequireDefault(_callbacks);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Event Handler for Time Update
- *
- * @module events/TimeUpdate
- */
-
-
-/**
- * Imports the Time utility class
- * @module utilities/Time
- */
-
-
-/**
- * Imports the Song Slider Elements visual class.
- * @module visual/songSliderElements
- */
-
-
-/**
- * Imports the Buffered Progress Elements visual class
- * @module visual/bufferedProgressElements
- */
-var TimeUpdate = function () {
-  /**
-   * When the time updates on the active song, we sync the current time displays
-   *
-   * HANDLER FOR: timeupdate
-   *
-   * @access public
-   */
-  function handle() {
-    /*
-      Computes the buffered time.
-    */
-    computeBufferedTime();
-
-    /*
-      Sync the buffered progress elements.
-    */
-    _bufferedProgressElements2.default.sync();
-
-    /*
-      Updates the current time information.
-    */
-    updateTimeInformation();
-
-    /*
-      Run time callbacks
-    */
-    runTimeCallbacks();
-  }
-
-  /**
-   * Computes the buffered time
-   */
-  function computeBufferedTime() {
-    /*
-      Help from: http://jsbin.com/badimipi/1/edit?html,js,output
-    */
-    if (_config2.default.audio.buffered.length - 1 >= 0) {
-      var bufferedEnd = _config2.default.audio.buffered.end(_config2.default.audio.buffered.length - 1);
-      var duration = _config2.default.audio.duration;
-
-      _config2.default.buffered = bufferedEnd / duration * 100;
-    }
-  }
-
-  /**
-   * Updates the current time information.
-   * @access private
-   */
-  function updateTimeInformation() {
-    /*
-      If the current song is not live, then
-      we can update the time information. Otherwise the
-      current time updates wouldn't mean much since the time
-      is infinite.
-    */
-    if (!_config2.default.active_metadata.live) {
-      /*
-        Compute the current time
-      */
-      var currentTime = _time2.default.computeCurrentTimes();
-
-      /*
-        Compute the song completion percentage
-      */
-      var songCompletionPercentage = _time2.default.computeSongCompletionPercentage();
-
-      /*
-        Computes the song duration
-      */
-      var songDuration = _time2.default.computeSongDuration();
-
-      /*
-        Sync the current time elements with the current
-        location of the song and the song duration elements with
-        the duration of the song.
-      */
-      _timeElements2.default.syncCurrentTimes(currentTime);
-
-      /*
-        Sync the song slider elements.
-      */
-      _songSliderElements2.default.sync(songCompletionPercentage, _config2.default.active_playlist, _config2.default.active_index);
-
-      /*
-        Sync the song played progress elements.
-      */
-      _songPlayedProgressElements2.default.sync(songCompletionPercentage);
-
-      /*
-        Sync the duration time elements.
-      */
-      _timeElements2.default.syncDurationTimes(currentTime, songDuration);
-    }
-  }
-
-  /**
-   * Runs a callback at a certain time in the song.
-   */
-  function runTimeCallbacks() {
-    /*
-      Gets the current seconds into the song.
-    */
-    var currentSeconds = Math.floor(_config2.default.audio.currentTime);
-
-    /*
-      Checks to see if there is a callback at the certain seconds into the song.
-    */
-    if (_config2.default.active_metadata.time_callbacks != undefined && _config2.default.active_metadata.time_callbacks[currentSeconds] != undefined) {
-      /*
-        Checks to see if the callback has been run. Since the time updates more than
-        one second, we don't want the callback to run X times.
-      */
-      if (!_config2.default.active_metadata.time_callbacks[currentSeconds].run) {
-        _config2.default.active_metadata.time_callbacks[currentSeconds].run = true;
-        _config2.default.active_metadata.time_callbacks[currentSeconds]();
-      }
-    } else {
-      /*
-        Iterate over all of the callbacks for a song. If the song has one, we flag
-        the run as false. This occurs because we have passed the active second for
-        the callback, so we flag it as not run. It will either run again if the user
-        seeks back or not run in the future.
-      */
-      for (var seconds in _config2.default.active_metadata.time_callbacks) {
-        if (_config2.default.active_metadata.time_callbacks.hasOwnProperty(seconds)) {
-          _config2.default.active_metadata.time_callbacks[seconds].run = false;
-        }
-      }
-    }
-  }
-  /**
-   * Returns public functions
-   */
-  return {
-    handle: handle
-  };
-}();
-
-/**
- * Imports the Callback utility class
- * @module utilities/Callbacks
- */
-
-
-/**
- * Imports the Song Played Progress Elements visual class.
- * @module visual/songPlayedProgressElements
- */
-
-
-/**
- * Imports the Time Elements visual class.
- * @module visual/timeElements
- */
-/**
- * Imports the config module
- * @module config
- */
-exports.default = TimeUpdate;
 module.exports = exports["default"];
 
 /***/ }),

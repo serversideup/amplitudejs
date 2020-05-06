@@ -67,6 +67,10 @@ import MetaDataElements from "../visual/metaDataElements.js";
  */
 import ContainerElements from "../visual/containerElements.js";
 
+// Used in changeSong below. See comment in that
+// function for more details
+import TimeUpdate from "../events/timeUpdate.js";
+
 /**
  * AmplitudeJS Audio Navigation Utility.
  *
@@ -472,7 +476,23 @@ let AudioNavigation = (function() {
     /*
       Change the song.
     */
-    config.audio = new Audio();
+    // We're removing/adding event listeners on 
+    // the two events we're interested in on the audio
+    // object. 
+    //
+    // Although Events.initialize() also does these,
+    // it does more things too, including re-adding
+    // global event handlers. If we called
+    // that on every song change, we'd have so 
+    // many memory leaks that we'd crash the browser
+    // after just a few song changes.
+    console.log(`remove timeupdate and durationchange from song ${config.audio.src}`)
+    config.audio.removeEventListener("timeupdate", TimeUpdate.handle);
+    config.audio.removeEventListener("durationchange", TimeUpdate.handle);
+    config.audio = new Audio(song.url);
+    console.log(`add timeupdate and durationchange to new song ${config.audio.src}`)
+    config.audio.addEventListener("durationchange", TimeUpdate.handle);
+    config.audio.addEventListener("timeupdate", TimeUpdate.handle);
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
@@ -502,6 +522,11 @@ let AudioNavigation = (function() {
     /*
       Change the song.
     */
+    
+    // See note in changeSong above. We don't have
+    // playlists at the moment so we don't 
+    // care about fixing the playlist handler
+
     config.audio = new Audio();
     config.audio.src = song.url;
     config.active_metadata = song;
