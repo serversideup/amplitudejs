@@ -10722,6 +10722,38 @@ var Amplitude = function () {
   }
 
   /**
+   * Adds a song to the beginning of the config array.
+   * This will allow Amplitude to play the song in a 
+   * playlist type setting.
+   *
+   * Public Accessor: Amplitude.addSong( song_json )
+   *
+   * @access public
+   * @param {object} song 	- JSON representation of a song.
+   * @returns {number} New index of the song (0)
+   */
+  function prependSong(song) {
+    /*
+    Ensures we have a songs array to push to.
+    */
+    if (_config2.default.songs == undefined) {
+      _config2.default.songs = [];
+    }
+
+    _config2.default.songs.unshift(song);
+
+    if (_config2.default.shuffle_on) {
+      _config2.default.shuffle_list.unshift(song);
+    }
+
+    if (_soundcloud2.default.isSoundCloudURL(song.url)) {
+      _soundcloud2.default.resolveIndividualStreamableURL(song.url, null, _config2.default.songs.length - 1, _config2.default.shuffle_on);
+    }
+
+    return 0;
+  }
+
+  /**
    * Adds a song to a playlist. This will allow Amplitude to play the song in the
    * playlist
    *
@@ -11488,6 +11520,7 @@ var Amplitude = function () {
     getSongAtIndex: getSongAtIndex,
     getSongAtPlaylistIndex: getSongAtPlaylistIndex,
     addSong: addSong,
+    prependSong: prependSong,
     addSongToPlaylist: addSongToPlaylist,
     removeSong: removeSong,
     removeSongFromPlaylist: removeSongFromPlaylist,
