@@ -894,9 +894,9 @@ var _containerElements = __webpack_require__(49);
 
 var _containerElements2 = _interopRequireDefault(_containerElements);
 
-var _timeUpdate = __webpack_require__(22);
+var _events = __webpack_require__(22);
 
-var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
+var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1335,24 +1335,14 @@ var AudioNavigation = function () {
 
     /*
       Change the song.
+       We're removing/adding event listeners on 
+      the audio object before we create a new one
+      and then after we create it, re-binding.
     */
-    // We're removing/adding event listeners on 
-    // the two events we're interested in on the audio
-    // object. 
-    //
-    // Although Events.initialize() also does these,
-    // it does more things too, including re-adding
-    // global event handlers. If we called
-    // that on every song change, we'd have so 
-    // many memory leaks that we'd crash the browser
-    // after just a few song changes.
-    console.log("remove timeupdate and durationchange from song " + _config2.default.audio.src);
-    _config2.default.audio.removeEventListener("timeupdate", _timeUpdate2.default.handle);
-    _config2.default.audio.removeEventListener("durationchange", _timeUpdate2.default.handle);
+    _events2.default.destroyAudioBindings();
     _config2.default.audio = new Audio(song.url);
-    console.log("add timeupdate and durationchange to new song " + _config2.default.audio.src);
-    _config2.default.audio.addEventListener("durationchange", _timeUpdate2.default.handle);
-    _config2.default.audio.addEventListener("timeupdate", _timeUpdate2.default.handle);
+    _events2.default.rebindAudio();
+
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -1382,12 +1372,10 @@ var AudioNavigation = function () {
     /*
       Change the song.
     */
-
-    // See note in changeSong above. We don't have
-    // playlists at the moment so we don't 
-    // care about fixing the playlist handler
-
+    _events2.default.destroyAudioBindings();
     _config2.default.audio = new Audio();
+    _events2.default.rebindAudio();
+
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -1484,8 +1472,11 @@ var AudioNavigation = function () {
   };
 }();
 
-// Used in changeSong below. See comment in that
-// function for more details
+/**
+ * Time Update Handle
+ * 
+ * @module events/Events
+ */
 
 
 /**
@@ -4586,7 +4577,7 @@ var _shuffler = __webpack_require__(13);
 
 var _shuffler2 = _interopRequireDefault(_shuffler);
 
-var _events = __webpack_require__(27);
+var _events = __webpack_require__(22);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -5202,217 +5193,878 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(25);
+var _keydown = __webpack_require__(27);
 
-var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
+var _keydown2 = _interopRequireDefault(_keydown);
 
-var _timeElements = __webpack_require__(15);
+var _timeUpdate = __webpack_require__(42);
 
-var _timeElements2 = _interopRequireDefault(_timeElements);
+var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
 
-var _songSliderElements = __webpack_require__(14);
+var _ended = __webpack_require__(26);
 
-var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
+var _ended2 = _interopRequireDefault(_ended);
 
-var _songPlayedProgressElements = __webpack_require__(20);
+var _progress = __webpack_require__(35);
 
-var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
+var _progress2 = _interopRequireDefault(_progress);
 
-var _time = __webpack_require__(24);
+var _play = __webpack_require__(31);
 
-var _time2 = _interopRequireDefault(_time);
+var _play2 = _interopRequireDefault(_play);
 
-var _callbacks = __webpack_require__(7);
+var _pause = __webpack_require__(30);
 
-var _callbacks2 = _interopRequireDefault(_callbacks);
+var _pause2 = _interopRequireDefault(_pause);
+
+var _playPause = __webpack_require__(32);
+
+var _playPause2 = _interopRequireDefault(_playPause);
+
+var _stop = __webpack_require__(41);
+
+var _stop2 = _interopRequireDefault(_stop);
+
+var _mute = __webpack_require__(28);
+
+var _mute2 = _interopRequireDefault(_mute);
+
+var _volumeUp = __webpack_require__(45);
+
+var _volumeUp2 = _interopRequireDefault(_volumeUp);
+
+var _volumeDown = __webpack_require__(43);
+
+var _volumeDown2 = _interopRequireDefault(_volumeDown);
+
+var _songSlider = __webpack_require__(40);
+
+var _songSlider2 = _interopRequireDefault(_songSlider);
+
+var _volumeSlider = __webpack_require__(44);
+
+var _volumeSlider2 = _interopRequireDefault(_volumeSlider);
+
+var _next = __webpack_require__(29);
+
+var _next2 = _interopRequireDefault(_next);
+
+var _prev = __webpack_require__(34);
+
+var _prev2 = _interopRequireDefault(_prev);
+
+var _repeat = __webpack_require__(36);
+
+var _repeat2 = _interopRequireDefault(_repeat);
+
+var _repeatSong = __webpack_require__(37);
+
+var _repeatSong2 = _interopRequireDefault(_repeatSong);
+
+var _playbackSpeed = __webpack_require__(33);
+
+var _playbackSpeed2 = _interopRequireDefault(_playbackSpeed);
+
+var _shuffle = __webpack_require__(38);
+
+var _shuffle2 = _interopRequireDefault(_shuffle);
+
+var _skipTo = __webpack_require__(39);
+
+var _skipTo2 = _interopRequireDefault(_skipTo);
+
+var _waveform = __webpack_require__(23);
+
+var _waveform2 = _interopRequireDefault(_waveform);
+
+var _debug = __webpack_require__(4);
+
+var _debug2 = _interopRequireDefault(_debug);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * AmplitudeJS Event Handler for Time Update
+ * AmplitudeJS Events Module. Handles all of the events we listen to in
+ * AmplitudeJS.
  *
- * @module events/TimeUpdate
+ * @module events/Events
  */
 
 
 /**
- * Imports the Time utility class
- * @module utilities/Time
+ * Imports all of the handler objects used by the events.
  */
-
-
-/**
- * Imports the Song Slider Elements visual class.
- * @module visual/songSliderElements
- */
-
-
-/**
- * Imports the Buffered Progress Elements visual class
- * @module visual/bufferedProgressElements
- */
-var TimeUpdate = function () {
+var Events = function () {
   /**
-   * When the time updates on the active song, we sync the current time displays
-   *
-   * HANDLER FOR: timeupdate
+   * Initializes the handlers for the events listened to by Amplitude
    *
    * @access public
    */
-  function handle() {
-    console.log("TimeUpdate.handle. Song duration for " + _config2.default.audio.src + " = " + _config2.default.audio.duration);
+  function initialize() {
+    /*
+    Write out debug message
+    */
+    _debug2.default.writeMessage("Beginning initialization of event handlers..");
 
     /*
-      Computes the buffered time.
+    Sets flag that the screen is moving and not a tap
     */
-    computeBufferedTime();
+    document.addEventListener("touchmove", function () {
+      _config2.default.is_touch_moving = true;
+    });
 
     /*
-      Sync the buffered progress elements.
+    On touch end if it was a touch move event, set moving to
+    false
     */
-    _bufferedProgressElements2.default.sync();
+    document.addEventListener("touchend", function () {
+      if (_config2.default.is_touch_moving) {
+        _config2.default.is_touch_moving = false;
+      }
+    });
 
     /*
-      Updates the current time information.
+    On time update for the audio element, update visual displays that
+    represent the time on either a visualized element or time display.
     */
-    updateTimeInformation();
+    bindTimeUpdate();
 
     /*
-      Run time callbacks
+    Binds key down event handlers for matching key codes to functions.
     */
-    runTimeCallbacks();
+    bindKeyDownEventHandlers();
+
+    /*
+    When the audio element has ended playing, we handle the song
+    ending. In a single song or multiple modular song instance,
+    this just synchronizes the visuals for time and song time
+    visualization, but for a playlist it determines whether
+    it should play the next song or not.
+    */
+    bindSongEnded();
+
+    /*
+    Binds progress event so we can see how much of the song is loaded.
+    */
+    bindProgress();
+
+    /*
+    Binds 'amplitude-play' event handlers
+    */
+    bindPlay();
+
+    /*
+    Binds 'amplitude-pause' event handlers.
+    */
+    bindPause();
+
+    /*
+    Binds 'amplitude-play-pause' event handlers.
+    */
+    bindPlayPause();
+
+    /*
+    Binds 'amplitude-stop' event handlers.
+    */
+    bindStop();
+
+    /*
+    Binds 'amplitude-mute' event handlers.
+    */
+    bindMute();
+
+    /*
+    Binds 'amplitude-volume-up' event handlers
+    */
+    bindVolumeUp();
+
+    /*
+    Binds 'amplitude-volume-down' event handlers
+    */
+    bindVolumeDown();
+
+    /*
+    Binds 'amplitude-song-slider' event handlers
+    */
+    bindSongSlider();
+
+    /*
+    Binds 'amplitude-volume-slider' event handlers.
+    */
+    bindVolumeSlider();
+
+    /*
+    Binds 'amplitude-next' event handlers.
+    */
+    bindNext();
+
+    /*
+    Binds 'amplitude-prev' event handlers.
+    */
+    bindPrev();
+
+    /*
+    Binds 'amplitude-shuffle' event handlers.
+    */
+    bindShuffle();
+
+    /*
+    Binds 'amplitude-repeat' event handlers.
+    */
+    bindRepeat();
+
+    /*
+    Binds 'amplitude-repeat-song' event handlers.
+    */
+    bindRepeatSong();
+
+    /*
+    Binds 'amplitude-playback-speed' event handlers.
+    */
+    bindPlaybackSpeed();
+
+    /*
+    Binds 'amplitude-skip-to' event handlers.
+    */
+    bindSkipTo();
+
+    /*
+    Binds `canplaythrough` event to build the waveform.
+    */
+    bindCanPlayThrough();
   }
 
   /**
-   * Computes the buffered time
+   * Destroys all of the global audio bindings
    */
-  function computeBufferedTime() {
-    /*
-      Help from: http://jsbin.com/badimipi/1/edit?html,js,output
-    */
-    if (_config2.default.audio.buffered.length - 1 >= 0) {
-      var bufferedEnd = _config2.default.audio.buffered.end(_config2.default.audio.buffered.length - 1);
-      var duration = _config2.default.audio.duration;
+  function destroyAudioBindings() {
+    _config2.default.audio.removeEventListener("timeupdate", _timeUpdate2.default.handle);
+    _config2.default.audio.removeEventListener("durationchange", _timeUpdate2.default.handle);
+    _config2.default.audio.removeEventListener("ended", _ended2.default.handle);
+    _config2.default.audio.removeEventListener("progress", _progress2.default.handle);
 
-      _config2.default.buffered = bufferedEnd / duration * 100;
+    if (_waveform2.default.determineIfUsingWaveforms()) {
+      _config2.default.audio.removeEventListener("canplaythrough", _waveform2.default.build);
     }
   }
 
   /**
-   * Updates the current time information.
+   * Rebinds all of the global audio bindings
+   */
+  function rebindAudio() {
+    _config2.default.audio.addEventListener("durationchange", _timeUpdate2.default.handle);
+    _config2.default.audio.addEventListener("timeupdate", _timeUpdate2.default.handle);
+    _config2.default.audio.addEventListener("ended", _ended2.default.handle);
+    _config2.default.audio.addEventListener("progress", _progress2.default.handle);
+
+    if (_waveform2.default.determineIfUsingWaveforms()) {
+      _config2.default.audio.addEventListener("canplaythrough", _waveform2.default.build);
+    }
+  }
+
+  /**
+   * On time update for the audio element, update visual displays that
+   * represent the time on either a visualized element or time display.
+   *
    * @access private
    */
-  function updateTimeInformation() {
+  function bindTimeUpdate() {
     /*
-      If the current song is not live, then
-      we can update the time information. Otherwise the
-      current time updates wouldn't mean much since the time
-      is infinite.
+    Bind for time update
     */
-    if (!_config2.default.active_metadata.live) {
-      /*
-        Compute the current time
-      */
-      var currentTime = _time2.default.computeCurrentTimes();
+    _config2.default.audio.removeEventListener("timeupdate", _timeUpdate2.default.handle);
+    _config2.default.audio.addEventListener("timeupdate", _timeUpdate2.default.handle);
 
-      /*
-        Compute the song completion percentage
-      */
-      var songCompletionPercentage = _time2.default.computeSongCompletionPercentage();
+    /*
+    Bind for duration change
+    */
+    _config2.default.audio.removeEventListener("durationchange", _timeUpdate2.default.handle);
+    _config2.default.audio.addEventListener("durationchange", _timeUpdate2.default.handle);
+  }
 
-      /*
-        Computes the song duration
-      */
-      var songDuration = _time2.default.computeSongDuration();
+  /**
+   * On keydown, we listen to what key got pressed so we can map the key to
+   * a function. This allows the user to map pause and play, next, etc. to key
+   * presses.
+   *
+   * @access private
+   */
+  function bindKeyDownEventHandlers() {
+    document.removeEventListener("keydown", _keydown2.default.handle);
+    document.addEventListener("keydown", _keydown2.default.handle);
+  }
 
-      /*
-        Sync the current time elements with the current
-        location of the song and the song duration elements with
-        the duration of the song.
-      */
-      _timeElements2.default.syncCurrentTimes(currentTime);
+  /**
+   * When the audio element has ended playing, we handle the song
+   * ending. In a single song or multiple modular song instance,
+   * this just synchronizes the visuals for time and song time
+   * visualization, but for a playlist it determines whether
+   * it should play the next song or not.
+   *
+   * @access private
+   */
+  function bindSongEnded() {
+    _config2.default.audio.removeEventListener("ended", _ended2.default.handle);
+    _config2.default.audio.addEventListener("ended", _ended2.default.handle);
+  }
 
-      /*
-        Sync the song slider elements.
-      */
-      _songSliderElements2.default.sync(songCompletionPercentage, _config2.default.active_playlist, _config2.default.active_index);
+  /**
+   * As the audio is loaded, the progress event gets fired. We bind into this
+   * to grab the buffered percentage of the song. We can then add more elements
+   * to show the buffered amount.
+   *
+   * @access private
+   */
+  function bindProgress() {
+    _config2.default.audio.removeEventListener("progress", _progress2.default.handle);
+    _config2.default.audio.addEventListener("progress", _progress2.default.handle);
+  }
 
-      /*
-        Sync the song played progress elements.
-      */
-      _songPlayedProgressElements2.default.sync(songCompletionPercentage);
+  /**
+   * Binds click and touchend events for AmplitudeJS play buttons
+   *
+   * @access private
+   */
+  function bindPlay() {
+    /*
+    Gets all of the elements with the class amplitude-play
+    */
+    var play_classes = document.getElementsByClassName("amplitude-play");
 
-      /*
-        Sync the duration time elements.
-      */
-      _timeElements2.default.syncDurationTimes(currentTime, songDuration);
+    /*
+    Iterates over all of the play classes and binds the event interaction
+    method to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < play_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        play_classes[i].removeEventListener("touchend", _play2.default.handle);
+        play_classes[i].addEventListener("touchend", _play2.default.handle);
+      } else {
+        play_classes[i].removeEventListener("click", _play2.default.handle);
+        play_classes[i].addEventListener("click", _play2.default.handle);
+      }
     }
   }
 
   /**
-   * Runs a callback at a certain time in the song.
+   * Binds click and touchend events for AmplitudeJS pause buttons.
+   *
+   * @access private
    */
-  function runTimeCallbacks() {
+  function bindPause() {
     /*
-      Gets the current seconds into the song.
+    Gets all of the elements with the class amplitude-pause
     */
-    var currentSeconds = Math.floor(_config2.default.audio.currentTime);
+    var pause_classes = document.getElementsByClassName("amplitude-pause");
 
     /*
-      Checks to see if there is a callback at the certain seconds into the song.
+    Iterates over all of the pause classes and binds the event interaction
+    method to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
     */
-    if (_config2.default.active_metadata.time_callbacks != undefined && _config2.default.active_metadata.time_callbacks[currentSeconds] != undefined) {
-      /*
-        Checks to see if the callback has been run. Since the time updates more than
-        one second, we don't want the callback to run X times.
-      */
-      if (!_config2.default.active_metadata.time_callbacks[currentSeconds].run) {
-        _config2.default.active_metadata.time_callbacks[currentSeconds].run = true;
-        _config2.default.active_metadata.time_callbacks[currentSeconds]();
+    for (var i = 0; i < pause_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        pause_classes[i].removeEventListener("touchend", _pause2.default.handle);
+        pause_classes[i].addEventListener("touchend", _pause2.default.handle);
+      } else {
+        pause_classes[i].removeEventListener("click", _pause2.default.handle);
+        pause_classes[i].addEventListener("click", _pause2.default.handle);
       }
-    } else {
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS play pause buttons
+   *
+   * @access private
+   */
+  function bindPlayPause() {
+    /*
+    Gets all of the elements with the class amplitude-play-pause
+    */
+    var play_pause_classes = document.getElementsByClassName("amplitude-play-pause");
+
+    /*
+    Iterates over all of the play/pause classes and binds the event interaction
+    method to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < play_pause_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        play_pause_classes[i].removeEventListener("touchend", _playPause2.default.handle);
+        play_pause_classes[i].addEventListener("touchend", _playPause2.default.handle);
+      } else {
+        play_pause_classes[i].removeEventListener("click", _playPause2.default.handle);
+        play_pause_classes[i].addEventListener("click", _playPause2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS stop buttons
+   *
+   * @access private
+   */
+  function bindStop() {
+    /*
+    Gets all of the elements with the class amplitude-stop
+    */
+    var stop_classes = document.getElementsByClassName("amplitude-stop");
+
+    /*
+    Iterates over all of the stop classes and binds the event interaction
+    method to the element.  If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < stop_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        stop_classes[i].removeEventListener("touchend", _stop2.default.handle);
+        stop_classes[i].addEventListener("touchend", _stop2.default.handle);
+      } else {
+        stop_classes[i].removeEventListener("click", _stop2.default.handle);
+        stop_classes[i].addEventListener("click", _stop2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS mute buttons
+   *
+   * @access private
+   */
+  function bindMute() {
+    /*
+    Gets all of the elements with the class amplitue-mute
+    */
+    var mute_classes = document.getElementsByClassName("amplitude-mute");
+
+    /*
+    Iterates over all of the mute classes and binds the event interaction
+    method to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < mute_classes.length; i++) {
       /*
-        Iterate over all of the callbacks for a song. If the song has one, we flag
-        the run as false. This occurs because we have passed the active second for
-        the callback, so we flag it as not run. It will either run again if the user
-        seeks back or not run in the future.
+      WARNING: If iOS, we don't do anything because iOS does not allow the
+      volume to be adjusted through anything except the buttons on the side of
+      the device.
       */
-      for (var seconds in _config2.default.active_metadata.time_callbacks) {
-        if (_config2.default.active_metadata.time_callbacks.hasOwnProperty(seconds)) {
-          _config2.default.active_metadata.time_callbacks[seconds].run = false;
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        /*
+        Checks for an iOS device and displays an error message if debugging
+        is turned on.
+        */
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
+        } else {
+          mute_classes[i].removeEventListener("touchend", _mute2.default.handle);
+          mute_classes[i].addEventListener("touchend", _mute2.default.handle);
+        }
+      } else {
+        mute_classes[i].removeEventListener("click", _mute2.default.handle);
+        mute_classes[i].addEventListener("click", _mute2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS Volume Up Buttons
+   *
+   * @access private
+   */
+  function bindVolumeUp() {
+    /*
+    Gets all of the elements with the class amplitude-volume-up
+    */
+    var volume_up_classes = document.getElementsByClassName("amplitude-volume-up");
+
+    /*
+    Iterates over all of the volume up classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < volume_up_classes.length; i++) {
+      /*
+      WARNING: If iOS, we don't do anything because iOS does not allow the
+      volume to be adjusted through anything except the buttons on the side of
+      the device.
+      */
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        /*
+        Checks for an iOS device and displays an error message if debugging
+        is turned on.
+        */
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
+        } else {
+          volume_up_classes[i].removeEventListener("touchend", _volumeUp2.default.handle);
+          volume_up_classes[i].addEventListener("touchend", _volumeUp2.default.handle);
+        }
+      } else {
+        volume_up_classes[i].removeEventListener("click", _volumeUp2.default.handle);
+        volume_up_classes[i].addEventListener("click", _volumeUp2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS Volume Down Buttons
+   *
+   * @access private
+   */
+  function bindVolumeDown() {
+    /*
+    Gets all of the elements with the class amplitude-volume-down
+    */
+    var volume_down_classes = document.getElementsByClassName("amplitude-volume-down");
+
+    /*
+    Iterates over all of the volume down classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < volume_down_classes.length; i++) {
+      /*
+      WARNING: If iOS, we don't do anything because iOS does not allow the
+      volume to be adjusted through anything except the buttons on the side of
+      the device.
+      */
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        /*
+        Checks for an iOS device and displays an error message if debugging
+        is turned on.
+        */
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
+        } else {
+          volume_down_classes[i].removeEventListener("touchend", _volumeDown2.default.handle);
+          volume_down_classes[i].addEventListener("touchend", _volumeDown2.default.handle);
+        }
+      } else {
+        volume_down_classes[i].removeEventListener("click", _volumeDown2.default.handle);
+        volume_down_classes[i].addEventListener("click", _volumeDown2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds change and input events for AmplitudeJS Song Slider Inputs
+   *
+   * @access private
+   */
+  function bindSongSlider() {
+    /*
+    Gets browser so if we need to apply overrides, like we usually
+    have to do for anything cool in IE, we can do that.
+    */
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    /*
+    Gets all of the elements with the class amplitude-song-slider
+    */
+    var song_sliders = document.getElementsByClassName("amplitude-song-slider");
+
+    /*
+    Iterates over all of the song slider classes and binds the event interaction
+    methods to the element. If the browser is IE we listen to the change event
+    where if it is anything else, it's the input method.
+    */
+    for (var i = 0; i < song_sliders.length; i++) {
+      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        song_sliders[i].removeEventListener("change", _songSlider2.default.handle);
+        song_sliders[i].addEventListener("change", _songSlider2.default.handle);
+      } else {
+        song_sliders[i].removeEventListener("input", _songSlider2.default.handle);
+        song_sliders[i].addEventListener("input", _songSlider2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds change and input events fro AmplitudeJS Volume Slider inputs
+   *
+   * @access private
+   */
+  function bindVolumeSlider() {
+    /*
+    Gets browser so if we need to apply overrides, like we usually
+    have to do for anything cool in IE, we can do that.
+    */
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    /*
+    Gets all of the elements with the class amplitude-volume-slider
+        */
+    var volume_sliders = document.getElementsByClassName("amplitude-volume-slider");
+
+    /*
+    Iterates over all of the volume slider classes and binds the event interaction
+    methods to the element. If the browser is IE we listen to the change event
+    where if it is anything else, it's the input method.
+    */
+    for (var i = 0; i < volume_sliders.length; i++) {
+      /*
+      WARNING: If iOS, we don't do anything because iOS does not allow the
+      volume to be adjusted through anything except the buttons on the side of
+      the device.
+      */
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
+      } else {
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+          volume_sliders[i].removeEventListener("change", _volumeSlider2.default.handle);
+          volume_sliders[i].addEventListener("change", _volumeSlider2.default.handle);
+        } else {
+          volume_sliders[i].removeEventListener("input", _volumeSlider2.default.handle);
+          volume_sliders[i].addEventListener("input", _volumeSlider2.default.handle);
         }
       }
     }
   }
+
   /**
-   * Returns public functions
+   * Binds click and touchend events fro AmplitudeJS Next buttons
+   *
+   * @access private
    */
+  function bindNext() {
+    /*
+    Gets all of the elements with the class amplitude-next
+        */
+    var next_classes = document.getElementsByClassName("amplitude-next");
+
+    /*
+    Iterates over all of the next classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < next_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        next_classes[i].removeEventListener("touchend", _next2.default.handle);
+        next_classes[i].addEventListener("touchend", _next2.default.handle);
+      } else {
+        next_classes[i].removeEventListener("click", _next2.default.handle);
+        next_classes[i].addEventListener("click", _next2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS prev buttons.
+   *
+   * @access private
+   */
+  function bindPrev() {
+    /*
+    Gets all of the elements with the class amplitude-prev
+    */
+    var prev_classes = document.getElementsByClassName("amplitude-prev");
+
+    /*
+    Iterates over all of the prev classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < prev_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        prev_classes[i].removeEventListener("touchend", _prev2.default.handle);
+        prev_classes[i].addEventListener("touchend", _prev2.default.handle);
+      } else {
+        prev_classes[i].removeEventListener("click", _prev2.default.handle);
+        prev_classes[i].addEventListener("click", _prev2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS shuffle buttons.
+   *
+   * @access private
+   */
+  function bindShuffle() {
+    /*
+    Gets all of the elements with the class amplitude-shuffle
+    */
+    var shuffle_classes = document.getElementsByClassName("amplitude-shuffle");
+
+    /*
+    Iterates over all of the shuffle classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < shuffle_classes.length; i++) {
+      /*
+      Since we are re-binding everything we remove any classes that signify
+      a state of the shuffle control.
+      */
+      shuffle_classes[i].classList.remove("amplitude-shuffle-on");
+      shuffle_classes[i].classList.add("amplitude-shuffle-off");
+
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        shuffle_classes[i].removeEventListener("touchend", _shuffle2.default.handle);
+        shuffle_classes[i].addEventListener("touchend", _shuffle2.default.handle);
+      } else {
+        shuffle_classes[i].removeEventListener("click", _shuffle2.default.handle);
+        shuffle_classes[i].addEventListener("click", _shuffle2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS repeat buttons.
+   *
+   * @access private
+   */
+  function bindRepeat() {
+    /*
+    Gets all of the elements with the class amplitude-repeat
+    */
+    var repeat_classes = document.getElementsByClassName("amplitude-repeat");
+
+    /*
+    Iterates over all of the repeat classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < repeat_classes.length; i++) {
+      /*
+      Since we are re-binding everything we remove any classes that signify
+      a state of the repeat control.
+      */
+      repeat_classes[i].classList.remove("amplitude-repeat-on");
+      repeat_classes[i].classList.add("amplitude-repeat-off");
+
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        repeat_classes[i].removeEventListener("touchend", _repeat2.default.handle);
+        repeat_classes[i].addEventListener("touchend", _repeat2.default.handle);
+      } else {
+        repeat_classes[i].removeEventListener("click", _repeat2.default.handle);
+        repeat_classes[i].addEventListener("click", _repeat2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS repeat song buttons.
+   *
+   * @access private
+   */
+  function bindRepeatSong() {
+    /*
+    Gets all of the elements with the class amplitude-repeat-song
+    */
+    var repeat_song_classes = document.getElementsByClassName("amplitude-repeat-song");
+
+    /*
+    Iterates over all of the repeat song classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < repeat_song_classes.length; i++) {
+      /*
+      Since we are re-binding everything we remove any classes that signify
+      a state of the repeat control.
+      */
+      repeat_song_classes[i].classList.remove("amplitude-repeat-on");
+      repeat_song_classes[i].classList.add("amplitude-repeat-off");
+
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        repeat_song_classes[i].removeEventListener("touchend", _repeatSong2.default.handle);
+        repeat_song_classes[i].addEventListener("touchend", _repeatSong2.default.handle);
+      } else {
+        repeat_song_classes[i].removeEventListener("click", _repeatSong2.default.handle);
+        repeat_song_classes[i].addEventListener("click", _repeatSong2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS playback speed buttons
+   *
+   * @access private
+   */
+  function bindPlaybackSpeed() {
+    /*
+    Gets all of the elements with the class amplitude-playback-speed
+    */
+    var playback_speed_classes = document.getElementsByClassName("amplitude-playback-speed");
+
+    /*
+    Iterates over all of the playback speed classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it is click.
+    */
+    for (var i = 0; i < playback_speed_classes.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        playback_speed_classes[i].removeEventListener("touchend", _playbackSpeed2.default.handle);
+        playback_speed_classes[i].addEventListener("touchend", _playbackSpeed2.default.handle);
+      } else {
+        playback_speed_classes[i].removeEventListener("click", _playbackSpeed2.default.handle);
+        playback_speed_classes[i].addEventListener("click", _playbackSpeed2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds click and touchend events for AmplitudeJS skip to buttons.
+   *
+   * @access private
+   */
+  function bindSkipTo() {
+    /*
+    Gets all of the skip to elements with the class 'amplitude-skip-to'
+    */
+    var skipToClasses = document.getElementsByClassName("amplitude-skip-to");
+
+    /*
+    Iterates over all of the skip to classes and binds the event interaction
+    methods to the element. If the browser is mobile, then the event is touchend
+    otherwise it's a click.
+    */
+    for (var i = 0; i < skipToClasses.length; i++) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        skipToClasses[i].removeEventListener("touchend", _skipTo2.default.handle);
+        skipToClasses[i].addEventListener("touchend", _skipTo2.default.handle);
+      } else {
+        skipToClasses[i].removeEventListener("click", _skipTo2.default.handle);
+        skipToClasses[i].addEventListener("click", _skipTo2.default.handle);
+      }
+    }
+  }
+
+  /**
+   * Binds can play through to a song.
+   *
+   * @access private
+   */
+  function bindCanPlayThrough() {
+    if (_waveform2.default.determineIfUsingWaveforms()) {
+      _config2.default.audio.removeEventListener("canplaythrough", _waveform2.default.build);
+      _config2.default.audio.addEventListener("canplaythrough", _waveform2.default.build);
+    }
+  }
+
+  /*
+  Returns the public facing functions.
+  */
   return {
-    handle: handle
+    initialize: initialize,
+    destroyAudioBindings: destroyAudioBindings,
+    rebindAudio: rebindAudio
   };
 }();
 
 /**
- * Imports the Callback utility class
- * @module utilities/Callbacks
+ * Imports the utility classes used by the evnets.
  */
-
-
-/**
- * Imports the Song Played Progress Elements visual class.
- * @module visual/songPlayedProgressElements
- */
-
-
-/**
- * Imports the Time Elements visual class.
- * @module visual/timeElements
- */
-/**
- * Imports the config module
- * @module config
- */
-exports.default = TimeUpdate;
+/*
+	Import the necessary classes and config to use
+	with the events.
+*/
+exports.default = Events;
 module.exports = exports["default"];
 
 /***/ }),
@@ -6327,865 +6979,6 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _keydown = __webpack_require__(28);
-
-var _keydown2 = _interopRequireDefault(_keydown);
-
-var _timeUpdate = __webpack_require__(22);
-
-var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
-
-var _ended = __webpack_require__(26);
-
-var _ended2 = _interopRequireDefault(_ended);
-
-var _progress = __webpack_require__(36);
-
-var _progress2 = _interopRequireDefault(_progress);
-
-var _play = __webpack_require__(32);
-
-var _play2 = _interopRequireDefault(_play);
-
-var _pause = __webpack_require__(31);
-
-var _pause2 = _interopRequireDefault(_pause);
-
-var _playPause = __webpack_require__(33);
-
-var _playPause2 = _interopRequireDefault(_playPause);
-
-var _stop = __webpack_require__(42);
-
-var _stop2 = _interopRequireDefault(_stop);
-
-var _mute = __webpack_require__(29);
-
-var _mute2 = _interopRequireDefault(_mute);
-
-var _volumeUp = __webpack_require__(45);
-
-var _volumeUp2 = _interopRequireDefault(_volumeUp);
-
-var _volumeDown = __webpack_require__(43);
-
-var _volumeDown2 = _interopRequireDefault(_volumeDown);
-
-var _songSlider = __webpack_require__(41);
-
-var _songSlider2 = _interopRequireDefault(_songSlider);
-
-var _volumeSlider = __webpack_require__(44);
-
-var _volumeSlider2 = _interopRequireDefault(_volumeSlider);
-
-var _next = __webpack_require__(30);
-
-var _next2 = _interopRequireDefault(_next);
-
-var _prev = __webpack_require__(35);
-
-var _prev2 = _interopRequireDefault(_prev);
-
-var _repeat = __webpack_require__(37);
-
-var _repeat2 = _interopRequireDefault(_repeat);
-
-var _repeatSong = __webpack_require__(38);
-
-var _repeatSong2 = _interopRequireDefault(_repeatSong);
-
-var _playbackSpeed = __webpack_require__(34);
-
-var _playbackSpeed2 = _interopRequireDefault(_playbackSpeed);
-
-var _shuffle = __webpack_require__(39);
-
-var _shuffle2 = _interopRequireDefault(_shuffle);
-
-var _skipTo = __webpack_require__(40);
-
-var _skipTo2 = _interopRequireDefault(_skipTo);
-
-var _waveform = __webpack_require__(23);
-
-var _waveform2 = _interopRequireDefault(_waveform);
-
-var _debug = __webpack_require__(4);
-
-var _debug2 = _interopRequireDefault(_debug);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Events Module. Handles all of the events we listen to in
- * AmplitudeJS.
- *
- * @module events/Events
- */
-
-
-/**
- * Imports all of the handler objects used by the events.
- */
-var Events = function () {
-  /**
-   * Initializes the handlers for the events listened to by Amplitude
-   *
-   * @access public
-   */
-  function initialize() {
-    /*
-    Write out debug message
-    */
-    _debug2.default.writeMessage("Beginning initialization of event handlers..");
-
-    /*
-    Sets flag that the screen is moving and not a tap
-    */
-    document.addEventListener("touchmove", function () {
-      _config2.default.is_touch_moving = true;
-    });
-
-    /*
-    On touch end if it was a touch move event, set moving to
-    false
-    */
-    document.addEventListener("touchend", function () {
-      if (_config2.default.is_touch_moving) {
-        _config2.default.is_touch_moving = false;
-      }
-    });
-
-    /*
-    On time update for the audio element, update visual displays that
-    represent the time on either a visualized element or time display.
-    */
-    bindTimeUpdate();
-
-    /*
-    Binds key down event handlers for matching key codes to functions.
-    */
-    bindKeyDownEventHandlers();
-
-    /*
-    When the audio element has ended playing, we handle the song
-    ending. In a single song or multiple modular song instance,
-    this just synchronizes the visuals for time and song time
-    visualization, but for a playlist it determines whether
-    it should play the next song or not.
-    */
-    bindSongEnded();
-
-    /*
-    Binds progress event so we can see how much of the song is loaded.
-    */
-    bindProgress();
-
-    /*
-    Binds 'amplitude-play' event handlers
-    */
-    bindPlay();
-
-    /*
-    Binds 'amplitude-pause' event handlers.
-    */
-    bindPause();
-
-    /*
-    Binds 'amplitude-play-pause' event handlers.
-    */
-    bindPlayPause();
-
-    /*
-    Binds 'amplitude-stop' event handlers.
-    */
-    bindStop();
-
-    /*
-    Binds 'amplitude-mute' event handlers.
-    */
-    bindMute();
-
-    /*
-    Binds 'amplitude-volume-up' event handlers
-    */
-    bindVolumeUp();
-
-    /*
-    Binds 'amplitude-volume-down' event handlers
-    */
-    bindVolumeDown();
-
-    /*
-    Binds 'amplitude-song-slider' event handlers
-    */
-    bindSongSlider();
-
-    /*
-    Binds 'amplitude-volume-slider' event handlers.
-    */
-    bindVolumeSlider();
-
-    /*
-    Binds 'amplitude-next' event handlers.
-    */
-    bindNext();
-
-    /*
-    Binds 'amplitude-prev' event handlers.
-    */
-    bindPrev();
-
-    /*
-    Binds 'amplitude-shuffle' event handlers.
-    */
-    bindShuffle();
-
-    /*
-    Binds 'amplitude-repeat' event handlers.
-    */
-    bindRepeat();
-
-    /*
-    Binds 'amplitude-repeat-song' event handlers.
-    */
-    bindRepeatSong();
-
-    /*
-    Binds 'amplitude-playback-speed' event handlers.
-    */
-    bindPlaybackSpeed();
-
-    /*
-    Binds 'amplitude-skip-to' event handlers.
-    */
-    bindSkipTo();
-
-    /*
-    Binds `canplaythrough` event to build the waveform.
-    */
-    bindCanPlayThrough();
-  }
-
-  /**
-   * On time update for the audio element, update visual displays that
-   * represent the time on either a visualized element or time display.
-   *
-   * @access private
-   */
-  function bindTimeUpdate() {
-    /*
-    Bind for time update
-    */
-    _config2.default.audio.removeEventListener("timeupdate", _timeUpdate2.default.handle);
-    _config2.default.audio.addEventListener("timeupdate", _timeUpdate2.default.handle);
-
-    /*
-    Bind for duration change
-    */
-    _config2.default.audio.removeEventListener("durationchange", _timeUpdate2.default.handle);
-    _config2.default.audio.addEventListener("durationchange", _timeUpdate2.default.handle);
-  }
-
-  /**
-   * On keydown, we listen to what key got pressed so we can map the key to
-   * a function. This allows the user to map pause and play, next, etc. to key
-   * presses.
-   *
-   * @access private
-   */
-  function bindKeyDownEventHandlers() {
-    document.removeEventListener("keydown", _keydown2.default.handle);
-    document.addEventListener("keydown", _keydown2.default.handle);
-  }
-
-  /**
-   * When the audio element has ended playing, we handle the song
-   * ending. In a single song or multiple modular song instance,
-   * this just synchronizes the visuals for time and song time
-   * visualization, but for a playlist it determines whether
-   * it should play the next song or not.
-   *
-   * @access private
-   */
-  function bindSongEnded() {
-    _config2.default.audio.removeEventListener("ended", _ended2.default.handle);
-    _config2.default.audio.addEventListener("ended", _ended2.default.handle);
-  }
-
-  /**
-   * As the audio is loaded, the progress event gets fired. We bind into this
-   * to grab the buffered percentage of the song. We can then add more elements
-   * to show the buffered amount.
-   *
-   * @access private
-   */
-  function bindProgress() {
-    _config2.default.audio.removeEventListener("progress", _progress2.default.handle);
-    _config2.default.audio.addEventListener("progress", _progress2.default.handle);
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS play buttons
-   *
-   * @access private
-   */
-  function bindPlay() {
-    /*
-    Gets all of the elements with the class amplitude-play
-    */
-    var play_classes = document.getElementsByClassName("amplitude-play");
-
-    /*
-    Iterates over all of the play classes and binds the event interaction
-    method to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < play_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        play_classes[i].removeEventListener("touchend", _play2.default.handle);
-        play_classes[i].addEventListener("touchend", _play2.default.handle);
-      } else {
-        play_classes[i].removeEventListener("click", _play2.default.handle);
-        play_classes[i].addEventListener("click", _play2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS pause buttons.
-   *
-   * @access private
-   */
-  function bindPause() {
-    /*
-    Gets all of the elements with the class amplitude-pause
-    */
-    var pause_classes = document.getElementsByClassName("amplitude-pause");
-
-    /*
-    Iterates over all of the pause classes and binds the event interaction
-    method to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < pause_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        pause_classes[i].removeEventListener("touchend", _pause2.default.handle);
-        pause_classes[i].addEventListener("touchend", _pause2.default.handle);
-      } else {
-        pause_classes[i].removeEventListener("click", _pause2.default.handle);
-        pause_classes[i].addEventListener("click", _pause2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS play pause buttons
-   *
-   * @access private
-   */
-  function bindPlayPause() {
-    /*
-    Gets all of the elements with the class amplitude-play-pause
-    */
-    var play_pause_classes = document.getElementsByClassName("amplitude-play-pause");
-
-    /*
-    Iterates over all of the play/pause classes and binds the event interaction
-    method to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < play_pause_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        play_pause_classes[i].removeEventListener("touchend", _playPause2.default.handle);
-        play_pause_classes[i].addEventListener("touchend", _playPause2.default.handle);
-      } else {
-        play_pause_classes[i].removeEventListener("click", _playPause2.default.handle);
-        play_pause_classes[i].addEventListener("click", _playPause2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS stop buttons
-   *
-   * @access private
-   */
-  function bindStop() {
-    /*
-    Gets all of the elements with the class amplitude-stop
-    */
-    var stop_classes = document.getElementsByClassName("amplitude-stop");
-
-    /*
-    Iterates over all of the stop classes and binds the event interaction
-    method to the element.  If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < stop_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        stop_classes[i].removeEventListener("touchend", _stop2.default.handle);
-        stop_classes[i].addEventListener("touchend", _stop2.default.handle);
-      } else {
-        stop_classes[i].removeEventListener("click", _stop2.default.handle);
-        stop_classes[i].addEventListener("click", _stop2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS mute buttons
-   *
-   * @access private
-   */
-  function bindMute() {
-    /*
-    Gets all of the elements with the class amplitue-mute
-    */
-    var mute_classes = document.getElementsByClassName("amplitude-mute");
-
-    /*
-    Iterates over all of the mute classes and binds the event interaction
-    method to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < mute_classes.length; i++) {
-      /*
-      WARNING: If iOS, we don't do anything because iOS does not allow the
-      volume to be adjusted through anything except the buttons on the side of
-      the device.
-      */
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        /*
-        Checks for an iOS device and displays an error message if debugging
-        is turned on.
-        */
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
-        } else {
-          mute_classes[i].removeEventListener("touchend", _mute2.default.handle);
-          mute_classes[i].addEventListener("touchend", _mute2.default.handle);
-        }
-      } else {
-        mute_classes[i].removeEventListener("click", _mute2.default.handle);
-        mute_classes[i].addEventListener("click", _mute2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS Volume Up Buttons
-   *
-   * @access private
-   */
-  function bindVolumeUp() {
-    /*
-    Gets all of the elements with the class amplitude-volume-up
-    */
-    var volume_up_classes = document.getElementsByClassName("amplitude-volume-up");
-
-    /*
-    Iterates over all of the volume up classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < volume_up_classes.length; i++) {
-      /*
-      WARNING: If iOS, we don't do anything because iOS does not allow the
-      volume to be adjusted through anything except the buttons on the side of
-      the device.
-      */
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        /*
-        Checks for an iOS device and displays an error message if debugging
-        is turned on.
-        */
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
-        } else {
-          volume_up_classes[i].removeEventListener("touchend", _volumeUp2.default.handle);
-          volume_up_classes[i].addEventListener("touchend", _volumeUp2.default.handle);
-        }
-      } else {
-        volume_up_classes[i].removeEventListener("click", _volumeUp2.default.handle);
-        volume_up_classes[i].addEventListener("click", _volumeUp2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS Volume Down Buttons
-   *
-   * @access private
-   */
-  function bindVolumeDown() {
-    /*
-    Gets all of the elements with the class amplitude-volume-down
-    */
-    var volume_down_classes = document.getElementsByClassName("amplitude-volume-down");
-
-    /*
-    Iterates over all of the volume down classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < volume_down_classes.length; i++) {
-      /*
-      WARNING: If iOS, we don't do anything because iOS does not allow the
-      volume to be adjusted through anything except the buttons on the side of
-      the device.
-      */
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        /*
-        Checks for an iOS device and displays an error message if debugging
-        is turned on.
-        */
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
-        } else {
-          volume_down_classes[i].removeEventListener("touchend", _volumeDown2.default.handle);
-          volume_down_classes[i].addEventListener("touchend", _volumeDown2.default.handle);
-        }
-      } else {
-        volume_down_classes[i].removeEventListener("click", _volumeDown2.default.handle);
-        volume_down_classes[i].addEventListener("click", _volumeDown2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds change and input events for AmplitudeJS Song Slider Inputs
-   *
-   * @access private
-   */
-  function bindSongSlider() {
-    /*
-    Gets browser so if we need to apply overrides, like we usually
-    have to do for anything cool in IE, we can do that.
-    */
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE ");
-
-    /*
-    Gets all of the elements with the class amplitude-song-slider
-    */
-    var song_sliders = document.getElementsByClassName("amplitude-song-slider");
-
-    /*
-    Iterates over all of the song slider classes and binds the event interaction
-    methods to the element. If the browser is IE we listen to the change event
-    where if it is anything else, it's the input method.
-    */
-    for (var i = 0; i < song_sliders.length; i++) {
-      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-        song_sliders[i].removeEventListener("change", _songSlider2.default.handle);
-        song_sliders[i].addEventListener("change", _songSlider2.default.handle);
-      } else {
-        song_sliders[i].removeEventListener("input", _songSlider2.default.handle);
-        song_sliders[i].addEventListener("input", _songSlider2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds change and input events fro AmplitudeJS Volume Slider inputs
-   *
-   * @access private
-   */
-  function bindVolumeSlider() {
-    /*
-    Gets browser so if we need to apply overrides, like we usually
-    have to do for anything cool in IE, we can do that.
-    */
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE ");
-
-    /*
-    Gets all of the elements with the class amplitude-volume-slider
-        */
-    var volume_sliders = document.getElementsByClassName("amplitude-volume-slider");
-
-    /*
-    Iterates over all of the volume slider classes and binds the event interaction
-    methods to the element. If the browser is IE we listen to the change event
-    where if it is anything else, it's the input method.
-    */
-    for (var i = 0; i < volume_sliders.length; i++) {
-      /*
-      WARNING: If iOS, we don't do anything because iOS does not allow the
-      volume to be adjusted through anything except the buttons on the side of
-      the device.
-      */
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        _debug2.default.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
-      } else {
-        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-          volume_sliders[i].removeEventListener("change", _volumeSlider2.default.handle);
-          volume_sliders[i].addEventListener("change", _volumeSlider2.default.handle);
-        } else {
-          volume_sliders[i].removeEventListener("input", _volumeSlider2.default.handle);
-          volume_sliders[i].addEventListener("input", _volumeSlider2.default.handle);
-        }
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events fro AmplitudeJS Next buttons
-   *
-   * @access private
-   */
-  function bindNext() {
-    /*
-    Gets all of the elements with the class amplitude-next
-        */
-    var next_classes = document.getElementsByClassName("amplitude-next");
-
-    /*
-    Iterates over all of the next classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < next_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        next_classes[i].removeEventListener("touchend", _next2.default.handle);
-        next_classes[i].addEventListener("touchend", _next2.default.handle);
-      } else {
-        next_classes[i].removeEventListener("click", _next2.default.handle);
-        next_classes[i].addEventListener("click", _next2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS prev buttons.
-   *
-   * @access private
-   */
-  function bindPrev() {
-    /*
-    Gets all of the elements with the class amplitude-prev
-    */
-    var prev_classes = document.getElementsByClassName("amplitude-prev");
-
-    /*
-    Iterates over all of the prev classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < prev_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        prev_classes[i].removeEventListener("touchend", _prev2.default.handle);
-        prev_classes[i].addEventListener("touchend", _prev2.default.handle);
-      } else {
-        prev_classes[i].removeEventListener("click", _prev2.default.handle);
-        prev_classes[i].addEventListener("click", _prev2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS shuffle buttons.
-   *
-   * @access private
-   */
-  function bindShuffle() {
-    /*
-    Gets all of the elements with the class amplitude-shuffle
-    */
-    var shuffle_classes = document.getElementsByClassName("amplitude-shuffle");
-
-    /*
-    Iterates over all of the shuffle classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < shuffle_classes.length; i++) {
-      /*
-      Since we are re-binding everything we remove any classes that signify
-      a state of the shuffle control.
-      */
-      shuffle_classes[i].classList.remove("amplitude-shuffle-on");
-      shuffle_classes[i].classList.add("amplitude-shuffle-off");
-
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        shuffle_classes[i].removeEventListener("touchend", _shuffle2.default.handle);
-        shuffle_classes[i].addEventListener("touchend", _shuffle2.default.handle);
-      } else {
-        shuffle_classes[i].removeEventListener("click", _shuffle2.default.handle);
-        shuffle_classes[i].addEventListener("click", _shuffle2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS repeat buttons.
-   *
-   * @access private
-   */
-  function bindRepeat() {
-    /*
-    Gets all of the elements with the class amplitude-repeat
-    */
-    var repeat_classes = document.getElementsByClassName("amplitude-repeat");
-
-    /*
-    Iterates over all of the repeat classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < repeat_classes.length; i++) {
-      /*
-      Since we are re-binding everything we remove any classes that signify
-      a state of the repeat control.
-      */
-      repeat_classes[i].classList.remove("amplitude-repeat-on");
-      repeat_classes[i].classList.add("amplitude-repeat-off");
-
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        repeat_classes[i].removeEventListener("touchend", _repeat2.default.handle);
-        repeat_classes[i].addEventListener("touchend", _repeat2.default.handle);
-      } else {
-        repeat_classes[i].removeEventListener("click", _repeat2.default.handle);
-        repeat_classes[i].addEventListener("click", _repeat2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS repeat song buttons.
-   *
-   * @access private
-   */
-  function bindRepeatSong() {
-    /*
-    Gets all of the elements with the class amplitude-repeat-song
-    */
-    var repeat_song_classes = document.getElementsByClassName("amplitude-repeat-song");
-
-    /*
-    Iterates over all of the repeat song classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < repeat_song_classes.length; i++) {
-      /*
-      Since we are re-binding everything we remove any classes that signify
-      a state of the repeat control.
-      */
-      repeat_song_classes[i].classList.remove("amplitude-repeat-on");
-      repeat_song_classes[i].classList.add("amplitude-repeat-off");
-
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        repeat_song_classes[i].removeEventListener("touchend", _repeatSong2.default.handle);
-        repeat_song_classes[i].addEventListener("touchend", _repeatSong2.default.handle);
-      } else {
-        repeat_song_classes[i].removeEventListener("click", _repeatSong2.default.handle);
-        repeat_song_classes[i].addEventListener("click", _repeatSong2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS playback speed buttons
-   *
-   * @access private
-   */
-  function bindPlaybackSpeed() {
-    /*
-    Gets all of the elements with the class amplitude-playback-speed
-    */
-    var playback_speed_classes = document.getElementsByClassName("amplitude-playback-speed");
-
-    /*
-    Iterates over all of the playback speed classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it is click.
-    */
-    for (var i = 0; i < playback_speed_classes.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        playback_speed_classes[i].removeEventListener("touchend", _playbackSpeed2.default.handle);
-        playback_speed_classes[i].addEventListener("touchend", _playbackSpeed2.default.handle);
-      } else {
-        playback_speed_classes[i].removeEventListener("click", _playbackSpeed2.default.handle);
-        playback_speed_classes[i].addEventListener("click", _playbackSpeed2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds click and touchend events for AmplitudeJS skip to buttons.
-   *
-   * @access private
-   */
-  function bindSkipTo() {
-    /*
-    Gets all of the skip to elements with the class 'amplitude-skip-to'
-    */
-    var skipToClasses = document.getElementsByClassName("amplitude-skip-to");
-
-    /*
-    Iterates over all of the skip to classes and binds the event interaction
-    methods to the element. If the browser is mobile, then the event is touchend
-    otherwise it's a click.
-    */
-    for (var i = 0; i < skipToClasses.length; i++) {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        skipToClasses[i].removeEventListener("touchend", _skipTo2.default.handle);
-        skipToClasses[i].addEventListener("touchend", _skipTo2.default.handle);
-      } else {
-        skipToClasses[i].removeEventListener("click", _skipTo2.default.handle);
-        skipToClasses[i].addEventListener("click", _skipTo2.default.handle);
-      }
-    }
-  }
-
-  /**
-   * Binds can play through to a song.
-   *
-   * @access private
-   */
-  function bindCanPlayThrough() {
-    if (_waveform2.default.determineIfUsingWaveforms()) {
-      _config2.default.audio.removeEventListener("canplaythrough", _waveform2.default.build);
-      _config2.default.audio.addEventListener("canplaythrough", _waveform2.default.build);
-    }
-  }
-
-  /*
-  Returns the public facing functions.
-  */
-  return {
-    initialize: initialize
-  };
-}();
-
-/**
- * Imports the utility classes used by the evnets.
- */
-/*
-	Import the necessary classes and config to use
-	with the events.
-*/
-exports.default = Events;
-module.exports = exports["default"];
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
 var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
@@ -7438,7 +7231,7 @@ exports.default = KeyDown;
 module.exports = exports["default"];
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7543,7 +7336,7 @@ exports.default = Mute;
 module.exports = exports["default"];
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7702,7 +7495,7 @@ exports.default = Next;
 module.exports = exports["default"];
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7918,7 +7711,7 @@ exports.default = Pause;
 module.exports = exports["default"];
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8236,7 +8029,7 @@ exports.default = Play;
 module.exports = exports["default"];
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8573,7 +8366,7 @@ exports.default = PlayPause;
 module.exports = exports["default"];
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8663,7 +8456,7 @@ exports.default = PlaybackSpeed;
 module.exports = exports["default"];
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8792,7 +8585,7 @@ exports.default = Prev;
 module.exports = exports["default"];
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8866,7 +8659,7 @@ exports.default = Progress;
 module.exports = exports["default"];
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8994,7 +8787,7 @@ exports.default = Repeat;
 module.exports = exports["default"];
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9075,7 +8868,7 @@ exports.default = RepeatSong;
 module.exports = exports["default"];
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9194,7 +8987,7 @@ exports.default = Shuffle;
 module.exports = exports["default"];
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9398,7 +9191,7 @@ exports.default = SkipTo;
 module.exports = exports["default"];
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9620,7 +9413,7 @@ exports.default = SongSlider;
 module.exports = exports["default"];
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9712,6 +9505,232 @@ var Stop = function () {
  * @module utilities/configState
  */
 exports.default = Stop;
+module.exports = exports["default"];
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _bufferedProgressElements = __webpack_require__(25);
+
+var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
+
+var _timeElements = __webpack_require__(15);
+
+var _timeElements2 = _interopRequireDefault(_timeElements);
+
+var _songSliderElements = __webpack_require__(14);
+
+var _songSliderElements2 = _interopRequireDefault(_songSliderElements);
+
+var _songPlayedProgressElements = __webpack_require__(20);
+
+var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
+
+var _time = __webpack_require__(24);
+
+var _time2 = _interopRequireDefault(_time);
+
+var _callbacks = __webpack_require__(7);
+
+var _callbacks2 = _interopRequireDefault(_callbacks);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Event Handler for Time Update
+ *
+ * @module events/TimeUpdate
+ */
+
+
+/**
+ * Imports the Time utility class
+ * @module utilities/Time
+ */
+
+
+/**
+ * Imports the Song Slider Elements visual class.
+ * @module visual/songSliderElements
+ */
+
+
+/**
+ * Imports the Buffered Progress Elements visual class
+ * @module visual/bufferedProgressElements
+ */
+var TimeUpdate = function () {
+  /**
+   * When the time updates on the active song, we sync the current time displays
+   *
+   * HANDLER FOR: timeupdate
+   *
+   * @access public
+   */
+  function handle() {
+    /*
+      Computes the buffered time.
+    */
+    computeBufferedTime();
+
+    /*
+      Sync the buffered progress elements.
+    */
+    _bufferedProgressElements2.default.sync();
+
+    /*
+      Updates the current time information.
+    */
+    updateTimeInformation();
+
+    /*
+      Run time callbacks
+    */
+    runTimeCallbacks();
+  }
+
+  /**
+   * Computes the buffered time
+   */
+  function computeBufferedTime() {
+    /*
+      Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+    */
+    if (_config2.default.audio.buffered.length - 1 >= 0) {
+      var bufferedEnd = _config2.default.audio.buffered.end(_config2.default.audio.buffered.length - 1);
+      var duration = _config2.default.audio.duration;
+
+      _config2.default.buffered = bufferedEnd / duration * 100;
+    }
+  }
+
+  /**
+   * Updates the current time information.
+   * @access private
+   */
+  function updateTimeInformation() {
+    /*
+      If the current song is not live, then
+      we can update the time information. Otherwise the
+      current time updates wouldn't mean much since the time
+      is infinite.
+    */
+    if (!_config2.default.active_metadata.live) {
+      /*
+        Compute the current time
+      */
+      var currentTime = _time2.default.computeCurrentTimes();
+
+      /*
+        Compute the song completion percentage
+      */
+      var songCompletionPercentage = _time2.default.computeSongCompletionPercentage();
+
+      /*
+        Computes the song duration
+      */
+      var songDuration = _time2.default.computeSongDuration();
+
+      /*
+        Sync the current time elements with the current
+        location of the song and the song duration elements with
+        the duration of the song.
+      */
+      _timeElements2.default.syncCurrentTimes(currentTime);
+
+      /*
+        Sync the song slider elements.
+      */
+      _songSliderElements2.default.sync(songCompletionPercentage, _config2.default.active_playlist, _config2.default.active_index);
+
+      /*
+        Sync the song played progress elements.
+      */
+      _songPlayedProgressElements2.default.sync(songCompletionPercentage);
+
+      /*
+        Sync the duration time elements.
+      */
+      _timeElements2.default.syncDurationTimes(currentTime, songDuration);
+    }
+  }
+
+  /**
+   * Runs a callback at a certain time in the song.
+   */
+  function runTimeCallbacks() {
+    /*
+      Gets the current seconds into the song.
+    */
+    var currentSeconds = Math.floor(_config2.default.audio.currentTime);
+
+    /*
+      Checks to see if there is a callback at the certain seconds into the song.
+    */
+    if (_config2.default.active_metadata.time_callbacks != undefined && _config2.default.active_metadata.time_callbacks[currentSeconds] != undefined) {
+      /*
+        Checks to see if the callback has been run. Since the time updates more than
+        one second, we don't want the callback to run X times.
+      */
+      if (!_config2.default.active_metadata.time_callbacks[currentSeconds].run) {
+        _config2.default.active_metadata.time_callbacks[currentSeconds].run = true;
+        _config2.default.active_metadata.time_callbacks[currentSeconds]();
+      }
+    } else {
+      /*
+        Iterate over all of the callbacks for a song. If the song has one, we flag
+        the run as false. This occurs because we have passed the active second for
+        the callback, so we flag it as not run. It will either run again if the user
+        seeks back or not run in the future.
+      */
+      for (var seconds in _config2.default.active_metadata.time_callbacks) {
+        if (_config2.default.active_metadata.time_callbacks.hasOwnProperty(seconds)) {
+          _config2.default.active_metadata.time_callbacks[seconds].run = false;
+        }
+      }
+    }
+  }
+  /**
+   * Returns public functions
+   */
+  return {
+    handle: handle
+  };
+}();
+
+/**
+ * Imports the Callback utility class
+ * @module utilities/Callbacks
+ */
+
+
+/**
+ * Imports the Song Played Progress Elements visual class.
+ * @module visual/songPlayedProgressElements
+ */
+
+
+/**
+ * Imports the Time Elements visual class.
+ * @module visual/timeElements
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+exports.default = TimeUpdate;
 module.exports = exports["default"];
 
 /***/ }),

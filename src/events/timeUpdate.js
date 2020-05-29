@@ -54,10 +54,6 @@ let TimeUpdate = (function() {
    * @access public
    */
   function handle() {
-    console.log(
-      `TimeUpdate.handle. Song duration for ${config.audio.src} = ${config.audio.duration}`,
-    )
-
     /*
       Computes the buffered time.
     */

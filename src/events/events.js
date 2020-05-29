@@ -181,6 +181,34 @@ var Events = (function() {
   }
 
   /**
+   * Destroys all of the global audio bindings
+   */
+  function destroyAudioBindings(){
+    config.audio.removeEventListener("timeupdate", TimeUpdate.handle);
+    config.audio.removeEventListener("durationchange", TimeUpdate.handle);
+    config.audio.removeEventListener("ended", Ended.handle);
+    config.audio.removeEventListener("progress", Progress.handle);
+    
+    if( WaveForm.determineIfUsingWaveforms() ){
+      config.audio.removeEventListener("canplaythrough", WaveForm.build);
+    }
+  }
+
+  /**
+   * Rebinds all of the global audio bindings
+   */
+  function rebindAudio(){
+    config.audio.addEventListener("durationchange", TimeUpdate.handle);
+    config.audio.addEventListener("timeupdate", TimeUpdate.handle);
+    config.audio.addEventListener("ended", Ended.handle);
+    config.audio.addEventListener("progress", Progress.handle);
+
+    if( WaveForm.determineIfUsingWaveforms() ){
+      config.audio.addEventListener("canplaythrough", WaveForm.build);
+    }
+  }
+
+  /**
    * On time update for the audio element, update visual displays that
    * represent the time on either a visualized element or time display.
    *
@@ -862,11 +890,14 @@ var Events = (function() {
     }
   }
 
+
   /*
 		Returns the public facing functions.
 	*/
   return {
-    initialize: initialize
+    initialize: initialize,
+    destroyAudioBindings: destroyAudioBindings,
+    rebindAudio: rebindAudio
   };
 })();
 
