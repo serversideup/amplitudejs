@@ -6744,7 +6744,7 @@ var BufferedProgressElements = function () {
       var playlist = songBufferedProgressBars[i].getAttribute("data-amplitude-playlist");
       var song = songBufferedProgressBars[i].getAttribute("data-amplitude-song-index");
 
-      if (playlist == null && song == null) {
+      if (playlist == null && song == null && !isNaN(_config2.default.buffered)) {
         songBufferedProgressBars[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
       }
     }
@@ -6766,7 +6766,7 @@ var BufferedProgressElements = function () {
     for (var i = 0; i < songBufferedProgressBarsPlaylist.length; i++) {
       var song = songBufferedProgressBarsPlaylist[i].getAttribute("data-amplitude-song-index");
 
-      if (song == null) {
+      if (song == null && !isNaN(_config2.default.buffered)) {
         songBufferedProgressBarsPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
       }
     }
@@ -6788,7 +6788,7 @@ var BufferedProgressElements = function () {
     for (var i = 0; i < songBufferedProgressBarsSongs.length; i++) {
       var playlist = songBufferedProgressBarsSongs[i].getAttribute("data-amplitude-playlist");
 
-      if (playlist == null) {
+      if (playlist == null && !isNaN(_config2.default.buffered)) {
         songBufferedProgressBarsSongs[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
       }
     }
@@ -6810,7 +6810,9 @@ var BufferedProgressElements = function () {
     set them to 0 which is like re-setting them.
     */
     for (var i = 0; i < songBufferedProgressBarsSongsInPlaylist.length; i++) {
-      songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      if (!isNaN(_config2.default.buffered)) {
+        songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      }
     }
   }
 
