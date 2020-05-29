@@ -88,7 +88,7 @@ var _package = __webpack_require__(59);
 module.exports = {
   version: _package.version,
 
-  audio: new Audio(),
+  audio: null,
 
   active_metadata: {},
 
@@ -6094,10 +6094,12 @@ var WaveForm = function () {
     Initialize the local variables used in the Waveform.
   */
   var buffer = "";
-  var sampleRate = _config2.default.waveforms.sample_rate;
+  var sampleRate = '';
   var peaks = "";
 
   function init() {
+    sampleRate = _config2.default.waveforms.sample_rate;
+
     /*
       Grabs all of the waveform elements on the page.
     */
