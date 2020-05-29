@@ -40,10 +40,15 @@ AmplitudeJS is a lightweight JavaScript library that allows you to control the d
 
 Open-source software is not sustainable without proper financial support. Maintaining an open source project takes a lot of effort and resources. If you are very thankful for what you can do with AmplitudeJS or if you are using AmplitudeJS to make any sort of revenue, we kindly ask that you contribute any resources available to keep the community growing.
 
-## These People Believe in Open Source
-<a href="https://www.podcaster.de/" target="_blank"><img src="https://521dimensions.com/img/open-source/amplitudejs/sponsor-logo_podcaster.png"></a>
+## Sponsors
+These people believe in open-source. If you are interested in improving the project, <a href="https://opencollective.com/amplitudejs" target="_blank">become a sponsor</a>.
+### Platinum Sponsors
+<a href="https://soothingrelaxation.com/" target="_blank"><img width="250" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/soothing-relaxation.png"></a>
 
-#### You don't have to be an organization to believe. Any amount helps. Special thanks to these people who back the project on their own:
+### Gold Sponsors
+<a href="https://www.podcaster.de/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/sponsor-logo_podcaster.png"></a>
+
+### Backers
 <a href="https://opencollective.com/amplitudejs#backers" target="_blank"><img src="https://opencollective.com/amplitudejs/backers.svg?width=890"></a>
 
 ## Features
