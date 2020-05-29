@@ -36,7 +36,7 @@ meta:
 ---
 
 # Overview of Waveforms
-
+<carbon-ads/>
 Waveforms are another FX element added to AmplitudeJS. A waveform is a visual representation of the sound compressions for a piece of audio. Using the Web Audio API, you can display these in your player.
 
 There is one parameter that you can set to determine how your waveforms are displayed and that is the `sample_rate` set on initialization. The `sample_rate` setting determines how "fine" the visual for the waveform should be. The lower the sample rate, the more "rough" a depiction is generated. The higher the sample rate the more "accurate" a depiction is generated. Now keep in mind, the higher the sample rate, the more memory and longer it will take to generate!

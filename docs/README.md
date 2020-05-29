@@ -36,6 +36,7 @@ meta:
 ---
 
 # Overview
+<carbon-ads/>
 The concept of Amplitude.js is simple, allow designers to fully control the look
 and feel of their audio player through the web without having to understand
 advanced scripting. In HTML5, the audio tag allows users to add common audio

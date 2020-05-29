@@ -36,7 +36,7 @@ meta:
 ---
 
 # Setting the Starting Audio and Starting Playlist
-
+<carbon-ads/>
 When you initialize AmplitudeJS you can instruct AmplitudeJS to start at a certain song, certain playlist, and a certain song in a playlist.
 
 ## Set Starting Song

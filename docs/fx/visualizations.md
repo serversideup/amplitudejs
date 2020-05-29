@@ -36,7 +36,7 @@ meta:
 ---
 
 # Overview of Visualizations
-
+<carbon-ads/>
 So what are audio Visualizations? They are the beautiful art that vibe to the beat and react to the different highs and lows of the songs. iTunes is famous for having a beautiful visualization for it's audio.
 
 In AmplitudeJS you can add your own visualization element to the page that operates the same as an iTunes visualization! It reads in the highs and lows and different frequencies of the song to generate a beautiful visual to go along with the music! If you are really motivated, you can build your own using the template provided.

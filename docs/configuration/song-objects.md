@@ -36,7 +36,7 @@ meta:
 ---
 
 # Song Objects
-
+<carbon-ads/>
 An array of JSON song objects is required by AmplitudeJS.  This directs
 AmplitudeJS to the metadata and information necessary for playing the audio.
 

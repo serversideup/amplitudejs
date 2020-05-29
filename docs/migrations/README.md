@@ -36,7 +36,7 @@ meta:
 ---
 
 # Upgrading from 3.x To 4.0
-
+<carbon-ads/>
 AmplitudeJS 4.0 was one of the biggest releases thus far. We tried to limit the breaking changes, but in order to scale for the future we had to make a few.  I should have every change documented below and the reason why the change was made.
 
 ## All AmplitudeJS Attributes Have HTML5 Dataset Prefix

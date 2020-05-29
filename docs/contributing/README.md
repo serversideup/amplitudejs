@@ -36,6 +36,7 @@ meta:
 ---
 
 # How to contribute to AmplitudeJS
+<carbon-ads/>
 We greatly appeciate any efforts to help grow and maintain the AmplitudeJS community! There are number of ways that you can help AmplitudeJS:
 
 ## Share us on social media

@@ -36,7 +36,7 @@ meta:
 ---
 
 # Interactive Elements
-
+<carbon-ads/>
 The interactive elements of AmplitudeJS have event handlers bound to them that
 responds to a touch or click from a user. These elements build the functionality
 of the player you are designing. The scoping of these elements is handled by

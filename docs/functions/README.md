@@ -36,6 +36,7 @@ meta:
 ---
 
 # Public Functions
+<carbon-ads/>
 There are a variety of public functions that AmplitudeJS exposes to the user.
 These methods allow the user to change config variables, add new songs, play
 now, etc.

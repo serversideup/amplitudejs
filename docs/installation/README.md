@@ -35,7 +35,7 @@ meta:
     content: "@521dimensions"
 ---
 # Installation
-
+<carbon-ads/>
 ## Option 1: Use CDN from [jsDelivr](https://cdn.jsdelivr.net/npm/amplitudejs/)
 No installation is required to use Amplitude.js. All you need to do is include a single line in your `<head>` section of your HTML page.
 

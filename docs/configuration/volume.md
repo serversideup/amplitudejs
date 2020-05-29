@@ -35,7 +35,7 @@ meta:
     content: "@521dimensions"
 ---
 # Configuring Default Volume Parameters
-
+<carbon-ads/>
 There are lots of different volume parameters that can be set by default in AmplitudeJS. You can initialize the volume to be
 
 ## Setting the Starting Volume

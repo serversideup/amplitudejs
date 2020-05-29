@@ -36,6 +36,7 @@ meta:
 ---
 
 # Callbacks
+<carbon-ads/>
 There are a variety of callbacks specific to AmplitudeJS that get called at certain times that the developer can bind to.
 
 

@@ -36,6 +36,7 @@ meta:
 ---
 
 ## Community Support
+<carbon-ads/>
 Since AmplitudeJS is open sourced under the MIT license, any participating member can assist you with your support question. [Learn more about Community Support &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#community-support)
 
 ## Professional Support

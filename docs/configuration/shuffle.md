@@ -36,7 +36,7 @@ meta:
 ---
 
 # Defaulting Shuffle On
-
+<carbon-ads/>
 You can turn shuffle on right away when initializing AmplitudeJS. To do that, simply initialize AmplitudeJS with the `shuffle_on` parameter like this:
 
 ```javascript

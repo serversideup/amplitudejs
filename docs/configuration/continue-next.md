@@ -35,6 +35,8 @@ meta:
     content: "@521dimensions"
 ---
 
+<carbon-ads/>
+
 AmplitudeJS allows you to stop playing a song after it has been finished. To stop a song after it has been finished playing you need to configure AmplitudeJS with the `continue_next` flag set to `false` on initialization. By default, AmplitudeJS will go to the next song in the list or playlist depending on state. To set the flag as false, initialize AmplitudeJS with the following parameter:
 
 ```javascript
