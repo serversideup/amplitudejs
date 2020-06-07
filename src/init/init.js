@@ -509,12 +509,12 @@ let Initializer = (function() {
     initializeElements();
 
     /*
-			If the user has selected a starting playlist, we need to set the starting playlist
-			and sync the visuals
+			If the user has selected a starting playlist, we need to check whether it is a valid starting playlist and if so
+			set the starting playlist and sync the visuals
 		*/
     if (
-      userConfig.starting_playlist != undefined &&
-      userConfig.starting_playlist != ""
+      typeof userConfig.starting_playlist !== 'undefined' &&
+      userConfig.playlists.hasOwnProperty(userConfig.starting_playlist)
     ) {
       /*
 				Set the active playlist to the starting playlist by the user
@@ -522,57 +522,38 @@ let Initializer = (function() {
       config.active_playlist = userConfig.starting_playlist;
 
       /*
-				Check if the user defined a song to start with in the playlist.
+				Check if the user defined a valid song to start with in the playlist.
 			*/
       if (
-        userConfig.starting_playlist_song != undefined &&
-        userConfig.starting_playlist_song != ""
+        typeof userConfig.starting_playlist_song !== 'undefined' &&
+        !isNaN(parseInt(userConfig.starting_playlist_song)) &&
+        userConfig.playlists[userConfig.starting_playlist].songs.hasOwnProperty(parseInt(userConfig.starting_playlist_song))
       ) {
         /*
-					Ensure the song is a valid index.
-				*/
-        if (
-          typeof userConfig.playlists[userConfig.starting_playlist].songs[
+          Set the player to the song defined by the user.
+        */
+        AudioNavigation.changeSongPlaylist(
+          config.active_playlist,
+          userConfig.playlists[userConfig.starting_playlist].songs[
             parseInt(userConfig.starting_playlist_song)
-          ] != undefined
-        ) {
-          /*
-						Set the player to the song defined by the user.
-					*/
-          AudioNavigation.changeSongPlaylist(
-            config.active_playlist,
-            userConfig.playlists[userConfig.starting_playlist].songs[
-              parseInt(userConfig.starting_playlist_song)
-            ],
-            parseInt(userConfig.starting_playlist_song)
-          );
-        } else {
-          /*
-						Set the player to the first song in the playlist
-					*/
-          AudioNavigation.changeSongPlaylist(
-            config.active_playlist,
-            userConfig.playlists[userConfig.starting_playlist].songs[0],
-            0
-          );
-          /*
-						Debug that the song index doesn't exist
-					*/
-          Debug.writeMessage(
-            "The index of " +
-              userConfig.starting_playlist_song +
-              " does not exist in the playlist " +
-              userConfig.starting_playlist
-          );
-        }
+          ],
+          parseInt(userConfig.starting_playlist_song)
+        );
       } else {
         /*
-					Set the player to the first song in the playlist
-				*/
-        AudioNavigation.changeSong(
+          Set the player to the first song in the playlist
+        */
+        AudioNavigation.changeSongPlaylist(
           config.active_playlist,
           userConfig.playlists[userConfig.starting_playlist].songs[0],
           0
+        );
+
+        /*
+          Debug that the song index doesn't exist
+        */
+        Debug.writeMessage(
+          `The index of ${userConfig.starting_playlist_song} does not exist in the playlist ${userConfig.starting_playlist}. Setting index to 0.`
         );
       }
 
@@ -580,6 +561,13 @@ let Initializer = (function() {
 				Sync the main and song play pause buttons.
 			*/
       PlayPauseElements.sync();
+    } else {
+      /*
+        Debug that the song index doesn't exist
+			*/
+      Debug.writeMessage(
+        `The playlist ${userConfig.starting_playlist} could not be found, and thus was not set as your starting playlist.`
+      );
     }
 
     /*
