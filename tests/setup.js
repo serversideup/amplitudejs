@@ -5,8 +5,8 @@ const BarVisualization = require("../dist/visualizations/bar.js");
 const config = require("../src/config.js");
 
 let Setup = (function() {
-  function initializeAmplitude() {
-    Amplitude.init({
+  function initializeAmplitude(additionalConfig = {}) {
+    Amplitude.init(Object.assign({
       bindings: {
         37: "prev",
         39: "next",
@@ -149,7 +149,7 @@ let Setup = (function() {
           }
         }
       ]
-    });
+    }, additionalConfig));
 
     config.audio.currentTime = 30;
     config.audio.duration = 100;
@@ -244,92 +244,59 @@ let Setup = (function() {
     });
   }
 
-  function resetConfig() {
-    config.audio = new Audio();
+  function resetConfig(additionalConfig = {}) {
 
-    config.active_metadata = {};
+    let defaultConfig = {
+      audio: new Audio(),
+      active_metadata: {},
+      active_album: "",
+      active_index: 0,
+      active_playlist: "",
+      autoplay: false,
+      playback_speed: 1.0,
+      callbacks: {},
+      songs: [],
+      playlists: {},
+      start_song: "",
+      starting_playlist: "",
+      starting_playlist_song: "",
+      repeat: false,
+      repeat_song: false,
+      shuffle_list: {},
+      shuffle_on: false,
+      default_album_art: "",
+      default_playlist_art: "",
+      debug: false,
+      volume: 0.5,
+      pre_mute_volume: 0.5,
+      volume_increment: 5,
+      volume_decrement: 5,
+      soundcloud_client: "",
+      soundcloud_use_art: false,
+      soundcloud_song_count: 0,
+      soundcloud_songs_ready: 0,
+      is_touch_moving: false,
+      buffered: 0,
+      bindings: {},
+      continue_next: true,
+      delay: 0,
+      player_state: "stopped",
+      web_audio_api_available: false,
+      context: null,
+      source: null,
+      analyser: null,
+      visualizations: {
+        available: [],
+        active: [],
+        backup: "",
+      },
+      waveforms: {
+        sample_rate: 100,
+        built: [],
+      }
+    };
 
-    config.active_album = "";
-
-    config.active_index = 0;
-
-    config.active_playlist = "";
-
-    config.autoplay = false;
-
-    config.playback_speed = 1.0;
-
-    config.callbacks = {};
-
-    config.songs = [];
-
-    config.playlists = {};
-
-    config.start_song = "";
-
-    config.starting_playlist = "";
-
-    config.starting_playlist_song = "";
-
-    config.repeat = false;
-
-    config.repeat_song = false;
-
-    config.shuffle_list = {};
-
-    config.shuffle_on = false;
-
-    config.default_album_art = "";
-
-    config.default_playlist_art = "";
-
-    config.debug = false;
-
-    config.volume = 0.5;
-
-    config.pre_mute_volume = 0.5;
-
-    config.volume_increment = 5;
-
-    config.volume_decrement = 5;
-
-    config.soundcloud_client = "";
-
-    config.soundcloud_use_art = false;
-
-    config.soundcloud_song_count = 0;
-
-    config.soundcloud_songs_ready = 0;
-
-    config.is_touch_moving = false;
-
-    config.buffered = 0;
-
-    config.bindings = {};
-
-    config.continue_next = true;
-
-    config.delay = 0;
-
-    config.player_state = "stopped";
-
-    config.web_audio_api_available = false;
-
-    config.context = null;
-
-    config.source = null;
-
-    config.analyser = null;
-
-    config.visualizations.available = [];
-
-    config.visualizations.active = [];
-
-    config.visualizations.backup = "";
-
-    config.waveforms.sample_rate = 100;
-
-    config.waveforms.built = [];
+    Object.assign(config, defaultConfig, additionalConfig);
   }
 
   return {
