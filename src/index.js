@@ -897,6 +897,20 @@ let Amplitude = (function() {
   }
 
   /**
+   * Allows the user to stop whatever the active song is directly
+   * through Javascript.
+   * 
+   * Public Accessor: Amplitude.stop();
+   * 
+   * @access public
+   */
+  function stop(){
+    Core.stop();
+
+    ConfigState.setPlayerState();
+  }
+
+  /**
    * Returns the audio object used to play the audio
    *
    * Public Accessor: Amplitude.getAudio();
@@ -1389,6 +1403,7 @@ let Amplitude = (function() {
     playPlaylistSongAtIndex: playPlaylistSongAtIndex,
     play: play,
     pause: pause,
+    stop: stop,
     getAudio: getAudio,
     getAnalyser: getAnalyser,
     next: next,
