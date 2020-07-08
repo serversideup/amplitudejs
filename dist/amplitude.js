@@ -1326,8 +1326,12 @@ var AudioNavigation = function () {
    * @access private
    * @prop {object} song  - The song we are changing to.
    * @prop {number} index - The index we are changing to.
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
    */
   function changeSong(song, index) {
+    var direct = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
     /*
       Prepare the song change.
     */
@@ -1353,7 +1357,7 @@ var AudioNavigation = function () {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange();
+    afterSongChange(direct);
   }
 
   /**
@@ -1363,8 +1367,12 @@ var AudioNavigation = function () {
    * @prop {string} playlist - The playlist we are changing the song on.
    * @prop {object} song     - The song we are changing to in the playlist.
    * @prop {number} index    - The inded of the song we are changing to in the playlist.
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
    */
   function changeSongPlaylist(playlist, song, index) {
+    var direct = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
     /*
       Prepare the song change.
     */
@@ -1388,7 +1396,7 @@ var AudioNavigation = function () {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange();
+    afterSongChange(direct);
   }
 
   /**
@@ -1421,12 +1429,13 @@ var AudioNavigation = function () {
 
   /**
    * Updates data on the display after a song has changed.
-   *
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
    * @access private
    */
-  function afterSongChange() {
+  function afterSongChange(direct) {
     _metaDataElements2.default.displayMetaData();
-    _containerElements2.default.setActive();
+    _containerElements2.default.setActive(direct);
     _timeElements2.default.resetDurationTimes();
 
     /*
@@ -8218,9 +8227,9 @@ var PlayPause = function () {
         we go from the first song in the shuffle playlist array.
       */
       if (_config2.default.playlists[playlist].shuffle) {
-        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].shuffle_list[0], 0);
+        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].shuffle_list[0], 0, true);
       } else {
-        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[0], 0);
+        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[0], 0, true);
       }
     }
 
@@ -8268,7 +8277,7 @@ var PlayPause = function () {
       /*
       We then change the song to the index selected.
       */
-      _audioNavigation2.default.changeSong(_config2.default.songs[song], song);
+      _audioNavigation2.default.changeSong(_config2.default.songs[song], song, true);
     }
 
     /*
@@ -8282,7 +8291,7 @@ var PlayPause = function () {
       The song selected is different, so we change the
       song.
       */
-      _audioNavigation2.default.changeSong(_config2.default.songs[song], song);
+      _audioNavigation2.default.changeSong(_config2.default.songs[song], song, true);
     }
 
     /*
@@ -8331,7 +8340,7 @@ var PlayPause = function () {
       /*
       We then change the song to the index selected.
       */
-      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song);
+      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song, true);
     }
 
     /*
@@ -8345,7 +8354,7 @@ var PlayPause = function () {
       The song selected is different, so we change the
       song.
       */
-      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song);
+      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song, true);
     }
 
     /*
@@ -12003,9 +12012,12 @@ var ContainerElements = function () {
    * Applies the class 'amplitude-active-song-container' to the element
    * containing visual information regarding the active song.
    *
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
+   * 
    * @access public
    */
-  function setActive() {
+  function setActive(direct) {
     /*
       Gets all of the song container elements.
     */
@@ -12023,12 +12035,21 @@ var ContainerElements = function () {
     that represents the song at the index.
     */
     if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
+
       var activeIndex = '';
 
-      if (_config2.default.shuffle_on) {
-        activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
-      } else {
+      /*
+        If we click directly on the song element, we ignore
+        whether it's in shuffle or not.
+      */
+      if (direct) {
         activeIndex = _config2.default.active_index;
+      } else {
+        if (_config2.default.shuffle_on) {
+          activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
+        } else {
+          activeIndex = _config2.default.active_index;
+        }
       }
 
       if (document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activeIndex + '"]')) {
@@ -12041,7 +12062,11 @@ var ContainerElements = function () {
         }
       }
     } else {
-      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
+      /*
+        If we have an active playlist or the action took place directly on the
+        song element, we ignore the shuffle.
+      */
+      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '' || direct) {
         var activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].active_index;
       } else {
         var activePlaylistIndex = '';

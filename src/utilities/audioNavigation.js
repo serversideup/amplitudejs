@@ -469,8 +469,10 @@ let AudioNavigation = (function() {
    * @access private
    * @prop {object} song  - The song we are changing to.
    * @prop {number} index - The index we are changing to.
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
    */
-  function changeSong(song, index) {
+  function changeSong(song, index, direct = false) {
     /*
       Prepare the song change.
     */
@@ -497,7 +499,7 @@ let AudioNavigation = (function() {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange();
+    afterSongChange( direct );
   }
 
   /**
@@ -507,8 +509,10 @@ let AudioNavigation = (function() {
    * @prop {string} playlist - The playlist we are changing the song on.
    * @prop {object} song     - The song we are changing to in the playlist.
    * @prop {number} index    - The inded of the song we are changing to in the playlist.
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
    */
-  function changeSongPlaylist(playlist, song, index) {
+  function changeSongPlaylist(playlist, song, index, direct = false) {
     /*
       Prepare the song change.
     */
@@ -532,7 +536,7 @@ let AudioNavigation = (function() {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange();
+    afterSongChange( direct );
   }
 
   /**
@@ -565,12 +569,13 @@ let AudioNavigation = (function() {
 
   /**
    * Updates data on the display after a song has changed.
-   *
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   *      then don't care if shuffle is on or not.
    * @access private
    */
-  function afterSongChange() {
+  function afterSongChange( direct ) {
     MetaDataElements.displayMetaData();
-    ContainerElements.setActive();
+    ContainerElements.setActive( direct );
     TimeElements.resetDurationTimes();
 
     /*
