@@ -702,6 +702,21 @@ $(document).ready(function(){
 	});
 
 	/**
+	 * Test stop
+	 */
+	$('#amplitude-stop').on('click', function(){
+		$('#amplitude-function-output').html('');
+		$('#amplitude-function-output-pre').html('');
+
+		Amplitude.stop();
+		$('#amplitude-function-output').html('Ran Stop');
+
+		// let config = Amplitude.getConfig();
+
+		// $('#amplitude-function-output-pre').append('Current Config: '+JSON.stringify(config, null, 4) );
+	});
+
+	/**
 	 * Test get audio
 	 */
 	$('#amplitude-audio').on('click', function(){
