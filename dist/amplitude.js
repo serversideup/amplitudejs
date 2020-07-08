@@ -253,11 +253,11 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -862,7 +862,7 @@ var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -886,7 +886,7 @@ var _timeElements = __webpack_require__(15);
 
 var _timeElements2 = _interopRequireDefault(_timeElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -1834,262 +1834,6 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _debug = __webpack_require__(4);
-
-var _debug2 = _interopRequireDefault(_debug);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Callback Utility
- *
- * @module utilities/callbacks
- */
-/**
- * Imports the config module
- * @module config
- */
-var Callbacks = function () {
-  /**
-   * Initializes the callbacks for the player.
-   */
-  function initialize() {
-    /*
-      Event: abort
-      https://www.w3schools.com/tags/av_event_abort.asp
-    */
-    _config2.default.audio.addEventListener("abort", function () {
-      run("abort");
-    });
-
-    /*
-      Event: error
-      https://www.w3schools.com/tags/av_event_error.asp
-    */
-    _config2.default.audio.addEventListener("error", function () {
-      run("error");
-    });
-
-    /*
-      Event: loadeddata
-      https://www.w3schools.com/tags/av_event_loadeddata.asp
-    */
-    _config2.default.audio.addEventListener("loadeddata", function () {
-      run("loadeddata");
-    });
-
-    /*
-      Event: loadedmetadata
-      https://www.w3schools.com/tags/av_event_loadedmetadata.asp
-    */
-    _config2.default.audio.addEventListener("loadedmetadata", function () {
-      run("loadedmetadata");
-    });
-
-    /*
-      Event: loadstart
-      https://www.w3schools.com/tags/av_event_loadstart.asp
-    */
-    _config2.default.audio.addEventListener("loadstart", function () {
-      run("loadstart");
-    });
-
-    /*
-      Event: pause
-      https://www.w3schools.com/tags/av_event_pause.asp
-    */
-    _config2.default.audio.addEventListener("pause", function () {
-      run("pause");
-    });
-
-    /*
-      Event: playing
-      https://www.w3schools.com/tags/av_event_playing.asp
-    */
-    _config2.default.audio.addEventListener("playing", function () {
-      run("playing");
-    });
-
-    /*
-      Event: play
-      https://www.w3schools.com/tags/av_event_play.asp
-    */
-    _config2.default.audio.addEventListener("play", function () {
-      run("play");
-    });
-
-    /*
-      Event: progress
-      https://www.w3schools.com/tags/av_event_progress.asp
-    */
-    _config2.default.audio.addEventListener("progress", function () {
-      run("progress");
-    });
-
-    /*
-      Event: ratechange
-      https://www.w3schools.com/tags/av_event_ratechange.asp
-    */
-    _config2.default.audio.addEventListener("ratechange", function () {
-      run("ratechange");
-    });
-
-    /*
-      Event: seeked
-      https://www.w3schools.com/tags/av_event_seeked.asp
-    */
-    _config2.default.audio.addEventListener("seeked", function () {
-      run("seeked");
-    });
-
-    /*
-      Event: seeking
-      https://www.w3schools.com/tags/av_event_seeking.asp
-    */
-    _config2.default.audio.addEventListener("seeking", function () {
-      run("seeking");
-    });
-
-    /*
-      Event: stalled
-      https://www.w3schools.com/tags/av_event_stalled.asp
-    */
-    _config2.default.audio.addEventListener("stalled", function () {
-      run("stalled");
-    });
-
-    /*
-      Event: suspend
-      https://www.w3schools.com/tags/av_event_suspend.asp
-    */
-    _config2.default.audio.addEventListener("suspend", function () {
-      run("suspend");
-    });
-
-    /*
-      Event: timeupdate
-      https://www.w3schools.com/tags/av_event_timeupdate.asp
-    */
-    _config2.default.audio.addEventListener("timeupdate", function () {
-      run("timeupdate");
-    });
-
-    /*
-      Event: volumechange
-      https://www.w3schools.com/tags/av_event_volumechange.asp
-    */
-    _config2.default.audio.addEventListener("volumechange", function () {
-      run("volumechange");
-    });
-
-    /*
-      Event: waiting
-      https://www.w3schools.com/tags/av_event_waiting.asp
-    */
-    _config2.default.audio.addEventListener("waiting", function () {
-      run("waiting");
-    });
-
-    /*
-      Event: canplay
-      https://www.w3schools.com/tags/av_event_canplay.asp
-    */
-    _config2.default.audio.addEventListener("canplay", function () {
-      run("canplay");
-    });
-
-    /*
-      Event: canplaythrough
-      https://www.w3schools.com/tags/av_event_canplaythrough.asp
-    */
-    _config2.default.audio.addEventListener("canplaythrough", function () {
-      run("canplaythrough");
-    });
-
-    /*
-      Event: durationchange
-      https://www.w3schools.com/tags/av_event_durationchange.asp
-    */
-    _config2.default.audio.addEventListener("durationchange", function () {
-      run("durationchange");
-    });
-
-    /*
-      Event: ended
-      https://www.w3schools.com/tags/av_event_ended.asp
-    */
-    _config2.default.audio.addEventListener("ended", function () {
-      run("ended");
-    });
-  }
-
-  /**
-   * Runs a user defined callback method
-   *
-   * Public Accessor: Callbacks.run( callbackName )
-   *
-   * @access public
-   * @param {string} callbackName - The name of the callback we are going to run.
-   */
-  function run(callbackName) {
-    /*
-      Checks to see if a user defined a callback method for the
-      callback we are running.
-    */
-    if (_config2.default.callbacks[callbackName]) {
-      /*
-        Build the callback function
-      */
-      var callbackFunction = _config2.default.callbacks[callbackName];
-
-      /*
-        Write a debug message stating the callback we are running
-      */
-      _debug2.default.writeMessage("Running Callback: " + callbackName);
-
-      /*
-        Run the callback function and catch any errors
-      */
-      try {
-        callbackFunction();
-      } catch (error) {
-        if (error.message == "CANCEL EVENT") {
-          throw error;
-        } else {
-          _debug2.default.writeMessage("Callback error: " + error.message);
-        }
-      }
-    }
-  }
-
-  return {
-    initialize: initialize,
-    run: run
-  };
-}();
-
-/**
- * Imports the debug module
- * @module utilities/debug
- */
-exports.default = Callbacks;
-module.exports = exports["default"];
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -2385,7 +2129,7 @@ exports.default = MetaDataElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2516,6 +2260,262 @@ var RepeatElements = function () {
       * @module config
       */
 exports.default = RepeatElements;
+module.exports = exports["default"];
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _debug = __webpack_require__(4);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Callback Utility
+ *
+ * @module utilities/callbacks
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+var Callbacks = function () {
+  /**
+   * Initializes the callbacks for the player.
+   */
+  function initialize() {
+    /*
+      Event: abort
+      https://www.w3schools.com/tags/av_event_abort.asp
+    */
+    _config2.default.audio.addEventListener("abort", function () {
+      run("abort");
+    });
+
+    /*
+      Event: error
+      https://www.w3schools.com/tags/av_event_error.asp
+    */
+    _config2.default.audio.addEventListener("error", function () {
+      run("error");
+    });
+
+    /*
+      Event: loadeddata
+      https://www.w3schools.com/tags/av_event_loadeddata.asp
+    */
+    _config2.default.audio.addEventListener("loadeddata", function () {
+      run("loadeddata");
+    });
+
+    /*
+      Event: loadedmetadata
+      https://www.w3schools.com/tags/av_event_loadedmetadata.asp
+    */
+    _config2.default.audio.addEventListener("loadedmetadata", function () {
+      run("loadedmetadata");
+    });
+
+    /*
+      Event: loadstart
+      https://www.w3schools.com/tags/av_event_loadstart.asp
+    */
+    _config2.default.audio.addEventListener("loadstart", function () {
+      run("loadstart");
+    });
+
+    /*
+      Event: pause
+      https://www.w3schools.com/tags/av_event_pause.asp
+    */
+    _config2.default.audio.addEventListener("pause", function () {
+      run("pause");
+    });
+
+    /*
+      Event: playing
+      https://www.w3schools.com/tags/av_event_playing.asp
+    */
+    _config2.default.audio.addEventListener("playing", function () {
+      run("playing");
+    });
+
+    /*
+      Event: play
+      https://www.w3schools.com/tags/av_event_play.asp
+    */
+    _config2.default.audio.addEventListener("play", function () {
+      run("play");
+    });
+
+    /*
+      Event: progress
+      https://www.w3schools.com/tags/av_event_progress.asp
+    */
+    _config2.default.audio.addEventListener("progress", function () {
+      run("progress");
+    });
+
+    /*
+      Event: ratechange
+      https://www.w3schools.com/tags/av_event_ratechange.asp
+    */
+    _config2.default.audio.addEventListener("ratechange", function () {
+      run("ratechange");
+    });
+
+    /*
+      Event: seeked
+      https://www.w3schools.com/tags/av_event_seeked.asp
+    */
+    _config2.default.audio.addEventListener("seeked", function () {
+      run("seeked");
+    });
+
+    /*
+      Event: seeking
+      https://www.w3schools.com/tags/av_event_seeking.asp
+    */
+    _config2.default.audio.addEventListener("seeking", function () {
+      run("seeking");
+    });
+
+    /*
+      Event: stalled
+      https://www.w3schools.com/tags/av_event_stalled.asp
+    */
+    _config2.default.audio.addEventListener("stalled", function () {
+      run("stalled");
+    });
+
+    /*
+      Event: suspend
+      https://www.w3schools.com/tags/av_event_suspend.asp
+    */
+    _config2.default.audio.addEventListener("suspend", function () {
+      run("suspend");
+    });
+
+    /*
+      Event: timeupdate
+      https://www.w3schools.com/tags/av_event_timeupdate.asp
+    */
+    _config2.default.audio.addEventListener("timeupdate", function () {
+      run("timeupdate");
+    });
+
+    /*
+      Event: volumechange
+      https://www.w3schools.com/tags/av_event_volumechange.asp
+    */
+    _config2.default.audio.addEventListener("volumechange", function () {
+      run("volumechange");
+    });
+
+    /*
+      Event: waiting
+      https://www.w3schools.com/tags/av_event_waiting.asp
+    */
+    _config2.default.audio.addEventListener("waiting", function () {
+      run("waiting");
+    });
+
+    /*
+      Event: canplay
+      https://www.w3schools.com/tags/av_event_canplay.asp
+    */
+    _config2.default.audio.addEventListener("canplay", function () {
+      run("canplay");
+    });
+
+    /*
+      Event: canplaythrough
+      https://www.w3schools.com/tags/av_event_canplaythrough.asp
+    */
+    _config2.default.audio.addEventListener("canplaythrough", function () {
+      run("canplaythrough");
+    });
+
+    /*
+      Event: durationchange
+      https://www.w3schools.com/tags/av_event_durationchange.asp
+    */
+    _config2.default.audio.addEventListener("durationchange", function () {
+      run("durationchange");
+    });
+
+    /*
+      Event: ended
+      https://www.w3schools.com/tags/av_event_ended.asp
+    */
+    _config2.default.audio.addEventListener("ended", function () {
+      run("ended");
+    });
+  }
+
+  /**
+   * Runs a user defined callback method
+   *
+   * Public Accessor: Callbacks.run( callbackName )
+   *
+   * @access public
+   * @param {string} callbackName - The name of the callback we are going to run.
+   */
+  function run(callbackName) {
+    /*
+      Checks to see if a user defined a callback method for the
+      callback we are running.
+    */
+    if (_config2.default.callbacks[callbackName]) {
+      /*
+        Build the callback function
+      */
+      var callbackFunction = _config2.default.callbacks[callbackName];
+
+      /*
+        Write a debug message stating the callback we are running
+      */
+      _debug2.default.writeMessage("Running Callback: " + callbackName);
+
+      /*
+        Run the callback function and catch any errors
+      */
+      try {
+        callbackFunction();
+      } catch (error) {
+        if (error.message == "CANCEL EVENT") {
+          throw error;
+        } else {
+          _debug2.default.writeMessage("Callback error: " + error.message);
+        }
+      }
+    }
+  }
+
+  return {
+    initialize: initialize,
+    run: run
+  };
+}();
+
+/**
+ * Imports the debug module
+ * @module utilities/debug
+ */
+exports.default = Callbacks;
 module.exports = exports["default"];
 
 /***/ }),
@@ -4599,7 +4599,7 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -4627,7 +4627,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -4635,7 +4635,7 @@ var _playbackSpeedElements = __webpack_require__(18);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -6903,10 +6903,6 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _callbacks = __webpack_require__(7);
-
-var _callbacks2 = _interopRequireDefault(_callbacks);
-
 var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
@@ -6928,11 +6924,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
  */
-
-
 /**
- * Imports the Audio Navigation Utility
- * @module utilities/AudioNavigation
+ * Imports the config module
+ * @module config
  */
 var Ended = function () {
   /**
@@ -6966,7 +6960,7 @@ var Ended = function () {
           /*
           Stops the active song.
           */
-          AmplitudeCore.stop();
+          _core2.default.stop();
 
           /*
             Sync the play pause elements.
@@ -6992,12 +6986,8 @@ var Ended = function () {
 
 
 /**
- * Imports the Callback Utility
- * @module utilities/callbacks
- */
-/**
- * Imports the config module
- * @module config
+ * Imports the Audio Navigation Utility
+ * @module utilities/AudioNavigation
  */
 exports.default = Ended;
 module.exports = exports["default"];
@@ -7033,7 +7023,7 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -7396,7 +7386,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -8715,7 +8705,7 @@ var _repeater = __webpack_require__(12);
 
 var _repeater2 = _interopRequireDefault(_repeater);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -8843,7 +8833,7 @@ var _repeater = __webpack_require__(12);
 
 var _repeater2 = _interopRequireDefault(_repeater);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -9580,7 +9570,7 @@ var _time = __webpack_require__(24);
 
 var _time2 = _interopRequireDefault(_time);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -10266,7 +10256,7 @@ var _shuffleElements = __webpack_require__(19);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -10286,7 +10276,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -11718,7 +11708,7 @@ var _checks = __webpack_require__(5);
 
 var _checks2 = _interopRequireDefault(_checks);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
