@@ -219,8 +219,6 @@ let Initializer = (function() {
               }
           });
   
-      
-
           /*
             Set the user waveform settings if provided.
           */

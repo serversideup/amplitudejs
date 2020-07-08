@@ -1342,6 +1342,7 @@ var AudioNavigation = function () {
     _events2.default.destroyAudioBindings();
     _config2.default.audio = new Audio(song.url);
     _events2.default.rebindAudio();
+    _callbacks2.default.initialize();
 
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
@@ -1375,6 +1376,7 @@ var AudioNavigation = function () {
     _events2.default.destroyAudioBindings();
     _config2.default.audio = new Audio();
     _events2.default.rebindAudio();
+    _callbacks2.default.initialize();
 
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;

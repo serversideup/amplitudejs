@@ -486,6 +486,7 @@ let AudioNavigation = (function() {
     Events.destroyAudioBindings();
     config.audio = new Audio(song.url);
     Events.rebindAudio();
+    Callbacks.initialize();
     
     config.audio.src = song.url;
     config.active_metadata = song;
@@ -519,6 +520,7 @@ let AudioNavigation = (function() {
     Events.destroyAudioBindings();
     config.audio = new Audio();
     Events.rebindAudio();
+    Callbacks.initialize();
 
     config.audio.src = song.url;
     config.active_metadata = song;
