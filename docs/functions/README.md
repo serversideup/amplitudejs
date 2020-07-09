@@ -288,6 +288,12 @@ This simply pauses whatever song is active.
 Amplitude.pause()
 ```
 
+## Stop
+This simply stops whatever song is active.
+```javascript
+Amplitude.stop()
+```
+
 ## Next
 Plays the next song either in the playlist or globally.
 
