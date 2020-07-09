@@ -8,7 +8,7 @@
   &#x2022;
   <a title="Examples" href="https://521dimensions.com/open-source/amplitudejs/examples"><strong>Examples</strong></a>
   &#x2022;
-  <a title="Tutorials" href="https://serversideup.net/search/?type=tutorials&tags=amplitudejs"><strong>Tutorials</strong></a>
+  <a title="Tutorials" href="https://serversideup.net/search/?tags=amplitudejs&type=all"><strong>Tutorials</strong></a>
   &#x2022;
   <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
   &#x2022;
