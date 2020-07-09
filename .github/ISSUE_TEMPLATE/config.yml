@@ -2,4 +2,8 @@ blank_issues_enabled: false
 contact_links:
   - name: ❓ Support Question
     url: https://community.serversideup.net/c/get-help/amplitudejs/27
-    about: Get fast & friendly support on our community forum.
+    about: Get friendly support from the community on our forum.
+
+  - name: 🤵 Get Professional Support & Customizations
+    url: https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support
+    about: Skip the line and get priority support directly from the creators of AmplitudeJS.
