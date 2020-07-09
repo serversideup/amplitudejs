@@ -46,7 +46,7 @@ If you would like to get in touch directly with the creators of AmplitudeJS or i
 We have a number of demos and examples available for you to freely use. [View the demos &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/examples/)
 
 ## Tutorials
-We use [ServerSideUp](https://serversideup.net) for all of our tutorials. [See all of the tutorials &rarr;](https://serversideup.net/search/?type=tutorials&tags=amplitudejs)
+We use [ServerSideUp](https://serversideup.net) for all of our tutorials. [See all of the tutorials &rarr;](https://serversideup.net/search/?tags=amplitudejs&type=all)
 
 ## Asking for support
 If you need help, here are a few tips:
