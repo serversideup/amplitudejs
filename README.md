@@ -19,7 +19,7 @@
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
 	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank"><img src="https://badgen.net/jsdelivr/hits/npm/amplitudejs" alt="jsDelivr"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/dt/amplitudejs" alt="Downloads"></a>
-	<a href="https://gitter.im/521dimensions/amplitudejs" target="_blank"><img src="https://badges.gitter.im/gitterHQ/gitter.svg" alt="Gitter"></a>
+	<a href="https://community.serversideup.net/c/get-help/amplitudejs/27" target="_blank"><img src="https://badgen.net/badge/icon/On%20Discourse?label=chat&color=cyan" alt="Chat"></a>
 	<br />
 	<a href="https://david-dm.org/521dimensions/amplitudejs" target="_blank"><img src="https://badgen.net/david/dep/521dimensions/amplitudejs" alt="david-dm"></a>
 	<a href="https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE" target="_blank"><img src="https://badgen.net/github/license/521dimensions/amplitudejs" alt="License"></a>
