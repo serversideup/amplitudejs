@@ -8,7 +8,7 @@
   &#x2022;
   <a title="Examples" href="https://521dimensions.com/open-source/amplitudejs/examples"><strong>Examples</strong></a>
   &#x2022;
-  <a title="Tutorials" href="https://serversideup.net/search/?type=tutorials&tags=amplitudejs"><strong>Tutorials</strong></a>
+  <a title="Tutorials" href="https://serversideup.net/search/?tags=amplitudejs&type=all"><strong>Tutorials</strong></a>
   &#x2022;
   <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
   &#x2022;
@@ -19,7 +19,7 @@
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
 	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank"><img src="https://badgen.net/jsdelivr/hits/npm/amplitudejs" alt="jsDelivr"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/dt/amplitudejs" alt="Downloads"></a>
-	<a href="https://gitter.im/521dimensions/amplitudejs" target="_blank"><img src="https://badges.gitter.im/gitterHQ/gitter.svg" alt="Gitter"></a>
+	<a href="https://community.serversideup.net/c/get-help/amplitudejs/27" target="_blank"><img src="https://badgen.net/badge/icon/On%20Discourse?label=chat&color=cyan" alt="Chat"></a>
 	<br />
 	<a href="https://david-dm.org/521dimensions/amplitudejs" target="_blank"><img src="https://badgen.net/david/dep/521dimensions/amplitudejs" alt="david-dm"></a>
 	<a href="https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE" target="_blank"><img src="https://badgen.net/github/license/521dimensions/amplitudejs" alt="License"></a>
