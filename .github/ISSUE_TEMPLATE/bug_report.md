@@ -2,7 +2,7 @@
 name: "\U0001F41B Bug Report"
 about: "Something isn't working as expected \U0001F914"
 title: ''
-labels: bug
+labels: bug-needs-confirmation
 assignees: danpastori
 
 ---
