@@ -4,6 +4,10 @@ contact_links:
     url: https://community.serversideup.net/c/open-source/amplitudejs/27
     about: Get friendly support from the community on our forum.
 
+  - name: ✨ Request a feature
+    url: https://community.serversideup.net/t/requesting-features-for-amplitudejs/196/
+    about: Learn how to request a new feature.
+
   - name: 🤵 Get Professional Support & Customizations
     url: https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support
     about: Skip the line and get priority support directly from the creators of AmplitudeJS.
