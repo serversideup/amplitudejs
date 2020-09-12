@@ -2,8 +2,7 @@
 name: "\U0001F41B Bug Report"
 about: "Something isn't working as expected \U0001F914"
 title: ''
-labels: bug-needs-confirmation
-assignees: danpastori
+labels: "Bug: Needs Confirmation 🧐"
 
 ---
 <!-- 🤵 Looking for professional support? Guaranteed response times next business day. Learn more here: https://521d.me/amplitudejs-professional-support -->
