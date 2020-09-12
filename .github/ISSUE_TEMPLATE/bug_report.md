@@ -1,6 +1,6 @@
 ---
 name: "\U0001F41B Bug Report"
-about: "Something isn't working as expected \U0001F914"
+about: "You found a bug in the code \U0001F914"
 title: ''
 labels: "Bug: Needs Confirmation 🧐"
 
