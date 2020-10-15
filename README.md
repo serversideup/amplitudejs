@@ -52,7 +52,7 @@ These people believe in open-source. If you are interested in improving the proj
 <img src="https://opencollective.com/amplitudejs/tiers/silver-sponsor.svg">
 
 ### Backers
-<a href="https://opencollective.com/amplitudejs#backers" target="_blank"><img src="https://opencollective.com/amplitudejs/backers.svg?width=890"></a>
+<a href="https://opencollective.com/amplitudejs#backers"><img src="https://opencollective.com/amplitudejs/tiers/backer.svg"></a>
 
 ## Features
 * 🎨 100% customizable design of all player elements
