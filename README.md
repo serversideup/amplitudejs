@@ -48,6 +48,9 @@ These people believe in open-source. If you are interested in improving the proj
 ### Gold Sponsors
 <a href="https://www.podcaster.de/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/sponsor-logo_podcaster.png"></a>
 
+### Silver Sponsors
+<a href="https://www.kasinosivu.com/" target="_blank">Parhaat Kasinot</a>
+
 ### Backers
 <a href="https://opencollective.com/amplitudejs#backers" target="_blank"><img src="https://opencollective.com/amplitudejs/backers.svg?width=890"></a>
 
