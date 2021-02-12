@@ -36,7 +36,7 @@ meta:
 ---
 
 # Overview of Visualizations
-
+<carbon-ads/>
 So what are audio Visualizations? They are the beautiful art that vibe to the beat and react to the different highs and lows of the songs. iTunes is famous for having a beautiful visualization for it's audio.
 
 In AmplitudeJS you can add your own visualization element to the page that operates the same as an iTunes visualization! It reads in the highs and lows and different frequencies of the song to generate a beautiful visual to go along with the music! If you are really motivated, you can build your own using the template provided.
@@ -64,7 +64,7 @@ Once you've included the Visualization, you can add it to your visualizations ar
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     visualizations: [
       {
         object: MichaelBromleyVisualization,
@@ -96,7 +96,7 @@ Now that we have our visualizations included, we can define them in a variety of
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     visualizations: [
       {
         object: MichaelBromleyVisualization,
@@ -114,7 +114,7 @@ You can set the `visualization` key to one of the keys for a visualization you r
 You can also set the global visualization through the public method like this:
 
 ```javascript
-  Amplitude.setGlobalVisualization( visualizationKey );
+Amplitude.setGlobalVisualization( visualizationKey );
 ```
 
 Now you just need a visualization element like this:
@@ -131,7 +131,7 @@ You can also define a visualization specific for your playlist. This means that 
 You just need to set up AmplitudeJS with your visualizations and apply the key to the playlist key `visualization`:
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     visualizations: [
       {
         object: MichaelBromleyVisualization,
@@ -141,9 +141,9 @@ You just need to set up AmplitudeJS with your visualizations and apply the key t
       }
     ],
     playlists: {
-      'hip_hop': {
+      "hip_hop": {
         visualization: 'michaelbromley_visualization',
-        songs: ['...']
+        songs: ["..."]
       }
     }
   });
@@ -152,7 +152,7 @@ You just need to set up AmplitudeJS with your visualizations and apply the key t
 Now your visualization is scoped to a playlist! You can also set the visualization through the public facing method like this:
 
 ```javascript
-  Amplitude.setPlaylistVisualization( playlist_key, visualization_key );
+Amplitude.setPlaylistVisualization( playlist_key, visualization_key );
 ```
 
 And to use the visualization scoped for the playlist, you have to add an element with the proper attribute:
@@ -169,8 +169,8 @@ To add a visualization for an individual song, you just need to add the key to t
 ```javascript
   Amplitude.init({
     songs: [{
-      name: 'Test',
-      visualization: 'michaelbromley_visualization'
+      name: "Test",
+      visualization: "michaelbromley_visualization"
     }],
     visualizations: [
       {
@@ -188,7 +188,7 @@ Now whenever the song named 'Test' plays, the visualization defined will show up
 You can also set the visualization for an individual song using the `Amplitude.setSongVisualization(songIndex, visualizationKey)` method like so:
 
 ```javascript
-  Amplitude.setSongVisualization( songIndex, visualizationKey );
+Amplitude.setSongVisualization( songIndex, visualizationKey );
 ```
 
 To display this visualization, simply add an element like this:
@@ -202,12 +202,12 @@ You can even specify a visualization for an individual song within a playlist. T
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     playlists: {
-      'hip_hop': {
+      "hip_hop": {
         songs: [{
-          name: 'Test',
-          visualization: 'michaelbromley_visualization'
+          name: "Test",
+          visualization: "michaelbromley_visualization"
         }]
       }
     },
@@ -241,7 +241,7 @@ If you are really motivated and want to build your own visualization, you can!! 
 ```javascript
 /*
 	This is a template for how to build a visualization for
-	AmplitudeJS.  The visualization should be modular contain
+	AmplitudeJS. The visualization should be modular contain
 	the methods and variables outlined. You can add any additional
 	methods or variables inside of the object.
 */

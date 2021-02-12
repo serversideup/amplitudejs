@@ -36,12 +36,12 @@ meta:
 ---
 
 # Setting the Default Playback Speed
-
+<carbon-ads/>
 By default, AmplitudeJS plays back the audio at the normal speed of `1.0`. However, you can initialize AmplitudeJS to play at `1.5`x the normal rate or `2.0`x times the normal rate. To do that, you can set the `playback_speed` attribute on initialization.
 
 ```javascript
   Amplitude.init({
-    songs: ['...'],
+    songs: ["..."],
     playback_speed: 2.0
   });
 ```

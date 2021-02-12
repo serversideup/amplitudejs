@@ -36,6 +36,7 @@ meta:
 ---
 
 # Soundcloud Configuration
+<carbon-ads/>
 AmplitudeJS supports SoundCloud integration! To use SoundCloud there are a couple parameters that need to be set.
 
 First, the `url` in your song object must be the SoundCloud URL of the song provided. Second, the artist must have their audio be able to be streamed. NOT ALL AUDIO ON SOUNDCLOUD IS STREAMABLE! This is up to the artist to allow the song to be streamed through their API. If they do not allow it, the audio will not be able to be streamed!

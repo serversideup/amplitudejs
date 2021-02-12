@@ -36,7 +36,7 @@ meta:
 ---
 
 # Elements Introduction
-
+<carbon-ads/>
 AmplitudeJS comes with a variety of elements. Each element is picked up by a
 class prefixed with 'amplitude-' and depending on the environment, an attribute
 that relates to the index of a song in your list of songs or a playlist you are

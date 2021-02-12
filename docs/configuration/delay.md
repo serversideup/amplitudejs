@@ -36,7 +36,7 @@ meta:
 ---
 
 # Delay Between Audio
-
+<carbon-ads/>
 AmplitudeJS allows the developer to add a time delay between the audio objects defined. By default, this value is `0`. When you initialize AmplitudeJS you can provide an integer in MS for how long you want AmplitudeJS to wait before it starts playing the next audio track.
 
 ## Initialization
@@ -44,7 +44,7 @@ You can set this value on initialization:
 
 ```javascript
 Amplitude.init({
-  songs: ['...'],
+  songs: ["..."],
   delay: 3000
 });
 ```

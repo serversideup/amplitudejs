@@ -36,7 +36,7 @@ meta:
 ---
 
 # Meta Data Elements
-
+<carbon-ads/>
 Meta data elements get their information filled in with meta data from the
 active song object or on initialization from the keyed song in the array. These can be any type of HTML element except when filling
 in cover_art_url, station_art_url, or podcast_episode_cover_art_url.

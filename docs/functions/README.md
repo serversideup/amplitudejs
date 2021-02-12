@@ -36,6 +36,7 @@ meta:
 ---
 
 # Public Functions
+<carbon-ads/>
 There are a variety of public functions that AmplitudeJS exposes to the user.
 These methods allow the user to change config variables, add new songs, play
 now, etc.
@@ -216,6 +217,15 @@ This method returns the index of the song added to the player.
 Amplitude.addSong( {song_object} );
 ```
 
+## Prepend Song
+Adds a song to the beginning of the AmplitudeJS player. After pre-pending the song, you will have to bindNewElements() method to make sure that any visuals are updated as well.
+
+This method returns the index of the song added to the player.
+
+```javascript
+Amplitude.prependSong( {song_object} );
+```
+
 ## Add Song To Playlist
 Adds a song to a specific playlist within AmplitudeJS. Once the song is added
 you will need to update the visual side of the player yourself.  After you
@@ -276,6 +286,12 @@ Amplitude.play()
 This simply pauses whatever song is active.
 ```javascript
 Amplitude.pause()
+```
+
+## Stop
+This simply stops whatever song is active.
+```javascript
+Amplitude.stop()
 ```
 
 ## Next

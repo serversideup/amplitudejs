@@ -36,7 +36,7 @@ meta:
 ---
 
 # Playlists
-
+<carbon-ads/>
 Using playlists is an essential piece of functionality for AmplitudeJS. As a developer you have the ability to group audio by playlists. There are multiple advantages to this such as the ability to display unique groupings on the screen at once. A playlist could be an album, a group of songs, a podcast series, etc. It's all up to you on how you want to do it!
 
 There are multiple ways to initialize playlists. Let's start with doing it right away in the `Amplitude.init()` method.

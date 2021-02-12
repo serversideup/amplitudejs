@@ -36,7 +36,7 @@ meta:
 ---
 
 # Debug Mode
-
+<carbon-ads/>
 Debug mode outputs verbose updates when Amplitude actions take place to see the
 current config and statuses of the AmplitudeJS player. To turn on AmplitudeJS
 debug mode you can set it in the config or call:

@@ -36,7 +36,7 @@ meta:
 ---
 
 # Interactive Elements
-
+<carbon-ads/>
 The interactive elements of AmplitudeJS have event handlers bound to them that
 responds to a touch or click from a user. These elements build the functionality
 of the player you are designing. The scoping of these elements is handled by
@@ -297,13 +297,13 @@ The previous button will go sequentially down the indexes or to the previous
 index in the shuffled songs array. If the player is playing a playlist,
 the global previous button will operate on that playlist.
 
-### Global Next Button
+### Global Previous Button
 To add a global previous button add the following HTML:
 ```html
 <span class="amplitude-prev"></span>
 ```
 
-### Playlist Next Button
+### Playlist Previous Button
 To add a playlist previous button add the following HTML:
 ```html
 <span class="amplitude-prev" data-amplitude-playlist="{playlist_key}"></span>

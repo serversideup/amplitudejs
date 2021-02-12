@@ -36,7 +36,7 @@ meta:
 ---
 
 # FX Introduction
-
+<carbon-ads/>
 Amplitude FX elements are a brand new feature that requires a special section. These elements include Waveforms and Visualizations for audio. These elements make use of the Web Audio API providing more power to fine tune your player and create beautiful web audio players! Since these players make use of the Web Audio API it's important to realize that the browser they run in has to support it: [https://caniuse.com/#feat=audio-api](https://caniuse.com/#feat=audio-api).
 
 As of this writing, most major browsers (besides IE 11 go figure) support it. If it's not supported, we simply won't use the Web Audio API in your player.

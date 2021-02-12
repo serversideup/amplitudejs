@@ -35,13 +35,14 @@ meta:
     content: "@521dimensions"
 ---
 # Initializing Amplitude.js
+<carbon-ads/>
 To initialize Amplitude.js, you must call the `Amplitude.init()` method and pass in an object that contains an array of songs and settings. Amplitude.js will then take care of configuring and setting up your player by finding all of the Amplitude elements (defined later in the docs) and binding the appropriate event handlers.
 
 To configure Amplitude.js, you need to call the init function on the Amplitude object and you can pass it a JSON object of configuration variables ( we will go through ALL of these in the documentation ). At the bare minimum, you need to pass it all of the song objects that your page will be using. More information about the song object next.
 
 ```javascript
 	Amplitude.init({
-		"songs": [
+		songs: [
 			{
 				"name": "Song Name 1",
 				"artist": "Artist Name",
