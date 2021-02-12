@@ -11,12 +11,6 @@ import config from "../config.js";
 import AudioNavigation from "../utilities/audioNavigation.js";
 
 /**
- * Imports the Callback Utility
- * @module utilities/callbacks
- */
-import Callbacks from "../utilities/callbacks.js";
-
-/**
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
  */
@@ -65,7 +59,7 @@ let Ended = (function() {
           /*
 						Stops the active song.
 					*/
-          AmplitudeCore.stop();
+          Core.stop();
 
           /*
             Sync the play pause elements.
