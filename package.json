@@ -1,6 +1,6 @@
 {
   "name": "amplitudejs",
-  "version": "5.3.0-beta.1",
+  "version": "5.3.0-beta.2",
   "description": "A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs",
   "main": "dist/amplitude.js",
   "devDependencies": {
