@@ -14,10 +14,12 @@ let WaveForm = (function() {
     Initialize the local variables used in the Waveform.
   */
   let buffer = "";
-  let sampleRate = config.waveforms.sample_rate;
+  let sampleRate = '';
   let peaks = "";
 
   function init() {
+    sampleRate = config.waveforms.sample_rate;
+    
     /*
       Grabs all of the waveform elements on the page.
     */
