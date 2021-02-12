@@ -53,7 +53,7 @@ import { version } from "../package.json";
 module.exports = {
   version: version,
 
-  audio: null,
+  audio: new Audio(),
 
   active_metadata: {},
 

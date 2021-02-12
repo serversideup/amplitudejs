@@ -147,15 +147,13 @@ let PlayPause = (function() {
         AudioNavigation.changeSongPlaylist(
           playlist,
           config.playlists[playlist].shuffle_list[0],
-          0,
-          true
+          0
         );
       } else {
         AudioNavigation.changeSongPlaylist(
           playlist,
           config.playlists[playlist].songs[0],
-          0,
-          true
+          0
         );
       }
     }
@@ -204,7 +202,7 @@ let PlayPause = (function() {
       /*
 				We then change the song to the index selected.
 			*/
-      AudioNavigation.changeSong(config.songs[song], song, true);
+      AudioNavigation.changeSong(config.songs[song], song);
     }
 
     /*
@@ -218,7 +216,7 @@ let PlayPause = (function() {
 				The song selected is different, so we change the
 				song.
 			*/
-      AudioNavigation.changeSong(config.songs[song], song, true);
+      AudioNavigation.changeSong(config.songs[song], song);
     }
 
     /*
@@ -270,8 +268,7 @@ let PlayPause = (function() {
       AudioNavigation.changeSongPlaylist(
         playlist,
         config.playlists[playlist].songs[song],
-        song,
-        true
+        song
       );
     }
 
@@ -289,8 +286,7 @@ let PlayPause = (function() {
       AudioNavigation.changeSongPlaylist(
         playlist,
         config.playlists[playlist].songs[song],
-        song,
-        true
+        song
       );
     }
 

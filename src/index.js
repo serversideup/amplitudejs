@@ -550,43 +550,6 @@ let Amplitude = (function() {
   }
 
   /**
-   * Adds a song to the beginning of the config array.
-   * This will allow Amplitude to play the song in a 
-   * playlist type setting.
-   *
-   * Public Accessor: Amplitude.addSong( song_json )
-   *
-   * @access public
-   * @param {object} song 	- JSON representation of a song.
-   * @returns {number} New index of the song (0)
-   */
-  function prependSong(song) {
-    /*
-			Ensures we have a songs array to push to.
-		*/
-    if (config.songs == undefined) {
-      config.songs = [];
-    }
-
-    config.songs.unshift(song);
-
-    if (config.shuffle_on) {
-      config.shuffle_list.unshift(song);
-    }
-
-    if (SoundCloud.isSoundCloudURL(song.url)) {
-      SoundCloud.resolveIndividualStreamableURL(
-        song.url,
-        null,
-        config.songs.length - 1,
-        config.shuffle_on
-      );
-    }
-
-    return 0;
-  }
-
-  /**
    * Adds a song to a playlist. This will allow Amplitude to play the song in the
    * playlist
    *
@@ -714,7 +677,6 @@ let Amplitude = (function() {
 			or there will be nothing to play.
 		*/
     if (song.url) {
-      config.audio = new Audio();
       config.audio.src = song.url;
       config.active_metadata = song;
       config.active_album = song.album;
@@ -892,20 +854,6 @@ let Amplitude = (function() {
    */
   function pause() {
     Core.pause();
-
-    ConfigState.setPlayerState();
-  }
-
-  /**
-   * Allows the user to stop whatever the active song is directly
-   * through Javascript.
-   * 
-   * Public Accessor: Amplitude.stop();
-   * 
-   * @access public
-   */
-  function stop(){
-    Core.stop();
 
     ConfigState.setPlayerState();
   }
@@ -1394,7 +1342,6 @@ let Amplitude = (function() {
     getSongAtIndex: getSongAtIndex,
     getSongAtPlaylistIndex: getSongAtPlaylistIndex,
     addSong: addSong,
-    prependSong: prependSong,
     addSongToPlaylist: addSongToPlaylist,
     removeSong: removeSong,
     removeSongFromPlaylist: removeSongFromPlaylist,
@@ -1403,7 +1350,6 @@ let Amplitude = (function() {
     playPlaylistSongAtIndex: playPlaylistSongAtIndex,
     play: play,
     pause: pause,
-    stop: stop,
     getAudio: getAudio,
     getAnalyser: getAnalyser,
     next: next,

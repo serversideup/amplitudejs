@@ -24,7 +24,7 @@ let Callbacks = (function() {
       Event: abort
       https://www.w3schools.com/tags/av_event_abort.asp
     */
-    config.audio.addEventListener("abort", function(){
+    config.audio.addEventListener("abort", function() {
       run("abort");
     });
 
@@ -82,7 +82,7 @@ let Callbacks = (function() {
     */
     config.audio.addEventListener("play", function() {
       run("play");
-    } );
+    });
 
     /*
       Event: progress

@@ -98,7 +98,7 @@ Amplitude.init({
   ],
 
   waveforms: {
-      sample_rate: 100
+      sample_rate: 50
   },
 
   visualizations: [

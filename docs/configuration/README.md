@@ -36,7 +36,6 @@ meta:
 ---
 
 # Configuring Amplitude.js
-<carbon-ads/>
 Amplitude JS contains many variables that can be configured to determine the
 functionality of AmplitudeJS.
 

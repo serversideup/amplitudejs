@@ -36,7 +36,6 @@ meta:
 ---
 
 # Callbacks
-<carbon-ads/>
 There are a variety of callbacks specific to AmplitudeJS that get called at certain times that the developer can bind to.
 
 
@@ -59,7 +58,7 @@ callback that has a method to increase the play count:
 
 ```javascript
 Amplitude.init({
-		 songs: [
+		 "songs": [
 				 {
 						 "name": "Song Name 1",
 						 "artist": "Artist Name",
@@ -82,9 +81,9 @@ Amplitude.init({
 						 "cover_art_url": "/cover/art/url.jpg"
 				 }
 		 ],
-		 callbacks: {
-			 stop: function(){
-				 console.log("Audio has been stopped.")
+		 "callbacks": {
+			 'stop': function(){
+				 console.log('Audio has been stopped.')
 			 }
 		 }
  });

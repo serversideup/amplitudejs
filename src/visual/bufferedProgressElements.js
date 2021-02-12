@@ -45,7 +45,7 @@ let BufferedProgressElements = (function() {
         "data-amplitude-song-index"
       );
 
-      if (playlist == null && song == null && !isNaN(config.buffered) ) {
+      if (playlist == null && song == null) {
         songBufferedProgressBars[i].value = parseFloat(
           parseFloat(config.buffered) / 100
         );
@@ -75,7 +75,7 @@ let BufferedProgressElements = (function() {
         "data-amplitude-song-index"
       );
 
-      if (song == null && !isNaN(config.buffered) ) {
+      if (song == null) {
         songBufferedProgressBarsPlaylist[i].value = parseFloat(
           parseFloat(config.buffered) / 100
         );
@@ -105,7 +105,7 @@ let BufferedProgressElements = (function() {
         "data-amplitude-playlist"
       );
 
-      if (playlist == null && !isNaN(config.buffered) ) {
+      if (playlist == null) {
         songBufferedProgressBarsSongs[i].value = parseFloat(
           parseFloat(config.buffered) / 100
         );
@@ -138,11 +138,9 @@ let BufferedProgressElements = (function() {
 			set them to 0 which is like re-setting them.
 		*/
     for (let i = 0; i < songBufferedProgressBarsSongsInPlaylist.length; i++) {
-      if (!isNaN(config.buffered)) {
-        songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(
-          parseFloat(config.buffered) / 100
-        );
-      }
+      songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(
+        parseFloat(config.buffered) / 100
+      );
     }
   }
 

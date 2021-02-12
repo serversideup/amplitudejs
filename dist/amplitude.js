@@ -88,7 +88,7 @@ var _package = __webpack_require__(59);
 module.exports = {
   version: _package.version,
 
-  audio: null,
+  audio: new Audio(),
 
   active_metadata: {},
 
@@ -253,11 +253,11 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(7);
+var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
-var _callbacks = __webpack_require__(9);
+var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -498,7 +498,6 @@ var Core = function () {
    * @access public
    */
   function disconnectStream() {
-    _config2.default.audio = new Audio();
     _config2.default.audio.src = "";
     _config2.default.audio.load();
   }
@@ -511,7 +510,6 @@ var Core = function () {
    * @access public\
    */
   function reconnectStream() {
-    _config2.default.audio = new Audio();
     _config2.default.audio.src = _config2.default.active_metadata.url;
     _config2.default.audio.load();
   }
@@ -862,7 +860,7 @@ var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _callbacks = __webpack_require__(9);
+var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -886,17 +884,13 @@ var _timeElements = __webpack_require__(15);
 
 var _timeElements2 = _interopRequireDefault(_timeElements);
 
-var _metaDataElements = __webpack_require__(7);
+var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
 var _containerElements = __webpack_require__(49);
 
 var _containerElements2 = _interopRequireDefault(_containerElements);
-
-var _events = __webpack_require__(22);
-
-var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -908,37 +902,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 /**
- * Container Elements Module
+ * Meta Data Elements Module
  *
- * @module visual/ContainerElements
+ * @module visual/MetaDataElements
  */
 
 
 /**
- * Imports the Time Elements Module
+ * Imports the Song Played Progress Elements Module
  *
- * @module visual/TimeElements
+ * @module visual/SongPlayedProgressElements
  */
 
 
 /**
- * Imports the Song Slider Elements Module
+ * Imports the Play Pause Elements Module
  *
- * @module visual/SongSliderElements
+ * @module visual/PlayPauseElements
  */
 
 
 /**
- * Imports the Checks Module
+ * Imports the Callbacks Module
  *
- * @module utilities/Checks
+ * @module utilities/Callbacks
  */
-
-
 /**
- * Imports the Core Module
- *
- * @module core/Core
+ * Imports the config module
+ * @module config
  */
 var AudioNavigation = function () {
   /**
@@ -1326,12 +1317,8 @@ var AudioNavigation = function () {
    * @access private
    * @prop {object} song  - The song we are changing to.
    * @prop {number} index - The index we are changing to.
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
    */
   function changeSong(song, index) {
-    var direct = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
     /*
       Prepare the song change.
     */
@@ -1339,15 +1326,7 @@ var AudioNavigation = function () {
 
     /*
       Change the song.
-       We're removing/adding event listeners on 
-      the audio object before we create a new one
-      and then after we create it, re-binding.
     */
-    _events2.default.destroyAudioBindings();
-    _config2.default.audio = new Audio(song.url);
-    _events2.default.rebindAudio();
-    _callbacks2.default.initialize();
-
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -1357,7 +1336,7 @@ var AudioNavigation = function () {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange(direct);
+    afterSongChange();
   }
 
   /**
@@ -1367,12 +1346,8 @@ var AudioNavigation = function () {
    * @prop {string} playlist - The playlist we are changing the song on.
    * @prop {object} song     - The song we are changing to in the playlist.
    * @prop {number} index    - The inded of the song we are changing to in the playlist.
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
    */
   function changeSongPlaylist(playlist, song, index) {
-    var direct = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
     /*
       Prepare the song change.
     */
@@ -1381,11 +1356,6 @@ var AudioNavigation = function () {
     /*
       Change the song.
     */
-    _events2.default.destroyAudioBindings();
-    _config2.default.audio = new Audio();
-    _events2.default.rebindAudio();
-    _callbacks2.default.initialize();
-
     _config2.default.audio.src = song.url;
     _config2.default.active_metadata = song;
     _config2.default.active_album = song.album;
@@ -1396,7 +1366,7 @@ var AudioNavigation = function () {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange(direct);
+    afterSongChange();
   }
 
   /**
@@ -1429,13 +1399,12 @@ var AudioNavigation = function () {
 
   /**
    * Updates data on the display after a song has changed.
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
+   *
    * @access private
    */
-  function afterSongChange(direct) {
+  function afterSongChange() {
     _metaDataElements2.default.displayMetaData();
-    _containerElements2.default.setActive(direct);
+    _containerElements2.default.setActive();
     _timeElements2.default.resetDurationTimes();
 
     /*
@@ -1484,41 +1453,37 @@ var AudioNavigation = function () {
 }();
 
 /**
- * Time Update Handle
- * 
- * @module events/Events
- */
-
-
-/**
- * Meta Data Elements Module
+ * Container Elements Module
  *
- * @module visual/MetaDataElements
+ * @module visual/ContainerElements
  */
 
 
 /**
- * Imports the Song Played Progress Elements Module
+ * Imports the Time Elements Module
  *
- * @module visual/SongPlayedProgressElements
+ * @module visual/TimeElements
  */
 
 
 /**
- * Imports the Play Pause Elements Module
+ * Imports the Song Slider Elements Module
  *
- * @module visual/PlayPauseElements
+ * @module visual/SongSliderElements
  */
 
 
 /**
- * Imports the Callbacks Module
+ * Imports the Checks Module
  *
- * @module utilities/Callbacks
+ * @module utilities/Checks
  */
+
+
 /**
- * Imports the config module
- * @module config
+ * Imports the Core Module
+ *
+ * @module core/Core
  */
 exports.default = AudioNavigation;
 module.exports = exports["default"];
@@ -1843,6 +1808,262 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
+var _debug = __webpack_require__(4);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Callback Utility
+ *
+ * @module utilities/callbacks
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+var Callbacks = function () {
+  /**
+   * Initializes the callbacks for the player.
+   */
+  function initialize() {
+    /*
+      Event: abort
+      https://www.w3schools.com/tags/av_event_abort.asp
+    */
+    _config2.default.audio.addEventListener("abort", function () {
+      run("abort");
+    });
+
+    /*
+      Event: error
+      https://www.w3schools.com/tags/av_event_error.asp
+    */
+    _config2.default.audio.addEventListener("error", function () {
+      run("error");
+    });
+
+    /*
+      Event: loadeddata
+      https://www.w3schools.com/tags/av_event_loadeddata.asp
+    */
+    _config2.default.audio.addEventListener("loadeddata", function () {
+      run("loadeddata");
+    });
+
+    /*
+      Event: loadedmetadata
+      https://www.w3schools.com/tags/av_event_loadedmetadata.asp
+    */
+    _config2.default.audio.addEventListener("loadedmetadata", function () {
+      run("loadedmetadata");
+    });
+
+    /*
+      Event: loadstart
+      https://www.w3schools.com/tags/av_event_loadstart.asp
+    */
+    _config2.default.audio.addEventListener("loadstart", function () {
+      run("loadstart");
+    });
+
+    /*
+      Event: pause
+      https://www.w3schools.com/tags/av_event_pause.asp
+    */
+    _config2.default.audio.addEventListener("pause", function () {
+      run("pause");
+    });
+
+    /*
+      Event: playing
+      https://www.w3schools.com/tags/av_event_playing.asp
+    */
+    _config2.default.audio.addEventListener("playing", function () {
+      run("playing");
+    });
+
+    /*
+      Event: play
+      https://www.w3schools.com/tags/av_event_play.asp
+    */
+    _config2.default.audio.addEventListener("play", function () {
+      run("play");
+    });
+
+    /*
+      Event: progress
+      https://www.w3schools.com/tags/av_event_progress.asp
+    */
+    _config2.default.audio.addEventListener("progress", function () {
+      run("progress");
+    });
+
+    /*
+      Event: ratechange
+      https://www.w3schools.com/tags/av_event_ratechange.asp
+    */
+    _config2.default.audio.addEventListener("ratechange", function () {
+      run("ratechange");
+    });
+
+    /*
+      Event: seeked
+      https://www.w3schools.com/tags/av_event_seeked.asp
+    */
+    _config2.default.audio.addEventListener("seeked", function () {
+      run("seeked");
+    });
+
+    /*
+      Event: seeking
+      https://www.w3schools.com/tags/av_event_seeking.asp
+    */
+    _config2.default.audio.addEventListener("seeking", function () {
+      run("seeking");
+    });
+
+    /*
+      Event: stalled
+      https://www.w3schools.com/tags/av_event_stalled.asp
+    */
+    _config2.default.audio.addEventListener("stalled", function () {
+      run("stalled");
+    });
+
+    /*
+      Event: suspend
+      https://www.w3schools.com/tags/av_event_suspend.asp
+    */
+    _config2.default.audio.addEventListener("suspend", function () {
+      run("suspend");
+    });
+
+    /*
+      Event: timeupdate
+      https://www.w3schools.com/tags/av_event_timeupdate.asp
+    */
+    _config2.default.audio.addEventListener("timeupdate", function () {
+      run("timeupdate");
+    });
+
+    /*
+      Event: volumechange
+      https://www.w3schools.com/tags/av_event_volumechange.asp
+    */
+    _config2.default.audio.addEventListener("volumechange", function () {
+      run("volumechange");
+    });
+
+    /*
+      Event: waiting
+      https://www.w3schools.com/tags/av_event_waiting.asp
+    */
+    _config2.default.audio.addEventListener("waiting", function () {
+      run("waiting");
+    });
+
+    /*
+      Event: canplay
+      https://www.w3schools.com/tags/av_event_canplay.asp
+    */
+    _config2.default.audio.addEventListener("canplay", function () {
+      run("canplay");
+    });
+
+    /*
+      Event: canplaythrough
+      https://www.w3schools.com/tags/av_event_canplaythrough.asp
+    */
+    _config2.default.audio.addEventListener("canplaythrough", function () {
+      run("canplaythrough");
+    });
+
+    /*
+      Event: durationchange
+      https://www.w3schools.com/tags/av_event_durationchange.asp
+    */
+    _config2.default.audio.addEventListener("durationchange", function () {
+      run("durationchange");
+    });
+
+    /*
+      Event: ended
+      https://www.w3schools.com/tags/av_event_ended.asp
+    */
+    _config2.default.audio.addEventListener("ended", function () {
+      run("ended");
+    });
+  }
+
+  /**
+   * Runs a user defined callback method
+   *
+   * Public Accessor: Callbacks.run( callbackName )
+   *
+   * @access public
+   * @param {string} callbackName - The name of the callback we are going to run.
+   */
+  function run(callbackName) {
+    /*
+      Checks to see if a user defined a callback method for the
+      callback we are running.
+    */
+    if (_config2.default.callbacks[callbackName]) {
+      /*
+        Build the callback function
+      */
+      var callbackFunction = _config2.default.callbacks[callbackName];
+
+      /*
+        Write a debug message stating the callback we are running
+      */
+      _debug2.default.writeMessage("Running Callback: " + callbackName);
+
+      /*
+        Run the callback function and catch any errors
+      */
+      try {
+        callbackFunction();
+      } catch (error) {
+        if (error.message == "CANCEL EVENT") {
+          throw error;
+        } else {
+          _debug2.default.writeMessage("Callback error: " + error.message);
+        }
+      }
+    }
+  }
+
+  return {
+    initialize: initialize,
+    run: run
+  };
+}();
+
+/**
+ * Imports the debug module
+ * @module utilities/debug
+ */
+exports.default = Callbacks;
+module.exports = exports["default"];
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -2138,7 +2359,7 @@ exports.default = MetaDataElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2269,262 +2490,6 @@ var RepeatElements = function () {
       * @module config
       */
 exports.default = RepeatElements;
-module.exports = exports["default"];
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _debug = __webpack_require__(4);
-
-var _debug2 = _interopRequireDefault(_debug);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Callback Utility
- *
- * @module utilities/callbacks
- */
-/**
- * Imports the config module
- * @module config
- */
-var Callbacks = function () {
-  /**
-   * Initializes the callbacks for the player.
-   */
-  function initialize() {
-    /*
-      Event: abort
-      https://www.w3schools.com/tags/av_event_abort.asp
-    */
-    _config2.default.audio.addEventListener("abort", function () {
-      run("abort");
-    });
-
-    /*
-      Event: error
-      https://www.w3schools.com/tags/av_event_error.asp
-    */
-    _config2.default.audio.addEventListener("error", function () {
-      run("error");
-    });
-
-    /*
-      Event: loadeddata
-      https://www.w3schools.com/tags/av_event_loadeddata.asp
-    */
-    _config2.default.audio.addEventListener("loadeddata", function () {
-      run("loadeddata");
-    });
-
-    /*
-      Event: loadedmetadata
-      https://www.w3schools.com/tags/av_event_loadedmetadata.asp
-    */
-    _config2.default.audio.addEventListener("loadedmetadata", function () {
-      run("loadedmetadata");
-    });
-
-    /*
-      Event: loadstart
-      https://www.w3schools.com/tags/av_event_loadstart.asp
-    */
-    _config2.default.audio.addEventListener("loadstart", function () {
-      run("loadstart");
-    });
-
-    /*
-      Event: pause
-      https://www.w3schools.com/tags/av_event_pause.asp
-    */
-    _config2.default.audio.addEventListener("pause", function () {
-      run("pause");
-    });
-
-    /*
-      Event: playing
-      https://www.w3schools.com/tags/av_event_playing.asp
-    */
-    _config2.default.audio.addEventListener("playing", function () {
-      run("playing");
-    });
-
-    /*
-      Event: play
-      https://www.w3schools.com/tags/av_event_play.asp
-    */
-    _config2.default.audio.addEventListener("play", function () {
-      run("play");
-    });
-
-    /*
-      Event: progress
-      https://www.w3schools.com/tags/av_event_progress.asp
-    */
-    _config2.default.audio.addEventListener("progress", function () {
-      run("progress");
-    });
-
-    /*
-      Event: ratechange
-      https://www.w3schools.com/tags/av_event_ratechange.asp
-    */
-    _config2.default.audio.addEventListener("ratechange", function () {
-      run("ratechange");
-    });
-
-    /*
-      Event: seeked
-      https://www.w3schools.com/tags/av_event_seeked.asp
-    */
-    _config2.default.audio.addEventListener("seeked", function () {
-      run("seeked");
-    });
-
-    /*
-      Event: seeking
-      https://www.w3schools.com/tags/av_event_seeking.asp
-    */
-    _config2.default.audio.addEventListener("seeking", function () {
-      run("seeking");
-    });
-
-    /*
-      Event: stalled
-      https://www.w3schools.com/tags/av_event_stalled.asp
-    */
-    _config2.default.audio.addEventListener("stalled", function () {
-      run("stalled");
-    });
-
-    /*
-      Event: suspend
-      https://www.w3schools.com/tags/av_event_suspend.asp
-    */
-    _config2.default.audio.addEventListener("suspend", function () {
-      run("suspend");
-    });
-
-    /*
-      Event: timeupdate
-      https://www.w3schools.com/tags/av_event_timeupdate.asp
-    */
-    _config2.default.audio.addEventListener("timeupdate", function () {
-      run("timeupdate");
-    });
-
-    /*
-      Event: volumechange
-      https://www.w3schools.com/tags/av_event_volumechange.asp
-    */
-    _config2.default.audio.addEventListener("volumechange", function () {
-      run("volumechange");
-    });
-
-    /*
-      Event: waiting
-      https://www.w3schools.com/tags/av_event_waiting.asp
-    */
-    _config2.default.audio.addEventListener("waiting", function () {
-      run("waiting");
-    });
-
-    /*
-      Event: canplay
-      https://www.w3schools.com/tags/av_event_canplay.asp
-    */
-    _config2.default.audio.addEventListener("canplay", function () {
-      run("canplay");
-    });
-
-    /*
-      Event: canplaythrough
-      https://www.w3schools.com/tags/av_event_canplaythrough.asp
-    */
-    _config2.default.audio.addEventListener("canplaythrough", function () {
-      run("canplaythrough");
-    });
-
-    /*
-      Event: durationchange
-      https://www.w3schools.com/tags/av_event_durationchange.asp
-    */
-    _config2.default.audio.addEventListener("durationchange", function () {
-      run("durationchange");
-    });
-
-    /*
-      Event: ended
-      https://www.w3schools.com/tags/av_event_ended.asp
-    */
-    _config2.default.audio.addEventListener("ended", function () {
-      run("ended");
-    });
-  }
-
-  /**
-   * Runs a user defined callback method
-   *
-   * Public Accessor: Callbacks.run( callbackName )
-   *
-   * @access public
-   * @param {string} callbackName - The name of the callback we are going to run.
-   */
-  function run(callbackName) {
-    /*
-      Checks to see if a user defined a callback method for the
-      callback we are running.
-    */
-    if (_config2.default.callbacks[callbackName]) {
-      /*
-        Build the callback function
-      */
-      var callbackFunction = _config2.default.callbacks[callbackName];
-
-      /*
-        Write a debug message stating the callback we are running
-      */
-      _debug2.default.writeMessage("Running Callback: " + callbackName);
-
-      /*
-        Run the callback function and catch any errors
-      */
-      try {
-        callbackFunction();
-      } catch (error) {
-        if (error.message == "CANCEL EVENT") {
-          throw error;
-        } else {
-          _debug2.default.writeMessage("Callback error: " + error.message);
-        }
-      }
-    }
-  }
-
-  return {
-    initialize: initialize,
-    run: run
-  };
-}();
-
-/**
- * Imports the debug module
- * @module utilities/debug
- */
-exports.default = Callbacks;
 module.exports = exports["default"];
 
 /***/ }),
@@ -4588,7 +4553,7 @@ var _shuffler = __webpack_require__(13);
 
 var _shuffler2 = _interopRequireDefault(_shuffler);
 
-var _events = __webpack_require__(22);
+var _events = __webpack_require__(26);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -4600,7 +4565,7 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
-var _waveform = __webpack_require__(23);
+var _waveform = __webpack_require__(22);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -4608,7 +4573,7 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _callbacks = __webpack_require__(9);
+var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -4636,7 +4601,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(7);
+var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -4644,7 +4609,7 @@ var _playbackSpeedElements = __webpack_require__(18);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
-var _repeatElements = __webpack_require__(8);
+var _repeatElements = __webpack_require__(9);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -4697,8 +4662,28 @@ var Initializer = function () {
     */
     setArt(userConfig);
 
-    if (canAmplitudeRun(userConfig)) {
-      ready = true;
+    /*
+    Checks to see if the user has songs defined.
+    */
+    if (userConfig.songs) {
+      /*
+      Checks to see if the user has some songs in the songs array.
+      */
+      if (userConfig.songs.length != 0) {
+        /*
+        Copies over the user defined songs. and prepares
+        Amplitude for the rest of the configuration.
+        */
+        _config2.default.songs = userConfig.songs;
+        /*
+        Flag amplitude as ready.
+        */
+        ready = true;
+      } else {
+        _debug2.default.writeMessage("Please add some songs, to your songs object!");
+      }
+    } else {
+      _debug2.default.writeMessage("Please provide a songs object for AmplitudeJS to run!");
     }
 
     /*
@@ -4762,11 +4747,6 @@ var Initializer = function () {
     } else {
       _debug2.default.writeMessage("The Web Audio API is not available on this platform. We are using your defined backups!");
     }
-
-    /*
-      Initialize songs
-    */
-    initializeSongs(userConfig);
 
     /*
       Initialize default live settings
@@ -4866,20 +4846,11 @@ var Initializer = function () {
     }
 
     /*
-      If there are no songs and no defined starting playlist,
-      then we go with the first song in the first playlist.
-    */
-    if (_config2.default.songs.length == 0 && !userConfig.starting_playlist) {
-      var firstPlaylist = Object.keys(_config2.default.playlists)[0];
-      _audioNavigation2.default.changeSongPlaylist(firstPlaylist, _config2.default.playlists[firstPlaylist].songs[0], 0);
-    }
-
-    /*
-      Check to see if the user entered a start song
+    Check to see if the user entered a start song
     */
     if (userConfig.start_song != undefined && userConfig.starting_playlist) {
       /*
-        Ensure what has been entered is an integer.
+      Ensure what has been entered is an integer.
       */
       if (_checks2.default.isInt(userConfig.start_song)) {
         _audioNavigation2.default.changeSong(_config2.default.songs[userConfig.start_song], userConfig.start_song);
@@ -4887,26 +4858,18 @@ var Initializer = function () {
         _debug2.default.writeMessage("You must enter an integer index for the start song.");
       }
     } else {
-      /*
-        Ensure we have a song to change to. Otherwise we might just
-        only be using playlists.
-      */
-      if (_config2.default.songs.length > 0) {
-        _audioNavigation2.default.changeSong(_config2.default.songs[0], 0);
-      }
+      _audioNavigation2.default.changeSong(_config2.default.songs[0], 0);
     }
 
     /*
       If the shuffle is on by default, shuffle the songs and
       switch to the shuffled song.
     */
-    if (_config2.default.songs.length > 0) {
-      if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
-        _config2.default.shuffle_on = true;
-        _shuffler2.default.shuffleSongs();
+    if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
+      _config2.default.shuffle_on = true;
+      _shuffler2.default.shuffleSongs();
 
-        _audioNavigation2.default.changeSong(_config2.default.shuffle_list[0], 0);
-      }
+      _audioNavigation2.default.changeSong(_config2.default.shuffle_list[0], 0);
     }
 
     /*
@@ -5154,15 +5117,6 @@ var Initializer = function () {
   }
 
   /**
-   * Initializes the songs
-   * 
-   * @access private
-   */
-  function initializeSongs(userConfig) {
-    _config2.default.songs = userConfig.songs ? userConfig.songs : [];
-  }
-
-  /**
    * Intializes the default live settings for all of the songs.
    *
    * @access private
@@ -5185,27 +5139,6 @@ var Initializer = function () {
     for (var i = 0; i < _config2.default.songs.length; i++) {
       _config2.default.songs[i].index = i;
     }
-  }
-
-  /**
-   * Determines if we can run Amplitude. Amplitude can only run
-   * IF there are songs, playlists or songs and playlists
-   * 
-   * @access private
-   */
-  function canAmplitudeRun(userConfig) {
-    // If the user has provided songs, we can run AmplitudeJS
-    if (userConfig.songs && userConfig.songs.length != 0) {
-      return true;
-    }
-
-    // If the user has provided playlists, we can run AmplitudeJS
-    if (userConfig.playlists && countPlaylists(userConfig.playlists) > 0) {
-      return true;
-    }
-
-    _debug2.default.writeMessage("Please provide a playlist or some songs for AmplitudeJS to run!");
-    return false;
   }
 
   /*
@@ -5236,6 +5169,903 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Builds a waveform for the current audio.
+ * Help from: https://robots.thoughtbot.com/javascript-audio-api
+ * https://stackoverflow.com/questions/21347833/html-svg-not-drawing-works-in-other-pages
+ */
+var WaveForm = function () {
+  /*
+    Initialize the local variables used in the Waveform.
+  */
+  var buffer = "";
+  var sampleRate = _config2.default.waveforms.sample_rate;
+  var peaks = "";
+
+  function init() {
+    /*
+      Grabs all of the waveform elements on the page.
+    */
+    var waveforms = document.querySelectorAll(".amplitude-wave-form");
+
+    /*
+      If there are waveforms, we iterate over them and set them up to display
+      properly.
+    */
+    if (waveforms.length > 0) {
+      /*
+        Iterate over all of the waveforms and build the SVG parts.
+      */
+      for (var i = 0; i < waveforms.length; i++) {
+        /*
+          Clear the inner HTML of the element if we are replacing the waveform.
+        */
+        waveforms[i].innerHTML = "";
+
+        /*
+          Inserts an SVG into the element.
+        */
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 -1 " + sampleRate + " 2");
+        svg.setAttribute("preserveAspectRatio", "none");
+
+        /*
+          Add a g component to the SVG
+        */
+        var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        svg.appendChild(g);
+
+        /*
+          Add a path component to the g
+        */
+        var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "");
+        path.setAttribute("id", "waveform");
+
+        g.appendChild(path);
+
+        /*
+          Append the SVG to the waveform.
+        */
+        waveforms[i].appendChild(svg);
+      }
+    }
+  }
+
+  /**
+   * Builds each waveform for the page.
+   */
+  function build() {
+    if (_config2.default.web_audio_api_available) {
+      /*
+        If we don't have the wave form built, we need to build the waveform by loading
+        the src with an array buffer.
+      */
+      if (_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
+        a = (a << 5) - a + b.charCodeAt(0);
+        return a & a;
+      }, 0))] == undefined) {
+        /*
+          Initializes a new XML Http Request.
+        */
+        var req = new XMLHttpRequest();
+
+        /*
+          Opens the src parameter for the audio file to read in.
+        */
+        req.open("GET", _config2.default.audio.src, true);
+        req.responseType = "arraybuffer";
+
+        /*
+          When the ready state changes, check to see if we can render the
+          wave form.
+        */
+        req.onreadystatechange = function (e) {
+          /*
+            When the request is complete, then we begin decoding the
+            audio to build the waveform.
+          */
+          if (req.readyState == 4) {
+            /*
+              If the status is 200 means the response is a success and
+              we decode the audio data.
+            */
+            if (req.status == 200) {
+              /*
+                Decode the audio data and process the waveform.
+              */
+              _config2.default.context.decodeAudioData(req.response, function (bufferedAudio) {
+                /*
+                  Set the buffer to the audio returned.
+                */
+                buffer = bufferedAudio;
+
+                /*
+                  Get the peaks in the audio.
+                */
+                peaks = getPeaks(sampleRate, buffer);
+
+                /*
+                  Build the SVG
+                */
+                process(sampleRate, buffer, peaks);
+              });
+            }
+          }
+        };
+        req.send();
+      } else {
+        /*
+          If we already have a waveform, we grab the waveform that
+          was created for the song and display it. We do a simple hash
+          of the song URL so it's already unique.
+        */
+        displayWaveForms(_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
+          a = (a << 5) - a + b.charCodeAt(0);
+          return a & a;
+        }, 0))]);
+      }
+    }
+  }
+
+  /**
+   * Processes the audio and generates the waveform.
+   *
+   * @param {sampleRate} sampleRate - The rate we should sample the audio.
+   * @param {arraybuffer} buffer - The Web Audio API
+   * @param {array} peaks - The peaks in the audio.
+   */
+  function process(sampleRate, buffer, peaks) {
+    /*
+      If we have a buffer, we find the peaks in the audio.
+    */
+    if (buffer) {
+      /*
+        Get the total peaks in the song.
+      */
+      var totalPeaks = peaks.length;
+
+      /*
+        Figure out the depth of the peak.
+      */
+      var d = "";
+      for (var peakNumber = 0; peakNumber < totalPeaks; peakNumber++) {
+        if (peakNumber % 2 === 0) {
+          d += " M" + ~~(peakNumber / 2) + ", " + peaks.shift();
+        } else {
+          d += " L" + ~~(peakNumber / 2) + ", " + peaks.shift();
+        }
+      }
+
+      /*
+        Add the waveform to the built waveforms array.
+      */
+      _config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
+        a = (a << 5) - a + b.charCodeAt(0);
+        return a & a;
+      }, 0))] = d;
+
+      /*
+        Display the waveform.
+      */
+      displayWaveForms(_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
+        a = (a << 5) - a + b.charCodeAt(0);
+        return a & a;
+      }, 0))]);
+    }
+  }
+
+  /**
+   * Get the peaks of the audio for the waveform.
+   *
+   * @param {number} length - The sample size of the audio.
+   * @param {array} buffer - The array buffer used to find the peaks in the audio.
+   */
+  function getPeaks(length, buffer) {
+    /*
+      Set the parameters needed to build the SVG.
+    */
+    var sampleSize = buffer.length / length;
+    var sampleStep = ~~(sampleSize / 10) || 1;
+    var numberOfChannels = buffer.numberOfChannels;
+    var mergedPeaks = [];
+
+    /*
+      Iterate over the channels and find the peaks.
+    */
+    for (var channelNumber = 0; channelNumber < numberOfChannels; channelNumber++) {
+      /*
+        Initialize the peaks array and set the channel data to what
+        the buffer has in its channel data.
+      */
+      var _peaks = [];
+      var channelData = buffer.getChannelData(channelNumber);
+
+      /*
+        Iterate over peaks with respect to the sample size.
+      */
+      for (var peakNumber = 0; peakNumber < length; peakNumber++) {
+        /*
+          Gt the start and end peak.
+        */
+        var start = ~~(peakNumber * sampleSize);
+        var end = ~~(start + sampleSize);
+
+        /*
+          Set min and max to the channel data first peak.
+        */
+        var min = channelData[0];
+        var max = channelData[0];
+
+        /*
+          Iterate over the parts of the song starting to the
+          ending to display the waveform.
+        */
+        for (var sampleIndex = start; sampleIndex < end; sampleIndex += sampleStep) {
+          var value = channelData[sampleIndex];
+
+          if (value > max) {
+            max = value;
+          }
+          if (value < min) {
+            min = value;
+          }
+        }
+
+        /*
+          Set the max and min for the peak.
+        */
+        _peaks[2 * peakNumber] = max;
+        _peaks[2 * peakNumber + 1] = min;
+
+        /*
+          Merge the peaks
+        */
+        if (channelNumber === 0 || max > mergedPeaks[2 * peakNumber]) {
+          mergedPeaks[2 * peakNumber] = max;
+        }
+
+        if (channelNumber === 0 || min < mergedPeaks[2 * peakNumber + 1]) {
+          mergedPeaks[2 * peakNumber + 1] = min;
+        }
+      }
+    }
+
+    /*
+      Returns the merged peaks.
+    */
+    return mergedPeaks;
+  }
+
+  /**
+   * Displays all of the waveforms necessary.
+   *
+   * @param {path} svg - The drawing of the waveform.
+   */
+  function displayWaveForms(svg) {
+    var waveformElements = document.querySelectorAll(".amplitude-wave-form");
+
+    /*
+      Iterate over all of the waveform elements and
+      display the waveform.
+    */
+    for (var i = 0; i < waveformElements.length; i++) {
+      /*
+        Get the playlist attribute of the waveform element.
+      */
+      var playlist = waveformElements[i].getAttribute("data-amplitude-playlist");
+
+      /*
+        Get the song index attribute of the waveform element.
+      */
+      var song = waveformElements[i].getAttribute("data-amplitude-song-index");
+
+      /*
+        If the playlist is null and the song is null it's a global element.
+      */
+      if (playlist == null && song == null) {
+        displayGlobalWaveform(waveformElements[i], svg);
+      }
+
+      /*
+        If the playlist is defined but the song is null it's a playlist element.
+      */
+      if (playlist != null && song == null) {
+        displayPlaylistWaveform(waveformElements[i], svg, playlist);
+      }
+
+      /*
+        If the playlist is not defined and the song is not null it's a song
+        element.
+      */
+      if (playlist == null && song != null) {
+        displaySongWaveform(waveformElements[i], svg, song);
+      }
+
+      /*
+        If the playlist and song are defined it's a song in the playlist element.
+      */
+      if (playlist != null && song != null) {
+        displaySongInPlaylistWaveform(waveformElements[i], svg, playlist, song);
+      }
+    }
+  }
+
+  /**
+   * Displays a global wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   */
+  function displayGlobalWaveform(element, svg) {
+    var waveformPath = element.querySelector("svg g path");
+
+    waveformPath.setAttribute("d", svg);
+  }
+
+  /**
+   * Displays a playlist wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {string} playlist - The playlist we are displaying the waveform for.
+   */
+  function displayPlaylistWaveform(element, svg, playlist) {
+    /*
+      Ensure the playlist is the active playlist.
+    */
+    if (_config2.default.active_playlist == playlist) {
+      var waveformPath = element.querySelector("svg g path");
+
+      waveformPath.setAttribute("d", svg);
+    }
+  }
+
+  /**
+   * Displays a song wave form.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {Integer} song - The index of the song we are displaying the
+   * waveform for.
+   */
+  function displaySongWaveform(element, svg, song) {
+    /*
+      Ensure it's the active song being displayed.
+    */
+    if (_config2.default.active_index == song) {
+      var waveformPath = element.querySelector("svg g path");
+
+      waveformPath.setAttribute("d", svg);
+    }
+  }
+
+  /**
+   * Displays a song in playlist waveform.
+   *
+   * @param {Node} element - Element to display the waveform in.
+   * @param {SVG} svg - The waveform path.
+   * @param {String} playlist - The playlist the waveform is in.
+   * @param {Integer} song - The index of the song we are displaying the waveform for.
+   */
+  function displaySongInPlaylistWaveform(element, svg, playlist, song) {
+    /*
+      Ensure it's the active song in the active playlist.
+    */
+    if (_config2.default.active_playlist == playlist && _config2.default.playlists[_config2.default.active_playlist].active_index == song) {
+      var waveformPath = element.querySelector("svg g path");
+
+      waveformPath.setAttribute("d", svg);
+    }
+  }
+
+  /**
+   * Determines if the user is using waveforms
+   */
+  function determineIfUsingWaveforms() {
+    var waveforms = document.querySelectorAll(".amplitude-wave-form");
+
+    if (waveforms.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /*
+    Return the public methods.
+  */
+  return {
+    init: init,
+    build: build,
+    determineIfUsingWaveforms: determineIfUsingWaveforms
+  };
+}(); /**
+      * Imports the config module
+      * @module config
+      */
+exports.default = WaveForm;
+module.exports = exports["default"];
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * The utility to handle the computation of time in AmplitudeJS.
+ * @module utilities/Time
+ */
+var Time = function () {
+  /**
+   * Computes the current song time. Breaks down where the song is into
+   * hours, minutes, seconds and formats it to be displayed to the user.
+   *
+   * @access public
+   */
+  function computeCurrentTimes() {
+    /*
+    Initialize the current time object that will be returned.
+    */
+    var currentTime = {};
+
+    /*
+    Computes the current seconds for the song.
+    */
+    var currentSeconds = (Math.floor(_config2.default.audio.currentTime % 60) < 10 ? "0" : "") + Math.floor(_config2.default.audio.currentTime % 60);
+
+    /*
+    Computes the current minutes for the song.
+    */
+    var currentMinutes = Math.floor(_config2.default.audio.currentTime / 60);
+
+    /*
+    Initialize the current hours variable.
+    */
+    var currentHours = "00";
+
+    /*
+    If the current minutes is less than 10, we add a leading 0.
+    */
+    if (currentMinutes < 10) {
+      currentMinutes = "0" + currentMinutes;
+    }
+
+    /*
+    If the user is more than 60 minutes into the song, then
+    we extract the hours.
+    */
+    if (currentMinutes >= 60) {
+      currentHours = Math.floor(currentMinutes / 60);
+      currentMinutes = currentMinutes % 60;
+
+      /*
+      If the user is less than 10 minutes in, we append the
+      additional 0 to the minutes.
+      */
+      if (currentMinutes < 10) {
+        currentMinutes = "0" + currentMinutes;
+      }
+    }
+
+    /*
+    Build a clean current time object and send back the appropriate information.
+    */
+    currentTime.seconds = currentSeconds;
+    currentTime.minutes = currentMinutes;
+    currentTime.hours = currentHours;
+
+    return currentTime;
+  }
+
+  /**
+   * Computes the current song duration. Breaks down where the song is into
+   * hours, minutes, seconds and formats it to be displayed to the user.
+   *
+   * @access public
+   */
+  function computeSongDuration() {
+    /*
+    Initialize the song duration object that will be returned.
+    */
+    var songDuration = {};
+
+    /*
+    Computes the duration of the song's seconds.
+    */
+    var songDurationSeconds = (Math.floor(_config2.default.audio.duration % 60) < 10 ? "0" : "") + Math.floor(_config2.default.audio.duration % 60);
+
+    /*
+    Computes the duration of the song's minutes.
+    */
+    var songDurationMinutes = Math.floor(_config2.default.audio.duration / 60);
+
+    /*
+    Initialize the hours duration variable.
+    */
+    var songDurationHours = "00";
+
+    /*
+    If the song duration minutes is less than 10, we add a leading 0.
+    */
+    if (songDurationMinutes < 10) {
+      songDurationMinutes = "0" + songDurationMinutes;
+    }
+
+    /*
+    If there is more than 60 minutes in the song, then we
+    extract the hours.
+    */
+    if (songDurationMinutes >= 60) {
+      songDurationHours = Math.floor(songDurationMinutes / 60);
+      songDurationMinutes = songDurationMinutes % 60;
+
+      /*
+      If the song duration minutes is less than 10 we append
+      the additional 0.
+      */
+      if (songDurationMinutes < 10) {
+        songDurationMinutes = "0" + songDurationMinutes;
+      }
+    }
+
+    /*
+    Build a clean song duration object and send back the appropriate information.
+    */
+    songDuration.seconds = isNaN(songDurationSeconds) ? "00" : songDurationSeconds;
+    songDuration.minutes = isNaN(songDurationMinutes) ? "00" : songDurationMinutes;
+    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours.toString();
+
+    return songDuration;
+  }
+
+  /**
+   * Computes the song completion percentage.
+   *
+   * @access public
+   */
+  function computeSongCompletionPercentage() {
+    return _config2.default.audio.currentTime / _config2.default.audio.duration * 100;
+  }
+
+  /**
+   * Sets the current time for the audio.
+   *
+   * @access public
+   */
+  function setCurrentTime(time) {
+    /*
+      If the song is not live, we can set the current time.
+    */
+    if (!_config2.default.active_metadata.live) {
+      /*
+        Makes sure the number is finite to set the time.
+      */
+      if (isFinite(time)) {
+        _config2.default.audio.currentTime = time;
+      }
+    }
+  }
+
+  /**
+   * Defines what is returned by the module
+   */
+  return {
+    computeCurrentTimes: computeCurrentTimes,
+    computeSongDuration: computeSongDuration,
+    computeSongCompletionPercentage: computeSongCompletionPercentage,
+    setCurrentTime: setCurrentTime
+  };
+}(); /**
+      * Imports the config module
+      * @module config
+      */
+exports.default = Time;
+module.exports = exports["default"];
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Visual Handler for Buffered Progress Elements
+ *
+ * @module visual/BufferedProgressElements
+ */
+var BufferedProgressElements = function () {
+  /**
+   * Syncs the buffered progress bars to the current percentage in the config
+   *
+   * @access public
+   */
+  function sync() {
+    syncGlobal();
+    syncPlaylist();
+    syncSong();
+    syncSongInPlaylist();
+  }
+
+  /**
+   * Sync the global song buffered progress elements.
+   */
+  function syncGlobal() {
+    /*
+    Gets all of the song buffered progress bars.
+    */
+    var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
+
+    /*
+    Iterate over all of the song buffered progress bar and
+    set them to 0 which is like re-setting them.
+    */
+    for (var i = 0; i < songBufferedProgressBars.length; i++) {
+      var playlist = songBufferedProgressBars[i].getAttribute("data-amplitude-playlist");
+      var song = songBufferedProgressBars[i].getAttribute("data-amplitude-song-index");
+
+      if (playlist == null && song == null) {
+        songBufferedProgressBars[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      }
+    }
+  }
+
+  /**
+   * Sync the playlist song buffered progress elements.
+   */
+  function syncPlaylist() {
+    /*
+    Gets all of the song buffered progress bars.
+    */
+    var songBufferedProgressBarsPlaylist = document.querySelectorAll('.amplitude-buffered-progress[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
+
+    /*
+    Iterate over all of the song buffered progress bar and
+    set them to 0 which is like re-setting them.
+    */
+    for (var i = 0; i < songBufferedProgressBarsPlaylist.length; i++) {
+      var song = songBufferedProgressBarsPlaylist[i].getAttribute("data-amplitude-song-index");
+
+      if (song == null) {
+        songBufferedProgressBarsPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      }
+    }
+  }
+
+  /**
+   * Sync the song song buffered progress elements.
+   */
+  function syncSong() {
+    /*
+    Gets all of the song buffered progress bars.
+    */
+    var songBufferedProgressBarsSongs = document.querySelectorAll('.amplitude-buffered-progress[data-amplitude-song-index="' + _config2.default.active_index + '"]');
+
+    /*
+    Iterate over all of the song buffered progress bar and
+    set them to 0 which is like re-setting them.
+    */
+    for (var i = 0; i < songBufferedProgressBarsSongs.length; i++) {
+      var playlist = songBufferedProgressBarsSongs[i].getAttribute("data-amplitude-playlist");
+
+      if (playlist == null) {
+        songBufferedProgressBarsSongs[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      }
+    }
+  }
+
+  /**
+   * Sync the song in playlist song buffered progress elements.
+   */
+  function syncSongInPlaylist() {
+    var activePlaylistIndex = _config2.default.active_playlist != null && _config2.default.active_playlist != "" ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
+
+    /*
+    Gets all of the song buffered progress bars.
+    */
+    var songBufferedProgressBarsSongsInPlaylist = document.querySelectorAll('.amplitude-buffered-progress[data-amplitude-song-index="' + activePlaylistIndex + '"][data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
+
+    /*
+    Iterate over all of the song buffered progress bar and
+    set them to 0 which is like re-setting them.
+    */
+    for (var i = 0; i < songBufferedProgressBarsSongsInPlaylist.length; i++) {
+      songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+    }
+  }
+
+  /**
+   * Sets all of the song buffered progress bars to 0
+   *
+   * @access public
+   */
+  function reset() {
+    /*
+    Gets all of the song buffered progress bars.
+    */
+    var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
+
+    /*
+    Iterate over all of the song buffered progress bar and
+    set them to 0 which is like re-setting them.
+    */
+    for (var i = 0; i < songBufferedProgressBars.length; i++) {
+      songBufferedProgressBars[i].value = 0;
+    }
+  }
+
+  /**
+   * Returns the public facing methods
+   */
+  return {
+    sync: sync,
+    reset: reset
+  };
+}(); /**
+      * Imports the config module
+      * @module config
+      */
+exports.default = BufferedProgressElements;
+module.exports = exports["default"];
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _audioNavigation = __webpack_require__(3);
+
+var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
+
+var _callbacks = __webpack_require__(7);
+
+var _callbacks2 = _interopRequireDefault(_callbacks);
+
+var _core = __webpack_require__(1);
+
+var _core2 = _interopRequireDefault(_core);
+
+var _playPauseElements = __webpack_require__(2);
+
+var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Ended Module. Handles the ended event on the audio.
+ *
+ * @module events/Ended
+ */
+
+
+/**
+ * Imports the AmplitudeJS Core Methods
+ * @module core/Core
+ */
+
+
+/**
+ * Imports the Audio Navigation Utility
+ * @module utilities/AudioNavigation
+ */
+var Ended = function () {
+  /**
+   * When the song has ended, handles what to do next
+   *
+   * HANDLER FOR: ended
+   *
+   * @access public
+   */
+  function handle() {
+    /*
+      Sets the time out for song ended. This determines if
+      we should go to the next song or delay between songs.
+    */
+    setTimeout(function () {
+      /*
+        If we continue next, we should move to the next song in the playlist.
+      */
+      if (_config2.default.continue_next) {
+        /*
+        If the active playlist is not set, we set the
+        next song that's in the songs array.
+        */
+        if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
+          _audioNavigation2.default.setNext(true);
+        } else {
+          _audioNavigation2.default.setNextPlaylist(_config2.default.active_playlist, true);
+        }
+      } else {
+        if (!_config2.default.is_touch_moving) {
+          /*
+          Stops the active song.
+          */
+          AmplitudeCore.stop();
+
+          /*
+            Sync the play pause elements.
+          */
+          _playPauseElements2.default.sync();
+        }
+      }
+    }, _config2.default.delay);
+  }
+
+  /*
+    Returns the public facing methods.
+  */
+  return {
+    handle: handle
+  };
+}();
+
+/**
+ * Imports the AmplitudeJS Play Pause Elements
+ * @module visual/PlayPauseElements
+ */
+
+
+/**
+ * Imports the Callback Utility
+ * @module utilities/callbacks
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+exports.default = Ended;
+module.exports = exports["default"];
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
 var _keydown = __webpack_require__(27);
 
 var _keydown2 = _interopRequireDefault(_keydown);
@@ -5244,7 +6074,7 @@ var _timeUpdate = __webpack_require__(42);
 
 var _timeUpdate2 = _interopRequireDefault(_timeUpdate);
 
-var _ended = __webpack_require__(26);
+var _ended = __webpack_require__(25);
 
 var _ended2 = _interopRequireDefault(_ended);
 
@@ -5316,7 +6146,7 @@ var _skipTo = __webpack_require__(39);
 
 var _skipTo2 = _interopRequireDefault(_skipTo);
 
-var _waveform = __webpack_require__(23);
+var _waveform = __webpack_require__(22);
 
 var _waveform2 = _interopRequireDefault(_waveform);
 
@@ -5475,34 +6305,6 @@ var Events = function () {
     Binds `canplaythrough` event to build the waveform.
     */
     bindCanPlayThrough();
-  }
-
-  /**
-   * Destroys all of the global audio bindings
-   */
-  function destroyAudioBindings() {
-    _config2.default.audio.removeEventListener("timeupdate", _timeUpdate2.default.handle);
-    _config2.default.audio.removeEventListener("durationchange", _timeUpdate2.default.handle);
-    _config2.default.audio.removeEventListener("ended", _ended2.default.handle);
-    _config2.default.audio.removeEventListener("progress", _progress2.default.handle);
-
-    if (_waveform2.default.determineIfUsingWaveforms()) {
-      _config2.default.audio.removeEventListener("canplaythrough", _waveform2.default.build);
-    }
-  }
-
-  /**
-   * Rebinds all of the global audio bindings
-   */
-  function rebindAudio() {
-    _config2.default.audio.addEventListener("durationchange", _timeUpdate2.default.handle);
-    _config2.default.audio.addEventListener("timeupdate", _timeUpdate2.default.handle);
-    _config2.default.audio.addEventListener("ended", _ended2.default.handle);
-    _config2.default.audio.addEventListener("progress", _progress2.default.handle);
-
-    if (_waveform2.default.determineIfUsingWaveforms()) {
-      _config2.default.audio.addEventListener("canplaythrough", _waveform2.default.build);
-    }
   }
 
   /**
@@ -6094,9 +6896,7 @@ var Events = function () {
   Returns the public facing functions.
   */
   return {
-    initialize: initialize,
-    destroyAudioBindings: destroyAudioBindings,
-    rebindAudio: rebindAudio
+    initialize: initialize
   };
 }();
 
@@ -6108,897 +6908,6 @@ var Events = function () {
 	with the events.
 */
 exports.default = Events;
-module.exports = exports["default"];
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Builds a waveform for the current audio.
- * Help from: https://robots.thoughtbot.com/javascript-audio-api
- * https://stackoverflow.com/questions/21347833/html-svg-not-drawing-works-in-other-pages
- */
-var WaveForm = function () {
-  /*
-    Initialize the local variables used in the Waveform.
-  */
-  var buffer = "";
-  var sampleRate = '';
-  var peaks = "";
-
-  function init() {
-    sampleRate = _config2.default.waveforms.sample_rate;
-
-    /*
-      Grabs all of the waveform elements on the page.
-    */
-    var waveforms = document.querySelectorAll(".amplitude-wave-form");
-
-    /*
-      If there are waveforms, we iterate over them and set them up to display
-      properly.
-    */
-    if (waveforms.length > 0) {
-      /*
-        Iterate over all of the waveforms and build the SVG parts.
-      */
-      for (var i = 0; i < waveforms.length; i++) {
-        /*
-          Clear the inner HTML of the element if we are replacing the waveform.
-        */
-        waveforms[i].innerHTML = "";
-
-        /*
-          Inserts an SVG into the element.
-        */
-        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("viewBox", "0 -1 " + sampleRate + " 2");
-        svg.setAttribute("preserveAspectRatio", "none");
-
-        /*
-          Add a g component to the SVG
-        */
-        var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        svg.appendChild(g);
-
-        /*
-          Add a path component to the g
-        */
-        var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", "");
-        path.setAttribute("id", "waveform");
-
-        g.appendChild(path);
-
-        /*
-          Append the SVG to the waveform.
-        */
-        waveforms[i].appendChild(svg);
-      }
-    }
-  }
-
-  /**
-   * Builds each waveform for the page.
-   */
-  function build() {
-    if (_config2.default.web_audio_api_available) {
-      /*
-        If we don't have the wave form built, we need to build the waveform by loading
-        the src with an array buffer.
-      */
-      if (_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
-        a = (a << 5) - a + b.charCodeAt(0);
-        return a & a;
-      }, 0))] == undefined) {
-        /*
-          Initializes a new XML Http Request.
-        */
-        var req = new XMLHttpRequest();
-
-        /*
-          Opens the src parameter for the audio file to read in.
-        */
-        req.open("GET", _config2.default.audio.src, true);
-        req.responseType = "arraybuffer";
-
-        /*
-          When the ready state changes, check to see if we can render the
-          wave form.
-        */
-        req.onreadystatechange = function (e) {
-          /*
-            When the request is complete, then we begin decoding the
-            audio to build the waveform.
-          */
-          if (req.readyState == 4) {
-            /*
-              If the status is 200 means the response is a success and
-              we decode the audio data.
-            */
-            if (req.status == 200) {
-              /*
-                Decode the audio data and process the waveform.
-              */
-              _config2.default.context.decodeAudioData(req.response, function (bufferedAudio) {
-                /*
-                  Set the buffer to the audio returned.
-                */
-                buffer = bufferedAudio;
-
-                /*
-                  Get the peaks in the audio.
-                */
-                peaks = getPeaks(sampleRate, buffer);
-
-                /*
-                  Build the SVG
-                */
-                process(sampleRate, buffer, peaks);
-              });
-            }
-          }
-        };
-        req.send();
-      } else {
-        /*
-          If we already have a waveform, we grab the waveform that
-          was created for the song and display it. We do a simple hash
-          of the song URL so it's already unique.
-        */
-        displayWaveForms(_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
-          a = (a << 5) - a + b.charCodeAt(0);
-          return a & a;
-        }, 0))]);
-      }
-    }
-  }
-
-  /**
-   * Processes the audio and generates the waveform.
-   *
-   * @param {sampleRate} sampleRate - The rate we should sample the audio.
-   * @param {arraybuffer} buffer - The Web Audio API
-   * @param {array} peaks - The peaks in the audio.
-   */
-  function process(sampleRate, buffer, peaks) {
-    /*
-      If we have a buffer, we find the peaks in the audio.
-    */
-    if (buffer) {
-      /*
-        Get the total peaks in the song.
-      */
-      var totalPeaks = peaks.length;
-
-      /*
-        Figure out the depth of the peak.
-      */
-      var d = "";
-      for (var peakNumber = 0; peakNumber < totalPeaks; peakNumber++) {
-        if (peakNumber % 2 === 0) {
-          d += " M" + ~~(peakNumber / 2) + ", " + peaks.shift();
-        } else {
-          d += " L" + ~~(peakNumber / 2) + ", " + peaks.shift();
-        }
-      }
-
-      /*
-        Add the waveform to the built waveforms array.
-      */
-      _config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
-        a = (a << 5) - a + b.charCodeAt(0);
-        return a & a;
-      }, 0))] = d;
-
-      /*
-        Display the waveform.
-      */
-      displayWaveForms(_config2.default.waveforms.built[Math.abs(_config2.default.audio.src.split("").reduce(function (a, b) {
-        a = (a << 5) - a + b.charCodeAt(0);
-        return a & a;
-      }, 0))]);
-    }
-  }
-
-  /**
-   * Get the peaks of the audio for the waveform.
-   *
-   * @param {number} length - The sample size of the audio.
-   * @param {array} buffer - The array buffer used to find the peaks in the audio.
-   */
-  function getPeaks(length, buffer) {
-    /*
-      Set the parameters needed to build the SVG.
-    */
-    var sampleSize = buffer.length / length;
-    var sampleStep = ~~(sampleSize / 10) || 1;
-    var numberOfChannels = buffer.numberOfChannels;
-    var mergedPeaks = [];
-
-    /*
-      Iterate over the channels and find the peaks.
-    */
-    for (var channelNumber = 0; channelNumber < numberOfChannels; channelNumber++) {
-      /*
-        Initialize the peaks array and set the channel data to what
-        the buffer has in its channel data.
-      */
-      var _peaks = [];
-      var channelData = buffer.getChannelData(channelNumber);
-
-      /*
-        Iterate over peaks with respect to the sample size.
-      */
-      for (var peakNumber = 0; peakNumber < length; peakNumber++) {
-        /*
-          Gt the start and end peak.
-        */
-        var start = ~~(peakNumber * sampleSize);
-        var end = ~~(start + sampleSize);
-
-        /*
-          Set min and max to the channel data first peak.
-        */
-        var min = channelData[0];
-        var max = channelData[0];
-
-        /*
-          Iterate over the parts of the song starting to the
-          ending to display the waveform.
-        */
-        for (var sampleIndex = start; sampleIndex < end; sampleIndex += sampleStep) {
-          var value = channelData[sampleIndex];
-
-          if (value > max) {
-            max = value;
-          }
-          if (value < min) {
-            min = value;
-          }
-        }
-
-        /*
-          Set the max and min for the peak.
-        */
-        _peaks[2 * peakNumber] = max;
-        _peaks[2 * peakNumber + 1] = min;
-
-        /*
-          Merge the peaks
-        */
-        if (channelNumber === 0 || max > mergedPeaks[2 * peakNumber]) {
-          mergedPeaks[2 * peakNumber] = max;
-        }
-
-        if (channelNumber === 0 || min < mergedPeaks[2 * peakNumber + 1]) {
-          mergedPeaks[2 * peakNumber + 1] = min;
-        }
-      }
-    }
-
-    /*
-      Returns the merged peaks.
-    */
-    return mergedPeaks;
-  }
-
-  /**
-   * Displays all of the waveforms necessary.
-   *
-   * @param {path} svg - The drawing of the waveform.
-   */
-  function displayWaveForms(svg) {
-    var waveformElements = document.querySelectorAll(".amplitude-wave-form");
-
-    /*
-      Iterate over all of the waveform elements and
-      display the waveform.
-    */
-    for (var i = 0; i < waveformElements.length; i++) {
-      /*
-        Get the playlist attribute of the waveform element.
-      */
-      var playlist = waveformElements[i].getAttribute("data-amplitude-playlist");
-
-      /*
-        Get the song index attribute of the waveform element.
-      */
-      var song = waveformElements[i].getAttribute("data-amplitude-song-index");
-
-      /*
-        If the playlist is null and the song is null it's a global element.
-      */
-      if (playlist == null && song == null) {
-        displayGlobalWaveform(waveformElements[i], svg);
-      }
-
-      /*
-        If the playlist is defined but the song is null it's a playlist element.
-      */
-      if (playlist != null && song == null) {
-        displayPlaylistWaveform(waveformElements[i], svg, playlist);
-      }
-
-      /*
-        If the playlist is not defined and the song is not null it's a song
-        element.
-      */
-      if (playlist == null && song != null) {
-        displaySongWaveform(waveformElements[i], svg, song);
-      }
-
-      /*
-        If the playlist and song are defined it's a song in the playlist element.
-      */
-      if (playlist != null && song != null) {
-        displaySongInPlaylistWaveform(waveformElements[i], svg, playlist, song);
-      }
-    }
-  }
-
-  /**
-   * Displays a global wave form.
-   *
-   * @param {Node} element - Element to display the waveform in.
-   * @param {SVG} svg - The waveform path.
-   */
-  function displayGlobalWaveform(element, svg) {
-    var waveformPath = element.querySelector("svg g path");
-
-    waveformPath.setAttribute("d", svg);
-  }
-
-  /**
-   * Displays a playlist wave form.
-   *
-   * @param {Node} element - Element to display the waveform in.
-   * @param {SVG} svg - The waveform path.
-   * @param {string} playlist - The playlist we are displaying the waveform for.
-   */
-  function displayPlaylistWaveform(element, svg, playlist) {
-    /*
-      Ensure the playlist is the active playlist.
-    */
-    if (_config2.default.active_playlist == playlist) {
-      var waveformPath = element.querySelector("svg g path");
-
-      waveformPath.setAttribute("d", svg);
-    }
-  }
-
-  /**
-   * Displays a song wave form.
-   *
-   * @param {Node} element - Element to display the waveform in.
-   * @param {SVG} svg - The waveform path.
-   * @param {Integer} song - The index of the song we are displaying the
-   * waveform for.
-   */
-  function displaySongWaveform(element, svg, song) {
-    /*
-      Ensure it's the active song being displayed.
-    */
-    if (_config2.default.active_index == song) {
-      var waveformPath = element.querySelector("svg g path");
-
-      waveformPath.setAttribute("d", svg);
-    }
-  }
-
-  /**
-   * Displays a song in playlist waveform.
-   *
-   * @param {Node} element - Element to display the waveform in.
-   * @param {SVG} svg - The waveform path.
-   * @param {String} playlist - The playlist the waveform is in.
-   * @param {Integer} song - The index of the song we are displaying the waveform for.
-   */
-  function displaySongInPlaylistWaveform(element, svg, playlist, song) {
-    /*
-      Ensure it's the active song in the active playlist.
-    */
-    if (_config2.default.active_playlist == playlist && _config2.default.playlists[_config2.default.active_playlist].active_index == song) {
-      var waveformPath = element.querySelector("svg g path");
-
-      waveformPath.setAttribute("d", svg);
-    }
-  }
-
-  /**
-   * Determines if the user is using waveforms
-   */
-  function determineIfUsingWaveforms() {
-    var waveforms = document.querySelectorAll(".amplitude-wave-form");
-
-    if (waveforms.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /*
-    Return the public methods.
-  */
-  return {
-    init: init,
-    build: build,
-    determineIfUsingWaveforms: determineIfUsingWaveforms
-  };
-}(); /**
-      * Imports the config module
-      * @module config
-      */
-exports.default = WaveForm;
-module.exports = exports["default"];
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * The utility to handle the computation of time in AmplitudeJS.
- * @module utilities/Time
- */
-var Time = function () {
-  /**
-   * Computes the current song time. Breaks down where the song is into
-   * hours, minutes, seconds and formats it to be displayed to the user.
-   *
-   * @access public
-   */
-  function computeCurrentTimes() {
-    /*
-    Initialize the current time object that will be returned.
-    */
-    var currentTime = {};
-
-    /*
-    Computes the current seconds for the song.
-    */
-    var currentSeconds = (Math.floor(_config2.default.audio.currentTime % 60) < 10 ? "0" : "") + Math.floor(_config2.default.audio.currentTime % 60);
-
-    /*
-    Computes the current minutes for the song.
-    */
-    var currentMinutes = Math.floor(_config2.default.audio.currentTime / 60);
-
-    /*
-    Initialize the current hours variable.
-    */
-    var currentHours = "00";
-
-    /*
-    If the current minutes is less than 10, we add a leading 0.
-    */
-    if (currentMinutes < 10) {
-      currentMinutes = "0" + currentMinutes;
-    }
-
-    /*
-    If the user is more than 60 minutes into the song, then
-    we extract the hours.
-    */
-    if (currentMinutes >= 60) {
-      currentHours = Math.floor(currentMinutes / 60);
-      currentMinutes = currentMinutes % 60;
-
-      /*
-      If the user is less than 10 minutes in, we append the
-      additional 0 to the minutes.
-      */
-      if (currentMinutes < 10) {
-        currentMinutes = "0" + currentMinutes;
-      }
-    }
-
-    /*
-    Build a clean current time object and send back the appropriate information.
-    */
-    currentTime.seconds = currentSeconds;
-    currentTime.minutes = currentMinutes;
-    currentTime.hours = currentHours;
-
-    return currentTime;
-  }
-
-  /**
-   * Computes the current song duration. Breaks down where the song is into
-   * hours, minutes, seconds and formats it to be displayed to the user.
-   *
-   * @access public
-   */
-  function computeSongDuration() {
-    /*
-    Initialize the song duration object that will be returned.
-    */
-    var songDuration = {};
-
-    /*
-    Computes the duration of the song's seconds.
-    */
-    var songDurationSeconds = (Math.floor(_config2.default.audio.duration % 60) < 10 ? "0" : "") + Math.floor(_config2.default.audio.duration % 60);
-
-    /*
-    Computes the duration of the song's minutes.
-    */
-    var songDurationMinutes = Math.floor(_config2.default.audio.duration / 60);
-
-    /*
-    Initialize the hours duration variable.
-    */
-    var songDurationHours = "00";
-
-    /*
-    If the song duration minutes is less than 10, we add a leading 0.
-    */
-    if (songDurationMinutes < 10) {
-      songDurationMinutes = "0" + songDurationMinutes;
-    }
-
-    /*
-    If there is more than 60 minutes in the song, then we
-    extract the hours.
-    */
-    if (songDurationMinutes >= 60) {
-      songDurationHours = Math.floor(songDurationMinutes / 60);
-      songDurationMinutes = songDurationMinutes % 60;
-
-      /*
-      If the song duration minutes is less than 10 we append
-      the additional 0.
-      */
-      if (songDurationMinutes < 10) {
-        songDurationMinutes = "0" + songDurationMinutes;
-      }
-    }
-
-    /*
-    Build a clean song duration object and send back the appropriate information.
-    */
-    songDuration.seconds = isNaN(songDurationSeconds) ? "00" : songDurationSeconds;
-    songDuration.minutes = isNaN(songDurationMinutes) ? "00" : songDurationMinutes;
-    songDuration.hours = isNaN(songDurationHours) ? "00" : songDurationHours.toString();
-
-    return songDuration;
-  }
-
-  /**
-   * Computes the song completion percentage.
-   *
-   * @access public
-   */
-  function computeSongCompletionPercentage() {
-    return _config2.default.audio.currentTime / _config2.default.audio.duration * 100;
-  }
-
-  /**
-   * Sets the current time for the audio.
-   *
-   * @access public
-   */
-  function setCurrentTime(time) {
-    /*
-      If the song is not live, we can set the current time.
-    */
-    if (!_config2.default.active_metadata.live) {
-      /*
-        Makes sure the number is finite to set the time.
-      */
-      if (isFinite(time)) {
-        _config2.default.audio.currentTime = time;
-      }
-    }
-  }
-
-  /**
-   * Defines what is returned by the module
-   */
-  return {
-    computeCurrentTimes: computeCurrentTimes,
-    computeSongDuration: computeSongDuration,
-    computeSongCompletionPercentage: computeSongCompletionPercentage,
-    setCurrentTime: setCurrentTime
-  };
-}(); /**
-      * Imports the config module
-      * @module config
-      */
-exports.default = Time;
-module.exports = exports["default"];
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Visual Handler for Buffered Progress Elements
- *
- * @module visual/BufferedProgressElements
- */
-var BufferedProgressElements = function () {
-  /**
-   * Syncs the buffered progress bars to the current percentage in the config
-   *
-   * @access public
-   */
-  function sync() {
-    syncGlobal();
-    syncPlaylist();
-    syncSong();
-    syncSongInPlaylist();
-  }
-
-  /**
-   * Sync the global song buffered progress elements.
-   */
-  function syncGlobal() {
-    /*
-    Gets all of the song buffered progress bars.
-    */
-    var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
-
-    /*
-    Iterate over all of the song buffered progress bar and
-    set them to 0 which is like re-setting them.
-    */
-    for (var i = 0; i < songBufferedProgressBars.length; i++) {
-      var playlist = songBufferedProgressBars[i].getAttribute("data-amplitude-playlist");
-      var song = songBufferedProgressBars[i].getAttribute("data-amplitude-song-index");
-
-      if (playlist == null && song == null && !isNaN(_config2.default.buffered)) {
-        songBufferedProgressBars[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
-      }
-    }
-  }
-
-  /**
-   * Sync the playlist song buffered progress elements.
-   */
-  function syncPlaylist() {
-    /*
-    Gets all of the song buffered progress bars.
-    */
-    var songBufferedProgressBarsPlaylist = document.querySelectorAll('.amplitude-buffered-progress[data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
-
-    /*
-    Iterate over all of the song buffered progress bar and
-    set them to 0 which is like re-setting them.
-    */
-    for (var i = 0; i < songBufferedProgressBarsPlaylist.length; i++) {
-      var song = songBufferedProgressBarsPlaylist[i].getAttribute("data-amplitude-song-index");
-
-      if (song == null && !isNaN(_config2.default.buffered)) {
-        songBufferedProgressBarsPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
-      }
-    }
-  }
-
-  /**
-   * Sync the song song buffered progress elements.
-   */
-  function syncSong() {
-    /*
-    Gets all of the song buffered progress bars.
-    */
-    var songBufferedProgressBarsSongs = document.querySelectorAll('.amplitude-buffered-progress[data-amplitude-song-index="' + _config2.default.active_index + '"]');
-
-    /*
-    Iterate over all of the song buffered progress bar and
-    set them to 0 which is like re-setting them.
-    */
-    for (var i = 0; i < songBufferedProgressBarsSongs.length; i++) {
-      var playlist = songBufferedProgressBarsSongs[i].getAttribute("data-amplitude-playlist");
-
-      if (playlist == null && !isNaN(_config2.default.buffered)) {
-        songBufferedProgressBarsSongs[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
-      }
-    }
-  }
-
-  /**
-   * Sync the song in playlist song buffered progress elements.
-   */
-  function syncSongInPlaylist() {
-    var activePlaylistIndex = _config2.default.active_playlist != null && _config2.default.active_playlist != "" ? _config2.default.playlists[_config2.default.active_playlist].active_index : null;
-
-    /*
-    Gets all of the song buffered progress bars.
-    */
-    var songBufferedProgressBarsSongsInPlaylist = document.querySelectorAll('.amplitude-buffered-progress[data-amplitude-song-index="' + activePlaylistIndex + '"][data-amplitude-playlist="' + _config2.default.active_playlist + '"]');
-
-    /*
-    Iterate over all of the song buffered progress bar and
-    set them to 0 which is like re-setting them.
-    */
-    for (var i = 0; i < songBufferedProgressBarsSongsInPlaylist.length; i++) {
-      if (!isNaN(_config2.default.buffered)) {
-        songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
-      }
-    }
-  }
-
-  /**
-   * Sets all of the song buffered progress bars to 0
-   *
-   * @access public
-   */
-  function reset() {
-    /*
-    Gets all of the song buffered progress bars.
-    */
-    var songBufferedProgressBars = document.getElementsByClassName("amplitude-buffered-progress");
-
-    /*
-    Iterate over all of the song buffered progress bar and
-    set them to 0 which is like re-setting them.
-    */
-    for (var i = 0; i < songBufferedProgressBars.length; i++) {
-      songBufferedProgressBars[i].value = 0;
-    }
-  }
-
-  /**
-   * Returns the public facing methods
-   */
-  return {
-    sync: sync,
-    reset: reset
-  };
-}(); /**
-      * Imports the config module
-      * @module config
-      */
-exports.default = BufferedProgressElements;
-module.exports = exports["default"];
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _audioNavigation = __webpack_require__(3);
-
-var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
-
-var _core = __webpack_require__(1);
-
-var _core2 = _interopRequireDefault(_core);
-
-var _playPauseElements = __webpack_require__(2);
-
-var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Ended Module. Handles the ended event on the audio.
- *
- * @module events/Ended
- */
-
-
-/**
- * Imports the AmplitudeJS Core Methods
- * @module core/Core
- */
-/**
- * Imports the config module
- * @module config
- */
-var Ended = function () {
-  /**
-   * When the song has ended, handles what to do next
-   *
-   * HANDLER FOR: ended
-   *
-   * @access public
-   */
-  function handle() {
-    /*
-      Sets the time out for song ended. This determines if
-      we should go to the next song or delay between songs.
-    */
-    setTimeout(function () {
-      /*
-        If we continue next, we should move to the next song in the playlist.
-      */
-      if (_config2.default.continue_next) {
-        /*
-        If the active playlist is not set, we set the
-        next song that's in the songs array.
-        */
-        if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
-          _audioNavigation2.default.setNext(true);
-        } else {
-          _audioNavigation2.default.setNextPlaylist(_config2.default.active_playlist, true);
-        }
-      } else {
-        if (!_config2.default.is_touch_moving) {
-          /*
-          Stops the active song.
-          */
-          _core2.default.stop();
-
-          /*
-            Sync the play pause elements.
-          */
-          _playPauseElements2.default.sync();
-        }
-      }
-    }, _config2.default.delay);
-  }
-
-  /*
-    Returns the public facing methods.
-  */
-  return {
-    handle: handle
-  };
-}();
-
-/**
- * Imports the AmplitudeJS Play Pause Elements
- * @module visual/PlayPauseElements
- */
-
-
-/**
- * Imports the Audio Navigation Utility
- * @module utilities/AudioNavigation
- */
-exports.default = Ended;
 module.exports = exports["default"];
 
 /***/ }),
@@ -7032,7 +6941,7 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _repeatElements = __webpack_require__(8);
+var _repeatElements = __webpack_require__(9);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -7395,7 +7304,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _callbacks = __webpack_require__(9);
+var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -8227,9 +8136,9 @@ var PlayPause = function () {
         we go from the first song in the shuffle playlist array.
       */
       if (_config2.default.playlists[playlist].shuffle) {
-        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].shuffle_list[0], 0, true);
+        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].shuffle_list[0], 0);
       } else {
-        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[0], 0, true);
+        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[0], 0);
       }
     }
 
@@ -8277,7 +8186,7 @@ var PlayPause = function () {
       /*
       We then change the song to the index selected.
       */
-      _audioNavigation2.default.changeSong(_config2.default.songs[song], song, true);
+      _audioNavigation2.default.changeSong(_config2.default.songs[song], song);
     }
 
     /*
@@ -8291,7 +8200,7 @@ var PlayPause = function () {
       The song selected is different, so we change the
       song.
       */
-      _audioNavigation2.default.changeSong(_config2.default.songs[song], song, true);
+      _audioNavigation2.default.changeSong(_config2.default.songs[song], song);
     }
 
     /*
@@ -8340,7 +8249,7 @@ var PlayPause = function () {
       /*
       We then change the song to the index selected.
       */
-      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song, true);
+      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song);
     }
 
     /*
@@ -8354,7 +8263,7 @@ var PlayPause = function () {
       The song selected is different, so we change the
       song.
       */
-      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song, true);
+      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song);
     }
 
     /*
@@ -8636,7 +8545,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(25);
+var _bufferedProgressElements = __webpack_require__(24);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -8714,7 +8623,7 @@ var _repeater = __webpack_require__(12);
 
 var _repeater2 = _interopRequireDefault(_repeater);
 
-var _repeatElements = __webpack_require__(8);
+var _repeatElements = __webpack_require__(9);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -8842,7 +8751,7 @@ var _repeater = __webpack_require__(12);
 
 var _repeater2 = _interopRequireDefault(_repeater);
 
-var _repeatElements = __webpack_require__(8);
+var _repeatElements = __webpack_require__(9);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -9242,7 +9151,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _time = __webpack_require__(24);
+var _time = __webpack_require__(23);
 
 var _time2 = _interopRequireDefault(_time);
 
@@ -9559,7 +9468,7 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _bufferedProgressElements = __webpack_require__(25);
+var _bufferedProgressElements = __webpack_require__(24);
 
 var _bufferedProgressElements2 = _interopRequireDefault(_bufferedProgressElements);
 
@@ -9575,11 +9484,11 @@ var _songPlayedProgressElements = __webpack_require__(20);
 
 var _songPlayedProgressElements2 = _interopRequireDefault(_songPlayedProgressElements);
 
-var _time = __webpack_require__(24);
+var _time = __webpack_require__(23);
 
 var _time2 = _interopRequireDefault(_time);
 
-var _callbacks = __webpack_require__(9);
+var _callbacks = __webpack_require__(7);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -10265,7 +10174,7 @@ var _shuffleElements = __webpack_require__(19);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
-var _repeatElements = __webpack_require__(8);
+var _repeatElements = __webpack_require__(9);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -10285,7 +10194,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(7);
+var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -10778,38 +10687,6 @@ var Amplitude = function () {
   }
 
   /**
-   * Adds a song to the beginning of the config array.
-   * This will allow Amplitude to play the song in a 
-   * playlist type setting.
-   *
-   * Public Accessor: Amplitude.addSong( song_json )
-   *
-   * @access public
-   * @param {object} song 	- JSON representation of a song.
-   * @returns {number} New index of the song (0)
-   */
-  function prependSong(song) {
-    /*
-    Ensures we have a songs array to push to.
-    */
-    if (_config2.default.songs == undefined) {
-      _config2.default.songs = [];
-    }
-
-    _config2.default.songs.unshift(song);
-
-    if (_config2.default.shuffle_on) {
-      _config2.default.shuffle_list.unshift(song);
-    }
-
-    if (_soundcloud2.default.isSoundCloudURL(song.url)) {
-      _soundcloud2.default.resolveIndividualStreamableURL(song.url, null, _config2.default.songs.length - 1, _config2.default.shuffle_on);
-    }
-
-    return 0;
-  }
-
-  /**
    * Adds a song to a playlist. This will allow Amplitude to play the song in the
    * playlist
    *
@@ -10932,7 +10809,6 @@ var Amplitude = function () {
     or there will be nothing to play.
     */
     if (song.url) {
-      _config2.default.audio = new Audio();
       _config2.default.audio.src = song.url;
       _config2.default.active_metadata = song;
       _config2.default.active_album = song.album;
@@ -11102,20 +10978,6 @@ var Amplitude = function () {
    */
   function pause() {
     _core2.default.pause();
-
-    _configState2.default.setPlayerState();
-  }
-
-  /**
-   * Allows the user to stop whatever the active song is directly
-   * through Javascript.
-   * 
-   * Public Accessor: Amplitude.stop();
-   * 
-   * @access public
-   */
-  function stop() {
-    _core2.default.stop();
 
     _configState2.default.setPlayerState();
   }
@@ -11590,7 +11452,6 @@ var Amplitude = function () {
     getSongAtIndex: getSongAtIndex,
     getSongAtPlaylistIndex: getSongAtPlaylistIndex,
     addSong: addSong,
-    prependSong: prependSong,
     addSongToPlaylist: addSongToPlaylist,
     removeSong: removeSong,
     removeSongFromPlaylist: removeSongFromPlaylist,
@@ -11599,7 +11460,6 @@ var Amplitude = function () {
     playPlaylistSongAtIndex: playPlaylistSongAtIndex,
     play: play,
     pause: pause,
-    stop: stop,
     getAudio: getAudio,
     getAnalyser: getAnalyser,
     next: next,
@@ -11717,7 +11577,7 @@ var _checks = __webpack_require__(5);
 
 var _checks2 = _interopRequireDefault(_checks);
 
-var _metaDataElements = __webpack_require__(7);
+var _metaDataElements = __webpack_require__(8);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -12012,12 +11872,9 @@ var ContainerElements = function () {
    * Applies the class 'amplitude-active-song-container' to the element
    * containing visual information regarding the active song.
    *
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
-   * 
    * @access public
    */
-  function setActive(direct) {
+  function setActive() {
     /*
       Gets all of the song container elements.
     */
@@ -12035,21 +11892,12 @@ var ContainerElements = function () {
     that represents the song at the index.
     */
     if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
-
       var activeIndex = '';
 
-      /*
-        If we click directly on the song element, we ignore
-        whether it's in shuffle or not.
-      */
-      if (direct) {
-        activeIndex = _config2.default.active_index;
+      if (_config2.default.shuffle_on) {
+        activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
       } else {
-        if (_config2.default.shuffle_on) {
-          activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
-        } else {
-          activeIndex = _config2.default.active_index;
-        }
+        activeIndex = _config2.default.active_index;
       }
 
       if (document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activeIndex + '"]')) {
@@ -12062,11 +11910,7 @@ var ContainerElements = function () {
         }
       }
     } else {
-      /*
-        If we have an active playlist or the action took place directly on the
-        song element, we ignore the shuffle.
-      */
-      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '' || direct) {
+      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
         var activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].active_index;
       } else {
         var activePlaylistIndex = '';
@@ -13511,7 +13355,7 @@ module.exports = exports["default"];
 /* 59 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"amplitudejs","version":"5.2.0","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"funding":{"type":"opencollective","url":"https://opencollective.com/amplitudejs"},"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
+module.exports = {"name":"amplitudejs","version":"5.0.3","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"funding":{"type":"opencollective","url":"https://opencollective.com/amplitudejs"},"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
 
 /***/ })
 /******/ ]);

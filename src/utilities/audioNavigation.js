@@ -68,13 +68,6 @@ import MetaDataElements from "../visual/metaDataElements.js";
 import ContainerElements from "../visual/containerElements.js";
 
 /**
- * Time Update Handle
- * 
- * @module events/Events
- */
-import Events from "../events/events.js";
-
-/**
  * AmplitudeJS Audio Navigation Utility.
  *
  * @module utilities/AudioNavigation
@@ -469,10 +462,8 @@ let AudioNavigation = (function() {
    * @access private
    * @prop {object} song  - The song we are changing to.
    * @prop {number} index - The index we are changing to.
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
    */
-  function changeSong(song, index, direct = false) {
+  function changeSong(song, index) {
     /*
       Prepare the song change.
     */
@@ -480,16 +471,7 @@ let AudioNavigation = (function() {
 
     /*
       Change the song.
-
-      We're removing/adding event listeners on 
-      the audio object before we create a new one
-      and then after we create it, re-binding.
     */
-    Events.destroyAudioBindings();
-    config.audio = new Audio(song.url);
-    Events.rebindAudio();
-    Callbacks.initialize();
-    
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
@@ -499,7 +481,7 @@ let AudioNavigation = (function() {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange( direct );
+    afterSongChange();
   }
 
   /**
@@ -509,10 +491,8 @@ let AudioNavigation = (function() {
    * @prop {string} playlist - The playlist we are changing the song on.
    * @prop {object} song     - The song we are changing to in the playlist.
    * @prop {number} index    - The inded of the song we are changing to in the playlist.
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
    */
-  function changeSongPlaylist(playlist, song, index, direct = false) {
+  function changeSongPlaylist(playlist, song, index) {
     /*
       Prepare the song change.
     */
@@ -521,11 +501,6 @@ let AudioNavigation = (function() {
     /*
       Change the song.
     */
-    Events.destroyAudioBindings();
-    config.audio = new Audio();
-    Events.rebindAudio();
-    Callbacks.initialize();
-
     config.audio.src = song.url;
     config.active_metadata = song;
     config.active_album = song.album;
@@ -536,7 +511,7 @@ let AudioNavigation = (function() {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange( direct );
+    afterSongChange();
   }
 
   /**
@@ -569,13 +544,12 @@ let AudioNavigation = (function() {
 
   /**
    * Updates data on the display after a song has changed.
-   * @prop {boolean} direct - Determines if it was a direct click on the song. We
-   *      then don't care if shuffle is on or not.
+   *
    * @access private
    */
-  function afterSongChange( direct ) {
+  function afterSongChange() {
     MetaDataElements.displayMetaData();
-    ContainerElements.setActive( direct );
+    ContainerElements.setActive();
     TimeElements.resetDurationTimes();
 
     /*

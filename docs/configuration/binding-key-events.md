@@ -36,7 +36,6 @@ meta:
 ---
 
 # Binding Key Events
-<carbon-ads/>
 This allows you to configure certain
 events to trigger on key presses. The main piece of information needed is the
 key code [https://keycode.info/](https://keycode.info/). Once you have that, you

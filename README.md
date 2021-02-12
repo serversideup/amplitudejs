@@ -8,7 +8,7 @@
   &#x2022;
   <a title="Examples" href="https://521dimensions.com/open-source/amplitudejs/examples"><strong>Examples</strong></a>
   &#x2022;
-  <a title="Tutorials" href="https://serversideup.net/search/?tags=amplitudejs&type=all"><strong>Tutorials</strong></a>
+  <a title="Tutorials" href="https://serversideup.net/search/?type=tutorials&tags=amplitudejs"><strong>Tutorials</strong></a>
   &#x2022;
   <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
   &#x2022;
@@ -19,7 +19,7 @@
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
 	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank"><img src="https://badgen.net/jsdelivr/hits/npm/amplitudejs" alt="jsDelivr"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/dt/amplitudejs" alt="Downloads"></a>
-	<a href="https://community.serversideup.net/c/get-help/amplitudejs/27" target="_blank"><img src="https://badgen.net/badge/icon/On%20Discourse?label=chat&color=cyan" alt="Chat"></a>
+	<a href="https://gitter.im/521dimensions/amplitudejs" target="_blank"><img src="https://badges.gitter.im/gitterHQ/gitter.svg" alt="Gitter"></a>
 	<br />
 	<a href="https://david-dm.org/521dimensions/amplitudejs" target="_blank"><img src="https://badgen.net/david/dep/521dimensions/amplitudejs" alt="david-dm"></a>
 	<a href="https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE" target="_blank"><img src="https://badgen.net/github/license/521dimensions/amplitudejs" alt="License"></a>
@@ -36,20 +36,11 @@ AmplitudeJS is a lightweight JavaScript library that allows you to control the d
 	Click the image above to go to the demo site or <a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">click here</a>.
 </p>
 
-## This Software is Community-run
-
-Open-source software is not sustainable without proper financial support. Maintaining an open source project takes a lot of effort and resources. If you are very thankful for what you can do with AmplitudeJS or if you are using AmplitudeJS to make any sort of revenue, we kindly ask that you contribute any resources available to keep the community growing.
-
 ## Sponsors
-These people believe in open-source. If you are interested in improving the project, <a href="https://opencollective.com/amplitudejs" target="_blank">become a sponsor</a>.
-### Platinum Sponsors
-<a href="https://soothingrelaxation.com/" target="_blank"><img width="250" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/soothing-relaxation.png"></a>
 
-### Gold Sponsors
-<a href="https://www.podcaster.de/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/sponsor-logo_podcaster.png"></a>
+AmplitudeJS is free to use under the MIT license, but the project is not sustainable without proper financial backing. If you rely on AmplitudeJS or would like to see this project grow, consider becoming a sponsor. Different levels have diferent perks.
 
-### Backers
-<a href="https://opencollective.com/amplitudejs#backers"><img src="https://opencollective.com/amplitudejs/tiers/backer.svg"></a>
+We'll even throw your logo in our README and on our website. [Become a sponsor &rarr;](https://opencollective.com/amplitudejs)
 
 ## Features
 * 🎨 100% customizable design of all player elements
@@ -67,11 +58,12 @@ These people believe in open-source. If you are interested in improving the proj
 * [FossMint: AmplitudeJS - A Modern Open-Source HTML5 Audio Player](https://www.fossmint.com/amplitudejs-html5-audio-player-with-playlist/)
 
 
-## Browser Support
+## Browser support
 
-| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" /></br>Opera |
-| ---------- | --------- | --------- | --------- | --------- |
-| IE11, Edge | 4.0+      | 3.5+      | 4.0+      | 10.5+     |
+| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome |
+<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" /></br>Opera |
+| --------- | --------- | --------- | --------- | --------- |
+| IE11, Edge| 4.0+| 3.5+| 4.0+| 10.5+|
 
 ## Example Players
 

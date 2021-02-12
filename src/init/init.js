@@ -179,9 +179,31 @@ let Initializer = (function() {
       Set default artwork, if specified.
     */
     setArt(userConfig)
-    
-    if( canAmplitudeRun( userConfig ) ){
-      ready = true;
+
+    /*
+			Checks to see if the user has songs defined.
+		*/
+    if (userConfig.songs) {
+      /*
+				Checks to see if the user has some songs in the songs array.
+			*/
+      if (userConfig.songs.length != 0) {
+        /*
+					Copies over the user defined songs. and prepares
+					Amplitude for the rest of the configuration.
+				*/
+        config.songs = userConfig.songs;
+        /*
+					Flag amplitude as ready.
+				*/
+        ready = true;
+      } else {
+        Debug.writeMessage("Please add some songs, to your songs object!");
+      }
+    } else {
+      Debug.writeMessage(
+        "Please provide a songs object for AmplitudeJS to run!"
+      );
     }
 
     /*
@@ -219,6 +241,8 @@ let Initializer = (function() {
               }
           });
   
+      
+
           /*
             Set the user waveform settings if provided.
           */
@@ -259,11 +283,6 @@ let Initializer = (function() {
         "The Web Audio API is not available on this platform. We are using your defined backups!"
       );
     }
-
-    /*
-      Initialize songs
-    */
-    initializeSongs( userConfig );
 
     /*
       Initialize default live settings
@@ -369,25 +388,12 @@ let Initializer = (function() {
     }
 
     /*
-      If there are no songs and no defined starting playlist,
-      then we go with the first song in the first playlist.
-    */
-    if( config.songs.length == 0 && !userConfig.starting_playlist ){
-      let firstPlaylist = Object.keys( config.playlists )[0];
-      AudioNavigation.changeSongPlaylist( 
-        firstPlaylist,
-        config.playlists[ firstPlaylist ].songs[0],
-        0
-      );
-    }
-
-    /*
-      Check to see if the user entered a start song
-    */
+			Check to see if the user entered a start song
+		*/
     if (userConfig.start_song != undefined && userConfig.starting_playlist) {
       /*
-        Ensure what has been entered is an integer.
-      */
+				Ensure what has been entered is an integer.
+			*/
       if (Checks.isInt(userConfig.start_song)) {
         AudioNavigation.changeSong(
           config.songs[userConfig.start_song],
@@ -399,26 +405,18 @@ let Initializer = (function() {
         );
       }
     } else {
-      /*
-        Ensure we have a song to change to. Otherwise we might just
-        only be using playlists.
-      */
-      if( config.songs.length > 0 ){
-        AudioNavigation.changeSong(config.songs[0], 0);
-      }
+      AudioNavigation.changeSong(config.songs[0], 0);
     }
 
     /*
       If the shuffle is on by default, shuffle the songs and
       switch to the shuffled song.
     */
-    if( config.songs.length > 0 ){
-      if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
-        config.shuffle_on = true;
-        Shuffler.shuffleSongs();
+    if (userConfig.shuffle_on != undefined && userConfig.shuffle_on) {
+      config.shuffle_on = true;
+      Shuffler.shuffleSongs();
 
-        AudioNavigation.changeSong(config.shuffle_list[0], 0);
-      }
+      AudioNavigation.changeSong(config.shuffle_list[0], 0);
     }
 
     /*
@@ -706,15 +704,6 @@ let Initializer = (function() {
   }
 
   /**
-   * Initializes the songs
-   * 
-   * @access private
-   */
-  function initializeSongs( userConfig ) {
-    config.songs = userConfig.songs ? userConfig.songs : [];
-  }
-
-  /**
    * Intializes the default live settings for all of the songs.
    *
    * @access private
@@ -737,27 +726,6 @@ let Initializer = (function() {
     for (let i = 0; i < config.songs.length; i++) {
       config.songs[i].index = i;
     }
-  }
-
-  /**
-   * Determines if we can run Amplitude. Amplitude can only run
-   * IF there are songs, playlists or songs and playlists
-   * 
-   * @access private
-   */
-  function canAmplitudeRun( userConfig ){
-    // If the user has provided songs, we can run AmplitudeJS
-    if( userConfig.songs && userConfig.songs.length != 0 ){
-      return true;
-    }
-
-    // If the user has provided playlists, we can run AmplitudeJS
-    if (userConfig.playlists && countPlaylists(userConfig.playlists) > 0) {
-     return true;
-    }
-
-    Debug.writeMessage( "Please provide a playlist or some songs for AmplitudeJS to run!" );
-    return false;
   }
 
 

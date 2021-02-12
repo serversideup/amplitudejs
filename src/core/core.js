@@ -267,7 +267,6 @@ let Core = (function() {
    * @access public
    */
   function disconnectStream() {
-    config.audio = new Audio();
     config.audio.src = "";
     config.audio.load();
   }
@@ -280,7 +279,6 @@ let Core = (function() {
    * @access public\
    */
   function reconnectStream() {
-    config.audio = new Audio();
     config.audio.src = config.active_metadata.url;
     config.audio.load();
   }
