@@ -37,3 +37,9 @@ jobs:
 
     - name: Test
       run: yarn test
+
+    - name: Publish beta build
+      if: github.ref == 'refs/heads/dev'
+      run: npm publish --tag beta
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
