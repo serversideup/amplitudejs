@@ -29,10 +29,10 @@ jobs:
         node-version: 14.x
 
     - name: Install dependencies
-      run: npm ci
+      run: yarn install --frozen-lockfile
 
     - name: Build
-      run: npm run build --if-present
+      run: yarn build
 
     - name: Test
-      run: npm test
+      run: yarn test
