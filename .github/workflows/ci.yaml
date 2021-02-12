@@ -25,6 +25,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node }}
+        registry-url: https://registry.npmjs.org/
 
     - name: checkout
       uses: actions/checkout@v2
@@ -42,4 +43,4 @@ jobs:
       if: github.ref == 'refs/heads/dev'
       run: npm publish --tag beta
       env:
-        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
