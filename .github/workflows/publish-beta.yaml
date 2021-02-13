@@ -2,7 +2,7 @@ name: publish
 
 on:
   release:
-    types: [created]
+    types: [prereleased]
 
 jobs:
   publish:
@@ -35,12 +35,6 @@ jobs:
 
     - name: Publish BETA build
       run: npm publish --beta
-      if: github.ref == 'refs/heads/dev'
       env:
         NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
-    
-    - name: Publish PRODUCTION build
-      run: echo "Production deployment!"
-      if: github.ref == 'refs/heads/master'
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
+  
