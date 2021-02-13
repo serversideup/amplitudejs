@@ -34,8 +34,8 @@ jobs:
       run: yarn test
 
     - name: Publish PRODUCTION build
-    
-      run: npm publish
+
+      run: echo "Production delpoyment!"
       env:
         NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
   
