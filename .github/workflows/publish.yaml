@@ -1,17 +1,11 @@
-name: ci
+name: publish
 
 on:
-  push:
-    branches:
-      - master
-      - dev
-  pull_request:
-    branches:
-      - master
-      - dev
+  release:
+    types: [created]
 
 jobs:
-  test:
+  publish:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -38,3 +32,15 @@ jobs:
 
     - name: Test
       run: yarn test
+
+    - name: Publish BETA build
+      run: npm publish --beta
+      if: github.ref == 'refs/heads/dev'
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
+    
+    - name: Publish PRODUCTION build
+      run: echo "Production deployment!"
+      if: github.ref == 'refs/heads/master'
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
