@@ -15,7 +15,7 @@
   <a title="Get Professional Help" href="https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support"><strong>Get Professional Help</strong></a>
 </p>
 <p align="center">
-	<a href="https://github.com/serversideup/amplitudejs/actions" target="_blank"><img src="https://github.com/serversideup/amplitudejs/workflows/ci/badge.svg" alt="Build Status"></a>
+	<a href="https://github.com/serversideup/amplitudejs/actions" target="_blank"><img src="https://github.com/serversideup/amplitudejs/workflows/publish-production/badge.svg" alt="Build Status"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/v/amplitudejs" alt="npm version"></a>
 	<a href="https://www.jsdelivr.com/package/npm/amplitudejs" target="_blank"><img src="https://badgen.net/jsdelivr/hits/npm/amplitudejs" alt="jsDelivr"></a>
 	<a href="https://www.npmjs.com/package/amplitudejs" target="_blank"><img src="https://badgen.net/npm/dt/amplitudejs" alt="Downloads"></a>
