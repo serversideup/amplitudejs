@@ -11,7 +11,7 @@ on:
       - dev
 
 jobs:
-  build:
+  test:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -40,7 +40,7 @@ jobs:
       run: yarn test
 
   publish:
-    needs: build
+    needs: test
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ${{ matrix.os }}
 
