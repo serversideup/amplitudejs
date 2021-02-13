@@ -1,3 +1,6 @@
+# CI Test
+Publish WITHOUT tag test #1
+
 <p align="center">
 	<a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">
 		<img src="https://521dimensions.com/img/open-source/amplitudejs/AmplitudeJS-NoSlogan.svg" width="600" alt="AmplitudeJS Logo">
