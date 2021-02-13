@@ -40,7 +40,7 @@ jobs:
       run: yarn test
 
     - name: Publish beta build
-      if: github.ref == 'refs/heads/dev'
+      if: github.ref == 'refs/heads/dev' && startsWith(github.ref, 'refs/tags/v')
       run: npm publish --tag beta
       env:
         NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
