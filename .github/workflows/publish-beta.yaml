@@ -34,7 +34,7 @@ jobs:
       run: yarn test
 
     - name: Publish BETA build
-      run: npm publish --beta
+      run: npm publish --tag beta
       env:
         NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
   
