@@ -1,5 +1,5 @@
 # CI Test
-Publish WITH TAG (beta 3)
+No tag test #1
 
 <p align="center">
 	<a href="https://521dimensions.com/open-source/amplitudejs" target="_blank">
