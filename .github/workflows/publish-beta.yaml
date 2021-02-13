@@ -2,8 +2,6 @@ name: publish-beta
 
 on:
   push:
-    branches:
-      - dev
     tags:
       - "v*.*.*beta*"
 
