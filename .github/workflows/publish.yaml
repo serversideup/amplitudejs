@@ -1,14 +1,9 @@
-name: ci
+name: publish
 
 on:
   push:
-    branches:
-      - master
-      - dev
-  pull_request:
-    branches:
-      - master
-      - dev
+    tags:
+    - '*'
 
 jobs:
   build:
@@ -38,3 +33,15 @@ jobs:
 
     - name: Test
       run: yarn test
+
+    - name: Publish BETA build
+      if: github.ref == 'refs/heads/dev'
+      run: npm publish --tag beta
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
+    
+    - name: Publish PRODUCTION build
+      if: github.ref == 'refs/heads/master'
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN_SECRET}}
