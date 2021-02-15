@@ -856,7 +856,7 @@ var Events = (function() {
    * @access private
    */
   function bindCanPlayThrough() {
-    if( WaveForm.determineIfUsingWaveforms() ){
+    if (WaveForm.determineIfUsingWaveforms()) {
       config.audio.removeEventListener("canplaythrough", WaveForm.build);
       config.audio.addEventListener("canplaythrough", WaveForm.build);
     }

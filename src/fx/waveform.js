@@ -14,12 +14,12 @@ let WaveForm = (function() {
     Initialize the local variables used in the Waveform.
   */
   let buffer = "";
-  let sampleRate = '';
+  let sampleRate = "";
   let peaks = "";
 
   function init() {
     sampleRate = config.waveforms.sample_rate;
-    
+
     /*
       Grabs all of the waveform elements on the page.
     */
@@ -439,12 +439,12 @@ let WaveForm = (function() {
   /**
    * Determines if the user is using waveforms
    */
-  function determineIfUsingWaveforms(){
+  function determineIfUsingWaveforms() {
     let waveforms = document.querySelectorAll(".amplitude-wave-form");
 
-    if( waveforms.length > 0 ){
+    if (waveforms.length > 0) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }

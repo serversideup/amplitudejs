@@ -105,7 +105,7 @@ let BufferedProgressElements = (function() {
         "data-amplitude-playlist"
       );
 
-      if (playlist == null && !isNaN(config.buffered) ) {
+      if (playlist == null && !isNaN(config.buffered)) {
         songBufferedProgressBarsSongs[i].value = parseFloat(
           parseFloat(config.buffered) / 100
         );
@@ -138,7 +138,7 @@ let BufferedProgressElements = (function() {
 			set them to 0 which is like re-setting them.
 		*/
     for (let i = 0; i < songBufferedProgressBarsSongsInPlaylist.length; i++) {
-      if( !isNaN(config.buffered) ){
+      if (!isNaN(config.buffered)) {
         songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(
           parseFloat(config.buffered) / 100
         );

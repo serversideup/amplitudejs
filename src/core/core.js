@@ -97,13 +97,8 @@ let Core = (function() {
     */
     let playPromise = config.audio.play();
 
-    if( playPromise !== undefined ){
-      playPromise.then( _ => {
-
-      })
-      .catch( error => {
-
-      });
+    if (playPromise !== undefined) {
+      playPromise.then(_ => {}).catch(error => {});
     }
     config.audio.play();
     config.audio.playbackRate = config.playback_speed;

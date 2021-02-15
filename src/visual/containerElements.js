@@ -16,7 +16,7 @@ let ContainerElements = (function() {
    *
    * @prop {boolean} direct - Determines if it was a direct click on the song. We
    * then don't care if shuffle is on or not.
-   * 
+   *
    * @access public
    */
   function setActive(direct) {
@@ -39,18 +39,18 @@ let ContainerElements = (function() {
 			that represents the song at the index.
 		*/
     if (config.active_playlist == "" || config.active_playlist == null) {
-      let activeIndex = '';
+      let activeIndex = "";
 
       /*
         If we click directly on the song element, we ignore
         whether it's in shuffle or not.
       */
-      if( direct ){
+      if (direct) {
         activeIndex = config.active_index;
-      }else{
-        if( config.shuffle_on ){
-          activeIndex = config.shuffle_list[ config.active_index ].index;
-        }else{
+      } else {
+        if (config.shuffle_on) {
+          activeIndex = config.shuffle_list[config.active_index].index;
+        } else {
           activeIndex = config.active_index;
         }
       }
@@ -79,15 +79,23 @@ let ContainerElements = (function() {
         If we have an active playlist or the action took place directly on the
         song element, we ignore the shuffle.
       */
-      if( ( config.active_playlist != null && config.active_playlist != '' ) || direct ){
-        var activePlaylistIndex = config.playlists[ config.active_playlist ].active_index;
-      }else{
-        var activePlaylistIndex = '';
+      if (
+        (config.active_playlist != null && config.active_playlist != "") ||
+        direct
+      ) {
+        var activePlaylistIndex =
+          config.playlists[config.active_playlist].active_index;
+      } else {
+        var activePlaylistIndex = "";
 
-        if( config.playlists[ config.active_playlist ].shuffle ){
-          activePlaylistIndex = config.playlists[ config.active_playlist ].shuffle_list[ config.playlists[config.active_playlist].active_index ].index;
-        }else{
-          activePlaylistIndex = config.playlists[ config.active_playlist ].active_index;
+        if (config.playlists[config.active_playlist].shuffle) {
+          activePlaylistIndex =
+            config.playlists[config.active_playlist].shuffle_list[
+              config.playlists[config.active_playlist].active_index
+            ].index;
+        } else {
+          activePlaylistIndex =
+            config.playlists[config.active_playlist].active_index;
         }
       }
 
