@@ -6,11 +6,11 @@
 <p align="center">
   <a title="Documentation" href="https://521dimensions.com/open-source/amplitudejs/docs/"><strong>Documentation</strong></a>
   &#x2022;
-  <a title="Examples" href="https://521dimensions.com/open-source/amplitudejs/examples"><strong>Examples</strong></a>
+  <a title="Examples" href="https://521dimensions.com/open-source/amplitudejs/docs/examples/"><strong>Examples</strong></a>
   &#x2022;
   <a title="Tutorials" href="https://serversideup.net/search/?tags=amplitudejs&type=all"><strong>Tutorials</strong></a>
   &#x2022;
-  <a title="Support Us" href="https://opencollective.com/amplitudejs"><strong>Support Us</strong></a>
+  <a title="Support Us" href="https://github.com/sponsors/serversideup"><strong>Support Us</strong></a>
   &#x2022;
   <a title="Get Professional Help" href="https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support"><strong>Get Professional Help</strong></a>
 </p>
@@ -23,7 +23,7 @@
 	<br />
 	<a href="https://david-dm.org/521dimensions/amplitudejs" target="_blank"><img src="https://badgen.net/david/dep/521dimensions/amplitudejs" alt="david-dm"></a>
 	<a href="https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE" target="_blank"><img src="https://badgen.net/github/license/521dimensions/amplitudejs" alt="License"></a>
-	<a href="https://opencollective.com/amplitudejs"><img src="https://badgen.net/badge/icon/Support%20Us?label=Open%20Collective&color=orange" alt="Support us"></a>
+	<a href="https://github.com/sponsors/serversideup"><img src="https://badgen.net/badge/icon/Support%20Us?label=Github%20Sponsors&color=orange" alt="Support us"></a>
 </p>
 
 AmplitudeJS is a lightweight JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required). AmplitudeJS is available under the [MIT License](https://raw.githubusercontent.com/521dimensions/amplitudejs/master/LICENSE).
