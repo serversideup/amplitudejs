@@ -1407,10 +1407,10 @@ var AudioNavigation = function () {
 
   /**
    * Updates data on the display after a song has changed.
-   * 
+   *
    * @prop {boolean} direct - Determines if it was a direct click on the song.
    * We then don't care if shuffle is on or not.
-   * 
+   *
    * @access private
    */
   function afterSongChange(direct) {
@@ -4712,44 +4712,44 @@ var Initializer = function () {
             Activates the audio context after an event for the user.
         */
         document.documentElement.addEventListener("mousedown", function () {
-          if (_config2.default.context.state !== 'running') {
+          if (_config2.default.context.state !== "running") {
             _config2.default.context.resume();
           }
         });
 
         document.documentElement.addEventListener("keydown", function () {
-          if (_config2.default.context.state !== 'running') {
+          if (_config2.default.context.state !== "running") {
             _config2.default.context.resume();
           }
         });
 
         document.documentElement.addEventListener("keyup", function () {
-          if (_config2.default.context.state !== 'running') {
+          if (_config2.default.context.state !== "running") {
             _config2.default.context.resume();
           }
         });
 
         /*
-          Set the user waveform settings if provided.
-        */
+            Set the user waveform settings if provided.
+          */
         if (userConfig.waveforms != undefined && userConfig.waveforms.sample_rate != undefined) {
           _config2.default.waveforms.sample_rate = userConfig.waveforms.sample_rate;
         }
 
         /*
-          Initialize the waveform.
-        */
+            Initialize the waveform.
+          */
         _waveform2.default.init();
 
         /*
-          If the user is registering visualizations on init,
-          we set them right away.
-        */
+            If the user is registering visualizations on init,
+            we set them right away.
+          */
         if (userConfig.visualizations != undefined && userConfig.visualizations.length > 0) {
           /*
-                Iterate over all of the visualizations and
-                register them in our player.
-              */
+                  Iterate over all of the visualizations and
+                  register them in our player.
+                */
           for (var i = 0; i < userConfig.visualizations.length; i++) {
             _visualizations2.default.register(userConfig.visualizations[i].object, userConfig.visualizations[i].params);
           }
@@ -5140,10 +5140,10 @@ var Initializer = function () {
     }
   }
 
-  /** 
+  /**
    * Initializes the index of the song in the songs array so
    * we can reference it if needed
-   * 
+   *
    * @access private
    */
   function initializeDefaultSongIndexes() {
@@ -5192,7 +5192,7 @@ var WaveForm = function () {
     Initialize the local variables used in the Waveform.
   */
   var buffer = "";
-  var sampleRate = '';
+  var sampleRate = "";
   var peaks = "";
 
   function init() {
@@ -10336,9 +10336,9 @@ var Amplitude = function () {
 
   /**
    * Sets the playback speed
-   * 
+   *
    * Public Accessor: Amplitude.setPlaybackSpeed( speed )
-   * 
+   *
    * @access public
    */
   function setPlaybackSpeed(speed) {
@@ -10692,16 +10692,16 @@ var Amplitude = function () {
   }
 
   /**
-  * Adds a song to the beginning of the config array.
-  * This will allow Amplitude to play the song in a 
-  * playlist type setting.
-  *
-  * Public Accessor: Amplitude.addSong( song_json )
-  *
-  * @access public
-  * @param {object} song 	- JSON representation of a song.
-  * @returns {number} New index of the song (0)
-  */
+   * Adds a song to the beginning of the config array.
+   * This will allow Amplitude to play the song in a
+   * playlist type setting.
+   *
+   * Public Accessor: Amplitude.addSong( song_json )
+   *
+   * @access public
+   * @param {object} song 	- JSON representation of a song.
+   * @returns {number} New index of the song (0)
+   */
   function prependSong(song) {
     /*
     Ensures we have a songs array to push to.
@@ -11022,9 +11022,9 @@ var Amplitude = function () {
   /**
    * Allows the user to stop whatever the active song is directly
    * through Javascript.
-   * 
+   *
    * Public Accessor: Amplitude.stop();
-   * 
+   *
    * @access public
    */
   function stop() {
@@ -11541,7 +11541,7 @@ var Amplitude = function () {
   };
 }();
 
-/** 
+/**
  * Playback Speed Elements
  * @module visual/PlaybackSpeedElements
  */
@@ -11927,7 +11927,7 @@ var ContainerElements = function () {
    *
    * @prop {boolean} direct - Determines if it was a direct click on the song. We
    * then don't care if shuffle is on or not.
-   * 
+   *
    * @access public
    */
   function setActive(direct) {
@@ -11948,7 +11948,7 @@ var ContainerElements = function () {
     that represents the song at the index.
     */
     if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
-      var activeIndex = '';
+      var activeIndex = "";
 
       /*
         If we click directly on the song element, we ignore
@@ -11978,10 +11978,10 @@ var ContainerElements = function () {
         If we have an active playlist or the action took place directly on the
         song element, we ignore the shuffle.
       */
-      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '' || direct) {
+      if (_config2.default.active_playlist != null && _config2.default.active_playlist != "" || direct) {
         var activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].active_index;
       } else {
-        var activePlaylistIndex = '';
+        var activePlaylistIndex = "";
 
         if (_config2.default.playlists[_config2.default.active_playlist].shuffle) {
           activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].shuffle_list[_config2.default.playlists[_config2.default.active_playlist].active_index].index;
@@ -13423,7 +13423,7 @@ module.exports = exports["default"];
 /* 59 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"amplitudejs","version":"5.3.0-beta.14","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"funding":{"type":"opencollective","url":"https://opencollective.com/amplitudejs"},"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
+module.exports = {"name":"amplitudejs","version":"5.3.0-beta.15","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"funding":{"type":"opencollective","url":"https://opencollective.com/amplitudejs"},"scripts":{"build":"node_modules/.bin/webpack","prettier":"npx pretty-quick","preversion":"npx pretty-quick && npm run test","postversion":"git push && git push --tags","test":"jest","version":"npm run build && git add -A dist"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
 
 /***/ })
 /******/ ]);
