@@ -28,9 +28,11 @@
   },
   "scripts": {
     "build": "node_modules/.bin/webpack",
-    "watch": "watch 'node_modules/.bin/webpack' dist",
     "prettier": "npx pretty-quick",
-    "test": "jest"
+    "preversion": "npx pretty-quick && npm run test",
+    "postversion": "git push && git push --tags",
+    "test": "jest",
+    "version": "npm run build && git add -A dist"
   },
   "repository": {
     "type": "git",
