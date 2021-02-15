@@ -45,8 +45,8 @@ Any sort of help to get the word out is greatly appreciated. The easiest way to 
 ## Help answer bugs on Github
 There are a number of Github issues that need help being answered. If you have some time available, [view our open Github issues &rarr;](https://github.com/521dimensions/amplitudejs/issues)
 
-## Answer questions on Gitter
-From time to time, people jump on Gitter to ask questions. You can be active in the discussion by [joining our Gitter &rarr;](https://gitter.im/521dimensions/amplitudejs)
+## Answer questions on the Server Side Up Community Forum
+From time to time, people jump on the Server Side Up Community Forum to ask questions. You can be active in the discussion by [joining our community &rarr;](https://community.serversideup.net/c/get-help/amplitudejs/27)
 
 ## Submit a pull request
 If you are looking to submit a feature or a bugfix, contributions are always welcome. [View our contributing guidelines &rarr;](https://github.com/521dimensions/amplitudejs/blob/master/.github/CONTRIBUTING.md)
