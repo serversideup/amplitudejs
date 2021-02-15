@@ -77,6 +77,8 @@ These people believe in open-source. If you are interested in improving the proj
 
 Looking for some cool examples to get started with? [View all of our example players &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/examples/index.html)
 
+#### View the source
+All of our example players have the code available on our ["AmplitudeJS Example Players" repository](https://github.com/serversideup/amplitudejs-player-examples). Feel free to submit a PR of your own example if you want! [See the source for our example players &rarr;](https://github.com/serversideup/amplitudejs-player-examples)
 
 ## Installation
 Installation is a breeze and very flexible on how you want to use it. [View the installation instructions &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/installation/)
