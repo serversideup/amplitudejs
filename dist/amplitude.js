@@ -253,11 +253,11 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -860,7 +860,7 @@ var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -884,7 +884,7 @@ var _timeElements = __webpack_require__(15);
 
 var _timeElements2 = _interopRequireDefault(_timeElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -1317,8 +1317,12 @@ var AudioNavigation = function () {
    * @access private
    * @prop {object} song  - The song we are changing to.
    * @prop {number} index - The index we are changing to.
+   * @prop {boolean} direct - Determines if it was a direct click on the song.
+   * We then don't care if shuffle is on or not.
    */
   function changeSong(song, index) {
+    var direct = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
     /*
       Prepare the song change.
     */
@@ -1336,7 +1340,7 @@ var AudioNavigation = function () {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange();
+    afterSongChange(direct);
   }
 
   /**
@@ -1346,8 +1350,12 @@ var AudioNavigation = function () {
    * @prop {string} playlist - The playlist we are changing the song on.
    * @prop {object} song     - The song we are changing to in the playlist.
    * @prop {number} index    - The inded of the song we are changing to in the playlist.
+   * @prop {boolean} direct  - Determines if it was a direct click on the song. We
+   * then don't care if shuffle is on or not
    */
   function changeSongPlaylist(playlist, song, index) {
+    var direct = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
     /*
       Prepare the song change.
     */
@@ -1366,7 +1374,7 @@ var AudioNavigation = function () {
     /*
       Set new information now that the song has changed.
     */
-    afterSongChange();
+    afterSongChange(direct);
   }
 
   /**
@@ -1399,12 +1407,15 @@ var AudioNavigation = function () {
 
   /**
    * Updates data on the display after a song has changed.
-   *
+   * 
+   * @prop {boolean} direct - Determines if it was a direct click on the song.
+   * We then don't care if shuffle is on or not.
+   * 
    * @access private
    */
-  function afterSongChange() {
+  function afterSongChange(direct) {
     _metaDataElements2.default.displayMetaData();
-    _containerElements2.default.setActive();
+    _containerElements2.default.setActive(direct);
     _timeElements2.default.resetDurationTimes();
 
     /*
@@ -1808,262 +1819,6 @@ var _config = __webpack_require__(0);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _debug = __webpack_require__(4);
-
-var _debug2 = _interopRequireDefault(_debug);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * AmplitudeJS Callback Utility
- *
- * @module utilities/callbacks
- */
-/**
- * Imports the config module
- * @module config
- */
-var Callbacks = function () {
-  /**
-   * Initializes the callbacks for the player.
-   */
-  function initialize() {
-    /*
-      Event: abort
-      https://www.w3schools.com/tags/av_event_abort.asp
-    */
-    _config2.default.audio.addEventListener("abort", function () {
-      run("abort");
-    });
-
-    /*
-      Event: error
-      https://www.w3schools.com/tags/av_event_error.asp
-    */
-    _config2.default.audio.addEventListener("error", function () {
-      run("error");
-    });
-
-    /*
-      Event: loadeddata
-      https://www.w3schools.com/tags/av_event_loadeddata.asp
-    */
-    _config2.default.audio.addEventListener("loadeddata", function () {
-      run("loadeddata");
-    });
-
-    /*
-      Event: loadedmetadata
-      https://www.w3schools.com/tags/av_event_loadedmetadata.asp
-    */
-    _config2.default.audio.addEventListener("loadedmetadata", function () {
-      run("loadedmetadata");
-    });
-
-    /*
-      Event: loadstart
-      https://www.w3schools.com/tags/av_event_loadstart.asp
-    */
-    _config2.default.audio.addEventListener("loadstart", function () {
-      run("loadstart");
-    });
-
-    /*
-      Event: pause
-      https://www.w3schools.com/tags/av_event_pause.asp
-    */
-    _config2.default.audio.addEventListener("pause", function () {
-      run("pause");
-    });
-
-    /*
-      Event: playing
-      https://www.w3schools.com/tags/av_event_playing.asp
-    */
-    _config2.default.audio.addEventListener("playing", function () {
-      run("playing");
-    });
-
-    /*
-      Event: play
-      https://www.w3schools.com/tags/av_event_play.asp
-    */
-    _config2.default.audio.addEventListener("play", function () {
-      run("play");
-    });
-
-    /*
-      Event: progress
-      https://www.w3schools.com/tags/av_event_progress.asp
-    */
-    _config2.default.audio.addEventListener("progress", function () {
-      run("progress");
-    });
-
-    /*
-      Event: ratechange
-      https://www.w3schools.com/tags/av_event_ratechange.asp
-    */
-    _config2.default.audio.addEventListener("ratechange", function () {
-      run("ratechange");
-    });
-
-    /*
-      Event: seeked
-      https://www.w3schools.com/tags/av_event_seeked.asp
-    */
-    _config2.default.audio.addEventListener("seeked", function () {
-      run("seeked");
-    });
-
-    /*
-      Event: seeking
-      https://www.w3schools.com/tags/av_event_seeking.asp
-    */
-    _config2.default.audio.addEventListener("seeking", function () {
-      run("seeking");
-    });
-
-    /*
-      Event: stalled
-      https://www.w3schools.com/tags/av_event_stalled.asp
-    */
-    _config2.default.audio.addEventListener("stalled", function () {
-      run("stalled");
-    });
-
-    /*
-      Event: suspend
-      https://www.w3schools.com/tags/av_event_suspend.asp
-    */
-    _config2.default.audio.addEventListener("suspend", function () {
-      run("suspend");
-    });
-
-    /*
-      Event: timeupdate
-      https://www.w3schools.com/tags/av_event_timeupdate.asp
-    */
-    _config2.default.audio.addEventListener("timeupdate", function () {
-      run("timeupdate");
-    });
-
-    /*
-      Event: volumechange
-      https://www.w3schools.com/tags/av_event_volumechange.asp
-    */
-    _config2.default.audio.addEventListener("volumechange", function () {
-      run("volumechange");
-    });
-
-    /*
-      Event: waiting
-      https://www.w3schools.com/tags/av_event_waiting.asp
-    */
-    _config2.default.audio.addEventListener("waiting", function () {
-      run("waiting");
-    });
-
-    /*
-      Event: canplay
-      https://www.w3schools.com/tags/av_event_canplay.asp
-    */
-    _config2.default.audio.addEventListener("canplay", function () {
-      run("canplay");
-    });
-
-    /*
-      Event: canplaythrough
-      https://www.w3schools.com/tags/av_event_canplaythrough.asp
-    */
-    _config2.default.audio.addEventListener("canplaythrough", function () {
-      run("canplaythrough");
-    });
-
-    /*
-      Event: durationchange
-      https://www.w3schools.com/tags/av_event_durationchange.asp
-    */
-    _config2.default.audio.addEventListener("durationchange", function () {
-      run("durationchange");
-    });
-
-    /*
-      Event: ended
-      https://www.w3schools.com/tags/av_event_ended.asp
-    */
-    _config2.default.audio.addEventListener("ended", function () {
-      run("ended");
-    });
-  }
-
-  /**
-   * Runs a user defined callback method
-   *
-   * Public Accessor: Callbacks.run( callbackName )
-   *
-   * @access public
-   * @param {string} callbackName - The name of the callback we are going to run.
-   */
-  function run(callbackName) {
-    /*
-      Checks to see if a user defined a callback method for the
-      callback we are running.
-    */
-    if (_config2.default.callbacks[callbackName]) {
-      /*
-        Build the callback function
-      */
-      var callbackFunction = _config2.default.callbacks[callbackName];
-
-      /*
-        Write a debug message stating the callback we are running
-      */
-      _debug2.default.writeMessage("Running Callback: " + callbackName);
-
-      /*
-        Run the callback function and catch any errors
-      */
-      try {
-        callbackFunction();
-      } catch (error) {
-        if (error.message == "CANCEL EVENT") {
-          throw error;
-        } else {
-          _debug2.default.writeMessage("Callback error: " + error.message);
-        }
-      }
-    }
-  }
-
-  return {
-    initialize: initialize,
-    run: run
-  };
-}();
-
-/**
- * Imports the debug module
- * @module utilities/debug
- */
-exports.default = Callbacks;
-module.exports = exports["default"];
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _config2 = _interopRequireDefault(_config);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -2359,7 +2114,7 @@ exports.default = MetaDataElements;
 module.exports = exports["default"];
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2490,6 +2245,262 @@ var RepeatElements = function () {
       * @module config
       */
 exports.default = RepeatElements;
+module.exports = exports["default"];
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _debug = __webpack_require__(4);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * AmplitudeJS Callback Utility
+ *
+ * @module utilities/callbacks
+ */
+/**
+ * Imports the config module
+ * @module config
+ */
+var Callbacks = function () {
+  /**
+   * Initializes the callbacks for the player.
+   */
+  function initialize() {
+    /*
+      Event: abort
+      https://www.w3schools.com/tags/av_event_abort.asp
+    */
+    _config2.default.audio.addEventListener("abort", function () {
+      run("abort");
+    });
+
+    /*
+      Event: error
+      https://www.w3schools.com/tags/av_event_error.asp
+    */
+    _config2.default.audio.addEventListener("error", function () {
+      run("error");
+    });
+
+    /*
+      Event: loadeddata
+      https://www.w3schools.com/tags/av_event_loadeddata.asp
+    */
+    _config2.default.audio.addEventListener("loadeddata", function () {
+      run("loadeddata");
+    });
+
+    /*
+      Event: loadedmetadata
+      https://www.w3schools.com/tags/av_event_loadedmetadata.asp
+    */
+    _config2.default.audio.addEventListener("loadedmetadata", function () {
+      run("loadedmetadata");
+    });
+
+    /*
+      Event: loadstart
+      https://www.w3schools.com/tags/av_event_loadstart.asp
+    */
+    _config2.default.audio.addEventListener("loadstart", function () {
+      run("loadstart");
+    });
+
+    /*
+      Event: pause
+      https://www.w3schools.com/tags/av_event_pause.asp
+    */
+    _config2.default.audio.addEventListener("pause", function () {
+      run("pause");
+    });
+
+    /*
+      Event: playing
+      https://www.w3schools.com/tags/av_event_playing.asp
+    */
+    _config2.default.audio.addEventListener("playing", function () {
+      run("playing");
+    });
+
+    /*
+      Event: play
+      https://www.w3schools.com/tags/av_event_play.asp
+    */
+    _config2.default.audio.addEventListener("play", function () {
+      run("play");
+    });
+
+    /*
+      Event: progress
+      https://www.w3schools.com/tags/av_event_progress.asp
+    */
+    _config2.default.audio.addEventListener("progress", function () {
+      run("progress");
+    });
+
+    /*
+      Event: ratechange
+      https://www.w3schools.com/tags/av_event_ratechange.asp
+    */
+    _config2.default.audio.addEventListener("ratechange", function () {
+      run("ratechange");
+    });
+
+    /*
+      Event: seeked
+      https://www.w3schools.com/tags/av_event_seeked.asp
+    */
+    _config2.default.audio.addEventListener("seeked", function () {
+      run("seeked");
+    });
+
+    /*
+      Event: seeking
+      https://www.w3schools.com/tags/av_event_seeking.asp
+    */
+    _config2.default.audio.addEventListener("seeking", function () {
+      run("seeking");
+    });
+
+    /*
+      Event: stalled
+      https://www.w3schools.com/tags/av_event_stalled.asp
+    */
+    _config2.default.audio.addEventListener("stalled", function () {
+      run("stalled");
+    });
+
+    /*
+      Event: suspend
+      https://www.w3schools.com/tags/av_event_suspend.asp
+    */
+    _config2.default.audio.addEventListener("suspend", function () {
+      run("suspend");
+    });
+
+    /*
+      Event: timeupdate
+      https://www.w3schools.com/tags/av_event_timeupdate.asp
+    */
+    _config2.default.audio.addEventListener("timeupdate", function () {
+      run("timeupdate");
+    });
+
+    /*
+      Event: volumechange
+      https://www.w3schools.com/tags/av_event_volumechange.asp
+    */
+    _config2.default.audio.addEventListener("volumechange", function () {
+      run("volumechange");
+    });
+
+    /*
+      Event: waiting
+      https://www.w3schools.com/tags/av_event_waiting.asp
+    */
+    _config2.default.audio.addEventListener("waiting", function () {
+      run("waiting");
+    });
+
+    /*
+      Event: canplay
+      https://www.w3schools.com/tags/av_event_canplay.asp
+    */
+    _config2.default.audio.addEventListener("canplay", function () {
+      run("canplay");
+    });
+
+    /*
+      Event: canplaythrough
+      https://www.w3schools.com/tags/av_event_canplaythrough.asp
+    */
+    _config2.default.audio.addEventListener("canplaythrough", function () {
+      run("canplaythrough");
+    });
+
+    /*
+      Event: durationchange
+      https://www.w3schools.com/tags/av_event_durationchange.asp
+    */
+    _config2.default.audio.addEventListener("durationchange", function () {
+      run("durationchange");
+    });
+
+    /*
+      Event: ended
+      https://www.w3schools.com/tags/av_event_ended.asp
+    */
+    _config2.default.audio.addEventListener("ended", function () {
+      run("ended");
+    });
+  }
+
+  /**
+   * Runs a user defined callback method
+   *
+   * Public Accessor: Callbacks.run( callbackName )
+   *
+   * @access public
+   * @param {string} callbackName - The name of the callback we are going to run.
+   */
+  function run(callbackName) {
+    /*
+      Checks to see if a user defined a callback method for the
+      callback we are running.
+    */
+    if (_config2.default.callbacks[callbackName]) {
+      /*
+        Build the callback function
+      */
+      var callbackFunction = _config2.default.callbacks[callbackName];
+
+      /*
+        Write a debug message stating the callback we are running
+      */
+      _debug2.default.writeMessage("Running Callback: " + callbackName);
+
+      /*
+        Run the callback function and catch any errors
+      */
+      try {
+        callbackFunction();
+      } catch (error) {
+        if (error.message == "CANCEL EVENT") {
+          throw error;
+        } else {
+          _debug2.default.writeMessage("Callback error: " + error.message);
+        }
+      }
+    }
+  }
+
+  return {
+    initialize: initialize,
+    run: run
+  };
+}();
+
+/**
+ * Imports the debug module
+ * @module utilities/debug
+ */
+exports.default = Callbacks;
 module.exports = exports["default"];
 
 /***/ }),
@@ -4573,7 +4584,7 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -4601,7 +4612,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -4609,7 +4620,7 @@ var _playbackSpeedElements = __webpack_require__(18);
 
 var _playbackSpeedElements2 = _interopRequireDefault(_playbackSpeedElements);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -5181,10 +5192,12 @@ var WaveForm = function () {
     Initialize the local variables used in the Waveform.
   */
   var buffer = "";
-  var sampleRate = _config2.default.waveforms.sample_rate;
+  var sampleRate = '';
   var peaks = "";
 
   function init() {
+    sampleRate = _config2.default.waveforms.sample_rate;
+
     /*
       Grabs all of the waveform elements on the page.
     */
@@ -5829,7 +5842,7 @@ var BufferedProgressElements = function () {
       var playlist = songBufferedProgressBars[i].getAttribute("data-amplitude-playlist");
       var song = songBufferedProgressBars[i].getAttribute("data-amplitude-song-index");
 
-      if (playlist == null && song == null) {
+      if (playlist == null && song == null && !isNaN(_config2.default.buffered)) {
         songBufferedProgressBars[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
       }
     }
@@ -5851,7 +5864,7 @@ var BufferedProgressElements = function () {
     for (var i = 0; i < songBufferedProgressBarsPlaylist.length; i++) {
       var song = songBufferedProgressBarsPlaylist[i].getAttribute("data-amplitude-song-index");
 
-      if (song == null) {
+      if (song == null && !isNaN(_config2.default.buffered)) {
         songBufferedProgressBarsPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
       }
     }
@@ -5873,7 +5886,7 @@ var BufferedProgressElements = function () {
     for (var i = 0; i < songBufferedProgressBarsSongs.length; i++) {
       var playlist = songBufferedProgressBarsSongs[i].getAttribute("data-amplitude-playlist");
 
-      if (playlist == null) {
+      if (playlist == null && !isNaN(_config2.default.buffered)) {
         songBufferedProgressBarsSongs[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
       }
     }
@@ -5895,7 +5908,9 @@ var BufferedProgressElements = function () {
     set them to 0 which is like re-setting them.
     */
     for (var i = 0; i < songBufferedProgressBarsSongsInPlaylist.length; i++) {
-      songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      if (!isNaN(_config2.default.buffered)) {
+        songBufferedProgressBarsSongsInPlaylist[i].value = parseFloat(parseFloat(_config2.default.buffered) / 100);
+      }
     }
   }
 
@@ -5952,10 +5967,6 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _callbacks = __webpack_require__(7);
-
-var _callbacks2 = _interopRequireDefault(_callbacks);
-
 var _core = __webpack_require__(1);
 
 var _core2 = _interopRequireDefault(_core);
@@ -5977,11 +5988,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Imports the AmplitudeJS Core Methods
  * @module core/Core
  */
-
-
 /**
- * Imports the Audio Navigation Utility
- * @module utilities/AudioNavigation
+ * Imports the config module
+ * @module config
  */
 var Ended = function () {
   /**
@@ -6015,7 +6024,7 @@ var Ended = function () {
           /*
           Stops the active song.
           */
-          AmplitudeCore.stop();
+          _core2.default.stop();
 
           /*
             Sync the play pause elements.
@@ -6041,12 +6050,8 @@ var Ended = function () {
 
 
 /**
- * Imports the Callback Utility
- * @module utilities/callbacks
- */
-/**
- * Imports the config module
- * @module config
+ * Imports the Audio Navigation Utility
+ * @module utilities/AudioNavigation
  */
 exports.default = Ended;
 module.exports = exports["default"];
@@ -6941,7 +6946,7 @@ var _audioNavigation = __webpack_require__(3);
 
 var _audioNavigation2 = _interopRequireDefault(_audioNavigation);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -7304,7 +7309,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -8136,7 +8141,7 @@ var PlayPause = function () {
         we go from the first song in the shuffle playlist array.
       */
       if (_config2.default.playlists[playlist].shuffle) {
-        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].shuffle_list[0], 0);
+        _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].shuffle_list[0], 0, true);
       } else {
         _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[0], 0);
       }
@@ -8186,7 +8191,7 @@ var PlayPause = function () {
       /*
       We then change the song to the index selected.
       */
-      _audioNavigation2.default.changeSong(_config2.default.songs[song], song);
+      _audioNavigation2.default.changeSong(_config2.default.songs[song], song, true);
     }
 
     /*
@@ -8200,7 +8205,7 @@ var PlayPause = function () {
       The song selected is different, so we change the
       song.
       */
-      _audioNavigation2.default.changeSong(_config2.default.songs[song], song);
+      _audioNavigation2.default.changeSong(_config2.default.songs[song], song, true);
     }
 
     /*
@@ -8249,7 +8254,7 @@ var PlayPause = function () {
       /*
       We then change the song to the index selected.
       */
-      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song);
+      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song, true);
     }
 
     /*
@@ -8263,7 +8268,7 @@ var PlayPause = function () {
       The song selected is different, so we change the
       song.
       */
-      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song);
+      _audioNavigation2.default.changeSongPlaylist(playlist, _config2.default.playlists[playlist].songs[song], song, true);
     }
 
     /*
@@ -8623,7 +8628,7 @@ var _repeater = __webpack_require__(12);
 
 var _repeater2 = _interopRequireDefault(_repeater);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -8751,7 +8756,7 @@ var _repeater = __webpack_require__(12);
 
 var _repeater2 = _interopRequireDefault(_repeater);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -9488,7 +9493,7 @@ var _time = __webpack_require__(23);
 
 var _time2 = _interopRequireDefault(_time);
 
-var _callbacks = __webpack_require__(7);
+var _callbacks = __webpack_require__(9);
 
 var _callbacks2 = _interopRequireDefault(_callbacks);
 
@@ -10174,7 +10179,7 @@ var _shuffleElements = __webpack_require__(19);
 
 var _shuffleElements2 = _interopRequireDefault(_shuffleElements);
 
-var _repeatElements = __webpack_require__(9);
+var _repeatElements = __webpack_require__(8);
 
 var _repeatElements2 = _interopRequireDefault(_repeatElements);
 
@@ -10194,7 +10199,7 @@ var _playPauseElements = __webpack_require__(2);
 
 var _playPauseElements2 = _interopRequireDefault(_playPauseElements);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -10687,6 +10692,38 @@ var Amplitude = function () {
   }
 
   /**
+  * Adds a song to the beginning of the config array.
+  * This will allow Amplitude to play the song in a 
+  * playlist type setting.
+  *
+  * Public Accessor: Amplitude.addSong( song_json )
+  *
+  * @access public
+  * @param {object} song 	- JSON representation of a song.
+  * @returns {number} New index of the song (0)
+  */
+  function prependSong(song) {
+    /*
+    Ensures we have a songs array to push to.
+    */
+    if (_config2.default.songs == undefined) {
+      _config2.default.songs = [];
+    }
+
+    _config2.default.songs.unshift(song);
+
+    if (_config2.default.shuffle_on) {
+      _config2.default.shuffle_list.unshift(song);
+    }
+
+    if (_soundcloud2.default.isSoundCloudURL(song.url)) {
+      _soundcloud2.default.resolveIndividualStreamableURL(song.url, null, _config2.default.songs.length - 1, _config2.default.shuffle_on);
+    }
+
+    return 0;
+  }
+
+  /**
    * Adds a song to a playlist. This will allow Amplitude to play the song in the
    * playlist
    *
@@ -10978,6 +11015,20 @@ var Amplitude = function () {
    */
   function pause() {
     _core2.default.pause();
+
+    _configState2.default.setPlayerState();
+  }
+
+  /**
+   * Allows the user to stop whatever the active song is directly
+   * through Javascript.
+   * 
+   * Public Accessor: Amplitude.stop();
+   * 
+   * @access public
+   */
+  function stop() {
+    _core2.default.stop();
 
     _configState2.default.setPlayerState();
   }
@@ -11452,6 +11503,7 @@ var Amplitude = function () {
     getSongAtIndex: getSongAtIndex,
     getSongAtPlaylistIndex: getSongAtPlaylistIndex,
     addSong: addSong,
+    prependSong: prependSong,
     addSongToPlaylist: addSongToPlaylist,
     removeSong: removeSong,
     removeSongFromPlaylist: removeSongFromPlaylist,
@@ -11460,6 +11512,7 @@ var Amplitude = function () {
     playPlaylistSongAtIndex: playPlaylistSongAtIndex,
     play: play,
     pause: pause,
+    stop: stop,
     getAudio: getAudio,
     getAnalyser: getAnalyser,
     next: next,
@@ -11543,8 +11596,8 @@ var Amplitude = function () {
  * @module core/Core
  */
 /**
- * @name 		Amplitude.js
- * @author 	Dan Pastori (521 Dimensions) <opensource@521dimensions.com>
+ * @name 		AmplitudeJS
+ * @author 	Dan Pastori (Server Side Up) <hello@serversideup.net>
  */
 /**
  * AmplitudeJS Initializer Module
@@ -11577,7 +11630,7 @@ var _checks = __webpack_require__(5);
 
 var _checks2 = _interopRequireDefault(_checks);
 
-var _metaDataElements = __webpack_require__(8);
+var _metaDataElements = __webpack_require__(7);
 
 var _metaDataElements2 = _interopRequireDefault(_metaDataElements);
 
@@ -11872,9 +11925,12 @@ var ContainerElements = function () {
    * Applies the class 'amplitude-active-song-container' to the element
    * containing visual information regarding the active song.
    *
+   * @prop {boolean} direct - Determines if it was a direct click on the song. We
+   * then don't care if shuffle is on or not.
+   * 
    * @access public
    */
-  function setActive() {
+  function setActive(direct) {
     /*
       Gets all of the song container elements.
     */
@@ -11894,10 +11950,18 @@ var ContainerElements = function () {
     if (_config2.default.active_playlist == "" || _config2.default.active_playlist == null) {
       var activeIndex = '';
 
-      if (_config2.default.shuffle_on) {
-        activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
-      } else {
+      /*
+        If we click directly on the song element, we ignore
+        whether it's in shuffle or not.
+      */
+      if (direct) {
         activeIndex = _config2.default.active_index;
+      } else {
+        if (_config2.default.shuffle_on) {
+          activeIndex = _config2.default.shuffle_list[_config2.default.active_index].index;
+        } else {
+          activeIndex = _config2.default.active_index;
+        }
       }
 
       if (document.querySelectorAll('.amplitude-song-container[data-amplitude-song-index="' + activeIndex + '"]')) {
@@ -11910,7 +11974,11 @@ var ContainerElements = function () {
         }
       }
     } else {
-      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '') {
+      /*
+        If we have an active playlist or the action took place directly on the
+        song element, we ignore the shuffle.
+      */
+      if (_config2.default.active_playlist != null && _config2.default.active_playlist != '' || direct) {
         var activePlaylistIndex = _config2.default.playlists[_config2.default.active_playlist].active_index;
       } else {
         var activePlaylistIndex = '';
@@ -13355,7 +13423,7 @@ module.exports = exports["default"];
 /* 59 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"amplitudejs","version":"5.0.3","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"funding":{"type":"opencollective","url":"https://opencollective.com/amplitudejs"},"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
+module.exports = {"name":"amplitudejs","version":"5.3.0-beta.14","description":"A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://521dimensions.com/open-source/amplitudejs","main":"dist/amplitude.js","devDependencies":{"babel-core":"^6.26.3","babel-loader":"^7.1.5","babel-plugin-add-module-exports":"0.2.1","babel-polyfill":"^6.26.0","babel-preset-es2015":"^6.18.0","husky":"^1.3.1","jest":"^23.6.0","prettier":"1.15.1","pretty-quick":"^1.11.1","watch":"^1.0.2","webpack":"^2.7.0"},"directories":{"doc":"docs"},"files":["dist"],"funding":{"type":"opencollective","url":"https://opencollective.com/amplitudejs"},"scripts":{"build":"node_modules/.bin/webpack","watch":"watch 'node_modules/.bin/webpack' dist","prettier":"npx pretty-quick","test":"jest"},"repository":{"type":"git","url":"git+https://github.com/521dimensions/amplitudejs.git"},"keywords":["webaudio","html5","javascript","audio-player"],"author":"521 Dimensions (https://521dimensions.com)","license":"MIT","bugs":{"url":"https://github.com/521dimensions/amplitudejs/issues"},"homepage":"https://github.com/521dimensions/amplitudejs#readme"}
 
 /***/ })
 /******/ ]);
