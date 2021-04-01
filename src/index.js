@@ -761,10 +761,6 @@ let Amplitude = (function() {
 		*/
     TimeElements.resetDurationTimes();
 
-    /*
-      Sets the state of the player.
-    */
-    ConfigState.setPlayerState();
   }
 
   /**
@@ -801,11 +797,6 @@ let Amplitude = (function() {
 			Play the song
 		*/
     Core.play();
-
-    /*
-      Sets the state of the player.
-    */
-    ConfigState.setPlayerState();
 
     /*
 			Sync all of the play pause buttons.
@@ -858,11 +849,6 @@ let Amplitude = (function() {
 			Play the song
 		*/
     Core.play();
-
-    /*
-			Set the state of the player
-		*/
-    ConfigState.setPlayerState();
   }
 
   /**
@@ -876,8 +862,6 @@ let Amplitude = (function() {
    */
   function play() {
     Core.play();
-
-    ConfigState.setPlayerState();
   }
 
   /**
@@ -891,8 +875,6 @@ let Amplitude = (function() {
    */
   function pause() {
     Core.pause();
-
-    ConfigState.setPlayerState();
   }
 
   /**
@@ -905,8 +887,6 @@ let Amplitude = (function() {
    */
   function stop() {
     Core.stop();
-
-    ConfigState.setPlayerState();
   }
 
   /**

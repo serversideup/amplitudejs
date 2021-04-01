@@ -94,8 +94,6 @@ let Play = (function() {
       if (playlistAttribute != null && songIndexAttribute != null) {
         handleSongInPlaylistPlay(playlistAttribute, songIndexAttribute);
       }
-
-      ConfigState.setPlayerState();
     }
   }
 

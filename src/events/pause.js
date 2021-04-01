@@ -82,8 +82,6 @@ let Pause = (function() {
       if (playlistAttribute != null && songIndexAttribute != null) {
         handleSongInPlaylistPause(playlistAttribute, songIndexAttribute);
       }
-
-      ConfigState.setPlayerState();
     }
   }
 

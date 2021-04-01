@@ -49,11 +49,6 @@ let Stop = (function() {
 				Stops the active song.
 			*/
       Core.stop();
-
-      /*
-        Set the state of the player.
-      */
-      ConfigState.setPlayerState();
     }
   }
 

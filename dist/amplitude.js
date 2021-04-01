@@ -269,6 +269,10 @@ var _visualizations = __webpack_require__(16);
 
 var _visualizations2 = _interopRequireDefault(_visualizations);
 
+var _configState = __webpack_require__(6);
+
+var _configState2 = _interopRequireDefault(_configState);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -283,24 +287,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 /**
- * Imports AmplitudeJS Debug Utility
- * @module utilities/debug
+ * Import the Visualizations from the FX module.
+ * @module fx/visualizations
  */
 
 
 /**
- * Imports the Meta Data Visual Elements module.
- * @module visual/metaDataElements
+ * Imports AmplitudeJS Callback Utility
+ * @module utilities/callbacks
  */
 
 
 /**
- * Imports the Audio Navigation module.
- * @module utilities/audioNavigation
+ * Imports the Play/Pause Visual Elements module.
+ * @module visual/playPauseElements
  */
+
+
 /**
- * Imports the config module
- * @module config
+ * Imports the Checks module.
+ * @module utilities/checks
  */
 var Core = function () {
   /**
@@ -344,6 +350,11 @@ var Core = function () {
     }
     _config2.default.audio.play();
     _config2.default.audio.playbackRate = _config2.default.playback_speed;
+
+    /*
+      Sets the state of the player.
+    */
+    _configState2.default.setPlayerState();
   }
 
   /**
@@ -373,6 +384,11 @@ var Core = function () {
     if (_config2.default.active_metadata.live) {
       disconnectStream();
     }
+
+    /*
+      Sets the state of the player.
+    */
+    _configState2.default.setPlayerState();
   }
 
   /**
@@ -405,6 +421,11 @@ var Core = function () {
     if (_config2.default.active_metadata.live) {
       disconnectStream();
     }
+
+    /*
+      Sets the state of the player.
+    */
+    _configState2.default.setPlayerState();
 
     /*
     Run the stop callback
@@ -548,26 +569,30 @@ var Core = function () {
 }();
 
 /**
- * Import the Visualizations from the FX module.
- * @module fx/visualizations
+ * Import the Config State module.
+ * @module utilities/configState
  */
 
 
 /**
- * Imports AmplitudeJS Callback Utility
- * @module utilities/callbacks
+ * Imports AmplitudeJS Debug Utility
+ * @module utilities/debug
  */
 
 
 /**
- * Imports the Play/Pause Visual Elements module.
- * @module visual/playPauseElements
+ * Imports the Meta Data Visual Elements module.
+ * @module visual/metaDataElements
  */
 
 
 /**
- * Imports the Checks module.
- * @module utilities/checks
+ * Imports the Audio Navigation module.
+ * @module utilities/audioNavigation
+ */
+/**
+ * Imports the config module
+ * @module config
  */
 exports.default = Core;
 module.exports = exports["default"];
@@ -7544,8 +7569,6 @@ var Pause = function () {
       if (playlistAttribute != null && songIndexAttribute != null) {
         handleSongInPlaylistPause(playlistAttribute, songIndexAttribute);
       }
-
-      _configState2.default.setPlayerState();
     }
   }
 
@@ -7774,8 +7797,6 @@ var Play = function () {
       if (playlistAttribute != null && songIndexAttribute != null) {
         handleSongInPlaylistPlay(playlistAttribute, songIndexAttribute);
       }
-
-      _configState2.default.setPlayerState();
     }
   }
 
@@ -8089,8 +8110,6 @@ var PlayPause = function () {
       if (playlist != null && song != null) {
         handleSongInPlaylistPlayPause(playlist, song);
       }
-
-      _configState2.default.setPlayerState();
     }
   }
 
@@ -9429,11 +9448,6 @@ var Stop = function () {
       Stops the active song.
       */
       _core2.default.stop();
-
-      /*
-        Set the state of the player.
-      */
-      _configState2.default.setPlayerState();
     }
   }
 
@@ -10892,11 +10906,6 @@ var Amplitude = function () {
     Reset all of the duration time elements.
     */
     _timeElements2.default.resetDurationTimes();
-
-    /*
-      Sets the state of the player.
-    */
-    _configState2.default.setPlayerState();
   }
 
   /**
@@ -10933,11 +10942,6 @@ var Amplitude = function () {
     Play the song
     */
     _core2.default.play();
-
-    /*
-      Sets the state of the player.
-    */
-    _configState2.default.setPlayerState();
 
     /*
     Sync all of the play pause buttons.
@@ -10982,11 +10986,6 @@ var Amplitude = function () {
     Play the song
     */
     _core2.default.play();
-
-    /*
-    Set the state of the player
-    */
-    _configState2.default.setPlayerState();
   }
 
   /**
@@ -11000,8 +10999,6 @@ var Amplitude = function () {
    */
   function play() {
     _core2.default.play();
-
-    _configState2.default.setPlayerState();
   }
 
   /**
@@ -11015,8 +11012,6 @@ var Amplitude = function () {
    */
   function pause() {
     _core2.default.pause();
-
-    _configState2.default.setPlayerState();
   }
 
   /**
@@ -11029,8 +11024,6 @@ var Amplitude = function () {
    */
   function stop() {
     _core2.default.stop();
-
-    _configState2.default.setPlayerState();
   }
 
   /**

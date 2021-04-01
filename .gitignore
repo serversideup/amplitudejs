@@ -7,6 +7,7 @@ icon*
 .vscode
 .sass-cache
 logs/
+.nova/
 
 # AmplitudeJS Specifics
 songs/*
@@ -14,4 +15,4 @@ examples/testing/*
 src/PENDING
 examples/songs
 coverage/
-ui-tests/*
+ui-tests/

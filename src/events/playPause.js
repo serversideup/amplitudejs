@@ -91,8 +91,6 @@ let PlayPause = (function() {
       if (playlist != null && song != null) {
         handleSongInPlaylistPlayPause(playlist, song);
       }
-
-      ConfigState.setPlayerState();
     }
   }
 
