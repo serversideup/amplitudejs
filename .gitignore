@@ -14,3 +14,4 @@ examples/testing/*
 src/PENDING
 examples/songs
 coverage/
+ui-tests/*
