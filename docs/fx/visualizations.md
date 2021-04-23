@@ -271,7 +271,7 @@ function VisualizationObjectName(){
 
 	/*
 		Define any settings that your visualization will need. This is JSON so
-		make sure it's clearly defined and standards are followed. These shoudl be
+		make sure it's clearly defined and standards are followed. These should be
 		able to be overwritten by the user when they pass in their preferences.
 	*/
 	this.preferences = {
