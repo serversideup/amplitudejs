@@ -49,7 +49,7 @@ These people believe in open-source. If you are interested in improving the proj
 <a href="https://www.podcaster.de/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/sponsor-logo_podcaster.png"></a>
 
 ### Silver Sponsors
-<a href="https://awise.se/" target="_blank">AWISE</a>
+<a href="https://awise.se/" target="_blank">AWISE</a><br />
 <a href="https://www.cryptonewsz.com//" target="_blank">CryptoNewsZ</a>
 
 ### Backers
