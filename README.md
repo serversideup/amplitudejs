@@ -12,7 +12,7 @@
   &#x2022;
   <a title="Support Us" href="https://github.com/sponsors/serversideup"><strong>Support Us</strong></a>
   &#x2022;
-  <a title="Get Professional Help" href="https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support"><strong>Get Professional Help</strong></a>
+  <a title="Get Professional Help" href="https://serversideup.net/get-help/?quick_question=amplitudejs"><strong>Get Professional Help</strong></a>
 </p>
 <p align="center">
 	<a href="https://github.com/serversideup/amplitudejs/actions" target="_blank"><img src="https://github.com/serversideup/amplitudejs/workflows/publish-production/badge.svg" alt="Build Status"></a>
@@ -63,7 +63,7 @@ These people believe in open-source. If you are interested in improving the proj
 * 🌊 Autogenerate waveforms and visualizations using the Web Audio API
 * 🎤 Live streaming support
 * 🎛 Public functions for unlimited control!
-* 🤵 Professionally supported [Get professional help &rarr;](https://521dimensions.com/open-source/amplitudejs/docs/get-help/#professional-support)
+* 🤵 Professionally supported [Get professional help &rarr;](https://serversideup.net/get-help/?quick_question=amplitudejs)
 
 ## Don't just take our word for it
 * [GitHub: Release Radar · January 2019](https://github.blog/2019-02-05-release-radar-january-2019/)

@@ -5,7 +5,7 @@ title: ''
 labels: "Bug: Needs Confirmation 🧐"
 
 ---
-<!-- 🤵 Looking for professional support? Guaranteed response times next business day. Learn more here: https://521d.me/amplitudejs-professional-support -->
+<!-- 🤵 Looking for professional support? Guaranteed response times next business day. Learn more here: https://srvrsi.de/amplitudejs-support -->
 
 ## Issue description
 <!-- Replace this comment with a short explanation of what is going on -->
