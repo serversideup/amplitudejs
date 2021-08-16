@@ -50,7 +50,9 @@ These people believe in open-source. If you are interested in improving the proj
 
 ### Silver Sponsors
 <a href="https://awise.se/" target="_blank">AWISE</a><br />
-<a href="https://www.cryptonewsz.com//" target="_blank">CryptoNewsZ</a>
+<a href="https://www.cryptonewsz.com/" target="_blank">CryptoNewsZ</a>
+<a href="https://veepn.com/" target="_blank">VeePN</a>
+
 
 ### Backers
 <a href="https://opencollective.com/amplitudejs#backers"><img src="https://opencollective.com/amplitudejs/tiers/backer.svg"></a>
