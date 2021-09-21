@@ -51,7 +51,8 @@ These people believe in open-source. If you are interested in improving the proj
 ### Silver Sponsors
 <a href="https://awise.se/" target="_blank">AWISE</a><br />
 <a href="https://www.cryptonewsz.com/" target="_blank">CryptoNewsZ</a><br />
-<a href="https://veepn.com/" target="_blank">VeePN</a>
+<a href="https://veepn.com/" target="_blank">VeePN</a><br />
+<a href="https://www.trustmypaper.com/" target="_blank">Trust My Paper</a>
 
 
 ### Backers
