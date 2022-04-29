@@ -146,9 +146,29 @@ let Initializer = (function() {
    *
    * Public Accessor: Amplitude.init( user_config_json )
    * @access public
-   * @param {object} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
+   * @param {object|url} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
    */
   function initialize(userConfig) {
+    if( typeof userConfig == 'string' ){
+      fetch(userConfig).then( function( response ){
+        if( response.status != 200 ){
+          throw response.status;
+        }else{
+          return response.json();
+        }
+      }.bind(this))
+      .then( function( data ){
+        setUserConfig(data);
+      }.bind(this))
+      .catch( function( error ){
+        Debug.writeMessage(error);
+      }.bind(this));
+    }else{
+      setUserConfig( userConfig );
+    }
+  }
+
+  function setUserConfig( userConfig ) {
     let ready = false;
 
     /*
