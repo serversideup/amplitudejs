@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: ❓ Support Question
-    url: https://github.com/serversideup/amplitudejs/discussions/new?category=help-support
+    url: https://github.com/serversideup/amplitudejs/discussions/483
     about: Get friendly support from the community on our forum.
 
   - name: ✨ Request a feature
