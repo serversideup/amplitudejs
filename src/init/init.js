@@ -150,22 +150,26 @@ let Initializer = (function() {
    */
   function initialize(userConfig) {
     if( typeof userConfig == 'string' ){
-      fetch(userConfig).then( function( response ){
-        if( response.status != 200 ){
-          throw response.status;
-        }else{
-          return response.json();
-        }
-      }.bind(this))
-      .then( function( data ){
-        setUserConfig(data);
-      }.bind(this))
-      .catch( function( error ){
-        Debug.writeMessage(error);
-      }.bind(this));
+      loadUserConfig(userConfig);
     }else{
       setUserConfig( userConfig );
     }
+  }
+
+  function loadUserConfig(userConfig){
+    fetch(userConfig).then( function( response ){
+      if( response.status != 200 ){
+        throw response.status;
+      }else{
+        return response.json();
+      }
+    }.bind(this))
+    .then( function( data ){
+      setUserConfig(data);
+    }.bind(this))
+    .catch( function( error ){
+      Debug.writeMessage(error);
+    }.bind(this));
   }
 
   function setUserConfig( userConfig ) {

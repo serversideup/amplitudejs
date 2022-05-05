@@ -38,12 +38,6 @@ import Core from "./core/core.js";
 import Shuffler from "./utilities/shuffler.js";
 
 /**
- * Imports the config state module.
- * @module ConfigState
- */
-import ConfigState from "./utilities/configState.js";
-
-/**
  * Imports the audio navigation
  * @module utilities/AudioNavigation
  */
