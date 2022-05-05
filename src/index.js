@@ -2,6 +2,8 @@
  * @name 		AmplitudeJS
  * @author 	Dan Pastori (Server Side Up) <hello@serversideup.net>
  */
+ import { test } from '@/methods/test.js';
+
 /**
  * Amplitude should just be an interface to the public functions.
  * Everything else should be handled by other objects
@@ -9,6 +11,7 @@
  * @module Amplitude
  */
 const Amplitude = (function(){
+    
     function test(){
         console.log('test');
     }

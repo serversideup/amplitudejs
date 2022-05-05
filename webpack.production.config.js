@@ -21,5 +21,10 @@ module.exports = {
 			},
 		],
 	},
+	resolve: {
+		alias: {
+			'@': 'src',
+		}
+	},
 	devtool: 'source-map'
 }

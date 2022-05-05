@@ -10,7 +10,8 @@ module.exports = {
 		library: {
 			name: 'Amplitude',
 			type: 'umd',
-			umdNamedDefine: true
+			umdNamedDefine: true,
+			export: 'default'
 		}
 	},
 	module: {
@@ -21,6 +22,11 @@ module.exports = {
 				use: "babel-loader",
 			},
 		],
+	},
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, 'src/'),
+		}
 	},
 	devtool: 'source-map'
 }

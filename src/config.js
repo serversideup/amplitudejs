@@ -50,7 +50,7 @@
  */
 import { version } from "../package.json";
 
-module.exports = {
+export const config = {
   version: version,
 
   audio: new Audio(),
