@@ -16,14 +16,14 @@ import Core from "../core/core.js";
  */
 import SoundCloud from "../soundcloud/soundcloud.js";
 
-/**
- * Imports the utilities used by the main module.
- */
-/**
- * AmplitudeJS Config State Module
- * @module utilities/ConfigState
- */
-import ConfigState from "../utilities/configState.js";
+// /**
+//  * Imports the utilities used by the main module.
+//  */
+// /**
+//  * AmplitudeJS Config State Module
+//  * @module utilities/ConfigState
+//  */
+// import ConfigState from "../utilities/configState.js";
 
 /**
  * AmplitudeJS Debug Module
@@ -140,46 +140,46 @@ import RepeatElements from "../visual/repeatElements.js";
  * @module init/Initializer
  */
 let Initializer = (function() {
-  /**
-   * The main init function.  The user will call this through
-   * Amplitude.init({}) and pass in their settings.
-   *
-   * Public Accessor: Amplitude.init( user_config_json )
-   * @access public
-   * @param {object|url} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
-   */
-  function initialize(userConfig) {
-    if( typeof userConfig == 'string' ){
-      loadUserConfig(userConfig);
-    }else{
-      setUserConfig( userConfig );
-    }
-  }
+  // /**
+  //  * The main init function.  The user will call this through
+  //  * Amplitude.init({}) and pass in their settings.
+  //  *
+  //  * Public Accessor: Amplitude.init( user_config_json )
+  //  * @access public
+  //  * @param {object|url} userConfig - A JSON object of user defined values that help configure and initialize AmplitudeJS.
+  //  */
+  // function initialize(userConfig) {
+  //   if( typeof userConfig == 'string' ){
+  //     loadUserConfig(userConfig);
+  //   }else{
+  //     setUserConfig( userConfig );
+  //   }
+  // }
 
-  function loadUserConfig(userConfig){
-    fetch(userConfig).then( function( response ){
-      if( response.status != 200 ){
-        throw response.status;
-      }else{
-        return response.json();
-      }
-    }.bind(this))
-    .then( function( data ){
-      setUserConfig(data);
-    }.bind(this))
-    .catch( function( error ){
-      Debug.writeMessage(error);
-    }.bind(this));
-  }
+  // function loadUserConfig(userConfig){
+  //   fetch(userConfig).then( function( response ){
+  //     if( response.status != 200 ){
+  //       throw response.status;
+  //     }else{
+  //       return response.json();
+  //     }
+  //   }.bind(this))
+  //   .then( function( data ){
+  //     setUserConfig(data);
+  //   }.bind(this))
+  //   .catch( function( error ){
+  //     Debug.writeMessage(error);
+  //   }.bind(this));
+  // }
 
   function setUserConfig( userConfig ) {
-    let ready = false;
+    // let ready = false;
 
-    /*
-			Reset the config on init so we have a clean slate. This is if the
-			user has to re-init.
-		*/
-    ConfigState.resetConfig();
+    // /*
+		// 	Reset the config on init so we have a clean slate. This is if the
+		// 	user has to re-init.
+		// */
+    // ConfigState.resetConfig();
 
     /*
 			Initialize event handlers on init. This will clear any old
@@ -193,42 +193,42 @@ let Initializer = (function() {
     */
     Callbacks.initialize();
 
-    /*
-			Initializes debugging right away so we can use it for the rest
-			of the configuration.
-		*/
-    config.debug = userConfig.debug != undefined ? userConfig.debug : false;
+    // /*
+		// 	Initializes debugging right away so we can use it for the rest
+		// 	of the configuration.
+		// */
+    // config.debug = userConfig.debug != undefined ? userConfig.debug : false;
 
-    /*
-      Set default artwork, if specified.
-    */
-    setArt(userConfig);
+    // /*
+    //   Set default artwork, if specified.
+    // */
+    // setArt(userConfig);
 
     /*
 			Checks to see if the user has songs defined.
 		*/
-    if (userConfig.songs) {
-      /*
-				Checks to see if the user has some songs in the songs array.
-			*/
-      if (userConfig.songs.length != 0) {
-        /*
-					Copies over the user defined songs. and prepares
-					Amplitude for the rest of the configuration.
-				*/
-        config.songs = userConfig.songs;
-        /*
-					Flag amplitude as ready.
-				*/
-        ready = true;
-      } else {
-        Debug.writeMessage("Please add some songs, to your songs object!");
-      }
-    } else {
-      Debug.writeMessage(
-        "Please provide a songs object for AmplitudeJS to run!"
-      );
-    }
+    // if (userConfig.songs) {
+    //   /*
+		// 		Checks to see if the user has some songs in the songs array.
+		// 	*/
+    //   if (userConfig.songs.length != 0) {
+    //     /*
+		// 			Copies over the user defined songs. and prepares
+		// 			Amplitude for the rest of the configuration.
+		// 		*/
+    //     config.songs = userConfig.songs;
+    //     /*
+		// 			Flag amplitude as ready.
+		// 		*/
+    //     ready = true;
+    //   } else {
+    //     Debug.writeMessage("Please add some songs, to your songs object!");
+    //   }
+    // } else {
+    //   Debug.writeMessage(
+    //     "Please provide a songs object for AmplitudeJS to run!"
+    //   );
+    // }
 
     /*
 			Initializes the audio context. In this method it checks to see if the
@@ -303,15 +303,15 @@ let Initializer = (function() {
       );
     }
 
-    /*
-      Initialize default live settings
-    */
-    initializeDefaultLiveSettings();
+    // /*
+    //   Initialize default live settings
+    // */
+    // initializeDefaultLiveSettings();
 
-    /*
-      Initialize default song indexes
-    */
-    initializeDefaultSongIndexes();
+    // /*
+    //   Initialize default song indexes
+    // */
+    // initializeDefaultSongIndexes();
 
     /*
 			When the preliminary config is ready, we are ready to proceed.
@@ -722,30 +722,30 @@ let Initializer = (function() {
     return size;
   }
 
-  /**
-   * Intializes the default live settings for all of the songs.
-   *
-   * @access private
-   */
-  function initializeDefaultLiveSettings() {
-    for (let i = 0; i < config.songs.length; i++) {
-      if (config.songs[i].live == undefined) {
-        config.songs[i].live = false;
-      }
-    }
-  }
+  // /**
+  //  * Intializes the default live settings for all of the songs.
+  //  *
+  //  * @access private
+  //  */
+  // function initializeDefaultLiveSettings() {
+  //   for (let i = 0; i < config.songs.length; i++) {
+  //     if (config.songs[i].live == undefined) {
+  //       config.songs[i].live = false;
+  //     }
+  //   }
+  // }
 
-  /**
-   * Initializes the index of the song in the songs array so
-   * we can reference it if needed
-   *
-   * @access private
-   */
-  function initializeDefaultSongIndexes() {
-    for (let i = 0; i < config.songs.length; i++) {
-      config.songs[i].index = i;
-    }
-  }
+  // /**
+  //  * Initializes the index of the song in the songs array so
+  //  * we can reference it if needed
+  //  *
+  //  * @access private
+  //  */
+  // function initializeDefaultSongIndexes() {
+  //   for (let i = 0; i < config.songs.length; i++) {
+  //     config.songs[i].index = i;
+  //   }
+  // }
 
   /*
 		Returns the publicly accessible methods

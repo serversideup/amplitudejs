@@ -10,7 +10,7 @@
  * @module config
  * @type {object}
  * @property {string}  	config.version          				- The current version of AmplitudeJS.
- * @property {object} 	config.audio 		 								-	Handles all of the audio.
+ * @property {object} 	config.audio_element 		 				-	Handles all of the audio.
  * @property {object} 	config.active_metadata					- Contains the active metadata for the song.
  * @property {string} 	config.active_album							- Holds the active album name. Used to check and see if the album changed and run the album changed callback.
  * @property {number} 	config.active_index							- Contains the index of the actively playing song.
@@ -48,12 +48,12 @@
  * @property {object} 	config.analyser 								- Web Audio API Analyser
  * @property {string}		config.player_state 						- The current state of the player.
  */
-import { version } from "../package.json";
+import version from "../package.json";
 
 export const config = {
   version: version,
-
-  audio: new Audio(),
+  mobile: false,
+  audio_element: new Audio(),
 
   active_metadata: {},
 
@@ -61,21 +61,29 @@ export const config = {
 
   active_index: 0,
 
+  active_podcast: null,
   active_playlist: null,
+  active_collection: null,
 
   playback_speed: 1.0,
 
   callbacks: {},
 
   songs: [],
+  episodes: [],
+  audio: [],
 
-  playlists: {},
+  playlists: [],
+  seasons: [],
+  podcasts: [],
 
-  start_song: "",
+  start_audio: "",
 
   starting_playlist: "",
-
   starting_playlist_song: "",
+
+  starting_podcast: "",
+  starting_podcast_episode: "",
 
   repeat: false,
 
@@ -85,27 +93,45 @@ export const config = {
 
   shuffle_on: false,
 
-  default_album_art: "",
+  default_artwork: "",
 
   default_playlist_art: "",
 
-  debug: false,
+  debug: true,
 
-  volume: 0.5,
+    /**
+     * @todo BREAKING CHANGE
+     */
+    volume: {
+        initial: 0.5,
+        increment: 5,
+        decrement: 5,
+        pre_mute_level: 0.5
+    },
+//   volume: 0.5,
 
-  pre_mute_volume: 0.5,
+//   pre_mute_volume: 0.5,
 
-  volume_increment: 5,
+//   volume_increment: 5,
 
-  volume_decrement: 5,
+//   volume_decrement: 5,
 
-  soundcloud_client: "",
+    /**
+     * @todo BREAKING CHANGE
+     */
+    soundcloud: {
+        client: '',
+        use_art: false,
+        audio_count: 0,
+        ready_count: 0
+    },
+  // soundcloud_client: "",
 
-  soundcloud_use_art: false,
+  // soundcloud_use_art: false,
 
-  soundcloud_song_count: 0,
+  // soundcloud_song_count: 0,
 
-  soundcloud_songs_ready: 0,
+  // soundcloud_songs_ready: 0,
 
   is_touch_moving: false,
 
@@ -119,13 +145,22 @@ export const config = {
 
   player_state: "stopped",
 
-  web_audio_api_available: false,
+  /**
+   * @todo BREAKING
+   */
+  web_audio_api:{
+      availabile: false,
+      context: null,
+      source: null,
+      analyser: null
+  },
+//   web_audio_api_available: false,
 
-  context: null,
+//   context: null,
 
-  source: null,
+//   source: null,
 
-  analyser: null,
+//   analyser: null,
 
   visualizations: {
     available: [],

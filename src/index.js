@@ -1,23 +1,24 @@
 /**
- * @name 		AmplitudeJS
- * @author 	Dan Pastori (Server Side Up) <hello@serversideup.net>
+ * @name AmplitudeJS
+ * @author Dan Pastori (Server Side Up) <hello@serversideup.net>
  */
- import { test } from '@/methods/test.js';
+import * as initMethods from "@/methods/init";
+import * as configMethods from "@/methods/config";
+import * as playlistMethods from "@/methods/playlists";
 
 /**
- * Amplitude should just be an interface to the public functions.
- * Everything else should be handled by other objects
+ * Amplitude is an interface to the public methods.
+ * All public methods are in the /methods directory.
+ * These methods use clases to perform functionality.
+ * The state is stored in /config.js
  *
  * @module Amplitude
  */
 const Amplitude = (function(){
-    
-    function test(){
-        console.log('test');
-    }
-
     return {
-        test: test
+        ...initMethods,
+        ...configMethods,
+        ...playlistMethods
     }
 })();
 

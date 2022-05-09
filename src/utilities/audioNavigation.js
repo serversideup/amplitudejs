@@ -489,6 +489,7 @@ let AudioNavigation = (function() {
   /**
    * Handles a song change in the playlist
    *
+   * @todo This is now CollectionNavigation.changeAudioCollection();
    * @access private
    * @prop {string} playlist - The playlist we are changing the song on.
    * @prop {object} song     - The song we are changing to in the playlist.
@@ -496,27 +497,27 @@ let AudioNavigation = (function() {
    * @prop {boolean} direct  - Determines if it was a direct click on the song. We
    * then don't care if shuffle is on or not
    */
-  function changeSongPlaylist(playlist, song, index, direct = false) {
-    /*
-      Prepare the song change.
-    */
-    prepareSongChange(song);
+  // function changeSongPlaylist(playlist, song, index, direct = false) {
+  //   /*
+  //     Prepare the song change.
+  //   */
+  //   prepareSongChange(song);
 
-    /*
-      Change the song.
-    */
-    config.audio.src = song.url;
-    config.active_metadata = song;
-    config.active_album = song.album;
-    config.active_index = null;
+  //   /*
+  //     Change the song.
+  //   */
+  //   config.audio.src = song.url;
+  //   config.active_metadata = song;
+  //   config.active_album = song.album;
+  //   config.active_index = null;
 
-    config.playlists[playlist].active_index = parseInt(index);
+  //   config.playlists[playlist].active_index = parseInt(index);
 
-    /*
-      Set new information now that the song has changed.
-    */
-    afterSongChange(direct);
-  }
+  //   /*
+  //     Set new information now that the song has changed.
+  //   */
+  //   afterSongChange(direct);
+  // }
 
   /**
    *  Prepares a song change
@@ -565,30 +566,30 @@ let AudioNavigation = (function() {
     Callbacks.run("song_change");
   }
 
-  /**
-   * Sets the active playlist
-   *
-   * @access public
-   * @param {string} playlist - The string of the playlist being set to active.
-   */
-  function setActivePlaylist(playlist) {
-    /*
-      If the active playlist is different than the playlist being set,
-      we run the `playlist_changed` callback.
-    */
-    if (config.active_playlist != playlist) {
-      Callbacks.run("playlist_changed");
-      /*
-        Set the active playlist to the playlist parameter. Only need to
-        set if it's different.
-      */
-      config.active_playlist = playlist;
+  // /**
+  //  * Sets the active playlist
+  //  *
+  //  * @access public
+  //  * @param {string} playlist - The string of the playlist being set to active.
+  //  */
+  // function setActivePlaylist(playlist) {
+  //   /*
+  //     If the active playlist is different than the playlist being set,
+  //     we run the `playlist_changed` callback.
+  //   */
+  //   if (config.active_playlist != playlist) {
+  //     Callbacks.run("playlist_changed");
+  //     /*
+  //       Set the active playlist to the playlist parameter. Only need to
+  //       set if it's different.
+  //     */
+  //     config.active_playlist = playlist;
 
-      if (playlist != null) {
-        config.playlists[playlist].active_index = 0;
-      }
-    }
-  }
+  //     if (playlist != null) {
+  //       config.playlists[playlist].active_index = 0;
+  //     }
+  //   }
+  // }
 
   /*
     Return the publically facing methods

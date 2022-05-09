@@ -127,25 +127,25 @@ import SoundCloud from "./soundcloud/soundcloud.js";
  * @module Amplitude
  */
 let Amplitude = (function() {
-  /**
-   * The main init function.  The user will call this through
-   * Amplitude.init({}) and pass in their settings.
-   *
-   * Public Accessor: Amplitude.init( user_config_json );
-   *
-   * @access public
-   * @param {object} userConfig 	- A JSON object of user defined values that helps configure and initialize AmplitudeJS.
-   */
-  function init(userConfig) {
-    Initializer.initialize(userConfig);
-  }
+  // /**
+  //  * The main init function.  The user will call this through
+  //  * Amplitude.init({}) and pass in their settings.
+  //  *
+  //  * Public Accessor: Amplitude.init( user_config_json );
+  //  *
+  //  * @access public
+  //  * @param {object} userConfig 	- A JSON object of user defined values that helps configure and initialize AmplitudeJS.
+  //  */
+  // function init(userConfig) {
+  //   Initializer.initialize(userConfig);
+  // }
 
-  /**
-   * Returns the current config for AmplitudeJS
-   */
-  function getConfig() {
-    return config;
-  }
+  // /**
+  //  * Returns the current config for AmplitudeJS
+  //  */
+  // function getConfig() {
+  //   return config;
+  // }
 
   /**
    * Binds new elements that were added to the page.
@@ -158,16 +158,16 @@ let Amplitude = (function() {
     Initializer.rebindDisplay();
   }
 
-  /**
-   * Returns the active playlist.
-   *
-   * Public Accessor: Amplitude.getActivePlaylist()
-   *
-   * @access public
-   */
-  function getActivePlaylist() {
-    return config.active_playlist;
-  }
+  // /**
+  //  * Returns the active playlist.
+  //  *
+  //  * Public Accessor: Amplitude.getActivePlaylist()
+  //  *
+  //  * @access public
+  //  */
+  // function getActivePlaylist() {
+  //   return config.active_playlist;
+  // }
 
   /**
    * Returns the current playback speed.

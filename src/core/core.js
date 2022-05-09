@@ -192,55 +192,55 @@ let Core = (function() {
     Callbacks.run("stop");
   }
 
-  /**
-   * Sets the song volume.
-   *
-   * Public Accessor: Amplitude.setVolume( volumeLevel )
-   *
-   * @access public
-   * @param {number} volumeLevel - A number between 1 and 100 as a percentage of
-   * min to max for a volume level.
-   */
-  function setVolume(volumeLevel) {
-    /*
-			If the volume is set to mute somewhere else, we sync the display.
-		*/
-    if (volumeLevel == 0) {
-      config.audio.muted = true;
-    } else {
-      config.audio.muted = false;
-    }
+  // /**
+  //  * Sets the song volume.
+  //  *
+  //  * Public Accessor: Amplitude.setVolume( volumeLevel )
+  //  *
+  //  * @access public
+  //  * @param {number} volumeLevel - A number between 1 and 100 as a percentage of
+  //  * min to max for a volume level.
+  //  */
+  // function setVolume(volumeLevel) {
+  //   /*
+	// 		If the volume is set to mute somewhere else, we sync the display.
+	// 	*/
+  //   if (volumeLevel == 0) {
+  //     config.audio.muted = true;
+  //   } else {
+  //     config.audio.muted = false;
+  //   }
 
-    /*
-			Sets the volume in the config so we can reference it later on.
-		*/
-    config.volume = volumeLevel;
+  //   /*
+	// 		Sets the volume in the config so we can reference it later on.
+	// 	*/
+  //   config.volume = volumeLevel;
 
-    /*
-			Set the volume of the active song.
-		*/
-    config.audio.volume = volumeLevel / 100;
-  }
+  //   /*
+	// 		Set the volume of the active song.
+	// 	*/
+  //   config.audio.volume = volumeLevel / 100;
+  // }
 
-  /**
-   * Sets the song percentage. If it's a live song, we ignore this because
-   * we can't skip ahead. This is an issue if you have a playlist with
-   * a live source.
-   *
-   * Public Accessor: Amplitude.setSongLocation( songPercentage )
-   *
-   * @access public
-   * @param {number} songPercentage - A number between 1 and 100 as a percentage of song completion.
-   */
-  function setSongLocation(songPercentage) {
-    /*
-			As long as the song is not live, we can set the current time of the
-			song to the percentage the user passed in.
-		*/
-    if (!config.active_metadata.live) {
-      config.audio.currentTime = config.audio.duration * (songPercentage / 100);
-    }
-  }
+  // /**
+  //  * Sets the song percentage. If it's a live song, we ignore this because
+  //  * we can't skip ahead. This is an issue if you have a playlist with
+  //  * a live source.
+  //  *
+  //  * Public Accessor: Amplitude.setSongLocation( songPercentage )
+  //  *
+  //  * @access public
+  //  * @param {number} songPercentage - A number between 1 and 100 as a percentage of song completion.
+  //  */
+  // function setSongLocation(songPercentage) {
+  //   /*
+	// 		As long as the song is not live, we can set the current time of the
+	// 		song to the percentage the user passed in.
+	// 	*/
+  //   if (!config.active_metadata.live) {
+  //     config.audio.currentTime = config.audio.duration * (songPercentage / 100);
+  //   }
+  // }
 
   /**
    * Skips to a location in a song
@@ -276,46 +276,46 @@ let Core = (function() {
     );
   }
 
-  /**
-   * Disconnects the live stream
-   *
-   * Public Accessor: Amplitude.disconnectStream()
-   *
-   * @access public
-   */
-  function disconnectStream() {
-    config.audio.src = "";
-    config.audio.load();
-  }
+  // /**
+  //  * Disconnects the live stream
+  //  *
+  //  * Public Accessor: Amplitude.disconnectStream()
+  //  *
+  //  * @access public
+  //  */
+  // function disconnectStream() {
+  //   config.audio.src = "";
+  //   config.audio.load();
+  // }
 
-  /**
-   * Reconnects the live stream
-   *
-   * Public Accessor: Amplitude.reconnectStream()
-   *
-   * @access public\
-   */
-  function reconnectStream() {
-    config.audio.src = config.active_metadata.url;
-    config.audio.load();
-  }
+  // /**
+  //  * Reconnects the live stream
+  //  *
+  //  * Public Accessor: Amplitude.reconnectStream()
+  //  *
+  //  * @access public\
+  //  */
+  // function reconnectStream() {
+  //   config.audio.src = config.active_metadata.url;
+  //   config.audio.load();
+  // }
 
-  /**
-   * Sets the playback speed for the song.
-   *
-   * @param {number} playbackSpeed The speed we want the song to play back at.
-   */
-  function setPlaybackSpeed(playbackSpeed) {
-    /*
-			Set the config playback speed.
-		*/
-    config.playback_speed = playbackSpeed;
+  // /**
+  //  * Sets the playback speed for the song.
+  //  *
+  //  * @param {number} playbackSpeed The speed we want the song to play back at.
+  //  */
+  // function setPlaybackSpeed(playbackSpeed) {
+  //   /*
+	// 		Set the config playback speed.
+	// 	*/
+  //   config.playback_speed = playbackSpeed;
 
-    /*
-			Set the active song playback rate.
-		*/
-    config.audio.playbackRate = config.playback_speed;
-  }
+  //   /*
+	// 		Set the active song playback rate.
+	// 	*/
+  //   config.audio.playbackRate = config.playback_speed;
+  // }
 
   /*
 		Return publically facing functions

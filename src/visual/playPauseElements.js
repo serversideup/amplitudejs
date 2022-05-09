@@ -220,48 +220,48 @@ let PlayPauseElements = (function() {
     }
   }
 
-  /**
-   * Sets all of the play pause buttons to paused.
-   *
-   * @access public
-   */
-  function syncToPause() {
-    /*
-      Gets all of the play pause elements
-    */
-    let playPauseElements = document.querySelectorAll(".amplitude-play-pause");
+  // /**
+  //  * Sets all of the play pause buttons to paused.
+  //  *
+  //  * @access public
+  //  */
+  // function syncToPause() {
+  //   /*
+  //     Gets all of the play pause elements
+  //   */
+  //   let playPauseElements = document.querySelectorAll(".amplitude-play-pause");
 
-    /*
-      Sets all of the elements to pause
-    */
-    for (let i = 0; i < playPauseElements.length; i++) {
-      setElementPause(playPauseElements[i]);
-    }
-  }
+  //   /*
+  //     Sets all of the elements to pause
+  //   */
+  //   for (let i = 0; i < playPauseElements.length; i++) {
+  //     setElementPause(playPauseElements[i]);
+  //   }
+  // }
 
-  /**
-   * Sets an element to be playing by removing the 'amplitude-paused' class
-   * and adding the 'amplitude-playing' class
-   *
-   * @access public
-   * @param {element} element 	- The element getting the playing class added.
-   */
-  function setElementPlay(element) {
-    element.classList.add("amplitude-playing");
-    element.classList.remove("amplitude-paused");
-  }
+  // /**
+  //  * Sets an element to be playing by removing the 'amplitude-paused' class
+  //  * and adding the 'amplitude-playing' class
+  //  *
+  //  * @access public
+  //  * @param {element} element 	- The element getting the playing class added.
+  //  */
+  // function setElementPlay(element) {
+  //   element.classList.add("amplitude-playing");
+  //   element.classList.remove("amplitude-paused");
+  // }
 
-  /**
-   * Sets an element to be paused by adding the 'amplitude-paused' class
-   * and removing the 'amplitude-playing' class
-   *
-   * @access public
-   * @param {element} element 	- The element getting the paused class added.
-   */
-  function setElementPause(element) {
-    element.classList.remove("amplitude-playing");
-    element.classList.add("amplitude-paused");
-  }
+  // /**
+  //  * Sets an element to be paused by adding the 'amplitude-paused' class
+  //  * and removing the 'amplitude-playing' class
+  //  *
+  //  * @access public
+  //  * @param {element} element 	- The element getting the paused class added.
+  //  */
+  // function setElementPause(element) {
+  //   element.classList.remove("amplitude-playing");
+  //   element.classList.add("amplitude-paused");
+  // }
 
   /**
    * Returns the public facing methods

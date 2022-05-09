@@ -47,27 +47,27 @@ var Events = (function() {
    * @access public
    */
   function initialize() {
-    /*
-			Write out debug message
-		*/
-    Debug.writeMessage("Beginning initialization of event handlers..");
+    // /*
+		// 	Write out debug message
+		// */
+    // Debug.writeMessage("Beginning initialization of event handlers..");
 
-    /*
-			Sets flag that the screen is moving and not a tap
-		*/
-    document.addEventListener("touchmove", function() {
-      config.is_touch_moving = true;
-    });
+    // /*
+		// 	Sets flag that the screen is moving and not a tap
+		// */
+    // document.addEventListener("touchmove", function() {
+    //   config.is_touch_moving = true;
+    // });
 
-    /*
-			On touch end if it was a touch move event, set moving to
-			false
-		*/
-    document.addEventListener("touchend", function() {
-      if (config.is_touch_moving) {
-        config.is_touch_moving = false;
-      }
-    });
+    // /*
+		// 	On touch end if it was a touch move event, set moving to
+		// 	false
+		// */
+    // document.addEventListener("touchend", function() {
+    //   if (config.is_touch_moving) {
+    //     config.is_touch_moving = false;
+    //   }
+    // });
 
     /*
 			On time update for the audio element, update visual displays that
@@ -180,25 +180,25 @@ var Events = (function() {
     bindCanPlayThrough();
   }
 
-  /**
-   * On time update for the audio element, update visual displays that
-   * represent the time on either a visualized element or time display.
-   *
-   * @access private
-   */
-  function bindTimeUpdate() {
-    /*
-			Bind for time update
-		*/
-    config.audio.removeEventListener("timeupdate", TimeUpdate.handle);
-    config.audio.addEventListener("timeupdate", TimeUpdate.handle);
+  // /**
+  //  * On time update for the audio element, update visual displays that
+  //  * represent the time on either a visualized element or time display.
+  //  *
+  //  * @access private
+  //  */
+  // function bindTimeUpdate() {
+  //   /*
+	// 		Bind for time update
+	// 	*/
+  //   config.audio.removeEventListener("timeupdate", TimeUpdate.handle);
+  //   config.audio.addEventListener("timeupdate", TimeUpdate.handle);
 
-    /*
-			Bind for duration change
-		*/
-    config.audio.removeEventListener("durationchange", TimeUpdate.handle);
-    config.audio.addEventListener("durationchange", TimeUpdate.handle);
-  }
+  //   /*
+	// 		Bind for duration change
+	// 	*/
+  //   config.audio.removeEventListener("durationchange", TimeUpdate.handle);
+  //   config.audio.addEventListener("durationchange", TimeUpdate.handle);
+  // }
 
   /**
    * On keydown, we listen to what key got pressed so we can map the key to
@@ -305,33 +305,33 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindPlayPause() {
-    /*
-			Gets all of the elements with the class amplitude-play-pause
-		*/
-    var play_pause_classes = document.getElementsByClassName(
-      "amplitude-play-pause"
-    );
+  // function bindPlayPause() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-play-pause
+	// 	*/
+  //   var play_pause_classes = document.getElementsByClassName(
+  //     "amplitude-play-pause"
+  //   );
 
-    /*
-			Iterates over all of the play/pause classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < play_pause_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        play_pause_classes[i].removeEventListener("touchend", PlayPause.handle);
-        play_pause_classes[i].addEventListener("touchend", PlayPause.handle);
-      } else {
-        play_pause_classes[i].removeEventListener("click", PlayPause.handle);
-        play_pause_classes[i].addEventListener("click", PlayPause.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the play/pause classes and binds the event interaction
+	// 		method to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < play_pause_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       play_pause_classes[i].removeEventListener("touchend", PlayPause.handle);
+  //       play_pause_classes[i].addEventListener("touchend", PlayPause.handle);
+  //     } else {
+  //       play_pause_classes[i].removeEventListener("click", PlayPause.handle);
+  //       play_pause_classes[i].addEventListener("click", PlayPause.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS stop buttons
