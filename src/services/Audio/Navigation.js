@@ -2,6 +2,7 @@ import { Audio } from "@/core/Audio";
 import { config } from "@/config";
 import { Callbacks } from "@/services/Callbacks";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
+import { MetaDataElement } from "@/elements/MetaDataElement";
 
 export class Navigation {
     /**
@@ -21,7 +22,8 @@ export class Navigation {
     }
 
     #prepareAudioChange( audio ){
-        Audio.stop();
+        let coreAudio = new Audio();
+        coreAudio.stop();
 
         // Sync elements
         PlayPauseElement.syncAllToPause();
@@ -46,12 +48,18 @@ export class Navigation {
     }
 
     #afterAudioChange( direct ){
+        this.#updateMetaData();
+
         /**
-         * @todo meta data elements -> display meta data
          * @todo container elements -> set active
          * @todo time elements -> reset duration times
          * ( see src/utilities/audioNavigation.js Line #558 )
          */
         Callbacks.run('audio_change');
+    }
+
+    #updateMetaData(){
+        let metaData = new MetaDataElement();
+        metaData.displayMetaData();
     }
 }

@@ -364,6 +364,184 @@ function _setAudioVolume2(volumeLevel) {
 
 /***/ }),
 
+/***/ "./src/elements/MetaDataElement.js":
+/*!*****************************************!*\
+  !*** ./src/elements/MetaDataElement.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MetaDataElement": () => (/* binding */ MetaDataElement)
+/* harmony export */ });
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/config */ "./src/config.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+
+
+var _imageMetaDataKeys = /*#__PURE__*/new WeakMap();
+
+var _displayGlobalMetaElements = /*#__PURE__*/new WeakSet();
+
+var _displayCollectionMetaElements = /*#__PURE__*/new WeakSet();
+
+var _displayAudioMetaElements = /*#__PURE__*/new WeakSet();
+
+var _displayCollectionAudioMetaElements = /*#__PURE__*/new WeakSet();
+
+var _setMetaValue = /*#__PURE__*/new WeakSet();
+
+var MetaDataElement = /*#__PURE__*/function () {
+  function MetaDataElement() {
+    _classCallCheck(this, MetaDataElement);
+
+    _classPrivateMethodInitSpec(this, _setMetaValue);
+
+    _classPrivateMethodInitSpec(this, _displayCollectionAudioMetaElements);
+
+    _classPrivateMethodInitSpec(this, _displayAudioMetaElements);
+
+    _classPrivateMethodInitSpec(this, _displayCollectionMetaElements);
+
+    _classPrivateMethodInitSpec(this, _displayGlobalMetaElements);
+
+    _classPrivateFieldInitSpec(this, _imageMetaDataKeys, {
+      writable: true,
+      value: ["cover_art_url", "station_art_url", "podcast_episode_cover_art_url", "album_art_url"]
+    });
+  }
+
+  _createClass(MetaDataElement, [{
+    key: "displayMetaData",
+    value:
+    /**
+     * Gets called after audio has been changed. Updates all of the global
+     * elements and collection elements, not the individual audio elements.
+     * Individual audio elements should only be dynamically set once and not again
+     * since they never change.
+     * 
+     * Examples:
+     * Update - Global cover art for a song.
+     * Update - Playlist now playing cover art.
+     * Update - Podcast now playing cover art.
+     * Do Not Update - Individual audio element. These will be set with syncMetaData()
+     * and won't need to be updated again.
+     */
+    function displayMetaData() {
+      _classPrivateMethodGet(this, _displayGlobalMetaElements, _displayGlobalMetaElements2).call(this);
+
+      _classPrivateMethodGet(this, _displayCollectionMetaElements, _displayCollectionMetaElements2).call(this);
+    }
+  }, {
+    key: "displayCollectionMetaData",
+    value: function displayCollectionMetaData() {}
+  }, {
+    key: "syncMetaData",
+    value: function syncMetaData() {
+      _classPrivateMethodGet(this, _displayAudioMetaElements, _displayAudioMetaElements2).call(this);
+
+      _classPrivateMethodGet(this, _displayCollectionAudioMetaElements, _displayCollectionAudioMetaElements2).call(this);
+
+      this.displayCollectionMetaData();
+    }
+  }]);
+
+  return MetaDataElement;
+}();
+
+function _displayGlobalMetaElements2() {
+  var _this = this;
+
+  var globalAudioInfoElements = document.querySelectorAll(MetaDataElement.globalMetaDataElementsQuery);
+  globalAudioInfoElements.forEach(function (element) {
+    var key = element.getAttribute('data-amplitude-audio-info');
+    var value = _config__WEBPACK_IMPORTED_MODULE_0__.config.active_metadata[key] != undefined ? _config__WEBPACK_IMPORTED_MODULE_0__.config.active_metadata[key] : null;
+
+    _classPrivateMethodGet(_this, _setMetaValue, _setMetaValue2).call(_this, key, value, element);
+  });
+}
+
+function _displayCollectionMetaElements2() {
+  var _this2 = this;
+
+  var collectionInfoElements = document.querySelectorAll(MetaDataElement.collectionMetaDataElementsQuery);
+  collectionInfoElements.forEach(function (element) {
+    var key = element.getAttribute('data-amplitude-audio-info');
+    var value = _config__WEBPACK_IMPORTED_MODULE_0__.config.active_metadata[key] != undefined ? _config__WEBPACK_IMPORTED_MODULE_0__.config.active_metadata[key] : null;
+
+    _classPrivateMethodGet(_this2, _setMetaValue, _setMetaValue2).call(_this2, key, value, element);
+  });
+}
+
+function _displayAudioMetaElements2() {
+  var _this3 = this;
+
+  var audioInfoElements = document.querySelectorAll(MetaDataElement.audioMetaDataElementsQuery);
+  audioInfoElements.forEach(function (element) {
+    var key = element.getAttribute('data-amplitude-audio-info');
+    var audioIndex = element.getAttribute('data-amplitude-audio-index');
+    var value = _config__WEBPACK_IMPORTED_MODULE_0__.config.audio[audioIndex][key] != undefined ? _config__WEBPACK_IMPORTED_MODULE_0__.config.audio[audioIndex][key] : null;
+
+    _classPrivateMethodGet(_this3, _setMetaValue, _setMetaValue2).call(_this3, key, value, element);
+  });
+}
+
+function _displayCollectionAudioMetaElements2() {
+  var _this4 = this;
+
+  var collectionAudioInfoElements = document.querySelectorAll(MetaDataElement.collectionAudioMetaDataElementsQuery);
+  collectionAudioInfoElements.forEach(function (element) {
+    var key = element.getAttribute('data-amplitude-audio-info');
+    var audioIndex = element.getAttribute('data-amplitude-audio-index');
+    var collectionKey = element.getAttribute('data-amplitude-collection-key');
+    var value = _config__WEBPACK_IMPORTED_MODULE_0__.config.collections[collectionKey].audio[audioIndex][info] != undefined ? _config__WEBPACK_IMPORTED_MODULE_0__.config.collections[collectionKey].audio[audioIndex][info] : null;
+
+    _classPrivateMethodGet(_this4, _setMetaValue, _setMetaValue2).call(_this4, key, value, element);
+  });
+}
+
+function _setMetaValue2(key, value, element) {
+  if (_classPrivateFieldGet(this, _imageMetaDataKeys).indexOf(key) >= 0) {
+    value = value || _config__WEBPACK_IMPORTED_MODULE_0__.config.default_art;
+    element.setAttribute('src', value);
+  } else {
+    value = value || "";
+    element.innerHTML = value;
+  }
+}
+
+_defineProperty(MetaDataElement, "globalMetaDataElementsQuery", '[data-amplitude-audio-info]:not([data-amplitude-audio-index]):not([data-amplitude-collection-key])');
+
+_defineProperty(MetaDataElement, "collectionMetaDataElementsQuery", '[data-amplitude-audio-info][data-amplitude-collection-key]:not([data-amplitude-audio-index])');
+
+_defineProperty(MetaDataElement, "audioMetaDataElementsQuery", '[data-amplitude-audio-info][data-amplitude-audio-index]:not([data-amplitude-collection-key])');
+
+_defineProperty(MetaDataElement, "collectionAudioMetaDataElementsQuery", '[data-amplitude-audio-info][data-amplitude-audio-index][data-amplitude-collection-key]');
+
+_defineProperty(MetaDataElement, "collectionInfoElementsQuery", '[data-amplitude-collection-info]');
+
+/***/ }),
+
 /***/ "./src/elements/PlayElement.js":
 /*!*************************************!*\
   !*** ./src/elements/PlayElement.js ***!
@@ -1401,7 +1579,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_EventManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/EventManager */ "./src/services/EventManager.js");
 /* harmony import */ var _services_UIManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/services/UIManager */ "./src/services/UIManager.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config */ "./src/config.js");
-/* harmony import */ var _services_AudioNavigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/services/AudioNavigation */ "./src/services/AudioNavigation.js");
+/* harmony import */ var _services_Audio_Navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/services/Audio/Navigation */ "./src/services/Audio/Navigation.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1558,13 +1736,13 @@ function _prepareAmplitude2() {
 
   _classPrivateMethodGet(this, _copyUserConfig, _copyUserConfig2).call(this);
 
+  _classPrivateMethodGet(this, _initializeAudio, _initializeAudio2).call(this);
+
   _classPrivateMethodGet(this, _initializeEvents, _initializeEvents2).call(this);
 
   _classPrivateMethodGet(this, _initializeElements, _initializeElements2).call(this);
 
   _classPrivateMethodGet(this, _initializeCallbacks, _initializeCallbacks2).call(this);
-
-  _classPrivateMethodGet(this, _initializeAudio, _initializeAudio2).call(this);
 }
 
 function _resetConfig2() {
@@ -1588,7 +1766,7 @@ function _initializeElements2() {
 function _initializeCallbacks2() {}
 
 function _initializeAudio2() {
-  var audioNavigator = new _services_AudioNavigation__WEBPACK_IMPORTED_MODULE_5__.AudioNavigation();
+  var audioNavigator = new _services_Audio_Navigation__WEBPACK_IMPORTED_MODULE_5__.Navigation();
 
   if (_config__WEBPACK_IMPORTED_MODULE_4__.config.start_audio) {} else {
     audioNavigator.changeAudio(_config__WEBPACK_IMPORTED_MODULE_4__.config.audio[0], 0);
@@ -1758,6 +1936,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/config */ "./src/config.js");
 /* harmony import */ var _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/Callbacks */ "./src/services/Callbacks.js");
 /* harmony import */ var _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/elements/PlayPauseElement */ "./src/elements/PlayPauseElement.js");
+/* harmony import */ var _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/elements/MetaDataElement */ "./src/elements/MetaDataElement.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1775,15 +1954,20 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 
 
+
 var _prepareAudioChange = /*#__PURE__*/new WeakSet();
 
 var _switchAudio = /*#__PURE__*/new WeakSet();
 
 var _afterAudioChange = /*#__PURE__*/new WeakSet();
 
+var _updateMetaData = /*#__PURE__*/new WeakSet();
+
 var Navigation = /*#__PURE__*/function () {
   function Navigation() {
     _classCallCheck(this, Navigation);
+
+    _classPrivateMethodInitSpec(this, _updateMetaData);
 
     _classPrivateMethodInitSpec(this, _afterAudioChange);
 
@@ -1818,7 +2002,8 @@ var Navigation = /*#__PURE__*/function () {
 }();
 
 function _prepareAudioChange2(audio) {
-  _core_Audio__WEBPACK_IMPORTED_MODULE_0__.Audio.stop(); // Sync elements
+  var coreAudio = new _core_Audio__WEBPACK_IMPORTED_MODULE_0__.Audio();
+  coreAudio.stop(); // Sync elements
 
   _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_3__.PlayPauseElement.syncAllToPause();
   /**
@@ -1844,91 +2029,20 @@ function _switchAudio2(audio, index) {
 }
 
 function _afterAudioChange2(direct) {
+  _classPrivateMethodGet(this, _updateMetaData, _updateMetaData2).call(this);
   /**
-   * @todo meta data elements -> display meta data
    * @todo container elements -> set active
    * @todo time elements -> reset duration times
    * ( see src/utilities/audioNavigation.js Line #558 )
    */
+
+
   _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__.Callbacks.run('audio_change');
 }
 
-/***/ }),
-
-/***/ "./src/services/AudioNavigation.js":
-/*!*****************************************!*\
-  !*** ./src/services/AudioNavigation.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AudioNavigation": () => (/* binding */ AudioNavigation)
-/* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/config */ "./src/config.js");
-/* harmony import */ var _core_Audio__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/core/Audio */ "./src/core/Audio.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
-
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
-function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
-
-
-
-
-var _prepareAudioChange = /*#__PURE__*/new WeakSet();
-
-var _afterAudioChange = /*#__PURE__*/new WeakSet();
-
-var AudioNavigation = /*#__PURE__*/function () {
-  function AudioNavigation() {
-    _classCallCheck(this, AudioNavigation);
-
-    _classPrivateMethodInitSpec(this, _afterAudioChange);
-
-    _classPrivateMethodInitSpec(this, _prepareAudioChange);
-  }
-
-  _createClass(AudioNavigation, [{
-    key: "changeAudio",
-    value: function changeAudio(audio, index) {
-      var direct = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      _classPrivateMethodGet(this, _prepareAudioChange, _prepareAudioChange2).call(this, audio);
-
-      _config__WEBPACK_IMPORTED_MODULE_0__.config.audio_element.src = audio.url;
-      _config__WEBPACK_IMPORTED_MODULE_0__.config.active_metadata = audio;
-      _config__WEBPACK_IMPORTED_MODULE_0__.config.active_index = parseInt(index);
-      /**
-       * @todo We used to have active album, but that might not make sense any more..
-       */
-
-      _classPrivateMethodGet(this, _afterAudioChange, _afterAudioChange2).call(this, direct);
-    }
-  }]);
-
-  return AudioNavigation;
-}();
-
-function _prepareAudioChange2(audio) {
-  var coreAudio = new _core_Audio__WEBPACK_IMPORTED_MODULE_1__.Audio();
-  coreAudio.stop();
-  /**
-   * @todo sync all visuals
-   */
-}
-
-function _afterAudioChange2(direct) {
-  /**
-   * @todo run audio change
-   * resync visual meta data
-   */
+function _updateMetaData2() {
+  var metaData = new _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_4__.MetaDataElement();
+  metaData.displayMetaData();
 }
 
 /***/ }),
@@ -2035,6 +2149,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/config */ "./src/config.js");
 /* harmony import */ var _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/Callbacks */ "./src/services/Callbacks.js");
 /* harmony import */ var _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/elements/PlayPauseElement */ "./src/elements/PlayPauseElement.js");
+/* harmony import */ var _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/elements/MetaDataElement */ "./src/elements/MetaDataElement.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2052,15 +2167,20 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 
 
+
 var _prepareAudioChange = /*#__PURE__*/new WeakSet();
 
 var _switchAudio = /*#__PURE__*/new WeakSet();
 
 var _afterAudioChange = /*#__PURE__*/new WeakSet();
 
+var _updateMetaData = /*#__PURE__*/new WeakSet();
+
 var Navigation = /*#__PURE__*/function () {
   function Navigation() {
     _classCallCheck(this, Navigation);
+
+    _classPrivateMethodInitSpec(this, _updateMetaData);
 
     _classPrivateMethodInitSpec(this, _afterAudioChange);
 
@@ -2133,13 +2253,20 @@ function _switchAudio2(collection, audio, index) {
 }
 
 function _afterAudioChange2(direct) {
+  _classPrivateMethodGet(this, _updateMetaData, _updateMetaData2).call(this);
   /**
-   * @todo meta data elements -> display meta data
    * @todo container elements -> set active
    * @todo time elements -> reset duration times
    * ( see src/utilities/audioNavigation.js Line #558 )
    */
+
+
   _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__.Callbacks.run('audio_change');
+}
+
+function _updateMetaData2() {
+  var metaData = new _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_4__.MetaDataElement();
+  metaData.displayMetaData();
 }
 
 /***/ }),
@@ -2438,6 +2565,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _elements_PlayElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/elements/PlayElement */ "./src/elements/PlayElement.js");
 /* harmony import */ var _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/elements/PlayPauseElement */ "./src/elements/PlayPauseElement.js");
+/* harmony import */ var _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/elements/MetaDataElement */ "./src/elements/MetaDataElement.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2453,6 +2581,9 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 
 
+
+var _initializeMetaData = /*#__PURE__*/new WeakSet();
+
 var _initializePlayElement = /*#__PURE__*/new WeakSet();
 
 var _initializePlayPauseElement = /*#__PURE__*/new WeakSet();
@@ -2464,6 +2595,8 @@ var UIManager = /*#__PURE__*/function () {
     _classPrivateMethodInitSpec(this, _initializePlayPauseElement);
 
     _classPrivateMethodInitSpec(this, _initializePlayElement);
+
+    _classPrivateMethodInitSpec(this, _initializeMetaData);
   }
 
   _createClass(UIManager, [{
@@ -2472,6 +2605,8 @@ var UIManager = /*#__PURE__*/function () {
   }, {
     key: "initializeElements",
     value: function initializeElements() {
+      _classPrivateMethodGet(this, _initializeMetaData, _initializeMetaData2).call(this);
+
       _classPrivateMethodGet(this, _initializePlayElement, _initializePlayElement2).call(this);
 
       _classPrivateMethodGet(this, _initializePlayPauseElement, _initializePlayPauseElement2).call(this);
@@ -2480,6 +2615,11 @@ var UIManager = /*#__PURE__*/function () {
 
   return UIManager;
 }();
+
+function _initializeMetaData2() {
+  var metaDataElement = new _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_2__.MetaDataElement();
+  metaDataElement.syncMetaData();
+}
 
 function _initializePlayElement2() {
   var playElement = new _elements_PlayElement__WEBPACK_IMPORTED_MODULE_0__.PlayElement();

@@ -1,5 +1,6 @@
 import { PlayElement } from "@/elements/PlayElement";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
+import { MetaDataElement } from "@/elements/MetaDataElement";
 
 export class UIManager{
     setVisualElementsDefaults(){
@@ -7,8 +8,14 @@ export class UIManager{
     }
 
     initializeElements(){
+        this.#initializeMetaData();
         this.#initializePlayElement();
         this.#initializePlayPauseElement();
+    }
+
+    #initializeMetaData(){
+        let metaDataElement = new MetaDataElement();
+        metaDataElement.syncMetaData();
     }
 
     #initializePlayElement(){

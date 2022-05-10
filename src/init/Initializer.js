@@ -3,7 +3,7 @@ import { ConfigState } from "@/services/ConfigState";
 import { EventManager } from "@/services/EventManager";
 import { UIManager } from "@/services/UIManager";
 import { config } from "../config";
-import { AudioNavigation } from "@/services/AudioNavigation";
+import { Navigation as AudioNavigation } from "@/services/Audio/Navigation";
 
 export class Initializer{
     #element;
@@ -58,10 +58,10 @@ export class Initializer{
     #prepareAmplitude(){
         this.#resetConfig();
         this.#copyUserConfig();
+        this.#initializeAudio();
         this.#initializeEvents();
         this.#initializeElements();
         this.#initializeCallbacks();
-        this.#initializeAudio();
     }
 
     // Ensure we have a blank slate on initialization.
