@@ -39,7 +39,7 @@ export class Navigation {
     }
 
     #switchAudio( audio, index ){
-        config.audio.src = audio.url;
+        config.audio_element.src = audio.url;
         config.active_metadata = audio;
         /** 
          * @todo We don't have active_album. make note.

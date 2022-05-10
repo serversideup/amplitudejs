@@ -6,13 +6,8 @@ import { ConfigState } from "@/services/ConfigState";
 import { config } from "@/config";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 
-/**
- * A Collection Play Pause element is defined by the following:
- * 
- * Element: class="amplitude-play-pause" data-amplitude-collection-key="{collection_key}"
- */
-export class CollectionPlayPauseElement {
-    static collectionPlayPauseQuery = '.amplitude-play-pause[data-amplitude-collection-key]:not([data-amplitude-audio-index])';
+export class CollectionPlayElement{
+    static collectionPlayQuery = '.amplitude-play[data-amplitude-collection-key]:not([data-amplitude-audio-index])';
 
     #elements;
     #mobile;
@@ -22,16 +17,16 @@ export class CollectionPlayPauseElement {
     }
 
     initialize(){
-        this.#findElements()
-        this.#bindInteractions()
+        this.#findElements();
+        this.#bindInteractions();
     }
 
     #findElements(){
-        this.#elements = document.querySelectorAll( CollectionPlayPauseElement.collectionPlayPauseQuery );
+        this.#elements = document.querySelectorAll( CollectionPlayElement.collectionPlayQuery );
     }
 
     #bindInteractions(){
-        this.#elements.forEach( (element) => {;
+        this.#elements.forEach( (element) => {
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
                 element.addEventListener("touchend", this.#handleInteraction );
@@ -39,7 +34,7 @@ export class CollectionPlayPauseElement {
                 element.removeEventListener("click", this.#handleInteraction );
                 element.addEventListener("click", this.#handleInteraction );
             }
-        } );
+        });
     }
 
     #handleInteraction(){
@@ -52,7 +47,7 @@ export class CollectionPlayPauseElement {
             }
 
             this.#handleCollectionChanges( collection );
-            this.#toggleAudio();
+            this.#playAudio();
 
             PlayPauseElement.syncAll();
         }
@@ -84,32 +79,8 @@ export class CollectionPlayPauseElement {
         }
     }
 
-    #toggleAudio(){
-        if( config.audio_element.paused ){
-            Audio.play();
-        }else{
-            Audio.pause();
-        }
-    }
-
-    static syncUI(){
-        let state = ConfigState.getAudioState();
-        let elements = document.querySelectorAll( CollectionPlayPauseElement.collectionPlayPauseQuery );
-
-        elements.forEach( ( element ) => {
-            if( state == 'playing' ){
-                PlayPauseElement.setElementPlay( element );
-            }else{
-                PlayPauseElement.setElementPause( element );
-            }
-        })
-    }
-
-    static syncToPause(){
-        let elements = document.querySelectorAll( CollectionPlayPauseElement.collectionPlayPauseQuery );
-
-        elements.forEach( (element) => {
-            PlayPauseElement.setElementPause( element );
-        });
+    #playAudio(){
+        let audio = new Audio();
+        audio.play();
     }
 }

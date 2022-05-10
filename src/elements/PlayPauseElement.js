@@ -13,13 +13,13 @@ import { CollectionAudioPlayPauseElement } from "./PlayPauseElements/CollectionA
  * GLOBAL: class="amplitude-play-pause" 
  * Controls the entire state of the audio player. Will play or pause whatever is active.
  * 
- * COLLECTION: class="amplitude-play-pause" data-amplitude-collection="{collection_key}"
+ * COLLECTION: class="amplitude-play-pause" data-amplitude-collection-key="{collection_key}"
  * Scoped to an individual collection. Will only play or pause within the scope of a collection.
  * 
  * AUDIO: class="amplitude-play-pause" data-amplitude-audio-index="{audio_index}"
  * Scoped to an individual audio element. Will only play or pause a specific piece of audio.
  * 
- * AUDIO IN GROUPING: class="amplitude-play-pause" data-amplitude-collection="{collection_key}" amplitude-audio-index="{audio_index}"
+ * AUDIO IN COLLECTION: class="amplitude-play-pause" data-amplitude-collection-key="{collection_key}" data-amplitude-audio-index="{audio_index}"
  * Scoped to an individual audio element within a collection. Will only play or pause a specific piece of audio in a collection.
  */
 export class PlayPauseElement{

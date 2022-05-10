@@ -26,8 +26,8 @@ export class EventManager{
     }
 
     #bindTimeUpdateEvents(){
-        let timeUpdateEvent = new TimeUpdateEvent();
-        timeUpdateEvent.bind();
+        // let timeUpdateEvent = new TimeUpdateEvent();
+        // timeUpdateEvent.bind();
     }
 
     #bindKeyBindingEvents(){

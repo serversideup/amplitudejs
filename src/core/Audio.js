@@ -38,7 +38,7 @@ export class Audio{
 
     setAudioLocation( percentage ){
         if( !config.active_metadata.live ){
-            config.audio_element.currentTime = config.audio.duration * ( percentage / 100 );
+            config.audio_element.currentTime = config.audio_element.duration * ( percentage / 100 );
         }
     }
 
@@ -67,24 +67,24 @@ export class Audio{
         if( config.active_metadata.live 
             || ( ConfigState.isMobile() && !config.paused ) ){
                 config.audio_element.src = config.active_metadata.url;
-                config.audio.load();
+                config.audio_element.load();
         }
     }
 
     #disconnectStream(){
         if( config.active_metadata.live ){
-            config.audio.src = "";
-            config.audio.load();
+            config.audio_element.src = "";
+            config.audio_element.load();
         }
     }
 
     #playAudio(){
         let playPromise = config.audio_element.play();
+
         if( playPromise !== undefined ){
             playPromise.then(_ => {}).catch(error => {});
         }
 
-        config.audio_element.play();
         config.audio_element.playbackRate = config.playback_speed;
     }
 
@@ -99,9 +99,9 @@ export class Audio{
 
     #setMuted( volumeLevel ){
         if( volumeLevel == 0 ){
-            config.audio.muted = true;
+            config.audio_element.muted = true;
         }else{
-            config.audio.muted = false;
+            config.audio_element.muted = false;
         }
     }
 

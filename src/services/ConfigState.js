@@ -21,6 +21,14 @@ export class ConfigState{
 		return config.audio_element.paused ? "paused" : "playing";
 	}
 
+	static getScope(){
+		if( config.active_collection == '' || config.active_collection == null ){
+			return 'audio';
+		}else{
+			return 'collection';
+		}
+	}
+
 	resetConfig(){
 		config.audio_element = new Audio();
 		config.active_metadata = {};

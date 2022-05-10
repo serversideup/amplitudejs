@@ -85,109 +85,109 @@ let Pause = (function() {
     }
   }
 
-  /**
-   * Handles global pause button which pauses whatever song is
-   * active.
-   *
-   * @access private
-   */
-  function handleGlobalPause() {
-    /*
-      Pauses the song.
-    */
-    Core.pause();
+  // /**
+  //  * Handles global pause button which pauses whatever song is
+  //  * active.
+  //  *
+  //  * @access private
+  //  */
+  // function handleGlobalPause() {
+  //   /*
+  //     Pauses the song.
+  //   */
+  //   Core.pause();
 
-    /*
-      Sync the play pause elements.
-    */
-    PlayPauseElements.sync();
-  }
+  //   /*
+  //     Sync the play pause elements.
+  //   */
+  //   PlayPauseElements.sync();
+  // }
 
-  /**
-   * Handles the playlist pause.
-   *
-   * @access private
-   * @param {string} playlist The playlist the pause button belongs to.
-   */
-  function handlePlaylistPause(playlist) {
-    /*
-      Checks to see if the active playlist is the same
-    */
-    if (config.active_playlist == playlist) {
-      /*
-        Pauses the song.
-      */
-      Core.pause();
+  // /**
+  //  * Handles the playlist pause.
+  //  *
+  //  * @access private
+  //  * @param {string} playlist The playlist the pause button belongs to.
+  //  */
+  // function handlePlaylistPause(playlist) {
+  //   /*
+  //     Checks to see if the active playlist is the same
+  //   */
+  //   if (config.active_playlist == playlist) {
+  //     /*
+  //       Pauses the song.
+  //     */
+  //     Core.pause();
 
-      /*
-        Sync the play pause elements.
-      */
-      PlayPauseElements.sync();
-    }
-  }
+  //     /*
+  //       Sync the play pause elements.
+  //     */
+  //     PlayPauseElements.sync();
+  //   }
+  // }
 
-  /**
-   * Handles the song pause.
-   *
-   * @access private
-   * @param {integer} song The song the pause button belongs to.
-   */
-  function handleSongPause(song) {
-    /*
-      Checks to see if the active playlist is null and the song matches
-      the active index.
-    */
-    if (
-      (config.active_playlist == "" || config.active_playlist == null) &&
-      config.active_index == song
-    ) {
-      /*
-        Pauses the song.
-      */
-      Core.pause();
+  // /**
+  //  * Handles the song pause.
+  //  *
+  //  * @access private
+  //  * @param {integer} song The song the pause button belongs to.
+  //  */
+  // function handleSongPause(song) {
+  //   /*
+  //     Checks to see if the active playlist is null and the song matches
+  //     the active index.
+  //   */
+  //   if (
+  //     (config.active_playlist == "" || config.active_playlist == null) &&
+  //     config.active_index == song
+  //   ) {
+  //     /*
+  //       Pauses the song.
+  //     */
+  //     Core.pause();
 
-      /*
-        Sync the play pause elements.
-      */
-      PlayPauseElements.sync();
-    }
-  }
+  //     /*
+  //       Sync the play pause elements.
+  //     */
+  //     PlayPauseElements.sync();
+  //   }
+  // }
 
-  /**
-   * Handles the song in playlist pause.
-   *
-   * @access private
-   * @param {string} playlist The playlist the pause button belongs to.
-   * @param {integer} song The song the pause button belongs to.
-   */
-  function handleSongInPlaylistPause(playlist, song) {
-    /*
-      Checks to see if the active song matches the song and the
-      active playlist matches the playlist. This means the pause button is
-      for the song in the playlist.
-    */
-    if (
-      config.active_playlist == playlist &&
-      config.playlists[playlist].active_index == song
-    ) {
-      /*
-        Pauses the song.
-      */
-      Core.pause();
+  // /**
+  //  * Handles the song in playlist pause.
+  //  *
+  //  * @access private
+  //  * @param {string} playlist The playlist the pause button belongs to.
+  //  * @param {integer} song The song the pause button belongs to.
+  //  */
+  // function handleSongInPlaylistPause(playlist, song) {
+  //   /*
+  //     Checks to see if the active song matches the song and the
+  //     active playlist matches the playlist. This means the pause button is
+  //     for the song in the playlist.
+  //   */
+  //   if (
+  //     config.active_playlist == playlist &&
+  //     config.playlists[playlist].active_index == song
+  //   ) {
+  //     /*
+  //       Pauses the song.
+  //     */
+  //     Core.pause();
 
-      /*
-        Sync the play pause elements.
-      */
-      PlayPauseElements.sync();
-    }
-  }
+  //     /*
+  //       Sync the play pause elements.
+  //     */
+  //     PlayPauseElements.sync();
+  //   }
+  // }
 
-  /*
-    Returns the public facing elements
-  */
-  return {
-    handle: handle
-  };
+  // /*
+  //   Returns the public facing elements
+  // */
+  // return {
+  //   handle: handle
+  // };
 })();
 
 export default Pause;

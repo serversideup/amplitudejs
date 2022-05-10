@@ -8,8 +8,8 @@ import { ConfigState } from "@/services/ConfigState";
 import { config } from "@/config";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 
-export class AudioPlayPauseElement {
-    static audioPlayPauseQuery = '.amplitude-play-pause[data-amplitude-audio-index]:not([data-amplitude-collection-key])';
+export class AudioPlayElement {
+    static audioPlayQuery = '.amplitude-play[data-amplitude-audio-index]:not([data-amplitude-collection-key])';
 
     #elements;
     #mobile;
@@ -24,7 +24,7 @@ export class AudioPlayPauseElement {
     }
 
     #findElements(){
-        this.#elements = document.querySelectorAll( AudioPlayPauseElement.audioPlayPauseQuery );
+        this.#elements = document.querySelectorAll( AudioPlayElement.audioPlayQuery );
     }
 
     #bindInteractions(){
@@ -39,26 +39,6 @@ export class AudioPlayPauseElement {
         } );
     }
 
-    /**
-     * There can be multiple collections on the page. There can also be multiple
-     * individual audio players and audio players in collections.
-     * 
-     * We first check to see if the audio index exists. This can be a game changer
-     * if the user messes up a key.
-     * 
-     * Next, we check to see if the collection has changed. Even though, this class
-     * responds to audio that is not a part of a collection, technically the collection
-     * changes if the state of the player is in collection mode and we switch out of collection
-     * mode.
-     * 
-     * Finally, we check to see if the audio has changed. This means there is more than
-     * one audio player on the page and the user has switched to a different player. If the
-     * player was in collection mode, this check won't do anything since we change the audio
-     * out of collection mode. This only fires if the player is not in collection mode and
-     * switches to another audio player not in collection mode.
-     * 
-     * @returns {boolean|null}
-     */
     #handleInteraction(){
         if( !ConfigState.isTouchMoving() ){
             let index = this.attribute('data-amplitude-audio-index');
@@ -70,7 +50,7 @@ export class AudioPlayPauseElement {
 
             this.#handleCollectionChanges( index );
             this.#handleAudioChanges( index );
-            this.#toggleAudio();
+            this.#playAudio();
             
             PlayPauseElement.syncAll();
         }
@@ -98,32 +78,8 @@ export class AudioPlayPauseElement {
         }
     }
 
-    #toggleAudio(){
-        if( config.audio_element.paused ){
-            Audio.play();
-        }else{
-            Audio.pause();
-        }
-    }
-
-    static syncUI(){
-        let state = ConfigState.getAudioState();
-        let elements = document.querySelectorAll( AudioPlayPauseElement.audioPlayPauseQuery );
-
-        elements.forEach( ( element ) => {
-            if( state == 'playing' ){
-                PlayPauseElement.setElementPlay( element );
-            }else{
-                PlayPauseElement.setElementPause( element );
-            }
-        })
-    }
-
-    static syncToPause(){
-        let elements = document.querySelectorAll( AudioPlayPauseElement.audioPlayPauseQuery );
-
-        elements.forEach( ( element ) => {
-            PlayPauseElement.setElementPause( element );
-        });
+    #playAudio(){
+        let audio = new Audio();
+        audio.play();
     }
 }

@@ -6,8 +6,8 @@ import { ConfigState } from "@/services/ConfigState";
 import { config } from "@/config";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 
-export class CollectionAudioPlayPauseElement {
-    static collectionAudioPlayPauseQuery = '.amplitude-play-pause[data-amplitude-audio-index][data-amplitude-collection-key]';
+export class CollectionAudioPlayElement {
+    static collectionAudioPlayQuery = '.amplitude-play[data-amplitude-audio-index][data-amplitude-collection-key]';
 
     #elements;
     #mobile;
@@ -22,7 +22,7 @@ export class CollectionAudioPlayPauseElement {
     }
 
     #findElements(){
-        this.#elements = document.querySelectorAll( CollectionAudioPlayPauseElement.collectionAudioPlayPauseQuery );
+        this.#elements = document.querySelectorAll( CollectionAudioPlayElement.collectionAudioPlayQuery );
     }
 
     #bindInteractions(){
@@ -44,7 +44,7 @@ export class CollectionAudioPlayPauseElement {
             
             this.#handleCollectionChanges( collectionKey, audioIndex );
             this.#handleAudioChanges( collectionKey, audioIndex );
-            this.#toggleAudio();
+            this.#playAudio();
 
             PlayPauseElement.syncAll();
         }
@@ -77,32 +77,8 @@ export class CollectionAudioPlayPauseElement {
         }
     }
 
-    #toggleAudio(){
-        if( config.audio_element.paused ){
-            Audio.play();
-        }else{
-            Audio.pause();
-        }
-    }
-
-    static syncUI(){
-        let state = ConfigState.getAudioState();
-        let elements = document.querySelectorAll( CollectionAudioPlayPauseElement.collectionAudioPlayPauseQuery );
-
-        elements.forEach( ( element ) => {
-            if( state == 'playing' ){
-                PlayPauseElement.setElementPlay( element );
-            }else{
-                PlayPauseElement.setElementPause( element );
-            }
-        })
-    }
-
-    static syncToPause(){
-        let elements = document.querySelectorAll( CollectionAudioPlayPauseElement.collectionAudioPlayPauseQuery );
-
-        elements.forEach( ( element ) => {
-            PlayPauseElement.setElementPause( element );
-        });
+    #playAudio(){
+        let audio = new Audio();
+        audio.play();
     }
 }

@@ -23,7 +23,7 @@ export class GlobalPlayPauseElement{
     }
 
     #bindInteractions(){
-        this.#elements.forEach( (element) => {;
+        this.#elements.forEach( (element) => {
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
                 element.addEventListener("touchend", this.#handleInteraction );
@@ -35,15 +35,17 @@ export class GlobalPlayPauseElement{
     }
 
     #handleInteraction(){
-        let audio = new Audio();
+        if( !ConfigState.isTouchMoving() ){
+            let audio = new Audio();
 
-        if( config.audio_element.paused ){
-            audio.play();
-        }else{
-            audio.pause();
+            if( config.audio_element.paused ){
+                audio.play();
+            }else{
+                audio.pause();
+            }
+
+            PlayPauseElement.syncAll();
         }
-
-        PlayPauseElement.syncAll();
     }
 
     static syncUI(){

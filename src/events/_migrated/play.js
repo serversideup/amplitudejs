@@ -97,129 +97,129 @@ let Play = (function() {
     }
   }
 
-  /**
-   * Handles global play button which plays whatever song is
-   * active.
-   *
-   * @access private
-   */
-  function handleGlobalPlay() {
-    /*
-      Plays the song
-    */
-    Core.play();
+  // /**
+  //  * Handles global play button which plays whatever song is
+  //  * active.
+  //  *
+  //  * @access private
+  //  */
+  // function handleGlobalPlay() {
+  //   /*
+  //     Plays the song
+  //   */
+  //   Core.play();
 
-    /*
-      Sync the play pause elements.
-    */
-    PlayPauseElements.sync();
-  }
+  //   /*
+  //     Sync the play pause elements.
+  //   */
+  //   PlayPauseElements.sync();
+  // }
 
-  /**
-   * Handle the playlist play.
-   *
-   * @access private
-   * @param {string} playlist The playlist the play button belongs to.
-   */
-  function handlePlaylistPlay(playlist) {
-    /*
-      Checks if we have a new playlist.
-    */
-    if (Checks.newPlaylist(playlist)) {
-      /*
-        Sets the active playlist to what belongs to the playlist.
-      */
-      AudioNavigation.setActivePlaylist(playlist);
+  // /**
+  //  * Handle the playlist play.
+  //  *
+  //  * @access private
+  //  * @param {string} playlist The playlist the play button belongs to.
+  //  */
+  // function handlePlaylistPlay(playlist) {
+  //   /*
+  //     Checks if we have a new playlist.
+  //   */
+  //   if (Checks.newPlaylist(playlist)) {
+  //     /*
+  //       Sets the active playlist to what belongs to the playlist.
+  //     */
+  //     AudioNavigation.setActivePlaylist(playlist);
 
-      /*
-        Play first song in the playlist since we just
-        switched playlists, we start from the first song.
+  //     /*
+  //       Play first song in the playlist since we just
+  //       switched playlists, we start from the first song.
 
-        If the user has shuffle on for the playlist, then
-        we go from the first song in the shuffle playlist array.
-      */
-      if (config.playlists[playlist].shuffle) {
-        AudioNavigation.changeSongPlaylist(
-          playlist,
-          config.playlists[playlist].shuffle_list[0],
-          0
-        );
-      } else {
-        AudioNavigation.changeSongPlaylist(
-          playlist,
-          config.playlists[playlist].songs[0],
-          0
-        );
-      }
-    }
+  //       If the user has shuffle on for the playlist, then
+  //       we go from the first song in the shuffle playlist array.
+  //     */
+  //     if (config.playlists[playlist].shuffle) {
+  //       AudioNavigation.changeSongPlaylist(
+  //         playlist,
+  //         config.playlists[playlist].shuffle_list[0],
+  //         0
+  //       );
+  //     } else {
+  //       AudioNavigation.changeSongPlaylist(
+  //         playlist,
+  //         config.playlists[playlist].songs[0],
+  //         0
+  //       );
+  //     }
+  //   }
 
-    /*
-      Plays the song.
-    */
-    Core.play();
+  //   /*
+  //     Plays the song.
+  //   */
+  //   Core.play();
 
-    /*
-      Syncs the play pause elements since they are dependent upon this state
-      of the player.
-    */
-    PlayPauseElements.sync();
-  }
+  //   /*
+  //     Syncs the play pause elements since they are dependent upon this state
+  //     of the player.
+  //   */
+  //   PlayPauseElements.sync();
+  // }
 
-  /**
-   * Handles the song play button.
-   *
-   * @access private
-   * @param {integer} song The index of the song we are playing.
-   */
-  function handleSongPlay(song) {
-    /*
-      There can be multiple playlists on the page and there can be
-      multiple songs on the page AND there can be songs in multiple
-      playlists, so we have some checking to do.
-    */
+  // /**
+  //  * Handles the song play button.
+  //  *
+  //  * @access private
+  //  * @param {integer} song The index of the song we are playing.
+  //  */
+  // function handleSongPlay(song) {
+  //   /*
+  //     There can be multiple playlists on the page and there can be
+  //     multiple songs on the page AND there can be songs in multiple
+  //     playlists, so we have some checking to do.
+  //   */
 
-    /*
-      Check to see if the playlist has changed. Essentially, if we are moving
-      out of a playlist context.
-    */
-    if (Checks.newPlaylist(null)) {
-      /*
-        We've moved out of the playlist context, so we set the active playlist
-        to null
-      */
-      AudioNavigation.setActivePlaylist(null);
+  //   /*
+  //     Check to see if the playlist has changed. Essentially, if we are moving
+  //     out of a playlist context.
+  //   */
+  //   if (Checks.newPlaylist(null)) {
+  //     /*
+  //       We've moved out of the playlist context, so we set the active playlist
+  //       to null
+  //     */
+  //     AudioNavigation.setActivePlaylist(null);
 
-      /*
-        We then change the song to the index selected.
-      */
-      AudioNavigation.changeSong(config.songs[song], song);
-    }
+  //     /*
+  //       We then change the song to the index selected.
+  //     */
+  //     AudioNavigation.changeSong(config.songs[song], song);
+  //   }
 
-    /*
-      Check to see if the song has changed. If it has,
-      set the active song. If it was in a playlist, the
-      song wouldn't change here, since we already set the
-      song when we checked for a playlist.
-    */
-    if (Checks.newSong(null, song)) {
-      /*
-        The song selected is different, so we change the
-        song.
-      */
-      AudioNavigation.changeSong(config.songs[song], song);
-    }
+  //   /*
+  //     Check to see if the song has changed. If it has,
+  //     set the active song. If it was in a playlist, the
+  //     song wouldn't change here, since we already set the
+  //     song when we checked for a playlist.
+  //   */
+  //   if (Checks.newSong(null, song)) {
+  //     /*
+  //       The song selected is different, so we change the
+  //       song.
+  //     */
+  //     AudioNavigation.changeSong(config.songs[song], song);
+  //   }
 
-    /*
-      Plays the song
-    */
-    Core.play();
+  //   /*
+  //     Plays the song
+  //   */
+  //   Core.play();
 
-    /*
-      Syncs the play pause elements since they are dependent upon this state
-      of the player.
-    */
-    PlayPauseElements.sync();
-  }
+  //   /*
+  //     Syncs the play pause elements since they are dependent upon this state
+  //     of the player.
+  //   */
+  //   PlayPauseElements.sync();
+  // }
 
   /**
    * Handles the song in playlist play.
