@@ -1,7 +1,8 @@
+import { NextElement } from "@/elements/NextElement";
+import { MetaDataElement } from "@/elements/MetaDataElement";
 import { PauseElement } from "@/elements/PauseElement";
 import { PlayElement } from "@/elements/PlayElement";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
-import { MetaDataElement } from "@/elements/MetaDataElement";
 
 export class UIManager{
     setVisualElementsDefaults(){
@@ -13,6 +14,7 @@ export class UIManager{
         this.#initializePlayElement();
         this.#initializePauseElement();
         this.#initializePlayPauseElement();
+        this.#initializeNextElement();
     }
 
     #initializeMetaData(){
@@ -33,5 +35,10 @@ export class UIManager{
     #initializePlayPauseElement(){
         let playPauseElement = new PlayPauseElement();
         playPauseElement.setUp();
+    }
+
+    #initializeNextElement(){
+        let nextElement = new NextElement();
+        nextElement.setUp();
     }
 }

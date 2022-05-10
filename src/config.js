@@ -87,8 +87,12 @@ export const config = {
 
   repeat: false,
 
-  repeat_song: false,
-
+  /**
+   * @todo BREAKING should be repeat_audio
+   */
+  // repeat_song: false,
+  repeat_audio: false,
+  
   shuffle_list: {},
 
   shuffle_on: false,

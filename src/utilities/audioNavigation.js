@@ -73,227 +73,227 @@ import ContainerElements from "../visual/containerElements.js";
  * @module utilities/AudioNavigation
  */
 let AudioNavigation = (function() {
-  /**
-   * Sets the next song
-   *
-   * @access public
-   * @param {boolean} [songEnded=false] If the song ended, this is set to true
-   * so we take into effect the repeat setting.
-   */
-  function setNext(songEnded = false) {
-    /*
-      Initializes the next index variable. This will be the
-      index of the song that is next.
-    */
-    let nextIndex = null;
-    let nextSong = {};
+  // /**
+  //  * Sets the next song
+  //  *
+  //  * @access public
+  //  * @param {boolean} [songEnded=false] If the song ended, this is set to true
+  //  * so we take into effect the repeat setting.
+  //  */
+  // function setNext(songEnded = false) {
+  //   /*
+  //     Initializes the next index variable. This will be the
+  //     index of the song that is next.
+  //   */
+  //   let nextIndex = null;
+  //   let nextSong = {};
 
-    /*
-      Ensure we don't loop in the playlist if config.repeat is not true
-    */
-    let endOfList = false;
+  //   /*
+  //     Ensure we don't loop in the playlist if config.repeat is not true
+  //   */
+  //   let endOfList = false;
 
-    /*
-      Determines if we are repeating the song or not. If we are repeating,
-      the next song will be the same song index.
-    */
-    if (config.repeat_song) {
-      /*
-        If the playlist is shuffled, get the now playing index.
-      */
-      if (config.shuffle_on) {
-        nextIndex = config.shuffle_list[config.active_index].index;
-        nextSong = config.shuffle_list[nextIndex];
-      } else {
-        nextIndex = config.active_index;
-        nextSong = config.songs[nextIndex];
-      }
-    } else {
-      /*
-        If the shuffle is on, we use the shuffled list of
-        songs to determine our next song.
-      */
-      if (config.shuffle_on) {
-        /*
-          If the active shuffle index + 1 is less than the length, then
-          we use the next shuffle otherwise we go to the beginning
-          of the shuffle list.
-        */
-        if (parseInt(config.active_index) + 1 < config.shuffle_list.length) {
-          /*
-            Set the next index to be the index of the song in the shuffle list.
-          */
-          nextIndex = parseInt(config.active_index) + 1;
-        } else {
-          nextIndex = 0;
-          endOfList = true;
-        }
+  //   /*
+  //     Determines if we are repeating the song or not. If we are repeating,
+  //     the next song will be the same song index.
+  //   */
+  //   if (config.repeat_song) {
+  //     /*
+  //       If the playlist is shuffled, get the now playing index.
+  //     */
+  //     if (config.shuffle_on) {
+  //       nextIndex = config.shuffle_list[config.active_index].index;
+  //       nextSong = config.shuffle_list[nextIndex];
+  //     } else {
+  //       nextIndex = config.active_index;
+  //       nextSong = config.songs[nextIndex];
+  //     }
+  //   } else {
+  //     /*
+  //       If the shuffle is on, we use the shuffled list of
+  //       songs to determine our next song.
+  //     */
+  //     if (config.shuffle_on) {
+  //       /*
+  //         If the active shuffle index + 1 is less than the length, then
+  //         we use the next shuffle otherwise we go to the beginning
+  //         of the shuffle list.
+  //       */
+  //       if (parseInt(config.active_index) + 1 < config.shuffle_list.length) {
+  //         /*
+  //           Set the next index to be the index of the song in the shuffle list.
+  //         */
+  //         nextIndex = parseInt(config.active_index) + 1;
+  //       } else {
+  //         nextIndex = 0;
+  //         endOfList = true;
+  //       }
 
-        nextSong = config.shuffle_list[nextIndex];
-      } else {
-        /*
-          If the active index + 1 is less than the length of the songs, then
-          we use the next song otherwise we go to the beginning of the
-          song list.
-        */
-        if (parseInt(config.active_index) + 1 < config.songs.length) {
-          nextIndex = parseInt(config.active_index) + 1;
-        } else {
-          nextIndex = 0;
-          endOfList = true;
-        }
+  //       nextSong = config.shuffle_list[nextIndex];
+  //     } else {
+  //       /*
+  //         If the active index + 1 is less than the length of the songs, then
+  //         we use the next song otherwise we go to the beginning of the
+  //         song list.
+  //       */
+  //       if (parseInt(config.active_index) + 1 < config.songs.length) {
+  //         nextIndex = parseInt(config.active_index) + 1;
+  //       } else {
+  //         nextIndex = 0;
+  //         endOfList = true;
+  //       }
 
-        /*
-          Sets the next index.
-        */
-        nextSong = config.songs[nextIndex];
-      }
-    }
+  //       /*
+  //         Sets the next index.
+  //       */
+  //       nextSong = config.songs[nextIndex];
+  //     }
+  //   }
 
-    /*
-      Change the song after the next button has been pressed.
-    */
-    changeSong(nextSong, nextIndex);
+  //   /*
+  //     Change the song after the next button has been pressed.
+  //   */
+  //   changeSong(nextSong, nextIndex);
 
-    /*
-   		If it's the end of the list and repeat is not on, do nothing.
-   	*/
-    if (endOfList && !config.repeat) {
-    } else {
-      /*
-   			If the song has ended and repeat is on, play the song.
-   		*/
-      if (!(songEnded && !config.repeat && endOfList)) {
-        Core.play();
-      }
-    }
+  //   /*
+  //  		If it's the end of the list and repeat is not on, do nothing.
+  //  	*/
+  //   if (endOfList && !config.repeat) {
+  //   } else {
+  //     /*
+  //  			If the song has ended and repeat is on, play the song.
+  //  		*/
+  //     if (!(songEnded && !config.repeat && endOfList)) {
+  //       Core.play();
+  //     }
+  //   }
 
-    /*
-      Sync the play pause elements and run the
-      after next callback.
-    */
-    PlayPauseElements.sync();
-    Callbacks.run("next");
+  //   /*
+  //     Sync the play pause elements and run the
+  //     after next callback.
+  //   */
+  //   PlayPauseElements.sync();
+  //   Callbacks.run("next");
 
-    /*
-      If we repeated the song, run the repeat song callback.
-    */
-    if (config.repeat_song) {
-      Callbacks.run("song_repeated");
-    }
-  }
+  //   /*
+  //     If we repeated the song, run the repeat song callback.
+  //   */
+  //   if (config.repeat_song) {
+  //     Callbacks.run("song_repeated");
+  //   }
+  // }
 
-  /**
-   * Sets the next song in a playlist
-   *
-   * @param {string} playlist - The playlist being shuffled
-   * @param {boolean} [songEnded=false] - If the song ended, this is set to true
-   * so we take into effect the repeat setting.
-   */
-  function setNextPlaylist(playlist, songEnded = false) {
-    /*
-      Initializes the next index
-    */
-    let nextIndex = null;
-    let nextSong = {};
+  // /**
+  //  * Sets the next song in a playlist
+  //  *
+  //  * @param {string} playlist - The playlist being shuffled
+  //  * @param {boolean} [songEnded=false] - If the song ended, this is set to true
+  //  * so we take into effect the repeat setting.
+  //  */
+  // function setNextPlaylist(playlist, songEnded = false) {
+  //   /*
+  //     Initializes the next index
+  //   */
+  //   let nextIndex = null;
+  //   let nextSong = {};
 
-    /*
-      Ensure we don't loop in the playlist if config.repeat is not true
-    */
-    let endOfList = false;
+  //   /*
+  //     Ensure we don't loop in the playlist if config.repeat is not true
+  //   */
+  //   let endOfList = false;
 
-    /*
-      If we are repeating the song, then we just start the song over.
-    */
-    if (config.repeat_song) {
-      /*
-        If the playlist is shuffled, get the now playing index.
-      */
-      if (config.playlists[playlist].shuffle) {
-        nextIndex = config.playlists[playlist].active_index;
-        nextSong = config.playlists[playlist].shuffle_list[nextIndex];
-      } else {
-        nextIndex = config.playlists[playlist].active_index;
-        nextSong = config.playlists[playlist].songs[nextIndex];
-      }
-    } else {
-      /*
-        If the playlist is shuffled we get the next index of the playlist.
-      */
-      if (config.playlists[playlist].shuffle) {
-        /*
-          If the active shuffle index + 1 is less than the length of the shuffle list,
-          then we use the next shuffle otherwise we go to the beginning of the shuffle list.
-        */
-        if (
-          parseInt(config.playlists[playlist].active_index) + 1 <
-          config.playlists[playlist].shuffle_list.length
-        ) {
-          /*
-            Set the next index to be the index of the song in the shuffle list.
-          */
-          nextIndex = config.playlists[playlist].active_index + 1;
-        } else {
-          nextIndex = 0;
-          endOfList = true;
-        }
+  //   /*
+  //     If we are repeating the song, then we just start the song over.
+  //   */
+  //   if (config.repeat_song) {
+  //     // /*
+  //     //   If the playlist is shuffled, get the now playing index.
+  //     // */
+  //     // if (config.playlists[playlist].shuffle) {
+  //     //   nextIndex = config.playlists[playlist].active_index;
+  //     //   nextSong = config.playlists[playlist].shuffle_list[nextIndex];
+  //     // } else {
+  //     //   nextIndex = config.playlists[playlist].active_index;
+  //     //   nextSong = config.playlists[playlist].songs[nextIndex];
+  //     // }
+  //   } else {
+  //     /*
+  //       If the playlist is shuffled we get the next index of the playlist.
+  //     */
+  //     if (config.playlists[playlist].shuffle) {
+  //       // /*
+  //       //   If the active shuffle index + 1 is less than the length of the shuffle list,
+  //       //   then we use the next shuffle otherwise we go to the beginning of the shuffle list.
+  //       // */
+  //       // if (
+  //       //   parseInt(config.playlists[playlist].active_index) + 1 <
+  //       //   config.playlists[playlist].shuffle_list.length
+  //       // ) {
+  //       //   /*
+  //       //     Set the next index to be the index of the song in the shuffle list.
+  //       //   */
+  //       //   nextIndex = config.playlists[playlist].active_index + 1;
+  //       // } else {
+  //       //   nextIndex = 0;
+  //       //   endOfList = true;
+  //       // }
 
-        nextSong = config.playlists[playlist].shuffle_list[nextIndex];
-      } else {
-        /*
-          If the active index +1 is less than the length of the songs in the playlist,
-          then we use the next song otherwise we go to the beginning of the playlist.
-        */
-        if (
-          parseInt(config.playlists[playlist].active_index) + 1 <
-          config.playlists[playlist].songs.length
-        ) {
-          nextIndex = parseInt(config.playlists[playlist].active_index) + 1;
-        } else {
-          nextIndex = 0;
-          endOfList = true;
-        }
+  //       // nextSong = config.playlists[playlist].shuffle_list[nextIndex];
+  //     } else {
+  //     //   /*
+  //     //     If the active index +1 is less than the length of the songs in the playlist,
+  //     //     then we use the next song otherwise we go to the beginning of the playlist.
+  //     //   */
+  //     //   if (
+  //     //     parseInt(config.playlists[playlist].active_index) + 1 <
+  //     //     config.playlists[playlist].songs.length
+  //     //   ) {
+  //     //     nextIndex = parseInt(config.playlists[playlist].active_index) + 1;
+  //     //   } else {
+  //     //     nextIndex = 0;
+  //     //     endOfList = true;
+  //     //   }
 
-        /*
-          Sets the next song.
-        */
-        nextSong = config.playlists[playlist].songs[nextIndex];
-      }
-    }
+  //     //   /*
+  //     //     Sets the next song.
+  //     //   */
+  //     //   nextSong = config.playlists[playlist].songs[nextIndex];
+  //     // }
+  //   }
 
-    /*
-      Sets the active playlist to the playlist we are on.
-    */
-    setActivePlaylist(playlist);
+  //   /*
+  //     Sets the active playlist to the playlist we are on.
+  //   */
+  //   setActivePlaylist(playlist);
 
-    /*
-      Change the song within the playlist.
-    */
-    changeSongPlaylist(playlist, nextSong, nextIndex);
+  //   /*
+  //     Change the song within the playlist.
+  //   */
+  //   changeSongPlaylist(playlist, nextSong, nextIndex);
 
-    /*
-      If it's the end of the playlist and we aren't repeating, do nothing.
-    */
-    if (endOfList && !config.repeat) {
-    } else {
-      if (!(songEnded && !config.repeat && endOfList)) {
-        Core.play();
-      }
-    }
+  //   /*
+  //     If it's the end of the playlist and we aren't repeating, do nothing.
+  //   */
+  //   if (endOfList && !config.repeat) {
+  //   } else {
+  //     if (!(songEnded && !config.repeat && endOfList)) {
+  //       Core.play();
+  //     }
+  //   }
 
-    /*
-      Sync the play pause buttons.
-    */
-    PlayPauseElements.sync();
-    Callbacks.run("next");
+  //   /*
+  //     Sync the play pause buttons.
+  //   */
+  //   PlayPauseElements.sync();
+  //   Callbacks.run("next");
 
-    /*
-      Repeat the song.
-    */
-    if (config.repeat_song) {
-      Callbacks.run("song_repeated");
-    }
-  }
+  //   /*
+  //     Repeat the song.
+  //   */
+  //   if (config.repeat_song) {
+  //     Callbacks.run("song_repeated");
+  //   }
+  // }
 
   /**
    * Sets the previous song on the global songs array.

@@ -5,6 +5,108 @@ import { PlayPauseElement } from "@/elements/PlayPauseElement";
 import { MetaDataElement } from "@/elements/MetaDataElement";
 
 export class Navigation {
+    /**
+     * Sets the next song in a collection.
+     * 
+     * @param {string} collectionKey - The collection to navigate. Defaults to the active collection.
+     * @param {boolean} audioEnded - If the audio ended, this is true to take in effect the repeat setting.
+     */
+    next( collectionKey = null, audioEnded = false ){
+        if( !collectionKey ){
+            collectionKey = config.active_collection;
+        }
+
+        let nextAudio = this.#findNextAudio( collectionKey );
+        
+        this.setActiveCollection( collectionKey );
+        this.changeCollectionAudio( collectionKey, nextAudio,audio, nextAudio.index );
+        this.#playNextAudio( nextAudio.end, audioEnded )
+        
+        PlayPauseElement.syncAll();
+        Callbacks.run("next");
+
+        if( config.repeat_audio ){
+            Callbacks.run("audio_repeated");
+        }
+    }
+
+    #findNextAudio( collectionKey ){
+        if( config.repeat_audio ){
+            return this.#repeatedAudio( collectionKey );
+        }else{
+            if( config.collections[ collectionKey ].shuffle ){
+                return this.#nextShuffledAudio( collectionKey );
+            }else{
+                return this.#nextCollectionAudio( collectionKey );
+            }
+        }
+    }
+
+    #repeatedAudio( collectionKey ){
+        let nextIndex =  config.collections[ collectionKey ].active_index;
+
+        return {
+            'index': nextIndex,
+            'audio': config.collections[ collectionKey ].shuffle ?
+                     config.collections[ collectionKey ].shuffle_list[ nextIndex ] :
+                     config.collections[ collectionKey ].audio[ nextIndex ],
+            'end': false
+        }
+    }
+
+    #nextShuffledAudio( collectionKey ){
+        let nextIndex = null;
+        let endOfList = false;
+
+        let activeIndex = config.collections[ collectionKey ].active_index;
+        let shuffleCollectionLength = config.collections[ collectionKey ].shuffle_list.length;
+       
+        if( parseInt( activeIndex + 1 ) < shuffleCollectionLength ){
+            nextIndex = parseInt( activeIndex + 1 );    
+        }else{
+            nextIndex = 0;
+            endOfList = true;
+        }
+
+        return {
+            'index': nextIndex,
+            'audio': config.collections[ collectionKey ].shuffleList[ nextIndex ],
+            'end': endOfList
+        }
+    }
+
+    #nextCollectionAudio( collectionKey ){
+        let nextIndex = null;
+        let endOfList = false;
+        
+        let activeIndex = config.collections[ collectionKey ].active_index;
+        let collectionLength = config.collections[ collectionKey ].audio.length;
+
+        if( parseInt( activeIndex + 1 ) < collectionLength ){
+            nextIndex = parseInt( activeIndex + 1 );
+        }else{
+            nextIndex = 0;
+            endOfList = true;
+        }
+
+        return {
+            'index': nextIndex,
+            'audio': config.collections[ collectionKey ].audio[ nextIndex ],
+            'end': endOfList
+        }
+    }
+
+    #playNextAudio( endOfList, audioEnded ){
+        // If it's the end of the collection and we aren't repeating, do nothing.
+        if( endOfList && !config.repeat_audio ){
+        }else{
+            if( !( audioEnded && !config.repeat_audio && endOfList ) ){
+                let audio = new Audio();
+                audio.play();
+            }
+        }
+    }
+
     setActiveCollection( collection ){
         if( config.active_collection != collection ){
             Callbacks.run("collection_changed");

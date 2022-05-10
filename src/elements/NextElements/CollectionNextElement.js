@@ -1,0 +1,46 @@
+import { ConfigState } from "@/services/ConfigState";
+import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js";
+import { config } from "@/config";
+import { Debug } from "@/utilities/debug";
+
+export class CollectionNextElement {
+    static collectionNextQuery = '.amplitude-next[data-amplitude-collection-key]';
+
+    #elements;
+    #mobile;
+
+    constructor(){
+        this.#mobile = ConfigState.isMobile();
+    }
+
+    initialize(){
+        this.#findElements();
+        this.#bindInteractions();
+    }
+
+    #findElements(){
+        this.#elements = document.querySelectorAll( CollectionNextElement.collectionnextQuery );
+    }
+
+    #bindInteractions(){
+        this.#elements.forEach( ( element ) => {
+            if( this.#mobile ){
+                element.removeEventListener( "touchend", this.#handleInteraction );
+                element.addEventListener( "touchend", this.#handleInteraction );
+            }else{
+                element.removeEventListener( "click", this.#handleInteraction );
+                element.addEventListener( "click", this.#handleInteraction );
+            }
+        });
+    }
+
+    #handleInteraction(){
+        let collectionKey = this.attribute('data-amplitude-collection-key');
+
+        if( collectionKey == config.active_collection ){
+            CollectionNavigation.next( collectionKey );
+        }else{
+            Debug.writeMessage("You can not go to the next song on a playlist that is not being played!");
+        }
+    }
+}
