@@ -18,7 +18,7 @@ export class GlobalNextElement {
     }
 
     #findElements(){
-        this.#elements = document.querySelectorAll( GlobalNextElement.globalPauseQuery );
+        this.#elements = document.querySelectorAll( GlobalNextElement.globalNextQuery );
     }
 
     #bindInteractions(){

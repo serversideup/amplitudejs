@@ -19,7 +19,7 @@ export class Navigation {
         let nextAudio = this.#findNextAudio( collectionKey );
         
         this.setActiveCollection( collectionKey );
-        this.changeCollectionAudio( collectionKey, nextAudio,audio, nextAudio.index );
+        this.changeCollectionAudio( collectionKey, nextAudio.audio, nextAudio.index );
         this.#playNextAudio( nextAudio.end, audioEnded )
         
         PlayPauseElement.syncAll();
@@ -43,13 +43,13 @@ export class Navigation {
     }
 
     #repeatedAudio( collectionKey ){
-        let nextIndex =  config.collections[ collectionKey ].active_index;
+        let index =  config.collections[ collectionKey ].active_index;
 
         return {
             'index': nextIndex,
             'audio': config.collections[ collectionKey ].shuffle ?
-                     config.collections[ collectionKey ].shuffle_list[ nextIndex ] :
-                     config.collections[ collectionKey ].audio[ nextIndex ],
+                     config.collections[ collectionKey ].shuffle_list[ index ] :
+                     config.collections[ collectionKey ].audio[ index ],
             'end': false
         }
     }
@@ -104,6 +104,75 @@ export class Navigation {
                 let audio = new Audio();
                 audio.play();
             }
+        }
+    }
+
+    previous( collectionKey = null ){
+        if( !collectionKey ){
+            collectionKey = config.active_collection;
+        }
+
+        let previousAudio = this.#findPreviousAudio( collectionKey );
+        
+        this.setActiveCollection( collectionKey );
+        this.changeCollectionAudio( collectionKey, previousAudio.audio, previousAudio.index );
+        
+        let audio = new Audio();
+        audio.play();
+        
+        PlayPauseElement.syncAll();
+        Callbacks.run("previous");
+
+        if( config.repeat_audio ){
+            Callbacks.run("audio_repeated");
+        }
+    }
+
+    #findPreviousAudio(){
+        if( config.repeat_audio ){
+            return this.#repeatedAudio( collectionKey );
+        }else{
+            if( config.collections[ collectionKey ].shuffle ){
+                return this.#previousShuffledAudio( collectionKey );
+            }else{
+                return this.#previousCollectionAudio( collectionKey );
+            }
+        }
+    }
+
+    #previousShuffledAudio( collectionKey ){
+        let previousIndex = null;
+
+        let activeIndex = config.collections[ collectionKey ].active_index;
+        let shuffleCollectionLength = config.collections[ collectionKey ].shuffle_list.length;
+        
+        if( parseInt( activeIndex - 1 ) >= 0 ){
+            previousIndex =  parseInt( activeIndex - 1 );
+        }else{
+            previousIndex = parseInt( shuffleCollectionLength - 1 );
+        }
+
+        return {
+            'index': previousIndex,
+            'audio': config.collections[ collectionKey ].shuffleList[ previousIndex ]
+        }
+    }
+
+    #previousCollectionAudio( collectionKey ){
+        let previousIndex = null;
+
+        let activeIndex = config.collections[ collectionKey ].active_index;
+        let collectionLength = config.collections[ collectionKey ].audio.length;
+        
+        if( parseInt( activeIndex - 1 ) >= 0 ){
+            previousIndex =  parseInt( activeIndex - 1 );
+        }else{
+            previousIndex = parseInt( collectionLength - 1 );
+        }
+
+        return {
+            'index': previousIndex,
+            'audio': config.collections[ collectionKey ].audio[ previousIndex ]
         }
     }
 

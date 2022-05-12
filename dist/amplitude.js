@@ -714,7 +714,7 @@ var CollectionNextElement = /*#__PURE__*/function () {
 }();
 
 function _findElements2() {
-  _classPrivateFieldSet(this, _elements, document.querySelectorAll(CollectionNextElement.collectionnextQuery));
+  _classPrivateFieldSet(this, _elements, document.querySelectorAll(CollectionNextElement.collectionNextQuery));
 }
 
 function _bindInteractions2() {
@@ -735,9 +735,10 @@ function _handleInteraction2() {
   var collectionKey = this.attribute('data-amplitude-collection-key');
 
   if (collectionKey == _config__WEBPACK_IMPORTED_MODULE_2__.config.active_collection) {
-    _services_Collections_Navigation_js__WEBPACK_IMPORTED_MODULE_1__.Navigation.next(collectionKey);
+    var collectionNavigation = new _services_Collections_Navigation_js__WEBPACK_IMPORTED_MODULE_1__.Navigation();
+    collectionNavigation.next(collectionKey);
   } else {
-    _utilities_debug__WEBPACK_IMPORTED_MODULE_3__.Debug.writeMessage("You can not go to the next song on a playlist that is not being played!");
+    _utilities_debug__WEBPACK_IMPORTED_MODULE_3__.Debug.writeMessage("You can not go to the next audio on a playlist that is not being played!");
   }
 }
 
@@ -834,7 +835,7 @@ var GlobalNextElement = /*#__PURE__*/function () {
 }();
 
 function _findElements2() {
-  _classPrivateFieldSet(this, _elements, document.querySelectorAll(GlobalNextElement.globalPauseQuery));
+  _classPrivateFieldSet(this, _elements, document.querySelectorAll(GlobalNextElement.globalNextQuery));
 }
 
 function _bindInteractions2() {
@@ -3762,6 +3763,12 @@ var _nextCollectionAudio = /*#__PURE__*/new WeakSet();
 
 var _playNextAudio = /*#__PURE__*/new WeakSet();
 
+var _findPreviousAudio = /*#__PURE__*/new WeakSet();
+
+var _previousShuffledAudio = /*#__PURE__*/new WeakSet();
+
+var _previousCollectionAudio = /*#__PURE__*/new WeakSet();
+
 var _prepareAudioChange = /*#__PURE__*/new WeakSet();
 
 var _switchAudio = /*#__PURE__*/new WeakSet();
@@ -3781,6 +3788,12 @@ var Navigation = /*#__PURE__*/function () {
     _classPrivateMethodInitSpec(this, _switchAudio);
 
     _classPrivateMethodInitSpec(this, _prepareAudioChange);
+
+    _classPrivateMethodInitSpec(this, _previousCollectionAudio);
+
+    _classPrivateMethodInitSpec(this, _previousShuffledAudio);
+
+    _classPrivateMethodInitSpec(this, _findPreviousAudio);
 
     _classPrivateMethodInitSpec(this, _playNextAudio);
 
@@ -3813,12 +3826,34 @@ var Navigation = /*#__PURE__*/function () {
       var nextAudio = _classPrivateMethodGet(this, _findNextAudio, _findNextAudio2).call(this, collectionKey);
 
       this.setActiveCollection(collectionKey);
-      this.changeCollectionAudio(collectionKey, nextAudio, audio, nextAudio.index);
+      this.changeCollectionAudio(collectionKey, nextAudio.audio, nextAudio.index);
 
       _classPrivateMethodGet(this, _playNextAudio, _playNextAudio2).call(this, nextAudio.end, audioEnded);
 
       _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_3__.PlayPauseElement.syncAll();
       _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__.Callbacks.run("next");
+
+      if (_config__WEBPACK_IMPORTED_MODULE_1__.config.repeat_audio) {
+        _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__.Callbacks.run("audio_repeated");
+      }
+    }
+  }, {
+    key: "previous",
+    value: function previous() {
+      var collectionKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      if (!collectionKey) {
+        collectionKey = _config__WEBPACK_IMPORTED_MODULE_1__.config.active_collection;
+      }
+
+      var previousAudio = _classPrivateMethodGet(this, _findPreviousAudio, _findPreviousAudio2).call(this, collectionKey);
+
+      this.setActiveCollection(collectionKey);
+      this.changeCollectionAudio(collectionKey, previousAudio.audio, previousAudio.index);
+      var audio = new _core_Audio__WEBPACK_IMPORTED_MODULE_0__.Audio();
+      audio.play();
+      _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_3__.PlayPauseElement.syncAll();
+      _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__.Callbacks.run("previous");
 
       if (_config__WEBPACK_IMPORTED_MODULE_1__.config.repeat_audio) {
         _services_Callbacks__WEBPACK_IMPORTED_MODULE_2__.Callbacks.run("audio_repeated");
@@ -3873,10 +3908,10 @@ function _findNextAudio2(collectionKey) {
 }
 
 function _repeatedAudio2(collectionKey) {
-  var nextIndex = _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].active_index;
+  var index = _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].active_index;
   return {
     'index': nextIndex,
-    'audio': _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffle ? _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffle_list[nextIndex] : _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].audio[nextIndex],
+    'audio': _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffle ? _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffle_list[index] : _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].audio[index],
     'end': false
   };
 }
@@ -3925,11 +3960,56 @@ function _playNextAudio2(endOfList, audioEnded) {
   // If it's the end of the collection and we aren't repeating, do nothing.
   if (endOfList && !_config__WEBPACK_IMPORTED_MODULE_1__.config.repeat_audio) {} else {
     if (!(audioEnded && !_config__WEBPACK_IMPORTED_MODULE_1__.config.repeat_audio && endOfList)) {
-      var _audio = new _core_Audio__WEBPACK_IMPORTED_MODULE_0__.Audio();
-
-      _audio.play();
+      var audio = new _core_Audio__WEBPACK_IMPORTED_MODULE_0__.Audio();
+      audio.play();
     }
   }
+}
+
+function _findPreviousAudio2() {
+  if (_config__WEBPACK_IMPORTED_MODULE_1__.config.repeat_audio) {
+    return _classPrivateMethodGet(this, _repeatedAudio, _repeatedAudio2).call(this, collectionKey);
+  } else {
+    if (_config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffle) {
+      return _classPrivateMethodGet(this, _previousShuffledAudio, _previousShuffledAudio2).call(this, collectionKey);
+    } else {
+      return _classPrivateMethodGet(this, _previousCollectionAudio, _previousCollectionAudio2).call(this, collectionKey);
+    }
+  }
+}
+
+function _previousShuffledAudio2(collectionKey) {
+  var previousIndex = null;
+  var activeIndex = _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].active_index;
+  var shuffleCollectionLength = _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffle_list.length;
+
+  if (parseInt(activeIndex - 1) >= 0) {
+    previousIndex = parseInt(activeIndex - 1);
+  } else {
+    previousIndex = parseInt(shuffleCollectionLength - 1);
+  }
+
+  return {
+    'index': previousIndex,
+    'audio': _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].shuffleList[previousIndex]
+  };
+}
+
+function _previousCollectionAudio2(collectionKey) {
+  var previousIndex = null;
+  var activeIndex = _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].active_index;
+  var collectionLength = _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].audio.length;
+
+  if (parseInt(activeIndex - 1) >= 0) {
+    previousIndex = parseInt(activeIndex - 1);
+  } else {
+    previousIndex = parseInt(collectionLength - 1);
+  }
+
+  return {
+    'index': previousIndex,
+    'audio': _config__WEBPACK_IMPORTED_MODULE_1__.config.collections[collectionKey].audio[previousIndex]
+  };
 }
 
 function _prepareAudioChange2(audio) {

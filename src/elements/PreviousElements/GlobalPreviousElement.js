@@ -1,10 +1,9 @@
 import { ConfigState } from "@/services/ConfigState";
-import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js";
-import { config } from "@/config";
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@utilities/debug";
+import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js"
 
-export class CollectionNextElement {
-    static collectionNextQuery = '.amplitude-next[data-amplitude-collection-key]';
+export class GlobalPreviousElement {
+    static globalPreviousQuery = '.amplitude-previous:not([data-amplitude-collection-key])';
 
     #elements;
     #mobile;
@@ -19,7 +18,7 @@ export class CollectionNextElement {
     }
 
     #findElements(){
-        this.#elements = document.querySelectorAll( CollectionNextElement.collectionNextQuery );
+        this.#elements = document.querySelectorAll( GlobalPreviousElement.globalPreviousQuery );
     }
 
     #bindInteractions(){
@@ -35,13 +34,11 @@ export class CollectionNextElement {
     }
 
     #handleInteraction(){
-        let collectionKey = this.attribute('data-amplitude-collection-key');
-
-        if( collectionKey == config.active_collection ){
+        if( ConfigState.getScope() == 'collection' ){
             let collectionNavigation = new CollectionNavigation();
-            collectionNavigation.next( collectionKey );
+            collectionNavigation.previous();
         }else{
-            Debug.writeMessage("You can not go to the next audio on a playlist that is not being played!");
+            Debug.writeMessage("You can only navigate previous when you are playing a collection.");
         }
     }
 }

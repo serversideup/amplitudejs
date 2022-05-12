@@ -295,166 +295,166 @@ let AudioNavigation = (function() {
   //   }
   // }
 
-  /**
-   * Sets the previous song on the global songs array.
-   *
-   * @access private
-   */
-  function setPrevious() {
-    /*
-      Initializes the previous index
-    */
-    let previousIndex = null;
-    let previousSong = {};
+  // /**
+  //  * Sets the previous song on the global songs array.
+  //  *
+  //  * @access private
+  //  */
+  // function setPrevious() {
+  //   /*
+  //     Initializes the previous index
+  //   */
+  //   let previousIndex = null;
+  //   let previousSong = {};
 
-    /*
-      If we are repeating the song, then we just start the song over.
-    */
-    if (config.repeat_song) {
-      /*
-        If the config is shuffled, get the now playing index.
-      */
-      if (config.shuffle_on) {
-        previousIndex = config.active_index;
-        previousSong = config.shuffle_list[previousIndex];
-      } else {
-        previousIndex = config.active_index;
-        previousSong = config.songs[previousIndex];
-      }
-    } else {
-      /*
-        Get the previous index. If the previous index will be less than 0, get the
-        last song of the array and continue.
-      */
-      if (parseInt(config.active_index) - 1 >= 0) {
-        previousIndex = parseInt(config.active_index - 1);
-      } else {
-        previousIndex = parseInt(config.songs.length - 1);
-      }
+  //   /*
+  //     If we are repeating the song, then we just start the song over.
+  //   */
+  //   if (config.repeat_song) {
+  //     /*
+  //       If the config is shuffled, get the now playing index.
+  //     */
+  //     if (config.shuffle_on) {
+  //       previousIndex = config.active_index;
+  //       previousSong = config.shuffle_list[previousIndex];
+  //     } else {
+  //       previousIndex = config.active_index;
+  //       previousSong = config.songs[previousIndex];
+  //     }
+  //   } else {
+  //     /*
+  //       Get the previous index. If the previous index will be less than 0, get the
+  //       last song of the array and continue.
+  //     */
+  //     if (parseInt(config.active_index) - 1 >= 0) {
+  //       previousIndex = parseInt(config.active_index - 1);
+  //     } else {
+  //       previousIndex = parseInt(config.songs.length - 1);
+  //     }
 
-      /*
-        If the config is shuffled, we grab the song from the shuffle list
-      */
-      if (config.shuffle_on) {
-        /*
-          Grab song from the shuffle list
-        */
-        previousSong = config.shuffle_list[previousIndex];
-      } else {
-        /*
-          Grab song from the songs array
-        */
-        previousSong = config.songs[previousIndex];
-      }
-    }
-    /*
-      Change the song after the next button has been pressed.
-    */
-    changeSong(previousSong, previousIndex);
+  //     /*
+  //       If the config is shuffled, we grab the song from the shuffle list
+  //     */
+  //     if (config.shuffle_on) {
+  //       /*
+  //         Grab song from the shuffle list
+  //       */
+  //       previousSong = config.shuffle_list[previousIndex];
+  //     } else {
+  //       /*
+  //         Grab song from the songs array
+  //       */
+  //       previousSong = config.songs[previousIndex];
+  //     }
+  //   }
+  //   /*
+  //     Change the song after the next button has been pressed.
+  //   */
+  //   changeSong(previousSong, previousIndex);
 
-    /*
-      Play the newest song.
-    */
-    Core.play();
+  //   /*
+  //     Play the newest song.
+  //   */
+  //   Core.play();
 
-    /*
-      Sync the play pause elements and run the
-      after next callback.
-    */
-    PlayPauseElements.sync();
-    Callbacks.run("prev");
+  //   /*
+  //     Sync the play pause elements and run the
+  //     after next callback.
+  //   */
+  //   PlayPauseElements.sync();
+  //   Callbacks.run("prev");
 
-    /*
-      If we repeated the song, run the repeat song callback.
-    */
-    if (config.repeat_song) {
-      Callbacks.run("song_repeated");
-    }
-  }
+  //   /*
+  //     If we repeated the song, run the repeat song callback.
+  //   */
+  //   if (config.repeat_song) {
+  //     Callbacks.run("song_repeated");
+  //   }
+  // }
 
-  /**
-   * Sets the previous playlist song.
-   *
-   * @access private
-   *
-   * @prop {string} playlist  - The playlist we are navigating in.
-   */
-  function setPreviousPlaylist(playlist) {
-    /*
-      Initializes the previous index
-    */
-    let previousIndex = null;
-    let previousSong = {};
+  // /**
+  //  * Sets the previous playlist song.
+  //  *
+  //  * @access private
+  //  *
+  //  * @prop {string} playlist  - The playlist we are navigating in.
+  //  */
+  // function setPreviousPlaylist(playlist) {
+  //   /*
+  //     Initializes the previous index
+  //   */
+  //   let previousIndex = null;
+  //   let previousSong = {};
 
-    /*
-      If we are repeating the song, then we just start the song over.
-    */
-    if (config.repeat_song) {
-      /*
-        If the playlist is shuffled, get the now playing index.
-      */
-      if (config.playlists[playlist].shuffle) {
-        previousIndex = config.playlists[playlist].active_index;
-        previousSong = config.playlists[playlist].shuffle_list[previousIndex];
-      } else {
-        previousIndex = config.playlists[playlist].active_index;
-        previousSong = config.playlists[playlist].songs[previousIndex];
-      }
-    } else {
-      /*
-        Get the previous index. If the previous index will be less than 0, get the
-        last song of the array and continue.
-      */
-      if (parseInt(config.playlists[playlist].active_index) - 1 >= 0) {
-        previousIndex = parseInt(config.playlists[playlist].active_index - 1);
-      } else {
-        previousIndex = parseInt(config.playlists[playlist].songs.length - 1);
-      }
+  //   /*
+  //     If we are repeating the song, then we just start the song over.
+  //   */
+  //   if (config.repeat_song) {
+  //     /*
+  //       If the playlist is shuffled, get the now playing index.
+  //     */
+  //     if (config.playlists[playlist].shuffle) {
+  //       previousIndex = config.playlists[playlist].active_index;
+  //       previousSong = config.playlists[playlist].shuffle_list[previousIndex];
+  //     } else {
+  //       previousIndex = config.playlists[playlist].active_index;
+  //       previousSong = config.playlists[playlist].songs[previousIndex];
+  //     }
+  //   } else {
+  //     /*
+  //       Get the previous index. If the previous index will be less than 0, get the
+  //       last song of the array and continue.
+  //     */
+  //     if (parseInt(config.playlists[playlist].active_index) - 1 >= 0) {
+  //       previousIndex = parseInt(config.playlists[playlist].active_index - 1);
+  //     } else {
+  //       previousIndex = parseInt(config.playlists[playlist].songs.length - 1);
+  //     }
 
-      /*
-        If the playlist is shuffled, we grab the song from the shuffle list
-      */
-      if (config.playlists[playlist].shuffle) {
-        /*
-          Grab song from the shuffle list
-        */
-        previousSong = config.playlists[playlist].shuffle_list[previousIndex];
-      } else {
-        /*
-          Grab song from the songs array
-        */
-        previousSong = config.playlists[playlist].songs[previousIndex];
-      }
-    }
+  //     /*
+  //       If the playlist is shuffled, we grab the song from the shuffle list
+  //     */
+  //     if (config.playlists[playlist].shuffle) {
+  //       /*
+  //         Grab song from the shuffle list
+  //       */
+  //       previousSong = config.playlists[playlist].shuffle_list[previousIndex];
+  //     } else {
+  //       /*
+  //         Grab song from the songs array
+  //       */
+  //       previousSong = config.playlists[playlist].songs[previousIndex];
+  //     }
+  //   }
 
-    /*
-      Sets the active playlist to the playlist we are on.
-    */
-    setActivePlaylist(playlist);
+  //   /*
+  //     Sets the active playlist to the playlist we are on.
+  //   */
+  //   setActivePlaylist(playlist);
 
-    /*
-      Change the song within the playlist.
-    */
-    changeSongPlaylist(playlist, previousSong, previousIndex);
+  //   /*
+  //     Change the song within the playlist.
+  //   */
+  //   changeSongPlaylist(playlist, previousSong, previousIndex);
 
-    /*
-      Plays the song
-    */
-    Core.play();
+  //   /*
+  //     Plays the song
+  //   */
+  //   Core.play();
 
-    /*
-      Sync the play pause buttons.
-    */
-    PlayPauseElements.sync();
-    Callbacks.run("prev");
+  //   /*
+  //     Sync the play pause buttons.
+  //   */
+  //   PlayPauseElements.sync();
+  //   Callbacks.run("prev");
 
-    /*
-      Repeat the song.
-    */
-    if (config.repeat_song) {
-      Callbacks.run("song_repeated");
-    }
-  }
+  //   /*
+  //     Repeat the song.
+  //   */
+  //   if (config.repeat_song) {
+  //     Callbacks.run("song_repeated");
+  //   }
+  // }
 
   /**
    * Change song in the songs array.
