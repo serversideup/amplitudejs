@@ -1,5 +1,5 @@
 import { ConfigState } from "@/services/ConfigState";
-import { Debug } from "@utilities/debug";
+import { Debug } from "@/utilities/debug";
 import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js"
 
 export class GlobalPreviousElement {
@@ -34,11 +34,13 @@ export class GlobalPreviousElement {
     }
 
     #handleInteraction(){
-        if( ConfigState.getScope() == 'collection' ){
-            let collectionNavigation = new CollectionNavigation();
-            collectionNavigation.previous();
-        }else{
-            Debug.writeMessage("You can only navigate previous when you are playing a collection.");
+        if( !ConfigState.isTouchMoving() ){
+            if( ConfigState.getScope() == 'collection' ){
+                let collectionNavigation = new CollectionNavigation();
+                collectionNavigation.previous();
+            }else{
+                Debug.writeMessage("You can only navigate previous when you are playing a collection.");
+            }
         }
     }
 }

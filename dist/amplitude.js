@@ -546,6 +546,159 @@ _defineProperty(MetaDataElement, "collectionInfoElementsQuery", '[data-amplitude
 
 /***/ }),
 
+/***/ "./src/elements/MuteElement.js":
+/*!*************************************!*\
+  !*** ./src/elements/MuteElement.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MuteElement": () => (/* binding */ MuteElement)
+/* harmony export */ });
+/* harmony import */ var _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/ConfigState */ "./src/services/ConfigState.js");
+/* harmony import */ var _VolumeSliderElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VolumeSliderElement */ "./src/elements/VolumeSliderElement.js");
+/* harmony import */ var _utilities_debug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/utilities/debug */ "./src/utilities/debug.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+/**
+ * Handles the configuration and managing of Mute elements
+ * 
+ * A Mute element is defined as the following:
+ * 
+ * Element: class="amplitude-mute"
+ * 
+ * Whenever this element is interacted with, the audio is muted no matter where.
+ */
+
+var _elements = /*#__PURE__*/new WeakMap();
+
+var _mobile = /*#__PURE__*/new WeakMap();
+
+var _findElements = /*#__PURE__*/new WeakSet();
+
+var _bindInteractions = /*#__PURE__*/new WeakSet();
+
+var _handleInteraction = /*#__PURE__*/new WeakSet();
+
+var MuteElement = /*#__PURE__*/function () {
+  function MuteElement() {
+    _classCallCheck(this, MuteElement);
+
+    _classPrivateMethodInitSpec(this, _handleInteraction);
+
+    _classPrivateMethodInitSpec(this, _bindInteractions);
+
+    _classPrivateMethodInitSpec(this, _findElements);
+
+    _classPrivateFieldInitSpec(this, _elements, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _mobile, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldSet(this, _mobile, _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isMobile());
+  }
+
+  _createClass(MuteElement, [{
+    key: "setup",
+    value: function setup() {
+      _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
+
+      _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
+    }
+  }], [{
+    key: "syncElements",
+    value: function syncElements() {
+      var elements = document.querySelectorAll(MuteElement.muteElementQuery);
+      elements.forEach(function (element) {
+        if (_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.getVolume() == 0) {
+          element.classList.add("amplitude-not-muted");
+          element.classList.remove("amplitude-muted");
+        } else {
+          element.classList.remove("amplitude-not-muted");
+          element.classList.add("amplitude-muted");
+        }
+      });
+    }
+  }]);
+
+  return MuteElement;
+}();
+
+function _findElements2() {
+  _classPrivateFieldSet(this, _elements, document.querySelectorAll(MuteElement.muteElementQuery));
+}
+
+function _bindInteractions2() {
+  var _this = this;
+
+  if (_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isIos()) {
+    _utilities_debug__WEBPACK_IMPORTED_MODULE_2__.Debug.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
+  } else {
+    _classPrivateFieldGet(this, _elements).forEach(function (element) {
+      if (_classPrivateFieldGet(_this, _mobile)) {
+        element.removeEventListener("touchend", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+        element.addEventListener("touchend", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+      } else {
+        element.removeEventListener("click", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+        element.addEventListener("click", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+      }
+    });
+  }
+}
+
+function _handleInteraction2() {
+  if (!_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isTouchMoving()) {
+    var audio = new Audio();
+
+    if (_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.getVolume() == 0) {
+      audio.setVolume(_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.getPreMuteVolume());
+    } else {
+      _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.setPreMuteVolume();
+      audio.setVolume(0);
+    }
+
+    MuteElement.syncElements();
+    _VolumeSliderElement__WEBPACK_IMPORTED_MODULE_1__.VolumeSliderElement.syncElements();
+  }
+}
+
+_defineProperty(MuteElement, "muteElementQuery", '.amplitude-mute');
+
+/***/ }),
+
 /***/ "./src/elements/NextElement.js":
 /*!*************************************!*\
   !*** ./src/elements/NextElement.js ***!
@@ -3079,6 +3232,471 @@ _defineProperty(GlobalPlayPauseElement, "globalPlayPauseQuery", '.amplitude-play
 
 /***/ }),
 
+/***/ "./src/elements/PreviousElement.js":
+/*!*****************************************!*\
+  !*** ./src/elements/PreviousElement.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PreviousElement": () => (/* binding */ PreviousElement)
+/* harmony export */ });
+/* harmony import */ var _PreviousElements_CollectionPreviousElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PreviousElements/CollectionPreviousElement */ "./src/elements/PreviousElements/CollectionPreviousElement.js");
+/* harmony import */ var _PreviousElements_GlobalPreviousElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PreviousElements/GlobalPreviousElement */ "./src/elements/PreviousElements/GlobalPreviousElement.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+
+
+/**
+ * Handles the configuration and managing of Previous elements
+ * 
+ * A Previous element is defined as the following:
+ * 
+ * Element: class="amplitude-previous"
+ * 
+ * GLOBAL: class="amplitude-previous"
+ * Handles previous for whatever scope the player is in.
+ * 
+ * COLLECTION: class="amplitude-previous" data-amplitude-collection="{collection_key}"
+ * Handles the previous audio within a specific collection.
+ */
+
+var _configureGlobalPreviousElement = /*#__PURE__*/new WeakSet();
+
+var _configureCollectionPreviousElement = /*#__PURE__*/new WeakSet();
+
+var PreviousElement = /*#__PURE__*/function () {
+  function PreviousElement() {
+    _classCallCheck(this, PreviousElement);
+
+    _classPrivateMethodInitSpec(this, _configureCollectionPreviousElement);
+
+    _classPrivateMethodInitSpec(this, _configureGlobalPreviousElement);
+  }
+
+  _createClass(PreviousElement, [{
+    key: "setup",
+    value: function setup() {
+      _classPrivateMethodGet(this, _configureGlobalPreviousElement, _configureGlobalPreviousElement2).call(this);
+
+      _classPrivateMethodGet(this, _configureCollectionPreviousElement, _configureCollectionPreviousElement2).call(this);
+    }
+  }]);
+
+  return PreviousElement;
+}();
+
+function _configureGlobalPreviousElement2() {
+  var globalPreviousElement = new _PreviousElements_GlobalPreviousElement__WEBPACK_IMPORTED_MODULE_1__.GlobalPreviousElement();
+  globalPreviousElement.initialize();
+}
+
+function _configureCollectionPreviousElement2() {
+  var collectionPreviousElement = new _PreviousElements_CollectionPreviousElement__WEBPACK_IMPORTED_MODULE_0__.CollectionPreviousElement();
+  collectionPreviousElement.initialize();
+}
+
+/***/ }),
+
+/***/ "./src/elements/PreviousElements/CollectionPreviousElement.js":
+/*!********************************************************************!*\
+  !*** ./src/elements/PreviousElements/CollectionPreviousElement.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CollectionPreviousElement": () => (/* binding */ CollectionPreviousElement)
+/* harmony export */ });
+/* harmony import */ var _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/ConfigState */ "./src/services/ConfigState.js");
+/* harmony import */ var _utilities_debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/utilities/debug */ "./src/utilities/debug.js");
+/* harmony import */ var _services_Collections_Navigation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/Collections/Navigation.js */ "./src/services/Collections/Navigation.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+
+var _elements = /*#__PURE__*/new WeakMap();
+
+var _mobile = /*#__PURE__*/new WeakMap();
+
+var _findElements = /*#__PURE__*/new WeakSet();
+
+var _bindInteractions = /*#__PURE__*/new WeakSet();
+
+var _handleInteraction = /*#__PURE__*/new WeakSet();
+
+var CollectionPreviousElement = /*#__PURE__*/function () {
+  function CollectionPreviousElement() {
+    _classCallCheck(this, CollectionPreviousElement);
+
+    _classPrivateMethodInitSpec(this, _handleInteraction);
+
+    _classPrivateMethodInitSpec(this, _bindInteractions);
+
+    _classPrivateMethodInitSpec(this, _findElements);
+
+    _classPrivateFieldInitSpec(this, _elements, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _mobile, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldSet(this, _mobile, _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isMobile());
+  }
+
+  _createClass(CollectionPreviousElement, [{
+    key: "initialize",
+    value: function initialize() {
+      _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
+
+      _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
+    }
+  }]);
+
+  return CollectionPreviousElement;
+}();
+
+function _findElements2() {
+  _classPrivateFieldSet(this, _elements, document.querySelectorAll(CollectionPreviousElement.collectionPreviousQuery));
+}
+
+function _bindInteractions2() {
+  var _this = this;
+
+  _classPrivateFieldGet(this, _elements).forEach(function (element) {
+    if (_classPrivateFieldGet(_this, _mobile)) {
+      element.removeEventListener("touchend", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+      element.addEventListener("touchend", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+    } else {
+      element.removeEventListener("click", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+      element.addEventListener("click", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+    }
+  });
+}
+
+function _handleInteraction2() {
+  if (!_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isTouchMoving()) {
+    var collectionKey = this.attribute('data-amplitude-collection-key');
+
+    if (collectionKey == config.active_collection) {
+      var collectionNavigation = new _services_Collections_Navigation_js__WEBPACK_IMPORTED_MODULE_2__.Navigation();
+      collectionNavigation.previous();
+    } else {
+      _utilities_debug__WEBPACK_IMPORTED_MODULE_1__.Debug.writeMessage("You can not go to the previous audio on a playlist that is not being played!");
+    }
+  }
+}
+
+_defineProperty(CollectionPreviousElement, "collectionPreviousQuery", '.amplitude-previous[data-amplitude-collection-key]');
+
+/***/ }),
+
+/***/ "./src/elements/PreviousElements/GlobalPreviousElement.js":
+/*!****************************************************************!*\
+  !*** ./src/elements/PreviousElements/GlobalPreviousElement.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GlobalPreviousElement": () => (/* binding */ GlobalPreviousElement)
+/* harmony export */ });
+/* harmony import */ var _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/ConfigState */ "./src/services/ConfigState.js");
+/* harmony import */ var _utilities_debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/utilities/debug */ "./src/utilities/debug.js");
+/* harmony import */ var _services_Collections_Navigation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/Collections/Navigation.js */ "./src/services/Collections/Navigation.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+
+var _elements = /*#__PURE__*/new WeakMap();
+
+var _mobile = /*#__PURE__*/new WeakMap();
+
+var _findElements = /*#__PURE__*/new WeakSet();
+
+var _bindInteractions = /*#__PURE__*/new WeakSet();
+
+var _handleInteraction = /*#__PURE__*/new WeakSet();
+
+var GlobalPreviousElement = /*#__PURE__*/function () {
+  function GlobalPreviousElement() {
+    _classCallCheck(this, GlobalPreviousElement);
+
+    _classPrivateMethodInitSpec(this, _handleInteraction);
+
+    _classPrivateMethodInitSpec(this, _bindInteractions);
+
+    _classPrivateMethodInitSpec(this, _findElements);
+
+    _classPrivateFieldInitSpec(this, _elements, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _mobile, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldSet(this, _mobile, _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isMobile());
+  }
+
+  _createClass(GlobalPreviousElement, [{
+    key: "initialize",
+    value: function initialize() {
+      _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
+
+      _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
+    }
+  }]);
+
+  return GlobalPreviousElement;
+}();
+
+function _findElements2() {
+  _classPrivateFieldSet(this, _elements, document.querySelectorAll(GlobalPreviousElement.globalPreviousQuery));
+}
+
+function _bindInteractions2() {
+  var _this = this;
+
+  _classPrivateFieldGet(this, _elements).forEach(function (element) {
+    if (_classPrivateFieldGet(_this, _mobile)) {
+      element.removeEventListener("touchend", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+      element.addEventListener("touchend", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+    } else {
+      element.removeEventListener("click", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+      element.addEventListener("click", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+    }
+  });
+}
+
+function _handleInteraction2() {
+  if (!_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isTouchMoving()) {
+    if (_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.getScope() == 'collection') {
+      var collectionNavigation = new _services_Collections_Navigation_js__WEBPACK_IMPORTED_MODULE_2__.Navigation();
+      collectionNavigation.previous();
+    } else {
+      _utilities_debug__WEBPACK_IMPORTED_MODULE_1__.Debug.writeMessage("You can only navigate previous when you are playing a collection.");
+    }
+  }
+}
+
+_defineProperty(GlobalPreviousElement, "globalPreviousQuery", '.amplitude-previous:not([data-amplitude-collection-key])');
+
+/***/ }),
+
+/***/ "./src/elements/VolumeSliderElement.js":
+/*!*********************************************!*\
+  !*** ./src/elements/VolumeSliderElement.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VolumeSliderElement": () => (/* binding */ VolumeSliderElement)
+/* harmony export */ });
+/* harmony import */ var _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/ConfigState */ "./src/services/ConfigState.js");
+/* harmony import */ var _MuteElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MuteElement */ "./src/elements/MuteElement.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+/**
+ * Handles the configuration and managing of Volume Slider elements
+ * 
+ * A Volume Slider element is defined as the following:
+ * 
+ * Element: class="amplitude-volume-slider"
+ * Type: input[type="range"]
+ * 
+ * Whenever this element is interacted with, the audio volume is adjusted no matter where.
+ */
+
+var _elements = /*#__PURE__*/new WeakMap();
+
+var _mobile = /*#__PURE__*/new WeakMap();
+
+var _ie = /*#__PURE__*/new WeakMap();
+
+var _findElements = /*#__PURE__*/new WeakSet();
+
+var _bindInteractions = /*#__PURE__*/new WeakSet();
+
+var _handleInteraction = /*#__PURE__*/new WeakSet();
+
+var VolumeSliderElement = /*#__PURE__*/function () {
+  function VolumeSliderElement() {
+    _classCallCheck(this, VolumeSliderElement);
+
+    _classPrivateMethodInitSpec(this, _handleInteraction);
+
+    _classPrivateMethodInitSpec(this, _bindInteractions);
+
+    _classPrivateMethodInitSpec(this, _findElements);
+
+    _classPrivateFieldInitSpec(this, _elements, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _mobile, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _ie, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldSet(this, _mobile, _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isMobile());
+
+    _classPrivateFieldSet(this, _ie, _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isIE());
+  }
+
+  _createClass(VolumeSliderElement, [{
+    key: "setup",
+    value: function setup() {
+      _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
+
+      _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
+    }
+  }], [{
+    key: "syncElements",
+    value: function syncElements() {
+      var elements = document.querySelectorAll(VolumeSliderElement.volumeSliderElementQuery);
+      elements.forEach(function (element) {
+        element.value = config.audio.volume * 100;
+      });
+    }
+  }]);
+
+  return VolumeSliderElement;
+}();
+
+function _findElements2() {
+  _classPrivateFieldSet(this, _elements, document.querySelectorAll(VolumeSliderElement.volumeSliderElementQuery));
+}
+
+function _bindInteractions2() {
+  if (_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isIos()) {
+    Debug.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
+  } else {
+    _classPrivateFieldGet(this, _elements).forEach(function (element) {
+      if (_classPrivateFieldGet(this, _ie)) {
+        element.removeEventListener("change", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
+        element.addEventListener("change", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
+      } else {
+        element.removeEventListener("input", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
+        element.addEventListener("input", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
+      }
+    });
+  }
+}
+
+function _handleInteraction2() {
+  var audio = new Audio();
+  audio.setVolume(this.value);
+  _MuteElement__WEBPACK_IMPORTED_MODULE_1__.MuteElement.syncElements();
+  VolumeSliderElement.syncElements();
+}
+
+_defineProperty(VolumeSliderElement, "volumeSliderElementQuery", 'input[type="range"].amplitude-volume-slider');
+
+/***/ }),
+
 /***/ "./src/events/TimeUpdateEvent.js":
 /*!***************************************!*\
   !*** ./src/events/TimeUpdateEvent.js ***!
@@ -4189,6 +4807,18 @@ var ConfigState = /*#__PURE__*/function () {
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.callbacks = callbacks != undefined ? callbacks : {};
     }
   }], [{
+    key: "isIos",
+    value: function isIos() {
+      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+  }, {
+    key: "isIE",
+    value: function isIE() {
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
+      return msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
+    }
+  }, {
     key: "isMobile",
     value: function isMobile() {
       return _config_js__WEBPACK_IMPORTED_MODULE_0__.config.mobile;
@@ -4211,6 +4841,27 @@ var ConfigState = /*#__PURE__*/function () {
       } else {
         return 'collection';
       }
+    }
+  }, {
+    key: "getVolume",
+    value: function getVolume() {
+      return _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume;
+    }
+  }, {
+    key: "getPreMuteVolume",
+    value: function getPreMuteVolume() {
+      return _config_js__WEBPACK_IMPORTED_MODULE_0__.config.pre_mute_volume;
+    }
+  }, {
+    key: "setPreMuteVolume",
+    value: function setPreMuteVolume() {
+      var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      if (!level) {
+        level = _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume;
+      }
+
+      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.pre_mute_volume = level;
     }
   }, {
     key: "setPlayerState",
@@ -4360,9 +5011,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _elements_NextElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/elements/NextElement */ "./src/elements/NextElement.js");
 /* harmony import */ var _elements_MetaDataElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/elements/MetaDataElement */ "./src/elements/MetaDataElement.js");
-/* harmony import */ var _elements_PauseElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/elements/PauseElement */ "./src/elements/PauseElement.js");
-/* harmony import */ var _elements_PlayElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/elements/PlayElement */ "./src/elements/PlayElement.js");
-/* harmony import */ var _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/elements/PlayPauseElement */ "./src/elements/PlayPauseElement.js");
+/* harmony import */ var _elements_MuteElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/elements/MuteElement */ "./src/elements/MuteElement.js");
+/* harmony import */ var _elements_PauseElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/elements/PauseElement */ "./src/elements/PauseElement.js");
+/* harmony import */ var _elements_PlayElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/elements/PlayElement */ "./src/elements/PlayElement.js");
+/* harmony import */ var _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/elements/PlayPauseElement */ "./src/elements/PlayPauseElement.js");
+/* harmony import */ var _elements_PreviousElement__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/elements/PreviousElement */ "./src/elements/PreviousElement.js");
+/* harmony import */ var _elements_VolumeSliderElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/elements/VolumeSliderElement */ "./src/elements/VolumeSliderElement.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4381,6 +5035,9 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 
 
+
+
+
 var _initializeMetaData = /*#__PURE__*/new WeakSet();
 
 var _initializePlayElement = /*#__PURE__*/new WeakSet();
@@ -4391,9 +5048,21 @@ var _initializePlayPauseElement = /*#__PURE__*/new WeakSet();
 
 var _initializeNextElement = /*#__PURE__*/new WeakSet();
 
+var _initializePreviousElement = /*#__PURE__*/new WeakSet();
+
+var _initializeMuteElement = /*#__PURE__*/new WeakSet();
+
+var _initializeVolumeSliderElement = /*#__PURE__*/new WeakSet();
+
 var UIManager = /*#__PURE__*/function () {
   function UIManager() {
     _classCallCheck(this, UIManager);
+
+    _classPrivateMethodInitSpec(this, _initializeVolumeSliderElement);
+
+    _classPrivateMethodInitSpec(this, _initializeMuteElement);
+
+    _classPrivateMethodInitSpec(this, _initializePreviousElement);
 
     _classPrivateMethodInitSpec(this, _initializeNextElement);
 
@@ -4421,6 +5090,12 @@ var UIManager = /*#__PURE__*/function () {
       _classPrivateMethodGet(this, _initializePlayPauseElement, _initializePlayPauseElement2).call(this);
 
       _classPrivateMethodGet(this, _initializeNextElement, _initializeNextElement2).call(this);
+
+      _classPrivateMethodGet(this, _initializePreviousElement, _initializePreviousElement2).call(this);
+
+      _classPrivateMethodGet(this, _initializeMuteElement, _initializeMuteElement2).call(this);
+
+      _classPrivateMethodGet(this, _initializeVolumeSliderElement, _initializeVolumeSliderElement2).call(this);
     }
   }]);
 
@@ -4433,23 +5108,38 @@ function _initializeMetaData2() {
 }
 
 function _initializePlayElement2() {
-  var playElement = new _elements_PlayElement__WEBPACK_IMPORTED_MODULE_3__.PlayElement();
+  var playElement = new _elements_PlayElement__WEBPACK_IMPORTED_MODULE_4__.PlayElement();
   playElement.setUp();
 }
 
 function _initializePauseElement2() {
-  var pauseElement = new _elements_PauseElement__WEBPACK_IMPORTED_MODULE_2__.PauseElement();
+  var pauseElement = new _elements_PauseElement__WEBPACK_IMPORTED_MODULE_3__.PauseElement();
   pauseElement.setUp();
 }
 
 function _initializePlayPauseElement2() {
-  var playPauseElement = new _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_4__.PlayPauseElement();
+  var playPauseElement = new _elements_PlayPauseElement__WEBPACK_IMPORTED_MODULE_5__.PlayPauseElement();
   playPauseElement.setUp();
 }
 
 function _initializeNextElement2() {
   var nextElement = new _elements_NextElement__WEBPACK_IMPORTED_MODULE_0__.NextElement();
   nextElement.setUp();
+}
+
+function _initializePreviousElement2() {
+  var previousElement = new _elements_PreviousElement__WEBPACK_IMPORTED_MODULE_6__.PreviousElement();
+  previousElement.setUp();
+}
+
+function _initializeMuteElement2() {
+  var muteElement = new _elements_MuteElement__WEBPACK_IMPORTED_MODULE_2__.MuteElement();
+  muteElement.setUp();
+}
+
+function _initializeVolumeSliderElement2() {
+  var volumeSliderElement = new _elements_VolumeSliderElement__WEBPACK_IMPORTED_MODULE_7__.VolumeSliderElement();
+  volumeSliderElement.setUp();
 }
 
 /***/ }),

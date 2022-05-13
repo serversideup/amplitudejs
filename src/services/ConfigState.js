@@ -9,6 +9,17 @@ export class ConfigState{
 		}
 	}
 
+	static isIos(){
+		return /iPhone|iPad|iPod/i.test( navigator.userAgent );
+	}
+
+	static isIE(){
+		let ua = window.navigator.userAgent;
+		let msie = ua.indexOf("MSIE ");
+
+		return ( msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./) );
+	}
+
 	static isMobile(){
 		return config.mobile;
 	}
@@ -27,6 +38,22 @@ export class ConfigState{
 		}else{
 			return 'collection';
 		}
+	}
+
+	static getVolume(){
+		return config.volume;
+	}
+
+	static getPreMuteVolume(){
+		return config.pre_mute_volume;
+	}
+
+	static setPreMuteVolume( level = null ){
+		if( !level ){
+			level = config.volume;
+		}
+
+		config.pre_mute_volume = level;
 	}
 
 	resetConfig(){

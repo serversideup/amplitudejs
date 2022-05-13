@@ -1,5 +1,5 @@
 import { ConfigState } from "@/services/ConfigState";
-import { Debug } from "@utilities/debug";
+import { Debug } from "@/utilities/debug";
 import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js"
 
 export class CollectionPreviousElement {
@@ -18,7 +18,7 @@ export class CollectionPreviousElement {
     }
 
     #findElements(){
-        this.#elements = documnet.querySelectorAll( CollectionPreviousElement.collectionPreviousQuery );
+        this.#elements = document.querySelectorAll( CollectionPreviousElement.collectionPreviousQuery );
     }
 
     #bindInteractions(){
@@ -34,13 +34,15 @@ export class CollectionPreviousElement {
     }
 
     #handleInteraction(){
-        let collectionKey = this.attribute('data-amplitude-collection-key');
+        if( !ConfigState.isTouchMoving() ){
+            let collectionKey = this.attribute('data-amplitude-collection-key');
 
-        if( collectionKey == config.active_collection ){
-            let collectionNavigation = new CollectionNavigation();
-            collectionNavigation.previous();
-        }else{
-            Debug.writeMessage("You can not go to the previous audio on a playlist that is not being played!");
+            if( collectionKey == config.active_collection ){
+                let collectionNavigation = new CollectionNavigation();
+                collectionNavigation.previous();
+            }else{
+                Debug.writeMessage("You can not go to the previous audio on a playlist that is not being played!");
+            }
         }
     }
 }

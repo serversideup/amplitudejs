@@ -1,3 +1,6 @@
+import { CollectionPreviousElement } from "./PreviousElements/CollectionPreviousElement";
+import { GlobalPreviousElement } from "./PreviousElements/GlobalPreviousElement";
+
 /**
  * Handles the configuration and managing of Previous elements
  * 
@@ -11,17 +14,19 @@
  * COLLECTION: class="amplitude-previous" data-amplitude-collection="{collection_key}"
  * Handles the previous audio within a specific collection.
  */
-export class Previous {
+export class PreviousElement {
     setup(){
         this.#configureGlobalPreviousElement();
         this.#configureCollectionPreviousElement();
     }
 
     #configureGlobalPreviousElement(){
-
+        let globalPreviousElement = new GlobalPreviousElement();
+        globalPreviousElement.initialize();
     }
 
     #configureCollectionPreviousElement(){
-        
+        let collectionPreviousElement = new CollectionPreviousElement();
+        collectionPreviousElement.initialize();   
     }
 }

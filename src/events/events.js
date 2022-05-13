@@ -364,51 +364,51 @@ var Events = (function() {
     }
   }
 
-  /**
-   * Binds click and touchend events for AmplitudeJS mute buttons
-   *
-   * @access private
-   */
-  function bindMute() {
-    /*
-			Gets all of the elements with the class amplitue-mute
-		*/
-    var mute_classes = document.getElementsByClassName("amplitude-mute");
+  // /**
+  //  * Binds click and touchend events for AmplitudeJS mute buttons
+  //  *
+  //  * @access private
+  //  */
+  // function bindMute() {
+  //   /*
+	// 		Gets all of the elements with the class amplitue-mute
+	// 	*/
+  //   var mute_classes = document.getElementsByClassName("amplitude-mute");
 
-    /*
-			Iterates over all of the mute classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < mute_classes.length; i++) {
-      /*
-				WARNING: If iOS, we don't do anything because iOS does not allow the
-				volume to be adjusted through anything except the buttons on the side of
-				the device.
-			*/
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        /*
-					Checks for an iOS device and displays an error message if debugging
-					is turned on.
-				*/
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          Debug.writeMessage(
-            "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
-          );
-        } else {
-          mute_classes[i].removeEventListener("touchend", Mute.handle);
-          mute_classes[i].addEventListener("touchend", Mute.handle);
-        }
-      } else {
-        mute_classes[i].removeEventListener("click", Mute.handle);
-        mute_classes[i].addEventListener("click", Mute.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the mute classes and binds the event interaction
+	// 		method to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < mute_classes.length; i++) {
+  //     /*
+	// 			WARNING: If iOS, we don't do anything because iOS does not allow the
+	// 			volume to be adjusted through anything except the buttons on the side of
+	// 			the device.
+	// 		*/
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       /*
+	// 				Checks for an iOS device and displays an error message if debugging
+	// 				is turned on.
+	// 			*/
+  //       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  //         Debug.writeMessage(
+  //           "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
+  //         );
+  //       } else {
+  //         mute_classes[i].removeEventListener("touchend", Mute.handle);
+  //         mute_classes[i].addEventListener("touchend", Mute.handle);
+  //       }
+  //     } else {
+  //       mute_classes[i].removeEventListener("click", Mute.handle);
+  //       mute_classes[i].addEventListener("click", Mute.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS Volume Up Buttons
@@ -546,114 +546,114 @@ var Events = (function() {
     }
   }
 
-  /**
-   * Binds change and input events fro AmplitudeJS Volume Slider inputs
-   *
-   * @access private
-   */
-  function bindVolumeSlider() {
-    /*
-			Gets browser so if we need to apply overrides, like we usually
-			have to do for anything cool in IE, we can do that.
-		*/
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE ");
+  // /**
+  //  * Binds change and input events fro AmplitudeJS Volume Slider inputs
+  //  *
+  //  * @access private
+  //  */
+  // function bindVolumeSlider() {
+  //   /*
+	// 		Gets browser so if we need to apply overrides, like we usually
+	// 		have to do for anything cool in IE, we can do that.
+	// 	*/
+  //   var ua = window.navigator.userAgent;
+  //   var msie = ua.indexOf("MSIE ");
 
-    /*
-			Gets all of the elements with the class amplitude-volume-slider
-        */
-    var volume_sliders = document.getElementsByClassName(
-      "amplitude-volume-slider"
-    );
+  //   /*
+	// 		Gets all of the elements with the class amplitude-volume-slider
+  //       */
+  //   var volume_sliders = document.getElementsByClassName(
+  //     "amplitude-volume-slider"
+  //   );
 
-    /*
-			Iterates over all of the volume slider classes and binds the event interaction
-			methods to the element. If the browser is IE we listen to the change event
-			where if it is anything else, it's the input method.
-		*/
-    for (var i = 0; i < volume_sliders.length; i++) {
-      /*
-				WARNING: If iOS, we don't do anything because iOS does not allow the
-				volume to be adjusted through anything except the buttons on the side of
-				the device.
-			*/
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        Debug.writeMessage(
-          "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
-        );
-      } else {
-        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-          volume_sliders[i].removeEventListener("change", VolumeSlider.handle);
-          volume_sliders[i].addEventListener("change", VolumeSlider.handle);
-        } else {
-          volume_sliders[i].removeEventListener("input", VolumeSlider.handle);
-          volume_sliders[i].addEventListener("input", VolumeSlider.handle);
-        }
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the volume slider classes and binds the event interaction
+	// 		methods to the element. If the browser is IE we listen to the change event
+	// 		where if it is anything else, it's the input method.
+	// 	*/
+  //   for (var i = 0; i < volume_sliders.length; i++) {
+  //     /*
+	// 			WARNING: If iOS, we don't do anything because iOS does not allow the
+	// 			volume to be adjusted through anything except the buttons on the side of
+	// 			the device.
+	// 		*/
+  //     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  //       Debug.writeMessage(
+  //         "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
+  //       );
+  //     } else {
+  //       if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+  //         volume_sliders[i].removeEventListener("change", VolumeSlider.handle);
+  //         volume_sliders[i].addEventListener("change", VolumeSlider.handle);
+  //       } else {
+  //         volume_sliders[i].removeEventListener("input", VolumeSlider.handle);
+  //         volume_sliders[i].addEventListener("input", VolumeSlider.handle);
+  //       }
+  //     }
+  //   }
+  // }
 
-  /**
-   * Binds click and touchend events fro AmplitudeJS Next buttons
-   *
-   * @access private
-   */
-  function bindNext() {
-    /*
-			Gets all of the elements with the class amplitude-next
-        */
-    var next_classes = document.getElementsByClassName("amplitude-next");
+  // /**
+  //  * Binds click and touchend events fro AmplitudeJS Next buttons
+  //  *
+  //  * @access private
+  //  */
+  // function bindNext() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-next
+  //       */
+  //   var next_classes = document.getElementsByClassName("amplitude-next");
 
-    /*
-			Iterates over all of the next classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < next_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        next_classes[i].removeEventListener("touchend", Next.handle);
-        next_classes[i].addEventListener("touchend", Next.handle);
-      } else {
-        next_classes[i].removeEventListener("click", Next.handle);
-        next_classes[i].addEventListener("click", Next.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the next classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < next_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       next_classes[i].removeEventListener("touchend", Next.handle);
+  //       next_classes[i].addEventListener("touchend", Next.handle);
+  //     } else {
+  //       next_classes[i].removeEventListener("click", Next.handle);
+  //       next_classes[i].addEventListener("click", Next.handle);
+  //     }
+  //   }
+  // }
 
-  /**
-   * Binds click and touchend events for AmplitudeJS prev buttons.
-   *
-   * @access private
-   */
-  function bindPrev() {
-    /*
-			Gets all of the elements with the class amplitude-prev
-		*/
-    var prev_classes = document.getElementsByClassName("amplitude-prev");
+  // /**
+  //  * Binds click and touchend events for AmplitudeJS prev buttons.
+  //  *
+  //  * @access private
+  //  */
+  // function bindPrev() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-prev
+	// 	*/
+  //   var prev_classes = document.getElementsByClassName("amplitude-prev");
 
-    /*
-			Iterates over all of the prev classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < prev_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        prev_classes[i].removeEventListener("touchend", Prev.handle);
-        prev_classes[i].addEventListener("touchend", Prev.handle);
-      } else {
-        prev_classes[i].removeEventListener("click", Prev.handle);
-        prev_classes[i].addEventListener("click", Prev.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the prev classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < prev_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       prev_classes[i].removeEventListener("touchend", Prev.handle);
+  //       prev_classes[i].addEventListener("touchend", Prev.handle);
+  //     } else {
+  //       prev_classes[i].removeEventListener("click", Prev.handle);
+  //       prev_classes[i].addEventListener("click", Prev.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS shuffle buttons.

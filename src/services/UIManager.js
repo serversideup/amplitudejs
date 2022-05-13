@@ -1,8 +1,11 @@
 import { NextElement } from "@/elements/NextElement";
 import { MetaDataElement } from "@/elements/MetaDataElement";
+import { MuteElement } from "@/elements/MuteElement";
 import { PauseElement } from "@/elements/PauseElement";
 import { PlayElement } from "@/elements/PlayElement";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
+import { PreviousElement } from "@/elements/PreviousElement";
+import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
 
 export class UIManager{
     setVisualElementsDefaults(){
@@ -15,6 +18,9 @@ export class UIManager{
         this.#initializePauseElement();
         this.#initializePlayPauseElement();
         this.#initializeNextElement();
+        this.#initializePreviousElement();
+        this.#initializeMuteElement();
+        this.#initializeVolumeSliderElement();
     }
 
     #initializeMetaData(){
@@ -40,5 +46,20 @@ export class UIManager{
     #initializeNextElement(){
         let nextElement = new NextElement();
         nextElement.setUp();
+    }
+
+    #initializePreviousElement(){
+        let previousElement = new PreviousElement();
+        previousElement.setUp();
+    }
+
+    #initializeMuteElement(){
+        let muteElement = new MuteElement();
+        muteElement.setUp();
+    }
+
+    #initializeVolumeSliderElement(){
+        let volumeSliderElement = new VolumeSliderElement();
+        volumeSliderElement.setUp();
     }
 }
