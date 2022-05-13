@@ -333,36 +333,36 @@ var Events = (function() {
   //   }
   // }
 
-  /**
-   * Binds click and touchend events for AmplitudeJS stop buttons
-   *
-   * @access private
-   */
-  function bindStop() {
-    /*
-			Gets all of the elements with the class amplitude-stop
-		*/
-    var stop_classes = document.getElementsByClassName("amplitude-stop");
+  // /**
+  //  * Binds click and touchend events for AmplitudeJS stop buttons
+  //  *
+  //  * @access private
+  //  */
+  // function bindStop() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-stop
+	// 	*/
+  //   var stop_classes = document.getElementsByClassName("amplitude-stop");
 
-    /*
-			Iterates over all of the stop classes and binds the event interaction
-			method to the element.  If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < stop_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        stop_classes[i].removeEventListener("touchend", Stop.handle);
-        stop_classes[i].addEventListener("touchend", Stop.handle);
-      } else {
-        stop_classes[i].removeEventListener("click", Stop.handle);
-        stop_classes[i].addEventListener("click", Stop.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the stop classes and binds the event interaction
+	// 		method to the element.  If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < stop_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       stop_classes[i].removeEventListener("touchend", Stop.handle);
+  //       stop_classes[i].addEventListener("touchend", Stop.handle);
+  //     } else {
+  //       stop_classes[i].removeEventListener("click", Stop.handle);
+  //       stop_classes[i].addEventListener("click", Stop.handle);
+  //     }
+  //   }
+  // }
 
   // /**
   //  * Binds click and touchend events for AmplitudeJS mute buttons
