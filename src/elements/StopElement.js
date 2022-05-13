@@ -1,8 +1,16 @@
 import { Audio } from "@/core/Audio";
-import { PlayPauseElement } from "@/services/PlayPauseElement";
+import { PlayPauseElement } from "@/elements/PlayPauseElement";
 import { ConfigState } from "@/services/ConfigState";
 
-
+/**
+ * Handles the configuration and managing of Stop elements
+ * 
+ * A Stop element is defined as the following:
+ * 
+ * Element: class="amplitude-stop"
+ * 
+ * Whenever this element is interacted with, the audio is stopped no matter where.
+ */
 export class StopElement {
     static stopElementQuery = '.amplitude-stop';
 

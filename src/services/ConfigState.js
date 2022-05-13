@@ -44,6 +44,14 @@ export class ConfigState{
 		return config.volume;
 	}
 
+	static getVolumeIncrement(){
+		return config.volume.increment;
+	}
+
+	static getVolumeDecrement(){
+		return config.volume.decrement;
+	}
+
 	static getPreMuteVolume(){
 		return config.pre_mute_volume;
 	}
