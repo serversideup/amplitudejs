@@ -56,6 +56,10 @@ export class ConfigState{
 		config.pre_mute_volume = level;
 	}
 
+	static getPlaybackSpeed(){
+		return config.playback_speed;
+	}
+
 	resetConfig(){
 		config.audio_element = new Audio();
 		config.active_metadata = {};

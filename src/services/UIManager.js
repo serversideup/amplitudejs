@@ -3,6 +3,7 @@ import { MetaDataElement } from "@/elements/MetaDataElement";
 import { MuteElement } from "@/elements/MuteElement";
 import { PauseElement } from "@/elements/PauseElement";
 import { PlayElement } from "@/elements/PlayElement";
+import { PlaybackSpeedElement } from "@/elements/PlaybackSpeedElement";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 import { PreviousElement } from "@/elements/PreviousElement";
 import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
@@ -21,6 +22,7 @@ export class UIManager{
         this.#initializePreviousElement();
         this.#initializeMuteElement();
         this.#initializeVolumeSliderElement();
+        this.#initializePlaybackSpeedElement();
     }
 
     #initializeMetaData(){
@@ -61,5 +63,10 @@ export class UIManager{
     #initializeVolumeSliderElement(){
         let volumeSliderElement = new VolumeSliderElement();
         volumeSliderElement.setUp();
+    }
+
+    #initializePlaybackSpeedElement(){
+        let playbackSpeedElement = new PlaybackSpeedElement();
+        playbackSpeedElement.setUp();
     }
 }
