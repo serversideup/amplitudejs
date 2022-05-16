@@ -57,6 +57,7 @@ export class VolumeSliderElement {
         MuteElement.syncElements();
         VolumeSliderElement.syncElements();
     }
+    
 
     static syncElements(){
         let elements = document.querySelectorAll( VolumeSliderElement.volumeSliderElementQuery );

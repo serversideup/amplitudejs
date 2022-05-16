@@ -1,5 +1,5 @@
 import { TimeUpdateEvent } from "@/events/TimeUpdateEvent";
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@/services/Debug";
 import { config } from "@/config.js";
 
 export class EventManager{

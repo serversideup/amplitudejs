@@ -1,7 +1,7 @@
 import { ConfigState } from "@/services/ConfigState";
 import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js";
 import { config } from "@/config";
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@/services/Debug";
 
 export class CollectionNextElement {
     static collectionNextQuery = '.amplitude-next[data-amplitude-collection-key]';

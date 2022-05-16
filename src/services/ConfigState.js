@@ -68,6 +68,27 @@ export class ConfigState{
 		return config.playback_speed;
 	}
 
+	static isCollectionShuffled( collection ){
+		if( config.collections[ collection ] && config.collections[ collection ].shuffled ){
+			return true;
+		}else{ 
+			return false;
+		}
+	}
+
+	static setCollectionShuffled( collection, shuffled, audio ){
+		config.collections[ collection ].shuffled = shuffled;
+		config.collections[ collection ].audio = audio;
+	}
+
+	static getCollectionAudio( collection ){
+		return config.collections[ collection ].audio;
+	}
+
+	static getActiveCollection(){
+		return config.active_collection;
+	}
+
 	resetConfig(){
 		config.audio_element = new Audio();
 		config.active_metadata = {};

@@ -3,7 +3,7 @@ import { Checks as AudioChecks } from '@/services/Audio/Checks.js';
 import { Navigation as AudioNavigation } from '@/services/Audio/Navigation.js';
 import { Checks as CollectionChecks } from '@/services/Collections/Checks.js';
 import { Navigation as CollectionNavigation } from '@/services/Collections/Navigation.js';
-import { Debug } from '@/utilities/debug';
+import { Debug } from "@/services/Debug";
 import { ConfigState } from "@/services/ConfigState";
 import { config } from "@/config";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";

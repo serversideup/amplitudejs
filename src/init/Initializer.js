@@ -1,4 +1,4 @@
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@/services/Debug";
 import { ConfigState } from "@/services/ConfigState";
 import { EventManager } from "@/services/EventManager";
 import { UIManager } from "@/services/UIManager";

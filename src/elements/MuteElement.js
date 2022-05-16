@@ -1,6 +1,6 @@
 import { ConfigState } from "@/services/ConfigState";
 import { VolumeSliderElement } from "./VolumeSliderElement";
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@/services/Debug";
 /**
  * Handles the configuration and managing of Mute elements
  * 

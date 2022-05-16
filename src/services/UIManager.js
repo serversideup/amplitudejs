@@ -6,9 +6,11 @@ import { PlayElement } from "@/elements/PlayElement";
 import { PlaybackSpeedElement } from "@/elements/PlaybackSpeedElement";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 import { PreviousElement } from "@/elements/PreviousElement";
+import { ShuffleElement } from "@/elements/ShuffleElement";
 import { StopElement } from "@/elements/StopElement";
 import { VolumeDownElement } from "@/elements/VolumeDownElement";
 import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
+import { VolumeUpElement } from "@/elements/VolumeUpElement";
 
 export class UIManager{
     setVisualElementsDefaults(){
@@ -27,6 +29,8 @@ export class UIManager{
         this.#initializePlaybackSpeedElement();
         this.#initializeStopElement();
         this.#initializeVolumeDownElement();
+        this.#initializeVolumeUpElement();
+        this.#initializeShuffleElement();
     }
 
     #initializeMetaData(){
@@ -82,5 +86,15 @@ export class UIManager{
     #initializeVolumeDownElement(){
         let volumeDownElement = new VolumeDownElement();
         volumeDownElement.setUp();
+    }
+
+    #initializeVolumeUpElement(){
+        let volumeUpElement = new VolumeUpElement();
+        volumeUpElement.setUp();
+    }
+
+    #initializeShuffleElement(){
+        let shuffleElement = new ShuffleElement();
+        shuffleElement.setUp();
     }
 }

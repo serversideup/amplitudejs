@@ -2,7 +2,7 @@ import { Audio } from "@/core/Audio";
 import { ConfigState } from "@/services/ConfigState";
 import { MuteElement } from "./MuteElement";
 import { VolumeSliderElement } from "./VolumeSliderElement";
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@/services/Debug";
 
 /**
  * Handles the configuration and managing of Volume Down elements

@@ -1,7 +1,7 @@
 import { Audio } from "@/core/Audio";
 import { Checks as CollectionChecks } from "@/services/Collections/Checks";
 import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation";
-import { Debug } from "@/utilities/debug";
+import { Debug } from "@/services/Debug";
 import { ConfigState } from "@/services/ConfigState";
 import { config } from "@/config";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
