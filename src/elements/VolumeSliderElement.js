@@ -1,5 +1,6 @@
 import { ConfigState } from "@/services/ConfigState";
 import { MuteElement } from "./MuteElement";
+import { Audio } from "@/core/Audio";
 
 /**
  * Handles the configuration and managing of Volume Slider elements
@@ -23,7 +24,7 @@ export class VolumeSliderElement {
         this.#ie = ConfigState.isIE();
     }
 
-    setup(){
+    setUp(){
         this.#findElements();
         this.#bindInteractions();
     }
@@ -38,7 +39,7 @@ export class VolumeSliderElement {
                 "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
             );
         }else{
-            this.#elements.forEach( function( element ){
+            this.#elements.forEach( ( element ) => {
                 if( this.#ie ){
                     element.removeEventListener( "change", this.#handleInteraction );
                     element.addEventListener( "change", this.#handleInteraction );
@@ -63,7 +64,7 @@ export class VolumeSliderElement {
         let elements = document.querySelectorAll( VolumeSliderElement.volumeSliderElementQuery );
 
         elements.forEach( function( element ){
-            element.value = config.audio.volume * 100;
+            element.value = ConfigState.getVolume();
         });
     }
 }

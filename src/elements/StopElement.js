@@ -21,7 +21,7 @@ export class StopElement {
         this.#mobile = ConfigState.isMobile();
     }
 
-    setup(){
+    setUp(){
         this.#findElements();
         this.#bindInteractions();
     }

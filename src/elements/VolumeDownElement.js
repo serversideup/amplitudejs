@@ -23,7 +23,7 @@ export class VolumeDownElement {
         this.#mobile = ConfigState.isMobile();
     }
 
-    setup(){
+    setUp(){
         this.#findElements();
         this.#bindInteractions();
     }

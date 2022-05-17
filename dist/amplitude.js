@@ -76,6 +76,7 @@ var config = {
    * @todo BREAKING CHANGE
    */
   volume: {
+    current: 0.5,
     initial: 0.5,
     increment: 5,
     decrement: 5,
@@ -324,7 +325,7 @@ function _setMuted2(volumeLevel) {
 }
 
 function _setAudioVolume2(volumeLevel) {
-  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume = volumeLevel;
+  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume.current = volumeLevel;
   _config_js__WEBPACK_IMPORTED_MODULE_0__.config.audio_element.volume = volumeLevel / 100;
 }
 
@@ -594,8 +595,8 @@ var MuteElement = /*#__PURE__*/function () {
   }
 
   _createClass(MuteElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
 
       _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
@@ -3271,8 +3272,8 @@ var PlaybackSpeedElement = /*#__PURE__*/function () {
   }
 
   _createClass(PlaybackSpeedElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
 
       _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
@@ -3403,8 +3404,8 @@ var PreviousElement = /*#__PURE__*/function () {
   }
 
   _createClass(PreviousElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _configureGlobalPreviousElement, _configureGlobalPreviousElement2).call(this);
 
       _classPrivateMethodGet(this, _configureCollectionPreviousElement, _configureCollectionPreviousElement2).call(this);
@@ -4101,8 +4102,8 @@ var StopElement = /*#__PURE__*/function () {
   }
 
   _createClass(StopElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
 
       _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
@@ -4232,8 +4233,8 @@ var VolumeDownElement = /*#__PURE__*/function () {
   }
 
   _createClass(VolumeDownElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
 
       _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
@@ -4298,6 +4299,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/ConfigState */ "./src/services/ConfigState.js");
 /* harmony import */ var _MuteElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MuteElement */ "./src/elements/MuteElement.js");
+/* harmony import */ var _core_Audio__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/core/Audio */ "./src/core/Audio.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4323,6 +4325,7 @@ function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _
 function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
 
 function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
 
 
 
@@ -4380,8 +4383,8 @@ var VolumeSliderElement = /*#__PURE__*/function () {
   }
 
   _createClass(VolumeSliderElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
 
       _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
@@ -4391,7 +4394,7 @@ var VolumeSliderElement = /*#__PURE__*/function () {
     value: function syncElements() {
       var elements = document.querySelectorAll(VolumeSliderElement.volumeSliderElementQuery);
       elements.forEach(function (element) {
-        element.value = config.audio.volume * 100;
+        element.value = _services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.getVolume();
       });
     }
   }]);
@@ -4404,23 +4407,25 @@ function _findElements2() {
 }
 
 function _bindInteractions2() {
+  var _this = this;
+
   if (_services_ConfigState__WEBPACK_IMPORTED_MODULE_0__.ConfigState.isIos()) {
     Debug.writeMessage("iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4");
   } else {
     _classPrivateFieldGet(this, _elements).forEach(function (element) {
-      if (_classPrivateFieldGet(this, _ie)) {
-        element.removeEventListener("change", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
-        element.addEventListener("change", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
+      if (_classPrivateFieldGet(_this, _ie)) {
+        element.removeEventListener("change", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+        element.addEventListener("change", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
       } else {
-        element.removeEventListener("input", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
-        element.addEventListener("input", _classPrivateMethodGet(this, _handleInteraction, _handleInteraction2));
+        element.removeEventListener("input", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
+        element.addEventListener("input", _classPrivateMethodGet(_this, _handleInteraction, _handleInteraction2));
       }
     });
   }
 }
 
 function _handleInteraction2() {
-  var audio = new Audio();
+  var audio = new _core_Audio__WEBPACK_IMPORTED_MODULE_2__.Audio();
   audio.setVolume(this.value);
   _MuteElement__WEBPACK_IMPORTED_MODULE_1__.MuteElement.syncElements();
   VolumeSliderElement.syncElements();
@@ -4520,8 +4525,8 @@ var VolumeUpElement = /*#__PURE__*/function () {
   }
 
   _createClass(VolumeUpElement, [{
-    key: "setup",
-    value: function setup() {
+    key: "setUp",
+    value: function setUp() {
       _classPrivateMethodGet(this, _findElements, _findElements2).call(this);
 
       _classPrivateMethodGet(this, _bindInteractions, _bindInteractions2).call(this);
@@ -5718,11 +5723,12 @@ var ConfigState = /*#__PURE__*/function () {
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.default_artwork = "";
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.default_playlist_art = "";
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.debug = true;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume = 0.5;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.pre_mute_volume = 0.5;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume_increment = 5;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume_decrement = 5;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.soundcloud = {
+      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume = {
+        initial: 0.5,
+        increment: 5,
+        decrement: 5,
+        pre_mute_level: 0.5
+      }, _config_js__WEBPACK_IMPORTED_MODULE_0__.config.soundcloud = {
         client: '',
         use_art: false,
         audio_count: 0,
@@ -5819,7 +5825,7 @@ var ConfigState = /*#__PURE__*/function () {
   }, {
     key: "getVolume",
     value: function getVolume() {
-      return _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume;
+      return _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume.current;
     }
   }, {
     key: "getVolumeIncrement",

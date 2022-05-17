@@ -41,7 +41,7 @@ export class ConfigState{
 	}
 
 	static getVolume(){
-		return config.volume;
+		return config.volume.current;
 	}
 
 	static getVolumeIncrement(){
@@ -109,10 +109,12 @@ export class ConfigState{
 		config.default_playlist_art = "";
 		config.debug = true;
 
-		config.volume = 0.5;
-		config.pre_mute_volume = 0.5;
-		config.volume_increment = 5;
-		config.volume_decrement = 5;
+		config.volume =  {
+			initial: 0.5,
+			increment: 5,
+			decrement: 5,
+			pre_mute_level: 0.5
+		},
 
 		config.soundcloud = {
 			client: '',

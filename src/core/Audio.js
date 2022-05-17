@@ -106,7 +106,7 @@ export class Audio{
     }
 
     #setAudioVolume( volumeLevel ){
-        config.volume = volumeLevel;
+        config.volume.current = volumeLevel;
         config.audio_element.volume = ( volumeLevel / 100 );
     }
 }

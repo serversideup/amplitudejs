@@ -20,7 +20,7 @@ export class MuteElement {
         this.#mobile = ConfigState.isMobile();
     }
 
-    setup(){
+    setUp(){
         this.#findElements();
         this.#bindInteractions();
     }

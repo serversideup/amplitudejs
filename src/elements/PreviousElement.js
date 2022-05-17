@@ -15,7 +15,7 @@ import { GlobalPreviousElement } from "./PreviousElements/GlobalPreviousElement"
  * Handles the previous audio within a specific collection.
  */
 export class PreviousElement {
-    setup(){
+    setUp(){
         this.#configureGlobalPreviousElement();
         this.#configureCollectionPreviousElement();
     }

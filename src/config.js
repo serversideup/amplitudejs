@@ -73,6 +73,7 @@ export const config = {
 	 * @todo BREAKING CHANGE
 	 */
 	volume: {
+		current: 0.5,
 		initial: 0.5,
 		increment: 5,
 		decrement: 5,
