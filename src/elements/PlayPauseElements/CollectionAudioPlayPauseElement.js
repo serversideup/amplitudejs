@@ -29,18 +29,18 @@ export class CollectionAudioPlayPauseElement {
         this.#elements.forEach( (element) => {
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
-                element.addEventListener("touchend", this.#handleInteraction );
+                element.addEventListener("touchend", this.#handleInteraction.bind(this, element) );
             }else{
                 element.removeEventListener("click", this.#handleInteraction );
-                element.addEventListener("click", this.#handleInteraction );
+                element.addEventListener("click", this.#handleInteraction.bind(this, element) );
             }
         } );
     }
 
-    #handleInteraction(){
+    #handleInteraction( element ){
         if( !ConfigState.isTouchMoving() ){
-            let collectionKey = this.attribute('data-amplitude-collection-key');
-            let audioIndex = this.attribute('data-amplitude-audio-index');
+            let collectionKey = element.getAttribute('data-amplitude-collection-key');
+            let audioIndex = element.getAttribute('data-amplitude-audio-index');
             
             this.#handleCollectionChanges( collectionKey, audioIndex );
             this.#handleAudioChanges( collectionKey, audioIndex );
@@ -78,10 +78,12 @@ export class CollectionAudioPlayPauseElement {
     }
 
     #toggleAudio(){
+        let audio = new Audio();
+
         if( config.audio_element.paused ){
-            Audio.play();
+            audio.play();
         }else{
-            Audio.pause();
+            audio.pause();
         }
     }
 

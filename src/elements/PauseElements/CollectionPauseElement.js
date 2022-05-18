@@ -35,7 +35,7 @@ export class CollectionPauseElement{
 
     #handleInteraction(){
         if( !ConfigState.isTouchMoving() ){
-            let collectionKey = this.attribute('data-amplitude-collection-key');
+            let collectionKey = this.getAttribute('data-amplitude-collection-key');
             
             // Ensure we pause the audio if the active collection is
             // what is controlled by this pause element.

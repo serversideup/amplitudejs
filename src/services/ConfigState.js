@@ -1,4 +1,6 @@
 import { config } from '@/config.js';
+import { MuteElement } from '@/elements/MuteElement';
+import { PlaybackSpeedElement } from '@/elements/PlaybackSpeedElement';
 
 export class ConfigState{
 	setIsMobile(){
@@ -53,15 +55,15 @@ export class ConfigState{
 	}
 
 	static getPreMuteVolume(){
-		return config.pre_mute_volume;
+		return config.volume.pre_mute_level;
 	}
 
 	static setPreMuteVolume( level = null ){
 		if( !level ){
-			level = config.volume;
+			level = config.volume.current;
 		}
 
-		config.pre_mute_volume = level;
+		config.volume.pre_mute_level = level;
 	}
 
 	static getPlaybackSpeed(){
@@ -110,10 +112,10 @@ export class ConfigState{
 		config.debug = true;
 
 		config.volume =  {
-			initial: 0.5,
+			current: 50,
 			increment: 5,
 			decrement: 5,
-			pre_mute_level: 0.5
+			pre_mute_level: 50
 		},
 
 		config.soundcloud = {
@@ -135,17 +137,27 @@ export class ConfigState{
 
 	setUserSettings( userConfig ){
 		this.setAudio( userConfig.audio );
+		this.setVolume( userConfig.volume );
 		this.setDebug( userConfig.debug );
 		this.setDefaultArtwork( userConfig.default_artwork );
-		this.setGroupings( userConfig.groupings );
+		this.setCollections( userConfig.collections );
 		this.setPlaybackSpeed( userConfig.playback_speed );
 		this.setCallbacks( userConfig.callbacks );
 	}
 
 	setAudio( value ){
 		config.audio = value != undefined ? value : [];
+
 		this.#setDefaultLiveSettings();
 		this.#setDefaultAudioIndices();
+	}
+
+	setVolume( volume ){
+		config.volume.current = volume && volume.initial ? volume.initial : 50;
+		config.volume.increment = volume && volume.increment ? volume.increment : 5;
+		config.volume.decrement = volume && volume.decrement ? volume.decrement : 5;
+
+		MuteElement.syncElements();
 	}
 
 	setDebug( value ){
@@ -156,12 +168,14 @@ export class ConfigState{
 		config.default_artwork = value != undefined ? value : false;
 	}
 
-	setGroupings( groupings ){
-		// @todo set groupings
+	setCollections( collections ){
+		// @todo set collections
 	}
 
 	setPlaybackSpeed( speed ){
 		config.playback_speed = speed != undefined ? speed : 1.0;
+
+		PlaybackSpeedElement.syncElements();
 	}
 
 	setCallbacks( callbacks ){

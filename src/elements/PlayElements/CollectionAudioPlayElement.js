@@ -39,8 +39,8 @@ export class CollectionAudioPlayElement {
 
     #handleInteraction(){
         if( !ConfigState.isTouchMoving() ){
-            let collectionKey = this.attribute('data-amplitude-collection-key');
-            let audioIndex = this.attribute('data-amplitude-audio-index');
+            let collectionKey = this.getAttribute('data-amplitude-collection-key');
+            let audioIndex = this.getAttribute('data-amplitude-audio-index');
             
             this.#handleCollectionChanges( collectionKey, audioIndex );
             this.#handleAudioChanges( collectionKey, audioIndex );

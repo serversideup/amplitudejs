@@ -1,3 +1,4 @@
+import { Audio } from "@/core/Audio";
 import { ConfigState } from "@/services/ConfigState";
 import { VolumeSliderElement } from "./VolumeSliderElement";
 import { Debug } from "@/services/Debug";
@@ -68,11 +69,11 @@ export class MuteElement {
 
         elements.forEach( function( element ){
             if( ConfigState.getVolume() == 0 ){
-                element.classList.add("amplitude-not-muted");
-                element.classList.remove("amplitude-muted");
-            }else{
                 element.classList.remove("amplitude-not-muted");
                 element.classList.add("amplitude-muted");
+            }else{
+                element.classList.add("amplitude-not-muted");
+                element.classList.remove("amplitude-muted");
             }
         });
     }

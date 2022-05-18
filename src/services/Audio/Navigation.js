@@ -3,6 +3,7 @@ import { config } from "@/config";
 import { Callbacks } from "@/services/Callbacks";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 import { MetaDataElement } from "@/elements/MetaDataElement";
+import { ContainerElement } from "@/elements/ContainerElement";
 
 export class Navigation {
     /**
@@ -50,8 +51,10 @@ export class Navigation {
     #afterAudioChange( direct ){
         this.#updateMetaData();
 
+        let containerElements = new ContainerElement();
+        containerElements.setActiveContainers( direct );
+
         /**
-         * @todo container elements -> set active
          * @todo time elements -> reset duration times
          * ( see src/utilities/audioNavigation.js Line #558 )
          */

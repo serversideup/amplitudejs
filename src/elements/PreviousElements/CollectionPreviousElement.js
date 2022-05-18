@@ -35,7 +35,7 @@ export class CollectionPreviousElement {
 
     #handleInteraction(){
         if( !ConfigState.isTouchMoving() ){
-            let collectionKey = this.attribute('data-amplitude-collection-key');
+            let collectionKey = this.getAttribute('data-amplitude-collection-key');
 
             if( collectionKey == config.active_collection ){
                 let collectionNavigation = new CollectionNavigation();

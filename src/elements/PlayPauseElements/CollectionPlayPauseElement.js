@@ -34,17 +34,17 @@ export class CollectionPlayPauseElement {
         this.#elements.forEach( (element) => {;
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
-                element.addEventListener("touchend", this.#handleInteraction );
+                element.addEventListener("touchend", this.#handleInteraction.bind(this, element) );
             }else{
                 element.removeEventListener("click", this.#handleInteraction );
-                element.addEventListener("click", this.#handleInteraction );
+                element.addEventListener("click", this.#handleInteraction.bind(this, element) );
             }
         } );
     }
 
-    #handleInteraction(){
+    #handleInteraction( element ){
         if( !ConfigState.isTouchMoving() ){
-            let collection = this.getAttribute('data-amplitude-collection-key');
+            let collection = element.getAttribute('data-amplitude-collection-key');
 
             if( !CollectionChecks.collectionExists( collection ) ){
                 Debug.writeMessage('Collection with key "'+collection+'" does not exist! Please define this collection in your configuration.');
@@ -85,10 +85,12 @@ export class CollectionPlayPauseElement {
     }
 
     #toggleAudio(){
+        let audio = new Audio();
+
         if( config.audio_element.paused ){
-            Audio.play();
+            audio.play();
         }else{
-            Audio.pause();
+            audio.pause();
         }
     }
 

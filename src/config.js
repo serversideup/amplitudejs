@@ -73,11 +73,10 @@ export const config = {
 	 * @todo BREAKING CHANGE
 	 */
 	volume: {
-		current: 0.5,
-		initial: 0.5,
+		current: 50,
 		increment: 5,
 		decrement: 5,
-		pre_mute_level: 0.5
+		pre_mute_level: 50
 	},
 	//   volume: 0.5,
 

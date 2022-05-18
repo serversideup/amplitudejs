@@ -33,7 +33,7 @@ export class CollectionShuffleElement {
     }
 
     #handleInteraction(){
-        let collectionKey = this.attribute('data-amplitude-collection-key');
+        let collectionKey = this.getAttribute('data-amplitude-collection-key');
 
         let shuffle = new Shuffle( collectionKey );
         shuffle.toggleShuffle();

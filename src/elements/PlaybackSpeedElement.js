@@ -1,3 +1,4 @@
+import { Audio } from "@/core/Audio";
 import { ConfigState } from "@/services/ConfigState";
 
 export class PlaybackSpeedElement {
@@ -47,11 +48,11 @@ export class PlaybackSpeedElement {
                 break;
             }
 
-            PlaybackSpeedElement.#syncElements();
+            PlaybackSpeedElement.syncElements();
         }
     }
 
-    static #syncElements(){
+    static syncElements(){
         let elements = document.querySelectorAll( PlaybackSpeedElement.playbackSpeedElementQuery );
 
         elements.forEach( function( element ){

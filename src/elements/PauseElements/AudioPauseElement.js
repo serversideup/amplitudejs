@@ -36,7 +36,7 @@ export class AudioPauseElement{
 
     #handleInteraction(){
         if( !ConfigState.isTouchMoving() ){
-            let audioIndex = this.attribute('data-amplitude-audio-index');
+            let audioIndex = this.getAttribute('data-amplitude-audio-index');
 
             // If the scope is audio and the index of the element matches the active audio
             // index, then we pause the player.

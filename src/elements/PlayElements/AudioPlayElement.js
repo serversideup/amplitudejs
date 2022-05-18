@@ -28,21 +28,21 @@ export class AudioPlayElement {
     }
 
     #bindInteractions(){
-        this.#elements.forEach( (element) => {;
+        this.#elements.forEach( (element) => {
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
-                element.addEventListener("touchend", this.#handleInteraction );
+                element.addEventListener("touchend", this.#handleInteraction.bind(this, element) );
             }else{
                 element.removeEventListener("click", this.#handleInteraction );
-                element.addEventListener("click", this.#handleInteraction );
+                element.addEventListener("click", this.#handleInteraction.bind(this, element) );
             }
         } );
     }
 
-    #handleInteraction(){
-        if( !ConfigState.isTouchMoving() ){
-            let index = this.attribute('data-amplitude-audio-index');
-            
+    #handleInteraction( element ){
+        if( !ConfigState.isTouchMoving() ){     
+            let index = element.getAttribute('data-amplitude-audio-index');
+
             if( !AudioChecks.audioExists( index ) ){
                 Debug.writeMessage('Audio with index "'+index+'" does not exist! Please add an audio object at this index in your configuration.');
                 return false;
