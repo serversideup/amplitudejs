@@ -97,9 +97,12 @@ export class CollectionPlayPauseElement {
     static syncUI(){
         let state = ConfigState.getAudioState();
         let elements = document.querySelectorAll( CollectionPlayPauseElement.collectionPlayPauseQuery );
+        let activeCollectionKey = ConfigState.getActiveCollection();
 
         elements.forEach( ( element ) => {
-            if( state == 'playing' ){
+            let elementCollectionKey = element.getAttribute('data-amplitude-collection-key');
+
+            if( state == 'playing' && ( activeCollectionKey == elementCollectionKey ) ){
                 PlayPauseElement.setElementPlay( element );
             }else{
                 PlayPauseElement.setElementPause( element );

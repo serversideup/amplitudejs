@@ -110,25 +110,25 @@ let SkipTo = (function() {
    * @param {string} songIndex  - The index of the song being skipped to
    * @param {number} location   - The seconds location of the song in the playlist.
    */
-  function handleSkipToSong(songIndex, location) {
-    /*
-      Changes the song to where it's being skipped and then
-      play the song.
-    */
-    AudioNavigation.changeSong(config.songs[songIndex], songIndex);
-    Core.play();
+  // function handleSkipToSong(songIndex, location) {
+  //   /*
+  //     Changes the song to where it's being skipped and then
+  //     play the song.
+  //   */
+  //   AudioNavigation.changeSong(config.songs[songIndex], songIndex);
+  //   Core.play();
 
-    /*
-      Syncs all of the play pause buttons now that we've skipped.
-    */
-    PlayPauseElements.syncGlobal();
-    PlayPauseElements.syncSong();
+  //   /*
+  //     Syncs all of the play pause buttons now that we've skipped.
+  //   */
+  //   PlayPauseElements.syncGlobal();
+  //   PlayPauseElements.syncSong();
 
-    /*
-      Skip to the location in the song.
-    */
-    Core.skipToLocation(location);
-  }
+  //   /*
+  //     Skip to the location in the song.
+  //   */
+  //   Core.skipToLocation(location);
+  // }
 
   /**
    * Handles the skipping to a song that's in a playlist.

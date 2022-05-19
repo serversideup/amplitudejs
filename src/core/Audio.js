@@ -1,5 +1,6 @@
 import { config } from "@/config.js";
 import { ConfigState } from "../services/ConfigState";
+import { Debug } from "@/services/Debug";
 
 export class Audio{
     play(){
@@ -25,6 +26,21 @@ export class Audio{
         /**
          * @todo run stop callback
          */
+    }
+
+    skipToLocation(seconds){
+        // Cannot skip live streams
+        if( !config.active_metadata.live ){
+            // We only skip to the location when the audio is loaded enough to play through
+            // and skip to a location. This event is unbound after it's fired once.
+            config.audio_element.addEventListener("canplaythrough", function(){
+                if( config.audio_element.duration >= seconds && seconds > 0 ){
+                    config.audio_element.currentTime = seconds;
+                } else {
+                    Debug.writeMessage( "Amplitude can't skip to a location greater than the duration of the audio or less than 0.")
+                }
+            }, { once: true } );
+        }
     }
 
     /**

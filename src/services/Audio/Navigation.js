@@ -40,6 +40,7 @@ export class Navigation {
     }
 
     #switchAudio( audio, index ){
+        config.active_collection = null;
         config.audio_element.src = audio.url;
         config.active_metadata = audio;
         /** 

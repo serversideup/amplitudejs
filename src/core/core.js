@@ -250,31 +250,31 @@ let Core = (function() {
    * @access public
    * @param {number} seconds - An integer containing the seconds to skip to
    */
-  function skipToLocation(seconds) {
-    /*
-			When the active song can be played through, we can check to
-			see if the seconds will work. We only bind the event handler
-			once and remove it once it's fired.
-		*/
-    config.audio.addEventListener(
-      "canplaythrough",
-      function() {
-        /*
-				If the active song duration is greater than or equal to the
-				amount of seconds the user wants to skip to and the seconds
-				is greater than 0, we skip to the seconds defined.
-			*/
-        if (config.audio.duration >= seconds && seconds > 0) {
-          config.audio.currentTime = seconds;
-        } else {
-          Debug.writeMessage(
-            "Amplitude can't skip to a location greater than the duration of the audio or less than 0"
-          );
-        }
-      },
-      { once: true }
-    );
-  }
+  // function skipToLocation(seconds) {
+  //   /*
+	// 		When the active song can be played through, we can check to
+	// 		see if the seconds will work. We only bind the event handler
+	// 		once and remove it once it's fired.
+	// 	*/
+  //   config.audio.addEventListener(
+  //     "canplaythrough",
+  //     function() {
+  //       /*
+	// 			If the active song duration is greater than or equal to the
+	// 			amount of seconds the user wants to skip to and the seconds
+	// 			is greater than 0, we skip to the seconds defined.
+	// 		*/
+  //       if (config.audio.duration >= seconds && seconds > 0) {
+  //         config.audio.currentTime = seconds;
+  //       } else {
+  //         Debug.writeMessage(
+  //           "Amplitude can't skip to a location greater than the duration of the audio or less than 0"
+  //         );
+  //       }
+  //     },
+  //     { once: true }
+  //   );
+  // }
 
   // /**
   //  * Disconnects the live stream

@@ -111,9 +111,12 @@ export class AudioPlayPauseElement {
     static syncUI(){
         let state = ConfigState.getAudioState();
         let elements = document.querySelectorAll( AudioPlayPauseElement.audioPlayPauseQuery );
+        let activeAudioIndex = ConfigState.getActiveAudioIndex();
 
         elements.forEach( ( element ) => {
-            if( state == 'playing' ){
+            let elementAudioIndex = element.getAttribute('data-amplitude-audio-index');
+
+            if( state == 'playing' && ( activeAudioIndex == elementAudioIndex ) ){
                 PlayPauseElement.setElementPlay( element );
             }else{
                 PlayPauseElement.setElementPause( element );

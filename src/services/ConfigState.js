@@ -91,6 +91,10 @@ export class ConfigState{
 		return config.active_collection;
 	}
 
+	static getActiveAudioIndex(){
+		return config.active_index;
+	}
+
 	resetConfig(){
 		config.audio_element = new Audio();
 		config.active_metadata = {};

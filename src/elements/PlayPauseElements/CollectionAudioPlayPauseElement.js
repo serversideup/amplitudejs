@@ -90,7 +90,7 @@ export class CollectionAudioPlayPauseElement {
     static syncUI(){
         let state = ConfigState.getAudioState();
         let elements = document.querySelectorAll( CollectionAudioPlayPauseElement.collectionAudioPlayPauseQuery );
-
+        
         elements.forEach( ( element ) => {
             if( state == 'playing' ){
                 PlayPauseElement.setElementPlay( element );
