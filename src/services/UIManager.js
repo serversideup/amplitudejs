@@ -9,6 +9,7 @@ import { PreviousElement } from "@/elements/PreviousElement";
 import { ShuffleElement } from "@/elements/ShuffleElement";
 import { SkipToElement } from "@/elements/SkipToElement";
 import { StopElement } from "@/elements/StopElement";
+import { TrackerElement } from "@/elements/TrackerElement";
 import { VolumeDownElement } from "@/elements/VolumeDownElement";
 import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
 import { VolumeUpElement } from "@/elements/VolumeUpElement";
@@ -33,6 +34,7 @@ export class UIManager{
         this.#initializeVolumeUpElement();
         this.#initializeShuffleElement();
         this.#initializeSkipToElement();
+        this.#initializeTrackerElement();
     }
 
     #initializeMetaData(){
@@ -103,5 +105,10 @@ export class UIManager{
     #initializeSkipToElement(){
         let skipToElement = new SkipToElement();
         skipToElement.setUp();
+    }
+
+    #initializeTrackerElement(){
+        let trackerElement = new TrackerElement();
+        trackerElement.setUp();
     }
 }

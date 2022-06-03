@@ -27,44 +27,44 @@ let CurrentTimeElements = (function() {
     syncSongInPlaylist(currentTime);
   }
 
-  /**
-   * Updates any elements that display the current time for the song. This
-   * is a computed field that will be commonly used.
-   *
-   * @access public
-   * @param {object} time 	- A json object conaining the parts for the current time for the song.
-   */
-  function syncGlobal(time) {
-    /*
-			Get all of the time selectors.
-		*/
-    let currentTimeSelectors = document.querySelectorAll(
-      ".amplitude-current-time"
-    );
+  // /**
+  //  * Updates any elements that display the current time for the song. This
+  //  * is a computed field that will be commonly used.
+  //  *
+  //  * @access public
+  //  * @param {object} time 	- A json object conaining the parts for the current time for the song.
+  //  */
+  // function syncGlobal(time) {
+  //   /*
+	// 		Get all of the time selectors.
+	// 	*/
+  //   let currentTimeSelectors = document.querySelectorAll(
+  //     ".amplitude-current-time"
+  //   );
 
-    /*
-			Set the time selector's inner html to the current time for the song. The current
-			time is computed by joining minutes and seconds.
-		*/
-    var timeText = time.minutes + ":" + time.seconds;
+  //   /*
+	// 		Set the time selector's inner html to the current time for the song. The current
+	// 		time is computed by joining minutes and seconds.
+	// 	*/
+  //   var timeText = time.minutes + ":" + time.seconds;
 
-    if (time.hours > 0) {
-      timeText = time.hours + ":" + timeText;
-    }
+  //   if (time.hours > 0) {
+  //     timeText = time.hours + ":" + timeText;
+  //   }
 
-    for (let i = 0; i < currentTimeSelectors.length; i++) {
-      let playlist = currentTimeSelectors[i].getAttribute(
-        "data-amplitude-playlist"
-      );
-      let songIndex = currentTimeSelectors[i].getAttribute(
-        "data-amplitude-song-index"
-      );
+  //   for (let i = 0; i < currentTimeSelectors.length; i++) {
+  //     let playlist = currentTimeSelectors[i].getAttribute(
+  //       "data-amplitude-playlist"
+  //     );
+  //     let songIndex = currentTimeSelectors[i].getAttribute(
+  //       "data-amplitude-song-index"
+  //     );
 
-      if (playlist == null && songIndex == null) {
-        currentTimeSelectors[i].innerHTML = timeText;
-      }
-    }
-  }
+  //     if (playlist == null && songIndex == null) {
+  //       currentTimeSelectors[i].innerHTML = timeText;
+  //     }
+  //   }
+  // }
 
   /**
    * Updates any elements that display the current time for the song. This

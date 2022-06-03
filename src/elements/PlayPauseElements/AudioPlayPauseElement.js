@@ -28,7 +28,7 @@ export class AudioPlayPauseElement {
     }
 
     #bindInteractions(){
-        this.#elements.forEach( (element) => {;
+        this.#elements.forEach( (element) => {
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
                 element.addEventListener("touchend", this.#handleInteraction.bind(this, element) );

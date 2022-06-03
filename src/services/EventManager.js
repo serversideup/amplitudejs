@@ -1,3 +1,4 @@
+// import { ProgressEvent } from "@/events/ProgressEvent";
 import { TimeUpdateEvent } from "@/events/TimeUpdateEvent";
 import { Debug } from "@/services/Debug";
 import { config } from "@/config.js";
@@ -10,7 +11,8 @@ export class EventManager{
         this.#bindTimeUpdateEvents();
         this.#bindKeyBindingEvents();
         this.#bindAudioEndedEvent();
-        this.#bindProgressEvent();
+        // this.#bindProgressEvent();
+        this.#bindAudioElementEventCallbacks();
     }
 
     #bindTouchEvents(){
@@ -26,8 +28,8 @@ export class EventManager{
     }
 
     #bindTimeUpdateEvents(){
-        // let timeUpdateEvent = new TimeUpdateEvent();
-        // timeUpdateEvent.bind();
+        let timeUpdateEvent = new TimeUpdateEvent();
+        timeUpdateEvent.bind();
     }
 
     #bindKeyBindingEvents(){
@@ -39,6 +41,11 @@ export class EventManager{
     }
 
     #bindProgressEvent(){
+        let progressEvent = new ProgressEvent();
+        progressEvent.bind();
+    }
+
+    #bindAudioElementEventCallbacks(){
 
     }
 }

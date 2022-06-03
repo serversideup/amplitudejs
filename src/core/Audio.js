@@ -19,7 +19,7 @@ export class Audio{
 
     stop(){
         this.#stopVisualizations();
-        this.#setCurrentTime(0);
+        this.setCurrentTime(0);
         this.#pauseAudio();
         this.#disconnectStream();
         ConfigState.setPlayerState();
@@ -109,8 +109,10 @@ export class Audio{
         config.paused = true;
     }
 
-    #setCurrentTime( seconds ){
-        config.audio_element.currentTime = seconds;
+    setCurrentTime( seconds ){
+        if ( isFinite( seconds ) ) {
+            config.audio_element.currentTime = seconds;
+        }
     }
 
     #setMuted( volumeLevel ){

@@ -22,66 +22,66 @@ let BufferedProgressElements = (function() {
     syncSongInPlaylist();
   }
 
-  /**
-   * Sync the global song buffered progress elements.
-   */
-  function syncGlobal() {
-    /*
-			Gets all of the song buffered progress bars.
-		*/
-    const songBufferedProgressBars = document.getElementsByClassName(
-      "amplitude-buffered-progress"
-    );
+  // /**
+  //  * Sync the global song buffered progress elements.
+  //  */
+  // function syncGlobal() {
+  //   /*
+	// 		Gets all of the song buffered progress bars.
+	// 	*/
+  //   const songBufferedProgressBars = document.getElementsByClassName(
+  //     "amplitude-buffered-progress"
+  //   );
 
-    /*
-			Iterate over all of the song buffered progress bar and
-			set them to 0 which is like re-setting them.
-		*/
-    for (let i = 0; i < songBufferedProgressBars.length; i++) {
-      let playlist = songBufferedProgressBars[i].getAttribute(
-        "data-amplitude-playlist"
-      );
-      let song = songBufferedProgressBars[i].getAttribute(
-        "data-amplitude-song-index"
-      );
+  //   /*
+	// 		Iterate over all of the song buffered progress bar and
+	// 		set them to 0 which is like re-setting them.
+	// 	*/
+  //   for (let i = 0; i < songBufferedProgressBars.length; i++) {
+  //     let playlist = songBufferedProgressBars[i].getAttribute(
+  //       "data-amplitude-playlist"
+  //     );
+  //     let song = songBufferedProgressBars[i].getAttribute(
+  //       "data-amplitude-song-index"
+  //     );
 
-      if (playlist == null && song == null && !isNaN(config.buffered)) {
-        songBufferedProgressBars[i].value = parseFloat(
-          parseFloat(config.buffered) / 100
-        );
-      }
-    }
-  }
+  //     if (playlist == null && song == null && !isNaN(config.buffered)) {
+  //       songBufferedProgressBars[i].value = parseFloat(
+  //         parseFloat(config.buffered) / 100
+  //       );
+  //     }
+  //   }
+  // }
 
-  /**
-   * Sync the playlist song buffered progress elements.
-   */
-  function syncPlaylist() {
-    /*
-			Gets all of the song buffered progress bars.
-		*/
-    const songBufferedProgressBarsPlaylist = document.querySelectorAll(
-      '.amplitude-buffered-progress[data-amplitude-playlist="' +
-        config.active_playlist +
-        '"]'
-    );
+  // /**
+  //  * Sync the playlist song buffered progress elements.
+  //  */
+  // function syncPlaylist() {
+  //   /*
+	// 		Gets all of the song buffered progress bars.
+	// 	*/
+  //   const songBufferedProgressBarsPlaylist = document.querySelectorAll(
+  //     '.amplitude-buffered-progress[data-amplitude-playlist="' +
+  //       config.active_playlist +
+  //       '"]'
+  //   );
 
-    /*
-			Iterate over all of the song buffered progress bar and
-			set them to 0 which is like re-setting them.
-		*/
-    for (let i = 0; i < songBufferedProgressBarsPlaylist.length; i++) {
-      let song = songBufferedProgressBarsPlaylist[i].getAttribute(
-        "data-amplitude-song-index"
-      );
+  //   /*
+	// 		Iterate over all of the song buffered progress bar and
+	// 		set them to 0 which is like re-setting them.
+	// 	*/
+  //   for (let i = 0; i < songBufferedProgressBarsPlaylist.length; i++) {
+  //     let song = songBufferedProgressBarsPlaylist[i].getAttribute(
+  //       "data-amplitude-song-index"
+  //     );
 
-      if (song == null && !isNaN(config.buffered)) {
-        songBufferedProgressBarsPlaylist[i].value = parseFloat(
-          parseFloat(config.buffered) / 100
-        );
-      }
-    }
-  }
+  //     if (song == null && !isNaN(config.buffered)) {
+  //       songBufferedProgressBarsPlaylist[i].value = parseFloat(
+  //         parseFloat(config.buffered) / 100
+  //       );
+  //     }
+  //   }
+  // }
 
   /**
    * Sync the song song buffered progress elements.
@@ -146,27 +146,27 @@ let BufferedProgressElements = (function() {
     }
   }
 
-  /**
-   * Sets all of the song buffered progress bars to 0
-   *
-   * @access public
-   */
-  function reset() {
-    /*
-			Gets all of the song buffered progress bars.
-		*/
-    let songBufferedProgressBars = document.getElementsByClassName(
-      "amplitude-buffered-progress"
-    );
+  // /**
+  //  * Sets all of the song buffered progress bars to 0
+  //  *
+  //  * @access public
+  //  */
+  // function reset() {
+  //   /*
+	// 		Gets all of the song buffered progress bars.
+	// 	*/
+  //   let songBufferedProgressBars = document.getElementsByClassName(
+  //     "amplitude-buffered-progress"
+  //   );
 
-    /*
-			Iterate over all of the song buffered progress bar and
-			set them to 0 which is like re-setting them.
-		*/
-    for (let i = 0; i < songBufferedProgressBars.length; i++) {
-      songBufferedProgressBars[i].value = 0;
-    }
-  }
+  //   /*
+	// 		Iterate over all of the song buffered progress bar and
+	// 		set them to 0 which is like re-setting them.
+	// 	*/
+  //   for (let i = 0; i < songBufferedProgressBars.length; i++) {
+  //     songBufferedProgressBars[i].value = 0;
+  //   }
+  // }
 
   /**
    * Returns the public facing methods

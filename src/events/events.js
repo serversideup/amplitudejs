@@ -226,17 +226,17 @@ var Events = (function() {
     config.audio.addEventListener("ended", Ended.handle);
   }
 
-  /**
-   * As the audio is loaded, the progress event gets fired. We bind into this
-   * to grab the buffered percentage of the song. We can then add more elements
-   * to show the buffered amount.
-   *
-   * @access private
-   */
-  function bindProgress() {
-    config.audio.removeEventListener("progress", Progress.handle);
-    config.audio.addEventListener("progress", Progress.handle);
-  }
+  // /**
+  //  * As the audio is loaded, the progress event gets fired. We bind into this
+  //  * to grab the buffered percentage of the song. We can then add more elements
+  //  * to show the buffered amount.
+  //  *
+  //  * @access private
+  //  */
+  // function bindProgress() {
+  //   config.audio.removeEventListener("progress", Progress.handle);
+  //   config.audio.addEventListener("progress", Progress.handle);
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS play buttons
@@ -415,136 +415,136 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindVolumeUp() {
-    /*
-			Gets all of the elements with the class amplitude-volume-up
-		*/
-    var volume_up_classes = document.getElementsByClassName(
-      "amplitude-volume-up"
-    );
+  // function bindVolumeUp() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-volume-up
+	// 	*/
+  //   var volume_up_classes = document.getElementsByClassName(
+  //     "amplitude-volume-up"
+  //   );
 
-    /*
-			Iterates over all of the volume up classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < volume_up_classes.length; i++) {
-      /*
-				WARNING: If iOS, we don't do anything because iOS does not allow the
-				volume to be adjusted through anything except the buttons on the side of
-				the device.
-			*/
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        /*
-					Checks for an iOS device and displays an error message if debugging
-					is turned on.
-				*/
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          Debug.writeMessage(
-            "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
-          );
-        } else {
-          volume_up_classes[i].removeEventListener("touchend", VolumeUp.handle);
-          volume_up_classes[i].addEventListener("touchend", VolumeUp.handle);
-        }
-      } else {
-        volume_up_classes[i].removeEventListener("click", VolumeUp.handle);
-        volume_up_classes[i].addEventListener("click", VolumeUp.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the volume up classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < volume_up_classes.length; i++) {
+  //     /*
+	// 			WARNING: If iOS, we don't do anything because iOS does not allow the
+	// 			volume to be adjusted through anything except the buttons on the side of
+	// 			the device.
+	// 		*/
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       /*
+	// 				Checks for an iOS device and displays an error message if debugging
+	// 				is turned on.
+	// 			*/
+  //       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  //         Debug.writeMessage(
+  //           "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
+  //         );
+  //       } else {
+  //         volume_up_classes[i].removeEventListener("touchend", VolumeUp.handle);
+  //         volume_up_classes[i].addEventListener("touchend", VolumeUp.handle);
+  //       }
+  //     } else {
+  //       volume_up_classes[i].removeEventListener("click", VolumeUp.handle);
+  //       volume_up_classes[i].addEventListener("click", VolumeUp.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS Volume Down Buttons
    *
    * @access private
    */
-  function bindVolumeDown() {
-    /*
-			Gets all of the elements with the class amplitude-volume-down
-		*/
-    var volume_down_classes = document.getElementsByClassName(
-      "amplitude-volume-down"
-    );
+  // function bindVolumeDown() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-volume-down
+	// 	*/
+  //   var volume_down_classes = document.getElementsByClassName(
+  //     "amplitude-volume-down"
+  //   );
 
-    /*
-			Iterates over all of the volume down classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < volume_down_classes.length; i++) {
-      /*
-				WARNING: If iOS, we don't do anything because iOS does not allow the
-				volume to be adjusted through anything except the buttons on the side of
-				the device.
-			*/
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        /*
-					Checks for an iOS device and displays an error message if debugging
-					is turned on.
-				*/
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          Debug.writeMessage(
-            "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
-          );
-        } else {
-          volume_down_classes[i].removeEventListener(
-            "touchend",
-            VolumeDown.handle
-          );
-          volume_down_classes[i].addEventListener(
-            "touchend",
-            VolumeDown.handle
-          );
-        }
-      } else {
-        volume_down_classes[i].removeEventListener("click", VolumeDown.handle);
-        volume_down_classes[i].addEventListener("click", VolumeDown.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the volume down classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < volume_down_classes.length; i++) {
+  //     /*
+	// 			WARNING: If iOS, we don't do anything because iOS does not allow the
+	// 			volume to be adjusted through anything except the buttons on the side of
+	// 			the device.
+	// 		*/
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       /*
+	// 				Checks for an iOS device and displays an error message if debugging
+	// 				is turned on.
+	// 			*/
+  //       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  //         Debug.writeMessage(
+  //           "iOS does NOT allow volume to be set through javascript: https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW4"
+  //         );
+  //       } else {
+  //         volume_down_classes[i].removeEventListener(
+  //           "touchend",
+  //           VolumeDown.handle
+  //         );
+  //         volume_down_classes[i].addEventListener(
+  //           "touchend",
+  //           VolumeDown.handle
+  //         );
+  //       }
+  //     } else {
+  //       volume_down_classes[i].removeEventListener("click", VolumeDown.handle);
+  //       volume_down_classes[i].addEventListener("click", VolumeDown.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds change and input events for AmplitudeJS Song Slider Inputs
    *
    * @access private
    */
-  function bindSongSlider() {
-    /*
-			Gets browser so if we need to apply overrides, like we usually
-			have to do for anything cool in IE, we can do that.
-		*/
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE ");
+  // function bindSongSlider() {
+  //   /*
+	// 		Gets browser so if we need to apply overrides, like we usually
+	// 		have to do for anything cool in IE, we can do that.
+	// 	*/
+  //   var ua = window.navigator.userAgent;
+  //   var msie = ua.indexOf("MSIE ");
 
-    /*
-			Gets all of the elements with the class amplitude-song-slider
-		*/
-    var song_sliders = document.getElementsByClassName("amplitude-song-slider");
+  //   /*
+	// 		Gets all of the elements with the class amplitude-song-slider
+	// 	*/
+  //   var song_sliders = document.getElementsByClassName("amplitude-song-slider");
 
-    /*
-			Iterates over all of the song slider classes and binds the event interaction
-			methods to the element. If the browser is IE we listen to the change event
-			where if it is anything else, it's the input method.
-		*/
-    for (var i = 0; i < song_sliders.length; i++) {
-      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-        song_sliders[i].removeEventListener("change", SongSlider.handle);
-        song_sliders[i].addEventListener("change", SongSlider.handle);
-      } else {
-        song_sliders[i].removeEventListener("input", SongSlider.handle);
-        song_sliders[i].addEventListener("input", SongSlider.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the song slider classes and binds the event interaction
+	// 		methods to the element. If the browser is IE we listen to the change event
+	// 		where if it is anything else, it's the input method.
+	// 	*/
+  //   for (var i = 0; i < song_sliders.length; i++) {
+  //     if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+  //       song_sliders[i].removeEventListener("change", SongSlider.handle);
+  //       song_sliders[i].addEventListener("change", SongSlider.handle);
+  //     } else {
+  //       song_sliders[i].removeEventListener("input", SongSlider.handle);
+  //       song_sliders[i].addEventListener("input", SongSlider.handle);
+  //     }
+  //   }
+  // }
 
   // /**
   //  * Binds change and input events fro AmplitudeJS Volume Slider inputs
@@ -779,76 +779,76 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindPlaybackSpeed() {
-    /*
-			Gets all of the elements with the class amplitude-playback-speed
-		*/
-    var playback_speed_classes = document.getElementsByClassName(
-      "amplitude-playback-speed"
-    );
+  // function bindPlaybackSpeed() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-playback-speed
+	// 	*/
+  //   var playback_speed_classes = document.getElementsByClassName(
+  //     "amplitude-playback-speed"
+  //   );
 
-    /*
-			Iterates over all of the playback speed classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < playback_speed_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        playback_speed_classes[i].removeEventListener(
-          "touchend",
-          PlaybackSpeed.handle
-        );
-        playback_speed_classes[i].addEventListener(
-          "touchend",
-          PlaybackSpeed.handle
-        );
-      } else {
-        playback_speed_classes[i].removeEventListener(
-          "click",
-          PlaybackSpeed.handle
-        );
-        playback_speed_classes[i].addEventListener(
-          "click",
-          PlaybackSpeed.handle
-        );
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the playback speed classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < playback_speed_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       playback_speed_classes[i].removeEventListener(
+  //         "touchend",
+  //         PlaybackSpeed.handle
+  //       );
+  //       playback_speed_classes[i].addEventListener(
+  //         "touchend",
+  //         PlaybackSpeed.handle
+  //       );
+  //     } else {
+  //       playback_speed_classes[i].removeEventListener(
+  //         "click",
+  //         PlaybackSpeed.handle
+  //       );
+  //       playback_speed_classes[i].addEventListener(
+  //         "click",
+  //         PlaybackSpeed.handle
+  //       );
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS skip to buttons.
    *
    * @access private
    */
-  function bindSkipTo() {
-    /*
-			Gets all of the skip to elements with the class 'amplitude-skip-to'
-		*/
-    var skipToClasses = document.getElementsByClassName("amplitude-skip-to");
+  // function bindSkipTo() {
+  //   /*
+	// 		Gets all of the skip to elements with the class 'amplitude-skip-to'
+	// 	*/
+  //   var skipToClasses = document.getElementsByClassName("amplitude-skip-to");
 
-    /*
-			Iterates over all of the skip to classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it's a click.
-		*/
-    for (var i = 0; i < skipToClasses.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        skipToClasses[i].removeEventListener("touchend", SkipTo.handle);
-        skipToClasses[i].addEventListener("touchend", SkipTo.handle);
-      } else {
-        skipToClasses[i].removeEventListener("click", SkipTo.handle);
-        skipToClasses[i].addEventListener("click", SkipTo.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the skip to classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it's a click.
+	// 	*/
+  //   for (var i = 0; i < skipToClasses.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       skipToClasses[i].removeEventListener("touchend", SkipTo.handle);
+  //       skipToClasses[i].addEventListener("touchend", SkipTo.handle);
+  //     } else {
+  //       skipToClasses[i].removeEventListener("click", SkipTo.handle);
+  //       skipToClasses[i].addEventListener("click", SkipTo.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds can play through to a song.

@@ -115,6 +115,8 @@ export const config = {
 
 	player_state: "stopped",
 
+	time_format: 'MM:SS',
+
 	/**
 	 * @todo BREAKING
 	 */
@@ -139,10 +141,11 @@ export const config = {
 
 		backup: ""
 	},
-
+	
 	waveforms: {
 	sample_rate: 100,
 
-	built: []
+	built: [],
+
 	}
 };

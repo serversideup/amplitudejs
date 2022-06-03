@@ -16,11 +16,9 @@ export class VolumeSliderElement {
     static volumeSliderElementQuery = 'input[type="range"].amplitude-volume-slider';
 
     #elements;
-    #mobile;
     #ie;
 
     constructor(){
-        this.#mobile = ConfigState.isMobile();
         this.#ie = ConfigState.isIE();
     }
 

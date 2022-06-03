@@ -75,22 +75,22 @@ let TimeUpdate = (function() {
     runTimeCallbacks();
   }
 
-  /**
-   * Computes the buffered time
-   */
-  function computeBufferedTime() {
-    /*
-      Help from: http://jsbin.com/badimipi/1/edit?html,js,output
-    */
-    if (config.audio.buffered.length - 1 >= 0) {
-      let bufferedEnd = config.audio.buffered.end(
-        config.audio.buffered.length - 1
-      );
-      let duration = config.audio.duration;
+  // /**
+  //  * Computes the buffered time
+  //  */
+  // function computeBufferedTime() {
+  //   /*
+  //     Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+  //   */
+  //   if (config.audio.buffered.length - 1 >= 0) {
+  //     let bufferedEnd = config.audio.buffered.end(
+  //       config.audio.buffered.length - 1
+  //     );
+  //     let duration = config.audio.duration;
 
-      config.buffered = (bufferedEnd / duration) * 100;
-    }
-  }
+  //     config.buffered = (bufferedEnd / duration) * 100;
+  //   }
+  // }
 
   /**
    * Updates the current time information.
@@ -126,6 +126,7 @@ let TimeUpdate = (function() {
       */
       TimeElements.syncCurrentTimes(currentTime);
 
+      UP TO HERE 👇
       /*
         Sync the song slider elements.
       */

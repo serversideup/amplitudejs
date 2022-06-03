@@ -95,6 +95,31 @@ export class ConfigState{
 		return config.active_index;
 	}
 
+	static updateBufferedTime(){
+		// Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+        if( config.audio_element.buffered.length - 1 >= 0 ){
+            let bufferedEnd = config.audio_element.buffered.end(
+                config.audio_element.buffered.length - 1
+            );
+
+            let duration = config.audio_element.duration;
+
+            config.buffered = ( bufferedEnd / duration ) * 100;
+        }
+	}
+
+	static getBufferedPercentage(){
+		return parseFloat( config.buffered ) / 100;
+	}
+
+	static isLive(){
+		return config.active_metadata.live;
+	}
+
+	static getTimeFormat(){
+		return config.time_format;
+	}
+
 	resetConfig(){
 		config.audio_element = new Audio();
 		config.active_metadata = {};
