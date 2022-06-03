@@ -1,5 +1,7 @@
 import { GlobalTrackerElement } from "./TrackerElements/GlobalTrackerElement";
+import { CollectionTrackerElement } from "./TrackerElements/CollectionTrackerElement";
 import { AudioTrackerElement } from "./TrackerElements/AudioTrackerElement";
+import { CollectionAudioTrackerElement } from "./TrackerElements/CollectionAudioTrackerElement";
 
 export class TrackerElement{
     constructor(){
@@ -19,7 +21,8 @@ export class TrackerElement{
     }
 
     #configureCollectionTrackerElement(){
-
+        let collectionTrackerElement = new CollectionTrackerElement();
+        collectionTrackerElement.initialize();
     }
 
     #configureAudioTrackerElement(){
@@ -28,11 +31,14 @@ export class TrackerElement{
     }
 
     #configureCollectionAudioTrackerElement(){
-
+        let collectionAudioTrackerElement = new CollectionAudioTrackerElement();
+        collectionAudioTrackerElement.initialize();
     }
 
     static syncCurrentTime( currentTime ){
         GlobalTrackerElement.syncUI( currentTime );
+        CollectionTrackerElement.syncUI( currentTime );
         AudioTrackerElement.syncUI( currentTime );
+        CollectionAudioTrackerElement.syncUI( currentTime );
     }
 }

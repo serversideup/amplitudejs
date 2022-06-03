@@ -13,8 +13,14 @@ export class TimeElement {
         let globalCurrentTimeElement = new GlobalCurrentTimeElement( currentTime );
         globalCurrentTimeElement.sync();
 
+        let collectionCurrentTimeElement = new CollectionCurrentTimeElement( currentTime );
+        collectionCurrentTimeElement.sync();
+
         let audioCurrentTimeElement = new AudioCurrentTimeElement( currentTime );
         audioCurrentTimeElement.sync();
+
+        let collectionAudioCurrentTimeElement = new CollectionAudioCurrentTimeElement( currentTime );
+        collectionAudioCurrentTimeElement.sync();
     }
 
     syncDurationTime(){

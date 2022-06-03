@@ -1,6 +1,7 @@
 import { BufferedProgressElement } from '@/elements/BufferedProgressElement';
 import { ConfigState } from '@/services/ConfigState';
 import { config } from '@/config.js';
+import { ProgressElement } from '@/elements/ProgressElement';
 import { Time } from '@/services/Time';
 import { TimeElement } from '@/elements/TimeElement';
 import { TrackerElement } from '@/elements/TrackerElement';
@@ -41,6 +42,7 @@ export class TimeUpdateEvent{
             timeElement.syncDurationTime( currentTime, duration );
 
             TrackerElement.syncCurrentTime( completionPercentage );
+            ProgressElement.syncCurrentTime( completionPercentage );
         }
     }
 
