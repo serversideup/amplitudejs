@@ -1,4 +1,5 @@
 // import { ProgressEvent } from "@/events/ProgressEvent";
+import { AudioEndedEvent } from "@/events/AudioEndedEvent";
 import { TimeUpdateEvent } from "@/events/TimeUpdateEvent";
 import { Debug } from "@/services/Debug";
 import { config } from "@/config.js";
@@ -37,7 +38,8 @@ export class EventManager{
     }
 
     #bindAudioEndedEvent(){
-
+        let audioEndedEvent = new AudioEndedEvent();
+        audioEndedEvent.bind();
     }
 
     #bindProgressEvent(){

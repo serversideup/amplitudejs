@@ -5,6 +5,7 @@
 import * as initMethods from "@/methods/init";
 import * as configMethods from "@/methods/config";
 import * as playlistMethods from "@/methods/playlists";
+import * as eventListeners from "@/methods/eventListeners";
 
 /**
  * Amplitude is an interface to the public methods.
@@ -18,7 +19,8 @@ const Amplitude = (function(){
     return {
         ...initMethods,
         ...configMethods,
-        ...playlistMethods
+        ...playlistMethods,
+        ...eventListeners
     }
 })();
 

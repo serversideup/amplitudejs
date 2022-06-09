@@ -95,6 +95,10 @@ export class ConfigState{
 		return config.active_index;
 	}
 
+	static getContinueNext(){
+		return config.continue_next;
+	}
+
 	static updateBufferedTime(){
 		// Help from: http://jsbin.com/badimipi/1/edit?html,js,output
         if( config.audio_element.buffered.length - 1 >= 0 ){

@@ -1,7 +1,7 @@
 import { Debug } from "@/services/Debug";
 import { ConfigState } from "@/services/ConfigState";
 import { EventManager } from "@/services/EventManager";
-import { UIManager } from "@/services/UIManager";
+import { ElementsManager } from "@/services/ElementsManager";
 import { config } from "../config";
 import { Navigation as AudioNavigation } from "@/services/Audio/Navigation";
 
@@ -62,6 +62,7 @@ export class Initializer{
         this.#initializeEvents();
         this.#initializeElements();
         this.#initializeCallbacks();
+        this.#initializeKeybindingEvents();
     }
 
     // Ensure we have a blank slate on initialization.
@@ -79,12 +80,8 @@ export class Initializer{
     }
 
     #initializeElements(){
-        let uiManager = new UIManager();
-        uiManager.initializeElements();
-    }
-
-    #initializeCallbacks(){
-
+        let elementsManager = new ElementsManager();
+        elementsManager.initializeElements();
     }
 
     #initializeAudio(){
@@ -95,5 +92,13 @@ export class Initializer{
         }else{
             audioNavigator.changeAudio( config.audio[0], 0 );
         }
+    }
+
+    #initializeCallbacks(){
+
+    }
+
+    #initializeKeybindingEvents(){
+
     }
 }

@@ -14,7 +14,7 @@ import { VolumeDownElement } from "@/elements/VolumeDownElement";
 import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
 import { VolumeUpElement } from "@/elements/VolumeUpElement";
 
-export class UIManager{
+export class ElementsManager{
     setVisualElementsDefaults(){
 
     }
