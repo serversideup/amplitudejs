@@ -189,44 +189,44 @@ let Callbacks = (function() {
     });
   }
 
-  /**
-   * Runs a user defined callback method
-   *
-   * Public Accessor: Callbacks.run( callbackName )
-   *
-   * @access public
-   * @param {string} callbackName - The name of the callback we are going to run.
-   */
-  function run(callbackName) {
-    /*
-      Checks to see if a user defined a callback method for the
-      callback we are running.
-    */
-    if (config.callbacks[callbackName]) {
-      /*
-        Build the callback function
-      */
-      let callbackFunction = config.callbacks[callbackName];
+  // /**
+  //  * Runs a user defined callback method
+  //  *
+  //  * Public Accessor: Callbacks.run( callbackName )
+  //  *
+  //  * @access public
+  //  * @param {string} callbackName - The name of the callback we are going to run.
+  //  */
+  // function run(callbackName) {
+  //   /*
+  //     Checks to see if a user defined a callback method for the
+  //     callback we are running.
+  //   */
+  //   if (config.callbacks[callbackName]) {
+  //     /*
+  //       Build the callback function
+  //     */
+  //     let callbackFunction = config.callbacks[callbackName];
 
-      /*
-        Write a debug message stating the callback we are running
-      */
-      Debug.writeMessage("Running Callback: " + callbackName);
+  //     /*
+  //       Write a debug message stating the callback we are running
+  //     */
+  //     Debug.writeMessage("Running Callback: " + callbackName);
 
-      /*
-        Run the callback function and catch any errors
-      */
-      try {
-        callbackFunction();
-      } catch (error) {
-        if (error.message == "CANCEL EVENT") {
-          throw error;
-        } else {
-          Debug.writeMessage("Callback error: " + error.message);
-        }
-      }
-    }
-  }
+  //     /*
+  //       Run the callback function and catch any errors
+  //     */
+  //     try {
+  //       callbackFunction();
+  //     } catch (error) {
+  //       if (error.message == "CANCEL EVENT") {
+  //         throw error;
+  //       } else {
+  //         Debug.writeMessage("Callback error: " + error.message);
+  //       }
+  //     }
+  //   }
+  // }
 
   return {
     initialize: initialize,

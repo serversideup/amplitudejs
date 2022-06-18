@@ -124,6 +124,18 @@ export class ConfigState{
 		return config.time_format;
 	}
 
+	static getCallback( name ){
+		let callbackObject = false;
+
+		config.callbacks.forEach( function( callback ){
+			if( callback.event == name ){
+				callbackObject = callback
+			}
+		});
+
+		return callbackObject;
+	}
+
 	resetConfig(){
 		config.audio_element = new Audio();
 		config.active_metadata = {};
@@ -131,7 +143,6 @@ export class ConfigState{
 		config.active_index = 0;
 		config.active_playlist = null;
 		config.playback_speed = 1.0;
-		config.callbacks = {};
 		config.audio = [];
 		config.playlists = {};
 		config.start_audio = "";
@@ -166,6 +177,11 @@ export class ConfigState{
 		// config.soundcloud_song_count = 0;
 		// config.soundcloud_songs_ready = 0;
 		config.continue_next = true;
+
+		/**
+		 * @todo rebind event handlers
+		 */
+		
 	}
 
 	setUserSettings( userConfig ){

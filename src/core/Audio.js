@@ -1,3 +1,4 @@
+import { Callbacks } from "@/services/Callbacks";
 import { config } from "@/config.js";
 import { ConfigState } from "../services/ConfigState";
 import { Debug } from "@/services/Debug";
@@ -23,9 +24,7 @@ export class Audio{
         this.#pauseAudio();
         this.#disconnectStream();
         ConfigState.setPlayerState();
-        /**
-         * @todo run stop callback
-         */
+        Callbacks.run('stop');
     }
 
     skipToLocation(seconds){

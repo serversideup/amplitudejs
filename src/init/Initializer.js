@@ -4,6 +4,7 @@ import { EventManager } from "@/services/EventManager";
 import { ElementsManager } from "@/services/ElementsManager";
 import { config } from "../config";
 import { Navigation as AudioNavigation } from "@/services/Audio/Navigation";
+import { Callbacks } from "@/services/Callbacks";
 
 export class Initializer{
     #element;
@@ -95,7 +96,8 @@ export class Initializer{
     }
 
     #initializeCallbacks(){
-
+        let callbacks = new Callbacks();
+        callbacks.handleNativeAudioElementEvents();
     }
 
     #initializeKeybindingEvents(){
