@@ -41,7 +41,7 @@ body:
     required: false
 - type: input
   attributes:
-    label: Link To Where Issue Can Be Reproduced
+    label: Link To Where Your Issue Can Be Reproduced
     description: |
       Please provide a link to a JSFiddle,  JSBin, CodePen, your website, or GitHub repo.
   validations:
