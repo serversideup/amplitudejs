@@ -37,13 +37,10 @@ export const config = {
 	// User Definable Variables
 	callbacks: {},
 	
-	songs: [],
-	episodes: [],
 	audio: [],
 
-	playlists: [],
-	seasons: [],
-	podcasts: [],
+	collections: [],
+
 	debug: true,
 	default_artwork: "",
 	default_playlist_art: "",

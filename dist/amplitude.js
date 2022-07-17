@@ -7303,6 +7303,74 @@ function _handle2() {
 
 /***/ }),
 
+/***/ "./src/events/KeyBindingEvents.js":
+/*!****************************************!*\
+  !*** ./src/events/KeyBindingEvents.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "KeyBindingEvents": () => (/* binding */ KeyBindingEvents)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+var _bindKeyPress = /*#__PURE__*/new WeakSet();
+
+var _handle = /*#__PURE__*/new WeakSet();
+
+var _isFormFocused = /*#__PURE__*/new WeakSet();
+
+var KeyBindingEvents = /*#__PURE__*/function () {
+  function KeyBindingEvents() {
+    _classCallCheck(this, KeyBindingEvents);
+
+    _classPrivateMethodInitSpec(this, _isFormFocused);
+
+    _classPrivateMethodInitSpec(this, _handle);
+
+    _classPrivateMethodInitSpec(this, _bindKeyPress);
+  }
+
+  _createClass(KeyBindingEvents, [{
+    key: "bind",
+    value: function bind() {
+      _classPrivateMethodGet(this, _bindKeyPress, _bindKeyPress2).call(this);
+    }
+  }]);
+
+  return KeyBindingEvents;
+}();
+
+function _bindKeyPress2() {
+  document.removeEventListener("keydown", _classPrivateMethodGet(this, _handle, _handle2).bind(this));
+  document.addEventListener("keydown", _classPrivateMethodGet(this, _handle, _handle2).bind(this));
+}
+
+function _handle2(event) {
+  if (!_classPrivateMethodGet(this, _isFormFocused, _isFormFocused2).call(this)) {
+    var key = event.key;
+  }
+}
+
+function _isFormFocused2() {
+  var activeElement = document.activeElement.tagName.toLowerCase();
+  var ignoredElements = ['input', 'textarea', 'select', 'checkbox'];
+  return ignoredElements.indexOf(activeElement) > -1;
+}
+
+/***/ }),
+
 /***/ "./src/events/TimeUpdateEvent.js":
 /*!***************************************!*\
   !*** ./src/events/TimeUpdateEvent.js ***!
@@ -7489,13 +7557,9 @@ var _initializeAudio = /*#__PURE__*/new WeakSet();
 
 var _initializeCallbacks = /*#__PURE__*/new WeakSet();
 
-var _initializeKeybindingEvents = /*#__PURE__*/new WeakSet();
-
 var Initializer = /*#__PURE__*/function () {
   function Initializer(userConfig, element) {
     _classCallCheck(this, Initializer);
-
-    _classPrivateMethodInitSpec(this, _initializeKeybindingEvents);
 
     _classPrivateMethodInitSpec(this, _initializeCallbacks);
 
@@ -7599,8 +7663,6 @@ function _prepareAmplitude2() {
   _classPrivateMethodGet(this, _initializeElements, _initializeElements2).call(this);
 
   _classPrivateMethodGet(this, _initializeCallbacks, _initializeCallbacks2).call(this);
-
-  _classPrivateMethodGet(this, _initializeKeybindingEvents, _initializeKeybindingEvents2).call(this);
 }
 
 function _resetConfig2() {
@@ -7633,8 +7695,6 @@ function _initializeCallbacks2() {
   var callbacks = new _services_Callbacks__WEBPACK_IMPORTED_MODULE_6__.Callbacks();
   callbacks.handleNativeAudioElementEvents();
 }
-
-function _initializeKeybindingEvents2() {}
 
 /***/ }),
 
@@ -9137,9 +9197,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "EventManager": () => (/* binding */ EventManager)
 /* harmony export */ });
 /* harmony import */ var _events_AudioEndedEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/events/AudioEndedEvent */ "./src/events/AudioEndedEvent.js");
-/* harmony import */ var _events_TimeUpdateEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/events/TimeUpdateEvent */ "./src/events/TimeUpdateEvent.js");
-/* harmony import */ var _services_Debug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/Debug */ "./src/services/Debug.js");
-/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/config.js */ "./src/config.js");
+/* harmony import */ var _events_KeyBindingEvents__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/events/KeyBindingEvents */ "./src/events/KeyBindingEvents.js");
+/* harmony import */ var _events_TimeUpdateEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/events/TimeUpdateEvent */ "./src/events/TimeUpdateEvent.js");
+/* harmony import */ var _services_Debug__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/services/Debug */ "./src/services/Debug.js");
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/config.js */ "./src/config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -9153,6 +9214,7 @@ function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollect
 function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
 
 // import { ProgressEvent } from "@/events/ProgressEvent";
+
 
 
 
@@ -9190,7 +9252,7 @@ var EventManager = /*#__PURE__*/function () {
   _createClass(EventManager, [{
     key: "initializeAllEvents",
     value: function initializeAllEvents() {
-      _services_Debug__WEBPACK_IMPORTED_MODULE_2__.Debug.writeMessage("Starting initialization of event handlers...");
+      _services_Debug__WEBPACK_IMPORTED_MODULE_3__.Debug.writeMessage("Starting initialization of event handlers...");
 
       _classPrivateMethodGet(this, _bindTouchEvents, _bindTouchEvents2).call(this);
 
@@ -9210,21 +9272,24 @@ var EventManager = /*#__PURE__*/function () {
 
 function _bindTouchEvents2() {
   document.addEventListener("touchmove", function () {
-    _config_js__WEBPACK_IMPORTED_MODULE_3__.config.is_touch_moving = true;
+    _config_js__WEBPACK_IMPORTED_MODULE_4__.config.is_touch_moving = true;
   });
   document.addEventListener("touchend", function () {
-    if (!_config_js__WEBPACK_IMPORTED_MODULE_3__.config.is_touch_moving) {
-      _config_js__WEBPACK_IMPORTED_MODULE_3__.config.is_touch_moving = false;
+    if (!_config_js__WEBPACK_IMPORTED_MODULE_4__.config.is_touch_moving) {
+      _config_js__WEBPACK_IMPORTED_MODULE_4__.config.is_touch_moving = false;
     }
   });
 }
 
 function _bindTimeUpdateEvents2() {
-  var timeUpdateEvent = new _events_TimeUpdateEvent__WEBPACK_IMPORTED_MODULE_1__.TimeUpdateEvent();
+  var timeUpdateEvent = new _events_TimeUpdateEvent__WEBPACK_IMPORTED_MODULE_2__.TimeUpdateEvent();
   timeUpdateEvent.bind();
 }
 
-function _bindKeyBindingEvents2() {}
+function _bindKeyBindingEvents2() {
+  var keyBindingEvents = new _events_KeyBindingEvents__WEBPACK_IMPORTED_MODULE_1__.KeyBindingEvents();
+  keyBindingEvents.bind();
+}
 
 function _bindAudioEndedEvent2() {
   var audioEndedEvent = new _events_AudioEndedEvent__WEBPACK_IMPORTED_MODULE_0__.AudioEndedEvent();

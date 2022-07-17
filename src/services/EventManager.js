@@ -1,5 +1,6 @@
 // import { ProgressEvent } from "@/events/ProgressEvent";
 import { AudioEndedEvent } from "@/events/AudioEndedEvent";
+import { KeyBindingEvents } from "@/events/KeyBindingEvents";
 import { TimeUpdateEvent } from "@/events/TimeUpdateEvent";
 import { Debug } from "@/services/Debug";
 import { config } from "@/config.js";
@@ -34,7 +35,8 @@ export class EventManager{
     }
 
     #bindKeyBindingEvents(){
-
+        let keyBindingEvents = new KeyBindingEvents();
+        keyBindingEvents.bind();
     }
 
     #bindAudioEndedEvent(){

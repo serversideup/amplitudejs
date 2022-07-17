@@ -63,7 +63,6 @@ export class Initializer{
         this.#initializeEvents();
         this.#initializeElements();
         this.#initializeCallbacks();
-        this.#initializeKeybindingEvents();
     }
 
     // Ensure we have a blank slate on initialization.
@@ -98,9 +97,5 @@ export class Initializer{
     #initializeCallbacks(){
         let callbacks = new Callbacks();
         callbacks.handleNativeAudioElementEvents();
-    }
-
-    #initializeKeybindingEvents(){
-
     }
 }
