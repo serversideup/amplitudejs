@@ -56,13 +56,9 @@ var config = {
   repeat_audio: false,
   shuffle_on: false,
   // User Definable Variables
-  callbacks: {},
-  songs: [],
-  episodes: [],
+  callbacks: [],
   audio: [],
-  playlists: [],
-  seasons: [],
-  podcasts: [],
+  collections: [],
   debug: true,
   default_artwork: "",
   default_playlist_art: "",
@@ -7482,6 +7478,94 @@ function _runTimeCallbacks2() {}
 
 /***/ }),
 
+/***/ "./src/init/Collections.js":
+/*!*********************************!*\
+  !*** ./src/init/Collections.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Collections": () => (/* binding */ Collections)
+/* harmony export */ });
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/config.js */ "./src/config.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+
+
+var _syncSoundCloudData = /*#__PURE__*/new WeakSet();
+
+var _setActiveIndexes = /*#__PURE__*/new WeakSet();
+
+var _initializeShuffle = /*#__PURE__*/new WeakSet();
+
+var _initializeRepeat = /*#__PURE__*/new WeakSet();
+
+var Collections = /*#__PURE__*/function () {
+  function Collections() {
+    _classCallCheck(this, Collections);
+
+    _classPrivateMethodInitSpec(this, _initializeRepeat);
+
+    _classPrivateMethodInitSpec(this, _initializeShuffle);
+
+    _classPrivateMethodInitSpec(this, _setActiveIndexes);
+
+    _classPrivateMethodInitSpec(this, _syncSoundCloudData);
+  }
+
+  _createClass(Collections, [{
+    key: "initializeCollections",
+    value: function initializeCollections() {
+      if (_config_js__WEBPACK_IMPORTED_MODULE_0__.config.collections.length > 0) {
+        _classPrivateMethodGet(this, _syncSoundCloudData, _syncSoundCloudData2).call(this);
+
+        _classPrivateMethodGet(this, _setActiveIndexes, _setActiveIndexes2).call(this);
+
+        _classPrivateMethodGet(this, _initializeShuffle, _initializeShuffle2).call(this);
+
+        _classPrivateMethodGet(this, _initializeRepeat, _initializeRepeat2).call(this);
+      }
+    }
+  }]);
+
+  return Collections;
+}();
+
+function _syncSoundCloudData2() {}
+
+function _setActiveIndexes2() {
+  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.collections.forEach(function (collection) {
+    collection.active_index = null;
+  });
+}
+
+function _initializeShuffle2() {
+  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.collections.forEach(function (collection) {
+    collection.shuffle = false;
+    collection.shuffle_list = [];
+  });
+}
+
+function _initializeRepeat2() {
+  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.collections.forEach(function (collection) {
+    collection.repeat = false;
+  });
+  console.log(_config_js__WEBPACK_IMPORTED_MODULE_0__.config);
+}
+
+/***/ }),
+
 /***/ "./src/init/Initializer.js":
 /*!*********************************!*\
   !*** ./src/init/Initializer.js ***!
@@ -7496,9 +7580,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_ConfigState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/services/ConfigState */ "./src/services/ConfigState.js");
 /* harmony import */ var _services_EventManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/services/EventManager */ "./src/services/EventManager.js");
 /* harmony import */ var _services_ElementsManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/services/ElementsManager */ "./src/services/ElementsManager.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config */ "./src/config.js");
-/* harmony import */ var _services_Audio_Navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/services/Audio/Navigation */ "./src/services/Audio/Navigation.js");
-/* harmony import */ var _services_Callbacks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/services/Callbacks */ "./src/services/Callbacks.js");
+/* harmony import */ var _init_UserConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/init/UserConfig */ "./src/init/UserConfig.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../config */ "./src/config.js");
+/* harmony import */ var _services_Audio_Navigation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/services/Audio/Navigation */ "./src/services/Audio/Navigation.js");
+/* harmony import */ var _services_Callbacks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/services/Callbacks */ "./src/services/Callbacks.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -7531,6 +7616,7 @@ function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.
 
 
 
+
 var _element = /*#__PURE__*/new WeakMap();
 
 var _userConfig = /*#__PURE__*/new WeakMap();
@@ -7551,9 +7637,9 @@ var _copyUserConfig = /*#__PURE__*/new WeakSet();
 
 var _initializeEvents = /*#__PURE__*/new WeakSet();
 
-var _initializeElements = /*#__PURE__*/new WeakSet();
-
 var _initializeAudio = /*#__PURE__*/new WeakSet();
+
+var _initializeElements = /*#__PURE__*/new WeakSet();
 
 var _initializeCallbacks = /*#__PURE__*/new WeakSet();
 
@@ -7563,9 +7649,9 @@ var Initializer = /*#__PURE__*/function () {
 
     _classPrivateMethodInitSpec(this, _initializeCallbacks);
 
-    _classPrivateMethodInitSpec(this, _initializeAudio);
-
     _classPrivateMethodInitSpec(this, _initializeElements);
+
+    _classPrivateMethodInitSpec(this, _initializeAudio);
 
     _classPrivateMethodInitSpec(this, _initializeEvents);
 
@@ -7670,7 +7756,8 @@ function _resetConfig2() {
 }
 
 function _copyUserConfig2() {
-  _classPrivateFieldGet(this, _configState).setUserSettings(_classPrivateFieldGet(this, _userConfig));
+  var userConfigInit = new _init_UserConfig__WEBPACK_IMPORTED_MODULE_4__.UserConfig();
+  userConfigInit.copyUserSettings(_classPrivateFieldGet(this, _userConfig));
 }
 
 function _initializeEvents2() {
@@ -7678,22 +7765,143 @@ function _initializeEvents2() {
   eventManager.initializeAllEvents();
 }
 
+function _initializeAudio2() {
+  var audioNavigator = new _services_Audio_Navigation__WEBPACK_IMPORTED_MODULE_6__.Navigation();
+
+  if (_config__WEBPACK_IMPORTED_MODULE_5__.config.start_audio) {} else {
+    audioNavigator.changeAudio(_config__WEBPACK_IMPORTED_MODULE_5__.config.audio[0], 0);
+  }
+}
+
 function _initializeElements2() {
   var elementsManager = new _services_ElementsManager__WEBPACK_IMPORTED_MODULE_3__.ElementsManager();
   elementsManager.initializeElements();
 }
 
-function _initializeAudio2() {
-  var audioNavigator = new _services_Audio_Navigation__WEBPACK_IMPORTED_MODULE_5__.Navigation();
-
-  if (_config__WEBPACK_IMPORTED_MODULE_4__.config.start_audio) {} else {
-    audioNavigator.changeAudio(_config__WEBPACK_IMPORTED_MODULE_4__.config.audio[0], 0);
-  }
+function _initializeCallbacks2() {
+  var callbacks = new _services_Callbacks__WEBPACK_IMPORTED_MODULE_7__.Callbacks();
+  callbacks.handleNativeAudioElementEvents();
 }
 
-function _initializeCallbacks2() {
-  var callbacks = new _services_Callbacks__WEBPACK_IMPORTED_MODULE_6__.Callbacks();
-  callbacks.handleNativeAudioElementEvents();
+/***/ }),
+
+/***/ "./src/init/UserConfig.js":
+/*!********************************!*\
+  !*** ./src/init/UserConfig.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UserConfig": () => (/* binding */ UserConfig)
+/* harmony export */ });
+/* harmony import */ var _init_Collections__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/init/Collections */ "./src/init/Collections.js");
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/config.js */ "./src/config.js");
+/* harmony import */ var _elements_MuteElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/elements/MuteElement */ "./src/elements/MuteElement.js");
+/* harmony import */ var _elements_PlaybackSpeedElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/elements/PlaybackSpeedElement */ "./src/elements/PlaybackSpeedElement.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+
+
+
+
+
+var _setDefaultLiveSettings = /*#__PURE__*/new WeakSet();
+
+var _setDefaultAudioIndices = /*#__PURE__*/new WeakSet();
+
+var UserConfig = /*#__PURE__*/function () {
+  function UserConfig() {
+    _classCallCheck(this, UserConfig);
+
+    _classPrivateMethodInitSpec(this, _setDefaultAudioIndices);
+
+    _classPrivateMethodInitSpec(this, _setDefaultLiveSettings);
+  }
+
+  _createClass(UserConfig, [{
+    key: "copyUserSettings",
+    value: function copyUserSettings(userConfig) {
+      this.setAudio(userConfig.audio);
+      this.setCollections(userConfig.collections);
+      this.setVolume(userConfig.volume);
+      this.setDebug(userConfig.debug);
+      this.setDefaultArtwork(userConfig.default_artwork);
+      this.setPlaybackSpeed(userConfig.playback_speed);
+      this.setCallbacks(userConfig.callbacks);
+    }
+  }, {
+    key: "setAudio",
+    value: function setAudio(value) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.audio = value != undefined ? value : [];
+
+      _classPrivateMethodGet(this, _setDefaultLiveSettings, _setDefaultLiveSettings2).call(this);
+
+      _classPrivateMethodGet(this, _setDefaultAudioIndices, _setDefaultAudioIndices2).call(this);
+    }
+  }, {
+    key: "setCollections",
+    value: function setCollections(userCollections) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.collections = userCollections;
+      var collections = new _init_Collections__WEBPACK_IMPORTED_MODULE_0__.Collections();
+      collections.initializeCollections();
+    }
+  }, {
+    key: "setVolume",
+    value: function setVolume(volume) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.volume.current = volume && volume.initial ? volume.initial : 50;
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.volume.increment = volume && volume.increment ? volume.increment : 5;
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.volume.decrement = volume && volume.decrement ? volume.decrement : 5;
+      _elements_MuteElement__WEBPACK_IMPORTED_MODULE_2__.MuteElement.syncElements();
+    }
+  }, {
+    key: "setDebug",
+    value: function setDebug(value) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.debug = value != undefined ? value : false;
+    }
+  }, {
+    key: "setDefaultArtwork",
+    value: function setDefaultArtwork(value) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.default_artwork = value != undefined ? value : false;
+    }
+  }, {
+    key: "setPlaybackSpeed",
+    value: function setPlaybackSpeed(speed) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.playback_speed = speed != undefined ? speed : 1.0;
+      _elements_PlaybackSpeedElement__WEBPACK_IMPORTED_MODULE_3__.PlaybackSpeedElement.syncElements();
+    }
+  }, {
+    key: "setCallbacks",
+    value: function setCallbacks(callbacks) {
+      _config_js__WEBPACK_IMPORTED_MODULE_1__.config.callbacks = callbacks != undefined ? callbacks : [];
+    }
+  }]);
+
+  return UserConfig;
+}();
+
+function _setDefaultLiveSettings2() {
+  _config_js__WEBPACK_IMPORTED_MODULE_1__.config.audio.forEach(function (audio, index) {
+    if (audio.live == undefined) {
+      audio.live = false;
+    }
+  });
+}
+
+function _setDefaultAudioIndices2() {
+  _config_js__WEBPACK_IMPORTED_MODULE_1__.config.audio.forEach(function (audio, index) {
+    audio.index = index;
+  });
 }
 
 /***/ }),
@@ -8595,35 +8803,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ConfigState": () => (/* binding */ ConfigState)
 /* harmony export */ });
 /* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/config.js */ "./src/config.js");
-/* harmony import */ var _elements_MuteElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/elements/MuteElement */ "./src/elements/MuteElement.js");
-/* harmony import */ var _elements_PlaybackSpeedElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/elements/PlaybackSpeedElement */ "./src/elements/PlaybackSpeedElement.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
-
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
-function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
-
-
-
-
-
-var _setDefaultLiveSettings = /*#__PURE__*/new WeakSet();
-
-var _setDefaultAudioIndices = /*#__PURE__*/new WeakSet();
 
 var ConfigState = /*#__PURE__*/function () {
   function ConfigState() {
     _classCallCheck(this, ConfigState);
-
-    _classPrivateMethodInitSpec(this, _setDefaultAudioIndices);
-
-    _classPrivateMethodInitSpec(this, _setDefaultLiveSettings);
   }
 
   _createClass(ConfigState, [{
@@ -8655,6 +8844,7 @@ var ConfigState = /*#__PURE__*/function () {
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.default_artwork = "";
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.default_playlist_art = "";
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.debug = true;
+      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.callbacks = [];
       _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume = {
         current: 50,
         increment: 5,
@@ -8677,59 +8867,6 @@ var ConfigState = /*#__PURE__*/function () {
       /**
        * @todo rebind event handlers
        */
-    }
-  }, {
-    key: "setUserSettings",
-    value: function setUserSettings(userConfig) {
-      this.setAudio(userConfig.audio);
-      this.setVolume(userConfig.volume);
-      this.setDebug(userConfig.debug);
-      this.setDefaultArtwork(userConfig.default_artwork);
-      this.setCollections(userConfig.collections);
-      this.setPlaybackSpeed(userConfig.playback_speed);
-      this.setCallbacks(userConfig.callbacks);
-    }
-  }, {
-    key: "setAudio",
-    value: function setAudio(value) {
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.audio = value != undefined ? value : [];
-
-      _classPrivateMethodGet(this, _setDefaultLiveSettings, _setDefaultLiveSettings2).call(this);
-
-      _classPrivateMethodGet(this, _setDefaultAudioIndices, _setDefaultAudioIndices2).call(this);
-    }
-  }, {
-    key: "setVolume",
-    value: function setVolume(volume) {
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume.current = volume && volume.initial ? volume.initial : 50;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume.increment = volume && volume.increment ? volume.increment : 5;
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.volume.decrement = volume && volume.decrement ? volume.decrement : 5;
-      _elements_MuteElement__WEBPACK_IMPORTED_MODULE_1__.MuteElement.syncElements();
-    }
-  }, {
-    key: "setDebug",
-    value: function setDebug(value) {
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.debug = value != undefined ? value : false;
-    }
-  }, {
-    key: "setDefaultArtwork",
-    value: function setDefaultArtwork(value) {
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.default_artwork = value != undefined ? value : false;
-    }
-  }, {
-    key: "setCollections",
-    value: function setCollections(collections) {// @todo set collections
-    }
-  }, {
-    key: "setPlaybackSpeed",
-    value: function setPlaybackSpeed(speed) {
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.playback_speed = speed != undefined ? speed : 1.0;
-      _elements_PlaybackSpeedElement__WEBPACK_IMPORTED_MODULE_2__.PlaybackSpeedElement.syncElements();
-    }
-  }, {
-    key: "setCallbacks",
-    value: function setCallbacks(callbacks) {
-      _config_js__WEBPACK_IMPORTED_MODULE_0__.config.callbacks = callbacks != undefined ? callbacks : {};
     }
   }], [{
     key: "isIos",
@@ -8896,20 +9033,6 @@ var ConfigState = /*#__PURE__*/function () {
 
   return ConfigState;
 }();
-
-function _setDefaultLiveSettings2() {
-  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.audio.forEach(function (audio, index) {
-    if (audio.live == undefined) {
-      audio.live = false;
-    }
-  });
-}
-
-function _setDefaultAudioIndices2() {
-  _config_js__WEBPACK_IMPORTED_MODULE_0__.config.audio.forEach(function (audio, index) {
-    audio.index = index;
-  });
-}
 
 /***/ }),
 

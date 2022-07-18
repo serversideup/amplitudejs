@@ -2,6 +2,7 @@ import { Debug } from "@/services/Debug";
 import { ConfigState } from "@/services/ConfigState";
 import { EventManager } from "@/services/EventManager";
 import { ElementsManager } from "@/services/ElementsManager";
+import { UserConfig } from "@/init/UserConfig";
 import { config } from "../config";
 import { Navigation as AudioNavigation } from "@/services/Audio/Navigation";
 import { Callbacks } from "@/services/Callbacks";
@@ -71,17 +72,13 @@ export class Initializer{
     }
 
     #copyUserConfig(){
-        this.#configState.setUserSettings( this.#userConfig );
+        let userConfigInit = new UserConfig();
+        userConfigInit.copyUserSettings( this.#userConfig );
     }
 
     #initializeEvents(){
         let eventManager = new EventManager();
         eventManager.initializeAllEvents();
-    }
-
-    #initializeElements(){
-        let elementsManager = new ElementsManager();
-        elementsManager.initializeElements();
     }
 
     #initializeAudio(){
@@ -92,6 +89,11 @@ export class Initializer{
         }else{
             audioNavigator.changeAudio( config.audio[0], 0 );
         }
+    }
+
+    #initializeElements(){
+        let elementsManager = new ElementsManager();
+        elementsManager.initializeElements();
     }
 
     #initializeCallbacks(){

@@ -35,7 +35,7 @@ export const config = {
 	shuffle_on: false,
 
 	// User Definable Variables
-	callbacks: {},
+	callbacks: [],
 	
 	audio: [],
 
@@ -52,19 +52,6 @@ export const config = {
 
 	starting_podcast: "",
 	starting_podcast_episode: "",
-
-	
-
-	
-
-	
-
-	
-
-	
-	
-
-	
 
 	/**
 	 * @todo BREAKING CHANGE
