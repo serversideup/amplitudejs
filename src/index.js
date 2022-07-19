@@ -2,10 +2,10 @@
  * @name AmplitudeJS
  * @author Dan Pastori (Server Side Up) <hello@serversideup.net>
  */
-import * as initMethods from "@/methods/init";
-import * as configMethods from "@/methods/config";
-import * as playlistMethods from "@/methods/playlists";
-import * as eventListeners from "@/methods/eventListeners";
+import * as initMethods from "@/methods/init.js";
+import * as configMethods from "@/methods/config.js";
+import * as playlistMethods from "@/methods/playlists.js";
+import * as eventListeners from "@/methods/eventListeners.js";
 
 /**
  * Amplitude is an interface to the public methods.
@@ -23,6 +23,5 @@ const Amplitude = (function(){
         ...eventListeners
     }
 })();
-
 
 export default Amplitude;

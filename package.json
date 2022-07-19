@@ -4,11 +4,7 @@
   "description": "A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies (jQuery not required) https://serversideup.net/open-source/amplitudejs",
   "main": "dist/amplitude.js",
   "devDependencies": {
-    "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10",
-    "babel-loader": "^8.2.5",
-    "webpack": "^5.72.0",
-    "webpack-cli": "^4.9.2"
+    "vite": "^3.0.0"
   },
   "directories": {
     "doc": "docs"
@@ -21,8 +17,8 @@
     "url": "https://opencollective.com/amplitudejs"
   },
   "scripts": {
-    "dev": "webpack --config webpack.development.config.js",
-    "build": "webpack --config webpack.production.config.js",
+    "dev": "vite",
+	  "build": "vite build",
     "prettier": "npx pretty-quick",
     "preversion": "npx pretty-quick && npm run test",
     "postversion": "git push && git push --tags",

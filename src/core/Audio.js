@@ -1,7 +1,7 @@
-import { Callbacks } from "@/services/Callbacks";
+import { Callbacks } from "@/services/Callbacks.js";
 import { config } from "@/config.js";
-import { ConfigState } from "../services/ConfigState";
-import { Debug } from "@/services/Debug";
+import { ConfigState } from '@/services/ConfigState.js'
+import { Debug } from "@/services/Debug.js";
 
 export class Audio{
     play(){
