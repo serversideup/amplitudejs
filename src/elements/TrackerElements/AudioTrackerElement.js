@@ -49,17 +49,19 @@ export class AudioTrackerElement{
     }
 
     static syncUI( completionPercentage ){
-        let elements = document.querySelectorAll( AudioTrackerElement.audioTrackerQuery );
-        let activeAudioIndex = ConfigState.getActiveAudioIndex();
+        if( !isNaN( completionPercentage ) ){
+            let elements = document.querySelectorAll( AudioTrackerElement.audioTrackerQuery );
+            let activeAudioIndex = ConfigState.getActiveAudioIndex();
 
-        elements.forEach( ( element ) => {
-            let elementAudioIndex = element.getAttribute('data-amplitude-audio-index');
-            
-            if( activeAudioIndex == elementAudioIndex ){
-                element.value = completionPercentage;
-            }else{
-                element.value = 0;
-            }
-        });
+            elements.forEach( ( element ) => {
+                let elementAudioIndex = element.getAttribute('data-amplitude-audio-index');
+                
+                if( activeAudioIndex == elementAudioIndex ){
+                    element.value = completionPercentage;
+                }else{
+                    element.value = 0;
+                }
+            });
+        }
     }
 }

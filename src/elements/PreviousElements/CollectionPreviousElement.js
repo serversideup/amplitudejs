@@ -1,5 +1,6 @@
 import { ConfigState } from "@/services/ConfigState";
 import { Debug } from "@/services/Debug";
+import { config } from "@/config";
 import { Navigation as CollectionNavigation } from "@/services/Collections/Navigation.js"
 
 export class CollectionPreviousElement {

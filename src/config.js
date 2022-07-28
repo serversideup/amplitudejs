@@ -17,22 +17,17 @@ export const config = {
 
 	// Amplitude Dynamic Variables
 	active_metadata: {},
-	active_album: "",
 	active_index: 0,
-
-	active_podcast: null,
-	active_playlist: null,
 	active_collection: null,
+	is_touch_moving: false,
 
 	playback_speed: 1.0,
 	repeat: false,
-	shuffle_list: {},
 	/**
 	 * @todo BREAKING should be repeat_audio
 	 */
 	// repeat_song: false,
 	repeat_audio: false,
-	shuffle_on: false,
 
 	// User Definable Variables
 	callbacks: [],
@@ -42,16 +37,24 @@ export const config = {
 	collections: [],
 
 	debug: true,
-	default_artwork: "",
-	default_playlist_art: "",
+	/**
+	 * BREAKING
+	 * @todo default_album_art -> default_art
+	 * @todo default_playlist_art -> default_collection_art
+	 */
+	default_art: "",
+	default_collection_art: "",
 
-	start_audio: "",
-
-	starting_playlist: "",
-	starting_playlist_song: "",
-
-	starting_podcast: "",
-	starting_podcast_episode: "",
+	/**
+	 * @todo Starting Configuration
+	 * BREAKING
+	 */
+	starting: {
+		audio_index: '',
+		collection_key: '',
+		collection_audio_index: '',
+		collection_shuffled: false
+	},
 
 	/**
 	 * @todo BREAKING CHANGE
@@ -62,13 +65,6 @@ export const config = {
 		decrement: 5,
 		pre_mute_level: 50
 	},
-	//   volume: 0.5,
-
-	//   pre_mute_volume: 0.5,
-
-	//   volume_increment: 5,
-
-	//   volume_decrement: 5,
 
 	/**
 	 * @todo BREAKING CHANGE
@@ -79,19 +75,13 @@ export const config = {
 		audio_count: 0,
 		ready_count: 0
 	},
-	// soundcloud_client: "",
-
-	// soundcloud_use_art: false,
-
-	// soundcloud_song_count: 0,
-
-	// soundcloud_songs_ready: 0,
-
-	is_touch_moving: false,
 
 	buffered: 0,
 
-	bindings: {},
+	/**
+	 * @todo BREAKING not `bindings` -> `key_bindings`
+	 */
+	key_bindings: {},
 
 	continue_next: true,
 

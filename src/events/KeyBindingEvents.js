@@ -11,7 +11,8 @@ export class KeyBindingEvents{
     #handle( event ){
         if( !this.#isFormFocused() ){
             let key = event.key;
-              
+            
+            
         }
     }
 

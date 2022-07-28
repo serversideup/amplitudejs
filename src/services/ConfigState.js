@@ -1,7 +1,5 @@
 import { config } from '@/config.js';
 
-
-
 export class ConfigState{
 	setIsMobile(){
 		if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent ) ) {
@@ -99,6 +97,38 @@ export class ConfigState{
 		return config.continue_next;
 	}
 
+	static getCollectionIntegerIndex( key ){
+		let index = null;
+
+		if( isNaN( key ) ){
+			config.collections.forEach( function( collection, collectionIndex ){
+				if( collection.key == key ){
+					index = collectionIndex;
+				}
+			});
+		}else{
+			index = key;
+		}
+
+		return index;
+	}
+
+	static getCollectionKey( index ){
+		return config.collections[ index ].key;
+	}
+
+	static getStartingCollectionKey(){
+		return config.starting.collection_key != '' 
+				? ConfigState.getCollectionIntegerIndex( config.starting.collection_key )
+				: '';
+	}
+
+	static getStartingCollectionAudioIndex(){
+		return config.starting.collection_audio_index != ''
+					? config.starting.collection_audio_index
+					: 0;
+	}
+
 	static updateBufferedTime(){
 		// Help from: http://jsbin.com/badimipi/1/edit?html,js,output
         if( config.audio_element.buffered.length - 1 >= 0 ){
@@ -144,7 +174,6 @@ export class ConfigState{
 		config.active_playlist = null;
 		config.playback_speed = 1.0;
 		config.audio = [];
-		config.playlists = {};
 		config.start_audio = "";
 		config.starting_playlist = "";
 		config.starting_playlist_song = "";

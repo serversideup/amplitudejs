@@ -73,12 +73,12 @@ var Events = (function() {
 			On time update for the audio element, update visual displays that
 			represent the time on either a visualized element or time display.
 		*/
-    bindTimeUpdate();
+    // bindTimeUpdate();
 
     /*
 			Binds key down event handlers for matching key codes to functions.
 		*/
-    bindKeyDownEventHandlers();
+    // bindKeyDownEventHandlers();
 
     /*
 			When the audio element has ended playing, we handle the song
@@ -87,97 +87,97 @@ var Events = (function() {
 			visualization, but for a playlist it determines whether
 			it should play the next song or not.
 		*/
-    bindSongEnded();
+    // bindSongEnded();
 
     /*
 			Binds progress event so we can see how much of the song is loaded.
 		*/
-    bindProgress();
+    // bindProgress();
 
     /*
 			Binds 'amplitude-play' event handlers
 		*/
-    bindPlay();
+    // bindPlay();
 
     /*
 			Binds 'amplitude-pause' event handlers.
 		*/
-    bindPause();
+    // bindPause();
 
     /*
 			Binds 'amplitude-play-pause' event handlers.
 		*/
-    bindPlayPause();
+    // bindPlayPause();
 
     /*
 			Binds 'amplitude-stop' event handlers.
 		*/
-    bindStop();
+    // bindStop();
 
     /*
 			Binds 'amplitude-mute' event handlers.
 		*/
-    bindMute();
+    // bindMute();
 
     /*
 			Binds 'amplitude-volume-up' event handlers
 		*/
-    bindVolumeUp();
+    // bindVolumeUp();
 
     /*
 			Binds 'amplitude-volume-down' event handlers
 		*/
-    bindVolumeDown();
+    // bindVolumeDown();
 
     /*
 			Binds 'amplitude-song-slider' event handlers
 		*/
-    bindSongSlider();
+    //bindSongSlider();
 
     /*
 			Binds 'amplitude-volume-slider' event handlers.
 		*/
-    bindVolumeSlider();
+    //bindVolumeSlider();
 
     /*
 			Binds 'amplitude-next' event handlers.
 		*/
-    bindNext();
+    // bindNext();
 
     /*
 			Binds 'amplitude-prev' event handlers.
 		*/
-    bindPrev();
+    // bindPrev();
 
     /*
 			Binds 'amplitude-shuffle' event handlers.
 		*/
-    bindShuffle();
+    // bindShuffle();
 
     /*
 			Binds 'amplitude-repeat' event handlers.
 		*/
-    bindRepeat();
+    //bindRepeat();
 
     /*
 			Binds 'amplitude-repeat-song' event handlers.
 		*/
-    bindRepeatSong();
+    //bindRepeatSong();
 
     /*
 			Binds 'amplitude-playback-speed' event handlers.
 		*/
-    bindPlaybackSpeed();
+    //bindPlaybackSpeed();
 
     /*
 			Binds 'amplitude-skip-to' event handlers.
 		*/
-    bindSkipTo();
+    //bindSkipTo();
 
     /*
 			Binds `canplaythrough` event to build the waveform.
 		*/
-    bindCanPlayThrough();
+    //bindCanPlayThrough();
   }
 
   // /**
@@ -207,10 +207,10 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindKeyDownEventHandlers() {
-    document.removeEventListener("keydown", KeyDown.handle);
-    document.addEventListener("keydown", KeyDown.handle);
-  }
+  // function bindKeyDownEventHandlers() {
+  //   document.removeEventListener("keydown", KeyDown.handle);
+  //   document.addEventListener("keydown", KeyDown.handle);
+  // }
 
   /**
    * When the audio element has ended playing, we handle the song
@@ -221,10 +221,10 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindSongEnded() {
-    config.audio.removeEventListener("ended", Ended.handle);
-    config.audio.addEventListener("ended", Ended.handle);
-  }
+  // function bindSongEnded() {
+  //   config.audio.removeEventListener("ended", Ended.handle);
+  //   config.audio.addEventListener("ended", Ended.handle);
+  // }
 
   // /**
   //  * As the audio is loaded, the progress event gets fired. We bind into this
@@ -243,62 +243,62 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindPlay() {
-    /*
-			Gets all of the elements with the class amplitude-play
-		*/
-    var play_classes = document.getElementsByClassName("amplitude-play");
+  // function bindPlay() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-play
+	// 	*/
+  //   var play_classes = document.getElementsByClassName("amplitude-play");
 
-    /*
-			Iterates over all of the play classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < play_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        play_classes[i].removeEventListener("touchend", Play.handle);
-        play_classes[i].addEventListener("touchend", Play.handle);
-      } else {
-        play_classes[i].removeEventListener("click", Play.handle);
-        play_classes[i].addEventListener("click", Play.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the play classes and binds the event interaction
+	// 		method to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < play_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       play_classes[i].removeEventListener("touchend", Play.handle);
+  //       play_classes[i].addEventListener("touchend", Play.handle);
+  //     } else {
+  //       play_classes[i].removeEventListener("click", Play.handle);
+  //       play_classes[i].addEventListener("click", Play.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS pause buttons.
    *
    * @access private
    */
-  function bindPause() {
-    /*
-			Gets all of the elements with the class amplitude-pause
-		*/
-    var pause_classes = document.getElementsByClassName("amplitude-pause");
+  // function bindPause() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-pause
+	// 	*/
+  //   var pause_classes = document.getElementsByClassName("amplitude-pause");
 
-    /*
-			Iterates over all of the pause classes and binds the event interaction
-			method to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < pause_classes.length; i++) {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        pause_classes[i].removeEventListener("touchend", Pause.handle);
-        pause_classes[i].addEventListener("touchend", Pause.handle);
-      } else {
-        pause_classes[i].removeEventListener("click", Pause.handle);
-        pause_classes[i].addEventListener("click", Pause.handle);
-      }
-    }
-  }
+  //   /*
+	// 		Iterates over all of the pause classes and binds the event interaction
+	// 		method to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < pause_classes.length; i++) {
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       pause_classes[i].removeEventListener("touchend", Pause.handle);
+  //       pause_classes[i].addEventListener("touchend", Pause.handle);
+  //     } else {
+  //       pause_classes[i].removeEventListener("click", Pause.handle);
+  //       pause_classes[i].addEventListener("click", Pause.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS play pause buttons
@@ -660,38 +660,38 @@ var Events = (function() {
    *
    * @access private
    */
-  function bindShuffle() {
-    /*
-			Gets all of the elements with the class amplitude-shuffle
-		*/
-    var shuffle_classes = document.getElementsByClassName("amplitude-shuffle");
+  // function bindShuffle() {
+  //   /*
+	// 		Gets all of the elements with the class amplitude-shuffle
+	// 	*/
+  //   var shuffle_classes = document.getElementsByClassName("amplitude-shuffle");
 
-    /*
-			Iterates over all of the shuffle classes and binds the event interaction
-			methods to the element. If the browser is mobile, then the event is touchend
-			otherwise it is click.
-		*/
-    for (var i = 0; i < shuffle_classes.length; i++) {
-      /*
-				Since we are re-binding everything we remove any classes that signify
-				a state of the shuffle control.
-			*/
-      shuffle_classes[i].classList.remove("amplitude-shuffle-on");
-      shuffle_classes[i].classList.add("amplitude-shuffle-off");
+  //   /*
+	// 		Iterates over all of the shuffle classes and binds the event interaction
+	// 		methods to the element. If the browser is mobile, then the event is touchend
+	// 		otherwise it is click.
+	// 	*/
+  //   for (var i = 0; i < shuffle_classes.length; i++) {
+  //     /*
+	// 			Since we are re-binding everything we remove any classes that signify
+	// 			a state of the shuffle control.
+	// 		*/
+  //     shuffle_classes[i].classList.remove("amplitude-shuffle-on");
+  //     shuffle_classes[i].classList.add("amplitude-shuffle-off");
 
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        shuffle_classes[i].removeEventListener("touchend", Shuffle.handle);
-        shuffle_classes[i].addEventListener("touchend", Shuffle.handle);
-      } else {
-        shuffle_classes[i].removeEventListener("click", Shuffle.handle);
-        shuffle_classes[i].addEventListener("click", Shuffle.handle);
-      }
-    }
-  }
+  //     if (
+  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //         navigator.userAgent
+  //       )
+  //     ) {
+  //       shuffle_classes[i].removeEventListener("touchend", Shuffle.handle);
+  //       shuffle_classes[i].addEventListener("touchend", Shuffle.handle);
+  //     } else {
+  //       shuffle_classes[i].removeEventListener("click", Shuffle.handle);
+  //       shuffle_classes[i].addEventListener("click", Shuffle.handle);
+  //     }
+  //   }
+  // }
 
   /**
    * Binds click and touchend events for AmplitudeJS repeat buttons.

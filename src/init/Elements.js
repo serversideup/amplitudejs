@@ -14,7 +14,7 @@ import { VolumeDownElement } from "@/elements/VolumeDownElement";
 import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
 import { VolumeUpElement } from "@/elements/VolumeUpElement";
 
-export class ElementsManager{
+export class Elements{
     setVisualElementsDefaults(){
 
     }
@@ -35,6 +35,8 @@ export class ElementsManager{
         this.#initializeShuffleElement();
         this.#initializeSkipToElement();
         this.#initializeTrackerElement();
+        this.#initializeCollectionRepeatElement();
+        this.#initializeAudioRepeatElement();
     }
 
     #initializeMetaData(){
@@ -55,6 +57,8 @@ export class ElementsManager{
     #initializePlayPauseElement(){
         let playPauseElement = new PlayPauseElement();
         playPauseElement.setUp();
+
+        PlayPauseElement.syncAll();
     }
 
     #initializeNextElement(){
@@ -70,16 +74,22 @@ export class ElementsManager{
     #initializeMuteElement(){
         let muteElement = new MuteElement();
         muteElement.setUp();
+
+        MuteElement.syncElements();
     }
 
     #initializeVolumeSliderElement(){
         let volumeSliderElement = new VolumeSliderElement();
         volumeSliderElement.setUp();
+
+        VolumeSliderElement.syncElements();
     }
 
     #initializePlaybackSpeedElement(){
         let playbackSpeedElement = new PlaybackSpeedElement();
         playbackSpeedElement.setUp();
+
+        PlaybackSpeedElement.syncElements();
     }
 
     #initializeStopElement(){
@@ -110,5 +120,13 @@ export class ElementsManager{
     #initializeTrackerElement(){
         let trackerElement = new TrackerElement();
         trackerElement.setUp();
+    }
+
+    #initializeCollectionRepeatElement(){
+
+    }
+
+    #initializeAudioRepeatElement(){
+
     }
 }

@@ -44,10 +44,12 @@ export class GlobalTrackerElement{
     }
 
     static syncUI( completionPercentage ){
-        let elements = document.querySelectorAll( GlobalTrackerElement.globalTrackerQuery );
+        if( !isNaN( completionPercentage ) ){
+            let elements = document.querySelectorAll( GlobalTrackerElement.globalTrackerQuery );
 
-        elements.forEach( ( element ) => {
-            element.value = completionPercentage;
-        });
+            elements.forEach( ( element ) => {
+                element.value = completionPercentage;
+            });
+        }
     }
 }

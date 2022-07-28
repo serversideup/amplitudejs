@@ -5,7 +5,7 @@ import { TimeUpdateEvent } from "@/events/TimeUpdateEvent";
 import { Debug } from "@/services/Debug";
 import { config } from "@/config.js";
 
-export class EventManager{
+export class Events{
     initializeAllEvents(){
         Debug.writeMessage("Starting initialization of event handlers...");
 

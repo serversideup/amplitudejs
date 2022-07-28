@@ -34,16 +34,17 @@ export class CollectionAudioContainerElement {
 
     #getActiveIndex(){
         this.#activeCollection = ConfigState.getActiveCollection();
+        let collectionIndex = ConfigState.getCollectionIntegerIndex( this.#activeCollection );
 
         if( this.#direct ){
-            this.#activeIndex = config.collections[ this.#activeCollection ].active_index;
+            this.#activeIndex = config.collections[ collectionIndex ].active_index;
         }else{
-            if( ConfigState.isCollectionShuffled( this.#activeCollection ) ){
-                this.#activeIndex = config.collections[ this.#activeCollection ].shuffle_list[
-                    config.collections[ this.#activeCollection ].active_index
+            if( ConfigState.isCollectionShuffled( collectionIndex ) ){
+                this.#activeIndex = config.collections[ collectionIndex ].shuffle_list[
+                    config.collections[ collectionIndex ].active_index
                 ].index;
             }else{
-                this.#activeIndex = config.collections[ this.#activeCollection ].active_index;
+                this.#activeIndex = config.collections[ collectionIndex ].active_index;
             }
         }
     }

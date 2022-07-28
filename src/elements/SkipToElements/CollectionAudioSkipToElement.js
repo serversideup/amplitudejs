@@ -80,7 +80,7 @@ export class CollectionAudioSkipToElement {
     #handleAudioChange( audioIndex, collectionKey ){
         let collectionNavigation = new CollectionNavigation();
 
-        collectionNavigation.changeAudioCollection(
+        collectionNavigation.changeCollectionAudio(
             collectionKey,
             config.collections[ collectionKey ].audio[ parseInt( audioIndex ) ],
             parseInt( audioIndex ),

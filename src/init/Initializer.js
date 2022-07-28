@@ -1,10 +1,11 @@
+import { Audio } from "@/init/Audio";
+import { Collections } from "@/init/Collections";
 import { Debug } from "@/services/Debug";
 import { ConfigState } from "@/services/ConfigState";
-import { EventManager } from "@/services/EventManager";
-import { ElementsManager } from "@/services/ElementsManager";
+import { Elements } from "@/init/Elements.js";
+import { Events } from "@/init/Events.js";
 import { UserConfig } from "@/init/UserConfig";
 import { config } from "../config";
-import { Navigation as AudioNavigation } from "@/services/Audio/Navigation";
 import { Callbacks } from "@/services/Callbacks";
 
 export class Initializer{
@@ -14,18 +15,23 @@ export class Initializer{
     #ready = false;
 
     constructor( userConfig, element ){
-        this.#configState = new ConfigState();
-        this.#configState.setIsMobile();
         this.#userConfig = userConfig;
         this.#element = element;
     }
 
     setup(){
+        this.#setMobile();
+
         if( this.#isValidUrl( this.#userConfig ) ){
             this.#loadUserConfig();
         }else{
             this.#prepareAmplitude();
         }
+    }
+
+    #setMobile(){
+        this.#configState = new ConfigState();
+        this.#configState.setIsMobile();
     }
 
     #isValidUrl(url){
@@ -60,6 +66,8 @@ export class Initializer{
     #prepareAmplitude(){
         this.#resetConfig();
         this.#copyUserConfig();
+        this.#initializeFx();
+        this.#initializeCollections();
         this.#initializeAudio();
         this.#initializeEvents();
         this.#initializeElements();
@@ -74,26 +82,102 @@ export class Initializer{
     #copyUserConfig(){
         let userConfigInit = new UserConfig();
         userConfigInit.copyUserSettings( this.#userConfig );
+        userConfigInit.applyConfig();
     }
 
-    #initializeEvents(){
-        let eventManager = new EventManager();
-        eventManager.initializeAllEvents();
+    #initializeFx(){
+        /**
+         * @todo Below is the old initialization for Fx
+         * We need to improve this and make it more effective and up-to-date
+         */
+        // if (Fx.webAudioAPIAvailable()) {
+        //     if (Fx.determineUsingAnyFX()) {
+        //       /*
+        //         Configure the Web Audio API If It's available.
+        //       */
+        //       Fx.configureWebAudioAPI();
+      
+        //       /*
+        //           Activates the audio context after an event for the user.
+        //       */
+        //       document.documentElement.addEventListener("mousedown", function() {
+        //         if (config.context.state !== "running") {
+        //           config.context.resume();
+        //         }
+        //       });
+      
+        //       document.documentElement.addEventListener("keydown", function() {
+        //         if (config.context.state !== "running") {
+        //           config.context.resume();
+        //         }
+        //       });
+      
+        //       document.documentElement.addEventListener("keyup", function() {
+        //         if (config.context.state !== "running") {
+        //           config.context.resume();
+        //         }
+        //       });
+      
+        //       /*
+        //           Set the user waveform settings if provided.
+        //         */
+        //       if (
+        //         userConfig.waveforms != undefined &&
+        //         userConfig.waveforms.sample_rate != undefined
+        //       ) {
+        //         config.waveforms.sample_rate = userConfig.waveforms.sample_rate;
+        //       }
+      
+        //       /*
+        //           Initialize the waveform.
+        //         */
+        //       WaveForm.init();
+      
+        //       /*
+        //           If the user is registering visualizations on init,
+        //           we set them right away.
+        //         */
+        //       if (
+        //         userConfig.visualizations != undefined &&
+        //         userConfig.visualizations.length > 0
+        //       ) {
+        //         /*
+        //                 Iterate over all of the visualizations and
+        //                 register them in our player.
+        //               */
+        //         for (let i = 0; i < userConfig.visualizations.length; i++) {
+        //           Visualizations.register(
+        //             userConfig.visualizations[i].object,
+        //             userConfig.visualizations[i].params
+        //           );
+        //         }
+        //       }
+        //     }
+        //   } else {
+        //     Debug.writeMessage(
+        //       "The Web Audio API is not available on this platform. We are using your defined backups!"
+        //     );
+        //   }
+    }
+
+    #initializeCollections(){
+        let collections = new Collections();
+        collections.initializeCollections();
     }
 
     #initializeAudio(){
-        let audioNavigator = new AudioNavigation();
-
-        if( config.start_audio ){
+        let audio = new Audio();
+        audio.initializeAudio();
+    }
     
-        }else{
-            audioNavigator.changeAudio( config.audio[0], 0 );
-        }
+    #initializeEvents(){
+        let events = new Events();
+        events.initializeAllEvents();
     }
 
     #initializeElements(){
-        let elementsManager = new ElementsManager();
-        elementsManager.initializeElements();
+        let elements = new Elements();
+        elements.initializeElements();
     }
 
     #initializeCallbacks(){

@@ -556,7 +556,7 @@ let AudioNavigation = (function() {
    * @access private
    */
   function afterSongChange(direct) {
-    MetaDataElements.displayMetaData();
+    MetaDataElements.updateActiveMetaData();
     ContainerElements.setActive(direct);
     TimeElements.resetDurationTimes();
 

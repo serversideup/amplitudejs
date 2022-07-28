@@ -2,10 +2,14 @@
  * @name AmplitudeJS
  * @author Dan Pastori (Server Side Up) <hello@serversideup.net>
  */
-import * as initMethods from "@/methods/init.js";
+
+import * as artMethods from "@/methods/art.js";
+import * as audioMethods from "@/methods/audio.js";
+import * as collectionMethods from "@/methods/collections.js";
 import * as configMethods from "@/methods/config.js";
-import * as playlistMethods from "@/methods/playlists.js";
-import * as eventListeners from "@/methods/eventListeners.js";
+import * as eventListenerMethods from "@/methods/eventListeners.js";
+import * as initMethods from "@/methods/init.js";
+import * as playbackSpeedMethods from "@/methods/playbackSpeed.js";
 
 /**
  * Amplitude is an interface to the public methods.
@@ -17,10 +21,13 @@ import * as eventListeners from "@/methods/eventListeners.js";
  */
 const Amplitude = (function(){
     return {
-        ...initMethods,
+        ...artMethods,
+        ...audioMethods,
+        ...collectionMethods,
         ...configMethods,
-        ...playlistMethods,
-        ...eventListeners
+        ...eventListenerMethods,
+        ...initMethods,
+        ...playbackSpeedMethods
     }
 })();
 

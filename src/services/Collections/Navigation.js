@@ -4,6 +4,7 @@ import { Callbacks } from "@/services/Callbacks";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 import { MetaDataElement } from "@/elements/MetaDataElement";
 import { ContainerElement } from "@/elements/ContainerElement";
+import { ConfigState } from "@/services/ConfigState";
 
 export class Navigation {
     /**
@@ -17,10 +18,11 @@ export class Navigation {
             collectionKey = config.active_collection;
         }
 
-        let nextAudio = this.#findNextAudio( collectionKey );
+        let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+        let nextAudio = this.#findNextAudio( collectionIndex );
         
-        this.setActiveCollection( collectionKey );
-        this.changeCollectionAudio( collectionKey, nextAudio.audio, nextAudio.index );
+        this.setActiveCollection( collectionKey, collectionIndex );
+        this.changeCollectionAudio( collectionIndex, nextAudio.audio, nextAudio.index );
         this.#playNextAudio( nextAudio.end, audioEnded )
         
         PlayPauseElement.syncAll();
@@ -31,36 +33,36 @@ export class Navigation {
         }
     }
 
-    #findNextAudio( collectionKey ){
+    #findNextAudio( collectionIndex ){
         if( config.repeat_audio ){
-            return this.#repeatedAudio( collectionKey );
+            return this.#repeatedAudio( collectionIndex );
         }else{
-            if( config.collections[ collectionKey ].shuffle ){
-                return this.#nextShuffledAudio( collectionKey );
+            if( config.collections[ collectionIndex ].shuffle ){
+                return this.#nextShuffledAudio( collectionIndex );
             }else{
-                return this.#nextCollectionAudio( collectionKey );
+                return this.#nextCollectionAudio( collectionIndex );
             }
         }
     }
 
-    #repeatedAudio( collectionKey ){
-        let index =  config.collections[ collectionKey ].active_index;
+    #repeatedAudio( collectionIndex ){
+        let index =  config.collections[ collectionIndex ].active_index;
 
         return {
             'index': nextIndex,
-            'audio': config.collections[ collectionKey ].shuffle ?
-                     config.collections[ collectionKey ].shuffle_list[ index ] :
-                     config.collections[ collectionKey ].audio[ index ],
+            'audio': config.collections[ collectionIndex ].shuffle ?
+                     config.collections[ collectionIndex ].shuffle_list[ index ] :
+                     config.collections[ collectionIndex ].audio[ index ],
             'end': false
         }
     }
 
-    #nextShuffledAudio( collectionKey ){
+    #nextShuffledAudio( collectionIndex ){
         let nextIndex = null;
         let endOfList = false;
 
-        let activeIndex = config.collections[ collectionKey ].active_index;
-        let shuffleCollectionLength = config.collections[ collectionKey ].shuffle_list.length;
+        let activeIndex = config.collections[ collectionIndex ].active_index;
+        let shuffleCollectionLength = config.collections[ collectionIndex ].shuffle_list.length;
        
         if( parseInt( activeIndex + 1 ) < shuffleCollectionLength ){
             nextIndex = parseInt( activeIndex + 1 );    
@@ -71,17 +73,17 @@ export class Navigation {
 
         return {
             'index': nextIndex,
-            'audio': config.collections[ collectionKey ].shuffleList[ nextIndex ],
+            'audio': config.collections[ collectionIndex ].shuffleList[ nextIndex ],
             'end': endOfList
         }
     }
 
-    #nextCollectionAudio( collectionKey ){
+    #nextCollectionAudio( collectionIndex ){
         let nextIndex = null;
         let endOfList = false;
         
-        let activeIndex = config.collections[ collectionKey ].active_index;
-        let collectionLength = config.collections[ collectionKey ].audio.length;
+        let activeIndex = config.collections[ collectionIndex ].active_index;
+        let collectionLength = config.collections[ collectionIndex ].audio.length;
 
         if( parseInt( activeIndex + 1 ) < collectionLength ){
             nextIndex = parseInt( activeIndex + 1 );
@@ -92,7 +94,7 @@ export class Navigation {
 
         return {
             'index': nextIndex,
-            'audio': config.collections[ collectionKey ].audio[ nextIndex ],
+            'audio': config.collections[ collectionIndex ].audio[ nextIndex ],
             'end': endOfList
         }
     }
@@ -113,10 +115,11 @@ export class Navigation {
             collectionKey = config.active_collection;
         }
 
-        let previousAudio = this.#findPreviousAudio( collectionKey );
+        let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+        let previousAudio = this.#findPreviousAudio( collectionIndex );
         
-        this.setActiveCollection( collectionKey );
-        this.changeCollectionAudio( collectionKey, previousAudio.audio, previousAudio.index );
+        this.setActiveCollection( collectionKey, collectionIndex );
+        this.changeCollectionAudio( collectionIndex, previousAudio.audio, previousAudio.index );
         
         let audio = new Audio();
         audio.play();
@@ -129,23 +132,23 @@ export class Navigation {
         }
     }
 
-    #findPreviousAudio(){
+    #findPreviousAudio( collectionIndex ){
         if( config.repeat_audio ){
-            return this.#repeatedAudio( collectionKey );
+            return this.#repeatedAudio( collectionIndex );
         }else{
-            if( config.collections[ collectionKey ].shuffle ){
-                return this.#previousShuffledAudio( collectionKey );
+            if( config.collections[ collectionIndex ].shuffle ){
+                return this.#previousShuffledAudio( collectionIndex );
             }else{
-                return this.#previousCollectionAudio( collectionKey );
+                return this.#previousCollectionAudio( collectionIndex );
             }
         }
     }
 
-    #previousShuffledAudio( collectionKey ){
+    #previousShuffledAudio( collectionIndex ){
         let previousIndex = null;
 
-        let activeIndex = config.collections[ collectionKey ].active_index;
-        let shuffleCollectionLength = config.collections[ collectionKey ].shuffle_list.length;
+        let activeIndex = config.collections[ collectionIndex ].active_index;
+        let shuffleCollectionLength = config.collections[ collectionIndex ].shuffle_list.length;
         
         if( parseInt( activeIndex - 1 ) >= 0 ){
             previousIndex =  parseInt( activeIndex - 1 );
@@ -155,15 +158,15 @@ export class Navigation {
 
         return {
             'index': previousIndex,
-            'audio': config.collections[ collectionKey ].shuffleList[ previousIndex ]
+            'audio': config.collections[ collectionIndex ].shuffleList[ previousIndex ]
         }
     }
 
-    #previousCollectionAudio( collectionKey ){
+    #previousCollectionAudio( collectionIndex ){
         let previousIndex = null;
 
-        let activeIndex = config.collections[ collectionKey ].active_index;
-        let collectionLength = config.collections[ collectionKey ].audio.length;
+        let activeIndex = config.collections[ collectionIndex ].active_index;
+        let collectionLength = config.collections[ collectionIndex ].audio.length;
         
         if( parseInt( activeIndex - 1 ) >= 0 ){
             previousIndex =  parseInt( activeIndex - 1 );
@@ -173,18 +176,18 @@ export class Navigation {
 
         return {
             'index': previousIndex,
-            'audio': config.collections[ collectionKey ].audio[ previousIndex ]
+            'audio': config.collections[ collectionIndex ].audio[ previousIndex ]
         }
     }
 
-    setActiveCollection( collection ){
-        if( config.active_collection != collection ){
+    setActiveCollection( collectionKey, collectionIndex ){
+        if( config.active_collection != collectionKey ){
             Callbacks.run("collection_changed");
 
-            config.active_collection = collection;
+            config.active_collection = collectionKey;
 
-            if( collection != null ){
-                config.collections[ collection ].active_index = 0;
+            if( collectionIndex != null ){
+                config.collections[ collectionIndex ].active_index = 0;
             }
         }
     }
@@ -192,22 +195,23 @@ export class Navigation {
     /**
      * Handles audio change in a collection
      *
-     * @prop {string} collection - The collection we are changing the song on.
+     * @prop {string} collectionIndex - The collection index we are changing the audio on.
      * @prop {object} audio - The audio object we are changing to in the collection.
-     * @prop {number} index - The index of the song we are changing to in the collection.
+     * @prop {number} audioIndex - The index of the audio we are changing to in the collection.
      * @prop {boolean} direct - Determines if it was a direct click on the song. We
      * then don't care if shuffle is on or not
      */
-    changeAudioCollection( collection, audio, index, direct ){
+    changeCollectionAudio( collectionIndex, audio, audioIndex, direct ){
         this.#prepareAudioChange( audio );
 
-        this.#switchAudio( collection, audio, index );
+        this.#switchAudio( collectionIndex, audio, audioIndex );
 
         this.#afterAudioChange( direct );
     }
 
     #prepareAudioChange( audio ){
-        Audio.stop();
+        let coreAudio = new Audio();
+        coreAudio.stop();
 
         // Sync elements
         PlayPauseElement.syncAllToPause();
@@ -222,14 +226,15 @@ export class Navigation {
          */
     }
 
-    #switchAudio( collection, audio, index ){
-        config.audio_element = audio.url;
+    #switchAudio( collectionIndex, audio, audioIndex ){
+        config.audio_element.src = audio.url;
         config.active_metadata = audio;
         /** 
          * @todo We don't have active_album. make note.
          */
         config.active_index = null;
-        config.collections[collection].active_index = parseInt(index);
+        config.active_collection = ConfigState.getCollectionKey( collectionIndex );
+        config.collections[collectionIndex].active_index = parseInt( audioIndex );
     }
 
     #afterAudioChange( direct ){
@@ -248,6 +253,6 @@ export class Navigation {
 
     #updateMetaData(){
         let metaData = new MetaDataElement();
-        metaData.displayMetaData();
+        metaData.updateActiveMetaData();
     }
 }

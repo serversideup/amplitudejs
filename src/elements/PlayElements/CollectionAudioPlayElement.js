@@ -55,7 +55,7 @@ export class CollectionAudioPlayElement {
             let collectionNavigation = new CollectionNavigation();
 
             collectionNavigation.setActiveCollection( collectionKey );
-            collectionNavigation.changeAudioCollection(
+            collectionNavigation.changeCollectionAudio(
                 collectionKey,
                 config.collections[ collectionKey ].audio[audioIndex],
                 audioIndex,
@@ -68,7 +68,7 @@ export class CollectionAudioPlayElement {
         if( AudioChecks.audioChanged( audioIndex, collectionKey ) ){
             let collectionNavigation = new CollectionNavigation();
 
-            collectionNavigation.changeAudioCollection(
+            collectionNavigation.changeCollectionAudio(
                 collectionKey,
                 config.collections[ collectionKey ].audio[audioIndex],
                 audioIndex,

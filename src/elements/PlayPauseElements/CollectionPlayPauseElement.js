@@ -44,40 +44,42 @@ export class CollectionPlayPauseElement {
 
     #handleInteraction( element ){
         if( !ConfigState.isTouchMoving() ){
-            let collection = element.getAttribute('data-amplitude-collection-key');
+            let collectionKey = element.getAttribute('data-amplitude-collection-key');
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
 
-            if( !CollectionChecks.collectionExists( collection ) ){
-                Debug.writeMessage('Collection with key "'+collection+'" does not exist! Please define this collection in your configuration.');
+            if( !CollectionChecks.collectionExists( collectionIndex ) ){
+                Debug.writeMessage('Collection with key "'+collectionKey+'" does not exist! Please define this collection in your configuration.');
                 return false;
             }
 
-            this.#handleCollectionChanges( collection );
+            this.#handleCollectionChanges( collectionKey );
             this.#toggleAudio();
 
             PlayPauseElement.syncAll();
         }
     }
 
-    #handleCollectionChanges( collection ){
-        if( CollectionChecks.collectionChanged( collection ) ){
-            
+    #handleCollectionChanges( collectionKey ){
+        if( CollectionChecks.collectionChanged( collectionKey ) ){
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+
             let collectionNavigation = new CollectionNavigation();
-            collectionNavigation.setActiveCollection( collection );
+            collectionNavigation.setActiveCollection( collectionKey, collectionIndex );
 
             // If the collection is shuffled and the collection is changed,
             // we change the audio to be the first audio in the array. Since,
             // we are changing the collection, we are starting at the top.
-            if( CollectionChecks.isCollectionShuffled( collection ) ){
-                collectionNavigation.changeAudioCollection(
-                    collection,
-                    config.collections[ collection ].shuffle_list[0],
+            if( CollectionChecks.isCollectionShuffled( collectionIndex ) ){
+                collectionNavigation.changeCollectionAudio(
+                    collectionIndex,
+                    config.collections[ collectionIndex ].shuffle_list[0],
                     0,
                     true
                 );
             }else{
-                collectionNavigation.changeAudioCollection(
-                    collection,
-                    config.collections[ collection ].audio[0],
+                collectionNavigation.changeCollectionAudio(
+                    collectionIndex,
+                    config.collections[ collectionIndex ].audio[0],
                     0
                 );
             }

@@ -169,40 +169,40 @@ let Amplitude = (function() {
   //   return config.active_playlist;
   // }
 
-  /**
-   * Returns the current playback speed.
-   *
-   * Public Accessor: Amplitude.getPlaybackSpeed()
-   *
-   * @access public
-   */
-  function getPlaybackSpeed() {
-    return config.playback_speed;
-  }
+  // /**
+  //  * Returns the current playback speed.
+  //  *
+  //  * Public Accessor: Amplitude.getPlaybackSpeed()
+  //  *
+  //  * @access public
+  //  */
+  // function getPlaybackSpeed() {
+  //   return config.playback_speed;
+  // }
 
-  /**
-   * Sets the playback speed
-   *
-   * Public Accessor: Amplitude.setPlaybackSpeed( speed )
-   *
-   * @access public
-   */
-  function setPlaybackSpeed(speed) {
-    /*
-      Increments are set in .5 We only accept values
-      1, 1.5, 2
+  // /**
+  //  * Sets the playback speed
+  //  *
+  //  * Public Accessor: Amplitude.setPlaybackSpeed( speed )
+  //  *
+  //  * @access public
+  //  */
+  // function setPlaybackSpeed(speed) {
+  //   /*
+  //     Increments are set in .5 We only accept values
+  //     1, 1.5, 2
 
-      1 -> Regular Speed
-      1.5 -> 50% faster
-      2 -> Twice as fast
-    */
-    Core.setPlaybackSpeed(speed);
+  //     1 -> Regular Speed
+  //     1.5 -> 50% faster
+  //     2 -> Twice as fast
+  //   */
+  //   Core.setPlaybackSpeed(speed);
 
-    /*
-      Visually sync the playback speed.
-    */
-    PlaybackSpeedElements.sync();
-  }
+  //   /*
+  //     Visually sync the playback speed.
+  //   */
+  //   PlaybackSpeedElements.sync();
+  // }
 
   /**
    * Gets the repeat state of the player.
@@ -329,256 +329,256 @@ let Amplitude = (function() {
     }
   }
 
-  /**
-   * Gets the default album art for the player
-   *
-   * Public Accessor: Amplitude.getDefaultAlbumArt()
-   *
-   * @access public
-   */
-  function getDefaultAlbumArt() {
-    return config.default_album_art;
-  }
+  // /**
+  //  * Gets the default album art for the player
+  //  *
+  //  * Public Accessor: Amplitude.getDefaultAlbumArt()
+  //  *
+  //  * @access public
+  //  */
+  // function getDefaultAlbumArt() {
+  //   return config.default_album_art;
+  // }
 
-  /**
-   * Gets the default playlist art for the playlists
-   *
-   * Public Accessor: Amplitude.getDefaultPlaylistArt()
-   *
-   * @access public
-   */
-  function getDefaultPlaylistArt() {
-    return config.default_playlist_art;
-  }
+  // /**
+  //  * Gets the default playlist art for the playlists
+  //  *
+  //  * Public Accessor: Amplitude.getDefaultPlaylistArt()
+  //  *
+  //  * @access public
+  //  */
+  // function getDefaultPlaylistArt() {
+  //   return config.default_playlist_art;
+  // }
 
-  /**
-   * Sets the default album art for the player
-   *
-   * Public Accessor: Amplitude.setDefaultAlbumArt( url )
-   *
-   * @access public
-   * @param {string} url 	- A string representing the URL of the new default album art.
-   */
-  function setDefaultAlbumArt(url) {
-    config.default_album_art = url;
-  }
+  // /**
+  //  * Sets the default album art for the player
+  //  *
+  //  * Public Accessor: Amplitude.setDefaultAlbumArt( url )
+  //  *
+  //  * @access public
+  //  * @param {string} url 	- A string representing the URL of the new default album art.
+  //  */
+  // function setDefaultAlbumArt(url) {
+  //   config.default_album_art = url;
+  // }
 
-  /**
-   * Sets the default playlist art for the player
-   *
-   * Public Accessor: Amplitude.setDefaultPlaylistArt( url )
-   *
-   * @access public
-   * @param {string} url - A string representing the URL of the new default playlist art.
-   */
-  function setDefaultPlaylistArt(url) {
-    config.default_plalist_art = url;
-  }
+  // /**
+  //  * Sets the default playlist art for the player
+  //  *
+  //  * Public Accessor: Amplitude.setDefaultPlaylistArt( url )
+  //  *
+  //  * @access public
+  //  * @param {string} url - A string representing the URL of the new default playlist art.
+  //  */
+  // function setDefaultPlaylistArt(url) {
+  //   config.default_plalist_art = url;
+  // }
 
-  /**
-   * Allows the user to get the percentage of the song played.
-   *
-   * Public Accessor: Amplitude.getSongPlayedPercentage();
-   *
-   * @access public
-   */
-  function getSongPlayedPercentage() {
-    /*
-			Returns the percentage of the song played.
-		*/
-    return (config.audio.currentTime / config.audio.duration) * 100;
-  }
+  // /**
+  //  * Allows the user to get the percentage of the song played.
+  //  *
+  //  * Public Accessor: Amplitude.getSongPlayedPercentage();
+  //  *
+  //  * @access public
+  //  */
+  // function getSongPlayedPercentage() {
+  //   /*
+	// 		Returns the percentage of the song played.
+	// 	*/
+  //   return (config.audio.currentTime / config.audio.duration) * 100;
+  // }
 
-  /**
-   * Allows the user to get the amount of seconds the song has played.
-   *
-   * Public Accessor: Amplitude.getSongPlayed();
-   *
-   * @access public
-   */
-  function getSongPlayedSeconds() {
-    /*
-			Returns the amount of seconds the song has played.
-		*/
-    return config.audio.currentTime;
-  }
+  // /**
+  //  * Allows the user to get the amount of seconds the song has played.
+  //  *
+  //  * Public Accessor: Amplitude.getSongPlayed();
+  //  *
+  //  * @access public
+  //  */
+  // function getSongPlayedSeconds() {
+  //   /*
+	// 		Returns the amount of seconds the song has played.
+	// 	*/
+  //   return config.audio.currentTime;
+  // }
 
-  /**
-   * Allows the user to get the duration of the current song
-   *
-   * Public Accessor: Amplitude.getSongPlayed();
-   *
-   * @access public
-   */
-  function getSongDuration() {
-    /*
-			Returns the duration of the current song
-		*/
-    return config.audio.duration;
-  }
+  // /**
+  //  * Allows the user to get the duration of the current song
+  //  *
+  //  * Public Accessor: Amplitude.getSongPlayed();
+  //  *
+  //  * @access public
+  //  */
+  // function getSongDuration() {
+  //   /*
+	// 		Returns the duration of the current song
+	// 	*/
+  //   return config.audio.duration;
+  // }
 
-  /**
-   * Allows the user to set how far into the song they want to be. This is
-   * helpful for implementing custom range sliders. Only works on the current song.
-   *
-   * Public Accessor: Amplitude.setSongPlayedPercentage( float );
-   *
-   * @access public
-   * @param {number} percentage 	- The percentage of the song played
-   */
-  function setSongPlayedPercentage(percentage) {
-    /*
-			Ensures the percentage is a number and is between 0 and 100.
-		*/
-    if (typeof percentage == "number" && (percentage > 0 && percentage < 100)) {
-      /*
-					Sets the current time of the song to the percentage.
-				*/
-      config.audio.currentTime = config.audio.duration * (percentage / 100);
-    }
-  }
+  // /**
+  //  * Allows the user to set how far into the song they want to be. This is
+  //  * helpful for implementing custom range sliders. Only works on the current song.
+  //  *
+  //  * Public Accessor: Amplitude.setSongPlayedPercentage( float );
+  //  *
+  //  * @access public
+  //  * @param {number} percentage 	- The percentage of the song played
+  //  */
+  // function setSongPlayedPercentage(percentage) {
+  //   /*
+	// 		Ensures the percentage is a number and is between 0 and 100.
+	// 	*/
+  //   if (typeof percentage == "number" && (percentage > 0 && percentage < 100)) {
+  //     /*
+	// 				Sets the current time of the song to the percentage.
+	// 			*/
+  //     config.audio.currentTime = config.audio.duration * (percentage / 100);
+  //   }
+  // }
 
-  /**
-   * Allows the user to turn on debugging.
-   *
-   * Public Accessor: Amplitude.setDebug( bool );
-   *
-   * @access public
-   * @param {boolean} state 		- Turns debugging on and off.
-   */
-  function setDebug(state) {
-    /*
-			Sets the global config debug on or off.
-		*/
-    config.debug = state;
-  }
+  // /**
+  //  * Allows the user to turn on debugging.
+  //  *
+  //  * Public Accessor: Amplitude.setDebug( bool );
+  //  *
+  //  * @access public
+  //  * @param {boolean} state 		- Turns debugging on and off.
+  //  */
+  // function setDebug(state) {
+  //   /*
+	// 		Sets the global config debug on or off.
+	// 	*/
+  //   config.debug = state;
+  // }
 
-  /**
-   * Returns the active song meta data for the user to do what is
-   * needed.
-   *
-   * Public Accessor: Amplitude.getActiveSongMetadata();
-   *
-   * @access public
-   * @returns {object} JSON Object with the active song information
-   */
-  function getActiveSongMetadata() {
-    return config.active_metadata;
-  }
+  // /**
+  //  * Returns the active song meta data for the user to do what is
+  //  * needed.
+  //  *
+  //  * Public Accessor: Amplitude.getActiveSongMetadata();
+  //  *
+  //  * @access public
+  //  * @returns {object} JSON Object with the active song information
+  //  */
+  // function getActiveSongMetadata() {
+  //   return config.active_metadata;
+  // }
 
-  /**
-   * Returns the active playlist meta data for the for the user to use.
-   *
-   * Public Accessor: Amplitude.getActivePlaylistMetadata();
-   *
-   * @access public
-   * @returns {object} JSON representation for the active playlist
-   */
-  function getActivePlaylistMetadata() {
-    return config.playlists[config.active_playlist];
-  }
+  // /**
+  //  * Returns the active playlist meta data for the for the user to use.
+  //  *
+  //  * Public Accessor: Amplitude.getActivePlaylistMetadata();
+  //  *
+  //  * @access public
+  //  * @returns {object} JSON representation for the active playlist
+  //  */
+  // function getActivePlaylistMetadata() {
+  //   return config.playlists[config.active_playlist];
+  // }
 
-  /**
-   * Returns a song in the songs array at that index
-   *
-   * Public Accessor: Amplitude.getSongAtIndex( song_index )
-   *
-   * @access public
-   * @param {number} index 	- The integer for the index of the song in the songs array.
-   * @returns {object} JSON representation for the song at a specific index.
-   */
-  function getSongAtIndex(index) {
-    return config.songs[index];
-  }
+  // /**
+  //  * Returns a song in the songs array at that index
+  //  *
+  //  * Public Accessor: Amplitude.getSongAtIndex( song_index )
+  //  *
+  //  * @access public
+  //  * @param {number} index 	- The integer for the index of the song in the songs array.
+  //  * @returns {object} JSON representation for the song at a specific index.
+  //  */
+  // function getSongAtIndex(index) {
+  //   return config.songs[index];
+  // }
 
-  /**
-   * Returns a song at a playlist index
-   *
-   * Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index
-   *
-   * @access public
-   * @param {number} index 			- The integer for the index of the song in the playlist.
-   * @param {string} playlist		- The key of the playlist we are getting the song at the index for
-   * @returns {object} JSON representation for the song at a specific index.
-   */
-  function getSongAtPlaylistIndex(playlist, index) {
-    let song = config.playlists[playlist].songs[index];
+  // /**
+  //  * Returns a song at a playlist index
+  //  *
+  //  * Public Accessor: Amplitude.getSongAtPlaylistIndex( playlist, index
+  //  *
+  //  * @access public
+  //  * @param {number} index 			- The integer for the index of the song in the playlist.
+  //  * @param {string} playlist		- The key of the playlist we are getting the song at the index for
+  //  * @returns {object} JSON representation for the song at a specific index.
+  //  */
+  // function getSongAtPlaylistIndex(playlist, index) {
+  //   let song = config.playlists[playlist].songs[index];
 
-    return song;
-  }
+  //   return song;
+  // }
 
-  /**
-   * Adds a song to the end of the config array.  This will allow Amplitude
-   * to play the song in a playlist type setting.
-   *
-   * Public Accessor: Amplitude.addSong( song_json )
-   *
-   * @access public
-   * @param {object} song 	- JSON representation of a song.
-   * @returns {number} New index of the song.
-   */
-  function addSong(song) {
-    /*
-			Ensures we have a songs array to push to.
-		*/
-    if (config.songs == undefined) {
-      config.songs = [];
-    }
+  // /**
+  //  * Adds a song to the end of the config array.  This will allow Amplitude
+  //  * to play the song in a playlist type setting.
+  //  *
+  //  * Public Accessor: Amplitude.addSong( song_json )
+  //  *
+  //  * @access public
+  //  * @param {object} song 	- JSON representation of a song.
+  //  * @returns {number} New index of the song.
+  //  */
+  // function addSong(song) {
+  //   /*
+	// 		Ensures we have a songs array to push to.
+	// 	*/
+  //   if (config.songs == undefined) {
+  //     config.songs = [];
+  //   }
 
-    config.songs.push(song);
+  //   config.songs.push(song);
 
-    if (config.shuffle_on) {
-      config.shuffle_list.push(song);
-    }
+  //   if (config.shuffle_on) {
+  //     config.shuffle_list.push(song);
+  //   }
 
-    if (SoundCloud.isSoundCloudURL(song.url)) {
-      SoundCloud.resolveIndividualStreamableURL(
-        song.url,
-        null,
-        config.songs.length - 1,
-        config.shuffle_on
-      );
-    }
+  //   if (SoundCloud.isSoundCloudURL(song.url)) {
+  //     SoundCloud.resolveIndividualStreamableURL(
+  //       song.url,
+  //       null,
+  //       config.songs.length - 1,
+  //       config.shuffle_on
+  //     );
+  //   }
 
-    return config.songs.length - 1;
-  }
+  //   return config.songs.length - 1;
+  // }
 
-  /**
-   * Adds a song to the beginning of the config array.
-   * This will allow Amplitude to play the song in a
-   * playlist type setting.
-   *
-   * Public Accessor: Amplitude.addSong( song_json )
-   *
-   * @access public
-   * @param {object} song 	- JSON representation of a song.
-   * @returns {number} New index of the song (0)
-   */
-  function prependSong(song) {
-    /*
-			Ensures we have a songs array to push to.
-		*/
-    if (config.songs == undefined) {
-      config.songs = [];
-    }
+  // /**
+  //  * Adds a song to the beginning of the config array.
+  //  * This will allow Amplitude to play the song in a
+  //  * playlist type setting.
+  //  *
+  //  * Public Accessor: Amplitude.addSong( song_json )
+  //  *
+  //  * @access public
+  //  * @param {object} song 	- JSON representation of a song.
+  //  * @returns {number} New index of the song (0)
+  //  */
+  // function prependSong(song) {
+  //   /*
+	// 		Ensures we have a songs array to push to.
+	// 	*/
+  //   if (config.songs == undefined) {
+  //     config.songs = [];
+  //   }
 
-    config.songs.unshift(song);
+  //   config.songs.unshift(song);
 
-    if (config.shuffle_on) {
-      config.shuffle_list.unshift(song);
-    }
+  //   if (config.shuffle_on) {
+  //     config.shuffle_list.unshift(song);
+  //   }
 
-    if (SoundCloud.isSoundCloudURL(song.url)) {
-      SoundCloud.resolveIndividualStreamableURL(
-        song.url,
-        null,
-        config.songs.length - 1,
-        config.shuffle_on
-      );
-    }
+  //   if (SoundCloud.isSoundCloudURL(song.url)) {
+  //     SoundCloud.resolveIndividualStreamableURL(
+  //       song.url,
+  //       null,
+  //       config.songs.length - 1,
+  //       config.shuffle_on
+  //     );
+  //   }
 
-    return 0;
-  }
+  //   return 0;
+  // }
 
   /**
    * Adds a song to a playlist. This will allow Amplitude to play the song in the

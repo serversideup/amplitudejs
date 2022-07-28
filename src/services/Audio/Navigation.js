@@ -17,7 +17,7 @@ export class Navigation {
     changeAudio( audio, index, direct = false ){
         this.#prepareAudioChange( audio );
 
-        this.#switchAudio(audio, index);
+        this.#switchAudio( audio, index );
 
         this.#afterAudioChange( direct );
     }
@@ -64,6 +64,6 @@ export class Navigation {
 
     #updateMetaData(){
         let metaData = new MetaDataElement();
-        metaData.displayMetaData();
+        metaData.updateActiveMetaData();
     }
 }

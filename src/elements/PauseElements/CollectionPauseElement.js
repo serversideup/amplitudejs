@@ -1,4 +1,5 @@
 import { Audio } from "@/core/Audio";
+import { config } from '@/config.js';
 import { ConfigState } from "@/services/ConfigState";
 import { PlayPauseElement } from "@/elements/PlayPauseElement";
 
@@ -36,7 +37,7 @@ export class CollectionPauseElement{
     #handleInteraction(){
         if( !ConfigState.isTouchMoving() ){
             let collectionKey = this.getAttribute('data-amplitude-collection-key');
-            
+
             // Ensure we pause the audio if the active collection is
             // what is controlled by this pause element.
             if( config.active_collection == collectionKey ){

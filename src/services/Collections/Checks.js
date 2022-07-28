@@ -1,8 +1,8 @@
 import { config } from "@/config";
 
 export class Checks {
-    static collectionExists( key ){
-		if( config.collections[ key ] ){
+    static collectionExists( index ){
+		if( config.collections[ index ] ){
 			return true;
 		}else{
 			return false;

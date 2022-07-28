@@ -41,7 +41,6 @@ export class CollectionTrackerElement{
             if( activeCollectionKey == elementCollectionKey ){
                 let locationPercentage = element.value;
                 let trackedLocation = Time.percentageInSeconds( locationPercentage );
-                
                 let audio = new Audio();
                 audio.setCurrentTime( trackedLocation )
             }
@@ -49,17 +48,19 @@ export class CollectionTrackerElement{
     }
 
     static syncUI( completionPercentage ){
-        let elements = document.querySelectorAll( CollectionTrackerElement.collectionTrackerQuery );
-        let activeCollectionKey = ConfigState.getActiveCollection();
+        if( !isNaN( completionPercentage ) ){
+            let elements = document.querySelectorAll( CollectionTrackerElement.collectionTrackerQuery );
+            let activeCollectionKey = ConfigState.getActiveCollection();
 
-        elements.forEach( ( element ) => {
-            let elementCollectionKey = element.getAttribute('data-amplitude-collection-key');
-            
-            if( activeCollectionKey == elementCollectionKey ){
-                element.value = completionPercentage;
-            }else{
-                element.value = 0;
-            }
-        });
+            elements.forEach( ( element ) => {
+                let elementCollectionKey = element.getAttribute('data-amplitude-collection-key');
+
+                if( activeCollectionKey == elementCollectionKey ){
+                    element.value = completionPercentage;
+                }else{
+                    element.value = 0;
+                }
+            });
+        }
     }
 }

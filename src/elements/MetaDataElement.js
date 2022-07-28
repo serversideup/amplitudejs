@@ -1,11 +1,21 @@
 import { config } from "@/config";
+import { ConfigState } from "@/services/ConfigState";
 
 export class MetaDataElement {
+    /**
+     * Active elements don't have a specific index or key associated with them
+     * data-amplitude-audio-info - WITHOUT an audio index is the active audio
+     * data-amplitude-audio-info + data-amplitude-audio-index - Will always be the specific audio
+     * 
+     * @todo Do global active collection info
+     *  data-amplitude-collection-info - WITHOUT data-amplitude-collection-key
+     */
     static globalMetaDataElementsQuery = '[data-amplitude-audio-info]:not([data-amplitude-audio-index]):not([data-amplitude-collection-key])';
     static collectionMetaDataElementsQuery = '[data-amplitude-audio-info][data-amplitude-collection-key]:not([data-amplitude-audio-index])';
+    
     static audioMetaDataElementsQuery = '[data-amplitude-audio-info][data-amplitude-audio-index]:not([data-amplitude-collection-key])';
     static collectionAudioMetaDataElementsQuery = '[data-amplitude-audio-info][data-amplitude-audio-index][data-amplitude-collection-key]';
-    static collectionInfoElementsQuery = '[data-amplitude-collection-info]';
+    static collectionInfoElementsQuery = '[data-amplitude-collection-info][data-amplitude-collection-key]';
 
     #imageMetaDataKeys = [
         "cover_art_url",
@@ -27,12 +37,12 @@ export class MetaDataElement {
      * Do Not Update - Individual audio element. These will be set with syncMetaData()
      * and won't need to be updated again.
      */
-    displayMetaData(){
-        this.#displayGlobalMetaElements();
-        this.#displayCollectionMetaElements();
+    updateActiveMetaData(){
+        this.#syncActiveGlobalMetaElements();
+        this.#syncActiveCollectionMetaElements();
     }
 
-    #displayGlobalMetaElements(){
+    #syncActiveGlobalMetaElements(){
         let globalAudioInfoElements = document.querySelectorAll( MetaDataElement.globalMetaDataElementsQuery );
 
         globalAudioInfoElements.forEach( ( element ) => {
@@ -43,14 +53,18 @@ export class MetaDataElement {
         });
     }
 
-    #displayCollectionMetaElements(){
+    #syncActiveCollectionMetaElements(){
         let collectionInfoElements = document.querySelectorAll( MetaDataElement.collectionMetaDataElementsQuery );
 
         collectionInfoElements.forEach( ( element ) => {
-            let key = element.getAttribute('data-amplitude-audio-info');
-            let value = ( config.active_metadata[ key ] != undefined ) ? config.active_metadata[ key ] : null;
+            let collectionKey = element.getAttribute('data-amplitude-collection-key');
 
-            this.#setMetaValue( key, value, element );
+            if( config.active_collection == collectionKey ){
+                let key = element.getAttribute('data-amplitude-audio-info');
+                let value = ( config.active_metadata[ key ] != undefined ) ? config.active_metadata[ key ] : null;
+
+                this.#setMetaValue( key, value, element );
+            }
         });
     }
     
@@ -73,8 +87,26 @@ export class MetaDataElement {
             let key = element.getAttribute('data-amplitude-audio-info');
             let audioIndex = element.getAttribute('data-amplitude-audio-index');
             let collectionKey = element.getAttribute('data-amplitude-collection-key');
-            let value = config.collections[ collectionKey ].audio[ audioIndex ][ info ] != undefined
-                            ? config.collections[ collectionKey ].audio[ audioIndex ][ info ]
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+
+            let value = config.collections[ collectionIndex ].audio[ audioIndex ][ key ] != undefined
+                            ? config.collections[ collectionIndex ].audio[ audioIndex ][ key ]
+                            : null;
+
+            this.#setMetaValue( key, value, element );
+        });
+    }
+
+    #displayCollectionMetaElements(){
+        let collectionInfoElements = document.querySelectorAll( MetaDataElement.collectionInfoElementsQuery );
+
+        collectionInfoElements.forEach( ( element ) => {
+            let key = element.getAttribute('data-amplitude-collection-info');
+            let collectionKey = element.getAttribute('data-amplitude-collection-key');
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+
+            let value = config.collections[ collectionIndex ][ key ] != undefined
+                            ? config.collections[ collectionIndex ][ key ]
                             : null;
 
             this.#setMetaValue( key, value, element );
@@ -91,13 +123,9 @@ export class MetaDataElement {
         }
     }
 
-    displayCollectionMetaData(){
-
-    }
-
     syncMetaData(){
         this.#displayAudioMetaElements();
         this.#displayCollectionAudioMetaElements();
-        this.displayCollectionMetaData();
+        this.#displayCollectionMetaElements();
     }
 }

@@ -11,6 +11,7 @@ export class Collections{
             this.#setActiveIndexes();
             this.#initializeShuffle();
             this.#initializeRepeat();
+            this.#setDefaultArt();
         }
     }
 
@@ -86,7 +87,11 @@ export class Collections{
         config.collections.forEach( ( collection ) => {
             collection.repeat = false;
         } );
+    }
 
-        console.log( config );
+    #setDefaultArt(){
+        config.collections.forEach( ( collection ) => {
+            collection.default_art = collection.default_art ? collection.default_art : config.default_collection_art;
+        } );
     }
 }

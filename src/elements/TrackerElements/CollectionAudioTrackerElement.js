@@ -52,19 +52,21 @@ export class CollectionAudioTrackerElement{
     }
 
     static syncUI( completionPercentage ){
-        let elements = document.querySelectorAll( CollectionAudioTrackerElement.collectionAudioTrackerQuery );
-        let activeCollectionKey = ConfigState.getActiveCollection();
-        let activeAudioIndex = ConfigState.getActiveAudioIndex();
+        if( !isNaN( completionPercentage ) ){
+            let elements = document.querySelectorAll( CollectionAudioTrackerElement.collectionAudioTrackerQuery );
+            let activeCollectionKey = ConfigState.getActiveCollection();
+            let activeAudioIndex = ConfigState.getActiveAudioIndex();
 
-        elements.forEach( ( element ) => {
-            let elementCollectionKey = element.getAttribute('data-amplitude-collection-key');
-            let elementAudioIndex = element.getAttribute('data-amplitude-audio-index');
-            
-            if( ( activeCollectionKey == elementCollectionKey ) && ( activeAudioIndex == elementAudioIndex ) ){
-                element.value = completionPercentage;
-            }else{
-                element.value = 0;
-            }
-        });
+            elements.forEach( ( element ) => {
+                let elementCollectionKey = element.getAttribute('data-amplitude-collection-key');
+                let elementAudioIndex = element.getAttribute('data-amplitude-audio-index');
+                
+                if( ( activeCollectionKey == elementCollectionKey ) && ( activeAudioIndex == elementAudioIndex ) ){
+                    element.value = completionPercentage;
+                }else{
+                    element.value = 0;
+                }
+            });
+        }
     }
 }
