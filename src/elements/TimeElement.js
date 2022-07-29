@@ -23,8 +23,12 @@ export class TimeElement {
         collectionAudioCurrentTimeElement.sync();
     }
 
-    syncDurationTime(){
-
+    syncDurationTime( currentTime, duration ){
+        let globalDurationElement = new GlobalDurationElement( currentTime, duration );
+        globalDurationElement.sync();
+        
+        let audioDurationElement = new AudioDurationElement( currentTime, duration );
+        audioDurationElement.sync();
     }
 
     resetDurationTime(){

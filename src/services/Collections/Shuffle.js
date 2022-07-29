@@ -1,28 +1,31 @@
 import { ConfigState } from '@/services/ConfigState';
+import { config } from '@/config.js';
 
 export class Shuffle {
-    #collection
+    #collectionKey
+    #collectionIndex
 
-    constructor( collection ){
-        this.#collection = collection;
+    constructor( collectionKey ){
+        this.#collectionKey = collectionKey;
+        this.#collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
     }
 
-    toggleShuffle( collection ){
-        let isShuffled = ConfigState.isCollectionShuffled( collection );
+    toggleShuffle(){
+        let isShuffled = ConfigState.isCollectionShuffled( this.#collectionIndex );
 
         if( isShuffled ){
-            ConfigState.setCollectionShuffled( collection, false, [] );
+            ConfigState.setCollectionShuffled( this.#collectionIndex, false, [] );
         }else{
-            let shuffledAudio = this.#shuffleAudio( collection );
-            ConfigState.setCollectionShuffled( collection, true, shuffledAudio );
+            let shuffledAudio = this.#shuffleAudio( this.#collectionIndex );
+            ConfigState.setCollectionShuffled( this.#collectionIndex, true, shuffledAudio );
         }
     }
 
-    #shuffleAudio( collection ){
-        let audio = ConfigState.getCollectionAudio( collection );
+    #shuffleAudio( collectionIndex ){
+        let audio = ConfigState.getCollectionAudio( collectionIndex );
         let shuffleTemp = new Array( audio.length );
 
-        audio.forEach( ( audio, index ) => {
+        audio.forEach( ( audioFile, index ) => {
             shuffleTemp[ index ] = audio[ index ]
         });
 

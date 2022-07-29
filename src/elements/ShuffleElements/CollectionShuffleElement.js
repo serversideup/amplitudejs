@@ -38,14 +38,32 @@ export class CollectionShuffleElement {
         let shuffle = new Shuffle( collectionKey );
         shuffle.toggleShuffle();
 
-        CollectionShuffleElement.syncUI( collectionKey )
+        CollectionShuffleElement.updateUI( collectionKey );
     }
 
-    static syncUI( collection ){
-        let elements = document.querySelectorAll( '.amplitude-shuffle[data-amplitude-collection="'+collection+'"]');
-        
+    static updateUI( collectionKey ){
+        let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+        let elements = document.querySelectorAll( '.amplitude-shuffle[data-amplitude-collection-key="'+collectionKey+'"]');
+
         elements.forEach( ( element ) => {
-            if( ConfigState.isCollectionShuffled( collection ) ){
+            if( ConfigState.isCollectionShuffled( collectionIndex ) ){
+                element.classList.add( "amplitude-shuffle-on" );
+                element.classList.remove( "amplitude-shuffle-off" );
+            }else{
+                element.classList.add( "amplitude-shuffle-off" );
+                element.classList.remove( "amplitude-shuffle-on" );
+            }
+        });
+    }
+
+    static syncUI(){
+        let elements = document.querySelectorAll( CollectionShuffleElement.collectionShuffleQuery );
+
+        elements.forEach( ( element ) => {
+            let collectionKey = element.getAttribute('data-amplitude-collection-key');
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+
+            if( ConfigState.isCollectionShuffled( collectionIndex ) ){
                 element.classList.add( "amplitude-shuffle-on" );
                 element.classList.remove( "amplitude-shuffle-off" );
             }else{

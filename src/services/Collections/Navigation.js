@@ -37,7 +37,7 @@ export class Navigation {
         if( config.repeat_audio ){
             return this.#repeatedAudio( collectionIndex );
         }else{
-            if( config.collections[ collectionIndex ].shuffle ){
+            if( config.collections[ collectionIndex ].shuffled ){
                 return this.#nextShuffledAudio( collectionIndex );
             }else{
                 return this.#nextCollectionAudio( collectionIndex );
@@ -73,7 +73,7 @@ export class Navigation {
 
         return {
             'index': nextIndex,
-            'audio': config.collections[ collectionIndex ].shuffleList[ nextIndex ],
+            'audio': config.collections[ collectionIndex ].shuffle_list[ nextIndex ],
             'end': endOfList
         }
     }
@@ -158,7 +158,7 @@ export class Navigation {
 
         return {
             'index': previousIndex,
-            'audio': config.collections[ collectionIndex ].shuffleList[ previousIndex ]
+            'audio': config.collections[ collectionIndex ].shuffle_list[ previousIndex ]
         }
     }
 

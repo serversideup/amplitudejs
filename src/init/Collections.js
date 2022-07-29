@@ -78,7 +78,7 @@ export class Collections{
 
     #initializeShuffle(){
         config.collections.forEach( ( collection ) => {
-            collection.shuffle = false;
+            collection.shuffled = false;
             collection.shuffle_list = [];
         } );
     }

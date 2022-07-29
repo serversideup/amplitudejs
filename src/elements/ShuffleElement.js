@@ -29,4 +29,9 @@ export class ShuffleElement {
         let collectionShuffleElement = new CollectionShuffleElement();
         collectionShuffleElement.initialize();
     }
+
+    static syncAll(){
+        GlobalShuffleElement.syncUI();
+        CollectionShuffleElement.syncUI();
+    }
 }

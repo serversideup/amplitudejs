@@ -5,6 +5,32 @@ export class Time {
         return config.audio_element.duration * (percentage / 100);
     }
 
+    static computeTimeRemaining( currentTime, duration ){
+        let totalCurrentSeconds = parseInt( currentTime.seconds ) +
+                                  ( parseInt( currentTime.minutes ) * 60 ) +
+                                  ( parseInt( currentTime.hours ) * 60 * 60 );
+
+        let totalDurationSeconds = parseInt( duration.seconds ) +
+                                   ( parseInt( duration.minutes ) * 60 ) +
+                                   ( parseInt( duration.hours ) * 60 * 60 );
+
+        if( !isNaN( totalCurrentSeconds ) && !isNaN( totalDurationSeconds ) ){
+            let timeRemainingTotalSeconds = totalDurationSeconds - totalCurrentSeconds;
+
+            let remainingHours = Math.floor( timeRemainingTotalSeconds / 3600 );
+            let remainingMinutes = Math.floor( (timeRemainingTotalSeconds - remainingHours * 3600) / 60 );
+            let remainingSeconds = timeRemainingTotalSeconds - ( remainingHours * 3600 ) - ( remainingMinutes * 60 );
+
+            return {
+                hours: remainingHours < 10 ? "0" + remainingHours : remainingHours,
+                minutes: remainingMinutes < 10 ? "0" + remainingMinutes : remainingMinutes,
+                seconds: remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds
+            }
+        }else{
+            return null;
+        }
+    }
+
     computeCurrentTimes(){
         let currentTime = {};
 

@@ -36,13 +36,13 @@ export class GlobalShuffleElement {
 
     #handleInteraction(){
         if( ConfigState.getScope() == 'collection' ){
-            let collection = ConfigState.getActiveCollection();
+            let collectionKey = ConfigState.getActiveCollection();
 
             let shuffle = new Shuffle( collectionKey );
             shuffle.toggleShuffle();
 
             GlobalShuffleElement.syncUI();
-            CollectionShuffleElement.syncUI( collection );
+            CollectionShuffleElement.updateUI( collectionKey );
         }else{
             Debug.writeMessage("You can only shuffle a collection if you are playing a collection.");
         }
@@ -50,10 +50,11 @@ export class GlobalShuffleElement {
 
     static syncUI(){
         let elements = document.querySelectorAll( GlobalShuffleElement.globalShuffleQuery );
-        let collection = ConfigState.getActiveCollection();
+        let collectionKey = ConfigState.getActiveCollection();
+        let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
 
         elements.forEach( ( element ) => {
-            if( ConfigState.isCollectionShuffled( collection ) ){
+            if( ConfigState.isCollectionShuffled( collectionIndex ) ){
                 element.classList.add( "amplitude-shuffle-on" );
                 element.classList.remove( "amplitude-shuffle-off" );
             }else{

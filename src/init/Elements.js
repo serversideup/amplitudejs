@@ -110,6 +110,8 @@ export class Elements{
     #initializeShuffleElement(){
         let shuffleElement = new ShuffleElement();
         shuffleElement.setUp();
+
+        ShuffleElement.syncAll();
     }
 
     #initializeSkipToElement(){

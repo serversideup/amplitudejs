@@ -25,6 +25,12 @@
         .amplitude-not-muted .state-muted{
             display: none;
         }
+        .amplitude-shuffle-on .state-not-shuffled{
+            display: none;
+        }
+        .amplitude-shuffle-off .state-shuffled{
+          display: none;
+      }
         .amplitude-playback-speed.amplitude-playback-speed-10 .speed-10{
             display: inline-block;
         }
@@ -62,7 +68,9 @@
           <button type="button" class="amplitude-playback-speed mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Playback Speed <span class="speed-10 hidden">(1.0x)</span><span class="speed-15 hidden">(1.5x)</span><span class="speed-20 hidden">(2.0x)</span>
           </button>
-          <button type="button" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Shuffle</button>
+          <button type="button" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Shuffle <span class="state-shuffled">(Shuffled)</span><span class="state-not-shuffled">(Not Shuffled)</span>
+          </button>
           <button type="button" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Next</button>
           <button type="button" class="amplitude-previous mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Previous</button>
         </div>
@@ -75,10 +83,42 @@
         <strong>Progress</strong>
         <progress class="amplitude-audio-played-progress" max="100"></progress>
 
-        Time: <span class="amplitude-current-time"></span><br>
-        Hours: <span class="amplitude-current-hours"></span><br>
-        Minutes: <span class="amplitude-current-minutes"></span><br>
-        Seconds: <span class="amplitude-current-seconds"></span><br><br>
+        <h3 class="font-semi-bold text-center text-sm my-3">Time</h3>
+
+        <h4 class="text-center text-xs my-3">Current</h4>
+        <div class="flex flex-row">
+          Time: <span class="amplitude-current-time"></span>
+        </div>
+        <div class="flex flex-row">
+          Hours: <span class="amplitude-current-hours"></span>
+        </div>
+        <div class="flex flex-row">
+          Minutes: <span class="amplitude-current-minutes"></span>
+        </div>
+        <div class="flex flex-row">
+          Seconds: <span class="amplitude-current-seconds"></span>
+        </div>
+
+        <h4 class="text-center text-xs my-3">Duration</h4>
+        <div class="flex flex-row">
+          Remaining: <span class="amplitude-time-remaining"></span>
+        </div>
+        <div class="flex flex-row">
+          Time: <span class="amplitude-duration-time"></span>
+        </div>
+        <div class="flex flex-row">
+          Hours: <span class="amplitude-duration-hours"></span>
+        </div>
+        <div class="flex flex-row">
+          Minutes: <span class="amplitude-duration-minutes"></span>
+        </div>
+        <div class="flex flex-row">
+          Seconds: <span class="amplitude-duration-seconds"></span>
+        </div>
+        
+        
+        
+        
 
         <h3 class="font-semi-bold text-center text-sm my-3">Meta Data</h3>
         Active Audio Name: <span data-amplitude-audio-info="name"></span>
@@ -109,7 +149,9 @@
           </button>
           <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-play mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Play</button>
           <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pause</button>
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Shuffle</button>
+          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Shuffle <span class="state-shuffled">(Shuffled)</span><span class="state-not-shuffled">(Not Shuffled)</span>
+          </button>
           <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Next</button>
           <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-previous mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Previous</button>
         </div>
@@ -163,7 +205,9 @@
         </button>
         <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-play mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Play</button>
         <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pause</button>
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Shuffle</button>
+        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Shuffle <span class="state-shuffled">(Shuffled)</span><span class="state-not-shuffled">(Not Shuffled)</span>
+        </button>
         <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Next</button>
         <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-previous mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Previous</button>
       </div>

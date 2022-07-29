@@ -68,21 +68,21 @@ export class ConfigState{
 		return config.playback_speed;
 	}
 
-	static isCollectionShuffled( collection ){
-		if( config.collections[ collection ] && config.collections[ collection ].shuffled ){
+	static isCollectionShuffled( collectionIndex ){
+		if( config.collections[ collectionIndex ] && config.collections[ collectionIndex ].shuffled ){
 			return true;
 		}else{ 
 			return false;
 		}
 	}
 
-	static setCollectionShuffled( collection, shuffled, audio ){
-		config.collections[ collection ].shuffled = shuffled;
-		config.collections[ collection ].audio = audio;
+	static setCollectionShuffled( collectionIndex, shuffled, audio ){
+		config.collections[ collectionIndex ].shuffled = shuffled;
+		config.collections[ collectionIndex ].shuffle_list = audio;
 	}
 
-	static getCollectionAudio( collection ){
-		return config.collections[ collection ].audio;
+	static getCollectionAudio( collectionIndex ){
+		return config.collections[ collectionIndex ].audio;
 	}
 
 	static getActiveCollection(){
