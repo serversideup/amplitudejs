@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Amplitude Vite</title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
@@ -45,225 +44,129 @@
         }
     </style>
   </head>
-  <body class="grid grid-cols-3 gap-4 px-4">
-    <div class="col-span-3 flex items-center justify-center p-4">
-        <img src="https://521dimensions.com/img/amplitude-small-icon.svg"/>
-    </div>
-    <div class="p-4 flex flex-col shadow rounded-md">
-        <h2 class="font-bold text-center text-slate-700 mb-5">Global Elements</h2>
+  <body class="flex flex-col px-4" style="width: 600px">
+    <h2 class="font-bold text-4xl">Meta Data Elements</h2>
 
-        <h3 class="font-semi-bold text-center text-sm my-3">Elements</h3>
-        <div class="flex flex-wrap">
-          <button type="button" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Play/Pause <span class="state-paused">(Paused)</span><span class="state-playing">(Playing)</span>
-          </button>
-          <button type="button" class="amplitude-play mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Play</button>
-          <button type="button" class="amplitude-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pause</button>
-          <button type="button" class="amplitude-stop mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Stop</button>
-          <button type="button" class="amplitude-volume-up mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Volume Up</button>
-          <button type="button" class="amplitude-volume-down mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Volume Down</button>
-          <button type="button" class="amplitude-mute mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Mute <span class="state-muted">(Muted)</span><span class="state-not-muted">(Not Muted)</span>
-          </button>
-          <button type="button" class="amplitude-playback-speed mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Playback Speed <span class="speed-10 hidden">(1.0x)</span><span class="speed-15 hidden">(1.5x)</span><span class="speed-20 hidden">(2.0x)</span>
-          </button>
-          <button type="button" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Shuffle <span class="state-shuffled">(Shuffled)</span><span class="state-not-shuffled">(Not Shuffled)</span>
-          </button>
-          <button type="button" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Next</button>
-          <button type="button" class="amplitude-previous mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Previous</button>
-        </div>
-        <strong>Volume</strong>
-        <input type="range" class="amplitude-volume-slider mb-4"/>
+    <h3 class="font-bold text-2xl">Global</h3>
+    <input type="range" class="amplitude-audio-tracker"/>
+    <button type="button" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
+    </button>
+    <span data-amplitude-audio-info="name"></span>
+    <span data-amplitude-audio-info="artist"></span>
+    <img data-amplitude-audio-info="cover_art_url" class="w-10 h-10"/>
 
-        <strong>Audio Tracker</strong>
-        <input type="range" class="amplitude-audio-tracker" step=".1"/>
+    <h3 class="font-bold text-2xl">Collection Play/Pause</h3>
+    <strong>Emancipator Vibes</strong>
+    <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
+    </button>
+    <span data-amplitude-collection-info="name" data-amplitude-collection-key="emancipator-vibes"></span>
+    <img data-amplitude-collection-info="collection_art_url" data-amplitude-collection-key="emancipator-vibes" class="w-20 h-20"/>
 
-        <strong>Progress</strong>
-        <progress class="amplitude-audio-played-progress" max="100"></progress>
+    <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Next
+    </button>
 
-        <h3 class="font-semi-bold text-center text-sm my-3">Time</h3>
+    <span data-amplitude-audio-info="name" data-amplitude-collection-key="emancipator-vibes"></span>
+    <span data-amplitude-audio-info="artist" data-amplitude-collection-key="emancipator-vibes"></span>
+    <img data-amplitude-audio-info="cover_art_url" data-amplitude-collection-key="emancipator-vibes" class="w-10 h-10"/>
 
-        <h4 class="text-center text-xs my-3">Current</h4>
-        <div class="flex flex-row">
-          Time: <span class="amplitude-current-time"></span>
-        </div>
-        <div class="flex flex-row">
-          Hours: <span class="amplitude-current-hours"></span>
-        </div>
-        <div class="flex flex-row">
-          Minutes: <span class="amplitude-current-minutes"></span>
-        </div>
-        <div class="flex flex-row">
-          Seconds: <span class="amplitude-current-seconds"></span>
-        </div>
+    
+    <strong>Big Collection</strong>
+    <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
+    </button>
+    <img data-amplitude-collection-info="collection_art_url" data-amplitude-collection-key="big-collection" class="w-20 h-20"/>
 
-        <h4 class="text-center text-xs my-3">Duration</h4>
-        <div class="flex flex-row">
-          Remaining: <span class="amplitude-time-remaining"></span>
-        </div>
-        <div class="flex flex-row">
-          Time: <span class="amplitude-duration-time"></span>
-        </div>
-        <div class="flex flex-row">
-          Hours: <span class="amplitude-duration-hours"></span>
-        </div>
-        <div class="flex flex-row">
-          Minutes: <span class="amplitude-duration-minutes"></span>
-        </div>
-        <div class="flex flex-row">
-          Seconds: <span class="amplitude-duration-seconds"></span>
-        </div>
-        
-        
-        
-        
+    <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Next
+    </button>
 
-        <h3 class="font-semi-bold text-center text-sm my-3">Meta Data</h3>
-        Active Audio Name: <span data-amplitude-audio-info="name"></span>
+    <span data-amplitude-audio-info="name" data-amplitude-collection-key="big-collection"></span>
+    <span data-amplitude-audio-info="artist" data-amplitude-collection-key="big-collection"></span>
+    <img data-amplitude-audio-info="cover_art_url" data-amplitude-collection-key="big-collection" class="w-10 h-10"/>
+   
+    <br><br><br>
 
-        <hr class="mb-10">
+    <strong>Audio</strong>
+    
 
-        <input type="text" placeholder="Should not listen to key handler"/>
-        <select>
-            <option>Should not listen to key handlers</option>
-        </select>
-        <textarea placeholder="Should not listen to key handler"></textarea>
-    </div>
+    <span>Audio 0</span>
+    <span data-amplitude-audio-info="name" data-amplitude-audio-index="0"></span>
+    <img data-amplitude-audio-info="cover_art_url" data-amplitude-audio-index="0" class="w-10 h-10"/>
+    <button type="button" data-amplitude-audio-index="0" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
+    </button>
 
-    <div class="p-4 flex flex-col shadow rounded-md">
-        <h2 class="font-bold text-center text-slate-700 mb-5">Emancipator Vibes Collection Elements</h2>
-        
-        <h2 class="font-bold text-slate-700 mb-5">STATIC Collection Elements</h2>
-        Released <span data-amplitude-collection-key="emancipator-vibes" data-amplitude-collection-info="released"></span>
-        Created By <span data-amplitude-collection-key="emancipator-vibes" data-amplitude-collection-info="created_by"></span>
-
-        <h2 class="font-bold text-slate-700 my-5">ACTIVE Collection Elements</h2>
-        Active Collection Audio Name: <span data-amplitude-audio-info="name" data-amplitude-collection-key="emancipator-vibes"></span>
-        
-        <h3 class="font-semi-bold text-center text-sm my-3">Elements</h3>
-        <div class="flex flex-wrap">
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Play/Pause <span class="state-paused">(Paused)</span><span class="state-playing">(Playing)</span>
-          </button>
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-play mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Play</button>
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pause</button>
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Shuffle <span class="state-shuffled">(Shuffled)</span><span class="state-not-shuffled">(Not Shuffled)</span>
-          </button>
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Next</button>
-          <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-previous mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Previous</button>
-        </div>
-
-        <strong>Audio Tracker</strong>
-        <input type="range" data-amplitude-collection-key="emancipator-vibes" class="amplitude-audio-tracker" step=".1"/>
-
-        <strong>Progress</strong>
-        <progress data-amplitude-collection-key="emancipator-vibes" class="amplitude-audio-played-progress" max="100"></progress>
-
-        Time: <span data-amplitude-collection-key="emancipator-vibes" class="amplitude-current-time"></span><br>
-        Hours: <span data-amplitude-collection-key="emancipator-vibes" class="amplitude-current-hours"></span><br>
-        Minutes: <span data-amplitude-collection-key="emancipator-vibes" class="amplitude-current-minutes"></span><br>
-        Seconds: <span data-amplitude-collection-key="emancipator-vibes" class="amplitude-current-seconds"></span><br><br>
-
-        <hr class="mb-10">
-
-        <input type="text" placeholder="Should not listen to key handler"/>
-        <select>
-            <option>Should not listen to key handlers</option>
-        </select>
-        <textarea placeholder="Should not listen to key handler"></textarea>
-
-        <h3 class="font-semi-bold text-center text-sm my-3">Audio Files</h3>
-        
-        <div class="w-full amplitude-audio-container" data-amplitude-collection-key="emancipator-vibes" data-amplitude-audio-index="0">
-            First Song
-        </div>
-        <div class="w-full amplitude-audio-container" data-amplitude-collection-key="emancipator-vibes" data-amplitude-audio-index="1">
-            Second Song
-        </div>
-        <div class="w-full amplitude-audio-container" data-amplitude-collection-key="emancipator-vibes" data-amplitude-audio-index="2">
-            Third Song
-        </div>
-    </div>
-
-    <div class="p-4 flex flex-col shadow rounded-md">
-      <h2 class="font-bold text-center text-slate-700 mb-5">Big Collection Elements</h2>
-      
-      <h2 class="font-bold text-slate-700 mb-5">STATIC Collection Elements</h2>
-      Type <span data-amplitude-collection-key="big-collection" data-amplitude-collection-info="type"></span>
-      Created By <span data-amplitude-collection-key="big-collection" data-amplitude-collection-info="created_by"></span>
-
-      <h2 class="font-bold text-slate-700 my-5">ACTIVE Collection Elements</h2>
-      Active Collection Audio Name: <span data-amplitude-audio-info="name" data-amplitude-collection-key="big-collection"></span>
-      
-      <h3 class="font-semi-bold text-center text-sm my-3">Elements</h3>
-      <div class="flex flex-wrap">
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Play/Pause <span class="state-paused">(Paused)</span><span class="state-playing">(Playing)</span>
-        </button>
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-play mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Play</button>
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pause</button>
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-shuffle mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Shuffle <span class="state-shuffled">(Shuffled)</span><span class="state-not-shuffled">(Not Shuffled)</span>
-        </button>
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Next</button>
-        <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-previous mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Previous</button>
-      </div>
-
-      <strong>Audio Tracker</strong>
-      <input type="range" data-amplitude-collection-key="big-collection" class="amplitude-audio-tracker" step=".1"/>
-
-      <strong>Progress</strong>
-      <progress data-amplitude-collection-key="big-collection" class="amplitude-audio-played-progress" max="100"></progress>
-
-      Time: <span data-amplitude-collection-key="big-collection" class="amplitude-current-time"></span><br>
-      Hours: <span data-amplitude-collection-key="big-collection" class="amplitude-current-hours"></span><br>
-      Minutes: <span data-amplitude-collection-key="big-collection" class="amplitude-current-minutes"></span><br>
-      Seconds: <span data-amplitude-collection-key="big-collection" class="amplitude-current-seconds"></span><br><br>
-
-      <hr class="mb-10">
-
-      <input type="text" placeholder="Should not listen to key handler"/>
-      <select>
-          <option>Should not listen to key handlers</option>
-      </select>
-      <textarea placeholder="Should not listen to key handler"></textarea>
-
-      <h3 class="font-semi-bold text-center text-sm my-3">Audio Files</h3>
-      
-      <div class="w-full amplitude-audio-container" data-amplitude-collection-key="big-collection" data-amplitude-audio-index="0">
-          First Song
-      </div>
-      <div class="w-full amplitude-audio-container" data-amplitude-collection-key="big-collection" data-amplitude-audio-index="1">
-          Second Song
-      </div>
-      <div class="w-full amplitude-audio-container" data-amplitude-collection-key="big-collection" data-amplitude-audio-index="2">
-          Third Song
-      </div>
-  </div>
+    <span>Audio 1</span>
+    <span data-amplitude-audio-info="name" data-amplitude-audio-index="1"></span>
+    <img data-amplitude-audio-info="cover_art_url" data-amplitude-audio-index="1" class="w-10 h-10"/>
+    <button type="button" data-amplitude-audio-index="1" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
+    </button>
+    
+    <br><br>
 
     <script type="module">
 
         import Amplitude from './src/index.js';
-    
+
         Amplitude.init({
           "debug": true,
           "delay": "3",
           "key_bindings": {
             "default": true
           },
-          "callbacks": [
+          "starting": {
+            "audio_index": 0
+          },
+          "art": {
+            "default_audio_art": "https://www.rootzwiki.com/attachments/unkownalbum-jpg.19745",
+            "default_collection_art": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f5a34e108782021.5fc5820ec88bf.png"
+          },
+          "audio": [
             {
-              "event": "next",
-              "handler": "next_audio"
+              "name": "First Snow",
+              "artist": "Emancipator",
+              "album": "Soon It Will Be Cold Enough",
+              "url": "https://521dimensions.com/song/FirstSnow-Emancipator.mp3",
+              "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/soon-it-will-be-cold-enough.jpg"
+            },
+            {
+              "name": "Intro / Sweet Glory",
+              "artist": "Jimkata",
+              "album": "Die Digital",
+              "url": "https://521dimensions.com/song/IntroSweetGlory-Jimkata.mp3",
+              "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/die-digital.jpg"
+            },
+            {
+              "name": "Offcut #6",
+              "artist": "Little People",
+              "album": "We Are But Hunks of Wood Remixes",
+              "url": "https://521dimensions.com/song/Offcut6-LittlePeople.mp3",
+              "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-but-hunks-of-wood.jpg"
+            },
+            {
+              "name": "Dusk To Dawn",
+              "artist": "Emancipator",
+              "album": "Dusk To Dawn",
+              "url": "https://521dimensions.com/song/DuskToDawn-Emancipator.mp3",
+              "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/from-dusk-to-dawn.jpg"
+            },
+            {
+              "name": "Anthem",
+              "artist": "Emancipator",
+              "album": "Soon It Will Be Cold Enough",
+              "url": "https://521dimensions.com/song/Anthem-Emancipator.mp3",
+              "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/soon-it-will-be-cold-enough.jpg"
             }
-          ],
+            ],
           "collections": [
             {
               "name": "Emancipator Vibes",
               "key": "emancipator-vibes",
+              "collection_art_url": "https://blog.society6.com/app/uploads/2020/10/a008c790e77a427bb0bac5a3bb1b3af4.jpeg",
               "audio": [
                 {
                   "name": "Anthem-Emancipator.mp3",
@@ -285,7 +188,7 @@
                 },
                 {
                   "name": "FirstSnow-Emancipator.mp3",
-                  "url": "https://api-amplitude-hosting.dev.test/storage/audio/1/jikSMShn1XOBB65Di8JGo5n9Y3XPMKlkN3gLnMl7.mp3",
+                  "url": "https://521dimensions.com/song/FirstSnow-Emancipator.mp3",
                   "format": "mp3",
                   "title": "first snow",
                   "artist": "emancipator",

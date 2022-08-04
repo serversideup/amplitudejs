@@ -21,6 +21,15 @@ export class Shuffle {
         }
     }
 
+    setShuffled( shuffled = true ){
+        if( shuffled ){
+            ConfigState.setCollectionShuffled( this.#collectionIndex, false, [] );
+        }else{
+            let shuffledAudio = this.#shuffleAudio( this.#collectionIndex );
+            ConfigState.setCollectionShuffled( this.#collectionIndex, true, shuffledAudio );
+        }
+    }
+
     #shuffleAudio( collectionIndex ){
         let audio = ConfigState.getCollectionAudio( collectionIndex );
         let shuffleTemp = new Array( audio.length );

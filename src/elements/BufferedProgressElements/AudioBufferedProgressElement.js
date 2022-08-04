@@ -6,13 +6,17 @@ export class AudioBufferedProgressElement{
 
     static syncUI(){
         let activeIndex = ConfigState.getActiveAudioIndex();
-        let elements = document.querySelectorAll('progress.amplitude-buffered-progress[data-amplitude-audio-index="'+activeIndex+'"]:not([data-amplitude-collection-key])');
+        let elements = document.querySelectorAll( AudioBufferedProgressElement.audioBufferedProgressQuery );
 
         elements.forEach( function( element ){
-            if( !isNaN( config.buffered ) ){
+            let audioIndex = element.getAttribute('data-amplitude-audio-index');
+
+            if( activeIndex == audioIndex && !isNaN( config.buffered ) ){
                 element.value = parseFloat(
                     ConfigState.getBufferedPercentage()
                 );
+            }else{
+                element.value = 0;
             }
         });
     }

@@ -1,5 +1,8 @@
 import { config } from "@/config.js";
 import { ConfigState } from "@/services/ConfigState.js";
+import { Debug } from "@/services/Debug";
+import { Shuffle } from "@/services/Collections/Shuffle";
+import { ShuffleElement } from "@/elements/ShuffleElement";
 
 /**
  * Returns the key of the active collection
@@ -41,4 +44,69 @@ export function getActiveCollectionMetadata() {
 export function getAudioAtCollectionIndex(collectionKey, audioIndex) {
     let collectionIndex = ConfigState.getCollectionIntegerIndex(collectionKey);
     return config.collections[collectionIndex].audio[audioIndex];
+}
+
+/**
+ * Returns whether the active collection is shuffled or not
+ * 
+ * Public Accessor: Amplitude.getActiveCollectionShuffled()
+ * 
+ * @access public
+ * 
+ * @returns {bool} True or false whether the active colleciton is shuffled
+ */
+export function getActiveCollectionShuffled(){
+    let collectionKey = ConfigState.getActiveCollection();
+    let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+
+    return config.collections[collectionIndex].shuffled;
+}
+
+/**
+ * Toggles the shuffle state on the active collection.
+ * 
+ * Public Accessor: Amplitude.toggleActiveCollectionShuffle()
+ * 
+ * @access public
+ */
+export function toggleActiveCollectionShuffle(){
+    if( ConfigState.getScope() == 'collection' ){
+        let collectionKey = ConfigState.getActiveCollection();
+
+        let shuffle = new Shuffle( collectionKey );
+        shuffle.toggleShuffle();
+
+        ShuffleElement.syncAll();
+    }else{
+        Debug.writeMessage("You can only shuffle a collection if you are playing a collection.");
+    }
+}
+
+/**
+ * Returns whether the specified collection is shuffled or not
+ * 
+ * Public Accessor: Amplitude.getCollectionShuffled( collectionKey )
+ * 
+ * @param {string} collection - The key of the collection we are checking is shuffled
+ * 
+ * @returns {bool} True or false whether the specified collection is shuffled.
+ */
+export function getCollectionShuffled( collectionKey ){
+    let collectionIndex = ConfigState.getCollectionIntegerIndex(collectionKey);
+    return config.collections[collectionIndex].shuffled;
+}
+
+/**
+ * Sets whether the specified collection is shuffled
+ * 
+ * Public Accessor: Amplitude.setCollectionShuffled( collectionKey, shuffled )
+ * 
+ * @param {string} collection - The key of the collection we are shuffling.
+ * @param {bool} shuffled - Whether we are shuffling the collection or not.
+ */
+export function setCollectionShuffled( collectionKey, shuffled = true ){
+    let shuffle = new Shuffle( collectionKey );
+    shuffle.setShuffled( shuffled );
+
+    ShuffleElement.syncAll();
 }

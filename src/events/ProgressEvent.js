@@ -10,7 +10,6 @@ export class ProgressEvent{
 
     #handle(){
         ConfigState.updateBufferedTime();
-
-        //BufferedProgressElement.syncAll();
+        BufferedProgressElement.syncAll();
     }
 }

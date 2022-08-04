@@ -1,4 +1,4 @@
-// import { ProgressEvent } from "@/events/ProgressEvent";
+import { ProgressEvent } from "@/events/ProgressEvent";
 import { AudioEndedEvent } from "@/events/AudioEndedEvent";
 import { KeyBindingEvents } from "@/events/KeyBindingEvents";
 import { TimeUpdateEvent } from "@/events/TimeUpdateEvent";
@@ -13,7 +13,7 @@ export class Events{
         this.#bindTimeUpdateEvents();
         this.#bindKeyBindingEvents();
         this.#bindAudioEndedEvent();
-        // this.#bindProgressEvent();
+        this.#bindProgressEvent();
         this.#bindAudioElementEventCallbacks();
     }
 

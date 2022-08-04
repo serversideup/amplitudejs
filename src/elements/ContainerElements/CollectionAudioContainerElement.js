@@ -14,9 +14,10 @@ export class CollectionAudioContainerElement {
     }
 
     setActive(){
+        this.#findElements();
+        this.#resetElements();
+        
         if( ConfigState.getScope() == 'collection' ){
-            this.#findElements();
-            this.#resetElements();
             this.#getActiveIndex();
             this.#setActiveContainerElements();
         }

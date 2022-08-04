@@ -52,12 +52,13 @@ export class CollectionAudioPlayPauseElement {
 
     #handleCollectionChanges( collectionKey, audioIndex ){
         if( CollectionChecks.collectionChanged( collectionKey ) ){
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
             let collectionNavigation = new CollectionNavigation();
 
             collectionNavigation.setActiveCollection( collectionKey );
             collectionNavigation.changeCollectionAudio(
-                collectionKey,
-                config.collections[ collectionKey ].audio[audioIndex],
+                collectionIndex,
+                config.collections[ collectionIndex ].audio[ audioIndex ],
                 audioIndex,
                 true
             );
@@ -66,10 +67,11 @@ export class CollectionAudioPlayPauseElement {
 
     #handleAudioChanges( collectionKey, audioIndex ){
         if( AudioChecks.audioChanged( audioIndex, collectionKey ) ){
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
             let collectionNavigation = new CollectionNavigation();
 
             collectionNavigation.changeCollectionAudio(
-                collectionKey,
+                collectionIndex,
                 config.collections[ collectionKey ].audio[audioIndex],
                 audioIndex,
                 true

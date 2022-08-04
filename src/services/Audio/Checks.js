@@ -1,4 +1,5 @@
 import { config } from "@/config";
+import { ConfigState } from "@/services/ConfigState";
 
 export class Checks {
     static audioExists( index ){
@@ -20,8 +21,10 @@ export class Checks {
 					return false;
 				}
 			}else{
-				if( config.active_collection == collection && 
-					config.collections[ collectionKey ].active_index != audioIndex ){
+				let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+
+				if( config.active_collection == collectionKey && 
+					config.collections[ collectionIndex ].active_index != audioIndex ){
 						return true;
 				}else{
 					return false;

@@ -182,10 +182,11 @@ export class Navigation {
 
     setActiveCollection( collectionKey, collectionIndex ){
         if( config.active_collection != collectionKey ){
-            Callbacks.run("collection_changed");
 
             config.active_collection = collectionKey;
 
+            Callbacks.run("collection_change");
+            
             if( collectionIndex != null ){
                 config.collections[ collectionIndex ].active_index = 0;
             }

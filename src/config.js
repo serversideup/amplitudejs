@@ -37,22 +37,26 @@ export const config = {
 	collections: [],
 
 	debug: true,
+	
 	/**
 	 * BREAKING
-	 * @todo default_album_art -> default_art
-	 * @todo default_playlist_art -> default_collection_art
+	 * @todo default_album_art -> art.default_audio_art
+	 * @todo default_playlist_art -> art.default_collection_art
 	 */
-	default_art: "",
-	default_collection_art: "",
+	art: {
+		default_audio_art: "",
+		default_collection_art: "",
+	},
+	
 
 	/**
 	 * @todo Starting Configuration
 	 * BREAKING
 	 */
 	starting: {
-		audio_index: '',
+		audio_index: null,
 		collection_key: '',
-		collection_audio_index: '',
+		collection_audio_index: null,
 		collection_shuffled: false
 	},
 

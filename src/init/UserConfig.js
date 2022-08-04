@@ -10,7 +10,7 @@ export class UserConfig {
 		this.setCollections( userConfig.collections );
 		this.setVolume( userConfig.volume );
 		this.setDebug( userConfig.debug );
-		this.setDefaultArtwork( userConfig.default_artwork );
+		this.setDefaultArtwork( userConfig.art );
 		this.setPlaybackSpeed( userConfig.playback_speed );
 		this.setCallbacks( userConfig.callbacks );
         this.setDelay( userConfig.delay );
@@ -18,7 +18,6 @@ export class UserConfig {
         this.setContinueNext( userConfig.continue_next );
         this.setPreload( userConfig.preload );
         this.setKeyBindings( userConfig.key_bindings );
-        this.setDefaultArt( userConfig.default_art, userConfig.default_collection_art );
     }
 
     setAudio( value ){
@@ -57,7 +56,8 @@ export class UserConfig {
 	}
 
 	setDefaultArtwork( value ){
-		config.default_artwork = value != undefined ? value : false;
+        config.art.default_audio_art = value && value.default_audio_art ? value.default_audio_art : '';
+		config.art.default_collection_art = value && value.default_collection_art ? value.default_collection_art : '';
 	}
 
     setPlaybackSpeed( speed ){
@@ -73,7 +73,7 @@ export class UserConfig {
     }
 
     setStarting( starting ){
-        config.starting.audio_index = starting && starting.audio_index ? starting.audio_index : '';
+        config.starting.audio_index = starting && starting.audio_index != undefined ? parseInt( starting.audio_index ) : '';
         config.starting.collection_key = starting && starting.collection_key ? starting.collection_key : '';
         config.starting.collection_audio_index = starting && starting.collection_audio_index ? starting.collection_audio_index : '';
         config.starting.collection_shuffled = starting && starting.collection_shuffled ? starting.collection_shuffled : false;
@@ -89,11 +89,6 @@ export class UserConfig {
 
     setKeyBindings( keyBindings ){
         config.key_bindings = keyBindings != undefined ? keyBindings : {};
-    }
-
-    setDefaultArt( audioArt, collectionArt ){
-        config.audio_art = audioArt != undefined ? audioArt : '';
-        config.collection_art = collectionArt != undefined ? collectionArt : '';
     }
 
     applyConfig(){

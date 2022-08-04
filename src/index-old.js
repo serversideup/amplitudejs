@@ -226,59 +226,59 @@ let Amplitude = (function() {
     return config.playlists[playlistKey].repeat;
   }
 
-  /**
-   * Returns the shuffle state of the player.
-   *
-   * Public Accessor: Amplitude.getShuffle()
-   *
-   * @access public
-   */
-  function getShuffle() {
-    return config.shuffle_on;
-  }
+  // /**
+  //  * Returns the shuffle state of the player.
+  //  *
+  //  * Public Accessor: Amplitude.getShuffle()
+  //  *
+  //  * @access public
+  //  */
+  // function getShuffle() {
+  //   return config.shuffle_on;
+  // }
 
-  /**
-   * Returns the shuffle state of the playlist.
-   *
-   * Public Accessor: Amplitude.getShufflePlaylist( playlist )
-   *
-   * @access public
-   * @param {string} playlist 	- The key representing the playlist ID to see if it's shuffled or not.
-   */
-  function getShufflePlaylist(playlist) {
-    return config.playlists[playlist].shuffle;
-  }
+  // /**
+  //  * Returns the shuffle state of the playlist.
+  //  *
+  //  * Public Accessor: Amplitude.getShufflePlaylist( playlist )
+  //  *
+  //  * @access public
+  //  * @param {string} playlist 	- The key representing the playlist ID to see if it's shuffled or not.
+  //  */
+  // function getShufflePlaylist(playlist) {
+  //   return config.playlists[playlist].shuffle;
+  // }
 
-  /**
-   * Sets the shuffle state for the player.
-   *
-   * Public Accessor: Amplitude.setShuffle()
-   *
-   * @param {boolean} shuffle  	- True when we are shuffling the songs, false when we turn off shuffle.
-   *
-   * @access public
-   */
-  function setShuffle(shuffle) {
-    Shuffler.setShuffle(shuffle);
+  // /**
+  //  * Sets the shuffle state for the player.
+  //  *
+  //  * Public Accessor: Amplitude.setShuffle()
+  //  *
+  //  * @param {boolean} shuffle  	- True when we are shuffling the songs, false when we turn off shuffle.
+  //  *
+  //  * @access public
+  //  */
+  // function setShuffle(shuffle) {
+  //   Shuffler.setShuffle(shuffle);
 
-    ShuffleElements.syncMain();
-  }
+  //   ShuffleElements.syncMain();
+  // }
 
-  /**
-   * Sets the shuffle state for the playlist
-   *
-   * Public Accessor: Amplitude.setShufflePlaylist( playlist )
-   *
-   * @access public
-   * @param {string} playlist 	- The key representing the playlist ID to to shuffle the playlist.
-   * @param {boolean} shuffle 	- True when we are shuffling the playlist, false when we turn off shuffle.
-   */
-  function setShufflePlaylist(playlist, shuffle) {
-    Shuffler.setShufflePlaylist(playlist, shuffle);
+  // /**
+  //  * Sets the shuffle state for the playlist
+  //  *
+  //  * Public Accessor: Amplitude.setShufflePlaylist( playlist )
+  //  *
+  //  * @access public
+  //  * @param {string} playlist 	- The key representing the playlist ID to to shuffle the playlist.
+  //  * @param {boolean} shuffle 	- True when we are shuffling the playlist, false when we turn off shuffle.
+  //  */
+  // function setShufflePlaylist(playlist, shuffle) {
+  //   Shuffler.setShufflePlaylist(playlist, shuffle);
 
-    ShuffleElements.syncMain();
-    ShuffleElements.syncPlaylist(playlist);
-  }
+  //   ShuffleElements.syncMain();
+  //   ShuffleElements.syncPlaylist(playlist);
+  // }
 
   /**
    * Sets the repeat state for the player.

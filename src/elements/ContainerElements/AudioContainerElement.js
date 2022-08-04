@@ -8,9 +8,10 @@ export class AudioContainerElement {
     #activeIndex;
 
     setActive(){
+        this.#findElements();
+        this.#resetElements();
+        
         if( ConfigState.getScope() == 'audio' ){
-            this.#findElements();
-            this.#resetElements();
             this.#getActiveIndex();
             this.#setActiveContainerElements();
         }

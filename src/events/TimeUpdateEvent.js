@@ -1,4 +1,3 @@
-import { BufferedProgressElement } from '@/elements/BufferedProgressElement';
 import { ConfigState } from '@/services/ConfigState';
 import { config } from '@/config.js';
 import { ProgressElement } from '@/elements/ProgressElement';
@@ -24,7 +23,6 @@ export class TimeUpdateEvent{
 
     #handle(){
         ConfigState.updateBufferedTime();
-        BufferedProgressElement.syncAll();
         this.#updateTimeInformation();
         this.#runTimeCallbacks();
     }

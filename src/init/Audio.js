@@ -81,16 +81,30 @@ export class Audio{
         }
     }
 
+    /**
+     * @todo Ensure starting selections are recognized
+     */
     #determineStartingAudioFile(){
         switch( this.#state ){
             case 'audio':
-                this.#setAudioFile( 0 );
+                let startingAudio = config.starting.audio_index != null ? config.starting.audio_index : 0;
+                this.#setAudioFile( startingAudio );
             break;
             case 'collections':
                 this.#setCollectionAudioFile( 0, 0 );
             break;
             case 'audio-and-collections':
-                Debug.writeMessage('AmplitudeJS has been initialized with both audio and collections. Please define a starting audio file or starting collection and audio file.');
+                if( config.starting.audio_index == null && config.starting.collection_key == '' ){
+                    Debug.writeMessage('AmplitudeJS has been initialized with both audio and collections. Please define a starting audio file or starting collection and audio file.');
+                }else{
+                    if( config.starting.audio_index != null ){
+                        this.#setAudioFile( config.starting.audio_index );
+                    }
+
+                    if( config.starting.collection_key != '' ){
+                        let collectionIndex = ConfigState.getCollectionIntegerIndex( config.starting.collection_key );
+                    }
+                }
             break;
             case 'empty':
                 // Set defaults (like album art, etc)
@@ -103,9 +117,9 @@ export class Audio{
         audioNavigator.changeAudio( config.audio[ audioIndex ], audioIndex );
     }
 
-    #setCollectionAudioFile( collectionKey, audioIndex ){
+    #setCollectionAudioFile( collectionIndex, audioIndex ){
         let collectionNavigator = new CollectionNavigation();
-        collectionNavigator.changeCollectionAudio( collectionKey, config.collections[ collectionKey ].audio[ audioIndex ], audioIndex );
+        collectionNavigator.changeCollectionAudio( collectionIndex, config.collections[ collectionIndex ].audio[ audioIndex ], audioIndex );
     }
 }
 

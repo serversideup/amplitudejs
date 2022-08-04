@@ -38,7 +38,6 @@ export class Initializer{
         try {
             new URL(url);
         } catch (e) {
-            Debug.writeMessage('AmplitudeJS must be initialized with a JSON object or a valid URL.')
             return false;
         }
 

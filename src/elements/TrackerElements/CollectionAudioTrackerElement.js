@@ -38,10 +38,10 @@ export class CollectionAudioTrackerElement{
             let activeCollectionKey = ConfigState.getActiveCollection();
             let elementCollectionKey = element.getAttribute( 'data-amplitude-collection-key' );
 
-            let activeAudioIndex = ConfigState.getActiveAudioIndex();
+            let activeCollectionAudioIndex = ConfigState.getActiveCollectionAudioIndex();
             let elementAudioIndex = element.getAttribute( 'data-amplitude-audio-index' );
 
-            if( ( activeCollectionKey == elementCollectionKey ) && ( activeAudioIndex == elementAudioIndex ) ){
+            if( ( activeCollectionKey == elementCollectionKey ) && ( activeCollectionAudioIndex == elementAudioIndex ) ){
                 let locationPercentage = element.value;
                 let trackedLocation = Time.percentageInSeconds( locationPercentage );
                 
@@ -55,13 +55,13 @@ export class CollectionAudioTrackerElement{
         if( !isNaN( completionPercentage ) ){
             let elements = document.querySelectorAll( CollectionAudioTrackerElement.collectionAudioTrackerQuery );
             let activeCollectionKey = ConfigState.getActiveCollection();
-            let activeAudioIndex = ConfigState.getActiveAudioIndex();
+            let activeCollectionAudioIndex = ConfigState.getActiveCollectionAudioIndex();
 
             elements.forEach( ( element ) => {
                 let elementCollectionKey = element.getAttribute('data-amplitude-collection-key');
                 let elementAudioIndex = element.getAttribute('data-amplitude-audio-index');
-                
-                if( ( activeCollectionKey == elementCollectionKey ) && ( activeAudioIndex == elementAudioIndex ) ){
+
+                if( ( activeCollectionKey == elementCollectionKey ) && ( activeCollectionAudioIndex == elementAudioIndex ) ){
                     element.value = completionPercentage;
                 }else{
                     element.value = 0;

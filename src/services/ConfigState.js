@@ -93,6 +93,13 @@ export class ConfigState{
 		return config.active_index;
 	}
 
+	static getActiveCollectionAudioIndex(){
+		if( ConfigState.getScope() == 'collection' ){
+			let collectionIndex = ConfigState.getCollectionIntegerIndex( config.active_collection );
+			return config.collections[ collectionIndex ].active_index;
+		}
+	}
+
 	static getContinueNext(){
 		return config.continue_next;
 	}
@@ -168,11 +175,14 @@ export class ConfigState{
 
 	resetConfig(){
 		config.audio_element = new Audio();
+
 		config.active_metadata = {};
-		config.active_album = "";
 		config.active_index = 0;
-		config.active_playlist = null;
+		config.active_collection = null;
+		config.is_touch_moving = null;
+
 		config.playback_speed = 1.0;
+		
 		config.audio = [];
 		config.start_audio = "";
 		config.starting_playlist = "";
@@ -185,19 +195,24 @@ export class ConfigState{
 		config.debug = true;
 		config.callbacks = [];
 
+		config.art = {
+			default_audio_art: '',
+			default_collection_art: ''
+		};
+
 		config.volume =  {
 			current: 50,
 			increment: 5,
 			decrement: 5,
 			pre_mute_level: 50
-		},
+		};
 
 		config.soundcloud = {
 			client: '',
 			use_art: false,
 			audio_count: 0,
 			ready_count: 0
-		},
+		};
 
 		/**
 		 * @todo BREAKING CHANGE

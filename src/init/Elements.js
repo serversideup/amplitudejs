@@ -42,6 +42,7 @@ export class Elements{
     #initializeMetaData(){
         let metaDataElement = new MetaDataElement();
         metaDataElement.syncMetaData();
+        metaDataElement.syncInitialCollectionAudioData();
     }
 
     #initializePlayElement(){
