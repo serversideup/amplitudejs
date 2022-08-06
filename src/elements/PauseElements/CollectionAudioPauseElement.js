@@ -34,13 +34,14 @@ export class CollectionAudioPauseElement{
         });
     }
 
-    #handleInteraction(){
+    #handleInteraction( element ){
         if( !ConfigState.isTouchMoving() ){
             let collectionKey = element.getAttribute('data-amplitude-collection-key');
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
             let audioIndex = element.getAttribute('data-amplitude-audio-index');
 
             if( config.active_collection == collectionKey &&
-                config.collections[ collectionKey ].active_index == audioIndex ){
+                config.collections[ collectionIndex ].active_index == audioIndex ){
                     let audio = new Audio();
                     audio.pause();
 

@@ -15,10 +15,6 @@ import { VolumeSliderElement } from "@/elements/VolumeSliderElement";
 import { VolumeUpElement } from "@/elements/VolumeUpElement";
 
 export class Elements{
-    setVisualElementsDefaults(){
-
-    }
-
     initializeElements(){
         this.#initializeMetaData();
         this.#initializePlayElement();
