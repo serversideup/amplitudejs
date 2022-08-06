@@ -29,48 +29,49 @@ export class CollectionAudioPlayElement {
         this.#elements.forEach( (element) => {
             if( this.#mobile ){
                 element.removeEventListener("touchend", this.#handleInteraction );
-                element.addEventListener("touchend", this.#handleInteraction );
+                element.addEventListener("touchend", this.#handleInteraction.bind(this, element) );
             }else{
                 element.removeEventListener("click", this.#handleInteraction );
-                element.addEventListener("click", this.#handleInteraction );
+                element.addEventListener("click", this.#handleInteraction.bind(this, element) );
             }
         } );
     }
 
-    #handleInteraction(){
+    #handleInteraction( element ){
         if( !ConfigState.isTouchMoving() ){
-            let collectionKey = this.getAttribute('data-amplitude-collection-key');
-            let audioIndex = this.getAttribute('data-amplitude-audio-index');
+            let collectionKey = element.getAttribute('data-amplitude-collection-key');
+            let collectionIndex = ConfigState.getCollectionIntegerIndex( collectionKey );
+            let audioIndex = element.getAttribute('data-amplitude-audio-index');
             
-            this.#handleCollectionChanges( collectionKey, audioIndex );
-            this.#handleAudioChanges( collectionKey, audioIndex );
+            this.#handleCollectionChanges( collectionKey, collectionIndex, audioIndex );
+            this.#handleAudioChanges( collectionKey, collectionIndex, audioIndex );
             this.#playAudio();
 
             PlayPauseElement.syncAll();
         }
     }
 
-    #handleCollectionChanges( collectionKey, audioIndex ){
+    #handleCollectionChanges( collectionKey, collectionIndex, audioIndex ){
         if( CollectionChecks.collectionChanged( collectionKey ) ){
             let collectionNavigation = new CollectionNavigation();
 
-            collectionNavigation.setActiveCollection( collectionKey );
+            collectionNavigation.setActiveCollection( collectionKey, collectionIndex );
             collectionNavigation.changeCollectionAudio(
-                collectionKey,
-                config.collections[ collectionKey ].audio[audioIndex],
+                collectionIndex,
+                config.collections[ collectionIndex ].audio[audioIndex],
                 audioIndex,
                 true
             );
         }
     }
 
-    #handleAudioChanges( collectionKey, audioIndex ){
+    #handleAudioChanges( collectionKey, collectionIndex, audioIndex ){
         if( AudioChecks.audioChanged( audioIndex, collectionKey ) ){
             let collectionNavigation = new CollectionNavigation();
 
             collectionNavigation.changeCollectionAudio(
-                collectionKey,
-                config.collections[ collectionKey ].audio[audioIndex],
+                collectionIndex,
+                config.collections[ collectionIndex ].audio[audioIndex],
                 audioIndex,
                 true
             );
