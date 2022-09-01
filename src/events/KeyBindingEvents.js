@@ -22,8 +22,7 @@ export class KeyBindingEvents{
         let ignoredElements = [
             'input',
             'textarea',
-            'select',
-            'checkbox',
+            'select'
         ];
 
         return ignoredElements.indexOf( activeElement ) > -1;

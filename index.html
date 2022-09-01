@@ -45,68 +45,17 @@
     </style>
   </head>
   <body class="flex flex-col px-4" style="width: 600px">
-    <h2 class="font-bold text-4xl">Meta Data Elements</h2>
+    <h2 class="font-bold text-4xl">Playback Speed Elements</h2>
 
     <h3 class="font-bold text-2xl">Global</h3>
-    <input type="range" class="amplitude-audio-tracker"/>
+    
     <button type="button" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
       Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
     </button>
-    <span data-amplitude-audio-info="name"></span>
-    <span data-amplitude-audio-info="artist"></span>
-    <img data-amplitude-audio-info="cover_art_url" class="w-10 h-10"/>
-
-    <h3 class="font-bold text-2xl">Collection Play/Pause</h3>
-    <strong>Emancipator Vibes</strong>
-    <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
-    </button>
-    <span data-amplitude-collection-info="name" data-amplitude-collection-key="emancipator-vibes"></span>
-    <img data-amplitude-collection-info="collection_art_url" data-amplitude-collection-key="emancipator-vibes" class="w-20 h-20"/>
-
-    <button type="button" data-amplitude-collection-key="emancipator-vibes" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Next
-    </button>
-
-    <span data-amplitude-audio-info="name" data-amplitude-collection-key="emancipator-vibes"></span>
-    <span data-amplitude-audio-info="artist" data-amplitude-collection-key="emancipator-vibes"></span>
-    <img data-amplitude-audio-info="cover_art_url" data-amplitude-collection-key="emancipator-vibes" class="w-10 h-10"/>
-
     
-    <strong>Big Collection</strong>
-    <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
+    <button type="button" class="amplitude-playback-speed mb-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Playback Speed <span class="speed-10 hidden">(1.0x)</span><span class="speed-15 hidden">(1.5x)</span><span class="speed-20 hidden">(2.0x)</span>
     </button>
-    <img data-amplitude-collection-info="collection_art_url" data-amplitude-collection-key="big-collection" class="w-20 h-20"/>
-
-    <button type="button" data-amplitude-collection-key="big-collection" class="amplitude-next mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Next
-    </button>
-
-    <span data-amplitude-audio-info="name" data-amplitude-collection-key="big-collection"></span>
-    <span data-amplitude-audio-info="artist" data-amplitude-collection-key="big-collection"></span>
-    <img data-amplitude-audio-info="cover_art_url" data-amplitude-collection-key="big-collection" class="w-10 h-10"/>
-   
-    <br><br><br>
-
-    <strong>Audio</strong>
-    
-
-    <span>Audio 0</span>
-    <span data-amplitude-audio-info="name" data-amplitude-audio-index="0"></span>
-    <img data-amplitude-audio-info="cover_art_url" data-amplitude-audio-index="0" class="w-10 h-10"/>
-    <button type="button" data-amplitude-audio-index="0" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
-    </button>
-
-    <span>Audio 1</span>
-    <span data-amplitude-audio-info="name" data-amplitude-audio-index="1"></span>
-    <img data-amplitude-audio-info="cover_art_url" data-amplitude-audio-index="1" class="w-10 h-10"/>
-    <button type="button" data-amplitude-audio-index="1" class="amplitude-play-pause mb-4 mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Play/Pause <span class="state-playing">(Playing)</span><span class="state-paused">(Paused)</span>
-    </button>
-    
-    <br><br>
 
     <script type="module">
 
