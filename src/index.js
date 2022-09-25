@@ -664,7 +664,37 @@ let Amplitude = (function() {
 
       return config.playlists[key];
     } else {
-      Debug.writeMessage("A playlist already exists with that key!");
+      Debug.writeMessage("A playlist already exists with that key, try updating instead!");
+      return null;
+    }
+  }
+
+  /**
+   * Update an existing playlist.
+   *
+   * @param {string} key            - The key of the playlist we are adding.
+   * @param {object} data           - The data relating to the playlist
+   * @param {array} songs           - The songs to add to the playlist
+   * @param {int|null} active_index - The active song in the updated list
+   */
+  function updatePlaylist(key, data, songs, active_index=null) {
+    /*
+      Ensures the playlist is defined.
+    */
+    if (config.playlists[key] !== undefined) {
+      /*
+        Recreate the playlist object.
+      */
+      config.playlists[key] = undefined;
+      this.addPlaylist(key, data, songs);
+
+      if (active_index !== null) {
+        config.playlists[key].active_index = active_index;
+      }
+
+      return config.playlists[key];
+    } else {
+      Debug.writeMessage("No playlist exists with that key.");
       return null;
     }
   }
@@ -1401,6 +1431,7 @@ let Amplitude = (function() {
     getDelay: getDelay,
     getPlayerState: getPlayerState,
     addPlaylist: addPlaylist,
+    updatePlaylist: updatePlaylist,
     registerVisualization: registerVisualization,
     setPlaylistVisualization: setPlaylistVisualization,
     setSongVisualization: setSongVisualization,
