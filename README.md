@@ -46,17 +46,10 @@ These people believe in open-source. If you are interested in improving the proj
 <a href="https://soothingrelaxation.com/" target="_blank"><img width="250" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/soothing-relaxation.png"></a>
 
 ### Gold Sponsors
-<a href="https://www.podcaster.de/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/sponsor-logo_podcaster.png"></a><br />
-<a href="https://snapshooter.com/?via=serversideup&amp;utm_campaign=serversideup&amp;utm_source=serversideup&amp;utm_medium=banner" rel="sponsored" target="_blank">
-  <img width="175" src="https://521public.s3.amazonaws.com/serversideup/sponsors/snapshooter.svg" alt="SnapShooter Backups">
-</a>
+<a href="https://awisee.com/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/awisee.jpg"></a><br />
 
 ### Silver Sponsors
-<a href="https://awise.se/" target="_blank">AWISE</a><br />
-<a href="https://www.cryptonewsz.com/" target="_blank">CryptoNewsZ</a><br />
-<a href="https://veepn.com/" target="_blank">VeePN</a><br />
 <a href="https://www.trustmypaper.com/" target="_blank">Trust My Paper</a>
-
 
 ### Backers
 <a href="https://opencollective.com/amplitudejs#backers"><img src="https://opencollective.com/amplitudejs/tiers/backer.svg"></a>
