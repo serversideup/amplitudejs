@@ -1150,7 +1150,9 @@ let Amplitude = (function() {
       for (var key in metaData) {
         if (metaData.hasOwnProperty(key)) {
           if (key != "url" && key != "URL" && key != "live" && key != "LIVE") {
-            config.playlists[playlist].songs[index][key] = metaData[key];
+            if (config.playlists[playlist].songs.hasOwnProperty(index)) {
+              config.playlists[playlist].songs[index][key] = metaData[key];
+            }
           }
         }
       }
@@ -1161,7 +1163,9 @@ let Amplitude = (function() {
       for (var key in metaData) {
         if (metaData.hasOwnProperty(key)) {
           if (key != "url" && key != "URL" && key != "live" && key != "LIVE") {
-            config.songs[index][key] = metaData[key];
+            if (config.songs.hasOwnProperty(index)) {
+              config.songs[index][key] = metaData[key];
+            }
           }
         }
       }
@@ -1185,7 +1189,9 @@ let Amplitude = (function() {
       for (var key in metaData) {
         if (metaData.hasOwnProperty(key)) {
           if (ignoredKeys.indexOf(key) < 0) {
-            config.playlists[playlist][key] = metaData[key];
+            if (config.playlists.hasOwnProperty(playlist)) {
+              config.playlists[playlist][key] = metaData[key];
+            }
           }
         }
       }
