@@ -59,6 +59,7 @@ let SongSliderElements = (function() {
       */
       if (playlist == null && song == null) {
         mainSongSliders[i].value = location;
+        mainSongSliders[i].dispatchEvent(new Event("change"));
       }
     }
   }
@@ -105,6 +106,7 @@ let SongSliderElements = (function() {
 			*/
       if (playlistAttribute == playlist && songAttribute == null) {
         playlistSongSliders[i].value = location;
+        playlistSongSliders[i].dispatchEvent(new Event("change"));
       }
     }
   }
@@ -155,6 +157,7 @@ let SongSliderElements = (function() {
 				*/
         if (playlistAttribute == null && songAttribute == songIndex) {
           songSliders[i].value = location;
+          songSliders[i].dispatchEvent(new Event("change"));
         }
       }
     }
@@ -195,6 +198,7 @@ let SongSliderElements = (function() {
 		*/
     for (let i = 0; i < songInPlaylistSliders.length; i++) {
       songInPlaylistSliders[i].value = location;
+      songInPlaylistSliders[i].dispatchEvent(new Event("change"));
     }
   }
 
@@ -213,6 +217,7 @@ let SongSliderElements = (function() {
 		*/
     for (let i = 0; i < songSliders.length; i++) {
       songSliders[i].value = 0;
+      songSliders[i].dispatchEvent(new Event("change"));
     }
   }
 
@@ -225,7 +230,7 @@ let SongSliderElements = (function() {
     syncPlaylist: syncPlaylist,
     syncSong: syncSong,
     syncSongInPlaylist: syncSongInPlaylist,
-    resetElements: resetElements
+    resetElements: resetElements,
   };
 })();
 
