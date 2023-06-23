@@ -45,12 +45,6 @@ These people believe in open-source. If you are interested in improving the proj
 ### Platinum Sponsors
 <a href="https://soothingrelaxation.com/" target="_blank"><img width="250" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/soothing-relaxation.png"></a>
 
-### Gold Sponsors
-<a href="https://awisee.com/" target="_blank"><img width="175" src="https://521dimensions.com/img/open-source/amplitudejs/sponsors/awisee.jpg"></a><br />
-
-### Silver Sponsors
-<a href="https://www.trustmypaper.com/" target="_blank">Trust My Paper</a>
-
 ### Backers
 <a href="https://opencollective.com/amplitudejs#backers"><img src="https://opencollective.com/amplitudejs/tiers/backer.svg"></a>
 
