@@ -59,6 +59,9 @@ let SongSliderElements = (function() {
       */
       if (playlist == null && song == null) {
         mainSongSliders[i].value = location;
+        if (window.Event) {
+          mainSongSliders[i].dispatchEvent(new Event("change"));
+        }
       }
     }
   }
@@ -105,6 +108,9 @@ let SongSliderElements = (function() {
 			*/
       if (playlistAttribute == playlist && songAttribute == null) {
         playlistSongSliders[i].value = location;
+        if (window.Event) {
+          playlistSongSliders[i].dispatchEvent(new Event("change"));
+        }
       }
     }
   }
@@ -155,6 +161,9 @@ let SongSliderElements = (function() {
 				*/
         if (playlistAttribute == null && songAttribute == songIndex) {
           songSliders[i].value = location;
+          if (window.Event) {
+            songSliders[i].dispatchEvent(new Event("change"));
+          }
         }
       }
     }
@@ -195,6 +204,9 @@ let SongSliderElements = (function() {
 		*/
     for (let i = 0; i < songInPlaylistSliders.length; i++) {
       songInPlaylistSliders[i].value = location;
+      if (window.Event) {
+        songInPlaylistSliders[i].dispatchEvent(new Event("change"));
+      }
     }
   }
 
@@ -213,6 +225,9 @@ let SongSliderElements = (function() {
 		*/
     for (let i = 0; i < songSliders.length; i++) {
       songSliders[i].value = 0;
+      if (window.Event) {
+        songSliders[i].dispatchEvent(new Event("change"));
+      }
     }
   }
 
@@ -225,7 +240,7 @@ let SongSliderElements = (function() {
     syncPlaylist: syncPlaylist,
     syncSong: syncSong,
     syncSongInPlaylist: syncSongInPlaylist,
-    resetElements: resetElements
+    resetElements: resetElements,
   };
 })();
 

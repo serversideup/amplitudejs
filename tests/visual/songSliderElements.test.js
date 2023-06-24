@@ -84,3 +84,26 @@ test("AmplitudeJS Song Slider Elements adjust current Time For Song", () => {
   );
   expect(document.getElementById("individual-song-slider").value).toBe("45");
 });
+
+test("AmplitudeJS Song Slider Elements trigger change event when value changed", () => {
+  Amplitude.playSongAtIndex(2);
+
+  const songSliderEl = document.getElementById("global-song-slider");
+
+  let onChangeCalled = false;
+  function onChangeCallback() {
+    onChangeCalled = true;
+  }
+  songSliderEl.addEventListener("change", onChangeCallback);
+  config.audio.currentTime = 45;
+  SongSliderElements.sync(
+    config.audio.currentTime,
+    config.active_playlist,
+    config.active_playlist != "" && config.active_playlist != null
+      ? config.playlists[config.active_playlist].active_index
+      : config.active_index
+  );
+
+  expect(document.getElementById("individual-song-slider").value).toBe("45");
+  expect(onChangeCalled).toBe(true);
+});
