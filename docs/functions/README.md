@@ -493,6 +493,15 @@ The second argument is all of the data describing the playlist such as `name`, `
 
 Finally, the third argument is an array of song objects. These are the songs that will be added to the playlist.
 
+## Update Playlist
+
+This method allows you to update an existing playlist in AmplitudeJS. To do this, you need a unique key for your playlist, the data describing your playlist such as `title`, `author`, etc., an array of song objects for your playlist and optionally the index of the song that should be marked as active (currently playing).
+This is required when mass-updating the playlist when reordering with drag&drop, for example.
+
+```javascript
+Amplitude.updatePlaylist( key, data, songs, active_index );
+```
+
 ## Register Visualization
 
 The other way to register a visualization is through the public `Amplitude.registerVisualization( visualization, preferences )` method. The first parameter being the object included with the visualization file and the second parameter being a JSON object containing any of the parameters needed to overwrite defaults provided by the visualization.

@@ -288,6 +288,37 @@ test("AmplitudeJS can not add a playlist that already exists", () => {
 });
 
 /**
+ * Ensure we can update an existing playlist in AmplitudeJS.
+ */
+test("Amplitude can update a playlist that already exists", () => {
+  let song = {
+    artist: "Emancipator",
+    name: "Test New Song",
+    album: "Test New Album"
+  };
+
+  let data = {
+    foo: "bar"
+  };
+
+  let existingPlaylist = Amplitude.addPlaylist("existing_playlist",[data], [song]);
+  let updatedPlaylist = Amplitude.updatePlaylist("existing_playlist",[data, data], [song, song], 1);
+
+  expect(updatedPlaylist).toBeDefined();
+  expect(config.playlists["test_playlist"].songs.length).toBe(2);
+  expect(config.playlists["test_playlist"].songs.active_index).toBe(1);
+});
+
+/**
+ * Ensure we can't update a playlist that doesn't exist.
+ */
+test("Amplitude can not update a playlist that doesn't exists", () => {
+  let newPlaylist = Amplitude.updatePlaylist("FooBar123456", [{}], [{}]);
+
+  expect(newPlaylist).toBeNull();
+});
+
+/**
  * Ensures we can remove a song from the song array.
  */
 test("AmplitudeJS can remove songs from the songs array", () => {

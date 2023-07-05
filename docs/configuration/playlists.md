@@ -154,3 +154,8 @@ The `key` parameter is the key of the playlist such as `ancient_astronauts` up a
 The `data` is any of the meta data that works for the playlist. Anything you want to pass as meta data for the playlist can be passed in a JSON object.
 
 the `songs` is an array of song objects for your playlist. These songs will only get added to the new playlist. Each one of these can be either an index of the song in the songs array, or an entirely new song object that only gets added to the playlist.
+
+
+## Updating an existing playlist
+
+If you want to update an existing (possibly even active) playlist completely, without interrupting the state, you can use the `Amplitude.updatePlaylist( key, data, songs, active_index )` method. This takes the same parameters as the `addPlaylist` method, as well as an integer that can be used to indicate which song is currently playing.
