@@ -15,62 +15,62 @@ let Time = (function() {
    *
    * @access public
    */
-  function computeCurrentTimes() {
-    /*
-			Initialize the current time object that will be returned.
-		*/
-    let currentTime = {};
+  // function computeCurrentTimes() {
+  //   /*
+	// 		Initialize the current time object that will be returned.
+	// 	*/
+  //   let currentTime = {};
 
-    /*
-			Computes the current seconds for the song.
-		*/
-    let currentSeconds =
-      (Math.floor(config.audio.currentTime % 60) < 10 ? "0" : "") +
-      Math.floor(config.audio.currentTime % 60);
+  //   /*
+	// 		Computes the current seconds for the song.
+	// 	*/
+  //   let currentSeconds =
+  //     (Math.floor(config.audio.currentTime % 60) < 10 ? "0" : "") +
+  //     Math.floor(config.audio.currentTime % 60);
 
-    /*
-			Computes the current minutes for the song.
-		*/
-    let currentMinutes = Math.floor(config.audio.currentTime / 60);
+  //   /*
+	// 		Computes the current minutes for the song.
+	// 	*/
+  //   let currentMinutes = Math.floor(config.audio.currentTime / 60);
 
-    /*
-			Initialize the current hours variable.
-		*/
-    let currentHours = "00";
+  //   /*
+	// 		Initialize the current hours variable.
+	// 	*/
+  //   let currentHours = "00";
 
-    /*
-			If the current minutes is less than 10, we add a leading 0.
-		*/
-    if (currentMinutes < 10) {
-      currentMinutes = "0" + currentMinutes;
-    }
+  //   /*
+	// 		If the current minutes is less than 10, we add a leading 0.
+	// 	*/
+  //   if (currentMinutes < 10) {
+  //     currentMinutes = "0" + currentMinutes;
+  //   }
 
-    /*
-			If the user is more than 60 minutes into the song, then
-			we extract the hours.
-		*/
-    if (currentMinutes >= 60) {
-      currentHours = Math.floor(currentMinutes / 60);
-      currentMinutes = currentMinutes % 60;
+  //   /*
+	// 		If the user is more than 60 minutes into the song, then
+	// 		we extract the hours.
+	// 	*/
+  //   if (currentMinutes >= 60) {
+  //     currentHours = Math.floor(currentMinutes / 60);
+  //     currentMinutes = currentMinutes % 60;
 
-      /*
-				If the user is less than 10 minutes in, we append the
-				additional 0 to the minutes.
-			*/
-      if (currentMinutes < 10) {
-        currentMinutes = "0" + currentMinutes;
-      }
-    }
+  //     /*
+	// 			If the user is less than 10 minutes in, we append the
+	// 			additional 0 to the minutes.
+	// 		*/
+  //     if (currentMinutes < 10) {
+  //       currentMinutes = "0" + currentMinutes;
+  //     }
+  //   }
 
-    /*
-			Build a clean current time object and send back the appropriate information.
-		*/
-    currentTime.seconds = currentSeconds;
-    currentTime.minutes = currentMinutes;
-    currentTime.hours = currentHours;
+  //   /*
+	// 		Build a clean current time object and send back the appropriate information.
+	// 	*/
+  //   currentTime.seconds = currentSeconds;
+  //   currentTime.minutes = currentMinutes;
+  //   currentTime.hours = currentHours;
 
-    return currentTime;
-  }
+  //   return currentTime;
+  // }
 
   /**
    * Computes the current song duration. Breaks down where the song is into
@@ -141,33 +141,33 @@ let Time = (function() {
     return songDuration;
   }
 
-  /**
-   * Computes the song completion percentage.
-   *
-   * @access public
-   */
-  function computeSongCompletionPercentage() {
-    return (config.audio.currentTime / config.audio.duration) * 100;
-  }
+  // /**
+  //  * Computes the song completion percentage.
+  //  *
+  //  * @access public
+  //  */
+  // function computeSongCompletionPercentage() {
+  //   return (config.audio.currentTime / config.audio.duration) * 100;
+  // }
 
-  /**
-   * Sets the current time for the audio.
-   *
-   * @access public
-   */
-  function setCurrentTime(time) {
-    /*
-      If the song is not live, we can set the current time.
-    */
-    if (!config.active_metadata.live) {
-      /*
-        Makes sure the number is finite to set the time.
-      */
-      if (isFinite(time)) {
-        config.audio.currentTime = time;
-      }
-    }
-  }
+  // /**
+  //  * Sets the current time for the audio.
+  //  *
+  //  * @access public
+  //  */
+  // function setCurrentTime(time) {
+  //   /*
+  //     If the song is not live, we can set the current time.
+  //   */
+  //   if (!config.active_metadata.live) {
+  //     /*
+  //       Makes sure the number is finite to set the time.
+  //     */
+  //     if (isFinite(time)) {
+  //       config.audio.currentTime = time;
+  //     }
+  //   }
+  // }
 
   /**
    * Defines what is returned by the module

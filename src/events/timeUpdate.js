@@ -46,106 +46,106 @@ import Callbacks from "../utilities/callbacks.js";
  * @module events/TimeUpdate
  */
 let TimeUpdate = (function() {
-  /**
-   * When the time updates on the active song, we sync the current time displays
-   *
-   * HANDLER FOR: timeupdate
-   *
-   * @access public
-   */
-  function handle() {
-    /*
-      Computes the buffered time.
-    */
-    computeBufferedTime();
+  // /**
+  //  * When the time updates on the active song, we sync the current time displays
+  //  *
+  //  * HANDLER FOR: timeupdate
+  //  *
+  //  * @access public
+  //  */
+  // function handle() {
+  //   /*
+  //     Computes the buffered time.
+  //   */
+  //   computeBufferedTime();
 
-    /*
-      Sync the buffered progress elements.
-    */
-    BufferedProgressElements.sync();
+  //   /*
+  //     Sync the buffered progress elements.
+  //   */
+  //   BufferedProgressElements.sync();
 
-    /*
-      Updates the current time information.
-    */
-    updateTimeInformation();
+  //   /*
+  //     Updates the current time information.
+  //   */
+  //   updateTimeInformation();
 
-    /*
-      Run time callbacks
-    */
-    runTimeCallbacks();
-  }
+  //   /*
+  //     Run time callbacks
+  //   */
+  //   runTimeCallbacks();
+  // }
 
-  /**
-   * Computes the buffered time
-   */
-  function computeBufferedTime() {
-    /*
-      Help from: http://jsbin.com/badimipi/1/edit?html,js,output
-    */
-    if (config.audio.buffered.length - 1 >= 0) {
-      let bufferedEnd = config.audio.buffered.end(
-        config.audio.buffered.length - 1
-      );
-      let duration = config.audio.duration;
+  // /**
+  //  * Computes the buffered time
+  //  */
+  // function computeBufferedTime() {
+  //   /*
+  //     Help from: http://jsbin.com/badimipi/1/edit?html,js,output
+  //   */
+  //   if (config.audio.buffered.length - 1 >= 0) {
+  //     let bufferedEnd = config.audio.buffered.end(
+  //       config.audio.buffered.length - 1
+  //     );
+  //     let duration = config.audio.duration;
 
-      config.buffered = (bufferedEnd / duration) * 100;
-    }
-  }
+  //     config.buffered = (bufferedEnd / duration) * 100;
+  //   }
+  // }
 
-  /**
-   * Updates the current time information.
-   * @access private
-   */
-  function updateTimeInformation() {
-    /*
-      If the current song is not live, then
-      we can update the time information. Otherwise the
-      current time updates wouldn't mean much since the time
-      is infinite.
-    */
-    if (!config.active_metadata.live) {
-      /*
-        Compute the current time
-      */
-      let currentTime = Time.computeCurrentTimes();
+  // /**
+  //  * Updates the current time information.
+  //  * @access private
+  //  */
+  // function updateTimeInformation() {
+  //   /*
+  //     If the current song is not live, then
+  //     we can update the time information. Otherwise the
+  //     current time updates wouldn't mean much since the time
+  //     is infinite.
+  //   */
+  //   if (!config.active_metadata.live) {
+  //     /*
+  //       Compute the current time
+  //     */
+  //     let currentTime = Time.computeCurrentTimes();
 
-      /*
-        Compute the song completion percentage
-      */
-      let songCompletionPercentage = Time.computeSongCompletionPercentage();
+  //     /*
+  //       Compute the song completion percentage
+  //     */
+  //     let songCompletionPercentage = Time.computeSongCompletionPercentage();
 
-      /*
-        Computes the song duration
-      */
-      let songDuration = Time.computeSongDuration();
+  //     /*
+  //       Computes the song duration
+  //     */
+  //     let songDuration = Time.computeSongDuration();
 
-      /*
-        Sync the current time elements with the current
-        location of the song and the song duration elements with
-        the duration of the song.
-      */
-      TimeElements.syncCurrentTimes(currentTime);
+  //     /*
+  //       Sync the current time elements with the current
+  //       location of the song and the song duration elements with
+  //       the duration of the song.
+  //     */
+  //     TimeElements.syncCurrentTimes(currentTime);
 
-      /*
-        Sync the song slider elements.
-      */
-      SongSliderElements.sync(
-        songCompletionPercentage,
-        config.active_playlist,
-        config.active_index
-      );
+  //     /*
+  //       Sync the song slider elements.
+  //     */
+  //     SongSliderElements.sync(
+  //       songCompletionPercentage,
+  //       config.active_playlist,
+  //       config.active_index
+  //     );
 
-      /*
-        Sync the song played progress elements.
-      */
-      SongPlayedProgressElements.sync(songCompletionPercentage);
+  //     /*
+  //       Sync the song played progress elements.
+  //     */
+  //     SongPlayedProgressElements.sync(songCompletionPercentage);
 
-      /*
-        Sync the duration time elements.
-      */
-      TimeElements.syncDurationTimes(currentTime, songDuration);
-    }
-  }
+  //     /*
+  //       Sync the duration time elements.
+  //     */
+  //     TimeElements.syncDurationTimes(currentTime, songDuration);
+  //   }
+  // }
 
   /**
    * Runs a callback at a certain time in the song.

@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@nuxt/content": "npm:@nuxt/content-edge@latest",
+    "@nuxtjs/tailwindcss": "^5.3.1",
+    "@tailwindcss/typography": "^0.5.4",
+    "nuxt": "3.0.0-rc.6"
+  }
+}

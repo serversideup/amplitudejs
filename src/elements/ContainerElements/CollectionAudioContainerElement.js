@@ -1,0 +1,59 @@
+import { config } from "@/config";
+import { ConfigState } from "@/services/ConfigState";
+
+export class CollectionAudioContainerElement {
+    static collectionAudioContainerElementQuery = '.amplitude-audio-container[data-amplitude-audio-index][data-amplitude-collection-key]';
+
+    #direct;
+    #elements;
+    #activeIndex;
+    #activeCollection;
+
+    constructor( direct ){
+        this.#direct = direct;
+    }
+
+    setActive(){
+        this.#findElements();
+        this.#resetElements();
+        
+        if( ConfigState.getScope() == 'collection' ){
+            this.#getActiveIndex();
+            this.#setActiveContainerElements();
+        }
+    }
+
+    #findElements(){
+        this.#elements = document.querySelectorAll( CollectionAudioContainerElement.collectionAudioContainerElementQuery );
+    }
+
+    #resetElements(){
+        this.#elements.forEach( function( element ){
+            element.classList.remove('amplitude-active-audio-container');
+        });
+    }
+
+    #getActiveIndex(){
+        this.#activeCollection = ConfigState.getActiveCollection();
+        let collectionIndex = ConfigState.getCollectionIntegerIndex( this.#activeCollection );
+
+        if( this.#direct ){
+            this.#activeIndex = config.collections[ collectionIndex ].active_index;
+        }else{
+            if( ConfigState.isCollectionShuffled( collectionIndex ) ){
+                this.#activeIndex = config.collections[ collectionIndex ].shuffle_list[
+                    config.collections[ collectionIndex ].active_index
+                ].index;
+            }else{
+                this.#activeIndex = config.collections[ collectionIndex ].active_index;
+            }
+        }
+    }
+
+    #setActiveContainerElements(){
+        let activeContainerElements = document.querySelectorAll('.amplitude-audio-container[data-amplitude-audio-index="'+this.#activeIndex+'"][data-amplitude-collection-key="'+this.#activeCollection+'"]');
+        activeContainerElements.forEach( function( element ){
+            element.classList.add("amplitude-active-audio-container");
+        });
+    }
+}
