@@ -2,8 +2,6 @@
 .DS_Store
 node_modules/
 *.log
-Iconr
-icon*
 .vscode
 .sass-cache
 logs/
