@@ -1,0 +1,10 @@
+@import "animations.css";
+@import "hamburger.css";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+} 
