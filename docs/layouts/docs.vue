@@ -58,7 +58,7 @@ useSeoMeta({
     ogLocale: 'en_US',
     ogUrl: domain+basePath+route.path,
     ogType: 'website',
-    ogSiteName: 'Server Side Up - Webext Bridge',
+    ogSiteName: 'Server Side Up - AmplitudeJS',
     ogTitle: page.value?.head.title,
     ogDescription: page.value.description,
     twitterCard: 'summary_large_image',
