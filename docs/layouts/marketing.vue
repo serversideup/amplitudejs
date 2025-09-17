@@ -1,8 +1,5 @@
 <template>
-    <div class="w-full flex flex-col scroll-smooth bg-[url('images/ui/background-pattern.svg')] bg-[length:410%] md:bg-auto bg-no-repeat min-h-screen bg-[#0C111D]"
-        :style="{
-            backgroundPosition: 'top, center'
-        }">
+    <div class="w-full flex flex-col scroll-smooth antialiased md:bg-auto bg-no-repeat min-h-screen bg-[#0C0E12]">
         <Head>
             <Link rel="preconnect" href="https://fonts.googleapis.com"/>
             <Link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -16,10 +13,10 @@
             <meta name="theme-color" content="#ffffff">
         </Head>
         
-        <GlobalServerSideUp
+        <ServerSideUp
             :fixed="true"/>
 
-        <MarketingHeader
+        <AppHeader
             :fixed="true"/>
             
         <div class="w-full flex flex-col">
@@ -38,7 +35,7 @@ useHead({
     bodyAttrs: {
         class: 'antialiased'
     },
-    title: 'Messaging in Web Extensions made easy. - Server Side Up',
+    title: 'AmplitudeJS - Server Side Up',
     script: [
         {
             src: 'https://f.convertkit.com/ckjs/ck.5.js'
@@ -61,7 +58,7 @@ useSeoMeta({
     ogDescription: '',
     ogTitle: 'Server Side Up - AmplitudeJS',
     twitterCard: 'summary_large_image',
-    twitterDescription: 'Messaging in Web Extensions made easy. Reduce headache and simplify the effort of keeping data in sync within your browser extension.',
+    twitterDescription: 'Design your web audio player, the way you want.',
     twitterImage: domain+basePath+'/images/seo/og-image.png',
     twitterSite: '@serversideup',
     twitterTitle: 'Server Side Up - AmplitudeJS'

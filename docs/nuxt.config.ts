@@ -1,34 +1,58 @@
-import tailwindTypography from '@tailwindcss/typography'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    vite: { server: { allowedHosts: ['localhost'] } },
+    compatibilityDate: '2024-11-01',
+    devtools: { enabled: true },
     modules: [
-        'nuxt-og-image',
-        '@nuxtjs/color-mode',
-        '@nuxt/content',
-        '@nuxtjs/plausible',
-        '@nuxtjs/tailwindcss',
-        '@vueuse/nuxt'
+      '@nuxtjs/seo',
+      '@nuxt/content',
+      '@nuxt/image',
+      '@nuxtjs/tailwindcss',
+      'nuxt-headlessui',
+      '@nuxt/fonts',
+      '@vueuse/nuxt',
+      '@nuxtjs/plausible',
+      '@stefanobartoletti/nuxt-social-share'
     ],
-
+    site: {
+      url: process.env.NUXT_SITE_URL || 'https://serversideup.net/open-source/amplitudejs',
+      name: process.env.NUXT_SITE_NAME || 'AmplitudeJS',
+      env: process.env.NUXT_SITE_ENV || 'production',
+      indexable: process.env.NUXT_SITE_ENV === 'production',
+      trailingSlash: true
+    },
+    image: {
+      ipx: {
+        modifiers: {
+          format: 'webp'
+        }
+      }
+    },
+    sitemap: {
+      sitemaps: {
+        pages: {
+          // extend the nuxt:pages app source
+          includeAppSources: true,
+        },
+      },
+    },
+    plausible: {
+      domain: process.env.NUXT_SITE_URL?.replace('https://', '') || 'serversideup.net/open-source/amplitudejs',
+      enabled: process.env.PLAUSIBLE_ENABLED === 'true',
+      apiHost: 'https://a.521dimensions.com'
+    },
+    socialShare: {
+      baseUrl: process.env.NUXT_SITE_URL || 'https://serversideup.net/open-source/amplitudejs',
+    },
+    runtimeConfig: {
+      public: {
+        mode: process.env.NUXT_SITE_ENV || 'production',
+      }
+    },
     content: {
-        documentDriven: true,
-
-        experimental: {
-            search: {
-                indexed: true
-            }
-        },
-
+      build: {
         markdown: {
-            tags: {
-                h2: 'AppHeading2',
-                h3: 'AppHeading3',
-                h4: 'AppHeading4'
-            }
-        },
-
-        highlight: {
+          highlight: {
             // OR
             theme: {
               // Default theme (same as single string)
@@ -38,53 +62,15 @@ export default defineNuxtConfig({
               // Theme used if `html.sepia`
               sepia: 'monokai'
             },
-            preload: [
-                'dockerfile',
-                'ini'
+            langs: [
+              'javascript',
+              'typescript',
+              'css',
+              'html',
+              'json'
             ]        
+          }
         }
+      }
     },
-
-    colorMode: {
-        classSuffix: ''
-    },
-
-    devtools: { 
-        enabled: true 
-    },
-
-    nitro: {
-        prerender: {
-            routes: [
-                '/sitemap.xml',
-                '/api/search.json'
-            ]
-        }
-    },
-
-    ogImage: {
-        componentDirs: ['~/components/Global/OgImage'],
-    },
-
-    plausible: {
-        apiHost: 'https://a.521dimensions.com'
-    },
-
-    runtimeConfig: {
-        public: {
-            basePath: process.env.NUXT_APP_BASE_URL || '/',
-            domain: process.env.TOP_LEVEL_DOMAIN
-        }
-    },
-
-    site: {
-        url: process.env.BASE_PATH,
-    },
-
-    tailwindcss: {
-        config: {
-            plugins: [tailwindTypography]
-        },
-        cssPath: '~/assets/css/tailwind.css',
-    }
-})
+  })

@@ -1,0 +1,24 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_ii_13527_466)">
+<path d="M0 10C0 4.47715 4.47715 0 10 0H38C43.5229 0 48 4.47715 48 10V38C48 43.5229 43.5228 48 38 48H10C4.47715 48 0 43.5228 0 38V10Z" fill="#0C0E12"/>
+<path d="M10 0.5H38C43.2467 0.5 47.5 4.75329 47.5 10V38C47.5 43.2467 43.2467 47.5 38 47.5H10C4.7533 47.5 0.5 43.2467 0.5 38V10C0.5 4.7533 4.75329 0.5 10 0.5Z" stroke="#373A41"/>
+<path d="M30 27L33 30M33 30L30 33M33 30H30.5689C29.6297 30 29.1601 30 28.7338 29.8705C28.3564 29.7559 28.0054 29.5681 27.7007 29.3176C27.3565 29.0348 27.096 28.644 26.575 27.8626L26.3333 27.5M30 15L33 18M33 18L30 21M33 18H30.5689C29.6297 18 29.1601 18 28.7338 18.1295C28.3564 18.2441 28.0054 18.4319 27.7007 18.6824C27.3565 18.9652 27.096 19.356 26.575 20.1374L21.425 27.8626C20.904 28.644 20.6435 29.0348 20.2993 29.3176C19.9946 29.5681 19.6436 29.7559 19.2662 29.8705C18.8399 30 18.3703 30 17.4311 30H15M15 18H17.4311C18.3703 18 18.8399 18 19.2662 18.1295C19.6436 18.2441 19.9946 18.4319 20.2993 18.6824C20.6435 18.9652 20.904 19.356 21.425 20.1374L21.6667 20.5" stroke="#CECFD2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<filter id="filter0_ii_13527_466" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="-2"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0470588 0 0 0 0 0.054902 0 0 0 0 0.0705882 0 0 0 0.05 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_13527_466"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect2_innerShadow_13527_466"/>
+<feOffset/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0470588 0 0 0 0 0.054902 0 0 0 0 0.0705882 0 0 0 0.18 0"/>
+<feBlend mode="normal" in2="effect1_innerShadow_13527_466" result="effect2_innerShadow_13527_466"/>
+</filter>
+</defs>
+</svg>
