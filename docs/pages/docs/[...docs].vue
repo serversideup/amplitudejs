@@ -2,10 +2,10 @@
     <div class="w-full h-screen flex items-start">
         <DocsNavigation 
             :navigation="navigation" />
-        <div class="w-[calc(100%-384px)]">
+        <div class="w-[calc(100%-384px)] pt-[144px] pb-10 h-screen no-scrollbar overflow-y-auto">
             <ContentRenderer 
                 :value="page"
-                class="h-screen max-w-screen-lg mx-auto pt-[131px] no-scrollbar overflow-y-auto prose md:prose-lg prose-invert prose-p:font-normal prose-p:text-[#CECFD2] px-4 md:px-6" />
+                class="max-w-screen-lg mx-auto prose prose-invert md:prose-lg prose-p:font-normal prose-p:text-[#CECFD2] px-4 md:px-6" />
         </div>
     </div>
 </template>

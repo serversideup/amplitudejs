@@ -20,7 +20,176 @@ module.exports = {
             '8xl': ['6rem', { lineHeight: '1' }],
             '9xl': ['8rem', { lineHeight: '1' }],
         },
-        typography: require('./typography'),
+        typography: {
+            DEFAULT: {
+                css: {
+                    h1: {
+                        'color': '#F7F7F7',
+                        'font-size': '2rem',
+                        'font-weight': 600,
+                        'margin-top': '32px',
+                        'margin-bottom': '16px',
+                    },
+                    'h1 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '2rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    h2: {
+                        'color': '#F7F7F7',
+                        'font-size': '1.5rem',
+                        'font-weight': 600,
+                        'margin-top': '32px',
+                        'margin-bottom': '16px',
+                    },
+                    'h2 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '1.5rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    h3: {
+                        'color': '#F7F7F7',
+                        'font-size': '1.25rem',
+                        'font-weight': 600,
+                        'margin-top': '16px',
+                        'margin-bottom': '8px',
+                    },
+                    'h3 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '1.25rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    h4: {
+                        'color': '#F7F7F7',
+                        'font-size': '1rem',
+                        'font-weight': 600,
+                        'margin-top': '16px',
+                        'margin-bottom': '0px',
+                    },
+                    'h4 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '1rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    'ol > li::marker': {
+                        'color': '#CECFD2',
+                    },
+                    'code': {
+                        'color': 'rgb(250, 250, 250)',
+                        'fontFamily': 'JetBrains Mono',
+                        'backgroundColor': 'rgb(33, 33, 33)',
+                        'border': 'solid',
+                        'borderColor': 'rgb(41, 41, 41)',
+                        'paddingLeft': '6px',
+                        'paddingRight': '6px',
+                        'paddingTop': '3px',
+                        'paddingBottom': '3px',
+                        'borderRadius': '4px',
+                        'fontSize': '0.875rem'
+                    },
+                    'code::before': {
+                        'content': '""',
+                    },
+                    'code::after': {
+                        'content': '""',
+                    },
+                    a: {
+                        color: '#FFFFFF',
+                        textDecoration: 'underline',
+                        textDecorationColor: '#61656C',
+                        textUnderlineOffset: '6px',
+                        textDecorationThickness: '2px',
+                        transition: 'text-decoration-color 0.4s cubic-bezier(.4,0,.2,1)',
+                        fontWeight: '500',
+                    },
+                    'a:hover': {
+                        textDecorationColor: '#fff',
+                    },
+                }
+            },
+            lg: {
+                css: {
+                    h1: {
+                        'color': '#F7F7F7',
+                        'font-size': '2rem',
+                        'font-weight': 600,
+                        'margin-top': '32px',
+                        'margin-bottom': '16px',
+                    },
+                    'h1 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '2rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    h2: {
+                        'color': '#F7F7F7',
+                        'font-size': '1.875rem',
+                        'font-weight': 600,
+                        'margin-top': '40px',
+                        'margin-bottom': '20px',
+                    },
+                    'h2 a': {
+                        'color': '#F7F7F7',
+                        'text-decoration': 'none',
+                        'font-size': '1.875rem',
+                        'font-weight': 600,
+                    },
+                    h3: {
+                        'color': '#F7F7F7',
+                        'font-size': '1.5rem',
+                        'font-weight': 600,
+                        'margin-top': '20px',
+                        'margin-bottom': '10px',
+                    },
+                    'h3 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '1.5rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    h4: {
+                        'color': '#F7F7F7',
+                        'font-size': '1.125rem',
+                        'font-weight': 600,
+                        'margin-top': '20px',
+                        'margin-bottom': '0px',
+                    },
+                    'h4 a': {
+                        'color': '#F7F7F7',
+                        'font-size': '1.125rem',
+                        'text-decoration': 'none',
+                        'font-weight': 600,
+                    },
+                    'ol > li::marker': {
+                        'color': '#CECFD2',
+                    },
+                    'code': {
+                        'color': 'rgb(250, 250, 250)',
+                        'fontFamily': 'JetBrains Mono',
+                        'backgroundColor': 'rgb(33, 33, 33)',
+                        'border': 'solid',
+                        'borderColor': 'rgb(41, 41, 41)',
+                        'paddingLeft': '6px',
+                        'paddingRight': '6px',
+                        'paddingTop': '3px',
+                        'paddingBottom': '3px',
+                        'borderRadius': '4px',
+                        'fontSize': '1rem'
+                    },
+                    'code::before': {
+                        'content': '""',
+                    },
+                    'code::after': {
+                        'content': '""',
+                    },
+                }
+            }
+        },
         extend: {
             boxShadow: {
                 glow: '0 0 4px rgb(0 0 0 / 0.1)',
@@ -45,16 +214,16 @@ module.exports = {
             }
         }
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/typography")],
     content: [
-        `/components/**/*.{vue,js,ts}`,
-        `/layouts/**/*.vue`,
-        `/pages/**/*.vue`,
-        `/composables/**/*.{js,ts}`,
-        `/plugins/**/*.{js,ts}`,
-        `/App.{js,ts,vue}`,
-        `/app.{js,ts,vue}`,
-        `/Error.{js,ts,vue}`,
-        `/error.{js,ts,vue}`
+        "./components/**/*.{vue,js,ts}",
+        "./layouts/**/*.vue",
+        "./pages/**/*.vue",
+        "./composables/**/*.{js,ts}",
+        "./plugins/**/*.{js,ts}",
+        "./App.{js,ts,vue}",
+        "./app.{js,ts,vue}",
+        "./Error.{js,ts,vue}",
+        "./error.{js,ts,vue}"
     ],
 }
