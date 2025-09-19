@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full top-[43px] bg-black/10 backdrop-blur-lg" :class="{ 'fixed left-1/2 -translate-x-1/2': fixed }">
+    <div class="w-full top-[43px] bg-black/10 backdrop-blur-lg z-[9999999]" :class="{ 'fixed left-1/2 -translate-x-1/2': fixed }">
         <header class="w-full mx-auto max-w-screen-xl px-8 py-5 flex items-center justify-between">
             <nav class="flex items-center">
                 <NuxtLink to="/" class="mr-5">

@@ -59,7 +59,7 @@ export default defineAppConfig({
             repo: 'https://github.com/serversideup/financial-freedom'
         },
         amplitudejs: {
-            learn_more: 'https://521dimensions.com/open-source/amplitudejs/',
+            learn_more: 'https://serversideup.net/open-source/amplitudejs/',
             repo: 'https://github.com/serversideup/amplitudejs'
         },
         webext_bridge: {

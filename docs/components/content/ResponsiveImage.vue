@@ -1,17 +1,17 @@
 <template>
-    <img 
-        :src="( basePath != '/' ? basePath : '' )+src" 
-        :alt="alt" 
-        :class="'max-w-full md:max-w-[' + maxWidth + 'px]'"
-        :style="{
-            maxHeight: maxHeight + 'px'
-        }"
-        class="mx-auto" />
+    <p>
+        <img 
+            :src="src" 
+            :alt="alt" 
+            :class="'max-w-full md:max-w-[' + maxWidth + 'px]'"
+            :style="{
+                maxHeight: maxHeight + 'px'
+            }"
+            class="mx-auto" />
+    </p>
 </template>
 
 <script setup>
-const { basePath, domain } = useRuntimeConfig().public;
-
 const props = defineProps({
     src: {
         type: String,

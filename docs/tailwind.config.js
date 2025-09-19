@@ -75,8 +75,26 @@ module.exports = {
                         'text-decoration': 'none',
                         'font-weight': 600,
                     },
+                    'ol': {
+                        'list-style-type': 'decimal',
+                        'margin-left': '1rem',
+                        'margin-bottom': '16px'
+                    },
                     'ol > li::marker': {
                         'color': '#CECFD2',
+                    },
+                    'ol > li': {
+                        'color': '#CECFD2',
+                        'margin-bottom': '6px'
+                    },
+                    'ul': {
+                        'list-style-type': 'disc',
+                        'margin-left': '1rem',
+                        'margin-bottom': '16px'
+                    },
+                    'ul > li': {
+                        'color': '#CECFD2',
+                        'margin-bottom': '6px'
                     },
                     'code': {
                         'color': 'rgb(250, 250, 250)',
@@ -109,6 +127,38 @@ module.exports = {
                     'a:hover': {
                         textDecorationColor: '#fff',
                     },
+                    'table': {
+                        'width': '100%',
+                        'color': '#CECFD2',
+                        'margin-bottom': '16px'
+                    },
+                    'table thead tr th': {
+                        textAlign: 'left',
+                        paddingRight: '0.5rem',
+                        paddingBottom: '0.5rem',
+                        paddingLeft: '0.5rem',
+                    },
+                    'table thead tr th:first-child': {
+                        paddingLeft: '0',
+                    },
+                    'table thead tr th:last-child': {
+                        paddingRight: '0',
+                    },
+                    'table tbody tr td': {
+                        textAlign: 'left',
+                        padding: '0.5rem',
+                        borderBottomWidth: '1px',
+                        borderBottomColor: 'rgb(41, 41, 41)',
+                    },
+                    'table tbody tr td:first-child': {
+                        paddingLeft: '0',
+                    },
+                    'table tbody tr td:last-child': {
+                        paddingRight: '0',
+                    },
+                    'table tbody tr:last-child': {
+                        borderBottomWidth: '0',
+                    }
                 }
             },
             lg: {
@@ -165,8 +215,29 @@ module.exports = {
                         'text-decoration': 'none',
                         'font-weight': 600,
                     },
+                    'ol': {
+                        'list-style-type': 'decimal',
+                        'margin-left': '1rem',
+                        'margin-bottom': '16px'
+                    },
                     'ol > li::marker': {
                         'color': '#CECFD2',
+                    },
+                    'ol > li': {
+                        'color': '#CECFD2',
+                        'margin-bottom': '6px'
+                    },
+                    'ol': {
+                        'list-style-type': 'decimal',
+                    },
+                    'ul': {
+                        'list-style-type': 'disc',
+                        'margin-left': '1rem',
+                        'margin-bottom': '16px'
+                    },
+                    'ul > li': {
+                        'color': '#CECFD2',
+                        'margin-bottom': '6px'
                     },
                     'code': {
                         'color': 'rgb(250, 250, 250)',
@@ -187,6 +258,38 @@ module.exports = {
                     'code::after': {
                         'content': '""',
                     },
+                    'table': {
+                        'width': '100%',
+                        'color': '#CECFD2',
+                        'margin-bottom': '16px'
+                    },
+                    'table thead tr th': {
+                        textAlign: 'left',
+                        paddingRight: '0.5rem',
+                        paddingBottom: '0.5rem',
+                        paddingLeft: '0.5rem',
+                    },
+                    'table thead tr th:first-child': {
+                        paddingLeft: '0',
+                    },
+                    'table thead tr th:last-child': {
+                        paddingRight: '0',
+                    },
+                    'table tbody tr td': {
+                        textAlign: 'left',
+                        padding: '0.5rem',
+                        borderBottomWidth: '1px',
+                        borderBottomColor: 'rgb(41, 41, 41)',
+                    },
+                    'table tbody tr td:first-child': {
+                        paddingLeft: '0',
+                    },
+                    'table tbody tr td:last-child': {
+                        paddingRight: '0',
+                    },
+                    'table tbody tr:last-child': {
+                        borderBottomWidth: '0',
+                    }
                 }
             }
         },

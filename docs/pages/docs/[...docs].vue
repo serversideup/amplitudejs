@@ -5,7 +5,7 @@
         <div class="w-[calc(100%-384px)] pt-[144px] pb-10 h-screen no-scrollbar overflow-y-auto">
             <ContentRenderer 
                 :value="page"
-                class="max-w-screen-lg mx-auto prose prose-invert md:prose-lg prose-p:font-normal prose-p:text-[#CECFD2] px-4 md:px-6" />
+                class="max-w-screen-md prose prose-invert prose-p:mb-6 prose-p:font-normal prose-p:text-[#CECFD2] px-4 md:px-6" />
         </div>
     </div>
 </template>
