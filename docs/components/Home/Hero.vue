@@ -1,7 +1,7 @@
 <template>
-    <div class="flex flex-col items-center justify-center pt-24 pb-16 max-w-screen-lg mx-auto">
-        <h1 class="text-[#F7F7F7] font-sans font-semibold text-6xl text-center">Design <span class="italic">your</span> web audio player,<br> the way <span class="italic">you</span> want.</h1>
-        <p class="font-sans text-center mt-6 max-w-screen-md mx-auto text-[#94979C] text-xl">Master the HTML5 audio experience with complete creative control. Craft players that perfectly embody your brand vision—trusted by millions of listeners.</p>
+    <div class="flex flex-col items-center justify-center px-4 lg:px-0 pt-8 lg:pt-24 pb-16 max-w-screen-lg mx-auto">
+        <h1 class="text-[#F7F7F7] font-sans font-semibold text-4xl lg:text-6xl text-center">Design <span class="italic">your</span> web audio player,<br> the way <span class="italic">you</span> want.</h1>
+        <p class="font-sans text-center mt-4 lg:mt-6 max-w-screen-md mx-auto text-[#94979C] text-base lg:text-xl">Master the HTML5 audio experience with complete creative control. Craft players that perfectly embody your brand vision—trusted by millions of listeners.</p>
         
         <div class="flex items-center justify-center mt-12">
             <NuxtLink to="https://github.com/serversideup/amplitudejs" target="_blank" class="py-3 px-5 font-sans font-semibold text-[#CECFD2] hover:text-white flex items-center border border-[#373A41] rounded-lg hover:bg-[#22262F] transition-colors duration-200">

@@ -1,5 +1,5 @@
 <template>
-    <header class="w-full bg-[#151A1F] px-4 py-3 z-[99] lg:px-8" :class="{ 'fixed': fixed }">
+    <header class="w-full z-[999999999] bg-[#151A1F] px-4 py-3 lg:px-8" :class="{ 'fixed': fixed }">
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 <NuxtLink :to="'https://serversideup.net'">
@@ -14,7 +14,7 @@
 
                     <div v-show="showMenu"
                         ref="menuRef"
-                        class="absolute shadow-sm z-50 bg-white rounded-b-lg p-4 w-64 top-[28px] flex flex-col content-left text-left">
+                        class="absolute shadow-sm bg-white rounded-b-lg p-4 w-64 top-[28px] flex flex-col content-left text-left">
                             <span class="font-inter font-bold text-black text-[14px]">Products</span>
                             <NuxtLink
                                 @click="showMenu = false"

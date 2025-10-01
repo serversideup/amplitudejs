@@ -18,7 +18,7 @@ We also have a few guidelines on getting started and how to contribute:
 3. Run `npm run build` to process a build of your source code
 
 # Submitting a pull request
-We ask that any pull requests be submitted to our `dev` branch, which you can do here: https://github.com/521dimensions/amplitudejs/pull/new/dev
+We ask that any pull requests be submitted to our `dev` branch, which you can do here: https://github.com/serversideup/amplitudejs/pull/new/dev
 
 ## Automated Tests
 AmplitudeJS ships with a full test suite written in Jest: [https://jestjs.io/](https://jestjs.io/) to ensure stable, production ready code. This process is automated by TravisCI on every commit we push. We tried to cover every scenario and even did some UI/UX tests. Like all of AmplitudeJS we welcome any critiques and contributes you may have for the tests.

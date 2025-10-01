@@ -36,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/521dimensions/amplitudejs.git"
+    "url": "git+https://github.com/serversideup/amplitudejs.git"
   },
   "keywords": [
     "webaudio",
@@ -44,10 +44,10 @@
     "javascript",
     "audio-player"
   ],
-  "author": "521 Dimensions (https://521dimensions.com)",
+  "author": "Server Side Up (https://serversideup.net)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/521dimensions/amplitudejs/issues"
+    "url": "https://github.com/serversideup/amplitudejs/issues"
   },
-  "homepage": "https://github.com/521dimensions/amplitudejs#readme"
+  "homepage": "https://github.com/serversideup/amplitudejs#readme"
 }

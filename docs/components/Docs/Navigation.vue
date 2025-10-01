@@ -1,5 +1,5 @@
 <template>
-    <nav class="overflow-y-auto h-screen pt-[131px] no-scrollbar w-96 px-6">
+    <nav class="overflow-y-auto h-screen pt-[131px] no-scrollbar md:w-64 px-6">
         <ul role="list">
             <li v-for="navigationGroup in navigation[0].children" :key="navigationGroup.title" class="my-6">
                 <span class="text-white font-semibold">{{ navigationGroup.group ? navigationGroup.group : navigationGroup.title }}</span>
