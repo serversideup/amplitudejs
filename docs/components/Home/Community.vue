@@ -11,7 +11,7 @@
                     Join our Discord
                 </NuxtLink>
 
-                <NuxtLink to="/products/" class="py-3 px-[18px] rounded-lg bg-[#155EEF] hover:bg-[#004EEB] transition-colors duration-200 border-2 border-[rgba(255,255,255,0.12)] font-sans font-semibold text-white flex w-full md:w-auto md:inline-flex items-center justify-center md:justify-start order-1 md:order-2">
+                <NuxtLink to="https://serversideup.net/products/" class="py-3 px-[18px] rounded-lg bg-[#155EEF] hover:bg-[#004EEB] transition-colors duration-200 border-2 border-[rgba(255,255,255,0.12)] font-sans font-semibold text-white flex w-full md:w-auto md:inline-flex items-center justify-center md:justify-start order-1 md:order-2">
                     Explore our tools
                 </NuxtLink>
             </div>

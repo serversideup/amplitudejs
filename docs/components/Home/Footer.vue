@@ -15,7 +15,7 @@
                         Star on GitHub
                     </NuxtLink>
 
-                    <NuxtLink to="/" class="mt-3 md:mt-0 md:ml-3 bg-[#155EEF] py-3 px-5 font-sans font-semibold text-white flex items-center border-2 border-[rgba(255,255,255,0.12)] rounded-lg hover:bg-[#004EEB] transition-colors duration-200">
+                    <NuxtLink to="/docs" class="mt-3 md:mt-0 md:ml-3 bg-[#155EEF] py-3 px-5 font-sans font-semibold text-white flex items-center border-2 border-[rgba(255,255,255,0.12)] rounded-lg hover:bg-[#004EEB] transition-colors duration-200">
                         Get Started
                     </NuxtLink>
                 </div>

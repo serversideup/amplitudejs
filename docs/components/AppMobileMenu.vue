@@ -92,6 +92,7 @@
                 </NuxtLink>
 
                 <button 
+                    @click="promptSearch()"
                     @click.native="toggleMenu()" 
                     class="flex items-center font-inter font-bold text-slate-300 text-xl mb-6">
                         <div class="flex items-center justify-center w-5 h-5 mr-2">
@@ -113,7 +114,7 @@
                 </div>
 
                 <div>
-                    <NuxtLink to="/" class="inline-flex bg-[#155EEF] py-2.5 px-4 font-sans font-semibold text-white items-center border-2 border-[rgba(255,255,255,0.12)] rounded-lg hover:bg-[#004EEB] transition-colors duration-200">
+                    <NuxtLink to="/docs" class="inline-flex bg-[#155EEF] py-2.5 px-4 font-sans font-semibold text-white items-center border-2 border-[rgba(255,255,255,0.12)] rounded-lg hover:bg-[#004EEB] transition-colors duration-200">
                         Get Started
                     </NuxtLink>
                 </div>
@@ -173,6 +174,12 @@ const {
 const emit = defineEmits(['toggle-menu'])
 const toggleMenu = () => {
     emit('toggle-menu')
+}
+
+const docsEventBus = useEventBus('amplitudejs-docs-event-bus');
+
+const promptSearch = () => {
+    docsEventBus.emit('prompt-search');
 }
 
 const route = useRoute();

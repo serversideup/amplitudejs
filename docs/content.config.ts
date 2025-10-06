@@ -9,14 +9,13 @@ export default defineContentConfig({
             schema: z.object({
                 title: z.string(),
                 group: z.string().optional(),
-                description: z.string(),
-                published: z.boolean().default(true),
+                description: z.string()
             })
         }),
         content: defineCollection(
             asSeoCollection({
                 type: 'page',
-                source: '**/*.md',
+                source: '**/{*,**/*}.md',
             }),
         ),
     },

@@ -4,7 +4,7 @@
         as="template" 
         @after-leave="query = ''" 
         appear>
-        <Dialog as="div" class="relative z-[999]" @close="show = false">
+        <Dialog as="div" class="relative z-[9999999999]" @close="show = false">
             <TransitionChild as="template" 
                 enter="ease-out duration-300" 
                 enter-from="opacity-0" 
@@ -105,6 +105,7 @@ import DiscordIcon from './DiscordIcon.vue';
 import DocsIcon from './DocsIcon.vue';
 import HeartIcon from './HeartIcon.vue';
 import GitHubIcon from './GitHubIcon.vue';
+import MusicIcon from './MusicIcon.vue';
 
 /**
  * CMD + K shortcut for activating the modal
@@ -134,12 +135,15 @@ docsEventBus.on(listener);
  */
  const defaultLinks = [
     { name: 'Docs', id: '/docs', icon: DocsIcon },
+    { name: 'Examples', id: '/examples', icon: MusicIcon },
     { name: 'Discord', id: 'https://serversideup.net/discord', icon: DiscordIcon, external: true },
     { name: 'GitHub', id: 'https://github.com/serversideup', icon: GitHubIcon, external: true },
     { name: 'Sponsor', id: 'https://github.com/sponsors/serversideup', icon: HeartIcon, external: true },
 ]
 
-const { navigation } = useContent();
+const { data: navigation } = await useAsyncData('search-navigation', () => {
+    return queryCollectionNavigation('docs', ["group"])
+})
 
 const links = computed(() => {
     let computedLinks = [];
@@ -153,7 +157,7 @@ const links = computed(() => {
         'title': navigation.value[0].title,
         'links': [{
             name: navigation.value[0].title,
-            id: navigation.value[0]._path,
+            id: navigation.value[0].path,
             icon: DocumentTextIcon
         }]
     });
@@ -166,7 +170,7 @@ const links = computed(() => {
             link.children.forEach((link) => {
                 childLinks.push({
                     name: link.title,
-                    id: link._path,
+                    id: link.path,
                     icon: DocumentTextIcon
                 });
             });
@@ -190,8 +194,33 @@ const searching = ref(false)
 
 const search = async () => {
     searching.value = true
-    const res = await searchContent(query.value, {})
-    results.value = res.value // res is a computed so we pluck out the .value and just add it to our ref
+    
+    results.value = []
+
+    for( let i = 0; i < links.value.length; i++ ){
+        if( links.value[i].title.toLowerCase().includes(query.value.toLowerCase()) && links.value[i].id ){
+            let linkObject = {
+                external: false,
+                title: links.value[i].title,
+                id: links.value[i].id,
+                icon: links.value[i].icon
+            }
+            results.value.push(linkObject)
+        }
+
+        for( let j = 0; j < links.value[i].links.length; j++ ){
+            if( links.value[i].links[j].name.toLowerCase().includes(query.value.toLowerCase()) && links.value[i].links[j].id ){
+                let linkObject = {
+                    external: false,
+                    title: links.value[i].links[j].name,
+                    id: links.value[i].links[j].id,
+                    icon: links.value[i].links[j].icon
+                }
+                results.value.push(linkObject)
+            }
+        }
+    }
+
     searching.value = false
 }
 
@@ -199,18 +228,19 @@ const search = async () => {
  * Builds the link text from the search result
  */
 const buildSearchResultTitle = (link) => {
-    let highlightedContent = link.content.replace(query.value, '<span class="bg-[#155EEF] text-white">'+query.value+'</span>');
-
-    let title =  '<span class="text-[#E2E8F0]">'+( link.titles.length > 0  ? link.titles.join(' > ')+ ' > ' : ''  )+ link.title+ ' </span><span class="text-[10px] hidden md:inline">'+highlightedContent+'</span>';
-    return title;
+    return link.title;
 }
 
 const onSelect = (link) => {
-    if( link.external ){
+    if( link.external || link.id.includes('http') ){
         window.open(link.id, '_blank');
         return;
     }else{
-        navigateTo(link.id);
+        navigateTo(link.id, {external: true});
     }
+
+    show.value = false;
+    query.value = '';
+    results.value = [];
 }
 </script>

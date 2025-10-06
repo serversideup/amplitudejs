@@ -21,7 +21,7 @@
             <slot></slot>
         </div>
 
-        <!-- <Search/> -->
+        <Search/>
     </div>
 </template>
 
@@ -34,32 +34,5 @@ useHead({
         class: 'antialiased'
     },
     title: 'AmplitudeJS - Server Side Up',
-    script: [
-        {
-            src: 'https://f.convertkit.com/ckjs/ck.5.js'
-        }
-    ]
 })
-
-const route = useRoute();
-const { basePath, domain } = useRuntimeConfig().public;
-
-useSeoMeta({
-    ogLocale: 'en_US',
-    ogUrl: domain+basePath+route.path,
-    ogType: 'website',
-    ogSiteName: 'Server Side Up - AmplitudeJS',
-    ogImage: domain+basePath+'/images/seo/og-image.png',
-    ogImageWidth: 1200,
-    ogImageHeight: 630,
-    ogImageType: 'image/png',
-    ogDescription: '',
-    ogTitle: 'Server Side Up - AmplitudeJS',
-    twitterCard: 'summary_large_image',
-    twitterDescription: 'Design your web audio player, the way you want.',
-    twitterImage: domain+basePath+'/images/seo/og-image.png',
-    twitterSite: '@serversideup',
-    twitterTitle: 'Server Side Up - AmplitudeJS'
-})
-
 </script>

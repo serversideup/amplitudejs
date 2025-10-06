@@ -1,6 +1,6 @@
 <template>
     <div class="w-full top-[43px] bg-black/10 backdrop-blur-lg z-[9999999]" :class="{ 'fixed left-1/2 -translate-x-1/2': fixed }">
-        <header class="w-full mx-auto max-w-screen-xl px-8 py-5 flex items-center justify-between">
+        <header class="w-full mx-auto max-w-screen-xl px-4 lg:px-8 py-5 flex items-center justify-between">
             <nav class="flex items-center">
                 <NuxtLink to="/" class="mr-5">
                     <img src="/images/logos/amplitudejs.svg" alt="AmplitudeJS" class="h-8"/>
@@ -26,7 +26,7 @@
                     Discord
                 </NuxtLink>
 
-                <button type="button" class="hidden lg:inline-flex items-center py-2 px-3 font-sans font-semibold text-[#CECFD2] hover:text-white">
+                <button @click="promptSearch()" type="button" class="hidden lg:inline-flex items-center py-2 px-3 font-sans font-semibold text-[#CECFD2] hover:text-white">
                     <svg class="mr-1" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 19.4468L13.0001 13.4468M15 8.44684C15 12.3128 11.866 15.4468 8 15.4468C4.13401 15.4468 1 12.3128 1 8.44684C1 4.58084 4.13401 1.44684 8 1.44684C11.866 1.44684 15 4.58084 15 8.44684Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -43,7 +43,7 @@
                     Star on GitHub
                 </NuxtLink>
 
-                <NuxtLink to="/" class="ml-3 hidden md:flex bg-[#155EEF] py-2.5 px-4 font-sans font-semibold text-white items-center border-2 border-[rgba(255,255,255,0.12)] rounded-lg hover:bg-[#004EEB] transition-colors duration-200">
+                <NuxtLink to="/docs" class="ml-3 hidden md:flex bg-[#155EEF] py-2.5 px-4 font-sans font-semibold text-white items-center border-2 border-[rgba(255,255,255,0.12)] rounded-lg hover:bg-[#004EEB] transition-colors duration-200">
                     Get Started
                 </NuxtLink>
 
@@ -69,5 +69,11 @@ const showMenu = ref( false );
 
 const toggleMenu = () => {
     showMenu.value = showMenu.value ? false : true;
+}
+
+const docsEventBus = useEventBus('amplitudejs-docs-event-bus');
+
+const promptSearch = () => {
+    docsEventBus.emit('prompt-search');
 }
 </script>

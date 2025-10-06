@@ -14,4 +14,9 @@
 definePageMeta({
     layout: 'marketing'
 })
+
+defineOgImageComponent('Home', {
+    title: 'AmplitudeJS',
+    description: 'A JavaScript library that allows you to control the design of your media controls in your webpage -- not the browser. No dependencies',
+})
 </script>
