@@ -8,7 +8,6 @@ export default defineNuxtConfig({
       '@nuxt/content',
       '@nuxt/image',
       '@nuxtjs/tailwindcss',
-      'nuxt-headlessui',
       '@nuxt/fonts',
       '@vueuse/nuxt',
       '@nuxtjs/plausible',

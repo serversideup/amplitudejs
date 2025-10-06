@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-provideHeadlessUseId(() => useId())
 useHead({
     script: [
         {

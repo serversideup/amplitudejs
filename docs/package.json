@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "@nuxt/content": "3.4.0",
     "@nuxt/fonts": "0.11.1",
@@ -27,7 +28,6 @@
   },
   "devDependencies": {
     "@stefanobartoletti/nuxt-social-share": "^1.2.2",
-    "@tailwindcss/typography": "^0.5.16",
-    "nuxt-headlessui": "^1.2.0"
+    "@tailwindcss/typography": "^0.5.16"
   }
 }
