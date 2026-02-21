@@ -18,7 +18,7 @@
     "@nuxtjs/plausible": "1.2.0",
     "@nuxtjs/seo": "^3.0.3",
     "@nuxtjs/tailwindcss": "6.13.2",
-    "@serversideup/project-switcher-bar": "^0.0.4",
+    "@serversideup/project-switcher-bar": "^0.0.5",
     "@vueuse/core": "^13.1.0",
     "@vueuse/nuxt": "^13.1.0",
     "hotkeys-js": "^3.13.10",
