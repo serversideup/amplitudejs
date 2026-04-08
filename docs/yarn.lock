@@ -1696,10 +1696,10 @@
   resolved "https://registry.yarnpkg.com/@sec-ant/readable-stream/-/readable-stream-0.4.1.tgz#60de891bb126abfdc5410fdc6166aca065f10a0c"
   integrity sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==
 
-"@serversideup/project-switcher-bar@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@serversideup/project-switcher-bar/-/project-switcher-bar-0.0.5.tgz#8ffe02facd4b2824afd35624e79865efd899ba99"
-  integrity sha512-ApbquhEYzXFdhmK1XkQTIvHA93iaNvhLGAwjKwzr/q3sCtsuHDlo5U8ergEkZmXH951e6jsaHFgGKp2XDQhY9A==
+"@serversideup/project-switcher-bar@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@serversideup/project-switcher-bar/-/project-switcher-bar-0.0.6.tgz#5d98bc37aff059b738e4c412f36e7ebde459394b"
+  integrity sha512-C9Z8Yrnc6phTH4uyF+21Fia3vnynZtdprBhoEijugP1TkHqKkQWoSw2z8J3SlVjKp2DP9GAP1/ou3ifNld0PHg==
 
 "@shikijs/core@3.12.2":
   version "3.12.2"
