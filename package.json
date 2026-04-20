@@ -14,7 +14,7 @@
     "prettier": "1.15.1",
     "pretty-quick": "^1.11.1",
     "watch": "^1.0.2",
-    "webpack": "^2.7.0"
+    "webpack": "^5.75.0"
   },
   "directories": {
     "doc": "docs"
