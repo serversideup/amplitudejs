@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+
+<channel>
+
+<title>Sunday Night Live - AlexJones.media</title>
+<itunes:subtitle>Because there's a war on for your mind!</itunes:subtitle>
+<link>https://alexjones.media</link>
+<itunes:new-feed-url>https://rss.alexjones.media/SundayLive.xml</itunes:new-feed-url>
+<itunes:summary> Because there's a war on for your mind; veteran broadcaster, filmmaker and media analyst Alex Jones brings you incredible interviews with people on the frontlines of the Infowar and takes an in-depth look at the news between the day's headlines.</itunes:summary>
+<description>Because there's a war on for your mind; broadcaster, filmmaker and news analyst Alex Jones brings you an in-depth look at the news between the day's headlines.</description>
+<language>en</language>
+<lastBuildDate>Mon, 28 Sep 2026 01:07:00 -0000</lastBuildDate>
+<itunes:owner>
+<itunes:name>Sunday Night Live</itunes:name>
+</itunes:owner>
+<ttl>250</ttl>
+
+<itunes:category text="News">
+ <itunes:category text="Politics" />
+</itunes:category>
+
+<itunes:image href="https://rss.alexjones.media/AJNSundayLive-600x600.png"/>
+
+<item>
+<title>Sunday Night Live 2026-Sep-27 Sunday</title>
+<description>Sunday - Sunday Night Live</description>
+<pubDate>Sun, 27 Sep 2026 22:00:00 -0000</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/rss/20260927_Sun_SundayLive.mp3" length="28792687" type="audio/mpeg"/>
+<guid isPermaLink="false">20260927_Sun_SundayLive.mp3</guid>
+</item>
+<item>
+<title>Sunday Night Live 2026-Sep-20 Sunday</title>
+<description>Sunday - Sunday Night Live</description>
+<pubDate>Sun, 20 Sep 2026 22:00:00 -0000</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/rss/20260920_Sun_SundayLive.mp3" length="28792687" type="audio/mpeg"/>
+<guid isPermaLink="false">20260920_Sun_SundayLive.mp3</guid>
+</item>
+<item>
+<title>Sunday Night Live 2026-Sep-13 Sunday</title>
+<description>Sunday - Sunday Night Live</description>
+<pubDate>Sun, 13 Sep 2026 22:00:00 -0000</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/rss/20260913_Sun_SundayLive.mp3" length="28792687" type="audio/mpeg"/>
+<guid isPermaLink="false">20260913_Sun_SundayLive.mp3</guid>
+</item>
+</channel>
+</rss>

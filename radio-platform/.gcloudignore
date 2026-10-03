@@ -1,0 +1,12 @@
+node_modules
+dist
+src/generated
+.env
+.env.*
+!.env.example
+.git
+*.zip
+docs
+tests
+scripts/*.zip
+dist-zip

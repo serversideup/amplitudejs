@@ -1,0 +1,7 @@
+.env
+node_modules/
+src/generated/prisma/
+dist/
+dist-zip/
+*.zip
+.sandbox-ca.crt

@@ -1,0 +1,107 @@
+name: Radio Platform CI
+
+on:
+  push:
+    branches: [master, dev]
+    paths:
+      - "radio-platform/**"
+      - ".github/workflows/radio-platform.yml"
+  pull_request:
+    branches: [master, dev]
+    paths:
+      - "radio-platform/**"
+      - ".github/workflows/radio-platform.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: radio-platform-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: radio-platform
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: radio-platform/package-lock.json
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  container-smoke:
+    name: container-smoke
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: radio
+          POSTGRES_PASSWORD: radio
+          POSTGRES_DB: ajn_radio
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U radio -d ajn_radio"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t ajn-radio:ci .
+      - name: Run image against Postgres
+        run: |
+          docker run -d --name ajn-radio --network host \
+            -e PORT=8080 \
+            -e DATABASE_URL='postgresql://radio:radio@127.0.0.1:5432/ajn_radio?schema=public' \
+            -e RUN_MIGRATIONS_ON_START=true -e SEED_DEMO=true \
+            -e RADIO_INGEST_TOKEN=ci-smoke-token-0123456789abcdef \
+            ajn-radio:ci
+      - name: Wait for /api/health
+        run: |
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8080/api/health >/dev/null 2>&1; then echo "healthy after ${i}s"; exit 0; fi
+            sleep 1
+          done
+          docker logs ajn-radio
+          exit 1
+      - name: Smoke test
+        run: bash scripts/smoke.sh http://127.0.0.1:8080
+      - name: Container logs on failure
+        if: failure()
+        run: docker logs ajn-radio
+
+  package-zip:
+    name: package-zip
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the deployment zip
+        run: npm run package:zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ajn-radio-preview-zip
+          path: radio-platform/dist-zip/ajn-radio-preview-*.zip
+          if-no-files-found: error
+          retention-days: 14
