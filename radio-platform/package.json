@@ -1,0 +1,57 @@
+{
+  "name": "ajn-radio-platform",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "dev": "tsx watch server/index.ts --dev",
+    "build": "vite build",
+    "start": "node --experimental-strip-types server/index.ts",
+    "postinstall": "prisma generate",
+    "typecheck": "tsc --noEmit",
+    "package:zip": "node scripts/package-zip.mjs",
+    "sources:sync": "node --experimental-strip-types scripts/sources-sync.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.0.0",
+    "@prisma/client": "^7.0.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "fast-xml-parser": "^4.5.7",
+    "lucide-react": "^0.468.0",
+    "motion": "^12.0.0",
+    "pg": "^8.13.1",
+    "prisma": "^7.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.14",
+    "zod": "^3.24.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@electric-sql/pglite-socket": "^0.2.11",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.5",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^19.0.3",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tsx": "^4.19.2",
+    "typescript": "~5.7.2",
+    "vite": "^6.0.7"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.2",
+    "mysql2": "^3.24.5"
+  }
+}

@@ -1,0 +1,49 @@
+# Cloud Build config for AJN Radio. Same file for both paths in DEPLOY.md:
+#   A) zip upload      -> app is at the source root, _APP_DIR stays "."
+#   B) GitHub trigger  -> --config radio-platform/cloudbuild.yaml with _APP_DIR=radio-platform
+# UNVERIFIED on Google Cloud: written from the Cloud Build / Cloud Run docs, never run there.
+substitutions:
+  _REGION: us-central1
+  _AR_REPO: ajn-radio            # Artifact Registry Docker repository (must already exist)
+  _SERVICE: ajn-radio-preview    # Cloud Run service name
+  _APP_DIR: "."
+  _CLOUDSQL_INSTANCE: ""         # PROJECT:REGION:INSTANCE  (required)
+  _DATABASE_URL_SECRET: ajn-radio-database-url   # Secret Manager secret names (must already exist)
+  _INGEST_TOKEN_SECRET: ajn-radio-ingest-token
+  _AUTH_FLAG: --allow-unauthenticated  # public preview; use --no-allow-unauthenticated to require IAM
+  _PREVIEW_ACCESS: public
+  _MAX_INSTANCES: "3"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    dir: ${_APP_DIR}
+    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/ajn-radio:$BUILD_ID", "-f", "Dockerfile", "."]
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: ["push", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/ajn-radio:$BUILD_ID"]
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/ajn-radio:$BUILD_ID
+      - --region=${_REGION}
+      - --platform=managed
+      - ${_AUTH_FLAG}
+      - --port=8080
+      - --timeout=3600            # SSE streams are cut at the request timeout (max 3600s); clients reconnect
+      - --min-instances=1
+      - --max-instances=${_MAX_INSTANCES}
+      - --no-cpu-throttling       # keeps the Postgres LISTEN connection alive between requests
+      - --add-cloudsql-instances=${_CLOUDSQL_INSTANCE}
+      - --set-secrets=DATABASE_URL=${_DATABASE_URL_SECRET}:latest,RADIO_INGEST_TOKEN=${_INGEST_TOKEN_SECRET}:latest
+      - --set-env-vars=RUN_MIGRATIONS_ON_START=true,SEED_DEMO=false,SYNC_SOURCES_ON_START=true,PREVIEW_ACCESS=${_PREVIEW_ACCESS}
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/ajn-radio:$BUILD_ID

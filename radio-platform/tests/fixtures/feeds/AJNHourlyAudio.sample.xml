@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+
+<channel>
+
+<title>AJN Hourly Audio Podcast</title>
+<itunes:subtitle>Because there's a war on for your mind!</itunes:subtitle>
+<link>https://alexjones.media</link>
+<itunes:new-feed-url>https://rss.alexjones.media/AJNHourlyAudio.xml</itunes:new-feed-url>
+<itunes:summary>Hour by hour audio podcast files of all AJN live shows.</itunes:summary>
+<description>Because there's a war on for your mind.</description>
+<language>en</language>
+<lastBuildDate>Fri, 02 Oct 2026 23:04:00 -0000</lastBuildDate>
+<itunes:owner>
+<itunes:name>AJN Hourly Audio</itunes:name>
+</itunes:owner>
+<ttl>250</ttl>
+
+<itunes:category text="News">
+ <itunes:category text="Politics" />
+</itunes:category>
+
+<itunes:image href="https://rss.alexjones.media/AJNHourlyAudio-600x600.png"/>
+
+<item>
+<title>AUDIO - 20261002_Fri_WarRoom-Hr3</title>
+<description>20261002_Fri_WarRoom-Hr3</description>
+<pubDate>Fri, 02 Oct 2026 18:03:46 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_WarRoom-Hr3.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_WarRoom-Hr3.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261002_Fri_WarRoom-Hr2</title>
+<description>20261002_Fri_WarRoom-Hr2</description>
+<pubDate>Fri, 02 Oct 2026 17:03:46 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_WarRoom-Hr2.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_WarRoom-Hr2.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261002_Fri_WarRoom-Hr1</title>
+<description>20261002_Fri_WarRoom-Hr1</description>
+<pubDate>Fri, 02 Oct 2026 16:03:47 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_WarRoom-Hr1.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_WarRoom-Hr1.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261002_Fri_Alex-Hr4</title>
+<description>20261002_Fri_Alex-Hr4</description>
+<pubDate>Fri, 02 Oct 2026 15:03:48 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_Alex-Hr4.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_Alex-Hr4.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261002_Fri_Alex-Hr3</title>
+<description>20261002_Fri_Alex-Hr3</description>
+<pubDate>Fri, 02 Oct 2026 14:03:47 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_Alex-Hr3.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_Alex-Hr3.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261002_Fri_Alex-Hr2</title>
+<description>20261002_Fri_Alex-Hr2</description>
+<pubDate>Fri, 02 Oct 2026 13:03:48 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_Alex-Hr2.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_Alex-Hr2.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261002_Fri_Alex-Hr1</title>
+<description>20261002_Fri_Alex-Hr1</description>
+<pubDate>Fri, 02 Oct 2026 12:03:46 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261002_Fri_Alex-Hr1.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261002_Fri_Alex-Hr1.mp3</guid>
+</item>
+<item>
+<title>AUDIO - 20261001_Thu_WarRoom-Hr3</title>
+<description>20261001_Thu_WarRoom-Hr3</description>
+<pubDate>Thu, 01 Oct 2026 18:03:46 -0500</pubDate>
+<enclosure url="https://archive.alexjoneslive.com/hourly-mp3/20261001_Thu_WarRoom-Hr3.mp3" length="28792512" type="audio/mpeg"/>
+<guid isPermaLink="false">20261001_Thu_WarRoom-Hr3.mp3</guid>
+</item>
+</channel>
+</rss>
